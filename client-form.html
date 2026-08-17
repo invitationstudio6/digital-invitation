@@ -310,11 +310,6 @@
     </p>
 
 
-    <!-- =========================
-         CLIENT INFORMATION
-    ========================= -->
-
-
     <form
         id="clientForm"
         action="https://formspree.io/f/xrpzyjjb"
@@ -565,7 +560,7 @@
 
 
         <!-- =========================
-             PHOTOS
+             GALLERY
         ========================= -->
 
 
@@ -576,6 +571,16 @@
             </h2>
 
 
+            <p class="hint">
+
+                Please upload your photos to
+                Google Drive, iCloud, Dropbox or
+                another photo-sharing service and
+                paste the links below.
+
+            </p>
+
+
             <label>
                 Photo 1
             </label>
@@ -583,7 +588,7 @@
             <input
                 type="url"
                 name="photo_1"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
 
 
@@ -594,7 +599,7 @@
             <input
                 type="url"
                 name="photo_2"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
 
 
@@ -605,7 +610,7 @@
             <input
                 type="url"
                 name="photo_3"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
 
 
@@ -616,7 +621,7 @@
             <input
                 type="url"
                 name="photo_4"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
 
 
@@ -627,7 +632,7 @@
             <input
                 type="url"
                 name="photo_5"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
 
 
@@ -638,17 +643,8 @@
             <input
                 type="url"
                 name="photo_6"
-                placeholder="Photo link"
+                placeholder="Paste photo link"
             >
-
-
-            <span class="hint">
-
-                For now, you can leave these empty.
-                We will create a proper photo upload
-                system later.
-
-            </span>
 
         </div>
 
@@ -706,7 +702,7 @@
                     4
                 </option>
 
-                <option value="5">
+                <option value="5+">
                     5+
                 </option>
 
@@ -730,6 +726,7 @@
             <label>
                 Preferred Style
             </label>
+
 
             <select name="style">
 
@@ -774,6 +771,7 @@
                 Anything else you'd like us to know?
             </label>
 
+
             <textarea
                 name="additional_requests"
                 placeholder="Colors, wording, special requests..."
@@ -800,28 +798,26 @@
 
 <script>
 
+    document
+        .getElementById("clientForm")
+        .addEventListener(
+            "submit",
+            function() {
 
-document
-    .getElementById("clientForm")
-    .addEventListener(
-        "submit",
-        function() {
-
-            const button =
-                document.getElementById(
-                    "submitButton"
-                );
-
-
-            button.textContent =
-                "SUBMITTING...";
+                const button =
+                    document.getElementById(
+                        "submitButton"
+                    );
 
 
-            button.disabled = true;
+                button.textContent =
+                    "SUBMITTING...";
 
-        }
-    );
 
+                button.disabled = true;
+
+            }
+        );
 
 </script>
 
