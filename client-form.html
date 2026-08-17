@@ -316,7 +316,11 @@
         method="POST"
     >
 
-
+<input
+    type="hidden"
+    name="invitation_id"
+    id="invitationId"
+>
         <input
             type="hidden"
             name="_subject"
@@ -820,7 +824,38 @@
         );
 
 </script>
+<script>
 
+    const form =
+        document.getElementById("clientForm");
+
+    const invitationId =
+        "LUNA-" +
+        Date.now();
+
+    document.getElementById(
+        "invitationId"
+    ).value = invitationId;
+
+
+    form.addEventListener(
+        "submit",
+        function() {
+
+            const button =
+                document.getElementById(
+                    "submitButton"
+                );
+
+            button.textContent =
+                "SUBMITTING...";
+
+            button.disabled = true;
+
+        }
+    );
+
+</script>
 
 </body>
 
