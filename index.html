@@ -4,9 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Wedding Invitation</title>
 
@@ -29,10 +27,12 @@
         }
 
         .container {
+            width: 100%;
             max-width: 1000px;
-            margin: auto;
+            margin: 0 auto;
             padding: 0 20px;
         }
+
 
         /* =========================
            HERO
@@ -101,6 +101,7 @@
             color: #403a35;
         }
 
+
         /* =========================
            COUNTDOWN
         ========================= */
@@ -134,8 +135,7 @@
             border-radius: 10px;
 
             box-shadow:
-                0 8px 25px
-                rgba(0, 0, 0, 0.06);
+                0 8px 25px rgba(0, 0, 0, 0.06);
         }
 
         .time-number {
@@ -153,6 +153,7 @@
 
             color: #9a8776;
         }
+
 
         /* =========================
            SECTIONS
@@ -183,6 +184,7 @@
             font-weight: normal;
         }
 
+
         /* =========================
            STORY
         ========================= */
@@ -196,9 +198,11 @@
             margin: auto;
 
             text-align: center;
+
             line-height: 2;
             font-size: 17px;
         }
+
 
         /* =========================
            GALLERY
@@ -238,6 +242,7 @@
             transform: scale(1.05);
         }
 
+
         /* =========================
            DETAILS
         ========================= */
@@ -250,15 +255,14 @@
 
         .card {
             background: white;
-
             padding: 40px;
+
             text-align: center;
 
             border-radius: 10px;
 
             box-shadow:
-                0 10px 30px
-                rgba(0, 0, 0, 0.05);
+                0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .icon {
@@ -295,6 +299,7 @@
             background: #806f61;
             color: white;
         }
+
 
         /* =========================
            RSVP
@@ -356,6 +361,7 @@
             opacity: 0.85;
         }
 
+
         /* =========================
            FOOTER
         ========================= */
@@ -374,6 +380,7 @@
             font-weight: normal;
             margin-bottom: 15px;
         }
+
 
         /* =========================
            MOBILE
@@ -422,6 +429,7 @@
             .title h2 {
                 font-size: 32px;
             }
+
         }
 
     </style>
@@ -452,7 +460,7 @@
                 class="date"
                 id="weddingDateText"
             >
-                Wedding Invitation
+                12 September 2026 · Baku
             </div>
 
             <a
@@ -573,30 +581,7 @@
             <div
                 class="story-text"
                 id="storyText"
-            >
-
-                <p>
-                    Some stories are written in books.
-                    Ours was written in little moments,
-                    shared smiles and unforgettable memories.
-                </p>
-
-                <br>
-
-                <p>
-                    From the day we met to this beautiful
-                    moment, every chapter has brought us
-                    closer together.
-                </p>
-
-                <br>
-
-                <p>
-                    And now, we are ready to begin
-                    our next chapter.
-                </p>
-
-            </div>
+            ></div>
 
         </div>
 
@@ -684,7 +669,7 @@
                     <p id="detailsLocation"></p>
 
                     <a
-                        href="https://www.google.com/maps"
+                        href="#"
                         target="_blank"
                         class="map-button"
                         id="mapLink"
@@ -693,7 +678,6 @@
                     </a>
 
                 </div>
-
 
             </div>
 
@@ -724,7 +708,7 @@
 
 
             <form
-                action="https://formspree.io/f/xrpzyjjb"
+                action="https://formspree.io/f/mqpzyklb"
                 method="POST"
             >
 
@@ -850,7 +834,7 @@
         <br>
 
         <p id="footerDate">
-            Wedding Invitation
+            12 · 09 · 2026
         </p>
 
     </footer>
@@ -862,219 +846,200 @@
 
     <script>
 
-        /* =========================
-           GET INVITATION ID
-        ========================= */
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
+        /* =====================================================
+           INVITATIONS
 
-        let invitationId =
-            params.get("id");
+           BURADA DƏYİŞİKLİK EDƏCƏKSƏN.
+           QALAN KODA TOXUNMA.
+        ===================================================== */
+
+        const invitations = {
+
+            "aysel-murad": {
+
+                bride: "Aysel",
+
+                groom: "Murad",
+
+                date: "12 September 2026",
+
+                dateShort: "12 · 09 · 2026",
+
+                time: "19:00",
+
+                location: "Baku, Azerbaijan",
+
+                venue: "Example Wedding Hall",
+
+                map:
+                    "https://www.google.com/maps",
+
+                story: `
+                    <p>
+                        Some stories are written in books.
+                        Ours was written in little moments,
+                        shared smiles and unforgettable memories.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        From the day we met to this beautiful
+                        moment, every chapter has brought us
+                        closer together.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        And now, we are ready to begin
+                        our next chapter.
+                    </p>
+                `,
+
+                images: [
+
+                    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
+
+                    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
+
+                    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
+
+                    "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
+
+                    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
+
+                ],
+
+                /*
+                   IMPORTANT:
+                   Countdown üçün tarix ayrıca
+                   il-ay-gün-saat-dəqiqə formatındadır.
+                */
+
+                countdown: {
+                    year: 2026,
+                    month: 9,
+                    day: 12,
+                    hour: 19,
+                    minute: 0
+                }
+
+            },
 
 
-        if (invitationId) {
+            "leyla-kamran": {
 
-            invitationId =
-                invitationId.toLowerCase();
+                bride: "Leyla",
 
-        }
+                groom: "Kamran",
 
+                date: "20 October 2026",
 
-        /* =========================
-           DEFAULT INVITATION
-        ========================= */
+                dateShort: "20 · 10 · 2026",
 
-        const defaultInvitation = {
+                time: "18:30",
 
-            bride: "Aysel",
+                location: "Baku, Azerbaijan",
 
-            groom: "Murad",
+                venue: "Example Wedding Hall",
 
-            date: "12 September 2026",
+                map:
+                    "https://www.google.com/maps",
 
-            time: "19:00",
+                story: `
+                    <p>
+                        Our story began with a simple hello
+                        and grew into something beautiful.
+                    </p>
 
-            location: "Baku, Azerbaijan",
+                    <br>
 
-            venue: "Example Wedding Hall",
+                    <p>
+                        Every moment brought us closer
+                        and every memory became part
+                        of our journey.
+                    </p>
 
-            map:
-                "https://www.google.com/maps",
+                    <br>
 
-            story: `
-                <p>
-                    Some stories are written in books.
-                    Ours was written in little moments,
-                    shared smiles and unforgettable memories.
-                </p>
+                    <p>
+                        Now we are ready to begin
+                        a new chapter together.
+                    </p>
+                `,
 
-                <br>
+                images: [
 
-                <p>
-                    From the day we met to this beautiful
-                    moment, every chapter has brought us
-                    closer together.
-                </p>
+                    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
 
-                <br>
+                    "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
 
-                <p>
-                    And now, we are ready to begin
-                    our next chapter.
-                </p>
-            `,
+                    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
 
-            images: [
+                    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
 
-                "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
+                    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
 
-                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
+                ],
 
-                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
+                countdown: {
+                    year: 2026,
+                    month: 10,
+                    day: 20,
+                    hour: 18,
+                    minute: 30
+                }
 
-                "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-                "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-                "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
-
-            ]
+            }
 
         };
 
 
-        /* =========================
-           GET SAVED INVITATION
-        ========================= */
+        /* =====================================================
+           GET INVITATION ID FROM URL
+        ===================================================== */
 
-        let invitation =
-            defaultInvitation;
-
-
-        if (invitationId) {
-
-            let saved =
-                localStorage.getItem(
-                    "luna_" + invitationId
-                );
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
 
 
-            if (!saved) {
-
-                for (
-                    let i = 0;
-                    i < localStorage.length;
-                    i++
-                ) {
-
-                    const key =
-                        localStorage.key(i);
+        let invitationId =
+            urlParams.get("id");
 
 
-                    if (
-                        key &&
-                        key.toLowerCase() ===
-                        (
-                            "luna_" +
-                            invitationId
-                        ).toLowerCase()
-                    ) {
+        /*
+           Əgər URL-də ID yoxdursa,
+           Aysel & Murad açılacaq.
+        */
 
-                        saved =
-                            localStorage.getItem(key);
+        if (
+            !invitationId ||
+            !invitations[invitationId]
+        ) {
 
-                        break;
-
-                    }
-
-                }
-
-            }
-
-
-            if (saved) {
-
-                try {
-
-                    invitation =
-                        JSON.parse(saved);
-
-                } catch (error) {
-
-                    console.error(
-                        "Invitation data error:",
-                        error
-                    );
-
-                    invitation =
-                        defaultInvitation;
-                }
-
-            }
+            invitationId =
+                "aysel-murad";
 
         }
 
 
-        /* =========================
-           SAFE VALUES
-        ========================= */
-
-        const bride =
-            invitation.bride ||
-            "Aysel";
+        const invitation =
+            invitations[invitationId];
 
 
-        const groom =
-            invitation.groom ||
-            "Murad";
-
+        /* =====================================================
+           COUPLE NAME
+        ===================================================== */
 
         const coupleName =
-            bride +
+            invitation.bride +
             " & " +
-            groom;
+            invitation.groom;
 
-
-        const date =
-            invitation.date ||
-            "12 September 2026";
-
-
-        const time =
-            invitation.time ||
-            "19:00";
-
-
-        const location =
-            invitation.location ||
-            "Baku, Azerbaijan";
-
-
-        const venue =
-            invitation.venue ||
-            "Example Wedding Hall";
-
-
-        const map =
-            invitation.map ||
-            "https://www.google.com/maps";
-
-
-        /* =========================
-           PAGE TITLE
-        ========================= */
-
-        document.title =
-            coupleName +
-            " | Wedding Invitation";
-
-
-        /* =========================
-           HERO
-        ========================= */
 
         document.getElementById(
             "coupleNames"
@@ -1083,72 +1048,77 @@
 
 
         document.getElementById(
-            "weddingDateText"
-        ).innerText =
-            date +
-            " · " +
-            location;
-
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        document.getElementById(
             "footerNames"
         ).innerText =
             coupleName;
 
 
+        /* =====================================================
+           PAGE TITLE
+        ===================================================== */
+
+        document.title =
+            coupleName +
+            " | Wedding Invitation";
+
+
+        /* =====================================================
+           DATE
+        ===================================================== */
+
         document.getElementById(
-            "footerDate"
+            "weddingDateText"
         ).innerText =
-            date;
+            invitation.date +
+            " · " +
+            invitation.location;
 
-
-        /* =========================
-           DETAILS
-        ========================= */
 
         document.getElementById(
             "detailsDate"
         ).innerHTML =
-            date +
+            invitation.date +
             "<br>" +
-            time;
+            invitation.time;
 
+
+        document.getElementById(
+            "footerDate"
+        ).innerText =
+            invitation.dateShort;
+
+
+        /* =====================================================
+           LOCATION
+        ===================================================== */
 
         document.getElementById(
             "detailsLocation"
         ).innerHTML =
-            location +
+            invitation.location +
             "<br>" +
-            venue;
+            invitation.venue;
 
 
         document.getElementById(
             "mapLink"
         ).href =
-            map;
+            invitation.map;
 
 
-        /* =========================
+        /* =====================================================
            STORY
-        ========================= */
+        ===================================================== */
 
-        if (invitation.story) {
-
-            document.getElementById(
-                "storyText"
-            ).innerHTML =
-                invitation.story;
-
-        }
+        document.getElementById(
+            "storyText"
+        ).innerHTML =
+            invitation.story;
 
 
-        /* =========================
+        /* =====================================================
            GALLERY
-        ========================= */
+        ===================================================== */
 
         const gallery =
             document.getElementById(
@@ -1159,80 +1129,65 @@
         gallery.innerHTML = "";
 
 
-        if (
-            invitation.images &&
-            invitation.images.length > 0
-        ) {
+        invitation.images.forEach(
+            function(image) {
 
-            invitation.images.forEach(
-                function(image) {
-
-                    const item =
-                        document.createElement(
-                            "div"
-                        );
+                const item =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                    item.className =
-                        "gallery-item";
+                item.className =
+                    "gallery-item";
 
 
-                    const img =
-                        document.createElement(
-                            "img"
-                        );
+                const img =
+                    document.createElement(
+                        "img"
+                    );
 
 
-                    img.src =
-                        image;
+                img.src =
+                    image;
 
 
-                    img.alt =
-                        coupleName +
-                        " wedding photo";
+                img.alt =
+                    coupleName +
+                    " wedding photo";
 
 
-                    img.loading =
-                        "lazy";
+                img.loading =
+                    "lazy";
 
 
-                    item.appendChild(img);
+                item.appendChild(img);
 
-                    gallery.appendChild(item);
+                gallery.appendChild(item);
 
-                }
+            }
+        );
+
+
+        /* =====================================================
+           HERO BACKGROUND
+        ===================================================== */
+
+        document.documentElement.style
+            .setProperty(
+                "--hero-image",
+                `url("${invitation.images[0]}")`
             );
 
-        }
 
-
-        /* =========================
-           HERO BACKGROUND
-        ========================= */
-
-        if (
-            invitation.images &&
-            invitation.images.length > 0
-        ) {
-
-            document.documentElement.style
-                .setProperty(
-                    "--hero-image",
-                    `url("${invitation.images[0]}")`
-                );
-
-        }
-
-
-        /* =========================
-           RSVP DATA
-        ========================= */
+        /* =====================================================
+           RSVP
+        ===================================================== */
 
         document.getElementById(
             "invitationIdField"
         ).value =
-            invitationId ||
-            "default";
+            invitationId;
 
 
         document.getElementById(
@@ -1241,244 +1196,57 @@
             coupleName;
 
 
-        /* =========================
-           COUNTDOWN DATE
-        ========================= */
+        /* =====================================================
+           COUNTDOWN
+        ===================================================== */
 
-        function createWeddingDate(
-            dateValue,
-            timeValue
-        ) {
+        /*
+           Burada new Date("September 12, 2026 19:00")
+           istifadə etmirik.
 
-            if (!dateValue) {
-                return null;
-            }
+           Bunun əvəzinə:
+           year / month / day / hour / minute
+           ayrıca istifadə olunur.
 
+           JavaScript-də month 0-dan başlayır.
+           Ona görə:
+           January = 0
+           February = 1
+           ...
+           September = 8
 
-            const dateString =
-                String(dateValue).trim();
+           Bizim invitations-də isə normal insan
+           formatı istifadə olunur:
+           September = 9
 
-
-            const timeString =
-                String(
-                    timeValue || "00:00"
-                ).trim();
-
-
-            /*
-               YYYY-MM-DD
-               YYYY-MM-DDTHH:MM
-            */
-
-            const isoMatch =
-                dateString.match(
-                    /^(\d{4})-(\d{2})-(\d{2})/
-                );
-
-
-            if (isoMatch) {
-
-                const year =
-                    Number(isoMatch[1]);
-
-                const month =
-                    Number(isoMatch[2]) - 1;
-
-                const day =
-                    Number(isoMatch[3]);
-
-
-                const timeMatch =
-                    timeString.match(
-                        /^(\d{1,2}):(\d{2})/
-                    );
-
-
-                const hours =
-                    timeMatch
-                        ? Number(timeMatch[1])
-                        : 0;
-
-
-                const minutes =
-                    timeMatch
-                        ? Number(timeMatch[2])
-                        : 0;
-
-
-                const result =
-                    new Date(
-                        year,
-                        month,
-                        day,
-                        hours,
-                        minutes
-                    );
-
-
-                if (
-                    !isNaN(
-                        result.getTime()
-                    )
-                ) {
-
-                    return result;
-
-                }
-
-            }
-
-
-            /*
-               DD/MM/YYYY
-               DD.MM.YYYY
-               DD-MM-YYYY
-            */
-
-            const europeanMatch =
-                dateString.match(
-                    /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/
-                );
-
-
-            if (europeanMatch) {
-
-                const day =
-                    Number(
-                        europeanMatch[1]
-                    );
-
-
-                const month =
-                    Number(
-                        europeanMatch[2]
-                    ) - 1;
-
-
-                const year =
-                    Number(
-                        europeanMatch[3]
-                    );
-
-
-                const timeMatch =
-                    timeString.match(
-                        /^(\d{1,2}):(\d{2})/
-                    );
-
-
-                const hours =
-                    timeMatch
-                        ? Number(timeMatch[1])
-                        : 0;
-
-
-                const minutes =
-                    timeMatch
-                        ? Number(timeMatch[2])
-                        : 0;
-
-
-                const result =
-                    new Date(
-                        year,
-                        month,
-                        day,
-                        hours,
-                        minutes
-                    );
-
-
-                if (
-                    !isNaN(
-                        result.getTime()
-                    )
-                ) {
-
-                    return result;
-
-                }
-
-            }
-
-
-            /*
-               Example:
-               12 September 2026
-            */
-
-            const normalDate =
-                new Date(
-                    dateString +
-                    " " +
-                    timeString
-                );
-
-
-            if (
-                !isNaN(
-                    normalDate.getTime()
-                )
-            ) {
-
-                return normalDate;
-
-            }
-
-
-            return null;
-
-        }
-
+           Aşağıda avtomatik -1 edilir.
+        */
 
         const weddingDate =
-            createWeddingDate(
-                date,
-                time
+            new Date(
+                invitation.countdown.year,
+                invitation.countdown.month - 1,
+                invitation.countdown.day,
+                invitation.countdown.hour,
+                invitation.countdown.minute,
+                0
             );
 
 
-        /* =========================
-           COUNTDOWN
-        ========================= */
-
         function updateCountdown() {
 
-            if (!weddingDate) {
-
-                document.getElementById(
-                    "days"
-                ).innerText =
-                    "--";
-
-                document.getElementById(
-                    "hours"
-                ).innerText =
-                    "--";
-
-                document.getElementById(
-                    "minutes"
-                ).innerText =
-                    "--";
-
-                document.getElementById(
-                    "seconds"
-                ).innerText =
-                    "--";
-
-                return;
-
-            }
-
-
             const now =
-                new Date().getTime();
+                new Date();
 
 
             const difference =
                 weddingDate.getTime() -
-                now;
+                now.getTime();
 
+
+            /*
+               Toy vaxtı keçibsə
+            */
 
             if (
                 difference <= 0
@@ -1489,82 +1257,70 @@
                 ).innerText =
                     "00";
 
+
                 document.getElementById(
                     "hours"
                 ).innerText =
                     "00";
+
 
                 document.getElementById(
                     "minutes"
                 ).innerText =
                     "00";
 
+
                 document.getElementById(
                     "seconds"
                 ).innerText =
                     "00";
+
 
                 return;
 
             }
 
 
+            /* DAYS */
+
             const days =
                 Math.floor(
                     difference /
-                    (
-                        1000 *
-                        60 *
-                        60 *
-                        24
-                    )
+                    (1000 * 60 * 60 * 24)
                 );
 
+
+            /* HOURS */
 
             const hours =
                 Math.floor(
                     (
                         difference %
-                        (
-                            1000 *
-                            60 *
-                            60 *
-                            24
-                        )
+                        (1000 * 60 * 60 * 24)
                     ) /
-                    (
-                        1000 *
-                        60 *
-                        60
-                    )
+                    (1000 * 60 * 60)
                 );
 
+
+            /* MINUTES */
 
             const minutes =
                 Math.floor(
                     (
                         difference %
-                        (
-                            1000 *
-                            60 *
-                            60
-                        )
+                        (1000 * 60 * 60)
                     ) /
-                    (
-                        1000 *
-                        60
-                    )
+                    (1000 * 60)
                 );
 
+
+            /* SECONDS */
 
             const seconds =
                 Math.floor(
                     (
                         difference %
-                        (
-                            1000 *
-                            60
-                        )
+                        (1000 * 60)
                     ) /
                     1000
                 );
@@ -1573,40 +1329,53 @@
             document.getElementById(
                 "days"
             ).innerText =
-                String(days)
-                    .padStart(2, "0");
+                String(days).padStart(
+                    2,
+                    "0"
+                );
 
 
             document.getElementById(
                 "hours"
             ).innerText =
-                String(hours)
-                    .padStart(2, "0");
+                String(hours).padStart(
+                    2,
+                    "0"
+                );
 
 
             document.getElementById(
                 "minutes"
             ).innerText =
-                String(minutes)
-                    .padStart(2, "0");
+                String(minutes).padStart(
+                    2,
+                    "0"
+                );
 
 
             document.getElementById(
                 "seconds"
             ).innerText =
-                String(seconds)
-                    .padStart(2, "0");
+                String(seconds).padStart(
+                    2,
+                    "0"
+                );
 
         }
 
 
+        /* İlk dəfə dərhal göstər */
+
         updateCountdown();
 
+
+        /* Sonra hər saniyə yenilə */
 
         setInterval(
             updateCountdown,
             1000
         );
+
 
     </script>
 
