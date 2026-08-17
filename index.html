@@ -92,12 +92,11 @@
 
         .hero h1 {
 
-            font-size:
-                clamp(
-                    55px,
-                    12vw,
-                    110px
-                );
+            font-size: clamp(
+                55px,
+                12vw,
+                110px
+            );
 
             font-weight: normal;
 
@@ -234,7 +233,7 @@
 
 
         /* =========================
-           GENERAL SECTIONS
+           SECTIONS
         ========================= */
 
         section {
@@ -727,6 +726,7 @@
 
         <div class="countdown">
 
+
             <div class="time-box">
 
                 <span
@@ -790,6 +790,7 @@
 
             </div>
 
+
         </div>
 
     </section>
@@ -802,6 +803,7 @@
     <section class="story">
 
         <div class="container">
+
 
             <div class="title">
 
@@ -819,7 +821,9 @@
             <div
                 class="story-text"
                 id="storyText"
-            ></div>
+            >
+            </div>
+
 
         </div>
 
@@ -833,6 +837,7 @@
     <section class="gallery-section">
 
         <div class="container">
+
 
             <div class="title">
 
@@ -850,7 +855,9 @@
             <div
                 class="gallery"
                 id="gallery"
-            ></div>
+            >
+            </div>
+
 
         </div>
 
@@ -864,6 +871,7 @@
     <section>
 
         <div class="container">
+
 
             <div class="title">
 
@@ -893,7 +901,8 @@
                     </h3>
 
 
-                    <p id="detailsDate"></p>
+                    <p id="detailsDate">
+                    </p>
 
                 </div>
 
@@ -910,7 +919,8 @@
                     </h3>
 
 
-                    <p id="detailsLocation"></p>
+                    <p id="detailsLocation">
+                    </p>
 
 
                     <a
@@ -923,6 +933,7 @@
                     </a>
 
                 </div>
+
 
             </div>
 
@@ -938,6 +949,7 @@
     <section class="rsvp">
 
         <div class="container">
+
 
             <div class="title">
 
@@ -956,6 +968,7 @@
                 action="https://formspree.io/f/mqpzyklb"
                 method="POST"
             >
+
 
                 <input
                     type="hidden"
@@ -1060,6 +1073,7 @@
                     SEND RSVP
                 </button>
 
+
             </form>
 
         </div>
@@ -1103,8 +1117,8 @@
         /* =====================================================
            INVITATIONS
 
-           YENİ MÜŞTƏRİ ƏLAVƏ EDƏNDƏ
-           YALNIZ BU HİSSƏDƏ DƏYİŞİKLİK EDƏCƏKSƏN.
+           YENİ DƏVƏTNAMƏ ƏLAVƏ ETMƏK ÜÇÜN
+           BURADAN YENİ BÖLMƏ YARADACAĞIQ.
         ===================================================== */
 
 
@@ -1134,6 +1148,7 @@
                 map:
                     "https://www.google.com/maps",
 
+
                 story: `
 
                     <p>
@@ -1159,6 +1174,7 @@
 
                 `,
 
+
                 images: [
 
                     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
@@ -1172,6 +1188,7 @@
                     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
 
                 ],
+
 
                 countdown: {
 
@@ -1213,6 +1230,7 @@
                 map:
                     "https://www.google.com/maps",
 
+
                 story: `
 
                     <p>
@@ -1237,6 +1255,7 @@
 
                 `,
 
+
                 images: [
 
                     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
@@ -1250,6 +1269,7 @@
                     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
 
                 ],
+
 
                 countdown: {
 
@@ -1289,7 +1309,8 @@
                 venue: "Crystal Hall",
 
                 map:
-                    "GOOGLE_MAPS_LINK",
+                    "https://www.google.com/maps",
+
 
                 story: `
 
@@ -1314,21 +1335,23 @@
 
                 `,
 
+
                 images: [
 
-                    "PHOTO_LINK_1",
+                    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
 
-                    "PHOTO_LINK_2",
+                    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
 
-                    "PHOTO_LINK_3",
+                    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
 
-                    "PHOTO_LINK_4",
+                    "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
 
-                    "PHOTO_LINK_5",
+                    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
 
-                    "PHOTO_LINK_6"
+                    "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
 
                 ],
+
 
                 countdown: {
 
@@ -1349,9 +1372,9 @@
         };
 
 
-        /* =========================
+        /* =====================================================
            GET ID FROM URL
-        ========================= */
+        ===================================================== */
 
 
         const urlParams =
@@ -1364,10 +1387,9 @@
             urlParams.get("id");
 
 
-        /*
-           URL-də ID yoxdursa
-           Aysel & Murad açılır.
-        */
+        /* =====================================================
+           DEFAULT INVITATION
+        ===================================================== */
 
 
         if (
@@ -1385,9 +1407,9 @@
             invitations[invitationId];
 
 
-        /* =========================
+        /* =====================================================
            COUPLE NAME
-        ========================= */
+        ===================================================== */
 
 
         const coupleName =
@@ -1408,9 +1430,9 @@
             coupleName;
 
 
-        /* =========================
+        /* =====================================================
            PAGE TITLE
-        ========================= */
+        ===================================================== */
 
 
         document.title =
@@ -1418,9 +1440,9 @@
             " | Wedding Invitation";
 
 
-        /* =========================
+        /* =====================================================
            DATE
-        ========================= */
+        ===================================================== */
 
 
         document.getElementById(
@@ -1445,9 +1467,9 @@
             invitation.dateShort;
 
 
-        /* =========================
+        /* =====================================================
            LOCATION
-        ========================= */
+        ===================================================== */
 
 
         document.getElementById(
@@ -1464,9 +1486,9 @@
             invitation.map;
 
 
-        /* =========================
+        /* =====================================================
            STORY
-        ========================= */
+        ===================================================== */
 
 
         document.getElementById(
@@ -1475,9 +1497,9 @@
             invitation.story;
 
 
-        /* =========================
+        /* =====================================================
            GALLERY
-        ========================= */
+        ===================================================== */
 
 
         const gallery =
@@ -1491,16 +1513,6 @@
 
         invitation.images.forEach(
             function(image) {
-
-                if (
-                    !image ||
-                    image.startsWith("PHOTO_LINK_")
-                ) {
-
-                    return;
-
-                }
-
 
                 const item =
                     document.createElement(
@@ -1540,30 +1552,21 @@
         );
 
 
-        /* =========================
+        /* =====================================================
            HERO IMAGE
-        ========================= */
+        ===================================================== */
 
 
-        if (
-            invitation.images.length > 0 &&
-            !invitation.images[0].startsWith(
-                "PHOTO_LINK_"
-            )
-        ) {
-
-            document.documentElement.style
-                .setProperty(
-                    "--hero-image",
-                    `url("${invitation.images[0]}")`
-                );
-
-        }
+        document.documentElement.style
+            .setProperty(
+                "--hero-image",
+                `url("${invitation.images[0]}")`
+            );
 
 
-        /* =========================
+        /* =====================================================
            RSVP INFORMATION
-        ========================= */
+        ===================================================== */
 
 
         document.getElementById(
@@ -1578,40 +1581,26 @@
             coupleName;
 
 
-        /* =========================
+        /* =====================================================
            COUNTDOWN
-        ========================= */
-
-
-        const countdown =
-            invitation.countdown;
-
-
-        /*
-           JavaScript-də aylar 0-dan başlayır.
-
-           January = 0
-           February = 1
-           March = 2
-           ...
-           September = 8
-           October = 9
-           November = 10
-           December = 11
-
-           Ona görə countdown-da yazdığımız
-           month dəyərindən 1 çıxırıq.
-        */
+        ===================================================== */
 
 
         const weddingDate =
             new Date(
-                countdown.year,
-                countdown.month - 1,
-                countdown.day,
-                countdown.hour,
-                countdown.minute,
+
+                invitation.countdown.year,
+
+                invitation.countdown.month - 1,
+
+                invitation.countdown.day,
+
+                invitation.countdown.hour,
+
+                invitation.countdown.minute,
+
                 0
+
             ).getTime();
 
 
@@ -1629,6 +1618,7 @@
             if (
                 difference <= 0
             ) {
+
 
                 document.getElementById(
                     "days"
@@ -1661,74 +1651,91 @@
 
             const days =
                 Math.floor(
+
                     difference /
-                    (1000 * 60 * 60 * 24)
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+
                 );
 
 
             const hours =
                 Math.floor(
+
                     (
                         difference /
-                        (1000 * 60 * 60)
+                        (
+                            1000 *
+                            60 *
+                            60
+                        )
                     ) % 24
+
                 );
 
 
             const minutes =
                 Math.floor(
+
                     (
                         difference /
-                        (1000 * 60)
+                        (
+                            1000 *
+                            60
+                        )
                     ) % 60
+
                 );
 
 
             const seconds =
                 Math.floor(
+
                     (
                         difference /
                         1000
                     ) % 60
+
                 );
 
 
             document.getElementById(
                 "days"
             ).innerText =
-                String(days).padStart(
-                    2,
-                    "0"
-                );
+                String(days)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "hours"
             ).innerText =
-                String(hours).padStart(
-                    2,
-                    "0"
-                );
+                String(hours)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "minutes"
             ).innerText =
-                String(minutes).padStart(
-                    2,
-                    "0"
-                );
+                String(minutes)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "seconds"
             ).innerText =
-                String(seconds).padStart(
-                    2,
-                    "0"
-                );
+                String(seconds)
+                    .padStart(2, "0");
 
         }
+
+
+        /* =====================================================
+           START COUNTDOWN
+        ===================================================== */
 
 
         updateCountdown();
