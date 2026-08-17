@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Luna | Invitation Generator</title>
+    <title>Luna | Admin</title>
 
 
     <style>
@@ -37,13 +37,47 @@
 
         .container {
 
-            max-width: 800px;
+            max-width: 850px;
 
             margin: auto;
 
+        }
+
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .logo {
+
+            font-size: 40px;
+
+            font-weight: normal;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .header p {
+
+            color: #806f61;
+
+            line-height: 1.6;
+
+        }
+
+
+        .card {
+
             background: white;
 
-            padding: 40px;
+            padding: 35px;
 
             border-radius: 16px;
 
@@ -51,31 +85,7 @@
                 0 10px 35px
                 rgba(0, 0, 0, 0.07);
 
-        }
-
-
-        h1 {
-
-            text-align: center;
-
-            font-size: 36px;
-
-            font-weight: normal;
-
-            margin-bottom: 10px;
-
-        }
-
-
-        .intro {
-
-            text-align: center;
-
-            color: #806f61;
-
-            line-height: 1.6;
-
-            margin-bottom: 35px;
+            margin-bottom: 25px;
 
         }
 
@@ -91,6 +101,17 @@
         }
 
 
+        .section:first-child {
+
+            border-top: none;
+
+            padding-top: 0;
+
+            margin-top: 0;
+
+        }
+
+
         .section h2 {
 
             font-size: 20px;
@@ -102,29 +123,45 @@
         }
 
 
+        .row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+
         label {
 
             display: block;
 
             font-size: 14px;
 
-            margin-bottom: 7px;
+            margin-bottom: 8px;
 
         }
 
 
         input,
-        textarea {
+        textarea,
+        select {
 
             width: 100%;
 
-            padding: 13px;
+            padding: 14px;
 
-            margin-bottom: 18px;
+            margin-bottom: 20px;
 
             border: 1px solid #d8cec3;
 
             border-radius: 7px;
+
+            background: white;
+
+            color: #403a35;
 
             font-family: inherit;
 
@@ -135,31 +172,64 @@
 
         textarea {
 
-            min-height: 120px;
+            min-height: 130px;
 
             resize: vertical;
 
         }
 
 
-        .row {
+        .hint {
 
-            display: grid;
+            display: block;
 
-            grid-template-columns: 1fr 1fr;
+            margin-top: -10px;
 
-            gap: 15px;
+            margin-bottom: 20px;
+
+            font-size: 12px;
+
+            color: #9a8776;
+
+            line-height: 1.5;
 
         }
 
 
-        button {
+        .checkbox {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .checkbox input {
+
+            width: auto;
+
+            margin: 0;
+
+        }
+
+
+        .checkbox label {
+
+            margin: 0;
+
+        }
+
+
+        .button {
 
             width: 100%;
 
             padding: 16px;
-
-            margin-top: 30px;
 
             border: none;
 
@@ -180,9 +250,22 @@
         }
 
 
-        button:hover {
+        .button:hover {
 
             opacity: 0.85;
+
+        }
+
+
+        .secondary-button {
+
+            background: transparent;
+
+            color: #806f61;
+
+            border: 1px solid #806f61;
+
+            margin-top: 10px;
 
         }
 
@@ -197,7 +280,7 @@
 
             background: #faf7f2;
 
-            border-radius: 10px;
+            border-radius: 12px;
 
         }
 
@@ -213,33 +296,145 @@
 
         .link-box {
 
-            width: 100%;
-
-            padding: 12px;
-
             background: white;
 
             border: 1px solid #d8cec3;
 
+            padding: 14px;
+
             border-radius: 7px;
 
             word-break: break-all;
+
+            margin: 15px 0;
+
+            line-height: 1.6;
+
+        }
+
+
+        .success {
+
+            color: #65745d;
 
             margin-bottom: 15px;
 
         }
 
 
-        .copy-button {
+        .saved-title {
 
-            margin-top: 0;
+            margin-bottom: 20px;
 
         }
 
 
-        @media (max-width: 600px) {
+        .invitation-item {
 
-            .container {
+            padding: 20px;
+
+            border: 1px solid #eee5dc;
+
+            border-radius: 10px;
+
+            margin-bottom: 15px;
+
+            background: #fffdf9;
+
+        }
+
+
+        .invitation-item h3 {
+
+            font-size: 20px;
+
+            font-weight: normal;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .invitation-item p {
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            color: #806f61;
+
+        }
+
+
+        .item-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .small-button {
+
+            padding: 10px 16px;
+
+            border-radius: 20px;
+
+            border: 1px solid #806f61;
+
+            background: white;
+
+            color: #806f61;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+        }
+
+
+        .small-button:hover {
+
+            background: #806f61;
+
+            color: white;
+
+        }
+
+
+        .delete-button {
+
+            border-color: #a56d5c;
+
+            color: #a56d5c;
+
+        }
+
+
+        .empty {
+
+            color: #9a8776;
+
+            text-align: center;
+
+            padding: 20px;
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            body {
+
+                padding: 15px 10px;
+
+            }
+
+
+            .card {
 
                 padding: 25px 18px;
 
@@ -251,6 +446,20 @@
                 grid-template-columns: 1fr;
 
                 gap: 0;
+
+            }
+
+
+            .logo {
+
+                font-size: 32px;
+
+            }
+
+
+            .item-buttons {
+
+                flex-direction: column;
 
             }
 
@@ -267,303 +476,398 @@
 <div class="container">
 
 
-    <h1>
-        Luna
-    </h1>
+    <!-- HEADER -->
 
+    <div class="header">
 
-    <p class="intro">
-
-        Invitation Generator
-
-    </p>
-
-
-    <form id="generatorForm">
-
-
-        <!-- =========================
-             COUPLE
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                Couple
-            </h2>
-
-
-            <div class="row">
-
-
-                <div>
-
-                    <label>
-                        Bride
-                    </label>
-
-                    <input
-                        type="text"
-                        id="bride"
-                        placeholder="Aysel"
-                        required
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label>
-                        Groom
-                    </label>
-
-                    <input
-                        type="text"
-                        id="groom"
-                        placeholder="Murad"
-                        required
-                    >
-
-                </div>
-
-
-            </div>
-
+        <div class="logo">
+            Luna
         </div>
 
+        <p>
+            Digital Invitation Admin
+        </p>
 
-        <!-- =========================
-             DATE
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                Wedding Details
-            </h2>
+    </div>
 
 
-            <div class="row">
+    <!-- CREATE INVITATION -->
+
+    <div class="card">
 
 
-                <div>
+        <form id="generatorForm">
 
-                    <label>
-                        Date
-                    </label>
 
-                    <input
-                        type="date"
-                        id="date"
-                        required
-                    >
+            <!-- COUPLE -->
+
+            <div class="section">
+
+                <h2>
+                    1. Couple Information
+                </h2>
+
+
+                <div class="row">
+
+
+                    <div>
+
+                        <label for="bride">
+                            Bride's Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bride"
+                            placeholder="Aysel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="groom">
+                            Groom's Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="groom"
+                            placeholder="Murad"
+                            required
+                        >
+
+                    </div>
 
                 </div>
-
-
-                <div>
-
-                    <label>
-                        Time
-                    </label>
-
-                    <input
-                        type="time"
-                        id="time"
-                        required
-                    >
-
-                </div>
-
 
             </div>
 
 
-            <label>
-                Location
-            </label>
+            <!-- WEDDING -->
 
-            <input
-                type="text"
-                id="location"
-                placeholder="Baku, Azerbaijan"
-                required
+            <div class="section">
+
+                <h2>
+                    2. Wedding Details
+                </h2>
+
+
+                <div class="row">
+
+
+                    <div>
+
+                        <label for="date">
+                            Wedding Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="time">
+                            Wedding Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="time"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <label for="location">
+                    City / Location
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Baku, Azerbaijan"
+                    required
+                >
+
+
+                <label for="venue">
+                    Venue / Wedding Hall
+                </label>
+
+                <input
+                    type="text"
+                    id="venue"
+                    placeholder="Wedding Hall"
+                    required
+                >
+
+
+                <label for="map">
+                    Google Maps Link
+                </label>
+
+                <input
+                    type="url"
+                    id="map"
+                    placeholder="https://maps.google.com/..."
+                >
+
+            </div>
+
+
+            <!-- STORY -->
+
+            <div class="section">
+
+                <h2>
+                    3. Our Story
+                </h2>
+
+
+                <textarea
+                    id="story"
+                    placeholder="Write the couple's story..."
+                ></textarea>
+
+
+                <span class="hint">
+
+                    Leave blank if you want to use
+                    the standard Luna story.
+
+                </span>
+
+            </div>
+
+
+            <!-- GALLERY -->
+
+            <div class="section">
+
+                <h2>
+                    4. Gallery
+                </h2>
+
+
+                <label>
+                    Photo 1 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo1"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Photo 2 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo2"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Photo 3 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo3"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Photo 4 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo4"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Photo 5 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo5"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Photo 6 URL
+                </label>
+
+                <input
+                    type="url"
+                    id="photo6"
+                    placeholder="https://..."
+                >
+
+            </div>
+
+
+            <!-- RSVP -->
+
+            <div class="section">
+
+                <h2>
+                    5. RSVP
+                </h2>
+
+
+                <div class="checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="rsvp"
+                    >
+
+                    <label for="rsvp">
+                        Show RSVP section
+                    </label>
+
+                </div>
+
+
+                <label for="maxGuests">
+                    Maximum Number of Guests
+                </label>
+
+                <select id="maxGuests">
+
+                    <option value="1">
+                        1
+                    </option>
+
+                    <option value="2">
+                        2
+                    </option>
+
+                    <option value="3">
+                        3
+                    </option>
+
+                    <option value="4">
+                        4
+                    </option>
+
+                    <option value="5">
+                        5
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="button"
             >
 
+                CREATE INVITATION
 
-            <label>
-                Venue
-            </label>
-
-            <input
-                type="text"
-                id="venue"
-                placeholder="Example Wedding Hall"
-                required
-            >
+            </button>
 
 
-            <label>
-                Google Maps Link
-            </label>
-
-            <input
-                type="url"
-                id="map"
-                placeholder="https://maps.google.com/..."
-            >
-
-        </div>
+        </form>
 
 
-        <!-- =========================
-             STORY
-        ========================= -->
+        <!-- RESULT -->
 
-
-        <div class="section">
+        <div
+            class="result"
+            id="result"
+        >
 
             <h2>
-                Our Story
+                Invitation Created 🤍
             </h2>
 
 
-            <textarea
-                id="story"
-                placeholder="Write the couple's story..."
-            ></textarea>
+            <p class="success">
+                Your invitation is ready.
+            </p>
+
+
+            <p>
+                Invitation link:
+            </p>
+
+
+            <div
+                class="link-box"
+                id="invitationLink"
+            ></div>
+
+
+            <button
+                type="button"
+                class="button"
+                id="copyButton"
+            >
+
+                COPY LINK
+
+            </button>
+
+
+            <button
+                type="button"
+                class="button secondary-button"
+                id="openButton"
+            >
+
+                OPEN INVITATION
+
+            </button>
 
         </div>
 
 
-        <!-- =========================
-             PHOTOS
-        ========================= -->
+    </div>
 
 
-        <div class="section">
+    <!-- SAVED INVITATIONS -->
 
-            <h2>
-                Gallery
-            </h2>
+    <div class="card">
 
 
-            <label>
-                Photo 1 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo1"
-                placeholder="https://..."
-            >
-
-
-            <label>
-                Photo 2 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo2"
-                placeholder="https://..."
-            >
-
-
-            <label>
-                Photo 3 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo3"
-                placeholder="https://..."
-            >
-
-
-            <label>
-                Photo 4 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo4"
-                placeholder="https://..."
-            >
-
-
-            <label>
-                Photo 5 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo5"
-                placeholder="https://..."
-            >
-
-
-            <label>
-                Photo 6 URL
-            </label>
-
-            <input
-                type="url"
-                id="photo6"
-                placeholder="https://..."
-            >
-
-        </div>
-
-
-        <button type="submit">
-
-            CREATE INVITATION LINK
-
-        </button>
-
-
-    </form>
-
-
-    <!-- =========================
-         RESULT
-    ========================= -->
-
-
-    <div
-        class="result"
-        id="result"
-    >
-
-        <h2>
-            Invitation Created 🤍
+        <h2 class="saved-title">
+            Created Invitations
         </h2>
 
 
-        <p>
-            Your invitation link:
-        </p>
+        <div id="savedInvitations">
 
+        </div>
 
-        <div
-            class="link-box"
-            id="invitationLink"
-        ></div>
-
-
-        <button
-            class="copy-button"
-            id="copyButton"
-            type="button"
-        >
-
-            COPY LINK
-
-        </button>
 
     </div>
 
@@ -574,213 +878,521 @@
 <script>
 
 
-    const form =
-        document.getElementById(
-            "generatorForm"
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const form =
+    document.getElementById("generatorForm");
+
+const result =
+    document.getElementById("result");
+
+const invitationLink =
+    document.getElementById("invitationLink");
+
+const savedInvitations =
+    document.getElementById("savedInvitations");
+
+
+/* =========================================
+   CREATE ID
+========================================= */
+
+function createId(bride, groom) {
+
+    const cleanBride =
+        bride
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9əğıöüçş\s-]/gi, "")
+            .replace(/\s+/g, "-");
+
+    const cleanGroom =
+        groom
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9əğıöüçş\s-]/gi, "")
+            .replace(/\s+/g, "-");
+
+    return cleanBride + "-" + cleanGroom;
+
+}
+
+
+/* =========================================
+   CREATE INVITATION
+========================================= */
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const bride =
+            document
+                .getElementById("bride")
+                .value
+                .trim();
+
+
+        const groom =
+            document
+                .getElementById("groom")
+                .value
+                .trim();
+
+
+        const date =
+            document
+                .getElementById("date")
+                .value;
+
+
+        const time =
+            document
+                .getElementById("time")
+                .value;
+
+
+        const location =
+            document
+                .getElementById("location")
+                .value
+                .trim();
+
+
+        const venue =
+            document
+                .getElementById("venue")
+                .value
+                .trim();
+
+
+        const map =
+            document
+                .getElementById("map")
+                .value
+                .trim();
+
+
+        const story =
+            document
+                .getElementById("story")
+                .value
+                .trim();
+
+
+        const rsvp =
+            document
+                .getElementById("rsvp")
+                .checked;
+
+
+        const maxGuests =
+            document
+                .getElementById("maxGuests")
+                .value;
+
+
+        const images = [
+
+            document.getElementById("photo1").value.trim(),
+
+            document.getElementById("photo2").value.trim(),
+
+            document.getElementById("photo3").value.trim(),
+
+            document.getElementById("photo4").value.trim(),
+
+            document.getElementById("photo5").value.trim(),
+
+            document.getElementById("photo6").value.trim()
+
+        ].filter(
+            image => image !== ""
         );
 
 
-    form.addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
-
-
-            const bride =
-                document.getElementById(
-                    "bride"
-                ).value.trim();
-
-
-            const groom =
-                document.getElementById(
-                    "groom"
-                ).value.trim();
-
-
-            const date =
-                document.getElementById(
-                    "date"
-                ).value;
-
-
-            const time =
-                document.getElementById(
-                    "time"
-                ).value;
-
-
-            const location =
-                document.getElementById(
-                    "location"
-                ).value.trim();
-
-
-            const venue =
-                document.getElementById(
-                    "venue"
-                ).value.trim();
-
-
-            const map =
-                document.getElementById(
-                    "map"
-                ).value.trim();
-
-
-            const story =
-                document.getElementById(
-                    "story"
-                ).value.trim();
-
-
-            const images = [
-
-                document.getElementById(
-                    "photo1"
-                ).value.trim(),
-
-                document.getElementById(
-                    "photo2"
-                ).value.trim(),
-
-                document.getElementById(
-                    "photo3"
-                ).value.trim(),
-
-                document.getElementById(
-                    "photo4"
-                ).value.trim(),
-
-                document.getElementById(
-                    "photo5"
-                ).value.trim(),
-
-                document.getElementById(
-                    "photo6"
-                ).value.trim()
-
-            ].filter(
-                function(image) {
-                    return image !== "";
-                }
-            );
-
-
-            const id =
-                bride
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")
-                +
-                "-"
-                +
+        const id =
+            createId(
+                bride,
                 groom
-                    .toLowerCase()
-                    .replace(/\s+/g, "-" );
-
-
-            const params =
-                new URLSearchParams();
-
-
-            params.set(
-                "id",
-                id
             );
 
+
+        const invitation = {
+
+            id: id,
+
+            bride: bride,
+
+            groom: groom,
+
+            date: date,
+
+            time: time,
+
+            location: location,
+
+            venue: venue,
+
+            map: map,
+
+            story: story,
+
+            images: images,
+
+            rsvp: rsvp,
+
+            maxGuests: maxGuests
+
+        };
+
+
+        /* SAVE */
+
+        localStorage.setItem(
+
+            "luna_" + id,
+
+            JSON.stringify(invitation)
+
+        );
+
+
+        /* CREATE LINK */
+
+        const baseUrl =
+            window.location.origin +
+            window.location.pathname
+                .replace(
+                    "admin.html",
+                    "index.html"
+                );
+
+
+        const link =
+            baseUrl +
+            "?id=" +
+            encodeURIComponent(id);
+
+
+        invitationLink.textContent =
+            link;
+
+
+        result.style.display =
+            "block";
+
+
+        /* REFRESH LIST */
+
+        displayInvitations();
+
+
+        /* SCROLL TO RESULT */
+
+        result.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+);
+
+
+/* =========================================
+   COPY LINK
+========================================= */
+
+document
+    .getElementById("copyButton")
+    .addEventListener(
+        "click",
+        async function() {
 
             const link =
+                invitationLink.textContent;
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    link
+                );
+
+                this.textContent =
+                    "COPIED ✓";
+
+
+                setTimeout(
+                    () => {
+
+                        this.textContent =
+                            "COPY LINK";
+
+                    },
+                    2000
+                );
+
+            }
+
+            catch {
+
+                alert(
+                    "Please copy the link manually."
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================================
+   OPEN INVITATION
+========================================= */
+
+document
+    .getElementById("openButton")
+    .addEventListener(
+        "click",
+        function() {
+
+            const link =
+                invitationLink.textContent;
+
+
+            window.open(
+                link,
+                "_blank"
+            );
+
+        }
+    );
+
+
+/* =========================================
+   SHOW SAVED INVITATIONS
+========================================= */
+
+function displayInvitations() {
+
+    const invitations = [];
+
+
+    for (
+        let i = 0;
+        i < localStorage.length;
+        i++
+    ) {
+
+        const key =
+            localStorage.key(i);
+
+
+        if (
+            key &&
+            key.startsWith("luna_")
+        ) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        localStorage.getItem(key)
+                    );
+
+
+                invitations.push(data);
+
+            }
+
+            catch {
+
+                // Ignore invalid data
+
+            }
+
+        }
+
+    }
+
+
+    if (
+        invitations.length === 0
+    ) {
+
+        savedInvitations.innerHTML =
+            `
+            <div class="empty">
+                No invitations created yet.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    savedInvitations.innerHTML =
+        "";
+
+
+    invitations.forEach(
+        function(invitation) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "invitation-item";
+
+
+            const name =
+                invitation.bride +
+                " & " +
+                invitation.groom;
+
+
+            const baseUrl =
                 window.location.origin +
                 window.location.pathname
                     .replace(
                         "admin.html",
                         "index.html"
-                    )
-                +
-                "?"
-                +
-                params.toString();
+                    );
 
-
-            localStorage.setItem(
-
-                "luna_" + id,
-
-                JSON.stringify({
-
-                    bride: bride,
-
-                    groom: groom,
-
-                    date: date,
-
-                    time: time,
-
-                    location: location,
-
-                    venue: venue,
-
-                    map: map,
-
-                    story: story,
-
-                    images: images
-
-                })
-
-            );
-
-
-            document.getElementById(
-                "invitationLink"
-            ).textContent =
-                link;
-
-
-            document.getElementById(
-                "result"
-            ).style.display =
-                "block";
-
-
-        }
-    );
-
-
-    document.getElementById(
-        "copyButton"
-    ).addEventListener(
-        "click",
-        async function() {
 
             const link =
-                document.getElementById(
-                    "invitationLink"
-                ).textContent;
+                baseUrl +
+                "?id=" +
+                encodeURIComponent(
+                    invitation.id
+                );
 
 
-            await navigator.clipboard.writeText(
-                link
-            );
+            item.innerHTML =
+
+                `
+                <h3>
+                    ${name}
+                </h3>
+
+                <p>
+                    ${invitation.date}
+                    ·
+                    ${invitation.time}
+                </p>
+
+                <p>
+                    ${invitation.location}
+                    ·
+                    ${invitation.venue}
+                </p>
+
+                <div class="item-buttons">
+
+                    <button
+                        class="small-button"
+                        onclick="window.open('${link}', '_blank')"
+                    >
+                        OPEN
+                    </button>
+
+                    <button
+                        class="small-button"
+                        onclick="copyInvitationLink('${link}')"
+                    >
+                        COPY LINK
+                    </button>
+
+                    <button
+                        class="small-button delete-button"
+                        onclick="deleteInvitation('${invitation.id}')"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+                `;
 
 
-            this.textContent =
-                "COPIED ✓";
-
-
-            setTimeout(
-                () => {
-
-                    this.textContent =
-                        "COPY LINK";
-
-                },
-                2000
+            savedInvitations.appendChild(
+                item
             );
 
         }
     );
+
+}
+
+
+/* =========================================
+   COPY SAVED LINK
+========================================= */
+
+async function copyInvitationLink(link) {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            link
+        );
+
+        alert(
+            "Invitation link copied."
+        );
+
+    }
+
+    catch {
+
+        alert(
+            link
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   DELETE INVITATION
+========================================= */
+
+function deleteInvitation(id) {
+
+    const confirmation =
+        confirm(
+            "Delete this invitation?"
+        );
+
+
+    if (!confirmation) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "luna_" + id
+    );
+
+
+    displayInvitations();
+
+}
+
+
+/* =========================================
+   LOAD
+========================================= */
+
+displayInvitations();
 
 
 </script>
