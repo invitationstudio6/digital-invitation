@@ -5,8 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Luna | Client Information</title>
 
@@ -56,7 +58,7 @@
 
             text-align: center;
 
-            font-size: 36px;
+            font-size: 38px;
 
             font-weight: normal;
 
@@ -71,9 +73,28 @@
 
             color: #806f61;
 
-            line-height: 1.7;
+            line-height: 1.8;
 
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+
+        }
+
+
+        .order-id {
+
+            text-align: center;
+
+            background: #faf7f2;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 35px;
+
+            font-size: 13px;
+
+            color: #806f61;
 
         }
 
@@ -131,6 +152,8 @@
 
             background: white;
 
+            color: #403a35;
+
         }
 
 
@@ -162,11 +185,18 @@
 
             font-size: 12px;
 
-            line-height: 1.5;
+            line-height: 1.6;
 
             margin-top: -10px;
 
             margin-bottom: 20px;
+
+        }
+
+
+        .required {
+
+            color: #a56d5c;
 
         }
 
@@ -200,11 +230,11 @@
         }
 
 
-        button {
+        .submit {
 
             width: 100%;
 
-            padding: 16px;
+            padding: 17px;
 
             margin-top: 35px;
 
@@ -227,14 +257,14 @@
         }
 
 
-        button:hover {
+        .submit:hover {
 
             opacity: 0.85;
 
         }
 
 
-        button:disabled {
+        .submit:disabled {
 
             opacity: 0.6;
 
@@ -243,9 +273,50 @@
         }
 
 
-        .required {
+        .success {
 
-            color: #a56d5c;
+            display: none;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+        }
+
+
+        .success h2 {
+
+            font-size: 32px;
+
+            font-weight: normal;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .success p {
+
+            color: #806f61;
+
+            line-height: 1.8;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .success .order-number {
+
+            margin: 25px 0;
+
+            padding: 15px;
+
+            background: #faf7f2;
+
+            border-radius: 8px;
+
+            color: #403a35;
 
         }
 
@@ -277,7 +348,7 @@
 
             .brand {
 
-                font-size: 30px;
+                font-size: 32px;
 
             }
 
@@ -294,507 +365,559 @@
 <div class="container">
 
 
-    <div class="brand">
-        Luna
+    <!-- HEADER -->
+
+    <div id="formArea">
+
+
+        <div class="brand">
+            Luna
+        </div>
+
+
+        <p class="intro">
+
+            Thank you for choosing Luna. 🤍
+
+            Please complete the form below with
+            the details you would like to appear
+            on your digital invitation.
+
+        </p>
+
+
+        <div class="order-id">
+
+            Order ID:
+            <strong id="orderIdDisplay">
+            </strong>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+            id="clientForm"
+            action="https://formspree.io/f/xrpzyjjb"
+            method="POST"
+        >
+
+
+            <!-- HIDDEN INFORMATION -->
+
+            <input
+                type="hidden"
+                name="order_id"
+                id="orderId"
+            >
+
+
+            <input
+                type="hidden"
+                name="_subject"
+                value="New Luna Digital Invitation Order"
+            >
+
+
+            <!-- CONTACT -->
+
+            <div class="section">
+
+                <h2>
+                    1. Contact Information
+                </h2>
+
+
+                <label>
+                    Your Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="client_name"
+                    placeholder="Your full name"
+                    required
+                >
+
+
+                <label>
+                    Email
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="email"
+                    name="client_email"
+                    placeholder="your@email.com"
+                    required
+                >
+
+
+                <label>
+                    Phone / WhatsApp
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    name="client_phone"
+                    placeholder="+994 XX XXX XX XX"
+                    required
+                >
+
+            </div>
+
+
+            <!-- COUPLE -->
+
+            <div class="section">
+
+                <h2>
+                    2. Couple Information
+                </h2>
+
+
+                <div class="row">
+
+
+                    <div>
+
+                        <label>
+                            Bride's Name
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="bride_name"
+                            placeholder="Bride's name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Groom's Name
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="groom_name"
+                            placeholder="Groom's name"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- WEDDING DETAILS -->
+
+            <div class="section">
+
+                <h2>
+                    3. Wedding Details
+                </h2>
+
+
+                <div class="row">
+
+
+                    <div>
+
+                        <label>
+                            Wedding Date
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            name="wedding_date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Wedding Time
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="time"
+                            name="wedding_time"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <label>
+                    City / Location
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Baku, Azerbaijan"
+                    required
+                >
+
+
+                <label>
+                    Venue / Wedding Hall
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="venue"
+                    placeholder="Wedding hall name"
+                    required
+                >
+
+
+                <label>
+                    Google Maps Link
+                </label>
+
+                <input
+                    type="url"
+                    name="map_link"
+                    placeholder="Paste Google Maps link"
+                >
+
+
+                <span class="hint">
+
+                    Open the location in Google Maps,
+                    press Share and paste the link here.
+
+                </span>
+
+            </div>
+
+
+            <!-- STORY -->
+
+            <div class="section">
+
+                <h2>
+                    4. Our Story
+                </h2>
+
+
+                <label>
+                    Your Story
+                </label>
+
+                <textarea
+                    name="story"
+                    placeholder="Tell us your story..."
+                ></textarea>
+
+
+                <span class="hint">
+
+                    Write as much as you like.
+
+                    If you leave this blank,
+                    Luna can use a standard romantic story.
+
+                </span>
+
+            </div>
+
+
+            <!-- GALLERY -->
+
+            <div class="section">
+
+                <h2>
+                    5. Gallery
+                </h2>
+
+
+                <p class="hint">
+
+                    Upload your photos to Google Drive,
+                    Dropbox, iCloud or another service
+                    and paste the links below.
+
+                </p>
+
+
+                <label>
+                    Photo 1
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_1"
+                    placeholder="Paste photo link"
+                >
+
+
+                <label>
+                    Photo 2
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_2"
+                    placeholder="Paste photo link"
+                >
+
+
+                <label>
+                    Photo 3
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_3"
+                    placeholder="Paste photo link"
+                >
+
+
+                <label>
+                    Photo 4
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_4"
+                    placeholder="Paste photo link"
+                >
+
+
+                <label>
+                    Photo 5
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_5"
+                    placeholder="Paste photo link"
+                >
+
+
+                <label>
+                    Photo 6
+                </label>
+
+                <input
+                    type="url"
+                    name="photo_6"
+                    placeholder="Paste photo link"
+                >
+
+            </div>
+
+
+            <!-- RSVP -->
+
+            <div class="section">
+
+                <h2>
+                    6. RSVP
+                </h2>
+
+
+                <div class="checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="rsvp"
+                        name="rsvp"
+                        value="Yes"
+                    >
+
+                    <label for="rsvp">
+
+                        I want an RSVP section
+                        on my invitation.
+
+                    </label>
+
+                </div>
+
+
+                <label>
+                    Maximum Number of Guests
+                </label>
+
+                <select
+                    name="max_guests"
+                >
+
+                    <option value="1">
+                        1
+                    </option>
+
+                    <option value="2">
+                        2
+                    </option>
+
+                    <option value="3">
+                        3
+                    </option>
+
+                    <option value="4">
+                        4
+                    </option>
+
+                    <option value="5+">
+                        5+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- STYLE -->
+
+            <div class="section">
+
+                <h2>
+                    7. Invitation Style
+                </h2>
+
+
+                <label>
+                    Preferred Style
+                </label>
+
+
+                <select name="style">
+
+                    <option value="Elegant">
+                        Elegant
+                    </option>
+
+                    <option value="Romantic">
+                        Romantic
+                    </option>
+
+                    <option value="Minimal">
+                        Minimal
+                    </option>
+
+                    <option value="Luxury">
+                        Luxury
+                    </option>
+
+                    <option value="I don't know">
+                        I don't know — choose for me
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ADDITIONAL -->
+
+            <div class="section">
+
+                <h2>
+                    8. Additional Requests
+                </h2>
+
+
+                <label>
+                    Anything else you'd like us to know?
+                </label>
+
+
+                <textarea
+                    name="additional_requests"
+                    placeholder="Colors, wording, special requests..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit"
+                id="submitButton"
+            >
+
+                SUBMIT INFORMATION
+
+            </button>
+
+
+        </form>
+
     </div>
 
 
-    <p class="intro">
+    <!-- SUCCESS -->
 
-        Thank you for choosing Luna. 🤍
-
-        Please complete the form below with
-        the details you would like to appear
-        on your digital invitation.
-
-    </p>
-
-
-    <form
-        id="clientForm"
-        action="https://formspree.io/f/xrpzyjjb"
-        method="POST"
+    <div
+        class="success"
+        id="successArea"
     >
 
-<input
-    type="hidden"
-    name="invitation_id"
-    id="invitationId"
->
-        <input
-            type="hidden"
-            name="_subject"
-            value="New Luna Invitation Client"
-        >
+        <h2>
+            Thank You 🤍
+        </h2>
 
 
-        <!-- =========================
-             CONTACT
-        ========================= -->
+        <p>
+            Your information has been
+            successfully submitted to Luna.
+        </p>
 
 
-        <div class="section">
+        <div class="order-number">
 
-            <h2>
-                1. Contact Information
-            </h2>
+            Your Order ID:
 
-
-            <label>
-                Your Name <span class="required">*</span>
-            </label>
-
-            <input
-                type="text"
-                name="client_name"
-                placeholder="Your full name"
-                required
-            >
-
-
-            <label>
-                Email <span class="required">*</span>
-            </label>
-
-            <input
-                type="email"
-                name="client_email"
-                placeholder="your@email.com"
-                required
-            >
-
-
-            <label>
-                Phone / WhatsApp <span class="required">*</span>
-            </label>
-
-            <input
-                type="tel"
-                name="client_phone"
-                placeholder="+994 XX XXX XX XX"
-                required
-            >
+            <strong id="successOrderId">
+            </strong>
 
         </div>
 
 
-        <!-- =========================
-             COUPLE
-        ========================= -->
+        <p>
 
+            We will review your information
+            and prepare your digital invitation.
 
-        <div class="section">
+        </p>
 
-            <h2>
-                2. Couple Information
-            </h2>
 
+        <p>
 
-            <div class="row">
+            Please keep your Order ID
+            for future communication.
 
+        </p>
 
-                <div>
-
-                    <label>
-                        Bride's Name
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        name="bride_name"
-                        placeholder="Bride's name"
-                        required
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label>
-                        Groom's Name
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        name="groom_name"
-                        placeholder="Groom's name"
-                        required
-                    >
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             WEDDING DETAILS
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                3. Wedding Details
-            </h2>
-
-
-            <div class="row">
-
-
-                <div>
-
-                    <label>
-                        Wedding Date
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="date"
-                        name="wedding_date"
-                        required
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label>
-                        Wedding Time
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="time"
-                        name="wedding_time"
-                        required
-                    >
-
-                </div>
-
-
-            </div>
-
-
-            <label>
-                City / Location
-                <span class="required">*</span>
-            </label>
-
-            <input
-                type="text"
-                name="location"
-                placeholder="Baku, Azerbaijan"
-                required
-            >
-
-
-            <label>
-                Venue / Wedding Hall
-                <span class="required">*</span>
-            </label>
-
-            <input
-                type="text"
-                name="venue"
-                placeholder="Wedding hall name"
-                required
-            >
-
-
-            <label>
-                Google Maps Link
-            </label>
-
-            <input
-                type="url"
-                name="map_link"
-                placeholder="Paste Google Maps link"
-            >
-
-
-            <span class="hint">
-
-                Open the location in Google Maps,
-                press Share and paste the link here.
-
-            </span>
-
-
-        </div>
-
-
-        <!-- =========================
-             STORY
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                4. Our Story
-            </h2>
-
-
-            <label>
-                Your Story
-            </label>
-
-            <textarea
-                name="story"
-                placeholder="Tell us your story..."
-            ></textarea>
-
-
-            <span class="hint">
-
-                You can write as much as you like.
-                If you prefer, leave this blank and
-                we can use a standard romantic story.
-
-            </span>
-
-        </div>
-
-
-        <!-- =========================
-             GALLERY
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                5. Gallery
-            </h2>
-
-
-            <p class="hint">
-
-                Please upload your photos to
-                Google Drive, iCloud, Dropbox or
-                another photo-sharing service and
-                paste the links below.
-
-            </p>
-
-
-            <label>
-                Photo 1
-            </label>
-
-            <input
-                type="url"
-                name="photo_1"
-                placeholder="Paste photo link"
-            >
-
-
-            <label>
-                Photo 2
-            </label>
-
-            <input
-                type="url"
-                name="photo_2"
-                placeholder="Paste photo link"
-            >
-
-
-            <label>
-                Photo 3
-            </label>
-
-            <input
-                type="url"
-                name="photo_3"
-                placeholder="Paste photo link"
-            >
-
-
-            <label>
-                Photo 4
-            </label>
-
-            <input
-                type="url"
-                name="photo_4"
-                placeholder="Paste photo link"
-            >
-
-
-            <label>
-                Photo 5
-            </label>
-
-            <input
-                type="url"
-                name="photo_5"
-                placeholder="Paste photo link"
-            >
-
-
-            <label>
-                Photo 6
-            </label>
-
-            <input
-                type="url"
-                name="photo_6"
-                placeholder="Paste photo link"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             RSVP
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                6. RSVP
-            </h2>
-
-
-            <div class="checkbox">
-
-                <input
-                    type="checkbox"
-                    id="rsvp"
-                    name="rsvp"
-                    value="Yes"
-                >
-
-                <label for="rsvp">
-
-                    I want an RSVP section
-                    on my invitation.
-
-                </label>
-
-            </div>
-
-
-            <label>
-                Maximum Number of Guests
-            </label>
-
-            <select name="max_guests">
-
-                <option value="1">
-                    1
-                </option>
-
-                <option value="2">
-                    2
-                </option>
-
-                <option value="3">
-                    3
-                </option>
-
-                <option value="4">
-                    4
-                </option>
-
-                <option value="5+">
-                    5+
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- =========================
-             STYLE
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                7. Invitation Style
-            </h2>
-
-
-            <label>
-                Preferred Style
-            </label>
-
-
-            <select name="style">
-
-                <option value="Elegant">
-                    Elegant
-                </option>
-
-                <option value="Romantic">
-                    Romantic
-                </option>
-
-                <option value="Minimal">
-                    Minimal
-                </option>
-
-                <option value="Luxury">
-                    Luxury
-                </option>
-
-                <option value="I don't know">
-                    I don't know — choose for me
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- =========================
-             ADDITIONAL
-        ========================= -->
-
-
-        <div class="section">
-
-            <h2>
-                8. Additional Requests
-            </h2>
-
-
-            <label>
-                Anything else you'd like us to know?
-            </label>
-
-
-            <textarea
-                name="additional_requests"
-                placeholder="Colors, wording, special requests..."
-            ></textarea>
-
-        </div>
-
-
-        <button
-            type="submit"
-            id="submitButton"
-        >
-
-            SUBMIT INFORMATION
-
-        </button>
-
-
-    </form>
+    </div>
 
 
 </div>
@@ -802,60 +925,121 @@
 
 <script>
 
-    document
-        .getElementById("clientForm")
-        .addEventListener(
-            "submit",
-            function() {
 
-                const button =
-                    document.getElementById(
-                        "submitButton"
-                    );
+/* =========================================
+   CREATE ORDER ID
+========================================= */
 
+function createOrderId() {
 
-                button.textContent =
-                    "SUBMITTING...";
+    const random =
+        Math.random()
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
 
 
-                button.disabled = true;
+    return "LUNA-" + random;
 
-            }
-        );
-
-</script>
-<script>
-
-    const form =
-        document.getElementById("clientForm");
-
-    const invitationId =
-        "LUNA-" +
-        Date.now();
-
-    document.getElementById(
-        "invitationId"
-    ).value = invitationId;
+}
 
 
-    form.addEventListener(
-        "submit",
-        function() {
+/* =========================================
+   GET / CREATE ORDER ID
+========================================= */
 
-            const button =
-                document.getElementById(
-                    "submitButton"
-                );
-
-            button.textContent =
-                "SUBMITTING...";
-
-            button.disabled = true;
-
-        }
+let orderId =
+    sessionStorage.getItem(
+        "luna_order_id"
     );
 
+
+if (!orderId) {
+
+    orderId =
+        createOrderId();
+
+
+    sessionStorage.setItem(
+        "luna_order_id",
+        orderId
+    );
+
+}
+
+
+document.getElementById(
+    "orderId"
+).value =
+    orderId;
+
+
+document.getElementById(
+    "orderIdDisplay"
+).textContent =
+    orderId;
+
+
+document.getElementById(
+    "successOrderId"
+).textContent =
+    orderId;
+
+
+/* =========================================
+   FORM SUBMISSION
+========================================= */
+
+const form =
+    document.getElementById(
+        "clientForm"
+    );
+
+
+form.addEventListener(
+    "submit",
+    function() {
+
+        const button =
+            document.getElementById(
+                "submitButton"
+            );
+
+
+        button.textContent =
+            "SUBMITTING...";
+
+
+        button.disabled =
+            true;
+
+    }
+);
+
+
+/* =========================================
+   FORM SUCCESS
+========================================= */
+
+form.addEventListener(
+    "submit",
+    function() {
+
+        /*
+         * The normal Formspree submission
+         * will handle the actual sending.
+         *
+         * We do not hide the form here,
+         * because Formspree controls the
+         * response after submission.
+         */
+
+    }
+);
+
+
 </script>
+
 
 </body>
 
