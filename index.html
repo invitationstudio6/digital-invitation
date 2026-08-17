@@ -8,14 +8,9 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Aysel & Murad | Wedding Invitation</title>
-
+    <title>Wedding Invitation</title>
 
     <style>
-
-        /* =========================
-           GENERAL
-        ========================= */
 
         * {
             margin: 0;
@@ -45,9 +40,10 @@
         ========================= */
 
         .hero {
+
             min-height: 100vh;
 
-            background:
+            background-image:
                 linear-gradient(
                     rgba(0, 0, 0, 0.30),
                     rgba(0, 0, 0, 0.30)
@@ -62,6 +58,7 @@
             justify-content: center;
 
             text-align: center;
+
             color: white;
         }
 
@@ -70,40 +67,61 @@
         }
 
         .subtitle {
+
             font-size: 14px;
+
             letter-spacing: 6px;
+
             text-transform: uppercase;
+
             margin-bottom: 25px;
         }
 
         .hero h1 {
-            font-size: clamp(55px, 12vw, 110px);
+
+            font-size: clamp(
+                55px,
+                12vw,
+                110px
+            );
+
             font-weight: normal;
+
             line-height: 1.1;
         }
 
         .date {
+
             margin-top: 25px;
+
             font-size: 18px;
+
             letter-spacing: 3px;
         }
 
         .button {
+
             display: inline-block;
+
             margin-top: 35px;
+
             padding: 14px 32px;
 
             border: 1px solid white;
+
             border-radius: 30px;
 
             color: white;
+
             text-decoration: none;
 
             transition: 0.3s;
         }
 
         .button:hover {
+
             background: white;
+
             color: #403a35;
         }
 
@@ -113,48 +131,70 @@
         ========================= */
 
         .countdown-section {
+
             background: #fffdf9;
+
             padding: 80px 20px;
+
             text-align: center;
         }
 
         .section-small-title {
+
             font-size: 13px;
+
             letter-spacing: 5px;
+
             text-transform: uppercase;
+
             color: #9a8776;
+
             margin-bottom: 35px;
         }
 
         .countdown {
+
             display: flex;
+
             justify-content: center;
+
             gap: 20px;
+
             flex-wrap: wrap;
         }
 
         .time-box {
+
             min-width: 110px;
+
             padding: 25px 15px;
 
             background: #faf7f2;
+
             border-radius: 10px;
 
             box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.06);
+                0 8px 25px
+                rgba(0, 0, 0, 0.06);
         }
 
         .time-number {
+
             display: block;
+
             font-size: 42px;
         }
 
         .time-label {
+
             display: block;
+
             margin-top: 8px;
 
             font-size: 11px;
+
             letter-spacing: 3px;
+
             text-transform: uppercase;
 
             color: #9a8776;
@@ -162,42 +202,46 @@
 
 
         /* =========================
-           COMMON SECTION
+           SECTIONS
         ========================= */
 
         section {
+
             padding: 90px 20px;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
-
         .title {
+
             text-align: center;
+
             margin-bottom: 45px;
         }
 
         .title span {
+
             display: block;
 
             font-size: 12px;
+
             letter-spacing: 4px;
+
             text-transform: uppercase;
 
             color: #9a8776;
+
             margin-bottom: 10px;
         }
 
         .title h2 {
+
             font-size: 42px;
+
             font-weight: normal;
         }
 
 
         /* =========================
-           OUR STORY
+           STORY
         ========================= */
 
         .story {
@@ -206,18 +250,21 @@
         }
 
         .story-text {
+
             max-width: 700px;
+
             margin: auto;
 
             text-align: center;
 
             line-height: 2;
+
             font-size: 17px;
         }
 
 
         /* =========================
-           PHOTO GALLERY
+           GALLERY
         ========================= */
 
         .gallery-section {
@@ -226,32 +273,44 @@
         }
 
         .gallery {
+
             max-width: 900px;
+
             margin: auto;
 
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+            grid-template-columns:
+                repeat(2, 1fr);
 
             gap: 18px;
         }
 
         .gallery-item {
+
             overflow: hidden;
+
             border-radius: 8px;
+
             aspect-ratio: 4 / 3;
         }
 
         .gallery-item img {
+
             width: 100%;
+
             height: 100%;
 
             object-fit: cover;
+
             display: block;
 
-            transition: transform 0.6s ease;
+            transition:
+                transform 0.6s ease;
         }
 
         .gallery-item:hover img {
+
             transform: scale(1.05);
         }
 
@@ -261,13 +320,17 @@
         ========================= */
 
         .details {
+
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+            grid-template-columns:
+                repeat(2, 1fr);
 
             gap: 25px;
         }
 
         .card {
+
             background: white;
 
             padding: 40px;
@@ -277,25 +340,33 @@
             border-radius: 10px;
 
             box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.05);
+                0 10px 30px
+                rgba(0, 0, 0, 0.05);
         }
 
         .icon {
+
             font-size: 35px;
+
             margin-bottom: 15px;
         }
 
         .card h3 {
+
             font-size: 22px;
+
             font-weight: normal;
+
             margin-bottom: 15px;
         }
 
         .card p {
+
             line-height: 1.8;
         }
 
         .map-button {
+
             display: inline-block;
 
             margin-top: 20px;
@@ -303,16 +374,20 @@
             padding: 12px 25px;
 
             border: 1px solid #806f61;
+
             border-radius: 25px;
 
             color: #806f61;
+
             text-decoration: none;
 
             transition: 0.3s;
         }
 
         .map-button:hover {
+
             background: #806f61;
+
             color: white;
         }
 
@@ -322,58 +397,76 @@
         ========================= */
 
         .rsvp {
+
             background: #fffdf9;
         }
 
         form {
+
             max-width: 600px;
+
             margin: auto;
         }
 
         label {
+
             display: block;
+
             margin-bottom: 8px;
+
             font-size: 14px;
         }
 
         input,
         select,
         textarea {
+
             width: 100%;
 
             padding: 14px;
+
             margin-bottom: 22px;
 
-            border: 1px solid #d8cec3;
+            border:
+                1px solid #d8cec3;
+
             border-radius: 5px;
 
             font-family: inherit;
+
             font-size: 15px;
         }
 
         textarea {
+
             min-height: 120px;
+
             resize: vertical;
         }
 
         .submit {
+
             width: 100%;
 
             padding: 15px;
 
             border: none;
+
             border-radius: 30px;
 
             background: #806f61;
+
             color: white;
 
             font-size: 15px;
+
             letter-spacing: 2px;
 
             cursor: pointer;
         }
 
         .submit:hover {
+
             opacity: 0.85;
         }
 
@@ -383,17 +476,22 @@
         ========================= */
 
         footer {
+
             padding: 70px 20px;
 
             background: #403a35;
+
             color: white;
 
             text-align: center;
         }
 
         footer h2 {
+
             font-size: 42px;
+
             font-weight: normal;
+
             margin-bottom: 15px;
         }
 
@@ -405,49 +503,62 @@
         @media (max-width: 700px) {
 
             .hero h1 {
+
                 font-size: 55px;
             }
 
             .date {
+
                 font-size: 14px;
             }
 
             .countdown {
+
                 gap: 10px;
             }
 
             .time-box {
+
                 min-width: 75px;
+
                 padding: 18px 8px;
             }
 
             .time-number {
+
                 font-size: 30px;
             }
 
             .time-label {
+
                 font-size: 9px;
+
                 letter-spacing: 1px;
             }
 
             .gallery {
+
                 grid-template-columns: 1fr;
             }
 
             .details {
+
                 grid-template-columns: 1fr;
             }
 
             section {
+
                 padding: 70px 18px;
             }
 
             .title h2 {
+
                 font-size: 32px;
             }
         }
 
     </style>
+
 </head>
 
 
@@ -470,11 +581,17 @@
                 Aysel & Murad
             </h1>
 
-            <div class="date" id="weddingDateText">
-                12 September 2026 · Baku
+            <div
+                class="date"
+                id="weddingDateText"
+            >
+                Wedding Invitation
             </div>
 
-            <a href="#countdown" class="button">
+            <a
+                href="#countdown"
+                class="button"
+            >
                 VIEW INVITATION
             </a>
 
@@ -487,7 +604,10 @@
          COUNTDOWN
     ========================= -->
 
-    <section class="countdown-section" id="countdown">
+    <section
+        class="countdown-section"
+        id="countdown"
+    >
 
         <div class="section-small-title">
             Until we say "I do"
@@ -496,23 +616,66 @@
         <div class="countdown">
 
             <div class="time-box">
-                <span class="time-number" id="days">00</span>
-                <span class="time-label">Days</span>
+
+                <span
+                    class="time-number"
+                    id="days"
+                >
+                    00
+                </span>
+
+                <span class="time-label">
+                    Days
+                </span>
+
             </div>
 
-            <div class="time-box">
-                <span class="time-number" id="hours">00</span>
-                <span class="time-label">Hours</span>
-            </div>
 
             <div class="time-box">
-                <span class="time-number" id="minutes">00</span>
-                <span class="time-label">Minutes</span>
+
+                <span
+                    class="time-number"
+                    id="hours"
+                >
+                    00
+                </span>
+
+                <span class="time-label">
+                    Hours
+                </span>
+
             </div>
 
+
             <div class="time-box">
-                <span class="time-number" id="seconds">00</span>
-                <span class="time-label">Seconds</span>
+
+                <span
+                    class="time-number"
+                    id="minutes"
+                >
+                    00
+                </span>
+
+                <span class="time-label">
+                    Minutes
+                </span>
+
+            </div>
+
+
+            <div class="time-box">
+
+                <span
+                    class="time-number"
+                    id="seconds"
+                >
+                    00
+                </span>
+
+                <span class="time-label">
+                    Seconds
+                </span>
+
             </div>
 
         </div>
@@ -540,7 +703,10 @@
 
             </div>
 
-            <div class="story-text" id="storyText">
+            <div
+                class="story-text"
+                id="storyText"
+            >
 
                 <p>
                     Some stories are written in books.
@@ -590,9 +756,10 @@
 
             </div>
 
-            <div class="gallery" id="gallery">
-
-            </div>
+            <div
+                class="gallery"
+                id="gallery"
+            ></div>
 
         </div>
 
@@ -621,6 +788,7 @@
 
             <div class="details">
 
+
                 <div class="card">
 
                     <div class="icon">
@@ -631,8 +799,7 @@
                         Date & Time
                     </h3>
 
-                    <p id="detailsDate">
-                    </p>
+                    <p id="detailsDate"></p>
 
                 </div>
 
@@ -647,11 +814,10 @@
                         Location
                     </h3>
 
-                    <p id="detailsLocation">
-                    </p>
+                    <p id="detailsLocation"></p>
 
                     <a
-                        href="#"
+                        href="https://www.google.com/maps"
                         target="_blank"
                         class="map-button"
                         id="mapLink"
@@ -660,6 +826,7 @@
                     </a>
 
                 </div>
+
 
             </div>
 
@@ -690,11 +857,10 @@
 
 
             <form
-                action="https://formspree.io/f/mqpzyklb"
+                action="https://formspree.io/f/xrpzyjjb"
                 method="POST"
             >
 
-                <!-- This tells Formspree which invitation -->
                 <input
                     type="hidden"
                     name="invitation_id"
@@ -817,7 +983,7 @@
         <br>
 
         <p id="footerDate">
-            12 · 09 · 2026
+            Wedding Invitation
         </p>
 
     </footer>
@@ -829,196 +995,217 @@
 
     <script>
 
-
         /* =========================
-           ALL INVITATIONS
+           GET INVITATION ID
         ========================= */
 
-        const invitations = {
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
 
-            "aysel-murad": {
-
-                bride: "Aysel",
-
-                groom: "Murad",
-
-                date: "12 September 2026",
-
-                dateShort: "12 · 09 · 2026",
-
-                time: "19:00",
-
-                location: "Baku, Azerbaijan",
-
-                venue: "Example Wedding Hall",
-
-                map:
-                    "https://www.google.com/maps",
-
-                story: `
-                    <p>
-                        Some stories are written in books.
-                        Ours was written in little moments,
-                        shared smiles and unforgettable memories.
-                    </p>
-
-                    <br>
-
-                    <p>
-                        From the day we met to this beautiful
-                        moment, every chapter has brought us
-                        closer together.
-                    </p>
-
-                    <br>
-
-                    <p>
-                        And now, we are ready to begin
-                        our next chapter.
-                    </p>
-                `,
-
-                images: [
-
-                    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
-
-                    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
-
-                    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-
-                    "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-                    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-                    "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
-
-                ],
-
-                countdown:
-                    "September 12, 2026 19:00:00"
-
-            },
+        let invitationId =
+            params.get("id");
 
 
-            "leyla-kamran": {
+        /*
+           Make ID lowercase
+           so Aydan-Ali and aydan-ali
+           work the same way.
+        */
 
-                bride: "Leyla",
+        if (invitationId) {
 
-                groom: "Kamran",
+            invitationId =
+                invitationId.toLowerCase();
 
-                date: "20 October 2026",
+        }
 
-                dateShort: "20 · 10 · 2026",
 
-                time: "18:30",
+        /* =========================
+           DEFAULT INVITATION
+        ========================= */
 
-                location: "Baku, Azerbaijan",
+        const defaultInvitation = {
 
-                venue: "Example Wedding Hall",
+            bride: "Aysel",
 
-                map:
-                    "https://www.google.com/maps",
+            groom: "Murad",
 
-                story: `
-                    <p>
-                        Our story began with a simple hello
-                        and grew into something beautiful.
-                    </p>
+            date: "12 September 2026",
 
-                    <br>
+            time: "19:00",
 
-                    <p>
-                        Every moment brought us closer
-                        and every memory became part
-                        of our journey.
-                    </p>
+            location: "Baku, Azerbaijan",
 
-                    <br>
+            venue: "Example Wedding Hall",
 
-                    <p>
-                        Now we are ready to begin
-                        a new chapter together.
-                    </p>
-                `,
+            map:
+                "https://www.google.com/maps",
 
-                images: [
+            story: `
+                <p>
+                    Some stories are written in books.
+                    Ours was written in little moments,
+                    shared smiles and unforgettable memories.
+                </p>
 
-                    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
+                <br>
 
-                    "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
+                <p>
+                    From the day we met to this beautiful
+                    moment, every chapter has brought us
+                    closer together.
+                </p>
 
-                    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
+                <br>
 
-                    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
+                <p>
+                    And now, we are ready to begin
+                    our next chapter.
+                </p>
+            `,
 
-                    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
+            images: [
 
-                    "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
+                "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
 
-                ],
+                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
 
-                countdown:
-                    "October 20, 2026 18:30:00"
+                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
 
-            }
+                "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
+
+                "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
+
+                "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
+
+            ]
 
         };
 
 
         /* =========================
-           GET ID FROM URL
+           GET SAVED INVITATION
         ========================= */
 
-        const urlParams =
-            new URLSearchParams(
-                window.location.search
-            );
+        let invitation =
+            defaultInvitation;
 
 
-        let invitationId =
-            urlParams.get("id");
+        if (invitationId) {
+
+            let saved =
+                localStorage.getItem(
+                    "luna_" + invitationId
+                );
 
 
-        /*
-           If no ID is provided,
-           use Aysel & Murad.
-        */
+            /*
+               If exact ID was not found,
+               search localStorage ignoring
+               uppercase/lowercase.
+            */
 
-        if (
-            !invitationId ||
-            !invitations[invitationId]
-        ) {
+            if (!saved) {
 
-            invitationId =
-                "aysel-murad";
+                for (
+                    let i = 0;
+                    i < localStorage.length;
+                    i++
+                ) {
+
+                    const key =
+                        localStorage.key(i);
+
+
+                    if (
+                        key &&
+                        key.toLowerCase() ===
+                        (
+                            "luna_" +
+                            invitationId
+                        ).toLowerCase()
+                    ) {
+
+                        saved =
+                            localStorage.getItem(key);
+
+                        break;
+
+                    }
+
+                }
+
+            }
+
+
+            if (saved) {
+
+                try {
+
+                    invitation =
+                        JSON.parse(saved);
+
+                } catch (error) {
+
+                    console.error(
+                        "Invitation data error:",
+                        error
+                    );
+
+                    invitation =
+                        defaultInvitation;
+                }
+
+            }
 
         }
 
 
-        const invitation =
-            invitations[invitationId];
-
-
         /* =========================
-           COUPLE NAME
+           SAFE VALUES
         ========================= */
 
+        const bride =
+            invitation.bride ||
+            "Aysel";
+
+
+        const groom =
+            invitation.groom ||
+            "Murad";
+
+
         const coupleName =
-            invitation.bride +
+            bride +
             " & " +
-            invitation.groom;
+            groom;
 
 
-        document.getElementById(
-            "coupleNames"
-        ).innerText =
-            coupleName;
+        const date =
+            invitation.date ||
+            "12 September 2026";
 
 
-        document.getElementById(
-            "footerNames"
-        ).innerText =
-            coupleName;
+        const time =
+            invitation.time ||
+            "19:00";
+
+
+        const location =
+            invitation.location ||
+            "Baku, Azerbaijan";
+
+
+        const venue =
+            invitation.venue ||
+            "Example Wedding Hall";
+
+
+        const map =
+            invitation.map ||
+            "https://www.google.com/maps";
 
 
         /* =========================
@@ -1031,57 +1218,77 @@
 
 
         /* =========================
-           DATE
+           HERO
         ========================= */
+
+        document.getElementById(
+            "coupleNames"
+        ).innerText =
+            coupleName;
+
 
         document.getElementById(
             "weddingDateText"
         ).innerText =
-            invitation.date +
+            date +
             " · " +
-            invitation.location;
+            location;
 
+
+        /* =========================
+           FOOTER
+        ========================= */
 
         document.getElementById(
-            "detailsDate"
-        ).innerHTML =
-            invitation.date +
-            "<br>" +
-            invitation.time;
+            "footerNames"
+        ).innerText =
+            coupleName;
 
 
         document.getElementById(
             "footerDate"
         ).innerText =
-            invitation.dateShort;
+            date;
 
 
         /* =========================
-           LOCATION
+           DETAILS
         ========================= */
+
+        document.getElementById(
+            "detailsDate"
+        ).innerHTML =
+            date +
+            "<br>" +
+            time;
+
 
         document.getElementById(
             "detailsLocation"
         ).innerHTML =
-            invitation.location +
+            location +
             "<br>" +
-            invitation.venue;
+            venue;
 
 
         document.getElementById(
             "mapLink"
         ).href =
-            invitation.map;
+            map;
 
 
         /* =========================
            STORY
         ========================= */
 
-        document.getElementById(
-            "storyText"
-        ).innerHTML =
-            invitation.story;
+        if (invitation.story) {
+
+            document.getElementById(
+                "storyText"
+            ).innerHTML =
+                invitation.story;
+
+        }
 
 
         /* =========================
@@ -1097,58 +1304,80 @@
         gallery.innerHTML = "";
 
 
-        invitation.images.forEach(
-            function(image) {
+        if (
+            invitation.images &&
+            invitation.images.length > 0
+        ) {
 
-                const item =
-                    document.createElement(
-                        "div"
-                    );
+            invitation.images.forEach(
+                function(image) {
 
-                item.className =
-                    "gallery-item";
-
-
-                const img =
-                    document.createElement(
-                        "img"
-                    );
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
 
 
-                img.src = image;
-
-                img.alt =
-                    coupleName +
-                    " wedding photo";
+                    item.className =
+                        "gallery-item";
 
 
-                item.appendChild(img);
-
-                gallery.appendChild(item);
-
-            }
-        );
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
 
 
-        /* =========================
-           HERO IMAGE
-        ========================= */
+                    img.src =
+                        image;
 
-        document.documentElement.style
-            .setProperty(
-                "--hero-image",
-                `url("${invitation.images[0]}")`
+
+                    img.alt =
+                        coupleName +
+                        " wedding photo";
+
+
+                    img.loading =
+                        "lazy";
+
+
+                    item.appendChild(img);
+
+                    gallery.appendChild(item);
+
+                }
             );
 
+        }
+
 
         /* =========================
-           RSVP INFORMATION
+           HERO BACKGROUND
+        ========================= */
+
+        if (
+            invitation.images &&
+            invitation.images.length > 0
+        ) {
+
+            document.documentElement.style
+                .setProperty(
+                    "--hero-image",
+                    `url("${invitation.images[0]}")`
+                );
+
+        }
+
+
+        /* =========================
+           RSVP DATA
         ========================= */
 
         document.getElementById(
             "invitationIdField"
         ).value =
-            invitationId;
+            invitationId ||
+            "default";
 
 
         document.getElementById(
@@ -1158,23 +1387,145 @@
 
 
         /* =========================
+           COUNTDOWN DATE
+        ========================= */
+
+        function createWeddingDate(
+            dateValue,
+            timeValue
+        ) {
+
+            let result;
+
+
+            /*
+               First try normal date format.
+            */
+
+            result =
+                new Date(
+                    dateValue +
+                    " " +
+                    timeValue
+                );
+
+
+            if (
+                !isNaN(
+                    result.getTime()
+                )
+            ) {
+
+                return result;
+
+            }
+
+
+            /*
+               Try YYYY-MM-DD.
+            */
+
+            if (
+                typeof dateValue ===
+                "string"
+            ) {
+
+                const match =
+                    dateValue.match(
+                        /^(\d{4})-(\d{2})-(\d{2})$/
+                    );
+
+
+                if (match) {
+
+                    result =
+                        new Date(
+                            Number(match[1]),
+                            Number(match[2]) - 1,
+                            Number(match[3]),
+                            Number(
+                                (
+                                    timeValue ||
+                                    "00:00"
+                                ).split(":")[0]
+                            ),
+                            Number(
+                                (
+                                    timeValue ||
+                                    "00:00"
+                                ).split(":")[1] ||
+                                0
+                            )
+                        );
+
+
+                    if (
+                        !isNaN(
+                            result.getTime()
+                        )
+                    ) {
+
+                        return result;
+
+                    }
+
+                }
+
+            }
+
+
+            return null;
+
+        }
+
+
+        const weddingDate =
+            createWeddingDate(
+                date,
+                time
+            );
+
+
+        /* =========================
            COUNTDOWN
         ========================= */
 
-        const weddingDate =
-            new Date(
-                invitation.countdown
-            ).getTime();
-
-
         function updateCountdown() {
+
+            if (!weddingDate) {
+
+                document.getElementById(
+                    "days"
+                ).innerText =
+                    "--";
+
+                document.getElementById(
+                    "hours"
+                ).innerText =
+                    "--";
+
+                document.getElementById(
+                    "minutes"
+                ).innerText =
+                    "--";
+
+                document.getElementById(
+                    "seconds"
+                ).innerText =
+                    "--";
+
+                return;
+
+            }
+
 
             const now =
                 new Date().getTime();
 
 
             const difference =
-                weddingDate - now;
+                weddingDate.getTime() -
+                now;
 
 
             if (
@@ -1209,71 +1560,90 @@
             const days =
                 Math.floor(
                     difference /
-                    (1000 * 60 * 60 * 24)
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
                 );
 
 
             const hours =
                 Math.floor(
                     (
-                        difference /
-                        (1000 * 60 * 60)
-                    ) % 24
+                        difference %
+                        (
+                            1000 *
+                            60 *
+                            60 *
+                            24
+                        )
+                    ) /
+                    (
+                        1000 *
+                        60 *
+                        60
+                    )
                 );
 
 
             const minutes =
                 Math.floor(
                     (
-                        difference /
-                        (1000 * 60)
-                    ) % 60
+                        difference %
+                        (
+                            1000 *
+                            60 *
+                            60
+                        )
+                    ) /
+                    (
+                        1000 *
+                        60
+                    )
                 );
 
 
             const seconds =
                 Math.floor(
                     (
-                        difference /
-                        1000
-                    ) % 60
+                        difference %
+                        (
+                            1000 *
+                            60
+                        )
+                    ) /
+                    1000
                 );
 
 
             document.getElementById(
                 "days"
             ).innerText =
-                String(days).padStart(
-                    2,
-                    "0"
-                );
+                String(days)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "hours"
             ).innerText =
-                String(hours).padStart(
-                    2,
-                    "0"
-                );
+                String(hours)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "minutes"
             ).innerText =
-                String(minutes).padStart(
-                    2,
-                    "0"
-                );
+                String(minutes)
+                    .padStart(2, "0");
 
 
             document.getElementById(
                 "seconds"
             ).innerText =
-                String(seconds).padStart(
-                    2,
-                    "0"
-                );
+                String(seconds)
+                    .padStart(2, "0");
 
         }
 
