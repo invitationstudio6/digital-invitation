@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Luna | Invitation Generator</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Georgia, serif;
+
+            background: #faf7f2;
+
+            color: #403a35;
+
+            padding: 30px 15px;
+
+        }
+
+
+        .container {
+
+            max-width: 800px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.07);
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            font-size: 36px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .intro {
+
+            text-align: center;
+
+            color: #806f61;
+
+            line-height: 1.6;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .section {
+
+            border-top: 1px solid #eee5dc;
+
+            padding-top: 25px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .section h2 {
+
+            font-size: 20px;
+
+            font-weight: normal;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #d8cec3;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+        }
+
+
+        textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+        .row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        button {
+
+            width: 100%;
+
+            padding: 16px;
+
+            margin-top: 30px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background: #806f61;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            letter-spacing: 2px;
+
+            cursor: pointer;
+
+        }
+
+
+        button:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        .result {
+
+            display: none;
+
+            margin-top: 30px;
+
+            padding: 25px;
+
+            background: #faf7f2;
+
+            border-radius: 10px;
+
+        }
+
+
+        .result h2 {
+
+            font-weight: normal;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .link-box {
+
+            width: 100%;
+
+            padding: 12px;
+
+            background: white;
+
+            border: 1px solid #d8cec3;
+
+            border-radius: 7px;
+
+            word-break: break-all;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .copy-button {
+
+            margin-top: 0;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                padding: 25px 18px;
+
+            }
+
+
+            .row {
+
+                grid-template-columns: 1fr;
+
+                gap: 0;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>
+        Luna
+    </h1>
+
+
+    <p class="intro">
+
+        Invitation Generator
+
+    </p>
+
+
+    <form id="generatorForm">
+
+
+        <!-- =========================
+             COUPLE
+        ========================= -->
+
+
+        <div class="section">
+
+            <h2>
+                Couple
+            </h2>
+
+
+            <div class="row">
+
+
+                <div>
+
+                    <label>
+                        Bride
+                    </label>
+
+                    <input
+                        type="text"
+                        id="bride"
+                        placeholder="Aysel"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Groom
+                    </label>
+
+                    <input
+                        type="text"
+                        id="groom"
+                        placeholder="Murad"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             DATE
+        ========================= -->
+
+
+        <div class="section">
+
+            <h2>
+                Wedding Details
+            </h2>
+
+
+            <div class="row">
+
+
+                <div>
+
+                    <label>
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="time"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <label>
+                Location
+            </label>
+
+            <input
+                type="text"
+                id="location"
+                placeholder="Baku, Azerbaijan"
+                required
+            >
+
+
+            <label>
+                Venue
+            </label>
+
+            <input
+                type="text"
+                id="venue"
+                placeholder="Example Wedding Hall"
+                required
+            >
+
+
+            <label>
+                Google Maps Link
+            </label>
+
+            <input
+                type="url"
+                id="map"
+                placeholder="https://maps.google.com/..."
+            >
+
+        </div>
+
+
+        <!-- =========================
+             STORY
+        ========================= -->
+
+
+        <div class="section">
+
+            <h2>
+                Our Story
+            </h2>
+
+
+            <textarea
+                id="story"
+                placeholder="Write the couple's story..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =========================
+             PHOTOS
+        ========================= -->
+
+
+        <div class="section">
+
+            <h2>
+                Gallery
+            </h2>
+
+
+            <label>
+                Photo 1 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo1"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Photo 2 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo2"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Photo 3 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo3"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Photo 4 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo4"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Photo 5 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo5"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Photo 6 URL
+            </label>
+
+            <input
+                type="url"
+                id="photo6"
+                placeholder="https://..."
+            >
+
+        </div>
+
+
+        <button type="submit">
+
+            CREATE INVITATION LINK
+
+        </button>
+
+
+    </form>
+
+
+    <!-- =========================
+         RESULT
+    ========================= -->
+
+
+    <div
+        class="result"
+        id="result"
+    >
+
+        <h2>
+            Invitation Created 🤍
+        </h2>
+
+
+        <p>
+            Your invitation link:
+        </p>
+
+
+        <div
+            class="link-box"
+            id="invitationLink"
+        ></div>
+
+
+        <button
+            class="copy-button"
+            id="copyButton"
+            type="button"
+        >
+
+            COPY LINK
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    const form =
+        document.getElementById(
+            "generatorForm"
+        );
+
+
+    form.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const bride =
+                document.getElementById(
+                    "bride"
+                ).value.trim();
+
+
+            const groom =
+                document.getElementById(
+                    "groom"
+                ).value.trim();
+
+
+            const date =
+                document.getElementById(
+                    "date"
+                ).value;
+
+
+            const time =
+                document.getElementById(
+                    "time"
+                ).value;
+
+
+            const location =
+                document.getElementById(
+                    "location"
+                ).value.trim();
+
+
+            const venue =
+                document.getElementById(
+                    "venue"
+                ).value.trim();
+
+
+            const map =
+                document.getElementById(
+                    "map"
+                ).value.trim();
+
+
+            const story =
+                document.getElementById(
+                    "story"
+                ).value.trim();
+
+
+            const images = [
+
+                document.getElementById(
+                    "photo1"
+                ).value.trim(),
+
+                document.getElementById(
+                    "photo2"
+                ).value.trim(),
+
+                document.getElementById(
+                    "photo3"
+                ).value.trim(),
+
+                document.getElementById(
+                    "photo4"
+                ).value.trim(),
+
+                document.getElementById(
+                    "photo5"
+                ).value.trim(),
+
+                document.getElementById(
+                    "photo6"
+                ).value.trim()
+
+            ].filter(
+                function(image) {
+                    return image !== "";
+                }
+            );
+
+
+            const id =
+                bride
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                +
+                "-"
+                +
+                groom
+                    .toLowerCase()
+                    .replace(/\s+/g, "-" );
+
+
+            const params =
+                new URLSearchParams();
+
+
+            params.set(
+                "id",
+                id
+            );
+
+
+            const link =
+                window.location.origin +
+                window.location.pathname
+                    .replace(
+                        "admin.html",
+                        "index.html"
+                    )
+                +
+                "?"
+                +
+                params.toString();
+
+
+            localStorage.setItem(
+
+                "luna_" + id,
+
+                JSON.stringify({
+
+                    bride: bride,
+
+                    groom: groom,
+
+                    date: date,
+
+                    time: time,
+
+                    location: location,
+
+                    venue: venue,
+
+                    map: map,
+
+                    story: story,
+
+                    images: images
+
+                })
+
+            );
+
+
+            document.getElementById(
+                "invitationLink"
+            ).textContent =
+                link;
+
+
+            document.getElementById(
+                "result"
+            ).style.display =
+                "block";
+
+
+        }
+    );
+
+
+    document.getElementById(
+        "copyButton"
+    ).addEventListener(
+        "click",
+        async function() {
+
+            const link =
+                document.getElementById(
+                    "invitationLink"
+                ).textContent;
+
+
+            await navigator.clipboard.writeText(
+                link
+            );
+
+
+            this.textContent =
+                "COPIED ✓";
+
+
+            setTimeout(
+                () => {
+
+                    this.textContent =
+                        "COPY LINK";
+
+                },
+                2000
+            );
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
