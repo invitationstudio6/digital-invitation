@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="az">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -15,9 +13,21 @@
 
 <style>
 
-/* =====================================================
-   RESET
-===================================================== */
+/* =========================================================
+   LUNA DESIGN SYSTEM
+========================================================= */
+
+:root{
+    --ink:#342724;
+    --soft-ink:#75625b;
+    --cream:#f5eee8;
+    --paper:#fffaf5;
+    --rose:#b58376;
+    --rose-light:#dfc3b9;
+    --gold:#b3956b;
+    --brown:#2b1e1b;
+    --dark:#181211;
+}
 
 *{
     margin:0;
@@ -30,15 +40,15 @@ html{
 }
 
 body{
-    background:#eee6df;
-    color:#3c2d29;
+    color:var(--ink);
     font-family:"DM Sans",sans-serif;
     overflow-x:hidden;
+    background:#f3ebe4;
 }
 
 a{
-    color:inherit;
     text-decoration:none;
+    color:inherit;
 }
 
 button{
@@ -46,1229 +56,1335 @@ button{
 }
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+/* =========================================================
+   GLOBAL GRAIN
+========================================================= */
 
-:root{
-
-    --cream:#eee6df;
-    --paper:#faf6f1;
-    --white:#fffdf9;
-
-    --brown:#3c2d29;
-    --brown-light:#6e5a53;
-
-    --gold:#a98a63;
-    --rose:#a9796c;
-
-    --dark:#211816;
-
-}
-
-
-/* =====================================================
-   GRAIN
-===================================================== */
-
-body::before{
-
+body::after{
     content:"";
-
     position:fixed;
-
     inset:0;
-
-    pointer-events:none;
-
     z-index:9999;
-
-    opacity:.12;
-
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
-
     pointer-events:none;
+    opacity:.045;
+
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
 
-/* =====================================================
+/* =========================================================
    NAVIGATION
-===================================================== */
+========================================================= */
 
 .nav{
-
     position:fixed;
-
     top:0;
     left:0;
-
     width:100%;
-
-    height:84px;
+    height:82px;
 
     padding:0 5%;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     z-index:1000;
 
-    background:rgba(238,230,223,.78);
+    background:rgba(248,241,235,.68);
+    backdrop-filter:blur(24px);
 
-    backdrop-filter:blur(20px);
-
-    border-bottom:1px solid rgba(60,45,41,.08);
-
+    border-bottom:1px solid rgba(55,39,34,.08);
 }
 
 .logo{
-
     font-family:"Italiana",serif;
-
-    font-size:38px;
-
+    font-size:39px;
     letter-spacing:2px;
-
 }
 
 .nav-links{
-
     display:flex;
-
-    align-items:center;
-
-    gap:38px;
-
+    gap:42px;
 }
 
 .nav-links a{
-
     font-size:9px;
-
     letter-spacing:2.5px;
-
     text-transform:uppercase;
-
-    color:var(--brown);
-
     position:relative;
-
 }
 
 .nav-links a::after{
-
     content:"";
-
     position:absolute;
-
-    bottom:-7px;
-
     left:0;
-
+    bottom:-8px;
     width:0;
-
     height:1px;
-
     background:var(--gold);
-
-    transition:.3s;
-
+    transition:.4s;
 }
 
 .nav-links a:hover::after{
-
     width:100%;
-
 }
 
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
 .language-wrapper{
-
     position:relative;
-
 }
 
 .language-button{
+    border:1px solid rgba(55,39,34,.18);
+    background:rgba(255,255,255,.3);
 
-    border:1px solid rgba(60,45,41,.25);
-
-    background:transparent;
-
+    padding:10px 16px;
     border-radius:50px;
 
-    min-width:65px;
-
-    padding:9px 14px;
-
-    cursor:pointer;
-
     font-size:9px;
-
     letter-spacing:2px;
 
-    color:var(--brown);
-
+    cursor:pointer;
+    color:var(--ink);
 }
 
 .language-menu{
-
     position:absolute;
-
-    top:44px;
-
     right:0;
+    top:47px;
 
-    width:145px;
+    width:160px;
 
-    background:#faf6f1;
+    padding:8px;
 
-    border:1px solid rgba(60,45,41,.12);
+    background:#fffaf5;
 
-    box-shadow:0 20px 60px rgba(40,25,20,.14);
+    border:1px solid rgba(55,39,34,.08);
 
-    padding:7px;
+    box-shadow:0 25px 70px rgba(50,30,25,.18);
 
     opacity:0;
-
     visibility:hidden;
-
-    transform:translateY(-7px);
+    transform:translateY(-8px);
 
     transition:.3s;
-
 }
 
 .language-wrapper:hover .language-menu{
-
     opacity:1;
-
     visibility:visible;
-
     transform:translateY(0);
-
 }
 
 .language-menu button{
-
+    display:block;
     width:100%;
 
+    padding:13px;
+
     border:0;
-
     background:transparent;
-
-    padding:12px;
 
     text-align:left;
 
-    cursor:pointer;
-
-    color:var(--brown);
-
     font-size:10px;
 
+    color:var(--ink);
+
+    cursor:pointer;
 }
 
 .language-menu button:hover{
-
-    background:#eee2da;
-
+    background:#f0e4dc;
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
-
     min-height:100vh;
 
     padding:150px 7% 90px;
 
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
     align-items:center;
 
-    gap:50px;
-
     position:relative;
-
     overflow:hidden;
-
-}
-
-
-/* decorative circles */
-
-.hero::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:650px;
-
-    height:650px;
-
-    border-radius:50%;
 
     background:
 
         radial-gradient(
+            ellipse at 75% 18%,
+            rgba(220,190,177,.72) 0%,
+            rgba(220,190,177,.28) 22%,
+            transparent 48%
+        ),
+
+        radial-gradient(
+            ellipse at 12% 78%,
+            rgba(193,161,137,.30),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at 45% 50%,
+            rgba(255,255,255,.82),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            120deg,
+            #eee2da,
+            #f9f4ef 45%,
+            #e8d7ce
+        );
+}
+
+
+/* HUGE ABSTRACT SILK AREA */
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    width:800px;
+    height:800px;
+
+    right:-300px;
+    top:-280px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
             circle,
-            rgba(183,145,129,.25),
-            transparent 67%
+            rgba(255,255,255,.78),
+            rgba(255,255,255,.12) 48%,
+            transparent 70%
         );
 
-    top:-230px;
+    filter:blur(2px);
 
-    right:-200px;
-
+    animation:heroLight 9s ease-in-out infinite alternate;
 }
 
 .hero::after{
-
     content:"";
 
     position:absolute;
 
     width:500px;
-
     height:500px;
+
+    left:-240px;
+    bottom:-250px;
 
     border-radius:50%;
 
-    border:1px solid rgba(169,138,99,.18);
+    background:
+        radial-gradient(
+            circle,
+            rgba(183,139,124,.32),
+            transparent 67%
+        );
 
-    bottom:-300px;
+    filter:blur(12px);
 
-    left:-200px;
+    animation:floatGlow 10s ease-in-out infinite alternate;
+}
 
+@keyframes heroLight{
+    from{
+        transform:scale(.92) translate(0,0);
+        opacity:.7;
+    }
+    to{
+        transform:scale(1.08) translate(-40px,35px);
+        opacity:1;
+    }
+}
+
+@keyframes floatGlow{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(60px,-40px);
+    }
 }
 
 
-/* =====================================================
-   HERO TEXT
-===================================================== */
+/* =========================================================
+   HERO CONTENT
+========================================================= */
 
 .hero-content{
-
     position:relative;
-
-    z-index:2;
-
-    max-width:620px;
-
+    z-index:5;
 }
 
 .eyebrow{
-
     display:flex;
-
     align-items:center;
-
     gap:14px;
 
-    font-size:8px;
-
-    letter-spacing:5px;
-
-    text-transform:uppercase;
+    margin-bottom:30px;
 
     color:var(--gold);
 
-    margin-bottom:28px;
-
+    font-size:8px;
+    letter-spacing:5px;
+    text-transform:uppercase;
 }
 
 .eyebrow::before{
-
     content:"";
-
-    width:38px;
-
+    width:42px;
     height:1px;
-
     background:var(--gold);
-
 }
 
 .hero h1{
-
     font-family:"Cormorant Garamond",serif;
 
     font-size:clamp(75px,9vw,135px);
 
+    font-weight:400;
     line-height:.72;
 
-    font-weight:400;
-
-    letter-spacing:-4px;
-
+    letter-spacing:-5px;
 }
 
 .hero h1 span{
-
     display:block;
+}
 
+.hero h1 span:last-child{
     margin-left:65px;
+    margin-top:18px;
 
-    margin-top:17px;
+    color:var(--rose);
 
     font-style:italic;
-
-    color:#9c7167;
-
 }
 
 .hero-description{
+    max-width:510px;
 
     margin-top:45px;
 
-    max-width:500px;
-
-    color:var(--brown-light);
+    color:var(--soft-ink);
 
     font-size:12px;
-
     line-height:2;
-
 }
 
 .hero-buttons{
-
-    margin-top:32px;
-
     display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
+    gap:13px;
     flex-wrap:wrap;
 
+    margin-top:32px;
 }
 
 .btn{
-
     display:inline-flex;
-
     align-items:center;
-
     justify-content:center;
 
-    padding:15px 27px;
+    padding:15px 28px;
 
     border-radius:50px;
 
     font-size:8px;
-
     letter-spacing:2px;
-
     text-transform:uppercase;
 
     transition:.4s;
-
 }
 
 .btn-dark{
-
-    background:var(--brown);
-
-    color:#fff;
-
+    background:var(--ink);
+    color:white;
 }
 
 .btn-outline{
-
-    border:1px solid rgba(60,45,41,.25);
-
+    border:1px solid rgba(55,39,34,.22);
+    background:rgba(255,255,255,.22);
 }
 
 .btn:hover{
-
     transform:translateY(-4px);
-
-    box-shadow:0 18px 40px rgba(60,45,41,.14);
-
+    box-shadow:0 20px 40px rgba(50,30,25,.15);
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO INVITATION
-===================================================== */
+========================================================= */
 
 .hero-stage{
-
     height:650px;
 
     position:relative;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
-    z-index:2;
-
+    z-index:5;
 }
 
-
-/* shadow */
-
 .stage-shadow{
-
     position:absolute;
 
-    width:390px;
+    width:430px;
+    height:70px;
 
-    height:80px;
-
-    background:rgba(60,40,35,.20);
-
-    filter:blur(35px);
-
-    bottom:65px;
+    bottom:55px;
 
     border-radius:50%;
 
+    background:rgba(45,28,23,.22);
+
+    filter:blur(32px);
 }
 
 
-/* envelope */
+/* floating decorative circles */
 
-.envelope{
-
-    position:absolute;
-
-    width:420px;
-
-    height:285px;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #d4b1a5,
-            #a9786c
-        );
-
-    bottom:115px;
-
-    left:50%;
-
-    transform:translateX(-50%) rotate(-7deg);
-
-    box-shadow:
-
-        0 40px 70px rgba(50,30,25,.25);
-
-    border-radius:3px;
-
-    transition:.7s;
-
-}
-
-.hero-stage:hover .envelope{
-
-    transform:
-
-        translateX(-50%)
-        rotate(-2deg)
-        translateY(15px);
-
-}
-
-
-/* envelope flap */
-
-.envelope::before{
-
+.hero-stage::before{
     content:"";
 
     position:absolute;
 
+    width:360px;
+    height:360px;
+
+    border:1px solid rgba(174,144,105,.28);
+
+    border-radius:50%;
+
+    transform:rotate(18deg);
+
+    animation:spinSlow 20s linear infinite;
+}
+
+.hero-stage::after{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border:1px solid rgba(174,144,105,.12);
+
+    border-radius:50%;
+
+    transform:rotate(-25deg);
+}
+
+@keyframes spinSlow{
+    to{
+        transform:rotate(378deg);
+    }
+}
+
+
+/* =========================================================
+   ENVELOPE
+========================================================= */
+
+.envelope{
+    position:absolute;
+
+    width:430px;
+    height:285px;
+
+    left:50%;
+    bottom:115px;
+
+    transform:translateX(-50%) rotate(-7deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #d9b8ac,
+            #a9786c
+        );
+
+    border-radius:4px;
+
+    box-shadow:
+        0 45px 90px rgba(45,28,23,.28);
+
+    transition:.8s;
+}
+
+.envelope::before{
+    content:"";
+
+    position:absolute;
     inset:0;
 
     clip-path:polygon(
         0 0,
         100% 0,
-        50% 57%
+        50% 58%
     );
 
     background:
-
         linear-gradient(
             145deg,
-            #ecd5cc,
-            #c4978b
+            #f0dcd4,
+            #c29488
         );
-
 }
 
-
-/* invitation */
-
-.invitation{
-
-    position:absolute;
-
-    width:285px;
-
-    height:430px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #fffdf9,
-            #f4ece5
-        );
-
-    z-index:10;
-
-    transform:
-
-        rotate(7deg)
-        translate(45px,-55px);
-
-    padding:45px 25px;
-
-    text-align:center;
-
-    box-shadow:
-
-        0 35px 75px rgba(45,28,24,.22);
-
-    transition:.8s;
-
-}
-
-.hero-stage:hover .invitation{
-
-    transform:
-
-        rotate(2deg)
-        translate(55px,-85px);
-
-}
-
-.invitation::before{
-
+.envelope::after{
     content:"";
 
     position:absolute;
 
-    inset:12px;
+    width:75px;
+    height:75px;
 
-    border:1px solid rgba(169,138,99,.6);
+    left:50%;
+    top:50%;
 
+    transform:translate(-50%,-50%) rotate(45deg);
+
+    background:#b18478;
+
+    box-shadow:0 4px 10px rgba(40,20,15,.12);
 }
 
-.invitation-small{
+.hero-stage:hover .envelope{
+    transform:
+        translateX(-50%)
+        rotate(-2deg)
+        translateY(14px);
+}
 
-    font-size:7px;
 
-    letter-spacing:4px;
+/* =========================================================
+   INVITATION CARD
+========================================================= */
+
+.invitation{
+    position:absolute;
+
+    width:285px;
+    height:430px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #fff,
+            transparent 50%
+        ),
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #f1e5dc
+        );
+
+    transform:
+        rotate(7deg)
+        translate(45px,-55px);
+
+    padding:47px 25px;
+
+    text-align:center;
+
+    box-shadow:
+        0 45px 90px rgba(45,28,23,.27);
+
+    z-index:10;
+
+    transition:.8s;
+}
+
+.invitation::before{
+    content:"";
+
+    position:absolute;
+
+    inset:13px;
+
+    border:1px solid rgba(169,138,99,.62);
+}
+
+.invitation::after{
+    content:"✦";
+
+    position:absolute;
+
+    top:20px;
+    left:50%;
+
+    transform:translateX(-50%);
 
     color:var(--gold);
 
-    margin-bottom:34px;
+    font-size:11px;
+}
 
+.hero-stage:hover .invitation{
+    transform:
+        rotate(2deg)
+        translate(58px,-88px);
+}
+
+.invitation-small{
+    font-size:7px;
+    letter-spacing:4px;
+    color:var(--gold);
+
+    margin-bottom:34px;
 }
 
 .invitation-names{
-
     font-family:"Cormorant Garamond",serif;
-
-    font-size:53px;
-
+    font-size:54px;
     line-height:.7;
-
 }
 
 .invitation-and{
-
     font-family:"Italiana",serif;
-
-    font-size:27px;
-
-    margin:18px 0;
+    font-size:28px;
 
     color:var(--rose);
 
+    margin:21px 0;
 }
 
 .invitation-date{
-
-    margin-top:38px;
+    margin-top:40px;
 
     font-size:7px;
-
     letter-spacing:3px;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    ORNAMENTS
-===================================================== */
+========================================================= */
 
 .ornament{
-
     position:absolute;
 
     font-family:"Cormorant Garamond",serif;
 
     font-style:italic;
 
-    color:#96746b;
+    color:#95766d;
 
     font-size:17px;
 
-    animation:float 5s ease-in-out infinite;
-
+    animation:ornamentFloat 6s ease-in-out infinite;
 }
 
 .ornament.one{
-
     top:85px;
-
     right:4%;
-
 }
 
 .ornament.two{
-
     bottom:80px;
+    left:2%;
 
-    left:4%;
-
-    animation-delay:1.7s;
-
+    animation-delay:2s;
 }
 
-@keyframes float{
-
+@keyframes ornamentFloat{
     0%,100%{
         transform:translateY(0) rotate(-4deg);
     }
-
     50%{
-        transform:translateY(-14px) rotate(2deg);
+        transform:translateY(-15px) rotate(2deg);
     }
-
 }
 
 
-/* =====================================================
+/* =========================================================
    INTRO
-===================================================== */
+========================================================= */
 
 .intro{
+    position:relative;
+    overflow:hidden;
 
-    padding:150px 8%;
-
-    background:#f8f1eb;
+    padding:165px 8%;
 
     text-align:center;
 
+    background:
+
+        radial-gradient(
+            circle at 12% 20%,
+            rgba(213,181,166,.27),
+            transparent 23%
+        ),
+
+        radial-gradient(
+            circle at 88% 80%,
+            rgba(192,158,125,.18),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.95),
+            transparent 55%
+        ),
+
+        #f5eee8;
+}
+
+.intro::before{
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    right:-180px;
+    top:-190px;
+
+    border:1px solid rgba(174,144,105,.18);
+
+    border-radius:50%;
+}
+
+.intro::after{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    left:-160px;
+    bottom:-170px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(210,170,155,.22),
+            transparent 68%
+        );
 }
 
 .small-label{
-
     font-size:8px;
-
     letter-spacing:5px;
-
     text-transform:uppercase;
-
     color:var(--gold);
-
 }
 
 .intro h2{
-
     max-width:900px;
 
-    margin:25px auto;
+    margin:30px auto;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:72px;
+
+    line-height:.88;
+
+    font-weight:400;
+}
+
+.intro p{
+    max-width:610px;
+
+    margin:auto;
+
+    color:var(--soft-ink);
+
+    font-size:12px;
+    line-height:2;
+}
+
+
+/* =========================================================
+   COLLECTIONS
+========================================================= */
+
+.collections{
+    position:relative;
+    overflow:hidden;
+
+    padding:140px 6%;
+
+    background:
+
+        radial-gradient(
+            ellipse at 5% 10%,
+            rgba(207,169,154,.48),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            ellipse at 95% 25%,
+            rgba(183,153,111,.27),
+            transparent 23%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(255,255,255,.75),
+            transparent 38%
+        ),
+
+        #e9ddd5;
+}
+
+.collections::before{
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    left:35%;
+    top:25%;
+
+    border-radius:50%;
+
+    border:1px solid rgba(174,144,105,.15);
+
+    transform:rotate(30deg);
+}
+
+.section-header{
+    display:flex;
+
+    align-items:end;
+    justify-content:space-between;
+
+    margin-bottom:55px;
+
+    position:relative;
+    z-index:2;
+}
+
+.section-title{
+    margin-top:15px;
 
     font-family:"Cormorant Garamond",serif;
 
     font-size:70px;
 
-    line-height:.9;
-
-    font-weight:400;
-
-}
-
-.intro p{
-
-    max-width:590px;
-
-    margin:auto;
-
-    color:var(--brown-light);
-
-    font-size:12px;
-
-    line-height:2;
-
-}
-
-
-/* =====================================================
-   COLLECTIONS
-===================================================== */
-
-.collections{
-
-    padding:130px 6%;
-
-}
-
-.section-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:end;
-
-    margin-bottom:50px;
-
-}
-
-.section-title{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:68px;
-
     line-height:.8;
 
     font-weight:400;
-
-    margin-top:14px;
-
 }
 
 .section-link{
-
     font-size:8px;
-
     letter-spacing:2px;
-
     text-transform:uppercase;
 
     border-bottom:1px solid var(--gold);
 
-    padding-bottom:6px;
-
+    padding-bottom:7px;
 }
 
 
-/* collection grid */
+/* =========================================================
+   COLLECTION CARDS
+========================================================= */
 
 .collection-grid{
+    position:relative;
+    z-index:3;
 
     display:grid;
 
     grid-template-columns:
-        1.25fr
-        1fr
-        1fr;
+        1.25fr 1fr 1fr;
 
     grid-template-rows:
-        290px
-        290px;
+        300px 300px;
 
-    gap:17px;
-
+    gap:18px;
 }
 
 .collection-card{
-
     position:relative;
 
     overflow:hidden;
 
     display:flex;
-
     align-items:end;
 
-    padding:30px;
+    padding:32px;
 
     color:white;
 
     background-position:center;
-
     background-size:cover;
 
     transition:.6s;
-
 }
 
-.collection-card::after{
+.collection-card::before{
+    content:"";
 
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 25%,
+            rgba(20,12,10,.75)
+        );
+}
+
+.collection-card:hover{
+    transform:translateY(-8px) scale(1.01);
+
+    box-shadow:
+        0 35px 75px rgba(50,30,25,.22);
+}
+
+.collection-card:first-child{
+    grid-row:span 2;
+
+    background-image:url(
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
+    );
+}
+
+.collection-card:nth-child(2){
+    background-image:url(
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=90"
+    );
+}
+
+.collection-card:nth-child(3){
+    background-image:url(
+        "https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1000&q=90"
+    );
+}
+
+.collection-card:nth-child(4){
+    background-image:url(
+        "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=90"
+    );
+}
+
+.collection-content{
+    position:relative;
+    z-index:3;
+}
+
+.collection-number{
+    font-size:7px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    opacity:.7;
+}
+
+.collection-name{
+    font-family:"Cormorant Garamond",serif;
+    font-size:44px;
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   PACKAGES
+========================================================= */
+
+.packages{
+    position:relative;
+    overflow:hidden;
+
+    padding:140px 6%;
+
+    background:
+
+        radial-gradient(
+            ellipse at 10% 15%,
+            rgba(255,255,255,.8),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 15%,
+            rgba(209,177,157,.38),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(184,148,124,.20),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #eee2da,
+            #f8f0ea
+        );
+}
+
+.packages::before{
     content:"";
 
     position:absolute;
 
-    inset:0;
+    width:800px;
+    height:300px;
+
+    left:20%;
+    top:35%;
+
+    border-radius:50%;
 
     background:
-
-        linear-gradient(
-            transparent 25%,
-            rgba(25,17,15,.7)
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.55),
+            transparent 68%
         );
 
-}
-
-.collection-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:0 30px 60px rgba(50,30,25,.18);
-
-}
-
-.collection-card:first-child{
-
-    grid-row:span 2;
-
-    background-image:
-
-        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90");
-
-}
-
-.collection-card:nth-child(2){
-
-    background-image:
-
-        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=90");
-
-}
-
-.collection-card:nth-child(3){
-
-    background-image:
-
-        url("https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1000&q=90");
-
-}
-
-.collection-card:nth-child(4){
-
-    background-image:
-
-        url("https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=90");
-
-}
-
-.collection-content{
-
-    position:relative;
-
-    z-index:2;
-
-}
-
-.collection-number{
-
-    font-size:7px;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-
-    opacity:.7;
-
-}
-
-.collection-name{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:42px;
-
-    margin-top:5px;
-
-}
-
-
-/* =====================================================
-   PACKAGES
-===================================================== */
-
-.packages{
-
-    padding:130px 6%;
-
-    background:#e4d8d0;
-
+    filter:blur(18px);
 }
 
 .package-grid{
+    position:relative;
+    z-index:2;
 
     display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
     gap:18px;
-
 }
 
 .package{
-
-    min-height:550px;
+    min-height:560px;
 
     padding:38px;
 
     display:flex;
-
     flex-direction:column;
-
     justify-content:space-between;
 
     position:relative;
-
     overflow:hidden;
 
-    background:#f9f3ed;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.85),
+            rgba(246,235,226,.82)
+        );
 
-    border:1px solid rgba(60,45,41,.09);
+    border:1px solid rgba(55,39,34,.08);
+
+    box-shadow:
+        0 20px 60px rgba(50,30,25,.06);
 
     transition:.5s;
+}
 
+.package::before{
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    right:-100px;
+    top:-100px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(197,160,143,.25),
+            transparent 68%
+        );
 }
 
 .package:hover{
-
     transform:translateY(-10px);
 
-    box-shadow:0 35px 70px rgba(50,30,25,.16);
-
+    box-shadow:
+        0 40px 80px rgba(50,30,25,.17);
 }
 
 .package:nth-child(2){
+    color:#3a2925;
 
     background:
 
+        radial-gradient(
+            circle at 90% 5%,
+            rgba(255,255,255,.4),
+            transparent 25%
+        ),
+
         linear-gradient(
             145deg,
-            #d8bdb4,
-            #b98e83
+            #d8bdb3,
+            #b88d82
         );
-
 }
 
 .package:nth-child(3){
+    color:white;
 
     background:
 
+        radial-gradient(
+            circle at 80% 5%,
+            rgba(181,145,126,.32),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(120,84,70,.25),
+            transparent 25%
+        ),
+
         linear-gradient(
-            145deg,
-            #241a18,
-            #4a332d
+            135deg,
+            #211715,
+            #49332d
         );
-
-    color:#fff;
-
 }
 
 .package-top{
+    position:relative;
+    z-index:2;
 
     display:flex;
-
     justify-content:space-between;
 
     font-size:8px;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
-
 }
 
 .package h3{
+    position:relative;
+    z-index:2;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:68px;
+    font-size:70px;
 
     font-weight:400;
 
     margin-top:55px;
-
 }
 
 .package p{
+    position:relative;
+    z-index:2;
 
     max-width:320px;
 
-    margin-top:8px;
+    margin-top:10px;
 
     font-size:11px;
-
     line-height:1.9;
 
-    opacity:.7;
-
+    opacity:.72;
 }
 
 .package-list{
+    position:relative;
+    z-index:2;
 
     list-style:none;
 
     margin-top:30px;
-
 }
 
 .package-list li{
-
     font-size:9px;
 
-    padding:10px 0;
+    padding:11px 0;
 
-    border-bottom:1px solid rgba(60,45,41,.1);
-
+    border-bottom:1px solid rgba(55,39,34,.11);
 }
 
 .package:nth-child(3) .package-list li{
-
     border-color:rgba(255,255,255,.13);
-
 }
 
 .package-button{
+    position:relative;
+    z-index:2;
 
     display:flex;
-
-    align-items:center;
-
     justify-content:space-between;
 
     padding-top:25px;
 
-    border-top:1px solid rgba(60,45,41,.12);
+    border-top:1px solid rgba(55,39,34,.12);
 
     font-size:8px;
-
     letter-spacing:2px;
-
     text-transform:uppercase;
-
 }
 
 .package:nth-child(3) .package-button{
-
-    border-color:rgba(255,255,255,.14);
-
+    border-color:rgba(255,255,255,.15);
 }
 
 
-/* =====================================================
-   HOW IT WORKS
-===================================================== */
+/* =========================================================
+   PROCESS
+========================================================= */
 
 .process{
+    position:relative;
+    overflow:hidden;
 
-    padding:130px 6%;
-
-    background:#2b201d;
+    padding:145px 6%;
 
     color:white;
 
+    background:
+
+        radial-gradient(
+            ellipse at 85% 5%,
+            rgba(163,124,109,.35),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            ellipse at 15% 95%,
+            rgba(106,74,62,.40),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(79,54,46,.35),
+            transparent 50%
+        ),
+
+        #1b1311;
+}
+
+.process::before{
+    content:"";
+
+    position:absolute;
+
+    width:700px;
+    height:700px;
+
+    right:-400px;
+    top:-300px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(211,176,149,.16);
+}
+
+.process::after{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    left:-300px;
+    bottom:-280px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(211,176,149,.11);
 }
 
 .process .small-label{
-
-    color:#c5a18f;
-
+    color:#c6a28e;
 }
 
 .process .section-title{
-
     color:white;
-
 }
 
 .steps{
+    position:relative;
+    z-index:2;
 
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
 
     gap:30px;
 
-    margin-top:60px;
-
+    margin-top:65px;
 }
 
 .step{
-
-    border-top:1px solid rgba(255,255,255,.18);
+    border-top:1px solid rgba(255,255,255,.17);
 
     padding-top:25px;
-
 }
 
 .step-number{
-
     font-family:"Cormorant Garamond",serif;
 
-    font-size:30px;
+    font-size:33px;
 
-    color:#c3a18f;
-
+    color:#c5a18e;
 }
 
 .step h3{
-
     font-family:"Cormorant Garamond",serif;
 
-    font-size:30px;
+    font-size:31px;
 
     font-weight:400;
 
     margin:25px 0 12px;
-
 }
 
 .step p{
-
     font-size:10px;
 
     line-height:1.9;
 
     opacity:.62;
-
 }
 
 
-/* =====================================================
-   FINAL CTA
-===================================================== */
+/* =========================================================
+   CTA
+========================================================= */
 
 .cta{
+    position:relative;
+    overflow:hidden;
 
-    padding:160px 6%;
+    padding:180px 6%;
 
     text-align:center;
 
@@ -1276,99 +1392,150 @@ body::before{
 
         radial-gradient(
             circle at center,
-            rgba(191,151,135,.25),
-            transparent 60%
-        );
+            rgba(255,255,255,.96),
+            transparent 36%
+        ),
 
+        radial-gradient(
+            ellipse at 10% 80%,
+            rgba(207,166,151,.35),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 20%,
+            rgba(188,155,122,.26),
+            transparent 25%
+        ),
+
+        #eee3db;
+}
+
+.cta::before{
+    content:"";
+
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    border:1px solid rgba(174,144,105,.16);
 }
 
 .cta h2{
+    position:relative;
+    z-index:2;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:90px;
+    font-size:95px;
 
     font-weight:400;
 
     line-height:.8;
 
-    margin:25px 0 35px;
-
+    margin:28px 0 40px;
 }
 
 .cta p{
+    position:relative;
+    z-index:2;
 
-    max-width:500px;
+    max-width:520px;
 
     margin:auto;
 
+    color:var(--soft-ink);
+
     font-size:12px;
-
     line-height:2;
+}
 
-    color:var(--brown-light);
-
+.cta .btn{
+    position:relative;
+    z-index:2;
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 .footer{
+    position:relative;
+    overflow:hidden;
 
-    background:#1d1513;
+    background:
+        radial-gradient(
+            ellipse at 85% 10%,
+            rgba(130,91,76,.25),
+            transparent 30%
+        ),
+        #191210;
 
     color:#d8c5bd;
 
-    padding:80px 6% 30px;
+    padding:90px 6% 30px;
+}
 
+.footer::before{
+    content:"L";
+
+    position:absolute;
+
+    right:-30px;
+    bottom:-170px;
+
+    font-family:"Italiana",serif;
+
+    font-size:500px;
+
+    color:rgba(255,255,255,.025);
 }
 
 .footer-main{
+    position:relative;
+    z-index:2;
 
     display:flex;
 
     justify-content:space-between;
 
     padding-bottom:60px;
-
 }
 
 .footer-logo{
-
     font-family:"Italiana",serif;
 
-    font-size:72px;
+    font-size:75px;
 
     color:white;
-
 }
 
 .footer-columns{
-
     display:flex;
 
-    gap:70px;
-
+    gap:80px;
 }
 
 .footer-column h4{
-
     color:#b99485;
 
     font-size:8px;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
 
     margin-bottom:20px;
-
 }
 
 .footer-column a{
-
     display:block;
 
     font-size:10px;
@@ -1377,26 +1544,32 @@ body::before{
 
     opacity:.65;
 
+    transition:.3s;
+}
+
+.footer-column a:hover{
+    opacity:1;
+    color:white;
 }
 
 .footer-bottom{
+    position:relative;
+    z-index:2;
 
     border-top:1px solid rgba(255,255,255,.1);
 
     padding-top:25px;
 
     font-size:8px;
-
     letter-spacing:2px;
 
     opacity:.4;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media(max-width:900px){
 
@@ -1405,219 +1578,136 @@ body::before{
     }
 
     .hero{
-
         grid-template-columns:1fr;
-
         text-align:center;
-
         padding-top:140px;
-
     }
 
     .hero-content{
-
         margin:auto;
-
     }
 
     .eyebrow{
-
         justify-content:center;
-
     }
 
-    .hero h1 span{
-
+    .hero h1 span:last-child{
         margin-left:0;
-
     }
 
     .hero-description{
-
         margin-left:auto;
-
         margin-right:auto;
-
     }
 
     .hero-buttons{
-
         justify-content:center;
-
     }
 
     .hero-stage{
-
-        height:570px;
-
+        height:580px;
     }
 
     .collection-grid{
-
         grid-template-columns:1fr 1fr;
-
-        grid-template-rows:
-            260px
-            260px;
-
+        grid-template-rows:270px 270px;
     }
 
     .collection-card:first-child{
-
         grid-row:span 2;
-
     }
 
     .package-grid{
-
         grid-template-columns:1fr;
-
     }
 
     .steps{
-
         grid-template-columns:1fr 1fr;
-
     }
-
 }
+
 
 @media(max-width:600px){
 
     .nav{
-
         height:72px;
-
-        padding:0 5%;
-
     }
 
     .logo{
-
         font-size:32px;
-
     }
 
     .hero{
-
         padding-left:5%;
-
         padding-right:5%;
-
     }
 
     .hero h1{
-
         font-size:72px;
-
     }
 
     .hero-stage{
-
-        transform:scale(.78);
-
-        margin-left:-40px;
-
-        margin-right:-40px;
-
+        transform:scale(.76);
+        margin-left:-45px;
+        margin-right:-45px;
     }
 
     .intro h2{
-
-        font-size:50px;
-
+        font-size:52px;
     }
 
     .collections,
     .packages,
     .process{
-
-        padding:95px 5%;
-
+        padding:105px 5%;
     }
 
     .section-header{
-
         display:block;
-
     }
 
     .section-link{
-
         display:inline-block;
-
         margin-top:25px;
-
     }
 
     .section-title{
-
-        font-size:55px;
-
+        font-size:58px;
     }
 
     .collection-grid{
-
         grid-template-columns:1fr;
-
-        grid-template-rows:
-            repeat(4,280px);
-
+        grid-template-rows:repeat(4,280px);
     }
 
     .collection-card:first-child{
-
         grid-row:auto;
-
     }
 
     .steps{
-
         grid-template-columns:1fr;
-
     }
 
     .cta{
-
-        padding:110px 5%;
-
+        padding:130px 5%;
     }
 
     .cta h2{
-
-        font-size:62px;
-
+        font-size:66px;
     }
 
     .footer-main{
-
         display:block;
-
     }
 
     .footer-columns{
-
         margin-top:45px;
-
-        gap:35px;
-
+        gap:40px;
         flex-wrap:wrap;
-
     }
-
-}
-
-
-/* =====================================================
-   LANGUAGE VISIBILITY
-===================================================== */
-
-[data-lang]{
-    transition:opacity .15s ease;
 }
 
 </style>
-
 </head>
 
 
@@ -1625,28 +1715,27 @@ body::before{
 
 
 <!-- =====================================================
-NAVIGATION
+     NAV
 ===================================================== -->
 
 <nav class="nav">
 
 <a href="index.html" class="logo">
-    Luna
+Luna
 </a>
-
 
 <div class="nav-links">
 
 <a href="#collections" data-i18n="navCollections">
-    Kolleksiyalar
+Kolleksiyalar
 </a>
 
 <a href="#packages" data-i18n="navPackages">
-    Paketlər
+Paketlər
 </a>
 
 <a href="pricing.html" data-i18n="navPricing">
-    Qiymətlər
+Qiymətlər
 </a>
 
 </div>
@@ -1654,22 +1743,25 @@ NAVIGATION
 
 <div class="language-wrapper">
 
-<button class="language-button" id="languageButton">
-    AZ ▾
+<button
+class="language-button"
+id="languageButton"
+>
+AZ ▾
 </button>
 
 <div class="language-menu">
 
 <button onclick="changeLanguage('az')">
-    🇦🇿 Azərbaycan
+🇦🇿 Azərbaycan
 </button>
 
 <button onclick="changeLanguage('tr')">
-    🇹🇷 Türkçe
+🇹🇷 Türkçe
 </button>
 
 <button onclick="changeLanguage('en')">
-    🇬🇧 English
+🇬🇧 English
 </button>
 
 </div>
@@ -1681,7 +1773,7 @@ NAVIGATION
 
 
 <!-- =====================================================
-HERO
+     HERO
 ===================================================== -->
 
 <section class="hero">
@@ -1690,18 +1782,18 @@ HERO
 <div class="hero-content">
 
 <div class="eyebrow" data-i18n="eyebrow">
-    Digital Invitations
+Digital Invitations
 </div>
 
 
 <h1>
 
 <span data-i18n="heroLine1">
-    Your moment.
+Sizin anınız.
 </span>
 
 <span data-i18n="heroLine2">
-    Your story.
+Sizin hekayəniz.
 </span>
 
 </h1>
@@ -1711,11 +1803,9 @@ HERO
 class="hero-description"
 data-i18n="heroDescription"
 >
-    Ən xüsusi günləriniz üçün
-    adi dəvətnamələrdən daha artığı.
-    Zərif dizayn, canlı animasiyalar
-    və sizin hekayənizə uyğun
-    rəqəmsal təcrübə.
+Ən xüsusi günləriniz üçün adi dəvətnamələrdən daha artığı.
+Zərif dizayn, canlı animasiyalar və sizin hekayənizə uyğun
+rəqəmsal təcrübə.
 </p>
 
 
@@ -1726,7 +1816,7 @@ href="#packages"
 class="btn btn-dark"
 data-i18n="heroButton"
 >
-    Dəvətnamələri kəşf et
+Dəvətnamələri kəşf et
 </a>
 
 <a
@@ -1734,7 +1824,7 @@ href="#collections"
 class="btn btn-outline"
 data-i18n="collectionButton"
 >
-    Kolleksiyalara bax
+Kolleksiyalara bax
 </a>
 
 </div>
@@ -1743,52 +1833,44 @@ data-i18n="collectionButton"
 
 
 
-<!-- =====================================================
-INVITATION
-===================================================== -->
-
 <div class="hero-stage">
 
 <div class="stage-shadow"></div>
 
 <div class="ornament one">
-    made with love
+made with love
 </div>
 
 <div class="ornament two">
-    forever starts here
+forever starts here
 </div>
 
-
-<div class="envelope">
-
-</div>
+<div class="envelope"></div>
 
 
 <div class="invitation">
 
-<div class="invitation-small" data-i18n="invitationSmall">
-    THE WEDDING OF
+<div
+class="invitation-small"
+data-i18n="invitationSmall"
+>
+THE WEDDING OF
 </div>
-
 
 <div class="invitation-names">
-    Aysel
+Aysel
 </div>
-
 
 <div class="invitation-and">
-    &
+&
 </div>
-
 
 <div class="invitation-names">
-    Murad
+Murad
 </div>
 
-
 <div class="invitation-date">
-    12 · 09 · 2026
+12 · 09 · 2026
 </div>
 
 </div>
@@ -1800,7 +1882,7 @@ INVITATION
 
 
 <!-- =====================================================
-INTRO
+     INTRO
 ===================================================== -->
 
 <section class="intro">
@@ -1809,26 +1891,16 @@ INTRO
 class="small-label"
 data-i18n="introLabel"
 >
-    More than an invitation
+More than an invitation
 </div>
 
-
 <h2 data-i18n="introTitle">
-
-    An invitation should feel
-    like the beginning of
-    your story.
-
+An invitation should feel like the beginning of your story.
 </h2>
 
-
 <p data-i18n="introText">
-
-    Luna ilə dəvətnaməniz sadəcə
-    bir link deyil. Qonaqlarınızın
-    ilk andan hiss edəcəyi xüsusi
-    rəqəmsal təcrübədir.
-
+Luna ilə dəvətnaməniz sadəcə bir link deyil.
+Qonaqlarınızın ilk andan hiss edəcəyi xüsusi rəqəmsal təcrübədir.
 </p>
 
 </section>
@@ -1836,11 +1908,13 @@ data-i18n="introLabel"
 
 
 <!-- =====================================================
-COLLECTIONS
+     COLLECTIONS
 ===================================================== -->
 
-<section class="collections" id="collections">
-
+<section
+class="collections"
+id="collections"
+>
 
 <div class="section-header">
 
@@ -1850,30 +1924,27 @@ COLLECTIONS
 class="small-label"
 data-i18n="collectionLabel"
 >
-    Choose your occasion
+Tədbirinizi seçin
 </div>
-
 
 <h2
 class="section-title"
 data-i18n="collectionTitle"
 >
-    Kolleksiyalar
+Kolleksiyalar
 </h2>
 
 </div>
-
 
 <a
 href="catalog/premium.html"
 class="section-link"
 data-i18n="allDesigns"
 >
-    Bütün dizaynlar →
+Bütün dizaynlar →
 </a>
 
 </div>
-
 
 
 <div class="collection-grid">
@@ -1890,20 +1961,19 @@ class="collection-card"
 class="collection-number"
 data-i18n="weddingNumber"
 >
-    Collection 01
+Kolleksiya 01
 </div>
 
 <div
 class="collection-name"
 data-i18n="wedding"
 >
-    Wedding
+Toy
 </div>
 
 </div>
 
 </a>
-
 
 
 <a
@@ -1917,20 +1987,19 @@ class="collection-card"
 class="collection-number"
 data-i18n="engagementNumber"
 >
-    Collection 02
+Kolleksiya 02
 </div>
 
 <div
 class="collection-name"
 data-i18n="engagement"
 >
-    Engagement
+Nişan
 </div>
 
 </div>
 
 </a>
-
 
 
 <a
@@ -1944,20 +2013,19 @@ class="collection-card"
 class="collection-number"
 data-i18n="hennaNumber"
 >
-    Collection 03
+Kolleksiya 03
 </div>
 
 <div
 class="collection-name"
 data-i18n="henna"
 >
-    Henna
+Xına
 </div>
 
 </div>
 
 </a>
-
 
 
 <a
@@ -1971,20 +2039,19 @@ class="collection-card"
 class="collection-number"
 data-i18n="birthdayNumber"
 >
-    Collection 04
+Kolleksiya 04
 </div>
 
 <div
 class="collection-name"
 data-i18n="birthday"
 >
-    Birthday
+Ad günü
 </div>
 
 </div>
 
 </a>
-
 
 </div>
 
@@ -1993,11 +2060,13 @@ data-i18n="birthday"
 
 
 <!-- =====================================================
-PACKAGES
+     PACKAGES
 ===================================================== -->
 
-<section class="packages" id="packages">
-
+<section
+class="packages"
+id="packages"
+>
 
 <div class="section-header">
 
@@ -2007,36 +2076,31 @@ PACKAGES
 class="small-label"
 data-i18n="packageLabel"
 >
-    Find your experience
+Sizə uyğun təcrübəni seçin
 </div>
-
 
 <h2
 class="section-title"
 data-i18n="packageTitle"
 >
-    Paketlər
+Paketlər
 </h2>
 
 </div>
-
 
 <a
 href="pricing.html"
 class="section-link"
 data-i18n="priceLink"
 >
-    Qiymətlər →
+Qiymətlər →
 </a>
 
 </div>
 
 
-
 <div class="package-grid">
 
-
-<!-- BASIC -->
 
 <article class="package">
 
@@ -2044,47 +2108,39 @@ data-i18n="priceLink"
 
 <div class="package-top">
 
-<span>
-    Luna / 01
-</span>
+<span>Luna / 01</span>
 
 <span data-i18n="basicName">
-    Basic
+Basic
 </span>
 
 </div>
 
-
 <h3>
-    Basic
+Basic
 </h3>
 
-
 <p data-i18n="basicDescription">
-
-Sadə və elegant görünüşü
-sevənlər üçün zərif
-rəqəmsal dəvətnamələr.
-
+Sadə və elegant görünüşü sevənlər üçün
+zərif rəqəmsal dəvətnamələr.
 </p>
-
 
 <ul class="package-list">
 
 <li data-i18n="basicFeature1">
-    ✓ Premium dizayn seçimi
+✓ Premium dizayn seçimi
 </li>
 
 <li data-i18n="basicFeature2">
-    ✓ Şəxsi dəvətnamə linki
+✓ Şəxsi dəvətnamə linki
 </li>
 
 <li data-i18n="basicFeature3">
-    ✓ Məlumatların dəyişdirilməsi
+✓ Məlumatların dəyişdirilməsi
 </li>
 
 <li data-i18n="basicFeature4">
-    ✓ Mobil uyğun dizayn
+✓ Mobil uyğun dizayn
 </li>
 
 </ul>
@@ -2098,12 +2154,10 @@ class="package-button"
 >
 
 <span data-i18n="viewCatalog">
-    Kataloqa bax
+Kataloqa bax
 </span>
 
-<span>
-    →
-</span>
+<span>→</span>
 
 </a>
 
@@ -2111,59 +2165,49 @@ class="package-button"
 
 
 
-<!-- PREMIUM -->
-
 <article class="package">
 
 <div>
 
 <div class="package-top">
 
-<span>
-    Luna / 02
-</span>
+<span>Luna / 02</span>
 
 <span data-i18n="premiumName">
-    Premium
+Premium
 </span>
 
 </div>
 
-
 <h3>
-    Premium
+Premium
 </h3>
 
-
 <p data-i18n="premiumDescription">
-
-Daha interaktiv, hərəkətli
-və qonaqlarınız üçün
-xüsusi rəqəmsal təcrübə.
-
+Daha interaktiv, hərəkətli və qonaqlarınız
+üçün xüsusi rəqəmsal təcrübə.
 </p>
-
 
 <ul class="package-list">
 
 <li data-i18n="premiumFeature1">
-    ✓ Premium invitation design
+✓ Premium dizayn
 </li>
 
 <li data-i18n="premiumFeature2">
-    ✓ Opening animation
+✓ Açılış animasiyası
 </li>
 
 <li data-i18n="premiumFeature3">
-    ✓ Countdown
+✓ Countdown
 </li>
 
 <li data-i18n="premiumFeature4">
-    ✓ Photo gallery
+✓ Foto qalereya
 </li>
 
 <li data-i18n="premiumFeature5">
-    ✓ RSVP
+✓ RSVP
 </li>
 
 </ul>
@@ -2177,12 +2221,10 @@ class="package-button"
 >
 
 <span data-i18n="viewCatalog">
-    Kataloqa bax
+Kataloqa bax
 </span>
 
-<span>
-    →
-</span>
+<span>→</span>
 
 </a>
 
@@ -2190,59 +2232,49 @@ class="package-button"
 
 
 
-<!-- LUXURY -->
-
 <article class="package">
 
 <div>
 
 <div class="package-top">
 
-<span>
-    Luna / 03
-</span>
+<span>Luna / 03</span>
 
 <span data-i18n="luxuryName">
-    Luxury
+Luxury
 </span>
 
 </div>
 
-
 <h3>
-    Luxury
+Luxury
 </h3>
 
-
 <p data-i18n="luxuryDescription">
-
-Cinematic, 3D və tam
-fərdiləşdirilmiş premium
-dəvətnamə təcrübəsi.
-
+Cinematic, 3D və tam fərdiləşdirilmiş
+premium dəvətnamə təcrübəsi.
 </p>
-
 
 <ul class="package-list">
 
 <li data-i18n="luxuryFeature1">
-    ✓ Exclusive design
+✓ Eksklüziv dizayn
 </li>
 
 <li data-i18n="luxuryFeature2">
-    ✓ 3D opening
+✓ 3D açılış
 </li>
 
 <li data-i18n="luxuryFeature3">
-    ✓ Cinematic animation
+✓ Cinematic animasiya
 </li>
 
 <li data-i18n="luxuryFeature4">
-    ✓ Music
+✓ Musiqi
 </li>
 
 <li data-i18n="luxuryFeature5">
-    ✓ Gallery + RSVP + Map
+✓ Qalereya + RSVP + xəritə
 </li>
 
 </ul>
@@ -2256,17 +2288,14 @@ class="package-button"
 >
 
 <span data-i18n="viewCatalog">
-    Kataloqa bax
+Kataloqa bax
 </span>
 
-<span>
-    →
-</span>
+<span>→</span>
 
 </a>
 
 </article>
-
 
 </div>
 
@@ -2275,11 +2304,10 @@ class="package-button"
 
 
 <!-- =====================================================
-PROCESS
+     PROCESS
 ===================================================== -->
 
 <section class="process">
-
 
 <div class="section-header">
 
@@ -2289,21 +2317,19 @@ PROCESS
 class="small-label"
 data-i18n="processLabel"
 >
-    How it works
+Necə işləyir
 </div>
-
 
 <h2
 class="section-title"
 data-i18n="processTitle"
 >
-    Necə işləyir?
+Necə işləyir?
 </h2>
 
 </div>
 
 </div>
-
 
 
 <div class="steps">
@@ -2312,89 +2338,73 @@ data-i18n="processTitle"
 <div class="step">
 
 <div class="step-number">
-    01
+01
 </div>
 
 <h3 data-i18n="step1Title">
-    Paket seç
+Paket seç
 </h3>
 
 <p data-i18n="step1Text">
-
-Sizə uyğun Luna paketini
-seçərək həmin paketin
-xüsusi kataloquna keçin.
-
+Sizə uyğun Luna paketini seçərək həmin
+paketin xüsusi kataloquna keçin.
 </p>
 
 </div>
 
 
-
 <div class="step">
 
 <div class="step-number">
-    02
+02
 </div>
 
 <h3 data-i18n="step2Title">
-    Dizayn seç
+Dizayn seç
 </h3>
 
 <p data-i18n="step2Text">
-
-Kataloqdan bəyəndiyiniz
-dəvətnaməni açın və canlı
-görünüşünə baxın.
-
+Kataloqdan bəyəndiyiniz dəvətnaməni
+açın və canlı görünüşünə baxın.
 </p>
 
 </div>
 
 
-
 <div class="step">
 
 <div class="step-number">
-    03
+03
 </div>
 
 <h3 data-i18n="step3Title">
-    Məlumatları göndər
+Məlumatları göndər
 </h3>
 
 <p data-i18n="step3Text">
-
-Adlar, tarix, məkan,
-şəkillər, musiqi və digər
-məlumatları doldurun.
-
+Adlar, tarix, məkan, şəkillər, musiqi
+və digər məlumatları doldurun.
 </p>
 
 </div>
-
 
 
 <div class="step">
 
 <div class="step-number">
-    04
+04
 </div>
 
 <h3 data-i18n="step4Title">
-    Linkinizi paylaş
+Linkinizi paylaş
 </h3>
 
 <p data-i18n="step4Text">
-
-Hazır dəvətnaməniz üçün
-xüsusi link əldə edin və
-qonaqlarınızla paylaşın.
-
+Hazır dəvətnaməniz üçün xüsusi link əldə
+edin və qonaqlarınızla paylaşın.
 </p>
 
 </div>
-
 
 </div>
 
@@ -2403,46 +2413,36 @@ qonaqlarınızla paylaşın.
 
 
 <!-- =====================================================
-CTA
+     CTA
 ===================================================== -->
 
 <section class="cta">
-
 
 <div
 class="small-label"
 data-i18n="ctaLabel"
 >
-    Your invitation awaits
+Dəvətnaməniz sizi gözləyir
 </div>
 
-
 <h2 data-i18n="ctaTitle">
-
-    Let your story<br>
-    begin.
-
+Hekayəniz<br>
+burada başlasın.
 </h2>
 
-
 <p data-i18n="ctaText">
-
-Ən gözəl anlarınız üçün
-Luna ilə fərqli bir dəvətnamə
-təcrübəsi yaradın.
-
+Ən gözəl anlarınız üçün Luna ilə
+fərqli bir dəvətnamə təcrübəsi yaradın.
 </p>
 
-
-<br>
-
+<br><br>
 
 <a
 href="#packages"
 class="btn btn-dark"
 data-i18n="ctaButton"
 >
-    Dizaynları kəşf et
+Dizaynları kəşf et
 </a>
 
 </section>
@@ -2450,69 +2450,63 @@ data-i18n="ctaButton"
 
 
 <!-- =====================================================
-FOOTER
+     FOOTER
 ===================================================== -->
 
 <footer class="footer">
 
-
 <div class="footer-main">
 
-
 <div class="footer-logo">
-    Luna
+Luna
 </div>
 
-
 <div class="footer-columns">
-
 
 <div class="footer-column">
 
 <h4 data-i18n="footerExplore">
-    Explore
+Kəşf et
 </h4>
 
 <a href="#collections" data-i18n="navCollections">
-    Kolleksiyalar
+Kolleksiyalar
 </a>
 
 <a href="#packages" data-i18n="navPackages">
-    Paketlər
+Paketlər
 </a>
 
 <a href="pricing.html" data-i18n="navPricing">
-    Qiymətlər
+Qiymətlər
 </a>
 
 </div>
-
 
 
 <div class="footer-column">
 
 <h4 data-i18n="footerOccasions">
-    Occasions
+Tədbirlər
 </h4>
 
-<a href="catalog/premium.html" data-i18n="wedding">
-    Wedding
+<a href="catalog/luxury.html" data-i18n="wedding">
+Toy
 </a>
 
 <a href="catalog/premium.html" data-i18n="engagement">
-    Engagement
+Nişan
 </a>
 
 <a href="catalog/premium.html" data-i18n="henna">
-    Henna
+Xına
 </a>
 
 <a href="catalog/basic.html" data-i18n="birthday">
-    Birthday
+Ad günü
 </a>
 
 </div>
-
 
 </div>
 
@@ -2522,7 +2516,7 @@ FOOTER
 <div class="footer-bottom">
 
 <span data-i18n="copyright">
-    © 2026 Luna Digital Invitations
+© 2026 Luna Digital Invitations
 </span>
 
 </div>
@@ -2533,11 +2527,11 @@ FOOTER
 
 <script>
 
-/* =====================================================
-   LANGUAGE SYSTEM
-===================================================== */
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
 
-const translations = {
+const translations={
 
 az:{
 
@@ -2568,7 +2562,6 @@ introText:
 
 collectionLabel:"Tədbirinizi seçin",
 collectionTitle:"Kolleksiyalar",
-
 allDesigns:"Bütün dizaynlar →",
 
 weddingNumber:"Kolleksiya 01",
@@ -2583,7 +2576,6 @@ birthday:"Ad günü",
 
 packageLabel:"Sizə uyğun təcrübəni seçin",
 packageTitle:"Paketlər",
-
 priceLink:"Qiymətlər →",
 
 basicName:"Basic",
@@ -2637,8 +2629,7 @@ ctaLabel:"Dəvətnaməniz sizi gözləyir",
 
 ctaTitle:"Hekayəniz<br>burada başlasın.",
 
-ctaText:
-"Ən gözəl anlarınız üçün Luna ilə fərqli bir dəvətnamə təcrübəsi yaradın.",
+ctaText:"Ən gözəl anlarınız üçün Luna ilə fərqli bir dəvətnamə təcrübəsi yaradın.",
 
 ctaButton:"Dizaynları kəşf et",
 
@@ -2679,7 +2670,6 @@ introText:
 
 collectionLabel:"Etkinliğinizi seçin",
 collectionTitle:"Koleksiyonlar",
-
 allDesigns:"Tüm tasarımlar →",
 
 weddingNumber:"Koleksiyon 01",
@@ -2694,7 +2684,6 @@ birthday:"Doğum Günü",
 
 packageLabel:"Size uygun deneyimi seçin",
 packageTitle:"Paketler",
-
 priceLink:"Fiyatlar →",
 
 basicName:"Basic",
@@ -2748,8 +2737,7 @@ ctaLabel:"Davetiyeniz sizi bekliyor",
 
 ctaTitle:"Hikâyeniz<br>burada başlasın.",
 
-ctaText:
-"En güzel anlarınız için Luna ile farklı bir davetiye deneyimi yaratın.",
+ctaText:"En güzel anlarınız için Luna ile farklı bir davetiye deneyimi yaratın.",
 
 ctaButton:"Tasarımları keşfet",
 
@@ -2790,7 +2778,6 @@ introText:
 
 collectionLabel:"Choose your occasion",
 collectionTitle:"Collections",
-
 allDesigns:"View all designs →",
 
 weddingNumber:"Collection 01",
@@ -2805,7 +2792,6 @@ birthday:"Birthday",
 
 packageLabel:"Find your experience",
 packageTitle:"Packages",
-
 priceLink:"Pricing →",
 
 basicName:"Basic",
@@ -2859,8 +2845,7 @@ ctaLabel:"Your invitation awaits",
 
 ctaTitle:"Let your story<br>begin here.",
 
-ctaText:
-"Create a different invitation experience for your most beautiful moments with Luna.",
+ctaText:"Create a different invitation experience for your most beautiful moments with Luna.",
 
 ctaButton:"Explore designs",
 
@@ -2874,56 +2859,44 @@ copyright:"© 2026 Luna Digital Invitations"
 };
 
 
-/* =====================================================
-   APPLY LANGUAGE
-===================================================== */
+/* =========================================================
+   LANGUAGE
+========================================================= */
 
 function changeLanguage(language){
 
-    const dictionary = translations[language];
+    const dictionary=translations[language];
 
-    document.documentElement.lang = language;
+    document.documentElement.lang=language;
 
-    document.querySelectorAll("[data-i18n]").forEach(element => {
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element=>{
 
-        const key = element.dataset.i18n;
+            const key=element.dataset.i18n;
 
-        if(dictionary[key] !== undefined){
+            if(dictionary[key] !== undefined){
+                element.innerHTML=dictionary[key];
+            }
 
-            element.innerHTML = dictionary[key];
+        });
 
-        }
-
-    });
-
-
-    const button =
-        document.getElementById("languageButton");
-
-    button.textContent =
-        language.toUpperCase() + " ▾";
-
+    document.getElementById("languageButton").textContent=
+        language.toUpperCase()+" ▾";
 
     localStorage.setItem(
         "luna_language",
         language
     );
-
 }
 
 
-/* =====================================================
-   INITIAL LANGUAGE
-===================================================== */
-
-const savedLanguage =
+const savedLanguage=
     localStorage.getItem("luna_language") || "az";
 
 changeLanguage(savedLanguage);
 
 </script>
 
-
 </body>
-
 </html>
