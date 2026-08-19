@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Luna | Pricing</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: Georgia, serif;
+
+            background: #faf7f2;
+
+            color: #403a35;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+        }
+
+
+        .logo {
+
+            font-size: 34px;
+
+            font-weight: normal;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .intro {
+
+            max-width: 650px;
+
+            margin: 15px auto 0;
+
+            color: #806f61;
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =========================
+           PRICING
+        ========================= */
+
+        .pricing {
+
+            max-width: 1100px;
+
+            margin: 40px auto 90px;
+
+            padding: 0 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+
+            align-items: stretch;
+
+        }
+
+
+        .package {
+
+            position: relative;
+
+            background: white;
+
+            padding: 40px 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.06);
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .package.recommended {
+
+            border: 1px solid #806f61;
+
+            transform: translateY(-10px);
+
+        }
+
+
+        .recommended-badge {
+
+            position: absolute;
+
+            top: -14px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background: #806f61;
+
+            color: white;
+
+            padding: 7px 18px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+
+        }
+
+
+        .package-number {
+
+            font-size: 12px;
+
+            letter-spacing: 4px;
+
+            color: #9a8776;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .package h2 {
+
+            font-size: 30px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .description {
+
+            color: #806f61;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            min-height: 48px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .price {
+
+            font-size: 38px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .price span {
+
+            font-size: 14px;
+
+            color: #9a8776;
+
+        }
+
+
+        .features {
+
+            list-style: none;
+
+            margin-bottom: 30px;
+
+            flex: 1;
+
+        }
+
+
+        .features li {
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid #eee5dc;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .features li::before {
+
+            content: "✓";
+
+            margin-right: 9px;
+
+            color: #806f61;
+
+        }
+
+
+        .choose-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #806f61;
+
+            border-radius: 30px;
+
+            background: #806f61;
+
+            color: white;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            font-family: Georgia, serif;
+
+            font-size: 14px;
+
+            letter-spacing: 1.5px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .choose-button:hover {
+
+            background: transparent;
+
+            color: #806f61;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            padding: 60px 20px;
+
+            background: #403a35;
+
+            color: white;
+
+            text-align: center;
+
+        }
+
+
+        footer h2 {
+
+            font-size: 35px;
+
+            font-weight: normal;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        footer p {
+
+            font-size: 14px;
+
+            opacity: 0.8;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .pricing {
+
+                grid-template-columns: 1fr;
+
+                max-width: 600px;
+
+            }
+
+
+            .package.recommended {
+
+                transform: none;
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .package {
+
+                padding: 35px 25px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Luna
+    </div>
+
+
+    <p class="intro">
+
+        Choose the invitation package
+        that feels right for your special day. 🤍
+
+        <br>
+
+        We create beautiful digital invitations
+        with care, elegance and attention to detail.
+
+    </p>
+
+</header>
+
+
+
+<main class="pricing">
+
+
+    <!-- =========================
+         BASIC
+    ========================= -->
+
+    <div class="package">
+
+        <div class="package-number">
+            01
+        </div>
+
+
+        <h2>
+            Basic
+        </h2>
+
+
+        <p class="description">
+
+            Sadə və zərif rəqəmsal
+            dəvətnamə.
+
+        </p>
+
+
+        <div class="price">
+
+            25 AZN
+
+        </div>
+
+
+        <ul class="features">
+
+            <li>
+                Digital invitation
+            </li>
+
+            <li>
+                Cütlüyün adları
+            </li>
+
+            <li>
+                Tarix və saat
+            </li>
+
+            <li>
+                Məkan + Google Maps
+            </li>
+
+            <li>
+                Countdown
+            </li>
+
+            <li>
+                "Our Story" bölməsi
+            </li>
+
+            <li>
+                6 foto
+            </li>
+
+        </ul>
+
+
+        <a
+            href="client-form.html?package=basic"
+            class="choose-button"
+        >
+            CHOOSE BASIC
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         PREMIUM
+    ========================= -->
+
+    <div class="package recommended">
+
+        <div class="recommended-badge">
+            MOST RECOMMENDED
+        </div>
+
+
+        <div class="package-number">
+            02
+        </div>
+
+
+        <h2>
+            Premium
+        </h2>
+
+
+        <p class="description">
+
+            Ən çox tövsiyə olunan
+            paket.
+
+        </p>
+
+
+        <div class="price">
+
+            40 AZN
+
+        </div>
+
+
+        <ul class="features">
+
+            <li>
+                Basic paketdə olan hər şey
+            </li>
+
+            <li>
+                RSVP forması
+            </li>
+
+            <li>
+                Qonaq sayı
+            </li>
+
+            <li>
+                Qonaqdan mesaj
+            </li>
+
+            <li>
+                Rəng və üslub seçimi
+            </li>
+
+            <li>
+                10 foto qalereyası
+            </li>
+
+        </ul>
+
+
+        <a
+            href="client-form.html?package=premium"
+            class="choose-button"
+        >
+            CHOOSE PREMIUM
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         LUXURY
+    ========================= -->
+
+    <div class="package">
+
+        <div class="package-number">
+            03
+        </div>
+
+
+        <h2>
+            Luxury
+        </h2>
+
+
+        <p class="description">
+
+            Daha xüsusi və premium
+            görünüş istəyənlər üçün.
+
+        </p>
+
+
+        <div class="price">
+
+            60 AZN
+
+        </div>
+
+
+        <ul class="features">
+
+            <li>
+                Fərdiləşdirilmiş dizayn
+            </li>
+
+            <li>
+                Cütlüyə xüsusi mətn
+            </li>
+
+            <li>
+                Foto qalereya
+            </li>
+
+            <li>
+                Countdown
+            </li>
+
+            <li>
+                Google Maps
+            </li>
+
+            <li>
+                RSVP
+            </li>
+
+            <li>
+                Qonaq sayı
+            </li>
+
+            <li>
+                Mesaj bölməsi
+            </li>
+
+            <li>
+                Musiqi
+            </li>
+
+        </ul>
+
+
+        <a
+            href="client-form.html?package=luxury"
+            class="choose-button"
+        >
+            CHOOSE LUXURY
+        </a>
+
+    </div>
+
+
+</main>
+
+
+
+<footer>
+
+    <h2>
+        Luna
+    </h2>
+
+    <p>
+        Digital invitations for beautiful moments. 🤍
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
