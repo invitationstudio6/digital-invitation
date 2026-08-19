@@ -3,604 +3,843 @@
 
 <head>
 
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Luna | Digital Invitations</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Georgia, serif;
-            background: #faf7f2;
-            color: #403a35;
-        }
-
-        /* =========================
-           NAVIGATION
-        ========================= */
-
-        nav {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 28px 7%;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            z-index: 10;
-        }
-
-        .logo {
-            font-size: 30px;
-            color: white;
-            font-weight: normal;
-            letter-spacing: 1px;
-        }
-
-        nav .links {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        nav a:hover {
-            opacity: 0.7;
-        }
-
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            min-height: 90vh;
-
-            background:
-                linear-gradient(
-                    rgba(50, 42, 36, 0.38),
-                    rgba(50, 42, 36, 0.38)
-                ),
-                url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85");
-
-            background-size: cover;
-            background-position: center;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-            color: white;
-        }
-
-        .hero-content {
-            padding: 30px;
-            max-width: 800px;
-        }
-
-        .hero-small {
-            font-size: 12px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
-        .hero h1 {
-            font-size: clamp(60px, 12vw, 130px);
-            font-weight: normal;
-            line-height: 1;
-        }
-
-        .hero-text {
-            margin-top: 30px;
-            font-size: 18px;
-            line-height: 1.8;
-        }
+<meta charset="UTF-8">
 
-        .hero-button {
-            display: inline-block;
-            margin-top: 35px;
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-            padding: 14px 34px;
+<title>Wedding Invitation</title>
 
-            border: 1px solid white;
-            border-radius: 30px;
+<style>
 
-            color: white;
-            text-decoration: none;
+/* =====================================================
+   GENERAL
+===================================================== */
 
-            letter-spacing: 2px;
-            font-size: 12px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-            transition: 0.3s;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        .hero-button:hover {
-            background: white;
-            color: #403a35;
-        }
+body {
+    font-family: Georgia, serif;
+    background: #faf7f2;
+    color: #403a35;
+}
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
 
-        /* =========================
-           INTRO
-        ========================= */
 
-        .intro {
-            padding: 100px 20px;
-            text-align: center;
-            background: #fffdf9;
-        }
+/* =====================================================
+   ERROR
+===================================================== */
 
-        .intro-small {
-            font-size: 12px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #9a8776;
-            margin-bottom: 20px;
-        }
+.error-message {
+    min-height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+}
 
-        .intro h2 {
-            font-size: 45px;
-            font-weight: normal;
-            margin-bottom: 25px;
-        }
+.error-message h1 {
+    font-weight: normal;
+    margin-bottom: 15px;
+}
 
-        .intro p {
-            max-width: 650px;
-            margin: auto;
 
-            font-size: 17px;
-            line-height: 2;
-        }
+/* =====================================================
+   DESIGN SELECTOR / OPEN SCREEN
+===================================================== */
 
+.design-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
 
-        /* =========================
-           COLLECTION
-        ========================= */
+    background: #eee8df;
 
-        .collection {
-            padding: 100px 7%;
-            background: #faf7f2;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .collection-heading {
-            text-align: center;
-            margin-bottom: 65px;
-        }
+    padding: 30px;
 
-        .collection-heading span {
-            display: block;
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
 
-            font-size: 12px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
+.design-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-            color: #9a8776;
-            margin-bottom: 15px;
-        }
+.design-card {
+    width: min(430px, 90vw);
+    height: 570px;
 
-        .collection-heading h2 {
-            font-size: 48px;
-            font-weight: normal;
-        }
+    background: white;
 
-        .collection-heading p {
-            margin-top: 20px;
-            color: #766b62;
-        }
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.15);
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        /* =========================
-           INVITATION GRID
-        ========================= */
+    text-align: center;
 
-        .invitation-grid {
+    position: relative;
 
-            max-width: 1250px;
-            margin: auto;
+    overflow: hidden;
+}
 
-            display: grid;
 
-            grid-template-columns:
-                repeat(3, 1fr);
+/* =====================================================
+   BOOK DESIGN
+===================================================== */
 
-            gap: 35px;
-        }
+.design-card.book {
+    background:
+        linear-gradient(
+            135deg,
+            #f9f3ea,
+            #e7dac9
+        );
 
+    border: 12px solid #d8c7b0;
+}
 
-        /* =========================
-           INVITATION CARD
-        ========================= */
+.book-cover {
+    width: 82%;
+    height: 86%;
 
-        .invitation-card {
-            background: white;
+    border: 1px solid #a98f76;
 
-            border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 
-            overflow: hidden;
+    align-items: center;
+    justify-content: center;
 
-            box-shadow:
-                0 15px 45px rgba(0,0,0,0.07);
+    padding: 30px;
+}
 
-            transition:
-                transform 0.4s ease,
-                box-shadow 0.4s ease;
-        }
+.book-cover .small {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
 
-        .invitation-card:hover {
-            transform: translateY(-8px);
+.book-cover h1 {
+    font-size: 48px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
 
-            box-shadow:
-                0 25px 60px rgba(0,0,0,0.12);
-        }
+.book-cover p {
+    font-size: 13px;
+    letter-spacing: 2px;
+}
 
 
-        /* =========================
-           INVITATION IMAGE
-        ========================= */
+/* =====================================================
+   ENVELOPE DESIGN
+===================================================== */
 
-        .invitation-image {
-            position: relative;
+.design-card.envelope {
+    background: #f5eee5;
+}
 
-            width: 100%;
-            height: 430px;
+.envelope {
+    width: 82%;
+    height: 55%;
 
-            overflow: hidden;
-        }
+    background: #e4d1bd;
 
-        .invitation-image img {
-            width: 100%;
-            height: 100%;
+    position: relative;
 
-            object-fit: cover;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.15);
+}
 
-            display: block;
+.envelope::before {
+    content: "";
 
-            transition:
-                transform 0.7s ease;
-        }
+    position: absolute;
 
-        .invitation-card:hover
-        .invitation-image img {
-            transform: scale(1.04);
-        }
+    top: 0;
+    left: 0;
 
+    width: 0;
+    height: 0;
 
-        /* =========================
-           IMAGE OVERLAY
-        ========================= */
+    border-left: 50% solid transparent;
+    border-right: 50% solid transparent;
 
-        .image-overlay {
+    border-top: 170px solid #d4bda5;
 
-            position: absolute;
+    z-index: 2;
+}
 
-            inset: 0;
+.envelope-letter {
+    position: absolute;
 
-            background:
-                rgba(40, 34, 29, 0.25);
+    left: 8%;
+    right: 8%;
+    bottom: 8%;
 
-            display: flex;
+    height: 70%;
 
-            align-items: center;
-            justify-content: center;
+    background: #fffdf9;
 
-            opacity: 0;
+    display: flex;
+    flex-direction: column;
 
-            transition: 0.4s;
-        }
+    align-items: center;
+    justify-content: center;
 
-        .invitation-card:hover
-        .image-overlay {
-            opacity: 1;
-        }
+    z-index: 1;
 
-        .view-button {
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+}
 
-            padding: 13px 27px;
+.envelope-letter span {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
 
-            border: 1px solid white;
-            border-radius: 30px;
+.envelope-letter h1 {
+    font-size: 42px;
+    font-weight: normal;
+}
 
-            color: white;
 
-            text-decoration: none;
+/* =====================================================
+   FLORAL DESIGN
+===================================================== */
 
-            font-size: 11px;
+.design-card.floral {
+    background:
+        radial-gradient(
+            circle at top left,
+            #e5d6cf,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #d8e0d5,
+            transparent 30%
+        ),
+        #faf7f2;
+}
 
-            letter-spacing: 2px;
+.floral-content {
+    width: 82%;
+    height: 86%;
 
-            text-transform: uppercase;
-        }
+    border: 1px solid #b8a99d;
 
+    display: flex;
+    flex-direction: column;
 
-        /* =========================
-           CARD INFO
-        ========================= */
+    align-items: center;
+    justify-content: center;
 
-        .invitation-info {
+    padding: 25px;
+}
 
-            padding: 28px 25px 30px;
+.flowers {
+    font-size: 45px;
+    margin-bottom: 25px;
+}
 
-            text-align: center;
-        }
+.floral-content span {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
 
-        .invitation-number {
+.floral-content h1 {
+    font-size: 45px;
+    font-weight: normal;
+    margin: 20px 0;
+}
 
-            font-size: 11px;
 
-            letter-spacing: 3px;
+/* =====================================================
+   ELEGANT DESIGN
+===================================================== */
 
-            color: #a18d7b;
+.design-card.elegant {
+    background:
+        linear-gradient(
+            145deg,
+            #332d29,
+            #62564d
+        );
 
-            margin-bottom: 12px;
-        }
+    color: white;
+}
 
-        .invitation-info h3 {
+.elegant-content {
+    width: 82%;
+    height: 86%;
 
-            font-size: 25px;
+    border: 1px solid rgba(255,255,255,.5);
 
-            font-weight: normal;
+    display: flex;
+    flex-direction: column;
 
-            margin-bottom: 10px;
-        }
+    align-items: center;
+    justify-content: center;
 
-        .invitation-info p {
+    padding: 30px;
+}
 
-            font-size: 14px;
+.elegant-content span {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
 
-            color: #8a7c70;
+.elegant-content h1 {
+    font-size: 48px;
+    font-weight: normal;
+    margin: 25px 0;
+}
 
-            line-height: 1.6;
-        }
 
+/* =====================================================
+   OPEN BUTTON
+===================================================== */
 
-        /* =========================
-           CTA
-        ========================= */
+.open-button {
+    margin-top: 30px;
 
-        .cta {
+    padding: 13px 30px;
 
-            padding: 120px 20px;
+    background: transparent;
 
-            background: #403a35;
+    border: 1px solid currentColor;
 
-            color: white;
+    color: inherit;
 
-            text-align: center;
-        }
+    cursor: pointer;
 
-        .cta span {
+    letter-spacing: 3px;
+    font-size: 11px;
 
-            font-size: 12px;
+    transition: .3s;
+}
 
-            letter-spacing: 5px;
+.open-button:hover {
+    background: rgba(255,255,255,.15);
+}
 
-            text-transform: uppercase;
 
-            opacity: 0.7;
-        }
+/* =====================================================
+   MAIN INVITATION
+===================================================== */
 
-        .cta h2 {
+#invitation {
+    display: none;
+}
 
-            margin-top: 20px;
 
-            font-size: 48px;
+/* =====================================================
+   HERO
+===================================================== */
 
-            font-weight: normal;
-        }
+.hero {
+    min-height: 100vh;
 
-        .cta p {
+    background:
+        linear-gradient(
+            rgba(0,0,0,.32),
+            rgba(0,0,0,.32)
+        ),
+        var(--hero-image);
 
-            max-width: 600px;
+    background-size: cover;
+    background-position: center;
 
-            margin: 25px auto 0;
+    display: flex;
 
-            line-height: 1.8;
+    align-items: center;
+    justify-content: center;
 
-            font-size: 16px;
-        }
+    text-align: center;
 
-        .cta-button {
+    color: white;
+}
 
-            display: inline-block;
+.hero-content {
+    padding: 30px;
+}
 
-            margin-top: 35px;
+.subtitle {
+    font-size: 13px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
 
-            padding: 14px 35px;
+    margin-bottom: 25px;
+}
 
-            border: 1px solid white;
+.hero h1 {
+    font-size: clamp(
+        55px,
+        12vw,
+        110px
+    );
 
-            border-radius: 30px;
+    font-weight: normal;
+    line-height: 1.1;
+}
 
-            color: white;
+.date {
+    margin-top: 25px;
 
-            text-decoration: none;
+    font-size: 18px;
 
-            font-size: 12px;
+    letter-spacing: 3px;
+}
 
-            letter-spacing: 2px;
+.button {
+    display: inline-block;
 
-            transition: 0.3s;
-        }
+    margin-top: 35px;
 
-        .cta-button:hover {
+    padding: 14px 32px;
 
-            background: white;
+    border: 1px solid white;
+    border-radius: 30px;
 
-            color: #403a35;
-        }
+    color: white;
 
+    text-decoration: none;
 
-        /* =========================
-           FOOTER
-        ========================= */
+    transition: .3s;
+}
 
-        footer {
+.button:hover {
+    background: white;
+    color: #403a35;
+}
 
-            padding: 60px 20px;
 
-            background: #2f2a26;
+/* =====================================================
+   COUNTDOWN
+===================================================== */
 
-            color: white;
+.countdown-section {
+    background: #fffdf9;
 
-            text-align: center;
-        }
+    padding: 80px 20px;
 
-        footer h2 {
+    text-align: center;
+}
 
-            font-size: 38px;
+.section-small-title {
+    font-size: 13px;
 
-            font-weight: normal;
+    letter-spacing: 5px;
 
-            margin-bottom: 15px;
-        }
+    text-transform: uppercase;
 
-        footer p {
+    color: #9a8776;
 
-            font-size: 13px;
+    margin-bottom: 35px;
+}
 
-            color: #d6cec6;
-        }
+.countdown {
+    display: flex;
 
+    justify-content: center;
 
-        /* =========================
-           MOBILE
-        ========================= */
+    gap: 20px;
 
-        @media (max-width: 900px) {
+    flex-wrap: wrap;
+}
 
-            .invitation-grid {
+.time-box {
+    min-width: 110px;
 
-                grid-template-columns:
-                    repeat(2, 1fr);
+    padding: 25px 15px;
 
-            }
+    background: #faf7f2;
 
-        }
+    border-radius: 10px;
 
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+}
 
-        @media (max-width: 600px) {
+.time-number {
+    display: block;
 
-            nav {
+    font-size: 42px;
+}
 
-                padding: 22px 25px;
+.time-label {
+    display: block;
 
-            }
+    margin-top: 8px;
 
-            .logo {
+    font-size: 11px;
 
-                font-size: 25px;
+    letter-spacing: 3px;
 
-            }
+    text-transform: uppercase;
 
-            nav .links {
+    color: #9a8776;
+}
 
-                gap: 12px;
 
-            }
+/* =====================================================
+   SECTIONS
+===================================================== */
 
-            nav a {
+section {
+    padding: 90px 20px;
+}
 
-                font-size: 9px;
+.container {
+    max-width: 1000px;
 
-                letter-spacing: 1px;
+    margin: auto;
 
-            }
+    padding: 0 20px;
+}
 
-            .hero {
+.title {
+    text-align: center;
 
-                min-height: 80vh;
+    margin-bottom: 45px;
+}
 
-            }
+.title span {
+    display: block;
 
-            .hero h1 {
+    font-size: 12px;
 
-                font-size: 65px;
+    letter-spacing: 4px;
 
-            }
+    text-transform: uppercase;
 
-            .hero-text {
+    color: #9a8776;
 
-                font-size: 15px;
+    margin-bottom: 10px;
+}
 
-            }
+.title h2 {
+    font-size: 42px;
 
-            .intro {
+    font-weight: normal;
+}
 
-                padding: 75px 20px;
 
-            }
+/* =====================================================
+   STORY
+===================================================== */
 
-            .intro h2 {
+.story {
+    background: #faf7f2;
+}
 
-                font-size: 35px;
+.story-text {
+    max-width: 700px;
 
-            }
+    margin: auto;
 
-            .collection {
+    text-align: center;
 
-                padding: 75px 20px;
+    line-height: 2;
 
-            }
+    font-size: 17px;
+}
 
-            .collection-heading h2 {
 
-                font-size: 36px;
+/* =====================================================
+   GALLERY
+===================================================== */
 
-            }
+.gallery-section {
+    background: #fffdf9;
+}
 
-            .invitation-grid {
+.gallery {
+    max-width: 900px;
 
-                grid-template-columns: 1fr;
+    margin: auto;
 
-                gap: 30px;
+    display: grid;
 
-            }
+    grid-template-columns:
+        repeat(2,1fr);
 
-            .invitation-image {
+    gap: 18px;
+}
 
-                height: 450px;
+.gallery-item {
+    overflow: hidden;
 
-            }
+    border-radius: 8px;
 
-            .cta {
+    aspect-ratio: 4/3;
+}
 
-                padding: 90px 20px;
+.gallery-item img {
+    width: 100%;
+    height: 100%;
 
-            }
+    object-fit: cover;
 
-            .cta h2 {
+    display: block;
 
-                font-size: 36px;
+    transition:
+        transform .6s ease;
+}
 
-            }
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
 
-        }
 
-    </style>
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 25px;
+}
+
+.card {
+    background: white;
+
+    padding: 40px;
+
+    text-align: center;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.05);
+}
+
+.icon {
+    font-size: 35px;
+
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 22px;
+
+    font-weight: normal;
+
+    margin-bottom: 15px;
+}
+
+.card p {
+    line-height: 1.8;
+}
+
+.map-button {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 12px 25px;
+
+    border: 1px solid #806f61;
+
+    border-radius: 25px;
+
+    color: #806f61;
+
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   MUSIC
+===================================================== */
+
+.music-section {
+    background: #faf7f2;
+
+    text-align: center;
+}
+
+.music-player {
+    width: 100%;
+
+    max-width: 500px;
+
+    margin: auto;
+}
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+.rsvp {
+    background: #fffdf9;
+}
+
+form {
+    max-width: 600px;
+
+    margin: auto;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 22px;
+
+    border: 1px solid #d8cec3;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+.submit {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background: #806f61;
+
+    color: white;
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    padding: 70px 20px;
+
+    background: #403a35;
+
+    color: white;
+
+    text-align: center;
+}
+
+footer h2 {
+    font-size: 42px;
+
+    font-weight: normal;
+
+    margin-bottom: 15px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px) {
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+    .date {
+        font-size: 14px;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+    }
+
+    .time-box {
+        min-width: 75px;
+
+        padding: 18px 8px;
+    }
+
+    .time-number {
+        font-size: 30px;
+    }
+
+    .time-label {
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+    section {
+        padding: 70px 18px;
+    }
+
+    .title h2 {
+        font-size: 32px;
+    }
+
+}
+
+</style>
 
 </head>
 
@@ -608,59 +847,84 @@
 <body>
 
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!-- =====================================================
+     ERROR
+===================================================== -->
 
-<nav>
+<div
+    class="error-message"
+    id="errorMessage"
+>
 
-    <div class="logo">
-        Luna
+    <div>
+
+        <h1>
+            Invitation not found
+        </h1>
+
+        <p>
+            Please check your invitation link.
+        </p>
+
     </div>
 
-    <div class="links">
+</div>
 
-        <a href="#collection">
-            Invitations
-        </a>
 
-        <a href="pricing.html">
-            Pricing
-        </a>
+<!-- =====================================================
+     DESIGN OPEN SCREEN
+===================================================== -->
+
+<div
+    class="design-screen"
+    id="designScreen"
+>
+
+    <div
+        class="design-card"
+        id="designCard"
+    >
+
+        <div
+            id="designContent"
+        ></div>
 
     </div>
 
-</nav>
+</div>
 
 
-<!-- =========================
-     HERO
-========================= -->
+<!-- =====================================================
+     MAIN INVITATION
+===================================================== -->
+
+<div id="invitation">
+
 
 <header class="hero">
 
     <div class="hero-content">
 
-        <div class="hero-small">
-            Digital Invitations
+        <div class="subtitle">
+            You are invited
         </div>
 
-        <h1>
-            Luna
+        <h1 id="coupleNames">
+            Aysel & Murad
         </h1>
 
-        <p class="hero-text">
-
-            Elegant digital invitations
-            created for your most beautiful moments.
-
-        </p>
+        <div
+            class="date"
+            id="weddingDateText"
+        >
+            12 September 2026 · Baku
+        </div>
 
         <a
-            href="#collection"
-            class="hero-button"
+            href="#countdown"
+            class="button"
         >
-            EXPLORE COLLECTION
+            VIEW INVITATION
         </a>
 
     </div>
@@ -668,230 +932,1033 @@
 </header>
 
 
-<!-- =========================
-     INTRO
-========================= -->
-
-<section class="intro">
-
-    <div class="intro-small">
-        Welcome to Luna
-    </div>
-
-    <h2>
-        Made for beautiful moments
-    </h2>
-
-    <p>
-
-        From intimate weddings to unforgettable
-        celebrations, Luna creates elegant digital
-        invitations designed especially for you.
-
-    </p>
-
-</section>
-
-
-<!-- =========================
-     COLLECTION
-========================= -->
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
 
 <section
-    class="collection"
-    id="collection"
+    class="countdown-section"
+    id="countdown"
 >
 
-    <div class="collection-heading">
+    <div class="section-small-title">
+        Until we say "I do"
+    </div>
 
-        <span>
-            The Collection
-        </span>
+    <div class="countdown">
 
-        <h2>
-            Wedding Invitations
-        </h2>
+        <div class="time-box">
 
-        <p>
-            Explore our invitation designs
-        </p>
+            <span
+                class="time-number"
+                id="days"
+            >
+                00
+            </span>
+
+            <span class="time-label">
+                Days
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <span
+                class="time-number"
+                id="hours"
+            >
+                00
+            </span>
+
+            <span class="time-label">
+                Hours
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <span
+                class="time-number"
+                id="minutes"
+            >
+                00
+            </span>
+
+            <span class="time-label">
+                Minutes
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <span
+                class="time-number"
+                id="seconds"
+            >
+                00
+            </span>
+
+            <span class="time-label">
+                Seconds
+            </span>
+
+        </div>
 
     </div>
 
+</section>
 
-    <div
-        class="invitation-grid"
-        id="invitationGrid"
-    ></div>
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section class="story">
+
+<div class="container">
+
+<div class="title">
+
+<span>
+    Our journey
+</span>
+
+<h2>
+    Our Story
+</h2>
+
+</div>
+
+<div
+    class="story-text"
+    id="storyText"
+></div>
+
+</div>
 
 </section>
 
 
-<!-- =========================
-     CTA
-========================= -->
+<!-- =====================================================
+     GALLERY
+===================================================== -->
 
-<section class="cta">
+<section class="gallery-section">
 
-    <span>
-        Create yours
-    </span>
+<div class="container">
 
-    <h2>
-        Your story deserves
-        a beautiful invitation.
-    </h2>
+<div class="title">
 
-    <p>
+<span>
+    Our memories
+</span>
 
-        Choose a design, share your details,
-        and let Luna create something
-        beautiful for your special day.
+<h2>
+    Moments
+</h2>
 
-    </p>
+</div>
 
-    <a
-        href="pricing.html"
-        class="cta-button"
-    >
-        VIEW PACKAGES
-    </a>
+<div
+    class="gallery"
+    id="gallery"
+></div>
+
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     DETAILS
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+<div class="title">
+
+<span>
+    Join us
+</span>
+
+<h2>
+    Wedding Details
+</h2>
+
+</div>
+
+
+<div class="details">
+
+
+<div class="card">
+
+<div class="icon">
+    📅
+</div>
+
+<h3>
+    Date & Time
+</h3>
+
+<p id="detailsDate"></p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">
+    📍
+</div>
+
+<h3>
+    Location
+</h3>
+
+<p id="detailsLocation"></p>
+
+<a
+    href="#"
+    target="_blank"
+    class="map-button"
+    id="mapLink"
+>
+    VIEW MAP
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MUSIC
+===================================================== -->
+
+<section
+    class="music-section"
+    id="musicSection"
+    style="display:none;"
+>
+
+<div class="container">
+
+<div class="title">
+
+<span>
+    Our soundtrack
+</span>
+
+<h2>
+    Music
+</h2>
+
+</div>
+
+<audio
+    id="weddingMusic"
+    class="music-player"
+    controls
+></audio>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RSVP
+===================================================== -->
+
+<section
+    class="rsvp"
+    id="rsvpSection"
+>
+
+<div class="container">
+
+<div class="title">
+
+<span>
+    We hope to see you
+</span>
+
+<h2>
+    RSVP
+</h2>
+
+</div>
+
+
+<form
+    action="https://formspree.io/f/mqpzyklb"
+    method="POST"
+>
+
+
+<input
+    type="hidden"
+    name="invitation_id"
+    id="invitationIdField"
+>
+
+
+<input
+    type="hidden"
+    name="couple"
+    id="coupleField"
+>
+
+
+<label>
+    Your Name
+</label>
+
+<input
+    type="text"
+    name="name"
+    placeholder="Enter your name"
+    required
+>
+
+
+<label>
+    Will you join us?
+</label>
+
+<select
+    name="attendance"
+    required
+>
+
+<option value="">
+    Please select
+</option>
+
+<option value="yes">
+    Yes, I'll be there 🤍
+</option>
+
+<option value="no">
+    Sorry, I can't attend
+</option>
+
+</select>
+
+
+<label>
+    Number of guests
+</label>
+
+<select
+    name="guest_number"
+    required
+>
+
+<option value="1">
+    1
+</option>
+
+<option value="2">
+    2
+</option>
+
+<option value="3">
+    3
+</option>
+
+<option value="4">
+    4
+</option>
+
+</select>
+
+
+<label>
+    Message
+</label>
+
+<textarea
+    name="message"
+    placeholder="Leave a message..."
+></textarea>
+
+
+<button
+    class="submit"
+    type="submit"
+>
+    SEND RSVP
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      FOOTER
-========================= -->
+===================================================== -->
 
 <footer>
 
-    <h2>
-        Luna
-    </h2>
+<h2 id="footerNames">
+    Aysel & Murad
+</h2>
 
-    <p>
-        Digital invitations for beautiful moments. 🤍
-    </p>
+<p>
+    We can't wait to celebrate with you 🤍
+</p>
+
+<br>
+
+<p id="footerDate">
+    12 · 09 · 2026
+</p>
 
 </footer>
 
 
-<!-- =========================
-     INVITATION DATA
-========================= -->
+</div>
+
+
+<!-- =====================================================
+     CUSTOMER DATA
+===================================================== -->
 
 <script src="data/invitations.js"></script>
 
 
-<!-- =========================
-     COLLECTION SYSTEM
-========================= -->
+<!-- =====================================================
+     MAIN JAVASCRIPT
+===================================================== -->
 
 <script>
 
-    const grid =
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const invitationId =
+    params.get("id");
+
+
+const invitation =
+    invitations[invitationId];
+
+
+/* =====================================================
+   DESIGN TYPE
+===================================================== */
+
+let designType = "book";
+
+
+if (invitationId === "leyla-kamran") {
+
+    designType = "envelope";
+
+}
+
+
+if (invitationId === "nigar-elvin") {
+
+    designType = "floral";
+
+}
+
+
+if (!invitation) {
+
+    document.getElementById(
+        "designScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "errorMessage"
+    ).style.display = "flex";
+
+}
+
+
+if (invitation) {
+
+
+/* =====================================================
+   COUPLE
+===================================================== */
+
+const coupleName =
+    invitation.bride +
+    " & " +
+    invitation.groom;
+
+
+document.title =
+    coupleName +
+    " | Wedding Invitation";
+
+
+document.getElementById(
+    "coupleNames"
+).innerText =
+    coupleName;
+
+
+document.getElementById(
+    "footerNames"
+).innerText =
+    coupleName;
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+document.getElementById(
+    "weddingDateText"
+).innerText =
+    invitation.date +
+    " · " +
+    invitation.location;
+
+
+document.getElementById(
+    "detailsDate"
+).innerHTML =
+    invitation.date +
+    "<br>" +
+    invitation.time;
+
+
+document.getElementById(
+    "footerDate"
+).innerText =
+    invitation.dateShort;
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+document.getElementById(
+    "detailsLocation"
+).innerHTML =
+    invitation.location +
+    "<br>" +
+    invitation.venue;
+
+
+document.getElementById(
+    "mapLink"
+).href =
+    invitation.map;
+
+
+/* =====================================================
+   STORY
+===================================================== */
+
+document.getElementById(
+    "storyText"
+).innerHTML =
+    invitation.story;
+
+
+/* =====================================================
+   HERO IMAGE
+===================================================== */
+
+if (
+    invitation.images &&
+    invitation.images.length > 0
+) {
+
+    document.documentElement.style
+        .setProperty(
+            "--hero-image",
+            `url("${invitation.images[0]}")`
+        );
+
+}
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+const gallery =
+    document.getElementById(
+        "gallery"
+    );
+
+
+let photoLimit = 6;
+
+
+if (
+    invitation.package === "premium" ||
+    invitation.package === "luxury"
+) {
+
+    photoLimit = 10;
+
+}
+
+
+invitation.images
+    .slice(0, photoLimit)
+    .forEach(
+        function(image) {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "gallery-item";
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src =
+                image;
+
+
+            img.alt =
+                coupleName +
+                " wedding photo";
+
+
+            item.appendChild(img);
+
+            gallery.appendChild(item);
+
+        }
+    );
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+const rsvpSection =
+    document.getElementById(
+        "rsvpSection"
+    );
+
+
+if (
+    invitation.package === "basic"
+) {
+
+    rsvpSection.style.display =
+        "none";
+
+}
+
+
+document.getElementById(
+    "invitationIdField"
+).value =
+    invitationId;
+
+
+document.getElementById(
+    "coupleField"
+).value =
+    coupleName;
+
+
+/* =====================================================
+   MUSIC
+===================================================== */
+
+const musicSection =
+    document.getElementById(
+        "musicSection"
+    );
+
+
+const weddingMusic =
+    document.getElementById(
+        "weddingMusic"
+    );
+
+
+if (
+    invitation.package === "luxury" &&
+    invitation.music
+) {
+
+    musicSection.style.display =
+        "block";
+
+
+    weddingMusic.src =
+        invitation.music;
+
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+const weddingDate =
+    new Date(
+        invitation.countdown
+    ).getTime();
+
+
+function updateCountdown() {
+
+    const now =
+        new Date().getTime();
+
+
+    const difference =
+        weddingDate - now;
+
+
+    if (difference <= 0) {
+
         document.getElementById(
-            "invitationGrid"
+            "days"
+        ).innerText = "00";
+
+
+        document.getElementById(
+            "hours"
+        ).innerText = "00";
+
+
+        document.getElementById(
+            "minutes"
+        ).innerText = "00";
+
+
+        document.getElementById(
+            "seconds"
+        ).innerText = "00";
+
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
         );
 
 
-    /*
-    ==========================================
-    CREATE INVITATION CARDS
-    ==========================================
-    */
-
-    Object.keys(invitations)
-        .forEach(function(id, index) {
-
-            const invitation =
-                invitations[id];
+    const hours =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60 * 60 * 24)
+            ) /
+            (1000 * 60 * 60)
+        );
 
 
-            const card =
-                document.createElement("article");
+    const minutes =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60 * 60)
+            ) /
+            (1000 * 60)
+        );
 
 
-            card.className =
-                "invitation-card";
+    const seconds =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60)
+            ) /
+            1000
+        );
 
 
-            /*
-            IMAGE
-            */
-
-            const image =
-                invitation.images &&
-                invitation.images.length > 0
-
-                ? invitation.images[0]
-
-                : "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80";
+    document.getElementById(
+        "days"
+    ).innerText =
+        String(days).padStart(
+            2,
+            "0"
+        );
 
 
-            /*
-            COUPLE NAME
-            */
-
-            const coupleName =
-                invitation.bride +
-                " & " +
-                invitation.groom;
-
-
-            /*
-            CARD
-            */
-
-            card.innerHTML = `
-
-                <div class="invitation-image">
-
-                    <img
-                        src="${image}"
-                        alt="${coupleName}"
-                    >
-
-                    <div class="image-overlay">
-
-                        <a
-                            href="index.html?id=${id}"
-                            class="view-button"
-                        >
-                            View Invitation
-                        </a>
-
-                    </div>
-
-                </div>
+    document.getElementById(
+        "hours"
+    ).innerText =
+        String(hours).padStart(
+            2,
+            "0"
+        );
 
 
-                <div class="invitation-info">
-
-                    <div class="invitation-number">
-                        ${String(index + 1).padStart(2, "0")}
-                    </div>
-
-                    <h3>
-                        ${coupleName}
-                    </h3>
-
-                    <p>
-                        ${invitation.date || "Wedding Invitation"}
-                    </p>
-
-                </div>
-
-            `;
+    document.getElementById(
+        "minutes"
+    ).innerText =
+        String(minutes).padStart(
+            2,
+            "0"
+        );
 
 
-            grid.appendChild(card);
+    document.getElementById(
+        "seconds"
+    ).innerText =
+        String(seconds).padStart(
+            2,
+            "0"
+        );
 
-        });
+}
+
+
+updateCountdown();
+
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =====================================================
+   DESIGN OPEN SCREEN
+===================================================== */
+
+const designScreen =
+    document.getElementById(
+        "designScreen"
+    );
+
+
+const designCard =
+    document.getElementById(
+        "designCard"
+    );
+
+
+const designContent =
+    document.getElementById(
+        "designContent"
+    );
+
+
+if (designType === "book") {
+
+    designCard.className =
+        "design-card book";
+
+
+    designContent.innerHTML = `
+
+        <div class="book-cover">
+
+            <div class="small">
+                You are invited
+            </div>
+
+            <h1>
+                ${coupleName}
+            </h1>
+
+            <p>
+                ${invitation.dateShort}
+            </p>
+
+            <button
+                class="open-button"
+                onclick="openInvitation()"
+            >
+                OPEN INVITATION
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+if (designType === "envelope") {
+
+    designCard.className =
+        "design-card envelope";
+
+
+    designContent.innerHTML = `
+
+        <div class="envelope">
+
+            <div class="envelope-letter">
+
+                <span>
+                    Wedding Invitation
+                </span>
+
+                <h1>
+                    ${coupleName}
+                </h1>
+
+                <button
+                    class="open-button"
+                    onclick="openInvitation()"
+                >
+                    OPEN
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+if (designType === "floral") {
+
+    designCard.className =
+        "design-card floral";
+
+
+    designContent.innerHTML = `
+
+        <div class="floral-content">
+
+            <div class="flowers">
+                🌿
+            </div>
+
+            <span>
+                Together with their families
+            </span>
+
+            <h1>
+                ${coupleName}
+            </h1>
+
+            <span>
+                ${invitation.date}
+            </span>
+
+            <button
+                class="open-button"
+                onclick="openInvitation()"
+            >
+                OPEN INVITATION
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+if (designType === "elegant") {
+
+    designCard.className =
+        "design-card elegant";
+
+
+    designContent.innerHTML = `
+
+        <div class="elegant-content">
+
+            <span>
+                The Wedding
+            </span>
+
+            <h1>
+                ${coupleName}
+            </h1>
+
+            <span>
+                ${invitation.date}
+            </span>
+
+            <button
+                class="open-button"
+                onclick="openInvitation()"
+            >
+                ENTER
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   SHOW INVITATION
+===================================================== */
+
+window.openInvitation =
+    function() {
+
+        designScreen.classList.add(
+            "hidden"
+        );
+
+
+        document.getElementById(
+            "invitation"
+        ).style.display =
+            "block";
+
+
+        setTimeout(
+            function() {
+
+                designScreen.style.display =
+                    "none";
+
+            },
+            800
+        );
+
+    };
+
+}
 
 </script>
-
 
 </body>
 
