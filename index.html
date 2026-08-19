@@ -6,12 +6,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Luna | Rəqəmsal Dəvətnamələr</title>
+<title>Luna — Digital Invitations</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
 
 <style>
 
@@ -21,31 +21,77 @@
     box-sizing:border-box;
 }
 
+:root{
+    --cream:#f6f0ea;
+    --paper:#fffdf9;
+    --brown:#4b3833;
+    --muted:#806e67;
+    --rose:#b98d80;
+    --dark:#211816;
+}
+
 html{
     scroll-behavior:smooth;
 }
 
 body{
-    font-family:"Montserrat",sans-serif;
-    color:#3e302d;
 
     background:
-        radial-gradient(circle at 10% 10%,rgba(255,255,255,.8),transparent 28%),
-        radial-gradient(circle at 90% 80%,rgba(184,145,135,.18),transparent 30%),
-        #f5ece8;
+        radial-gradient(
+            circle at 10% 5%,
+            rgba(255,255,255,.95),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 35%,
+            rgba(201,160,149,.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 30% 80%,
+            rgba(220,190,175,.18),
+            transparent 30%
+        ),
+        #eee4de;
+
+    color:var(--brown);
+
+    font-family:"DM Sans",sans-serif;
+
+    overflow-x:hidden;
+}
+
+body:before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.18;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+
+    z-index:9999;
+
+    mix-blend-mode:multiply;
 }
 
 a{
-    text-decoration:none;
     color:inherit;
+    text-decoration:none;
 }
 
 
 /* =========================
-   NAV
+NAV
 ========================= */
 
-nav{
+.nav{
 
     position:fixed;
 
@@ -54,166 +100,274 @@ nav{
 
     width:100%;
 
-    z-index:1000;
+    z-index:500;
 
-    padding:24px 6%;
+    padding:20px 5%;
 
     display:flex;
 
-    justify-content:space-between;
-
     align-items:center;
 
-    background:rgba(250,244,241,.75);
+    justify-content:space-between;
 
-    backdrop-filter:blur(18px);
+    background:rgba(246,240,234,.72);
 
-    border-bottom:1px solid rgba(80,50,45,.08);
+    backdrop-filter:blur(22px);
+
+    border-bottom:1px solid rgba(75,56,51,.08);
 }
 
 .logo{
 
-    font-family:"Cormorant Garamond",serif;
+    font-family:"Italiana",serif;
 
-    font-size:36px;
+    font-size:38px;
 
     letter-spacing:2px;
 }
 
-.nav-links{
+.nav-center{
 
     display:flex;
 
-    gap:35px;
+    gap:34px;
 
-    font-size:10px;
+    font-size:9px;
 
     letter-spacing:2px;
 
     text-transform:uppercase;
 }
 
-.nav-links a:hover{
-    color:#a36e65;
+.nav-center a{
+
+    position:relative;
+
+    transition:.3s;
+}
+
+.nav-center a:after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:1px;
+
+    background:var(--rose);
+
+    transition:.3s;
+}
+
+.nav-center a:hover:after{
+    width:100%;
+}
+
+.language{
+
+    position:relative;
+}
+
+.language-button{
+
+    border:1px solid rgba(75,56,51,.25);
+
+    background:transparent;
+
+    padding:9px 14px;
+
+    border-radius:30px;
+
+    font-size:9px;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    color:var(--brown);
+}
+
+.languages{
+
+    position:absolute;
+
+    top:43px;
+
+    right:0;
+
+    width:120px;
+
+    padding:8px;
+
+    background:#fffaf6;
+
+    border:1px solid rgba(75,56,51,.12);
+
+    box-shadow:0 20px 50px rgba(50,30,25,.12);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(-5px);
+
+    transition:.3s;
+}
+
+.language:hover .languages{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+}
+
+.languages button{
+
+    display:block;
+
+    width:100%;
+
+    border:0;
+
+    background:none;
+
+    padding:11px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    color:var(--brown);
+}
+
+.languages button:hover{
+    background:#eee2dc;
 }
 
 
 /* =========================
-   HERO
+HERO
 ========================= */
 
 .hero{
 
     min-height:100vh;
 
-    padding:150px 7% 100px;
+    padding:150px 6% 90px;
+
+    position:relative;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    align-items:center;
+
+    gap:60px;
+
+    overflow:hidden;
+}
+
+.hero-copy{
+
+    max-width:620px;
+
+    padding-left:5%;
+}
+
+.eyebrow{
 
     display:flex;
 
     align-items:center;
 
-    justify-content:center;
+    gap:15px;
 
-    text-align:center;
+    font-size:9px;
 
-    position:relative;
-
-    overflow:hidden;
-}
-
-.hero::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:600px;
-    height:600px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(203,164,153,.25),
-            transparent 70%
-        );
-
-    top:-200px;
-    left:-200px;
-}
-
-.hero-content{
-    position:relative;
-    z-index:2;
-}
-
-.hero-small{
-
-    font-size:10px;
-
-    letter-spacing:7px;
+    letter-spacing:5px;
 
     text-transform:uppercase;
 
-    color:#9d6b63;
+    color:var(--rose);
 
-    margin-bottom:30px;
+    margin-bottom:25px;
+}
+
+.eyebrow:before{
+
+    content:"";
+
+    width:40px;
+
+    height:1px;
+
+    background:var(--rose);
 }
 
 .hero h1{
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:clamp(70px,12vw,150px);
+    font-size:clamp(70px,9vw,130px);
 
-    font-weight:300;
+    line-height:.76;
 
-    line-height:.8;
+    font-weight:400;
 
-    color:#5c403b;
+    letter-spacing:-3px;
 }
 
-.hero h1 span{
+.hero h1 em{
 
     display:block;
 
+    color:#a9786d;
+
     font-style:italic;
 
-    color:#a36f66;
+    padding-left:60px;
 
-    font-size:.55em;
-
-    margin:15px 0;
+    margin-top:14px;
 }
 
-.hero-text{
+.hero-description{
 
-    max-width:550px;
+    max-width:470px;
 
-    margin:45px auto;
+    margin:45px 0 35px;
 
-    line-height:2;
-
-    color:#796762;
+    color:var(--muted);
 
     font-size:13px;
+
+    line-height:2;
 }
 
-.hero-buttons{
+.hero-actions{
 
     display:flex;
 
-    justify-content:center;
+    align-items:center;
 
-    gap:15px;
+    gap:14px;
 
     flex-wrap:wrap;
 }
 
-.btn{
+.button{
 
-    padding:16px 32px;
+    padding:15px 27px;
 
     border-radius:50px;
 
@@ -223,71 +377,490 @@ nav{
 
     text-transform:uppercase;
 
-    transition:.3s;
+    transition:.4s;
 }
 
-.btn-primary{
-
-    background:#5c403b;
+.button-dark{
 
     color:white;
+
+    background:var(--brown);
+
+    box-shadow:0 15px 35px rgba(60,40,35,.18);
 }
 
-.btn-secondary{
+.button-light{
 
-    border:1px solid #a98379;
+    border:1px solid rgba(75,56,51,.25);
 }
 
-.btn:hover{
+.button:hover{
 
     transform:translateY(-4px);
 
-    box-shadow:0 15px 30px rgba(70,40,35,.15);
+    box-shadow:0 18px 40px rgba(60,40,35,.16);
 }
 
 
 /* =========================
-   SECTION
+HERO INVITATION
 ========================= */
 
-section{
-    padding:120px 7%;
+.hero-visual{
+
+    min-height:650px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 }
 
-.section-head{
+.glow{
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(188,142,128,.28),
+            transparent 68%
+        );
+
+    filter:blur(8px);
+}
+
+.envelope{
+
+    width:400px;
+
+    height:290px;
+
+    position:absolute;
+
+    bottom:100px;
+
+    left:50%;
+
+    transform:translateX(-50%) rotate(-6deg);
+
+    background:
+        linear-gradient(
+            145deg,
+            #d7b6aa,
+            #b8897d
+        );
+
+    box-shadow:
+        0 35px 70px rgba(70,40,35,.24);
+
+    border-radius:4px;
+
+    z-index:2;
+
+    transition:.6s;
+}
+
+.hero-visual:hover .envelope{
+
+    transform:
+        translateX(-50%)
+        rotate(-3deg)
+        translateY(15px);
+}
+
+.envelope:before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    clip-path:polygon(0 0,100% 0,50% 57%);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ecd5cc,
+            #c79b8e
+        );
+
+    transform-origin:top;
+
+}
+
+.envelope-name{
+
+    position:absolute;
+
+    z-index:3;
+
+    width:100%;
+
+    top:150px;
 
     text-align:center;
 
-    margin-bottom:70px;
+    color:#fff9f5;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:28px;
+
+    letter-spacing:2px;
+}
+
+.invitation-paper{
+
+    position:absolute;
+
+    width:270px;
+
+    min-height:400px;
+
+    z-index:5;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffdf9,
+            #f6eee7
+        );
+
+    box-shadow:
+        0 30px 70px rgba(50,30,25,.20);
+
+    padding:45px 25px;
+
+    text-align:center;
+
+    transform:
+        rotate(7deg)
+        translate(40px,-45px);
+
+    transition:.7s;
+}
+
+.hero-visual:hover .invitation-paper{
+
+    transform:
+        rotate(3deg)
+        translate(50px,-80px);
+}
+
+.paper-border{
+
+    position:absolute;
+
+    inset:12px;
+
+    border:1px solid #c6a49a;
+
+    pointer-events:none;
+}
+
+.paper-small{
+
+    font-size:7px;
+
+    letter-spacing:4px;
+
+    margin-bottom:35px;
+
+    color:#a37a70;
+}
+
+.paper-names{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:52px;
+
+    line-height:.72;
+
+    color:#523b36;
+}
+
+.paper-and{
+
+    font-family:"Italiana",serif;
+
+    font-size:28px;
+
+    margin:15px 0;
+}
+
+.paper-date{
+
+    margin-top:35px;
+
+    font-size:7px;
+
+    letter-spacing:3px;
+}
+
+.floating{
+
+    position:absolute;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:17px;
+
+    font-style:italic;
+
+    color:#927068;
+
+    animation:float 5s ease-in-out infinite;
+}
+
+.float-one{
+
+    top:80px;
+    right:5%;
+}
+
+.float-two{
+
+    bottom:70px;
+    left:8%;
+
+    animation-delay:1.5s;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0) rotate(-4deg);
+    }
+
+    50%{
+        transform:translateY(-15px) rotate(2deg);
+    }
+}
+
+
+/* =========================
+INTRO
+========================= */
+
+.intro{
+
+    padding:120px 7%;
+
+    text-align:center;
+
+    background:rgba(255,250,246,.48);
+}
+
+.intro-title{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:65px;
+
+    font-weight:400;
+
+    max-width:850px;
+
+    margin:auto;
+
+    line-height:1;
+}
+
+.intro-text{
+
+    max-width:600px;
+
+    margin:30px auto;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:2;
+}
+
+
+/* =========================
+CATEGORIES
+========================= */
+
+.section{
+
+    padding:120px 6%;
+}
+
+.section-heading{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    margin-bottom:55px;
 }
 
 .section-label{
 
-    font-size:9px;
+    font-size:8px;
 
-    letter-spacing:5px;
+    letter-spacing:4px;
 
     text-transform:uppercase;
 
-    color:#a06e65;
+    color:var(--rose);
 
-    margin-bottom:18px;
+    margin-bottom:12px;
 }
 
 .section-title{
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:70px;
+    font-size:65px;
 
     font-weight:400;
 
-    color:#5c403b;
+    line-height:.9;
+}
+
+.section-link{
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    border-bottom:1px solid #a9857c;
+
+    padding-bottom:5px;
+}
+
+.categories{
+
+    display:grid;
+
+    grid-template-columns:
+        1.35fr
+        1fr
+        1fr;
+
+    grid-template-rows:
+        270px
+        270px;
+
+    gap:18px;
+}
+
+.category{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:end;
+
+    padding:30px;
+
+    color:white;
+
+    background-size:cover;
+
+    background-position:center;
+
+    transition:.6s;
+
+    box-shadow:0 20px 50px rgba(60,40,35,.12);
+}
+
+.category:before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 30%,
+            rgba(30,20,18,.65)
+        );
+}
+
+.category:hover{
+
+    transform:translateY(-8px);
+}
+
+.category:first-child{
+
+    grid-row:span 2;
+
+    background-image:
+        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90");
+}
+
+.category:nth-child(2){
+
+    background-image:
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=90");
+}
+
+.category:nth-child(3){
+
+    background-image:
+        url("https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1000&q=90");
+}
+
+.category:nth-child(4){
+
+    background-image:
+        url("https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=90");
+}
+
+.category-content{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.category-name{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:40px;
+}
+
+.category-small{
+
+    font-size:7px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    opacity:.8;
 }
 
 
 /* =========================
-   PACKAGES
+PACKAGES
 ========================= */
 
 .packages{
@@ -297,20 +870,16 @@ section{
     grid-template-columns:
         repeat(3,1fr);
 
-    gap:25px;
-
-    max-width:1250px;
-
-    margin:auto;
+    gap:20px;
 }
 
 .package{
 
+    min-height:540px;
+
     position:relative;
 
-    padding:55px 35px;
-
-    min-height:480px;
+    padding:38px;
 
     display:flex;
 
@@ -320,88 +889,18 @@ section{
 
     overflow:hidden;
 
-    border:1px solid rgba(90,55,50,.15);
+    background:#faf4ef;
 
-    background:
-        rgba(255,255,255,.48);
-
-    backdrop-filter:blur(12px);
+    border:1px solid rgba(70,45,40,.10);
 
     transition:.5s;
 }
 
 .package:hover{
 
-    transform:translateY(-12px);
+    transform:translateY(-10px);
 
-    box-shadow:
-        0 35px 70px rgba(70,40,35,.15);
-}
-
-.package-number{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-
-    color:#a06e65;
-}
-
-.package h3{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:52px;
-
-    font-weight:400;
-
-    margin:20px 0;
-}
-
-.package p{
-
-    font-size:12px;
-
-    line-height:2;
-
-    color:#796762;
-}
-
-.package ul{
-
-    list-style:none;
-
-    margin:25px 0;
-}
-
-.package li{
-
-    font-size:11px;
-
-    padding:8px 0;
-
-    border-bottom:1px solid rgba(90,55,50,.08);
-}
-
-.package-btn{
-
-    display:block;
-
-    padding:15px;
-
-    text-align:center;
-
-    border-radius:40px;
-
-    background:#5c403b;
-
-    color:white;
-
-    font-size:9px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
+    box-shadow:0 35px 70px rgba(60,40,35,.15);
 }
 
 .package:nth-child(2){
@@ -409,8 +908,8 @@ section{
     background:
         linear-gradient(
             145deg,
-            #eee0db,
-            #dfc8c1
+            #ead7d0,
+            #d3aea4
         );
 }
 
@@ -419,128 +918,433 @@ section{
     background:
         linear-gradient(
             145deg,
-            #302321,
-            #62443e
+            #211816,
+            #49312c
         );
 
     color:white;
 }
 
-.package:nth-child(3) h3{
-    color:white;
-}
-
-.package:nth-child(3) p{
-    color:#dbc9c4;
-}
-
-.package:nth-child(3) li{
-    border-color:rgba(255,255,255,.12);
-}
-
-.package:nth-child(3) .package-btn{
-
-    background:#f4e7e2;
-
-    color:#4d3631;
-}
-
-
-/* =========================
-   CATEGORIES
-========================= */
-
-.categories{
+.package-top{
 
     display:flex;
 
-    justify-content:center;
+    justify-content:space-between;
 
-    flex-wrap:wrap;
+    font-size:8px;
 
-    gap:12px;
+    letter-spacing:3px;
+
+    text-transform:uppercase;
 }
 
-.category{
+.package-number{
+    opacity:.65;
+}
 
-    padding:13px 25px;
+.package h3{
 
-    border:1px solid #c9aaa3;
+    font-family:"Cormorant Garamond",serif;
 
-    border-radius:40px;
+    font-size:65px;
+
+    font-weight:400;
+
+    margin-top:45px;
+}
+
+.package-description{
+
+    margin-top:10px;
+
+    max-width:320px;
+
+    font-size:11px;
+
+    line-height:1.9;
+
+    opacity:.72;
+}
+
+.package-features{
+
+    list-style:none;
+
+    margin-top:35px;
+}
+
+.package-features li{
 
     font-size:10px;
 
-    letter-spacing:1px;
+    padding:9px 0;
 
-    transition:.3s;
+    border-bottom:1px solid rgba(70,45,40,.10);
 }
 
-.category:hover{
+.package:last-child .package-features li{
 
-    background:#5c403b;
+    border-color:rgba(255,255,255,.12);
+}
 
-    color:white;
+.package-link{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-top:25px;
+
+    border-top:1px solid rgba(70,45,40,.12);
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+.package:last-child .package-link{
+
+    border-color:rgba(255,255,255,.15);
 }
 
 
 /* =========================
-   FOOTER
+PROCESS
+========================= */
+
+.process{
+
+    background:#31231f;
+
+    color:#f5e9e3;
+}
+
+.process .section-label{
+    color:#c9a399;
+}
+
+.process .section-title{
+    color:white;
+}
+
+.steps{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:30px;
+}
+
+.step{
+
+    border-top:1px solid rgba(255,255,255,.18);
+
+    padding-top:25px;
+}
+
+.step-number{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:30px;
+
+    color:#cba79d;
+}
+
+.step h3{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:30px;
+
+    font-weight:400;
+
+    margin:25px 0 12px;
+}
+
+.step p{
+
+    font-size:10px;
+
+    line-height:1.9;
+
+    opacity:.65;
+}
+
+
+/* =========================
+CTA
+========================= */
+
+.cta{
+
+    padding:150px 7%;
+
+    text-align:center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(203,165,153,.25),
+            transparent 60%
+        );
+}
+
+.cta h2{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:85px;
+
+    font-weight:400;
+
+    line-height:.85;
+}
+
+.cta p{
+
+    max-width:500px;
+
+    margin:30px auto;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:2;
+}
+
+
+/* =========================
+FOOTER
 ========================= */
 
 footer{
 
-    padding:80px 20px;
+    background:#1f1715;
 
-    text-align:center;
+    color:#d9c6bf;
 
-    background:#3f2d2a;
+    padding:70px 6% 30px;
+}
 
-    color:#eadbd6;
+.footer-main{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:40px;
+
+    padding-bottom:50px;
 }
 
 .footer-logo{
 
-    font-family:"Cormorant Garamond",serif;
+    font-family:"Italiana",serif;
 
-    font-size:60px;
+    font-size:65px;
 
-    margin-bottom:15px;
+    color:white;
 }
 
-footer p{
+.footer-links{
 
-    font-size:9px;
+    display:flex;
+
+    gap:50px;
+}
+
+.footer-column h4{
+
+    font-size:8px;
 
     letter-spacing:3px;
 
     text-transform:uppercase;
 
+    margin-bottom:20px;
+
+    color:#c49c91;
+}
+
+.footer-column a{
+
+    display:block;
+
+    font-size:10px;
+
+    margin-bottom:12px;
+
     opacity:.7;
+}
+
+.footer-bottom{
+
+    border-top:1px solid rgba(255,255,255,.10);
+
+    padding-top:25px;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    opacity:.5;
 }
 
 
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
-@media(max-width:800px){
+@media(max-width:900px){
 
-    nav{
-        padding:18px 5%;
+    .nav-center{
+        display:none;
     }
 
-    .nav-links{
-        gap:12px;
-        font-size:8px;
+    .hero{
+
+        grid-template-columns:1fr;
+
+        padding-top:130px;
+
+        text-align:center;
+    }
+
+    .hero-copy{
+        padding-left:0;
+        margin:auto;
+    }
+
+    .eyebrow{
+        justify-content:center;
+    }
+
+    .hero h1 em{
+        padding-left:0;
+    }
+
+    .hero-description{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-actions{
+        justify-content:center;
+    }
+
+    .hero-visual{
+        min-height:560px;
+    }
+
+    .categories{
+
+        grid-template-columns:1fr 1fr;
+
+        grid-template-rows:
+            250px
+            250px;
+    }
+
+    .category:first-child{
+        grid-row:span 2;
     }
 
     .packages{
         grid-template-columns:1fr;
     }
 
+    .steps{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .nav{
+        padding:16px 5%;
+    }
+
+    .logo{
+        font-size:32px;
+    }
+
+    .hero{
+        padding-left:5%;
+        padding-right:5%;
+    }
+
+    .hero h1{
+        font-size:70px;
+    }
+
+    .hero-visual{
+        transform:scale(.85);
+        margin-left:-30px;
+        margin-right:-30px;
+    }
+
+    .intro-title{
+        font-size:48px;
+    }
+
+    .section{
+        padding:90px 5%;
+    }
+
+    .section-heading{
+        display:block;
+    }
+
+    .section-link{
+        display:inline-block;
+        margin-top:20px;
+    }
+
     .section-title{
         font-size:55px;
+    }
+
+    .categories{
+
+        grid-template-columns:1fr;
+
+        grid-template-rows:
+            repeat(4,300px);
+    }
+
+    .category:first-child{
+        grid-row:auto;
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .cta h2{
+        font-size:60px;
+    }
+
+    .footer-main{
+        display:block;
+    }
+
+    .footer-links{
+        margin-top:40px;
+
+        flex-wrap:wrap;
+
+        gap:30px;
     }
 
 }
@@ -553,333 +1357,867 @@ footer p{
 <body>
 
 
-<nav>
+<!-- =========================
+NAVIGATION
+========================= -->
 
-    <a href="index.html" class="logo">
-        Luna
-    </a>
+<nav class="nav">
 
-    <div class="nav-links">
+<a href="index.html" class="logo">
+    Luna
+</a>
 
-        <a href="#packages">
-            Paketlər
-        </a>
+<div class="nav-center">
 
-        <a href="pricing.html">
-            Qiymətlər
-        </a>
+<a href="#collections">
+    Kolleksiyalar
+</a>
 
-        <a href="#categories">
-            Nümunələr
-        </a>
+<a href="#packages">
+    Paketlər
+</a>
 
-    </div>
+<a href="pricing.html">
+    Qiymətlər
+</a>
+
+</div>
+
+
+<div class="language">
+
+<button class="language-button">
+    AZ ▾
+</button>
+
+<div class="languages">
+
+<button onclick="setLanguage('az')">
+    🇦🇿 Azərbaycan
+</button>
+
+<button onclick="setLanguage('tr')">
+    🇹🇷 Türkçe
+</button>
+
+<button onclick="setLanguage('en')">
+    🇬🇧 English
+</button>
+
+</div>
+
+</div>
 
 </nav>
 
 
-<!-- HERO -->
+
+<!-- =========================
+HERO
+========================= -->
 
 <header class="hero">
 
-    <div class="hero-content">
 
-        <div class="hero-small">
-            Digital Invitations
-        </div>
+<div class="hero-copy">
 
-        <h1>
+<div class="eyebrow">
+    Digital Invitations
+</div>
 
-            Your story
+<h1>
 
-            <span>
-                beautifully invited
-            </span>
+    Your moment.
 
-        </h1>
+    <em>
+        Your story.
+    </em>
 
-        <p class="hero-text">
+</h1>
 
-            Ən xüsusi günləriniz üçün
-            zərif, interaktiv və
-            yadda qalan rəqəmsal
-            dəvətnamələr.
+<p class="hero-description">
 
-        </p>
+    Ən xüsusi günləriniz üçün
+    adi dəvətnamələrdən daha artığı.
+    Zərif dizayn, canlı animasiyalar
+    və sizin hekayənizə uyğun
+    rəqəmsal təcrübə.
 
-        <div class="hero-buttons">
+</p>
 
-            <a
-            href="#packages"
-            class="btn btn-primary"
-            >
-                Kataloqa bax
-            </a>
+<div class="hero-actions">
 
-            <a
-            href="pricing.html"
-            class="btn btn-secondary"
-            >
-                Qiymətlər
-            </a>
+<a
+href="#packages"
+class="button button-dark"
+>
+    Dəvətnamələri kəşf et
+</a>
 
-        </div>
+<a
+href="#collections"
+class="button button-light"
+>
+    Kolleksiyalara bax
+</a>
 
-    </div>
+</div>
+
+</div>
+
+
+
+<!-- INVITATION -->
+
+<div class="hero-visual">
+
+<div class="glow"></div>
+
+<div class="floating float-one">
+    made with love
+</div>
+
+<div class="floating float-two">
+    your forever starts here
+</div>
+
+
+<div class="envelope">
+
+<div class="envelope-name">
+    Aysel & Murad
+</div>
+
+</div>
+
+
+<div class="invitation-paper">
+
+<div class="paper-border"></div>
+
+<div class="paper-small">
+    THE WEDDING OF
+</div>
+
+<div class="paper-names">
+    Aysel
+</div>
+
+<div class="paper-and">
+    &
+</div>
+
+<div class="paper-names">
+    Murad
+</div>
+
+<div class="paper-date">
+    12 · 09 · 2026
+</div>
+
+</div>
+
+</div>
 
 </header>
 
 
-<!-- PACKAGES -->
 
-<section id="packages">
+<!-- =========================
+INTRO
+========================= -->
 
-    <div class="section-head">
+<section class="intro">
 
-        <div class="section-label">
-            Choose your experience
-        </div>
+<div class="section-label">
+    More than an invitation
+</div>
 
-        <h2 class="section-title">
-            Paketlər
-        </h2>
+<h2 class="intro-title">
 
-    </div>
+    An invitation should feel
+    like the beginning of
+    your story.
 
+</h2>
 
-    <div class="packages">
+<p class="intro-text">
 
+    Luna ilə dəvətnaməniz sadəcə
+    bir link deyil. Qonaqlarınızın
+    ilk andan hiss edəcəyi xüsusi
+    rəqəmsal təcrübədir.
 
-        <!-- BASIC -->
-
-        <article class="package">
-
-            <div>
-
-                <div class="package-number">
-                    01
-                </div>
-
-                <h3>
-                    Basic
-                </h3>
-
-                <p>
-                    Sadə, elegant və
-                    gözəl rəqəmsal
-                    dəvətnamə.
-                </p>
-
-                <ul>
-
-                    <li>
-                        ✓ Premium dizaynlar
-                    </li>
-
-                    <li>
-                        ✓ Mobil uyğunluq
-                    </li>
-
-                    <li>
-                        ✓ Mətn və məlumat dəyişimi
-                    </li>
-
-                    <li>
-                        ✓ Şəxsi link
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <a
-            href="catalog/basic.html"
-            class="package-btn"
-            >
-                Basic kataloqu
-            </a>
-
-        </article>
-
-
-        <!-- PREMIUM -->
-
-        <article class="package">
-
-            <div>
-
-                <div class="package-number">
-                    02
-                </div>
-
-                <h3>
-                    Premium
-                </h3>
-
-                <p>
-                    Daha interaktiv və
-                    xüsusi hazırlanmış
-                    invitation experience.
-                </p>
-
-                <ul>
-
-                    <li>
-                        ✓ Premium dizaynlar
-                    </li>
-
-                    <li>
-                        ✓ Animasiya
-                    </li>
-
-                    <li>
-                        ✓ Countdown
-                    </li>
-
-                    <li>
-                        ✓ Gallery
-                    </li>
-
-                    <li>
-                        ✓ RSVP
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <a
-            href="catalog/premium.html"
-            class="package-btn"
-            >
-                Premium kataloqu
-            </a>
-
-        </article>
-
-
-        <!-- LUXURY -->
-
-        <article class="package">
-
-            <div>
-
-                <div class="package-number">
-                    03
-                </div>
-
-                <h3>
-                    Luxury
-                </h3>
-
-                <p>
-                    Tam fərdiləşdirilmiş,
-                    cinematic və
-                    yüksək səviyyəli
-                    digital invitation.
-                </p>
-
-                <ul>
-
-                    <li>
-                        ✓ Exclusive dizayn
-                    </li>
-
-                    <li>
-                        ✓ 3D opening
-                    </li>
-
-                    <li>
-                        ✓ Parallax
-                    </li>
-
-                    <li>
-                        ✓ Music
-                    </li>
-
-                    <li>
-                        ✓ RSVP + Gallery
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <a
-            href="catalog/luxury.html"
-            class="package-btn"
-            >
-                Luxury kataloqu
-            </a>
-
-        </article>
-
-
-    </div>
+</p>
 
 </section>
 
 
-<!-- CATEGORIES -->
 
-<section id="categories">
+<!-- =========================
+COLLECTIONS
+========================= -->
 
-    <div class="section-head">
+<section class="section" id="collections">
 
-        <div class="section-label">
-            For every beautiful occasion
-        </div>
+<div class="section-heading">
 
-        <h2 class="section-title">
-            Dəvətnamələr
-        </h2>
+<div>
 
-    </div>
+<div class="section-label">
+    Choose your occasion
+</div>
+
+<h2 class="section-title">
+    Kolleksiyalar
+</h2>
+
+</div>
+
+<a
+href="catalog/premium.html"
+class="section-link"
+>
+    Bütün dizaynlar →
+</a>
+
+</div>
 
 
-    <div class="categories">
+<div class="categories">
 
-        <a class="category"
-        href="catalog/basic.html">
-            Toy
-        </a>
 
-        <a class="category"
-        href="catalog/premium.html">
-            Nişan
-        </a>
+<a
+href="catalog/luxury.html"
+class="category"
+>
 
-        <a class="category"
-        href="catalog/premium.html">
-            Xına
-        </a>
+<div class="category-content">
 
-        <a class="category"
-        href="catalog/basic.html">
-            Ad günü
-        </a>
+<div class="category-small">
+    Collection 01
+</div>
 
-        <a class="category"
-        href="catalog/luxury.html">
-            Luxury Wedding
-        </a>
+<div class="category-name">
+    Wedding
+</div>
 
-    </div>
+</div>
+
+</a>
+
+
+<a
+href="catalog/premium.html"
+class="category"
+>
+
+<div class="category-content">
+
+<div class="category-small">
+    Collection 02
+</div>
+
+<div class="category-name">
+    Engagement
+</div>
+
+</div>
+
+</a>
+
+
+<a
+href="catalog/premium.html"
+class="category"
+>
+
+<div class="category-content">
+
+<div class="category-small">
+    Collection 03
+</div>
+
+<div class="category-name">
+    Henna
+</div>
+
+</div>
+
+</a>
+
+
+<a
+href="catalog/basic.html"
+class="category"
+>
+
+<div class="category-content">
+
+<div class="category-small">
+    Collection 04
+</div>
+
+<div class="category-name">
+    Birthday
+</div>
+
+</div>
+
+</a>
+
+
+</div>
 
 </section>
 
+
+
+<!-- =========================
+PACKAGES
+========================= -->
+
+<section class="section" id="packages">
+
+<div class="section-heading">
+
+<div>
+
+<div class="section-label">
+    Find your experience
+</div>
+
+<h2 class="section-title">
+    Paketlər
+</h2>
+
+</div>
+
+<a
+href="pricing.html"
+class="section-link"
+>
+    Qiymətlər →
+</a>
+
+</div>
+
+
+<div class="packages">
+
+
+<!-- BASIC -->
+
+<article class="package">
+
+<div>
+
+<div class="package-top">
+
+<span>
+    Luna / 01
+</span>
+
+<span class="package-number">
+    Basic
+</span>
+
+</div>
+
+<h3>
+    Basic
+</h3>
+
+<p class="package-description">
+
+Sadə və elegant görünüşü
+sevənlər üçün zərif
+rəqəmsal dəvətnamələr.
+
+</p>
+
+<ul class="package-features">
+
+<li>
+    ✓ Premium dizayn seçimi
+</li>
+
+<li>
+    ✓ Şəxsi dəvətnamə linki
+</li>
+
+<li>
+    ✓ Məlumatların dəyişdirilməsi
+</li>
+
+<li>
+    ✓ Mobil uyğun dizayn
+</li>
+
+</ul>
+
+</div>
+
+<a
+href="catalog/basic.html"
+class="package-link"
+>
+
+<span>
+    Kataloqa bax
+</span>
+
+<span>
+    →
+</span>
+
+</a>
+
+</article>
+
+
+
+<!-- PREMIUM -->
+
+<article class="package">
+
+<div>
+
+<div class="package-top">
+
+<span>
+    Luna / 02
+</span>
+
+<span class="package-number">
+    Premium
+</span>
+
+</div>
+
+<h3>
+    Premium
+</h3>
+
+<p class="package-description">
+
+Daha interaktiv, hərəkətli
+və qonaqlarınız üçün
+xüsusi rəqəmsal təcrübə.
+
+</p>
+
+<ul class="package-features">
+
+<li>
+    ✓ Premium invitation design
+</li>
+
+<li>
+    ✓ Opening animation
+</li>
+
+<li>
+    ✓ Countdown
+</li>
+
+<li>
+    ✓ Photo gallery
+</li>
+
+<li>
+    ✓ RSVP
+</li>
+
+</ul>
+
+</div>
+
+<a
+href="catalog/premium.html"
+class="package-link"
+>
+
+<span>
+    Kataloqa bax
+</span>
+
+<span>
+    →
+</span>
+
+</a>
+
+</article>
+
+
+
+<!-- LUXURY -->
+
+<article class="package">
+
+<div>
+
+<div class="package-top">
+
+<span>
+    Luna / 03
+</span>
+
+<span class="package-number">
+    Luxury
+</span>
+
+</div>
+
+<h3>
+    Luxury
+</h3>
+
+<p class="package-description">
+
+Cinematic, 3D və tam
+fərdiləşdirilmiş premium
+dəvətnamə təcrübəsi.
+
+</p>
+
+<ul class="package-features">
+
+<li>
+    ✓ Exclusive design
+</li>
+
+<li>
+    ✓ 3D opening
+</li>
+
+<li>
+    ✓ Cinematic animation
+</li>
+
+<li>
+    ✓ Music
+</li>
+
+<li>
+    ✓ Gallery + RSVP + Map
+</li>
+
+</ul>
+
+</div>
+
+<a
+href="catalog/luxury.html"
+class="package-link"
+>
+
+<span>
+    Kataloqa bax
+</span>
+
+<span>
+    →
+</span>
+
+</a>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+PROCESS
+========================= -->
+
+<section class="section process">
+
+<div class="section-heading">
+
+<div>
+
+<div class="section-label">
+    How it works
+</div>
+
+<h2 class="section-title">
+    Necə işləyir?
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="steps">
+
+
+<div class="step">
+
+<div class="step-number">
+    01
+</div>
+
+<h3>
+    Paket seç
+</h3>
+
+<p>
+    Sizə uyğun Luna paketini
+    seçərək həmin paketin
+    xüsusi kataloquna keçin.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+    02
+</div>
+
+<h3>
+    Dizayn seç
+</h3>
+
+<p>
+    Kataloqdan bəyəndiyiniz
+    invitation dizaynını açın
+    və canlı görünüşünə baxın.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+    03
+</div>
+
+<h3>
+    Məlumatları göndər
+</h3>
+
+<p>
+    Adlar, tarix, məkan,
+    şəkillər, musiqi və digər
+    məlumatları doldurun.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+    04
+</div>
+
+<h3>
+    Linkinizi paylaş
+</h3>
+
+<p>
+    Hazır dəvətnaməniz üçün
+    xüsusi link əldə edin və
+    qonaqlarınızla paylaşın.
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+CTA
+========================= -->
+
+<section class="cta">
+
+<div class="section-label">
+    Your invitation awaits
+</div>
+
+<h2>
+    Let your story<br>
+    begin.
+</h2>
+
+<p>
+
+Ən gözəl anlarınız üçün
+Luna ilə fərqli bir dəvətnamə
+təcrübəsi yaradın.
+
+</p>
+
+<a
+href="#packages"
+class="button button-dark"
+>
+    Dizaynları kəşf et
+</a>
+
+</section>
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
 
 <footer>
 
-    <div class="footer-logo">
-        Luna
-    </div>
+<div class="footer-main">
 
-    <p>
-        Digital invitations for beautiful moments
-    </p>
+<div class="footer-logo">
+    Luna
+</div>
+
+
+<div class="footer-links">
+
+<div class="footer-column">
+
+<h4>
+    Explore
+</h4>
+
+<a href="#collections">
+    Kolleksiyalar
+</a>
+
+<a href="#packages">
+    Paketlər
+</a>
+
+<a href="pricing.html">
+    Qiymətlər
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+    Occasions
+</h4>
+
+<a href="catalog/premium.html">
+    Wedding
+</a>
+
+<a href="catalog/premium.html">
+    Engagement
+</a>
+
+<a href="catalog/premium.html">
+    Henna
+</a>
+
+<a href="catalog/basic.html">
+    Birthday
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+© 2026 Luna Digital Invitations
+
+</div>
 
 </footer>
+
+
+
+<script>
+
+const translations = {
+
+    az: {
+        label:"AZ",
+        collections:"Kolleksiyalar",
+        packages:"Paketlər",
+        pricing:"Qiymətlər"
+    },
+
+    tr: {
+        label:"TR",
+        collections:"Koleksiyonlar",
+        packages:"Paketler",
+        pricing:"Fiyatlar"
+    },
+
+    en: {
+        label:"EN",
+        collections:"Collections",
+        packages:"Packages",
+        pricing:"Pricing"
+    }
+
+};
+
+
+function setLanguage(language){
+
+    const data = translations[language];
+
+    document.querySelector(".language-button").innerHTML =
+        data.label + " ▾";
+
+    const links =
+        document.querySelectorAll(".nav-center a");
+
+    if(links.length >= 3){
+
+        links[0].textContent =
+            data.collections;
+
+        links[1].textContent =
+            data.packages;
+
+        links[2].textContent =
+            data.pricing;
+
+    }
+
+    localStorage.setItem(
+        "luna_language",
+        language
+    );
+
+}
+
+
+const savedLanguage =
+    localStorage.getItem("luna_language");
+
+if(savedLanguage){
+
+    setLanguage(savedLanguage);
+
+}
+
+</script>
 
 
 </body>
