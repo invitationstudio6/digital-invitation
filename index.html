@@ -5,19 +5,12 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Wedding Invitation</title>
 
-
     <style>
-
-        /* =========================
-           GENERAL
-        ========================= */
 
         * {
             margin: 0;
@@ -47,7 +40,6 @@
         ========================= */
 
         .hero {
-
             min-height: 100vh;
 
             background:
@@ -92,11 +84,8 @@
         }
 
         .button {
-
             display: inline-block;
-
             margin-top: 35px;
-
             padding: 14px 32px;
 
             border: 1px solid white;
@@ -119,70 +108,48 @@
         ========================= */
 
         .countdown-section {
-
             background: #fffdf9;
-
             padding: 80px 20px;
-
             text-align: center;
         }
 
         .section-small-title {
-
             font-size: 13px;
-
             letter-spacing: 5px;
-
             text-transform: uppercase;
-
             color: #9a8776;
-
             margin-bottom: 35px;
         }
 
         .countdown {
-
             display: flex;
-
             justify-content: center;
-
             gap: 20px;
-
             flex-wrap: wrap;
         }
 
         .time-box {
-
             min-width: 110px;
-
             padding: 25px 15px;
 
             background: #faf7f2;
-
             border-radius: 10px;
 
             box-shadow:
-                0 8px 25px
-                rgba(0, 0, 0, 0.06);
+                0 8px 25px rgba(0, 0, 0, 0.06);
         }
 
         .time-number {
-
             display: block;
-
             font-size: 42px;
         }
 
         .time-label {
-
             display: block;
-
             margin-top: 8px;
 
             font-size: 11px;
-
             letter-spacing: 3px;
-
             text-transform: uppercase;
 
             color: #9a8776;
@@ -198,31 +165,23 @@
         }
 
         .title {
-
             text-align: center;
-
             margin-bottom: 45px;
         }
 
         .title span {
-
             display: block;
 
             font-size: 12px;
-
             letter-spacing: 4px;
-
             text-transform: uppercase;
 
             color: #9a8776;
-
             margin-bottom: 10px;
         }
 
         .title h2 {
-
             font-size: 42px;
-
             font-weight: normal;
         }
 
@@ -236,15 +195,12 @@
         }
 
         .story-text {
-
             max-width: 700px;
-
             margin: auto;
 
             text-align: center;
 
             line-height: 2;
-
             font-size: 17px;
         }
 
@@ -258,46 +214,33 @@
         }
 
         .gallery {
-
             max-width: 900px;
-
             margin: auto;
 
             display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             gap: 18px;
         }
 
         .gallery-item {
-
             overflow: hidden;
-
             border-radius: 8px;
-
             aspect-ratio: 4 / 3;
         }
 
         .gallery-item img {
-
             width: 100%;
-
             height: 100%;
 
             object-fit: cover;
-
             display: block;
 
-            transition:
-                transform 0.6s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-item:hover img {
-
-            transform:
-                scale(1.05);
+            transform: scale(1.05);
         }
 
 
@@ -306,17 +249,13 @@
         ========================= */
 
         .details {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             gap: 25px;
         }
 
         .card {
-
             background: white;
 
             padding: 40px;
@@ -326,33 +265,25 @@
             border-radius: 10px;
 
             box-shadow:
-                0 10px 30px
-                rgba(0, 0, 0, 0.05);
+                0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .icon {
-
             font-size: 35px;
-
             margin-bottom: 15px;
         }
 
         .card h3 {
-
             font-size: 22px;
-
             font-weight: normal;
-
             margin-bottom: 15px;
         }
 
         .card p {
-
             line-height: 1.8;
         }
 
         .map-button {
-
             display: inline-block;
 
             margin-top: 20px;
@@ -360,100 +291,17 @@
             padding: 12px 25px;
 
             border: 1px solid #806f61;
-
             border-radius: 25px;
 
             color: #806f61;
-
             text-decoration: none;
 
             transition: 0.3s;
         }
 
         .map-button:hover {
-
             background: #806f61;
-
             color: white;
-        }
-
-
-        /* =========================
-           RSVP
-        ========================= */
-
-        .rsvp {
-
-            background: #fffdf9;
-        }
-
-        form {
-
-            max-width: 600px;
-
-            margin: auto;
-        }
-
-        label {
-
-            display: block;
-
-            margin-bottom: 8px;
-
-            font-size: 14px;
-        }
-
-        input,
-        select,
-        textarea {
-
-            width: 100%;
-
-            padding: 14px;
-
-            margin-bottom: 22px;
-
-            border:
-                1px solid #d8cec3;
-
-            border-radius: 5px;
-
-            font-family: inherit;
-
-            font-size: 15px;
-        }
-
-        textarea {
-
-            min-height: 120px;
-
-            resize: vertical;
-        }
-
-        .submit {
-
-            width: 100%;
-
-            padding: 15px;
-
-            border: none;
-
-            border-radius: 30px;
-
-            background: #806f61;
-
-            color: white;
-
-            font-size: 15px;
-
-            letter-spacing: 2px;
-
-            cursor: pointer;
-        }
-
-        .submit:hover {
-
-            opacity: 0.85;
         }
 
 
@@ -462,44 +310,75 @@
         ========================= */
 
         .music-section {
-
             background: #faf7f2;
-
             text-align: center;
         }
 
-        .music-button {
+        .music-player {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
 
-            display: inline-flex;
 
-            align-items: center;
+        /* =========================
+           RSVP
+        ========================= */
 
-            justify-content: center;
+        .rsvp {
+            background: #fffdf9;
+        }
 
-            gap: 10px;
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
 
-            padding: 14px 28px;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
 
-            border: 1px solid #806f61;
+        input,
+        select,
+        textarea {
+            width: 100%;
 
-            border-radius: 30px;
+            padding: 14px;
+            margin-bottom: 22px;
 
-            background: transparent;
-
-            color: #806f61;
+            border: 1px solid #d8cec3;
+            border-radius: 5px;
 
             font-family: inherit;
+            font-size: 15px;
+        }
 
-            font-size: 14px;
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit {
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 30px;
+
+            background: #806f61;
+            color: white;
+
+            font-size: 15px;
+            letter-spacing: 2px;
 
             cursor: pointer;
         }
 
-        .music-button:hover {
-
-            background: #806f61;
-
-            color: white;
+        .submit:hover {
+            opacity: 0.85;
         }
 
 
@@ -508,22 +387,17 @@
         ========================= */
 
         footer {
-
             padding: 70px 20px;
 
             background: #403a35;
-
             color: white;
 
             text-align: center;
         }
 
         footer h2 {
-
             font-size: 42px;
-
             font-weight: normal;
-
             margin-bottom: 15px;
         }
 
@@ -533,13 +407,11 @@
         ========================= */
 
         .error-message {
-
             display: none;
 
             min-height: 100vh;
 
             align-items: center;
-
             justify-content: center;
 
             text-align: center;
@@ -548,34 +420,8 @@
         }
 
         .error-message h1 {
-
             font-weight: normal;
-
             margin-bottom: 15px;
-        }
-
-
-        /* =========================
-           PACKAGE BADGE
-        ========================= */
-
-        .package-badge {
-
-            display: inline-block;
-
-            margin-top: 15px;
-
-            padding: 7px 16px;
-
-            border-radius: 20px;
-
-            background: rgba(255,255,255,0.18);
-
-            font-size: 11px;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
         }
 
 
@@ -586,61 +432,48 @@
         @media (max-width: 700px) {
 
             .hero h1 {
-
                 font-size: 55px;
             }
 
             .date {
-
                 font-size: 14px;
             }
 
             .countdown {
-
                 gap: 10px;
             }
 
             .time-box {
-
                 min-width: 75px;
-
                 padding: 18px 8px;
             }
 
             .time-number {
-
                 font-size: 30px;
             }
 
             .time-label {
-
                 font-size: 9px;
-
                 letter-spacing: 1px;
             }
 
             .gallery {
-
                 grid-template-columns: 1fr;
             }
 
             .details {
-
                 grid-template-columns: 1fr;
             }
 
             section {
-
                 padding: 70px 18px;
             }
 
             .title h2 {
-
                 font-size: 32px;
             }
 
             footer h2 {
-
                 font-size: 32px;
             }
 
@@ -658,16 +491,11 @@
          ERROR
     ========================= -->
 
-    <div
-        class="error-message"
-        id="errorMessage"
-    >
+    <div class="error-message" id="errorMessage">
 
         <div>
 
-            <h1>
-                Invitation not found
-            </h1>
+            <h1>Invitation not found</h1>
 
             <p>
                 Please check your invitation link.
@@ -694,22 +522,11 @@
                 Aysel & Murad
             </h1>
 
-            <div
-                class="date"
-                id="weddingDateText"
-            >
+            <div class="date" id="weddingDateText">
                 12 September 2026 · Baku
             </div>
 
-            <div
-                class="package-badge"
-                id="packageBadge"
-            ></div>
-
-            <a
-                href="#countdown"
-                class="button"
-            >
+            <a href="#countdown" class="button">
                 VIEW INVITATION
             </a>
 
@@ -930,8 +747,42 @@
 
 
     <!-- =========================
+         LUXURY MUSIC
+    ========================= -->
+
+    <section
+        class="music-section"
+        id="musicSection"
+        style="display:none;"
+    >
+
+        <div class="container">
+
+            <div class="title">
+
+                <span>
+                    Our soundtrack
+                </span>
+
+                <h2>
+                    Music
+                </h2>
+
+            </div>
+
+            <audio
+                id="weddingMusic"
+                class="music-player"
+                controls
+            ></audio>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
          RSVP
-         PREMIUM + LUXURY
     ========================= -->
 
     <section
@@ -1037,14 +888,6 @@
                         4
                     </option>
 
-                    <option value="5">
-                        5
-                    </option>
-
-                    <option value="6">
-                        6
-                    </option>
-
                 </select>
 
 
@@ -1067,56 +910,6 @@
                 </button>
 
             </form>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         MUSIC
-         LUXURY ONLY
-    ========================= -->
-
-    <section
-        class="music-section"
-        id="musicSection"
-    >
-
-        <div class="container">
-
-            <div class="title">
-
-                <span>
-                    A special melody
-                </span>
-
-                <h2>
-                    Our Song
-                </h2>
-
-            </div>
-
-
-            <button
-                class="music-button"
-                id="musicButton"
-                type="button"
-            >
-                ♫ PLAY MUSIC
-            </button>
-
-
-            <audio
-                id="weddingMusic"
-                loop
-            >
-                <source
-                    id="musicSource"
-                    src=""
-                    type="audio/mpeg"
-                >
-            </audio>
 
         </div>
 
@@ -1164,10 +957,9 @@
         LUNA INVITATION SYSTEM
 
         Customer information:
-
         data/invitations.js
 
-        Do not edit customer information here.
+        DO NOT EDIT CUSTOMER DATA HERE.
         =====================================================
         */
 
@@ -1180,7 +972,6 @@
             new URLSearchParams(
                 window.location.search
             );
-
 
         const invitationId =
             params.get("id");
@@ -1195,32 +986,21 @@
 
 
         /* =========================
-           ERROR
+           NOT FOUND
         ========================= */
 
         if (!invitation) {
 
-            document.querySelector(
-                ".hero"
-            ).style.display = "none";
+            document.querySelector(".hero").style.display =
+                "none";
 
+            document.querySelectorAll("section")
+                .forEach(function(section) {
+                    section.style.display = "none";
+                });
 
-            document.querySelectorAll(
-                "section"
-            ).forEach(
-                function(section) {
-
-                    section.style.display =
-                        "none";
-
-                }
-            );
-
-
-            document.querySelector(
-                "footer"
-            ).style.display = "none";
-
+            document.querySelector("footer").style.display =
+                "none";
 
             document.getElementById(
                 "errorMessage"
@@ -1276,24 +1056,6 @@
 
 
             /* =========================
-               PACKAGE
-            ========================= */
-
-            const packageBadge =
-                document.getElementById(
-                    "packageBadge"
-                );
-
-
-            if (invitation.package) {
-
-                packageBadge.innerText =
-                    invitation.package;
-
-            }
-
-
-            /* =========================
                DATE
             ========================= */
 
@@ -1340,6 +1102,35 @@
 
 
             /* =========================
+               PACKAGE SYSTEM
+            ========================= */
+
+            const packageType =
+                invitation.package || "basic";
+
+
+            /* =========================
+               PHOTO LIMIT
+            ========================= */
+
+            let photoLimit = 6;
+
+
+            if (packageType === "premium") {
+
+                photoLimit = 10;
+
+            }
+
+
+            if (packageType === "luxury") {
+
+                photoLimit = 10;
+
+            }
+
+
+            /* =========================
                GALLERY
             ========================= */
 
@@ -1352,58 +1143,87 @@
             gallery.innerHTML = "";
 
 
-            invitation.images.forEach(
-                function(image) {
+            invitation.images
+                .slice(0, photoLimit)
+                .forEach(
+                    function(image) {
 
-                    const item =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    item.className =
-                        "gallery-item";
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
 
 
-                    const img =
-                        document.createElement(
-                            "img"
-                        );
+                        item.className =
+                            "gallery-item";
 
 
-                    img.src =
-                        image;
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
 
 
-                    img.alt =
-                        coupleName +
-                        " wedding photo";
+                        img.src =
+                            image;
 
 
-                    item.appendChild(img);
+                        img.alt =
+                            coupleName +
+                            " wedding photo";
 
 
-                    gallery.appendChild(
-                        item
-                    );
+                        item.appendChild(img);
 
-                }
-            );
+                        gallery.appendChild(item);
+
+                    }
+                );
 
 
             /* =========================
                HERO IMAGE
             ========================= */
 
-            document.documentElement.style
-                .setProperty(
-                    "--hero-image",
-                    `url("${invitation.images[0]}")`
-                );
+            if (
+                invitation.images &&
+                invitation.images.length > 0
+            ) {
+
+                document.documentElement.style
+                    .setProperty(
+                        "--hero-image",
+                        `url("${invitation.images[0]}")`
+                    );
+
+            }
 
 
             /* =========================
-               RSVP INFORMATION
+               RSVP
+            ========================= */
+
+            const rsvpSection =
+                document.getElementById(
+                    "rsvpSection"
+                );
+
+
+            if (packageType === "basic") {
+
+                rsvpSection.style.display =
+                    "none";
+
+            } else {
+
+                rsvpSection.style.display =
+                    "block";
+
+            }
+
+
+            /* =========================
+               RSVP DATA
             ========================= */
 
             document.getElementById(
@@ -1419,19 +1239,8 @@
 
 
             /* =========================
-               PACKAGE SYSTEM
+               LUXURY MUSIC
             ========================= */
-
-            const packageType =
-                invitation.package ||
-                "basic";
-
-
-            const rsvpSection =
-                document.getElementById(
-                    "rsvpSection"
-                );
-
 
             const musicSection =
                 document.getElementById(
@@ -1439,65 +1248,28 @@
                 );
 
 
-            /*
-            BASIC
-            -----
+            const weddingMusic =
+                document.getElementById(
+                    "weddingMusic"
+                );
 
-            RSVP yoxdur.
-            Music yoxdur.
-            */
 
             if (
-                packageType === "basic"
+                packageType === "luxury" &&
+                invitation.music
             ) {
-
-                rsvpSection.style.display =
-                    "none";
-
-                musicSection.style.display =
-                    "none";
-
-            }
-
-
-            /*
-            PREMIUM
-            -------
-
-            RSVP var.
-            Music yoxdur.
-            */
-
-            if (
-                packageType === "premium"
-            ) {
-
-                rsvpSection.style.display =
-                    "block";
-
-                musicSection.style.display =
-                    "none";
-
-            }
-
-
-            /*
-            LUXURY
-            ------
-
-            RSVP var.
-            Music var.
-            */
-
-            if (
-                packageType === "luxury"
-            ) {
-
-                rsvpSection.style.display =
-                    "block";
 
                 musicSection.style.display =
                     "block";
+
+
+                weddingMusic.src =
+                    invitation.music;
+
+            } else {
+
+                musicSection.style.display =
+                    "none";
 
             }
 
@@ -1522,32 +1294,26 @@
                     weddingDate - now;
 
 
-                if (
-                    difference <= 0
-                ) {
+                if (difference <= 0) {
 
                     document.getElementById(
                         "days"
-                    ).innerText =
-                        "00";
+                    ).innerText = "00";
 
 
                     document.getElementById(
                         "hours"
-                    ).innerText =
-                        "00";
+                    ).innerText = "00";
 
 
                     document.getElementById(
                         "minutes"
-                    ).innerText =
-                        "00";
+                    ).innerText = "00";
 
 
                     document.getElementById(
                         "seconds"
-                    ).innerText =
-                        "00";
+                    ).innerText = "00";
 
 
                     return;
@@ -1558,12 +1324,7 @@
                 const days =
                     Math.floor(
                         difference /
-                        (
-                            1000 *
-                            60 *
-                            60 *
-                            24
-                        )
+                        (1000 * 60 * 60 * 24)
                     );
 
 
@@ -1571,18 +1332,9 @@
                     Math.floor(
                         (
                             difference %
-                            (
-                                1000 *
-                                60 *
-                                60 *
-                                24
-                            )
+                            (1000 * 60 * 60 * 24)
                         ) /
-                        (
-                            1000 *
-                            60 *
-                            60
-                        )
+                        (1000 * 60 * 60)
                     );
 
 
@@ -1590,16 +1342,9 @@
                     Math.floor(
                         (
                             difference %
-                            (
-                                1000 *
-                                60 *
-                                60
-                            )
+                            (1000 * 60 * 60)
                         ) /
-                        (
-                            1000 *
-                            60
-                        )
+                        (1000 * 60)
                     );
 
 
@@ -1607,10 +1352,7 @@
                     Math.floor(
                         (
                             difference %
-                            (
-                                1000 *
-                                60
-                            )
+                            (1000 * 60)
                         ) /
                         1000
                     );
@@ -1619,41 +1361,37 @@
                 document.getElementById(
                     "days"
                 ).innerText =
-                    String(days)
-                        .padStart(
-                            2,
-                            "0"
-                        );
+                    String(days).padStart(
+                        2,
+                        "0"
+                    );
 
 
                 document.getElementById(
                     "hours"
                 ).innerText =
-                    String(hours)
-                        .padStart(
-                            2,
-                            "0"
-                        );
+                    String(hours).padStart(
+                        2,
+                        "0"
+                    );
 
 
                 document.getElementById(
                     "minutes"
                 ).innerText =
-                    String(minutes)
-                        .padStart(
-                            2,
-                            "0"
-                        );
+                    String(minutes).padStart(
+                        2,
+                        "0"
+                    );
 
 
                 document.getElementById(
                     "seconds"
                 ).innerText =
-                    String(seconds)
-                        .padStart(
-                            2,
-                            "0"
-                        );
+                    String(seconds).padStart(
+                        2,
+                        "0"
+                    );
 
             }
 
@@ -1664,48 +1402,6 @@
             setInterval(
                 updateCountdown,
                 1000
-            );
-
-
-            /* =========================
-               MUSIC
-            ========================= */
-
-            const musicButton =
-                document.getElementById(
-                    "musicButton"
-                );
-
-
-            const weddingMusic =
-                document.getElementById(
-                    "weddingMusic"
-                );
-
-
-            musicButton.addEventListener(
-                "click",
-                function() {
-
-                    if (
-                        weddingMusic.paused
-                    ) {
-
-                        weddingMusic.play();
-
-                        musicButton.innerText =
-                            "♫ PAUSE MUSIC";
-
-                    } else {
-
-                        weddingMusic.pause();
-
-                        musicButton.innerText =
-                            "♫ PLAY MUSIC";
-
-                    }
-
-                }
             );
 
         }
