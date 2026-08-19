@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -9,25 +10,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
 
 <style>
 
 /* =========================================================
-   LUNA DESIGN SYSTEM
+   RESET
 ========================================================= */
-
-:root{
-    --ink:#342724;
-    --soft-ink:#75625b;
-    --cream:#f5eee8;
-    --paper:#fffaf5;
-    --rose:#b58376;
-    --rose-light:#dfc3b9;
-    --gold:#b3956b;
-    --brown:#2b1e1b;
-    --dark:#181211;
-}
 
 *{
     margin:0;
@@ -40,24 +29,29 @@ html{
 }
 
 body{
-    color:var(--ink);
-    font-family:"DM Sans",sans-serif;
     overflow-x:hidden;
-    background:#f3ebe4;
+    color:#302522;
+    background:#eee5de;
+    font-family:"DM Sans",sans-serif;
 }
 
 a{
-    text-decoration:none;
     color:inherit;
+    text-decoration:none;
 }
 
 button{
-    font-family:inherit;
+    font:inherit;
+}
+
+img{
+    display:block;
+    max-width:100%;
 }
 
 
 /* =========================================================
-   GLOBAL GRAIN
+   PAPER TEXTURE
 ========================================================= */
 
 body::after{
@@ -66,14 +60,15 @@ body::after{
     inset:0;
     z-index:9999;
     pointer-events:none;
-    opacity:.045;
+    opacity:.055;
 
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.45'/%3E%3C/svg%3E");
 }
 
 
 /* =========================================================
-   NAVIGATION
+   NAV
 ========================================================= */
 
 .nav{
@@ -81,7 +76,7 @@ body::after{
     top:0;
     left:0;
     width:100%;
-    height:82px;
+    height:78px;
 
     padding:0 5%;
 
@@ -91,111 +86,192 @@ body::after{
 
     z-index:1000;
 
-    background:rgba(248,241,235,.68);
-    backdrop-filter:blur(24px);
+    color:#302522;
 
-    border-bottom:1px solid rgba(55,39,34,.08);
+    background:rgba(244,237,231,.72);
+    backdrop-filter:blur(22px);
+
+    border-bottom:1px solid rgba(55,38,32,.09);
 }
 
 .logo{
     font-family:"Italiana",serif;
-    font-size:39px;
+    font-size:38px;
     letter-spacing:2px;
 }
 
 .nav-links{
     display:flex;
-    gap:42px;
+    gap:38px;
 }
 
 .nav-links a{
     font-size:9px;
-    letter-spacing:2.5px;
+    letter-spacing:2px;
     text-transform:uppercase;
+}
+
+.nav-links a:hover{
+    color:#9d7468;
+}
+
+.lang{
     position:relative;
 }
 
-.nav-links a::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:-8px;
-    width:0;
-    height:1px;
-    background:var(--gold);
-    transition:.4s;
-}
+.lang-btn{
+    border:1px solid rgba(50,37,32,.2);
+    background:rgba(255,255,255,.28);
 
-.nav-links a:hover::after{
-    width:100%;
-}
+    border-radius:30px;
 
-.language-wrapper{
-    position:relative;
-}
+    padding:10px 15px;
 
-.language-button{
-    border:1px solid rgba(55,39,34,.18);
-    background:rgba(255,255,255,.3);
-
-    padding:10px 16px;
-    border-radius:50px;
+    cursor:pointer;
 
     font-size:9px;
     letter-spacing:2px;
-
-    cursor:pointer;
-    color:var(--ink);
 }
 
-.language-menu{
+.lang-menu{
     position:absolute;
+    top:43px;
     right:0;
-    top:47px;
 
-    width:160px;
+    width:150px;
 
-    padding:8px;
+    padding:7px;
 
-    background:#fffaf5;
+    background:#fffaf6;
 
-    border:1px solid rgba(55,39,34,.08);
-
-    box-shadow:0 25px 70px rgba(50,30,25,.18);
+    box-shadow:0 20px 50px rgba(45,27,22,.18);
 
     opacity:0;
     visibility:hidden;
-    transform:translateY(-8px);
+
+    transform:translateY(-7px);
 
     transition:.3s;
 }
 
-.language-wrapper:hover .language-menu{
+.lang:hover .lang-menu{
     opacity:1;
     visibility:visible;
     transform:translateY(0);
 }
 
-.language-menu button{
-    display:block;
+.lang-menu button{
     width:100%;
 
-    padding:13px;
+    padding:12px;
 
     border:0;
     background:transparent;
 
     text-align:left;
 
-    font-size:10px;
-
-    color:var(--ink);
-
     cursor:pointer;
+
+    font-size:10px;
 }
 
-.language-menu button:hover{
-    background:#f0e4dc;
+.lang-menu button:hover{
+    background:#eee1d9;
+}
+
+
+/* =========================================================
+   DECORATIVE FLOWER
+========================================================= */
+
+.flower{
+    position:absolute;
+    width:270px;
+    height:270px;
+
+    pointer-events:none;
+
+    opacity:.72;
+}
+
+.flower span{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:75px;
+    height:150px;
+
+    transform-origin:50% 100%;
+
+    border-radius:
+        70% 30% 65% 35% /
+        60% 45% 55% 40%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(173,126,115,.55),
+            rgba(230,205,195,.16)
+        );
+
+    filter:blur(.3px);
+}
+
+.flower span:nth-child(1){
+    transform:translate(-50%,-100%) rotate(0deg);
+}
+
+.flower span:nth-child(2){
+    transform:translate(-50%,-100%) rotate(45deg);
+}
+
+.flower span:nth-child(3){
+    transform:translate(-50%,-100%) rotate(90deg);
+}
+
+.flower span:nth-child(4){
+    transform:translate(-50%,-100%) rotate(135deg);
+}
+
+.flower span:nth-child(5){
+    transform:translate(-50%,-100%) rotate(180deg);
+}
+
+.flower span:nth-child(6){
+    transform:translate(-50%,-100%) rotate(225deg);
+}
+
+.flower span:nth-child(7){
+    transform:translate(-50%,-100%) rotate(270deg);
+}
+
+.flower span:nth-child(8){
+    transform:translate(-50%,-100%) rotate(315deg);
+}
+
+.flower::after{
+    content:"";
+
+    position:absolute;
+
+    width:45px;
+    height:45px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #b69668,
+            #806348
+        );
 }
 
 
@@ -206,200 +282,176 @@ body::after{
 .hero{
     min-height:100vh;
 
-    padding:150px 7% 90px;
-
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    align-items:center;
-
     position:relative;
     overflow:hidden;
 
+    display:grid;
+    grid-template-columns:46% 54%;
+    align-items:center;
+
+    padding:130px 6% 70px;
+
+    background:#eee3db;
+}
+
+
+/* HUGE IMAGE AREA */
+
+.hero-image{
+    position:absolute;
+
+    width:48vw;
+    height:78vh;
+
+    right:-5vw;
+    top:11vh;
+
+    overflow:hidden;
+
+    border-radius:
+        48% 0 0 48%;
+
     background:
-
-        radial-gradient(
-            ellipse at 75% 18%,
-            rgba(220,190,177,.72) 0%,
-            rgba(220,190,177,.28) 22%,
-            transparent 48%
-        ),
-
-        radial-gradient(
-            ellipse at 12% 78%,
-            rgba(193,161,137,.30),
-            transparent 35%
-        ),
-
-        radial-gradient(
-            ellipse at 45% 50%,
-            rgba(255,255,255,.82),
-            transparent 38%
-        ),
-
         linear-gradient(
-            120deg,
-            #eee2da,
-            #f9f4ef 45%,
-            #e8d7ce
-        );
+            rgba(75,43,36,.15),
+            rgba(75,43,36,.15)
+        ),
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90");
+
+    background-size:cover;
+    background-position:center;
+
+    box-shadow:
+        -30px 40px 90px rgba(45,27,22,.18);
 }
 
-
-/* HUGE ABSTRACT SILK AREA */
-
-.hero::before{
+.hero-image::after{
     content:"";
 
     position:absolute;
-
-    width:800px;
-    height:800px;
-
-    right:-300px;
-    top:-280px;
-
-    border-radius:50%;
+    inset:0;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.78),
-            rgba(255,255,255,.12) 48%,
-            transparent 70%
+        linear-gradient(
+            90deg,
+            #eee3db 0%,
+            transparent 30%
         );
-
-    filter:blur(2px);
-
-    animation:heroLight 9s ease-in-out infinite alternate;
 }
 
-.hero::after{
-    content:"";
 
+/* organic frame */
+
+.hero-frame{
     position:absolute;
 
-    width:500px;
-    height:500px;
+    right:14%;
+    top:17%;
 
-    left:-240px;
-    bottom:-250px;
+    width:420px;
+    height:560px;
 
-    border-radius:50%;
+    border:1px solid rgba(173,139,106,.7);
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(183,139,124,.32),
-            transparent 67%
-        );
+    border-radius:
+        48% 48% 0 0;
 
-    filter:blur(12px);
+    transform:rotate(4deg);
 
-    animation:floatGlow 10s ease-in-out infinite alternate;
-}
-
-@keyframes heroLight{
-    from{
-        transform:scale(.92) translate(0,0);
-        opacity:.7;
-    }
-    to{
-        transform:scale(1.08) translate(-40px,35px);
-        opacity:1;
-    }
-}
-
-@keyframes floatGlow{
-    from{
-        transform:translate(0,0);
-    }
-    to{
-        transform:translate(60px,-40px);
-    }
+    z-index:3;
 }
 
 
-/* =========================================================
-   HERO CONTENT
-========================================================= */
+/* flower */
 
-.hero-content{
-    position:relative;
+.hero .flower{
+    right:1%;
+    bottom:0;
+
+    transform:scale(.8) rotate(-15deg);
+
     z-index:5;
 }
 
-.eyebrow{
+
+/* HERO TEXT */
+
+.hero-content{
+    position:relative;
+    z-index:10;
+
+    padding-left:5%;
+}
+
+.kicker{
     display:flex;
     align-items:center;
     gap:14px;
 
-    margin-bottom:30px;
-
-    color:var(--gold);
+    color:#a2845d;
 
     font-size:8px;
-    letter-spacing:5px;
+    letter-spacing:4px;
     text-transform:uppercase;
+
+    margin-bottom:30px;
 }
 
-.eyebrow::before{
+.kicker::before{
     content:"";
+
     width:42px;
     height:1px;
-    background:var(--gold);
+
+    background:#a2845d;
 }
 
 .hero h1{
     font-family:"Cormorant Garamond",serif;
 
-    font-size:clamp(75px,9vw,135px);
+    font-size:clamp(75px,9vw,130px);
 
-    font-weight:400;
-    line-height:.72;
+    font-weight:300;
+
+    line-height:.68;
 
     letter-spacing:-5px;
 }
 
-.hero h1 span{
+.hero h1 em{
     display:block;
+
+    margin-left:80px;
+    margin-top:23px;
+
+    color:#a47769;
+
+    font-weight:300;
 }
 
-.hero h1 span:last-child{
-    margin-left:65px;
-    margin-top:18px;
-
-    color:var(--rose);
-
-    font-style:italic;
-}
-
-.hero-description{
-    max-width:510px;
+.hero-text{
+    max-width:450px;
 
     margin-top:45px;
 
-    color:var(--soft-ink);
+    font-size:11px;
 
-    font-size:12px;
     line-height:2;
+
+    color:#75635c;
 }
 
-.hero-buttons{
+.buttons{
     display:flex;
-    gap:13px;
-    flex-wrap:wrap;
+    gap:12px;
 
-    margin-top:32px;
+    margin-top:30px;
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+    padding:15px 27px;
 
-    padding:15px 28px;
-
-    border-radius:50px;
+    border-radius:40px;
 
     font-size:8px;
     letter-spacing:2px;
@@ -409,412 +461,152 @@ body::after{
 }
 
 .btn-dark{
-    background:var(--ink);
     color:white;
+    background:#302522;
 }
 
-.btn-outline{
-    border:1px solid rgba(55,39,34,.22);
-    background:rgba(255,255,255,.22);
+.btn-light{
+    border:1px solid rgba(48,37,34,.22);
+    background:rgba(255,255,255,.3);
 }
 
 .btn:hover{
     transform:translateY(-4px);
-    box-shadow:0 20px 40px rgba(50,30,25,.15);
 }
 
 
 /* =========================================================
-   HERO INVITATION
+   FLOATING LABEL
 ========================================================= */
 
-.hero-stage{
-    height:650px;
+.hero-label{
+    position:absolute;
 
-    position:relative;
+    right:48%;
+    bottom:12%;
+
+    z-index:20;
+
+    width:115px;
+    height:115px;
+
+    border-radius:50%;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    z-index:5;
-}
-
-.stage-shadow{
-    position:absolute;
-
-    width:430px;
-    height:70px;
-
-    bottom:55px;
-
-    border-radius:50%;
-
-    background:rgba(45,28,23,.22);
-
-    filter:blur(32px);
-}
-
-
-/* floating decorative circles */
-
-.hero-stage::before{
-    content:"";
-
-    position:absolute;
-
-    width:360px;
-    height:360px;
-
-    border:1px solid rgba(174,144,105,.28);
-
-    border-radius:50%;
-
-    transform:rotate(18deg);
-
-    animation:spinSlow 20s linear infinite;
-}
-
-.hero-stage::after{
-    content:"";
-
-    position:absolute;
-
-    width:450px;
-    height:450px;
-
-    border:1px solid rgba(174,144,105,.12);
-
-    border-radius:50%;
-
-    transform:rotate(-25deg);
-}
-
-@keyframes spinSlow{
-    to{
-        transform:rotate(378deg);
-    }
-}
-
-
-/* =========================================================
-   ENVELOPE
-========================================================= */
-
-.envelope{
-    position:absolute;
-
-    width:430px;
-    height:285px;
-
-    left:50%;
-    bottom:115px;
-
-    transform:translateX(-50%) rotate(-7deg);
-
-    background:
-        linear-gradient(
-            135deg,
-            #d9b8ac,
-            #a9786c
-        );
-
-    border-radius:4px;
-
-    box-shadow:
-        0 45px 90px rgba(45,28,23,.28);
-
-    transition:.8s;
-}
-
-.envelope::before{
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    clip-path:polygon(
-        0 0,
-        100% 0,
-        50% 58%
-    );
-
-    background:
-        linear-gradient(
-            145deg,
-            #f0dcd4,
-            #c29488
-        );
-}
-
-.envelope::after{
-    content:"";
-
-    position:absolute;
-
-    width:75px;
-    height:75px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%) rotate(45deg);
-
-    background:#b18478;
-
-    box-shadow:0 4px 10px rgba(40,20,15,.12);
-}
-
-.hero-stage:hover .envelope{
-    transform:
-        translateX(-50%)
-        rotate(-2deg)
-        translateY(14px);
-}
-
-
-/* =========================================================
-   INVITATION CARD
-========================================================= */
-
-.invitation{
-    position:absolute;
-
-    width:285px;
-    height:430px;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #fff,
-            transparent 50%
-        ),
-        linear-gradient(
-            145deg,
-            #fffefa,
-            #f1e5dc
-        );
-
-    transform:
-        rotate(7deg)
-        translate(45px,-55px);
-
-    padding:47px 25px;
-
     text-align:center;
 
-    box-shadow:
-        0 45px 90px rgba(45,28,23,.27);
+    background:#fffaf4;
 
-    z-index:10;
+    border:1px solid rgba(157,120,91,.4);
 
-    transition:.8s;
-}
-
-.invitation::before{
-    content:"";
-
-    position:absolute;
-
-    inset:13px;
-
-    border:1px solid rgba(169,138,99,.62);
-}
-
-.invitation::after{
-    content:"✦";
-
-    position:absolute;
-
-    top:20px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    color:var(--gold);
-
-    font-size:11px;
-}
-
-.hero-stage:hover .invitation{
-    transform:
-        rotate(2deg)
-        translate(58px,-88px);
-}
-
-.invitation-small{
-    font-size:7px;
-    letter-spacing:4px;
-    color:var(--gold);
-
-    margin-bottom:34px;
-}
-
-.invitation-names{
     font-family:"Cormorant Garamond",serif;
-    font-size:54px;
-    line-height:.7;
-}
+    font-size:15px;
 
-.invitation-and{
-    font-family:"Italiana",serif;
-    font-size:28px;
+    transform:rotate(-12deg);
 
-    color:var(--rose);
-
-    margin:21px 0;
-}
-
-.invitation-date{
-    margin-top:40px;
-
-    font-size:7px;
-    letter-spacing:3px;
+    box-shadow:0 20px 45px rgba(45,27,22,.13);
 }
 
 
 /* =========================================================
-   ORNAMENTS
+   STORY
 ========================================================= */
 
-.ornament{
-    position:absolute;
+.story{
+    min-height:850px;
 
-    font-family:"Cormorant Garamond",serif;
-
-    font-style:italic;
-
-    color:#95766d;
-
-    font-size:17px;
-
-    animation:ornamentFloat 6s ease-in-out infinite;
-}
-
-.ornament.one{
-    top:85px;
-    right:4%;
-}
-
-.ornament.two{
-    bottom:80px;
-    left:2%;
-
-    animation-delay:2s;
-}
-
-@keyframes ornamentFloat{
-    0%,100%{
-        transform:translateY(0) rotate(-4deg);
-    }
-    50%{
-        transform:translateY(-15px) rotate(2deg);
-    }
-}
-
-
-/* =========================================================
-   INTRO
-========================================================= */
-
-.intro{
     position:relative;
     overflow:hidden;
 
-    padding:165px 8%;
+    padding:160px 8%;
 
-    text-align:center;
-
-    background:
-
-        radial-gradient(
-            circle at 12% 20%,
-            rgba(213,181,166,.27),
-            transparent 23%
-        ),
-
-        radial-gradient(
-            circle at 88% 80%,
-            rgba(192,158,125,.18),
-            transparent 27%
-        ),
-
-        radial-gradient(
-            ellipse at center,
-            rgba(255,255,255,.95),
-            transparent 55%
-        ),
-
-        #f5eee8;
+    background:#f8f1eb;
 }
 
-.intro::before{
-    content:"";
 
-    position:absolute;
+/* large typography */
 
-    width:420px;
-    height:420px;
+.story-title{
+    position:relative;
+    z-index:4;
 
-    right:-180px;
-    top:-190px;
-
-    border:1px solid rgba(174,144,105,.18);
-
-    border-radius:50%;
-}
-
-.intro::after{
-    content:"";
-
-    position:absolute;
-
-    width:300px;
-    height:300px;
-
-    left:-160px;
-    bottom:-170px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(210,170,155,.22),
-            transparent 68%
-        );
-}
-
-.small-label{
-    font-size:8px;
-    letter-spacing:5px;
-    text-transform:uppercase;
-    color:var(--gold);
-}
-
-.intro h2{
-    max-width:900px;
-
-    margin:30px auto;
+    max-width:850px;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:72px;
+    font-size:78px;
 
-    line-height:.88;
+    line-height:.82;
 
-    font-weight:400;
+    font-weight:300;
 }
 
-.intro p{
-    max-width:610px;
+.story-title em{
+    color:#a4786c;
+}
 
-    margin:auto;
 
-    color:var(--soft-ink);
+/* decorative image */
 
-    font-size:12px;
+.story-photo{
+    position:absolute;
+
+    right:9%;
+    top:110px;
+
+    width:360px;
+    height:500px;
+
+    overflow:hidden;
+
+    transform:rotate(6deg);
+
+    box-shadow:0 40px 80px rgba(45,27,22,.16);
+
+    background:url(
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=90"
+    ) center/cover;
+}
+
+.story-photo::before{
+    content:"";
+
+    position:absolute;
+    inset:15px;
+
+    border:1px solid rgba(255,255,255,.7);
+}
+
+.story-copy{
+    position:relative;
+    z-index:5;
+
+    max-width:520px;
+
+    margin-top:60px;
+
+    font-size:11px;
     line-height:2;
+
+    color:#75635c;
+}
+
+.story-number{
+    position:absolute;
+
+    right:-30px;
+    bottom:-130px;
+
+    font-family:"Italiana",serif;
+
+    font-size:450px;
+
+    color:rgba(161,125,111,.08);
+
+    line-height:.7;
 }
 
 
@@ -828,94 +620,77 @@ body::after{
 
     padding:140px 6%;
 
-    background:
-
-        radial-gradient(
-            ellipse at 5% 10%,
-            rgba(207,169,154,.48),
-            transparent 25%
-        ),
-
-        radial-gradient(
-            ellipse at 95% 25%,
-            rgba(183,153,111,.27),
-            transparent 23%
-        ),
-
-        radial-gradient(
-            ellipse at 50% 100%,
-            rgba(255,255,255,.75),
-            transparent 38%
-        ),
-
-        #e9ddd5;
+    background:#d8c5bb;
 }
+
+
+/* giant decorative circle */
 
 .collections::before{
     content:"";
 
     position:absolute;
 
-    width:600px;
-    height:600px;
+    width:700px;
+    height:700px;
 
-    left:35%;
-    top:25%;
+    right:-300px;
+    top:-250px;
 
     border-radius:50%;
 
-    border:1px solid rgba(174,144,105,.15);
+    border:1px solid rgba(116,82,70,.2);
 
-    transform:rotate(30deg);
+    box-shadow:
+        inset 0 0 0 80px rgba(255,255,255,.07),
+        inset 0 0 0 160px rgba(255,255,255,.05);
 }
 
-.section-header{
-    display:flex;
 
+/* title */
+
+.section-top{
+    position:relative;
+    z-index:5;
+
+    display:flex;
     align-items:end;
     justify-content:space-between;
 
-    margin-bottom:55px;
+    margin-bottom:65px;
+}
 
-    position:relative;
-    z-index:2;
+.section-kicker{
+    color:#8f6d60;
+
+    font-size:8px;
+    letter-spacing:4px;
+    text-transform:uppercase;
 }
 
 .section-title{
-    margin-top:15px;
+    margin-top:18px;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:70px;
+    font-size:78px;
 
-    line-height:.8;
+    font-weight:300;
 
-    font-weight:400;
-}
-
-.section-link{
-    font-size:8px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-
-    border-bottom:1px solid var(--gold);
-
-    padding-bottom:7px;
+    line-height:.78;
 }
 
 
-/* =========================================================
-   COLLECTION CARDS
-========================================================= */
+/* cards */
 
 .collection-grid{
     position:relative;
-    z-index:3;
+    z-index:5;
 
     display:grid;
 
     grid-template-columns:
-        1.25fr 1fr 1fr;
+        1.1fr .8fr .8fr;
 
     grid-template-rows:
         300px 300px;
@@ -923,7 +698,7 @@ body::after{
     gap:18px;
 }
 
-.collection-card{
+.collection{
     position:relative;
 
     overflow:hidden;
@@ -931,17 +706,17 @@ body::after{
     display:flex;
     align-items:end;
 
-    padding:32px;
+    padding:30px;
 
     color:white;
 
-    background-position:center;
     background-size:cover;
+    background-position:center;
 
     transition:.6s;
 }
 
-.collection-card::before{
+.collection::before{
     content:"";
 
     position:absolute;
@@ -950,19 +725,18 @@ body::after{
     background:
         linear-gradient(
             180deg,
-            transparent 25%,
-            rgba(20,12,10,.75)
+            transparent 35%,
+            rgba(22,14,12,.82)
         );
 }
 
-.collection-card:hover{
-    transform:translateY(-8px) scale(1.01);
+.collection:hover{
+    transform:translateY(-8px);
 
-    box-shadow:
-        0 35px 75px rgba(50,30,25,.22);
+    box-shadow:0 35px 70px rgba(45,27,22,.2);
 }
 
-.collection-card:first-child{
+.collection:nth-child(1){
     grid-row:span 2;
 
     background-image:url(
@@ -970,40 +744,41 @@ body::after{
     );
 }
 
-.collection-card:nth-child(2){
+.collection:nth-child(2){
     background-image:url(
-        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=90"
+        "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1000&q=90"
     );
 }
 
-.collection-card:nth-child(3){
-    background-image:url(
-        "https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1000&q=90"
-    );
-}
-
-.collection-card:nth-child(4){
+.collection:nth-child(3){
     background-image:url(
         "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=90"
     );
 }
 
-.collection-content{
+.collection:nth-child(4){
+    background-image:url(
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=90"
+    );
+}
+
+.collection-info{
     position:relative;
-    z-index:3;
+    z-index:2;
 }
 
 .collection-number{
     font-size:7px;
     letter-spacing:3px;
-    text-transform:uppercase;
-    opacity:.7;
+    opacity:.65;
 }
 
 .collection-name{
-    font-family:"Cormorant Garamond",serif;
-    font-size:44px;
     margin-top:5px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:45px;
 }
 
 
@@ -1013,282 +788,171 @@ body::after{
 
 .packages{
     position:relative;
-    overflow:hidden;
 
-    padding:140px 6%;
+    padding:160px 6%;
 
-    background:
-
-        radial-gradient(
-            ellipse at 10% 15%,
-            rgba(255,255,255,.8),
-            transparent 25%
-        ),
-
-        radial-gradient(
-            ellipse at 90% 15%,
-            rgba(209,177,157,.38),
-            transparent 27%
-        ),
-
-        radial-gradient(
-            ellipse at 50% 100%,
-            rgba(184,148,124,.20),
-            transparent 30%
-        ),
-
-        linear-gradient(
-            135deg,
-            #eee2da,
-            #f8f0ea
-        );
+    background:#f5eee8;
 }
 
-.packages::before{
-    content:"";
-
+.packages-decoration{
     position:absolute;
 
-    width:800px;
-    height:300px;
+    left:-150px;
+    top:100px;
 
-    left:20%;
-    top:35%;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(255,255,255,.55),
-            transparent 68%
-        );
-
-    filter:blur(18px);
-}
-
-.package-grid{
-    position:relative;
-    z-index:2;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:18px;
-}
-
-.package{
-    min-height:560px;
-
-    padding:38px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-
-    position:relative;
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.85),
-            rgba(246,235,226,.82)
-        );
-
-    border:1px solid rgba(55,39,34,.08);
-
-    box-shadow:
-        0 20px 60px rgba(50,30,25,.06);
-
-    transition:.5s;
-}
-
-.package::before{
-    content:"";
-
-    position:absolute;
-
-    width:250px;
-    height:250px;
-
-    right:-100px;
-    top:-100px;
+    width:400px;
+    height:400px;
 
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(197,160,143,.25),
-            transparent 68%
+            rgba(183,137,122,.25),
+            transparent 67%
         );
+}
+
+
+/* package cards */
+
+.package-grid{
+    position:relative;
+    z-index:3;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-top:70px;
+}
+
+.package{
+    position:relative;
+
+    min-height:560px;
+
+    padding:40px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(48,37,34,.1);
+
+    background:#fffaf6;
+
+    box-shadow:0 25px 70px rgba(45,27,22,.07);
+
+    transition:.5s;
 }
 
 .package:hover{
     transform:translateY(-10px);
-
-    box-shadow:
-        0 40px 80px rgba(50,30,25,.17);
+    box-shadow:0 40px 80px rgba(45,27,22,.16);
 }
 
 .package:nth-child(2){
-    color:#3a2925;
-
-    background:
-
-        radial-gradient(
-            circle at 90% 5%,
-            rgba(255,255,255,.4),
-            transparent 25%
-        ),
-
-        linear-gradient(
-            145deg,
-            #d8bdb3,
-            #b88d82
-        );
+    background:#d1b3a8;
 }
 
 .package:nth-child(3){
     color:white;
-
-    background:
-
-        radial-gradient(
-            circle at 80% 5%,
-            rgba(181,145,126,.32),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 15% 85%,
-            rgba(120,84,70,.25),
-            transparent 25%
-        ),
-
-        linear-gradient(
-            135deg,
-            #211715,
-            #49332d
-        );
+    background:#211715;
 }
 
-.package-top{
-    position:relative;
-    z-index:2;
+.package::after{
+    content:"";
 
-    display:flex;
-    justify-content:space-between;
+    position:absolute;
 
+    width:230px;
+    height:230px;
+
+    right:-100px;
+    top:-100px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(174,140,105,.25);
+}
+
+.package-number{
     font-size:8px;
     letter-spacing:3px;
-    text-transform:uppercase;
+
+    opacity:.6;
 }
 
 .package h3{
-    position:relative;
-    z-index:2;
+    margin-top:50px;
 
     font-family:"Cormorant Garamond",serif;
 
     font-size:70px;
 
-    font-weight:400;
-
-    margin-top:55px;
+    font-weight:300;
 }
 
-.package p{
-    position:relative;
-    z-index:2;
+.package-subtitle{
+    margin-top:8px;
 
-    max-width:320px;
+    font-size:10px;
 
-    margin-top:10px;
-
-    font-size:11px;
-    line-height:1.9;
-
-    opacity:.72;
+    opacity:.65;
 }
 
 .package-list{
-    position:relative;
-    z-index:2;
-
     list-style:none;
 
-    margin-top:30px;
+    margin-top:45px;
 }
 
 .package-list li{
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(48,37,34,.1);
+
     font-size:9px;
-
-    padding:11px 0;
-
-    border-bottom:1px solid rgba(55,39,34,.11);
 }
 
 .package:nth-child(3) .package-list li{
     border-color:rgba(255,255,255,.13);
 }
 
-.package-button{
-    position:relative;
-    z-index:2;
+.package-link{
+    position:absolute;
+
+    left:40px;
+    right:40px;
+    bottom:35px;
 
     display:flex;
     justify-content:space-between;
 
-    padding-top:25px;
+    padding-top:20px;
 
-    border-top:1px solid rgba(55,39,34,.12);
+    border-top:1px solid rgba(48,37,34,.13);
 
     font-size:8px;
     letter-spacing:2px;
     text-transform:uppercase;
 }
 
-.package:nth-child(3) .package-button{
-    border-color:rgba(255,255,255,.15);
-}
-
 
 /* =========================================================
-   PROCESS
+   PROCESS — DARK EDITORIAL
 ========================================================= */
 
 .process{
     position:relative;
     overflow:hidden;
 
-    padding:145px 6%;
+    padding:160px 6%;
 
     color:white;
 
-    background:
-
-        radial-gradient(
-            ellipse at 85% 5%,
-            rgba(163,124,109,.35),
-            transparent 27%
-        ),
-
-        radial-gradient(
-            ellipse at 15% 95%,
-            rgba(106,74,62,.40),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            ellipse at 50% 50%,
-            rgba(79,54,46,.35),
-            transparent 50%
-        ),
-
-        #1b1311;
+    background:#1b1311;
 }
 
 .process::before{
@@ -1300,31 +964,30 @@ body::after{
     height:700px;
 
     right:-400px;
-    top:-300px;
+    top:-350px;
 
     border-radius:50%;
 
-    border:1px solid rgba(211,176,149,.16);
+    border:1px solid rgba(208,173,148,.18);
 }
 
 .process::after{
-    content:"";
+    content:"LUNA";
 
     position:absolute;
 
-    width:500px;
-    height:500px;
+    right:-100px;
+    bottom:-160px;
 
-    left:-300px;
-    bottom:-280px;
+    font-family:"Italiana",serif;
 
-    border-radius:50%;
+    font-size:300px;
 
-    border:1px solid rgba(211,176,149,.11);
+    color:rgba(255,255,255,.025);
 }
 
-.process .small-label{
-    color:#c6a28e;
+.process .section-kicker{
+    color:#bd987f;
 }
 
 .process .section-title{
@@ -1333,134 +996,110 @@ body::after{
 
 .steps{
     position:relative;
-    z-index:2;
+    z-index:3;
 
     display:grid;
     grid-template-columns:repeat(4,1fr);
 
-    gap:30px;
+    gap:35px;
 
-    margin-top:65px;
+    margin-top:80px;
 }
 
 .step{
-    border-top:1px solid rgba(255,255,255,.17);
+    border-top:1px solid rgba(255,255,255,.2);
 
     padding-top:25px;
 }
 
 .step-number{
+    color:#bd987f;
+
     font-family:"Cormorant Garamond",serif;
 
-    font-size:33px;
-
-    color:#c5a18e;
+    font-size:36px;
 }
 
 .step h3{
+    margin-top:28px;
+
     font-family:"Cormorant Garamond",serif;
 
-    font-size:31px;
+    font-size:32px;
 
-    font-weight:400;
-
-    margin:25px 0 12px;
+    font-weight:300;
 }
 
 .step p{
+    margin-top:15px;
+
+    color:rgba(255,255,255,.58);
+
     font-size:10px;
 
     line-height:1.9;
-
-    opacity:.62;
 }
 
 
 /* =========================================================
-   CTA
+   FINAL CTA
 ========================================================= */
 
-.cta{
+.final{
     position:relative;
     overflow:hidden;
 
-    padding:180px 6%;
+    min-height:700px;
+
+    padding:170px 6%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     text-align:center;
 
     background:
-
-        radial-gradient(
-            circle at center,
-            rgba(255,255,255,.96),
-            transparent 36%
-        ),
-
-        radial-gradient(
-            ellipse at 10% 80%,
-            rgba(207,166,151,.35),
-            transparent 25%
-        ),
-
-        radial-gradient(
-            ellipse at 90% 20%,
-            rgba(188,155,122,.26),
-            transparent 25%
-        ),
-
-        #eee3db;
+        url("https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
 }
 
-.cta::before{
+.final::before{
     content:"";
 
     position:absolute;
+    inset:0;
 
-    width:650px;
-    height:650px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    border-radius:50%;
-
-    border:1px solid rgba(174,144,105,.16);
+    background:
+        linear-gradient(
+            rgba(245,232,222,.75),
+            rgba(245,232,222,.82)
+        );
 }
 
-.cta h2{
+.final-content{
     position:relative;
-    z-index:2;
+    z-index:4;
+}
+
+.final .section-kicker{
+    color:#8d6d5e;
+}
+
+.final h2{
+    margin:30px 0 35px;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:95px;
+    font-size:100px;
 
-    font-weight:400;
+    line-height:.72;
 
-    line-height:.8;
-
-    margin:28px 0 40px;
+    font-weight:300;
 }
 
-.cta p{
-    position:relative;
-    z-index:2;
-
-    max-width:520px;
-
-    margin:auto;
-
-    color:var(--soft-ink);
-
-    font-size:12px;
-    line-height:2;
-}
-
-.cta .btn{
-    position:relative;
-    z-index:2;
+.final h2 em{
+    color:#9f7568;
 }
 
 
@@ -1472,93 +1111,58 @@ body::after{
     position:relative;
     overflow:hidden;
 
-    background:
-        radial-gradient(
-            ellipse at 85% 10%,
-            rgba(130,91,76,.25),
-            transparent 30%
-        ),
-        #191210;
-
-    color:#d8c5bd;
-
     padding:90px 6% 30px;
-}
 
-.footer::before{
-    content:"L";
+    color:#d8c7bf;
 
-    position:absolute;
-
-    right:-30px;
-    bottom:-170px;
-
-    font-family:"Italiana",serif;
-
-    font-size:500px;
-
-    color:rgba(255,255,255,.025);
-}
-
-.footer-main{
-    position:relative;
-    z-index:2;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    padding-bottom:60px;
+    background:#17100e;
 }
 
 .footer-logo{
     font-family:"Italiana",serif;
 
-    font-size:75px;
+    font-size:85px;
 
     color:white;
 }
 
-.footer-columns{
+.footer-main{
     display:flex;
 
+    justify-content:space-between;
+
+    padding-bottom:70px;
+}
+
+.footer-links{
+    display:flex;
     gap:80px;
 }
 
-.footer-column h4{
-    color:#b99485;
+.footer-group h4{
+    margin-bottom:20px;
+
+    color:#b99481;
 
     font-size:8px;
     letter-spacing:3px;
     text-transform:uppercase;
-
-    margin-bottom:20px;
 }
 
-.footer-column a{
+.footer-group a{
     display:block;
+
+    margin-bottom:12px;
 
     font-size:10px;
 
-    margin-bottom:13px;
-
-    opacity:.65;
-
-    transition:.3s;
-}
-
-.footer-column a:hover{
-    opacity:1;
-    color:white;
+    opacity:.6;
 }
 
 .footer-bottom{
-    position:relative;
-    z-index:2;
+    padding-top:25px;
 
     border-top:1px solid rgba(255,255,255,.1);
-
-    padding-top:25px;
 
     font-size:8px;
     letter-spacing:2px;
@@ -1578,42 +1182,85 @@ body::after{
     }
 
     .hero{
-        grid-template-columns:1fr;
-        text-align:center;
-        padding-top:140px;
+        min-height:1050px;
+
+        display:block;
+
+        padding-top:130px;
     }
 
     .hero-content{
-        margin:auto;
+        padding:0;
+
+        text-align:center;
     }
 
-    .eyebrow{
+    .kicker{
         justify-content:center;
     }
 
-    .hero h1 span:last-child{
+    .hero h1{
+        font-size:76px;
+    }
+
+    .hero h1 em{
         margin-left:0;
     }
 
-    .hero-description{
+    .hero-text{
         margin-left:auto;
         margin-right:auto;
     }
 
-    .hero-buttons{
+    .buttons{
         justify-content:center;
     }
 
-    .hero-stage{
-        height:580px;
+    .hero-image{
+        width:82vw;
+        height:450px;
+
+        right:-10vw;
+        top:auto;
+        bottom:60px;
+    }
+
+    .hero-frame{
+        right:11%;
+        top:auto;
+        bottom:30px;
+
+        width:280px;
+        height:390px;
+    }
+
+    .hero-label{
+        right:8%;
+        bottom:45px;
+    }
+
+    .story{
+        min-height:1000px;
+    }
+
+    .story-title{
+        font-size:62px;
+    }
+
+    .story-photo{
+        top:420px;
+        right:10%;
+
+        width:280px;
+        height:390px;
     }
 
     .collection-grid{
         grid-template-columns:1fr 1fr;
-        grid-template-rows:270px 270px;
+        grid-template-rows:280px 280px;
     }
 
-    .collection-card:first-child{
+    .collection:nth-child(1){
         grid-row:span 2;
     }
 
@@ -1624,13 +1271,26 @@ body::after{
     .steps{
         grid-template-columns:1fr 1fr;
     }
+
+    .final h2{
+        font-size:70px;
+    }
+
+    .footer-main{
+        display:block;
+    }
+
+    .footer-links{
+        margin-top:50px;
+        gap:45px;
+    }
 }
 
 
 @media(max-width:600px){
 
     .nav{
-        height:72px;
+        height:70px;
     }
 
     .logo{
@@ -1643,44 +1303,52 @@ body::after{
     }
 
     .hero h1{
-        font-size:72px;
+        font-size:67px;
     }
 
-    .hero-stage{
-        transform:scale(.76);
-        margin-left:-45px;
-        margin-right:-45px;
+    .hero-image{
+        height:390px;
     }
 
-    .intro h2{
-        font-size:52px;
+    .hero-frame{
+        width:240px;
+        height:330px;
+    }
+
+    .story{
+        padding:120px 6%;
+    }
+
+    .story-title{
+        font-size:55px;
+    }
+
+    .story-photo{
+        width:245px;
+        height:340px;
+        right:5%;
     }
 
     .collections,
     .packages,
     .process{
-        padding:105px 5%;
+        padding:110px 5%;
     }
 
-    .section-header{
+    .section-top{
         display:block;
     }
 
-    .section-link{
-        display:inline-block;
-        margin-top:25px;
-    }
-
     .section-title{
-        font-size:58px;
+        font-size:61px;
     }
 
     .collection-grid{
         grid-template-columns:1fr;
-        grid-template-rows:repeat(4,280px);
+        grid-template-rows:repeat(4,300px);
     }
 
-    .collection-card:first-child{
+    .collection:nth-child(1){
         grid-row:auto;
     }
 
@@ -1688,22 +1356,16 @@ body::after{
         grid-template-columns:1fr;
     }
 
-    .cta{
-        padding:130px 5%;
+    .final{
+        min-height:620px;
     }
 
-    .cta h2{
-        font-size:66px;
+    .final h2{
+        font-size:62px;
     }
 
-    .footer-main{
-        display:block;
-    }
-
-    .footer-columns{
-        margin-top:45px;
-        gap:40px;
-        flex-wrap:wrap;
+    .footer-logo{
+        font-size:65px;
     }
 }
 
@@ -1720,47 +1382,36 @@ body::after{
 
 <nav class="nav">
 
-<a href="index.html" class="logo">
-Luna
-</a>
+<a href="index.html" class="logo">Luna</a>
 
 <div class="nav-links">
 
-<a href="#collections" data-i18n="navCollections">
-Kolleksiyalar
-</a>
+<a href="#collections" data-i18n="collections">Kolleksiyalar</a>
 
-<a href="#packages" data-i18n="navPackages">
-Paketlər
-</a>
+<a href="#packages" data-i18n="packages">Paketlər</a>
 
-<a href="pricing.html" data-i18n="navPricing">
-Qiymətlər
-</a>
+<a href="pricing.html" data-i18n="pricing">Qiymətlər</a>
 
 </div>
 
 
-<div class="language-wrapper">
+<div class="lang">
 
-<button
-class="language-button"
-id="languageButton"
->
+<button class="lang-btn" id="langButton">
 AZ ▾
 </button>
 
-<div class="language-menu">
+<div class="lang-menu">
 
-<button onclick="changeLanguage('az')">
+<button onclick="setLanguage('az')">
 🇦🇿 Azərbaycan
 </button>
 
-<button onclick="changeLanguage('tr')">
+<button onclick="setLanguage('tr')">
 🇹🇷 Türkçe
 </button>
 
-<button onclick="changeLanguage('en')">
+<button onclick="setLanguage('en')">
 🇬🇧 English
 </button>
 
@@ -1781,49 +1432,35 @@ AZ ▾
 
 <div class="hero-content">
 
-<div class="eyebrow" data-i18n="eyebrow">
+<div class="kicker" data-i18n="kicker">
 Digital Invitations
 </div>
 
-
 <h1>
 
-<span data-i18n="heroLine1">
+<span data-i18n="hero1">
 Sizin anınız.
 </span>
 
-<span data-i18n="heroLine2">
+<em data-i18n="hero2">
 Sizin hekayəniz.
-</span>
+</em>
 
 </h1>
 
-
-<p
-class="hero-description"
-data-i18n="heroDescription"
->
+<p class="hero-text" data-i18n="heroText">
 Ən xüsusi günləriniz üçün adi dəvətnamələrdən daha artığı.
 Zərif dizayn, canlı animasiyalar və sizin hekayənizə uyğun
 rəqəmsal təcrübə.
 </p>
 
+<div class="buttons">
 
-<div class="hero-buttons">
-
-<a
-href="#packages"
-class="btn btn-dark"
-data-i18n="heroButton"
->
+<a href="#packages" class="btn btn-dark" data-i18n="explore">
 Dəvətnamələri kəşf et
 </a>
 
-<a
-href="#collections"
-class="btn btn-outline"
-data-i18n="collectionButton"
->
+<a href="#collections" class="btn btn-light" data-i18n="viewCollections">
 Kolleksiyalara bax
 </a>
 
@@ -1832,48 +1469,25 @@ Kolleksiyalara bax
 </div>
 
 
+<div class="hero-image"></div>
 
-<div class="hero-stage">
+<div class="hero-frame"></div>
 
-<div class="stage-shadow"></div>
-
-<div class="ornament one">
-made with love
+<div class="hero-label" data-i18n="heroLabel">
+made<br>with<br>love
 </div>
 
-<div class="ornament two">
-forever starts here
-</div>
 
-<div class="envelope"></div>
+<div class="flower">
 
-
-<div class="invitation">
-
-<div
-class="invitation-small"
-data-i18n="invitationSmall"
->
-THE WEDDING OF
-</div>
-
-<div class="invitation-names">
-Aysel
-</div>
-
-<div class="invitation-and">
-&
-</div>
-
-<div class="invitation-names">
-Murad
-</div>
-
-<div class="invitation-date">
-12 · 09 · 2026
-</div>
-
-</div>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
 
 </div>
 
@@ -1882,26 +1496,33 @@ Murad
 
 
 <!-- =====================================================
-     INTRO
+     STORY
 ===================================================== -->
 
-<section class="intro">
+<section class="story">
 
-<div
-class="small-label"
-data-i18n="introLabel"
->
-More than an invitation
+<div class="section-kicker" data-i18n="storyKicker">
+THE LUNA EXPERIENCE
 </div>
 
-<h2 data-i18n="introTitle">
-An invitation should feel like the beginning of your story.
+<h2 class="story-title" data-i18n="storyTitle">
+Bir dəvətnamə.<br>
+Bir <em>hekayə.</em><br>
+Bir ömürlük xatirə.
 </h2>
 
-<p data-i18n="introText">
-Luna ilə dəvətnaməniz sadəcə bir link deyil.
-Qonaqlarınızın ilk andan hiss edəcəyi xüsusi rəqəmsal təcrübədir.
+<div class="story-photo"></div>
+
+<p class="story-copy" data-i18n="storyText">
+Luna dəvətnamələri qonaqlarınıza göndərilən adi
+rəqəmsal kartlar deyil. Açılış anından musiqiyə,
+fotoşəkillərdən RSVP-yə qədər hər detal sizin
+hekayənizin bir hissəsinə çevrilir.
 </p>
+
+<div class="story-number">
+01
+</div>
 
 </section>
 
@@ -1911,37 +1532,24 @@ Qonaqlarınızın ilk andan hiss edəcəyi xüsusi rəqəmsal təcrübədir.
      COLLECTIONS
 ===================================================== -->
 
-<section
-class="collections"
-id="collections"
->
+<section class="collections" id="collections">
 
-<div class="section-header">
+<div class="section-top">
 
 <div>
 
-<div
-class="small-label"
-data-i18n="collectionLabel"
->
-Tədbirinizi seçin
+<div class="section-kicker" data-i18n="collectionKicker">
+YOUR OCCASION
 </div>
 
-<h2
-class="section-title"
-data-i18n="collectionTitle"
->
+<h2 class="section-title" data-i18n="collectionTitle">
 Kolleksiyalar
 </h2>
 
 </div>
 
-<a
-href="catalog/premium.html"
-class="section-link"
-data-i18n="allDesigns"
->
-Bütün dizaynlar →
+<a href="catalog/premium.html" class="btn btn-light" data-i18n="allDesigns">
+Bütün dizaynlar
 </a>
 
 </div>
@@ -1950,24 +1558,15 @@ Bütün dizaynlar →
 <div class="collection-grid">
 
 
-<a
-href="catalog/luxury.html"
-class="collection-card"
->
+<a href="catalog/luxury.html" class="collection">
 
-<div class="collection-content">
+<div class="collection-info">
 
-<div
-class="collection-number"
-data-i18n="weddingNumber"
->
-Kolleksiya 01
+<div class="collection-number">
+01 — WEDDING
 </div>
 
-<div
-class="collection-name"
-data-i18n="wedding"
->
+<div class="collection-name" data-i18n="wedding">
 Toy
 </div>
 
@@ -1976,24 +1575,15 @@ Toy
 </a>
 
 
-<a
-href="catalog/premium.html"
-class="collection-card"
->
+<a href="catalog/premium.html" class="collection">
 
-<div class="collection-content">
+<div class="collection-info">
 
-<div
-class="collection-number"
-data-i18n="engagementNumber"
->
-Kolleksiya 02
+<div class="collection-number">
+02 — ENGAGEMENT
 </div>
 
-<div
-class="collection-name"
-data-i18n="engagement"
->
+<div class="collection-name" data-i18n="engagement">
 Nişan
 </div>
 
@@ -2002,24 +1592,15 @@ Nişan
 </a>
 
 
-<a
-href="catalog/premium.html"
-class="collection-card"
->
+<a href="catalog/premium.html" class="collection">
 
-<div class="collection-content">
+<div class="collection-info">
 
-<div
-class="collection-number"
-data-i18n="hennaNumber"
->
-Kolleksiya 03
+<div class="collection-number">
+03 — HENNA
 </div>
 
-<div
-class="collection-name"
-data-i18n="henna"
->
+<div class="collection-name" data-i18n="henna">
 Xına
 </div>
 
@@ -2028,24 +1609,15 @@ Xına
 </a>
 
 
-<a
-href="catalog/basic.html"
-class="collection-card"
->
+<a href="catalog/basic.html" class="collection">
 
-<div class="collection-content">
+<div class="collection-info">
 
-<div
-class="collection-number"
-data-i18n="birthdayNumber"
->
-Kolleksiya 04
+<div class="collection-number">
+04 — CELEBRATION
 </div>
 
-<div
-class="collection-name"
-data-i18n="birthday"
->
+<div class="collection-name" data-i18n="birthday">
 Ad günü
 </div>
 
@@ -2063,37 +1635,26 @@ Ad günü
      PACKAGES
 ===================================================== -->
 
-<section
-class="packages"
-id="packages"
->
+<section class="packages" id="packages">
 
-<div class="section-header">
+<div class="packages-decoration"></div>
+
+<div class="section-top">
 
 <div>
 
-<div
-class="small-label"
-data-i18n="packageLabel"
->
-Sizə uyğun təcrübəni seçin
+<div class="section-kicker" data-i18n="packageKicker">
+CHOOSE YOUR EXPERIENCE
 </div>
 
-<h2
-class="section-title"
-data-i18n="packageTitle"
->
+<h2 class="section-title" data-i18n="packageTitle">
 Paketlər
 </h2>
 
 </div>
 
-<a
-href="pricing.html"
-class="section-link"
-data-i18n="priceLink"
->
-Qiymətlər →
+<a href="pricing.html" class="btn btn-light" data-i18n="seePricing">
+Qiymətlər
 </a>
 
 </div>
@@ -2102,58 +1663,49 @@ Qiymətlər →
 <div class="package-grid">
 
 
+<!-- BASIC -->
+
 <article class="package">
 
 <div>
 
-<div class="package-top">
-
-<span>Luna / 01</span>
-
-<span data-i18n="basicName">
-Basic
-</span>
-
+<div class="package-number">
+LUNA / 01
 </div>
 
 <h3>
 Basic
 </h3>
 
-<p data-i18n="basicDescription">
-Sadə və elegant görünüşü sevənlər üçün
-zərif rəqəmsal dəvətnamələr.
-</p>
+<div class="package-subtitle" data-i18n="basicSub">
+Sadə. Zərif. Minimal.
+</div>
 
 <ul class="package-list">
 
-<li data-i18n="basicFeature1">
+<li data-i18n="basic1">
 ✓ Premium dizayn seçimi
 </li>
 
-<li data-i18n="basicFeature2">
+<li data-i18n="basic2">
 ✓ Şəxsi dəvətnamə linki
 </li>
 
-<li data-i18n="basicFeature3">
-✓ Məlumatların dəyişdirilməsi
+<li data-i18n="basic3">
+✓ Mobil uyğun görünüş
 </li>
 
-<li data-i18n="basicFeature4">
-✓ Mobil uyğun dizayn
+<li data-i18n="basic4">
+✓ Məlumatların yerləşdirilməsi
 </li>
 
 </ul>
 
 </div>
 
+<a href="catalog/basic.html" class="package-link">
 
-<a
-href="catalog/basic.html"
-class="package-button"
->
-
-<span data-i18n="viewCatalog">
+<span data-i18n="catalog">
 Kataloqa bax
 </span>
 
@@ -2165,48 +1717,43 @@ Kataloqa bax
 
 
 
+<!-- PREMIUM -->
+
 <article class="package">
 
 <div>
 
-<div class="package-top">
-
-<span>Luna / 02</span>
-
-<span data-i18n="premiumName">
-Premium
-</span>
-
+<div class="package-number">
+LUNA / 02
 </div>
 
 <h3>
 Premium
 </h3>
 
-<p data-i18n="premiumDescription">
-Daha interaktiv, hərəkətli və qonaqlarınız
-üçün xüsusi rəqəmsal təcrübə.
-</p>
+<div class="package-subtitle" data-i18n="premiumSub">
+Canlı. İnteraktiv. Xüsusi.
+</div>
 
 <ul class="package-list">
 
-<li data-i18n="premiumFeature1">
+<li data-i18n="premium1">
 ✓ Premium dizayn
 </li>
 
-<li data-i18n="premiumFeature2">
+<li data-i18n="premium2">
 ✓ Açılış animasiyası
 </li>
 
-<li data-i18n="premiumFeature3">
+<li data-i18n="premium3">
 ✓ Countdown
 </li>
 
-<li data-i18n="premiumFeature4">
+<li data-i18n="premium4">
 ✓ Foto qalereya
 </li>
 
-<li data-i18n="premiumFeature5">
+<li data-i18n="premium5">
 ✓ RSVP
 </li>
 
@@ -2214,13 +1761,9 @@ Daha interaktiv, hərəkətli və qonaqlarınız
 
 </div>
 
+<a href="catalog/premium.html" class="package-link">
 
-<a
-href="catalog/premium.html"
-class="package-button"
->
-
-<span data-i18n="viewCatalog">
+<span data-i18n="catalog">
 Kataloqa bax
 </span>
 
@@ -2232,48 +1775,43 @@ Kataloqa bax
 
 
 
+<!-- LUXURY -->
+
 <article class="package">
 
 <div>
 
-<div class="package-top">
-
-<span>Luna / 03</span>
-
-<span data-i18n="luxuryName">
-Luxury
-</span>
-
+<div class="package-number">
+LUNA / 03
 </div>
 
 <h3>
 Luxury
 </h3>
 
-<p data-i18n="luxuryDescription">
-Cinematic, 3D və tam fərdiləşdirilmiş
-premium dəvətnamə təcrübəsi.
-</p>
+<div class="package-subtitle" data-i18n="luxurySub">
+Cinematic. 3D. Unikal.
+</div>
 
 <ul class="package-list">
 
-<li data-i18n="luxuryFeature1">
+<li data-i18n="luxury1">
 ✓ Eksklüziv dizayn
 </li>
 
-<li data-i18n="luxuryFeature2">
+<li data-i18n="luxury2">
 ✓ 3D açılış
 </li>
 
-<li data-i18n="luxuryFeature3">
+<li data-i18n="luxury3">
 ✓ Cinematic animasiya
 </li>
 
-<li data-i18n="luxuryFeature4">
+<li data-i18n="luxury4">
 ✓ Musiqi
 </li>
 
-<li data-i18n="luxuryFeature5">
+<li data-i18n="luxury5">
 ✓ Qalereya + RSVP + xəritə
 </li>
 
@@ -2281,13 +1819,9 @@ premium dəvətnamə təcrübəsi.
 
 </div>
 
+<a href="catalog/luxury.html" class="package-link">
 
-<a
-href="catalog/luxury.html"
-class="package-button"
->
-
-<span data-i18n="viewCatalog">
+<span data-i18n="catalog">
 Kataloqa bax
 </span>
 
@@ -2309,21 +1843,15 @@ Kataloqa bax
 
 <section class="process">
 
-<div class="section-header">
+<div class="section-top">
 
 <div>
 
-<div
-class="small-label"
-data-i18n="processLabel"
->
-Necə işləyir
+<div class="section-kicker" data-i18n="processKicker">
+THE PROCESS
 </div>
 
-<h2
-class="section-title"
-data-i18n="processTitle"
->
+<h2 class="section-title" data-i18n="processTitle">
 Necə işləyir?
 </h2>
 
@@ -2341,13 +1869,13 @@ Necə işləyir?
 01
 </div>
 
-<h3 data-i18n="step1Title">
+<h3 data-i18n="step1">
 Paket seç
 </h3>
 
 <p data-i18n="step1Text">
-Sizə uyğun Luna paketini seçərək həmin
-paketin xüsusi kataloquna keçin.
+Sizə uyğun Luna paketini seçin və həmin
+paketin kataloquna keçin.
 </p>
 
 </div>
@@ -2359,13 +1887,13 @@ paketin xüsusi kataloquna keçin.
 02
 </div>
 
-<h3 data-i18n="step2Title">
+<h3 data-i18n="step2">
 Dizayn seç
 </h3>
 
 <p data-i18n="step2Text">
-Kataloqdan bəyəndiyiniz dəvətnaməni
-açın və canlı görünüşünə baxın.
+Bəyəndiyiniz dəvətnaməni açın və
+canlı görünüşünə baxın.
 </p>
 
 </div>
@@ -2377,13 +1905,13 @@ açın və canlı görünüşünə baxın.
 03
 </div>
 
-<h3 data-i18n="step3Title">
-Məlumatları göndər
+<h3 data-i18n="step3">
+Məlumatlarını göndər
 </h3>
 
 <p data-i18n="step3Text">
-Adlar, tarix, məkan, şəkillər, musiqi
-və digər məlumatları doldurun.
+Adlar, tarix, məkan, fotoşəkillər,
+musiqi və digər məlumatları göndərin.
 </p>
 
 </div>
@@ -2395,13 +1923,13 @@ və digər məlumatları doldurun.
 04
 </div>
 
-<h3 data-i18n="step4Title">
-Linkinizi paylaş
+<h3 data-i18n="step4">
+Linkini paylaş
 </h3>
 
 <p data-i18n="step4Text">
-Hazır dəvətnaməniz üçün xüsusi link əldə
-edin və qonaqlarınızla paylaşın.
+Hazır dəvətnamənizin xüsusi linkini
+qonaqlarınızla paylaşın.
 </p>
 
 </div>
@@ -2413,37 +1941,27 @@ edin və qonaqlarınızla paylaşın.
 
 
 <!-- =====================================================
-     CTA
+     FINAL
 ===================================================== -->
 
-<section class="cta">
+<section class="final">
 
-<div
-class="small-label"
-data-i18n="ctaLabel"
->
-Dəvətnaməniz sizi gözləyir
+<div class="final-content">
+
+<div class="section-kicker" data-i18n="finalKicker">
+YOUR STORY STARTS HERE
 </div>
 
-<h2 data-i18n="ctaTitle">
+<h2 data-i18n="finalTitle">
 Hekayəniz<br>
-burada başlasın.
+<em>burada başlasın.</em>
 </h2>
 
-<p data-i18n="ctaText">
-Ən gözəl anlarınız üçün Luna ilə
-fərqli bir dəvətnamə təcrübəsi yaradın.
-</p>
-
-<br><br>
-
-<a
-href="#packages"
-class="btn btn-dark"
-data-i18n="ctaButton"
->
+<a href="#packages" class="btn btn-dark" data-i18n="finalButton">
 Dizaynları kəşf et
 </a>
+
+</div>
 
 </section>
 
@@ -2461,30 +1979,30 @@ Dizaynları kəşf et
 Luna
 </div>
 
-<div class="footer-columns">
+<div class="footer-links">
 
-<div class="footer-column">
+<div class="footer-group">
 
 <h4 data-i18n="footerExplore">
 Kəşf et
 </h4>
 
-<a href="#collections" data-i18n="navCollections">
+<a href="#collections" data-i18n="collections">
 Kolleksiyalar
 </a>
 
-<a href="#packages" data-i18n="navPackages">
+<a href="#packages" data-i18n="packages">
 Paketlər
 </a>
 
-<a href="pricing.html" data-i18n="navPricing">
+<a href="pricing.html" data-i18n="pricing">
 Qiymətlər
 </a>
 
 </div>
 
 
-<div class="footer-column">
+<div class="footer-group">
 
 <h4 data-i18n="footerOccasions">
 Tədbirlər
@@ -2514,11 +2032,7 @@ Ad günü
 
 
 <div class="footer-bottom">
-
-<span data-i18n="copyright">
 © 2026 Luna Digital Invitations
-</span>
-
 </div>
 
 </footer>
@@ -2528,331 +2042,295 @@ Ad günü
 <script>
 
 /* =========================================================
-   TRANSLATIONS
+   LANGUAGES
 ========================================================= */
 
-const translations={
+const translations = {
 
 az:{
 
-navCollections:"Kolleksiyalar",
-navPackages:"Paketlər",
-navPricing:"Qiymətlər",
+collections:"Kolleksiyalar",
+packages:"Paketlər",
+pricing:"Qiymətlər",
 
-eyebrow:"Rəqəmsal Dəvətnamələr",
+kicker:"Rəqəmsal Dəvətnamələr",
 
-heroLine1:"Sizin anınız.",
-heroLine2:"Sizin hekayəniz.",
+hero1:"Sizin anınız.",
+hero2:"Sizin hekayəniz.",
 
-heroDescription:
+heroText:
 "Ən xüsusi günləriniz üçün adi dəvətnamələrdən daha artığı. Zərif dizayn, canlı animasiyalar və sizin hekayənizə uyğun rəqəmsal təcrübə.",
 
-heroButton:"Dəvətnamələri kəşf et",
-collectionButton:"Kolleksiyalara bax",
+explore:"Dəvətnamələri kəşf et",
+viewCollections:"Kolleksiyalara bax",
 
-invitationSmall:"TOY MƏRASİMİ",
+heroLabel:"hazırlandı<br>sevgi ilə",
 
-introLabel:"Dəvətnamədən daha artığı",
+storyKicker:"LUNA TƏCRÜBƏSİ",
 
-introTitle:
-"Dəvətnaməniz hekayənizin başlanğıcı kimi hiss olunmalıdır.",
+storyTitle:
+"Bir dəvətnamə.<br>Bir <em>hekayə.</em><br>Bir ömürlük xatirə.",
 
-introText:
-"Luna ilə dəvətnaməniz sadəcə bir link deyil. Qonaqlarınızın ilk andan hiss edəcəyi xüsusi rəqəmsal təcrübədir.",
+storyText:
+"Luna dəvətnamələri qonaqlarınıza göndərilən adi rəqəmsal kartlar deyil. Açılış anından musiqiyə, fotoşəkillərdən RSVP-yə qədər hər detal sizin hekayənizin bir hissəsinə çevrilir.",
 
-collectionLabel:"Tədbirinizi seçin",
+collectionKicker:"TƏDBİRİNİZ",
+
 collectionTitle:"Kolleksiyalar",
-allDesigns:"Bütün dizaynlar →",
 
-weddingNumber:"Kolleksiya 01",
-engagementNumber:"Kolleksiya 02",
-hennaNumber:"Kolleksiya 03",
-birthdayNumber:"Kolleksiya 04",
+allDesigns:"Bütün dizaynlar",
 
 wedding:"Toy",
 engagement:"Nişan",
 henna:"Xına",
 birthday:"Ad günü",
 
-packageLabel:"Sizə uyğun təcrübəni seçin",
+packageKicker:"SİZƏ UYĞUN TƏCRÜBƏ",
+
 packageTitle:"Paketlər",
-priceLink:"Qiymətlər →",
 
-basicName:"Basic",
-premiumName:"Premium",
-luxuryName:"Luxury",
+seePricing:"Qiymətlər",
 
-basicDescription:
-"Sadə və elegant görünüşü sevənlər üçün zərif rəqəmsal dəvətnamələr.",
+basicSub:"Sadə. Zərif. Minimal.",
 
-premiumDescription:
-"Daha interaktiv, hərəkətli və qonaqlarınız üçün xüsusi rəqəmsal təcrübə.",
+basic1:"✓ Premium dizayn seçimi",
+basic2:"✓ Şəxsi dəvətnamə linki",
+basic3:"✓ Mobil uyğun görünüş",
+basic4:"✓ Məlumatların yerləşdirilməsi",
 
-luxuryDescription:
-"Cinematic, 3D və tam fərdiləşdirilmiş premium dəvətnamə təcrübəsi.",
+premiumSub:"Canlı. İnteraktiv. Xüsusi.",
 
-basicFeature1:"✓ Premium dizayn seçimi",
-basicFeature2:"✓ Şəxsi dəvətnamə linki",
-basicFeature3:"✓ Məlumatların dəyişdirilməsi",
-basicFeature4:"✓ Mobil uyğun dizayn",
+premium1:"✓ Premium dizayn",
+premium2:"✓ Açılış animasiyası",
+premium3:"✓ Countdown",
+premium4:"✓ Foto qalereya",
+premium5:"✓ RSVP",
 
-premiumFeature1:"✓ Premium dizayn",
-premiumFeature2:"✓ Açılış animasiyası",
-premiumFeature3:"✓ Countdown",
-premiumFeature4:"✓ Foto qalereya",
-premiumFeature5:"✓ RSVP",
+luxurySub:"Cinematic. 3D. Unikal.",
 
-luxuryFeature1:"✓ Eksklüziv dizayn",
-luxuryFeature2:"✓ 3D açılış",
-luxuryFeature3:"✓ Cinematic animasiya",
-luxuryFeature4:"✓ Musiqi",
-luxuryFeature5:"✓ Qalereya + RSVP + xəritə",
+luxury1:"✓ Eksklüziv dizayn",
+luxury2:"✓ 3D açılış",
+luxury3:"✓ Cinematic animasiya",
+luxury4:"✓ Musiqi",
+luxury5:"✓ Qalereya + RSVP + xəritə",
 
-viewCatalog:"Kataloqa bax",
+catalog:"Kataloqa bax",
 
-processLabel:"Necə işləyir",
+processKicker:"PROSES",
 processTitle:"Necə işləyir?",
 
-step1Title:"Paket seç",
-step1Text:"Sizə uyğun Luna paketini seçərək həmin paketin xüsusi kataloquna keçin.",
+step1:"Paket seç",
+step1Text:"Sizə uyğun Luna paketini seçin və həmin paketin kataloquna keçin.",
 
-step2Title:"Dizayn seç",
-step2Text:"Kataloqdan bəyəndiyiniz dəvətnaməni açın və canlı görünüşünə baxın.",
+step2:"Dizayn seç",
+step2Text:"Bəyəndiyiniz dəvətnaməni açın və canlı görünüşünə baxın.",
 
-step3Title:"Məlumatları göndər",
-step3Text:"Adlar, tarix, məkan, şəkillər, musiqi və digər məlumatları doldurun.",
+step3:"Məlumatlarını göndər",
+step3Text:"Adlar, tarix, məkan, fotoşəkillər, musiqi və digər məlumatları göndərin.",
 
-step4Title:"Linkinizi paylaş",
-step4Text:"Hazır dəvətnaməniz üçün xüsusi link əldə edin və qonaqlarınızla paylaşın.",
+step4:"Linkini paylaş",
+step4Text:"Hazır dəvətnamənizin xüsusi linkini qonaqlarınızla paylaşın.",
 
-ctaLabel:"Dəvətnaməniz sizi gözləyir",
+finalKicker:"HEKAYƏNİZ BURADA BAŞLAYIR",
 
-ctaTitle:"Hekayəniz<br>burada başlasın.",
+finalTitle:"Hekayəniz<br><em>burada başlasın.</em>",
 
-ctaText:"Ən gözəl anlarınız üçün Luna ilə fərqli bir dəvətnamə təcrübəsi yaradın.",
-
-ctaButton:"Dizaynları kəşf et",
+finalButton:"Dizaynları kəşf et",
 
 footerExplore:"Kəşf et",
-footerOccasions:"Tədbirlər",
-
-copyright:"© 2026 Luna Digital Invitations"
+footerOccasions:"Tədbirlər"
 
 },
 
 
 tr:{
 
-navCollections:"Koleksiyonlar",
-navPackages:"Paketler",
-navPricing:"Fiyatlar",
+collections:"Koleksiyonlar",
+packages:"Paketler",
+pricing:"Fiyatlar",
 
-eyebrow:"Dijital Davetiyeler",
+kicker:"Dijital Davetiyeler",
 
-heroLine1:"Sizin anınız.",
-heroLine2:"Sizin hikâyeniz.",
+hero1:"Sizin anınız.",
+hero2:"Sizin hikâyeniz.",
 
-heroDescription:
+heroText:
 "En özel günleriniz için sıradan davetiyelerden çok daha fazlası. Zarif tasarım, canlı animasyonlar ve hikâyenize özel dijital deneyim.",
 
-heroButton:"Davetiyeleri keşfet",
-collectionButton:"Koleksiyonlara bak",
+explore:"Davetiyeleri keşfet",
+viewCollections:"Koleksiyonlara bak",
 
-invitationSmall:"DÜĞÜN TÖRENİ",
+heroLabel:"sevgiyle<br>hazırlandı",
 
-introLabel:"Bir davetiyeden daha fazlası",
+storyKicker:"LUNA DENEYİMİ",
 
-introTitle:
-"Davetiyeniz hikâyenizin başlangıcı gibi hissettirmeli.",
+storyTitle:
+"Bir davetiye.<br>Bir <em>hikâye.</em><br>Bir ömürlük anı.",
 
-introText:
-"Luna ile davetiyeniz sadece bir bağlantı değil. Misafirlerinizin ilk andan itibaren hissedeceği özel bir dijital deneyimdir.",
+storyText:
+"Luna davetiyeleri misafirlerinize gönderilen sıradan dijital kartlar değildir. Açılıştan müziğe, fotoğraflardan RSVP'ye kadar her detay hikâyenizin bir parçasına dönüşür.",
 
-collectionLabel:"Etkinliğinizi seçin",
+collectionKicker:"ETKİNLİĞİNİZ",
+
 collectionTitle:"Koleksiyonlar",
-allDesigns:"Tüm tasarımlar →",
 
-weddingNumber:"Koleksiyon 01",
-engagementNumber:"Koleksiyon 02",
-hennaNumber:"Koleksiyon 03",
-birthdayNumber:"Koleksiyon 04",
+allDesigns:"Tüm tasarımlar",
 
 wedding:"Düğün",
 engagement:"Nişan",
 henna:"Kına",
 birthday:"Doğum Günü",
 
-packageLabel:"Size uygun deneyimi seçin",
+packageKicker:"SİZE UYGUN DENEYİM",
+
 packageTitle:"Paketler",
-priceLink:"Fiyatlar →",
 
-basicName:"Basic",
-premiumName:"Premium",
-luxuryName:"Luxury",
+seePricing:"Fiyatlar",
 
-basicDescription:
-"Sade ve zarif görünümü sevenler için elegant dijital davetiyeler.",
+basicSub:"Sade. Zarif. Minimal.",
 
-premiumDescription:
-"Daha interaktif, hareketli ve misafirleriniz için özel bir dijital deneyim.",
+basic1:"✓ Premium tasarım seçimi",
+basic2:"✓ Kişisel davetiye bağlantısı",
+basic3:"✓ Mobil uyumlu görünüm",
+basic4:"✓ Bilgilerin eklenmesi",
 
-luxuryDescription:
-"Sinema hissi veren, 3D ve tamamen kişiselleştirilmiş premium davetiye deneyimi.",
+premiumSub:"Canlı. İnteraktif. Özel.",
 
-basicFeature1:"✓ Premium tasarım seçimi",
-basicFeature2:"✓ Kişisel davetiye bağlantısı",
-basicFeature3:"✓ Bilgilerin değiştirilmesi",
-basicFeature4:"✓ Mobil uyumlu tasarım",
+premium1:"✓ Premium tasarım",
+premium2:"✓ Açılış animasyonu",
+premium3:"✓ Geri sayım",
+premium4:"✓ Fotoğraf galerisi",
+premium5:"✓ RSVP",
 
-premiumFeature1:"✓ Premium tasarım",
-premiumFeature2:"✓ Açılış animasyonu",
-premiumFeature3:"✓ Geri sayım",
-premiumFeature4:"✓ Fotoğraf galerisi",
-premiumFeature5:"✓ RSVP",
+luxurySub:"Sinematik. 3D. Benzersiz.",
 
-luxuryFeature1:"✓ Özel tasarım",
-luxuryFeature2:"✓ 3D açılış",
-luxuryFeature3:"✓ Sinematik animasyon",
-luxuryFeature4:"✓ Müzik",
-luxuryFeature5:"✓ Galeri + RSVP + harita",
+luxury1:"✓ Özel tasarım",
+luxury2:"✓ 3D açılış",
+luxury3:"✓ Sinematik animasyon",
+luxury4:"✓ Müzik",
+luxury5:"✓ Galeri + RSVP + harita",
 
-viewCatalog:"Kataloğu gör",
+catalog:"Kataloğu gör",
 
-processLabel:"Nasıl çalışır",
+processKicker:"SÜREÇ",
 processTitle:"Nasıl çalışır?",
 
-step1Title:"Paket seç",
-step1Text:"Size uygun Luna paketini seçin ve o paketin özel kataloğuna geçin.",
+step1:"Paket seç",
+step1Text:"Size uygun Luna paketini seçin ve o paketin kataloğuna geçin.",
 
-step2Title:"Tasarım seç",
-step2Text:"Katalogdan beğendiğiniz davetiyeyi açın ve canlı görünümünü inceleyin.",
+step2:"Tasarım seç",
+step2Text:"Beğendiğiniz davetiyeyi açın ve canlı görünümünü inceleyin.",
 
-step3Title:"Bilgilerinizi gönderin",
-step3Text:"İsimler, tarih, mekan, fotoğraflar, müzik ve diğer bilgileri doldurun.",
+step3:"Bilgilerini gönder",
+step3Text:"İsimler, tarih, mekan, fotoğraflar, müzik ve diğer bilgileri gönderin.",
 
-step4Title:"Bağlantınızı paylaşın",
-step4Text:"Hazır davetiyeniz için özel bağlantınızı alın ve misafirlerinizle paylaşın.",
+step4:"Bağlantını paylaş",
+step4Text:"Hazır davetiyenizin özel bağlantısını misafirlerinizle paylaşın.",
 
-ctaLabel:"Davetiyeniz sizi bekliyor",
+finalKicker:"HİKÂYENİZ BURADA BAŞLIYOR",
 
-ctaTitle:"Hikâyeniz<br>burada başlasın.",
+finalTitle:"Hikâyeniz<br><em>burada başlasın.</em>",
 
-ctaText:"En güzel anlarınız için Luna ile farklı bir davetiye deneyimi yaratın.",
-
-ctaButton:"Tasarımları keşfet",
+finalButton:"Tasarımları keşfet",
 
 footerExplore:"Keşfet",
-footerOccasions:"Etkinlikler",
-
-copyright:"© 2026 Luna Digital Invitations"
+footerOccasions:"Etkinlikler"
 
 },
 
 
 en:{
 
-navCollections:"Collections",
-navPackages:"Packages",
-navPricing:"Pricing",
+collections:"Collections",
+packages:"Packages",
+pricing:"Pricing",
 
-eyebrow:"Digital Invitations",
+kicker:"Digital Invitations",
 
-heroLine1:"Your moment.",
-heroLine2:"Your story.",
+hero1:"Your moment.",
+hero2:"Your story.",
 
-heroDescription:
+heroText:
 "More than an ordinary invitation for your most meaningful moments. Elegant design, living animations and a digital experience created around your story.",
 
-heroButton:"Explore invitations",
-collectionButton:"View collections",
+explore:"Explore invitations",
+viewCollections:"View collections",
 
-invitationSmall:"THE WEDDING OF",
+heroLabel:"made<br>with<br>love",
 
-introLabel:"More than an invitation",
+storyKicker:"THE LUNA EXPERIENCE",
 
-introTitle:
-"Your invitation should feel like the beginning of your story.",
+storyTitle:
+"One invitation.<br>One <em>story.</em><br>A lifetime memory.",
 
-introText:
-"With Luna, your invitation is more than a link. It becomes a beautiful digital experience your guests feel from the very first moment.",
+storyText:
+"Luna invitations are more than ordinary digital cards. From the opening moment to music, photographs and RSVP, every detail becomes part of your story.",
 
-collectionLabel:"Choose your occasion",
+collectionKicker:"YOUR OCCASION",
+
 collectionTitle:"Collections",
-allDesigns:"View all designs →",
 
-weddingNumber:"Collection 01",
-engagementNumber:"Collection 02",
-hennaNumber:"Collection 03",
-birthdayNumber:"Collection 04",
+allDesigns:"View all designs",
 
 wedding:"Wedding",
 engagement:"Engagement",
 henna:"Henna",
 birthday:"Birthday",
 
-packageLabel:"Find your experience",
+packageKicker:"CHOOSE YOUR EXPERIENCE",
+
 packageTitle:"Packages",
-priceLink:"Pricing →",
 
-basicName:"Basic",
-premiumName:"Premium",
-luxuryName:"Luxury",
+seePricing:"Pricing",
 
-basicDescription:
-"Elegant digital invitations for those who love a simple and refined aesthetic.",
+basicSub:"Simple. Elegant. Minimal.",
 
-premiumDescription:
-"A more interactive and animated digital experience created for your guests.",
+basic1:"✓ Premium design selection",
+basic2:"✓ Personal invitation link",
+basic3:"✓ Mobile-friendly view",
+basic4:"✓ Information placement",
 
-luxuryDescription:
-"A cinematic, 3D and fully personalised premium invitation experience.",
+premiumSub:"Living. Interactive. Personal.",
 
-basicFeature1:"✓ Premium design selection",
-basicFeature2:"✓ Personal invitation link",
-basicFeature3:"✓ Editable information",
-basicFeature4:"✓ Mobile-friendly design",
+premium1:"✓ Premium design",
+premium2:"✓ Opening animation",
+premium3:"✓ Countdown",
+premium4:"✓ Photo gallery",
+premium5:"✓ RSVP",
 
-premiumFeature1:"✓ Premium design",
-premiumFeature2:"✓ Opening animation",
-premiumFeature3:"✓ Countdown",
-premiumFeature4:"✓ Photo gallery",
-premiumFeature5:"✓ RSVP",
+luxurySub:"Cinematic. 3D. Unique.",
 
-luxuryFeature1:"✓ Exclusive design",
-luxuryFeature2:"✓ 3D opening",
-luxuryFeature3:"✓ Cinematic animation",
-luxuryFeature4:"✓ Music",
-luxuryFeature5:"✓ Gallery + RSVP + map",
+luxury1:"✓ Exclusive design",
+luxury2:"✓ 3D opening",
+luxury3:"✓ Cinematic animation",
+luxury4:"✓ Music",
+luxury5:"✓ Gallery + RSVP + map",
 
-viewCatalog:"View catalogue",
+catalog:"View catalogue",
 
-processLabel:"How it works",
+processKicker:"THE PROCESS",
 processTitle:"How it works?",
 
-step1Title:"Choose a package",
-step1Text:"Choose the Luna package that fits your celebration and enter its exclusive catalogue.",
+step1:"Choose a package",
+step1Text:"Choose the Luna package that fits your celebration and enter its catalogue.",
 
-step2Title:"Choose a design",
-step2Text:"Open your favourite invitation and explore its live preview.",
+step2:"Choose a design",
+step2Text:"Open the invitation you love and explore its live preview.",
 
-step3Title:"Send your details",
-step3Text:"Add names, date, venue, photos, music and all the details you want to include.",
+step3:"Send your details",
+step3Text:"Send names, date, venue, photographs, music and all the details you want.",
 
-step4Title:"Share your link",
+step4:"Share your link",
 step4Text:"Receive your personal invitation link and share it with your guests.",
 
-ctaLabel:"Your invitation awaits",
+finalKicker:"YOUR STORY STARTS HERE",
 
-ctaTitle:"Let your story<br>begin here.",
+finalTitle:"Let your story<br><em>begin here.</em>",
 
-ctaText:"Create a different invitation experience for your most beautiful moments with Luna.",
-
-ctaButton:"Explore designs",
+finalButton:"Explore designs",
 
 footerExplore:"Explore",
-footerOccasions:"Occasions",
-
-copyright:"© 2026 Luna Digital Invitations"
+footerOccasions:"Occasions"
 
 }
 
@@ -2860,12 +2338,12 @@ copyright:"© 2026 Luna Digital Invitations"
 
 
 /* =========================================================
-   LANGUAGE
+   LANGUAGE FUNCTION
 ========================================================= */
 
-function changeLanguage(language){
+function setLanguage(language){
 
-    const dictionary=translations[language];
+    const data=translations[language];
 
     document.documentElement.lang=language;
 
@@ -2875,13 +2353,15 @@ function changeLanguage(language){
 
             const key=element.dataset.i18n;
 
-            if(dictionary[key] !== undefined){
-                element.innerHTML=dictionary[key];
+            if(data[key] !== undefined){
+
+                element.innerHTML=data[key];
+
             }
 
         });
 
-    document.getElementById("languageButton").textContent=
+    document.getElementById("langButton").textContent=
         language.toUpperCase()+" ▾";
 
     localStorage.setItem(
@@ -2891,12 +2371,35 @@ function changeLanguage(language){
 }
 
 
+/* saved language */
+
 const savedLanguage=
     localStorage.getItem("luna_language") || "az";
 
-changeLanguage(savedLanguage);
+setLanguage(savedLanguage);
+
+
+/* =========================================================
+   SMALL PARALLAX
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+    const scroll=window.scrollY;
+
+    const photo=document.querySelector(".hero-image");
+
+    if(photo && scroll<900){
+
+        photo.style.transform=
+            `translateY(${scroll*.08}px)`;
+
+    }
+
+});
 
 </script>
 
 </body>
 </html>
+```
