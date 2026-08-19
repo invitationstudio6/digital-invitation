@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -206,15 +207,6 @@
         }
 
 
-        .price span {
-
-            font-size: 14px;
-
-            color: #9a8776;
-
-        }
-
-
         .features {
 
             list-style: none;
@@ -291,6 +283,126 @@
 
 
         /* =========================
+           VIDEO INVITATION
+        ========================= */
+
+        .video-section {
+
+            max-width: 1100px;
+
+            margin: -45px auto 90px;
+
+            padding: 0 20px;
+
+        }
+
+
+        .video-package {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 40px 35px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.06);
+
+            text-align: center;
+
+            border: 1px solid #eee5dc;
+
+        }
+
+
+        .video-package .package-number {
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .video-package h2 {
+
+            font-size: 30px;
+
+            font-weight: normal;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .video-description {
+
+            max-width: 600px;
+
+            margin: 0 auto 20px;
+
+            color: #806f61;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+        }
+
+
+        .video-price {
+
+            font-size: 38px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .video-features {
+
+            list-style: none;
+
+            max-width: 500px;
+
+            margin: 0 auto 30px;
+
+            text-align: left;
+
+        }
+
+
+        .video-features li {
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid #eee5dc;
+
+            font-size: 14px;
+
+        }
+
+
+        .video-features li::before {
+
+            content: "✓";
+
+            margin-right: 9px;
+
+            color: #806f61;
+
+        }
+
+
+        .video-button {
+
+            max-width: 500px;
+
+            margin: auto;
+
+        }
+
+
+        /* =========================
            FOOTER
         ========================= */
 
@@ -348,12 +460,26 @@
 
             }
 
+
+            .video-section {
+
+                max-width: 600px;
+
+            }
+
         }
 
 
         @media (max-width: 500px) {
 
             .package {
+
+                padding: 35px 25px;
+
+            }
+
+
+            .video-package {
 
                 padding: 35px 25px;
 
@@ -632,6 +758,80 @@
 
 
 
+<!-- =========================
+     CANVA VIDEO INVITATION
+========================= -->
+
+<section class="video-section">
+
+    <div class="video-package">
+
+        <div class="package-number">
+            04
+        </div>
+
+
+        <h2>
+            Canva Video Invitation
+        </h2>
+
+
+        <p class="video-description">
+
+            Xüsusi gününüz üçün hazırlanmış
+            zərif və fərdiləşdirilmiş video
+            dəvətnamə.
+
+        </p>
+
+
+        <div class="video-price">
+            20 AZN
+        </div>
+
+
+        <ul class="video-features">
+
+            <li>
+                Fərdiləşdirilmiş video dəvətnamə
+            </li>
+
+            <li>
+                Cütlüyün adları
+            </li>
+
+            <li>
+                Tarix və saat
+            </li>
+
+            <li>
+                Foto və video materialların əlavə edilməsi
+            </li>
+
+            <li>
+                Musiqi seçimi
+            </li>
+
+            <li>
+                Canva ilə hazırlanmış elegant dizayn
+            </li>
+
+        </ul>
+
+
+        <a
+            href="client-form.html?package=video"
+            class="choose-button video-button"
+        >
+            CHOOSE VIDEO INVITATION
+        </a>
+
+    </div>
+
+</section>
+
+
+
 <footer>
 
     <h2>
@@ -648,3 +848,4 @@
 </body>
 
 </html>
+```

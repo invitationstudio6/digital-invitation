@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,17 +128,6 @@
         }
 
 
-        .selected-price {
-
-            margin-top: 10px;
-
-            color: #806f61;
-
-            font-size: 15px;
-
-        }
-
-
         .section {
 
             margin-top: 35px;
@@ -256,97 +246,6 @@
         .checkbox label {
 
             margin: 0;
-
-        }
-
-
-        /* =========================
-           VIDEO INVITATION
-        ========================= */
-
-        .video-box {
-
-            background: #faf7f2;
-
-            border: 1px solid #eee5dc;
-
-            border-radius: 12px;
-
-            padding: 22px;
-
-            margin-bottom: 20px;
-
-        }
-
-
-        .video-title {
-
-            font-size: 18px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .video-price {
-
-            color: #806f61;
-
-            font-size: 15px;
-
-            margin-bottom: 12px;
-
-        }
-
-
-        .video-description {
-
-            color: #806f61;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-
-            margin-bottom: 18px;
-
-        }
-
-
-        .price-summary {
-
-            margin-top: 25px;
-
-            padding: 22px;
-
-            background: #403a35;
-
-            color: white;
-
-            border-radius: 12px;
-
-            text-align: center;
-
-        }
-
-
-        .price-summary-title {
-
-            font-size: 11px;
-
-            letter-spacing: 3px;
-
-            text-transform: uppercase;
-
-            margin-bottom: 8px;
-
-            opacity: 0.8;
-
-        }
-
-
-        .price-total {
-
-            font-size: 28px;
 
         }
 
@@ -484,15 +383,7 @@
         <div
             class="selected-package-name"
             id="selectedPackageText"
-        >
-        </div>
-
-
-        <div
-            class="selected-price"
-            id="selectedPriceText"
-        >
-        </div>
+        ></div>
 
     </div>
 
@@ -516,20 +407,6 @@
             type="hidden"
             name="selected_package"
             id="selectedPackage"
-        >
-
-
-        <input
-            type="hidden"
-            name="video_invitation"
-            id="videoInvitationField"
-        >
-
-
-        <input
-            type="hidden"
-            name="total_price"
-            id="totalPriceField"
         >
 
 
@@ -993,78 +870,13 @@
 
 
         <!-- =========================
-             VIDEO INVITATION
-        ========================= -->
-
-        <div class="section">
-
-            <h2>
-                8. Canva Video Invitation
-            </h2>
-
-
-            <div class="video-box">
-
-                <div class="video-title">
-                    ✨ Canva Video Invitation
-                </div>
-
-
-                <div class="video-price">
-                    20 AZN
-                </div>
-
-
-                <div class="video-description">
-
-                    A beautiful personalized video
-                    invitation created specially for
-                    your event.
-
-                </div>
-
-
-                <div class="checkbox">
-
-                    <input
-                        type="checkbox"
-                        id="videoInvitation"
-                        name="video_invitation_choice"
-                        value="Yes"
-                    >
-
-
-                    <label for="videoInvitation">
-
-                        Yes, I want a Canva Video
-                        Invitation — 20 AZN
-
-                    </label>
-
-                </div>
-
-            </div>
-
-
-            <span class="hint">
-
-                This is a separate service and can
-                be ordered alone or together with
-                any Luna digital invitation package.
-
-            </span>
-
-        </div>
-
-
-        <!-- =========================
              ADDITIONAL
         ========================= -->
 
         <div class="section">
 
             <h2>
-                9. Additional Requests
+                8. Additional Requests
             </h2>
 
 
@@ -1077,27 +889,6 @@
                 name="additional_requests"
                 placeholder="Colors, wording, special requests..."
             ></textarea>
-
-        </div>
-
-
-        <!-- =========================
-             PRICE SUMMARY
-        ========================= -->
-
-        <div class="price-summary">
-
-            <div class="price-summary-title">
-                Estimated Total
-            </div>
-
-
-            <div
-                class="price-total"
-                id="priceTotal"
-            >
-                0 AZN
-            </div>
 
         </div>
 
@@ -1130,7 +921,7 @@
 
 
     /* =====================================================
-       PACKAGE FROM PRICING PAGE
+       PACKAGE SELECTION
     ===================================================== */
 
     const packageParams =
@@ -1161,75 +952,13 @@
         );
 
 
-    const selectedPriceText =
-        document.getElementById(
-            "selectedPriceText"
-        );
-
-
-    const videoCheckbox =
-        document.getElementById(
-            "videoInvitation"
-        );
-
-
-    const videoField =
-        document.getElementById(
-            "videoInvitationField"
-        );
-
-
-    const totalPriceField =
-        document.getElementById(
-            "totalPriceField"
-        );
-
-
-    const priceTotal =
-        document.getElementById(
-            "priceTotal"
-        );
-
-
-    /* =====================================================
-       PACKAGE PRICES
-    ===================================================== */
-
-    const packagePrices = {
-
-        basic: 25,
-
-        premium: 40,
-
-        luxury: 60
-
-    };
-
-
-    let packagePrice = 0;
-
-    let packageName = "Not selected";
-
-
-    /* =====================================================
-       CHECK SELECTED PACKAGE
-    ===================================================== */
-
     if (selectedPackage === "basic") {
-
-        packagePrice = 25;
-
-        packageName =
-            "Luna Basic";
 
         packageField.value =
             "Luna Basic - 25 AZN";
 
         packageText.textContent =
             "Luna Basic — 25 AZN";
-
-        selectedPriceText.textContent =
-            "25 AZN";
 
         packageBox.style.display =
             "block";
@@ -1239,19 +968,11 @@
 
     else if (selectedPackage === "premium") {
 
-        packagePrice = 40;
-
-        packageName =
-            "Luna Premium";
-
         packageField.value =
             "Luna Premium - 40 AZN";
 
         packageText.textContent =
             "Luna Premium — 40 AZN";
-
-        selectedPriceText.textContent =
-            "40 AZN";
 
         packageBox.style.display =
             "block";
@@ -1261,19 +982,25 @@
 
     else if (selectedPackage === "luxury") {
 
-        packagePrice = 60;
-
-        packageName =
-            "Luna Luxury";
-
         packageField.value =
             "Luna Luxury - 60 AZN";
 
         packageText.textContent =
             "Luna Luxury — 60 AZN";
 
-        selectedPriceText.textContent =
-            "60 AZN";
+        packageBox.style.display =
+            "block";
+
+    }
+
+
+    else if (selectedPackage === "video") {
+
+        packageField.value =
+            "Canva Video Invitation - 20 AZN";
+
+        packageText.textContent =
+            "Canva Video Invitation — 20 AZN";
 
         packageBox.style.display =
             "block";
@@ -1288,69 +1015,6 @@
 
     }
 
-
-    /* =====================================================
-       UPDATE TOTAL PRICE
-    ===================================================== */
-
-    function updateTotalPrice() {
-
-        let total =
-            packagePrice;
-
-
-        let videoPrice = 0;
-
-
-        if (videoCheckbox.checked) {
-
-            videoPrice = 20;
-
-            videoField.value =
-                "Canva Video Invitation - 20 AZN";
-
-        }
-
-        else {
-
-            videoField.value =
-                "No";
-
-        }
-
-
-        total =
-            packagePrice +
-            videoPrice;
-
-
-        priceTotal.textContent =
-            total +
-            " AZN";
-
-
-        totalPriceField.value =
-            total +
-            " AZN";
-
-    }
-
-
-    /* =====================================================
-       VIDEO CHECKBOX
-    ===================================================== */
-
-    videoCheckbox.addEventListener(
-        "change",
-        updateTotalPrice
-    );
-
-
-    /* =====================================================
-       INITIAL PRICE
-    ===================================================== */
-
-    updateTotalPrice();
 
 
     /* =====================================================
@@ -1368,6 +1032,7 @@
         invitationId;
 
 
+
     /* =====================================================
        FORM SUBMIT
     ===================================================== */
@@ -1382,9 +1047,6 @@
                     document.getElementById(
                         "submitButton"
                     );
-
-
-                updateTotalPrice();
 
 
                 button.textContent =
@@ -1404,3 +1066,4 @@
 </body>
 
 </html>
+```
