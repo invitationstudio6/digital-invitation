@@ -1,6 +1,5 @@
 const invitations = {
 
-
     /* =====================================================
        AYSEL & MURAD
     ===================================================== */
@@ -24,13 +23,7 @@ const invitations = {
         map:
             "https://www.google.com/maps",
 
-
-        countdown:
-            "September 12, 2026 19:00:00",
-
-
         story: `
-
             <p>
                 Some stories are written in books.
                 Ours was written in little moments,
@@ -51,9 +44,7 @@ const invitations = {
                 And now, we are ready to begin
                 our next chapter.
             </p>
-
         `,
-
 
         images: [
 
@@ -65,11 +56,12 @@ const invitations = {
 
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
 
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
 
-            "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
+        ],
 
-        ]
+        countdown:
+            "September 12, 2026 19:00:00"
 
     },
 
@@ -97,13 +89,7 @@ const invitations = {
         map:
             "https://www.google.com/maps",
 
-
-        countdown:
-            "October 20, 2026 18:30:00",
-
-
         story: `
-
             <p>
                 Our story began with a simple hello
                 and grew into something beautiful.
@@ -123,9 +109,7 @@ const invitations = {
                 Now we are ready to begin
                 a new chapter together.
             </p>
-
         `,
-
 
         images: [
 
@@ -137,66 +121,59 @@ const invitations = {
 
             "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
 
-            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
 
-            "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
+        ],
 
-        ]
+        countdown:
+            "October 20, 2026 18:30:00"
 
     },
 
 
     /* =====================================================
-       AYDAN & ALI
+       NIGAR & ELVIN
     ===================================================== */
 
-    "aydan-ali": {
+    "nigar-elvin": {
 
-        bride: "Aydan",
+        bride: "Nigar",
 
-        groom: "Ali",
+        groom: "Elvin",
 
-        date: "15 November 2026",
+        date: "20 October 2026",
 
-        dateShort: "15 · 11 · 2026",
+        dateShort: "20 · 10 · 2026",
 
         time: "19:00",
 
         location: "Baku, Azerbaijan",
 
-        venue: "Example Wedding Hall",
+        venue: "Crystal Hall",
 
         map:
             "https://www.google.com/maps",
 
-
-        countdown:
-            "November 15, 2026 19:00:00",
-
-
         story: `
-
             <p>
-                Every beautiful story begins
-                with two people finding each other.
+                Our story began with a simple hello
+                and slowly became something beautiful.
             </p>
 
             <br>
 
             <p>
-                We are grateful for every moment
-                that brought us to this day.
+                Every moment we shared brought us
+                closer together.
             </p>
 
             <br>
 
             <p>
-                Now we would love to celebrate
-                this beautiful beginning with you.
+                Now we are ready to begin
+                our next chapter together.
             </p>
-
         `,
-
 
         images: [
 
@@ -208,11 +185,12 @@ const invitations = {
 
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
 
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
 
-            "https://images.unsplash.com/photo-1519225255-8f7d8e4c4c4b?auto=format&fit=crop&w=1000&q=85"
+        ],
 
-        ]
+        countdown:
+            "October 20, 2026 19:00:00"
 
     }
 
