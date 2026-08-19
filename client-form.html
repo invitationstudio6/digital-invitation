@@ -1,966 +1,287 @@
-<!DOCTYPE html>
-<html lang="az">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Luna — Create Invitation</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Italiana&family=DM+Sans:wght@300;400&display=swap"
-      rel="stylesheet">
-
-<style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(150,96,70,.30),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 75%,
-            rgba(112,73,55,.25),
-            transparent 35%
-        ),
-        #17120f;
-
-    color: #f5eee9;
-
-    font-family: "DM Sans", sans-serif;
-}
-
-.wrapper {
-
-    width: min(850px,92%);
-
-    margin: auto;
-
-    padding: 60px 0 100px;
-}
-
-.logo {
-
-    text-align: center;
-
-    font-family: "Italiana", serif;
-
-    font-size: 40px;
-
-    margin-bottom: 60px;
-}
-
-.logo a {
-
-    color: white;
-
-    text-decoration: none;
-}
-
-.box {
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    background:
-        rgba(255,255,255,.025);
-
-    padding: 45px;
-}
-
-.eyebrow {
-
-    font-size: 8px;
-
-    letter-spacing: 6px;
-
-    text-transform: uppercase;
-
-    color: #c19b87;
-}
-
-h1 {
-
-    font-family:
-        "Cormorant Garamond",
-        serif;
-
-    font-size: 70px;
-
-    font-weight: 300;
-
-    line-height: .9;
-
-    margin: 18px 0 45px;
-}
-
-.package-info {
-
-    display: flex;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 35px;
-}
-
-.badge {
-
-    padding: 8px 14px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    color: #c9aa97;
-
-    font-size: 8px;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-}
-
-.form-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 22px;
-}
-
-.field {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.full {
-
-    grid-column: 1 / -1;
-}
-
-label {
-
-    color: #b79c90;
-
-    font-size: 8px;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-}
-
-input,
-textarea {
-
-    width: 100%;
-
-    background:
-        rgba(0,0,0,.35);
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    color: white;
-
-    padding: 15px;
-
-    outline: none;
-
-    font-family:
-        "DM Sans",
-        sans-serif;
-}
-
-input:focus,
-textarea:focus {
-
-    border-color:
-        #c5a08d;
-}
-
-textarea {
-
-    min-height: 140px;
-
-    resize: vertical;
-}
-
-button {
-
-    width: 100%;
-
-    margin-top: 30px;
-
-    padding: 18px;
-
-    border: none;
-
-    background: #eee0d7;
-
-    color: #211914;
-
-    font-size: 8px;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-
-    cursor: pointer;
-
-    transition: .3s;
-}
-
-button:hover {
-
-    background: #ffffff;
-
-    transform: translateY(-2px);
-}
-
-.result {
-
-    display: none;
-
-    margin-top: 35px;
-
-    padding: 30px;
-
-    border:
-        1px solid
-        rgba(196,158,137,.3);
-
-    background:
-        rgba(255,255,255,.03);
-}
-
-.result h2 {
-
-    font-family:
-        "Cormorant Garamond",
-        serif;
-
-    font-size: 34px;
-
-    font-weight: 400;
-
-    margin-bottom: 15px;
-}
-
-.result p {
-
-    color: #b9a79b;
-
-    font-size: 12px;
-
-    line-height: 1.8;
-}
-
-.generated-link {
-
-    display: block;
-
-    margin-top: 20px;
-
-    padding: 15px;
-
-    background:
-        rgba(0,0,0,.35);
-
-    color: #d8b8a5;
-
-    font-size: 10px;
-
-    line-height: 1.6;
-
-    word-break: break-all;
-}
-
-.success-buttons {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 12px;
-}
-
-.secondary {
-
-    background:
-        transparent;
-
-    color: #eee0d7;
-
-    border:
-        1px solid
-        rgba(255,255,255,.2);
-}
-
-@media(max-width:650px) {
-
-    .form-grid {
-
-        grid-template-columns: 1fr;
-    }
-
-    .full {
-
-        grid-column: auto;
-    }
-
-    .box {
-
-        padding: 25px;
-    }
-
-    h1 {
-
-        font-size: 55px;
-    }
-
-    .success-buttons {
-
-        grid-template-columns: 1fr;
-    }
-}
-
-</style>
-
-</head>
-
-<body>
-
-
-<div class="wrapper">
-
-
-<div class="logo">
-
-<a href="index.html">
-Luna
-</a>
-
-</div>
-
-
-<div class="box">
-
-
-<div class="eyebrow">
-Personalize your invitation
-</div>
-
-
-<h1>
-Your beautiful moment.
-</h1>
-
-
-<div class="package-info">
-
-<div class="badge"
-     id="categoryBadge">
-Wedding
-</div>
-
-<div class="badge"
-     id="designBadge">
-Amelia
-</div>
-
-<div class="badge"
-     id="packageBadge">
-Luxury
-</div>
-
-</div>
-
-
-<form id="invitationForm">
-
-
-<div class="form-grid">
-
-
-<div class="field">
-
-<label>
-Name 1
-</label>
-
-<input
-    id="bride"
-    required
-    placeholder="Aysel">
-
-</div>
-
-
-<div class="field">
-
-<label>
-Name 2
-</label>
-
-<input
-    id="groom"
-    required
-    placeholder="Murad">
-
-</div>
-
-
-<div class="field">
-
-<label>
-Event date
-</label>
-
-<input
-    id="date"
-    type="date"
-    required>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Event time
-</label>
-
-<input
-    id="time"
-    type="time"
-    required>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Venue
-</label>
-
-<input
-    id="venue"
-    required
-    placeholder="Luna Wedding Hall">
-
-</div>
-
-
-<div class="field">
-
-<label>
-Location
-</label>
-
-<input
-    id="location"
-    required
-    placeholder="Baku, Azerbaijan">
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Google Maps link
-</label>
-
-<input
-    id="map"
-    type="url"
-    placeholder="https://maps.google.com/...">
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Your story / message
-</label>
-
-<textarea
-    id="story"
-    placeholder="We would love to celebrate this beautiful day with you..."></textarea>
-
-</div>
-
-
-</div>
-
-
-<button type="submit">
-CREATE MY INVITATION
-</button>
-
-
-</form>
-
-
-<div
-    class="result"
-    id="result"
->
-
-
-<h2>
-Your invitation is ready ✨
-</h2>
-
-
-<p>
-Dəvətnamənizin preview linki hazırdır.
-Aşağıdakı linki aça və müştəriyə göndərə bilərsiniz.
-</p>
-
-
-<a
-    class="generated-link"
-    id="generatedLink"
-    target="_blank">
-</a>
-
-
-<br>
-
-
-<div class="success-buttons">
-
-
-<button
-    type="button"
-    id="openInvitation">
-    OPEN INVITATION
-</button>
-
-
-<button
-    type="button"
-    class="secondary"
-    id="copyButton">
-    COPY LINK
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
 <script>
 
-
 /* =====================================================
-   URL PARAMETERS
+   GET FORM OPTIONS
 ===================================================== */
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
+const params = new URLSearchParams(
+    window.location.search
+);
 
 const design =
-    params.get("design") ||
-    "amelia";
-
+    params.get("design") || "amelia";
 
 const packageName =
-    params.get("package") ||
-    "luxury";
-
+    params.get("package") || "basic";
 
 const category =
-    params.get("category") ||
-    "wedding";
+    params.get("category") || "wedding";
 
 
 /* =====================================================
-   DISPLAY PACKAGE INFORMATION
-===================================================== */
-
-document.getElementById(
-    "designBadge"
-).textContent =
-    design;
-
-
-document.getElementById(
-    "packageBadge"
-).textContent =
-    packageName;
-
-
-document.getElementById(
-    "categoryBadge"
-).textContent =
-    category;
-
-
-/* =====================================================
-   CREATE ID
-===================================================== */
-
-function createInvitationId(
-    bride,
-    groom
-) {
-
-    const names =
-        bride +
-        "-" +
-        groom;
-
-    return names
-        .toLowerCase()
-        .trim()
-        .replace(
-            /[ə]/g,
-            "e"
-        )
-        .replace(
-            /[ö]/g,
-            "o"
-        )
-        .replace(
-            /[ü]/g,
-            "u"
-        )
-        .replace(
-            /[ı]/g,
-            "i"
-        )
-        .replace(
-            /[ş]/g,
-            "s"
-        )
-        .replace(
-            /[ç]/g,
-            "c"
-        )
-        .replace(
-            /[ğ]/g,
-            "g"
-        )
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-+|-+$/g,
-            ""
-        );
-}
-
-
-/* =====================================================
-   FORM SUBMIT
+   FORM
 ===================================================== */
 
 document
 .getElementById("invitationForm")
-.addEventListener(
-    "submit",
-    function(event) {
+.addEventListener("submit", function(event) {
 
-        event.preventDefault();
+    event.preventDefault();
 
 
-        const bride =
-            document
-            .getElementById("bride")
-            .value
-            .trim();
+    /* -------------------------------------------------
+       GET VALUES
+    ------------------------------------------------- */
+
+    const bride =
+        document
+        .getElementById("bride")
+        .value
+        .trim();
+
+    const groom =
+        document
+        .getElementById("groom")
+        .value
+        .trim();
+
+    const date =
+        document
+        .getElementById("date")
+        .value;
+
+    const time =
+        document
+        .getElementById("time")
+        .value;
+
+    const venue =
+        document
+        .getElementById("venue")
+        .value
+        .trim();
+
+    const location =
+        document
+        .getElementById("location")
+        .value
+        .trim();
+
+    const map =
+        document
+        .getElementById("map")
+        .value
+        .trim();
+
+    const story =
+        document
+        .getElementById("story")
+        .value
+        .trim();
 
 
-        const groom =
-            document
-            .getElementById("groom")
-            .value
-            .trim();
+    /* =================================================
+       CREATE ID FROM NAMES
+    ================================================= */
+
+    function createSlug(text) {
+
+        return text
+            .toLowerCase()
+            .trim()
+
+            .replace(/ə/g, "e")
+            .replace(/ı/g, "i")
+            .replace(/ö/g, "o")
+            .replace(/ü/g, "u")
+            .replace(/ş/g, "s")
+            .replace(/ç/g, "c")
+            .replace(/ğ/g, "g")
+
+            .replace(/[^a-z0-9]+/g, "-")
+
+            .replace(/^-+|-+$/g, "");
+    }
 
 
-        const date =
-            document
-            .getElementById("date")
-            .value;
+    const brideSlug =
+        createSlug(bride);
+
+    const groomSlug =
+        createSlug(groom);
 
 
-        const time =
-            document
-            .getElementById("time")
-            .value;
+    const invitationId =
+        brideSlug +
+        "-" +
+        groomSlug;
 
 
-        const venue =
-            document
-            .getElementById("venue")
-            .value
-            .trim();
+    /* =================================================
+       CREATE DATE SHORT
+    ================================================= */
+
+    let dateShort = "";
+
+    if (date) {
+
+        const parts =
+            date.split("-");
+
+        dateShort =
+            parts[2] +
+            " · " +
+            parts[1] +
+            " · " +
+            parts[0];
+    }
 
 
-        const location =
-            document
-            .getElementById("location")
-            .value
-            .trim();
+    /* =================================================
+       CREATE COUNTDOWN
+    ================================================= */
+
+    const countdown =
+        date +
+        "T" +
+        time +
+        ":00";
 
 
-        const map =
-            document
-            .getElementById("map")
-            .value
-            .trim();
+    /* =================================================
+       SAVE INVITATION DATA
+    ================================================= */
+
+    const invitationData = {
+
+        id: invitationId,
+
+        package: packageName,
+
+        category: category,
+
+        design: design,
+
+        bride: bride,
+
+        groom: groom,
+
+        date: date,
+
+        dateShort: dateShort,
+
+        time: time,
+
+        venue: venue,
+
+        location: location,
+
+        map: map,
+
+        story: story,
+
+        images: [],
+
+        countdown: countdown
+    };
 
 
-        const story =
-            document
-            .getElementById("story")
-            .value
-            .trim();
+    /* =================================================
+       SAVE TO LOCAL STORAGE
+    ================================================= */
+
+    localStorage.setItem(
+
+        "luna_" + invitationId,
+
+        JSON.stringify(
+            invitationData
+        )
+
+    );
 
 
-        /* =================================================
-           CREATE UNIQUE ID
-        ================================================= */
+    /* =================================================
+       CREATE INVITATION LINK
+    ================================================= */
 
-        const invitationId =
-            createInvitationId(
-                bride,
-                groom
-            );
-
-
-        /* =================================================
-           CREATE INVITATION DATA
-        ================================================= */
-
-        const invitationData = {
-
-            id:
-                invitationId,
-
-            package:
-                packageName,
-
-            category:
-                category,
-
-            design:
-                design,
-
-            bride:
-                bride,
-
-            groom:
-                groom,
-
-            date:
-                date,
-
-            time:
-                time,
-
-            venue:
-                venue,
-
-            location:
-                location,
-
-            map:
-                map,
-
-            story:
-                story,
-
-            dateShort:
-                date
-                .split("-")
-                .reverse()
-                .join(" · "),
-
-            countdown:
-                date +
-                " " +
-                time +
-                ":00",
-
-            images: [],
-
-            music: null
-
-        };
-
-
-        /* =================================================
-           SAVE LOCALLY
-        ================================================= */
-
-        localStorage.setItem(
-
-            "luna_" +
-            invitationId,
-
-            JSON.stringify(
-                invitationData
-            )
-
+    const url =
+        new URL(
+            "data/invitation.html",
+            window.location.href
         );
 
 
-        /* =================================================
-           CREATE INVITATION LINK
-        ================================================= */
-
-        const invitationUrl =
-            new URL(
-                "data/invitation.html",
-                window.location.href
-            );
+    url.searchParams.set(
+        "id",
+        invitationId
+    );
 
 
-        invitationUrl.searchParams.set(
-            "id",
-            invitationId
-        );
+    /* =================================================
+       SHOW RESULT
+    ================================================= */
 
-
-        const link =
-            document.getElementById(
-                "generatedLink"
-            );
-
-
-        link.href =
-            invitationUrl.href;
-
-
-        link.textContent =
-            invitationUrl.href;
-
-
-        /* =================================================
-           SAVE CURRENT ID
-        ================================================= */
-
-        localStorage.setItem(
-            "luna_last_invitation",
-            invitationId
-        );
-
-
-        /* =================================================
-           SHOW RESULT
-        ================================================= */
-
+    const link =
         document.getElementById(
-            "result"
-        ).style.display =
-            "block";
+            "generatedLink"
+        );
 
 
+    link.href =
+        url.href;
+
+
+    link.textContent =
+        url.href;
+
+
+    document
+        .getElementById("result")
+        .style.display = "block";
+
+
+    /* =================================================
+       SAVE CURRENT CLIENT ID
+    ================================================= */
+
+    localStorage.setItem(
+        "luna_last_invitation",
+        invitationId
+    );
+
+});
+
+
+/* =====================================================
+   COPY LINK
+===================================================== */
+
+function copyLink() {
+
+    const link =
         document.getElementById(
-            "result"
-        ).scrollIntoView({
-            behavior: "smooth"
+            "generatedLink"
+        ).href;
+
+
+    navigator.clipboard
+        .writeText(link)
+        .then(function() {
+
+            alert(
+                "Invitation link copied!"
+            );
+
+        })
+        .catch(function() {
+
+            alert(
+                "Link: " + link
+            );
+
         });
 
-
-        /* =================================================
-           OPEN BUTTON
-        ================================================= */
-
-        document.getElementById(
-            "openInvitation"
-        ).onclick =
-            function() {
-
-                window.open(
-                    invitationUrl.href,
-                    "_blank"
-                );
-
-            };
-
-
-        /* =================================================
-           COPY BUTTON
-        ================================================= */
-
-        document.getElementById(
-            "copyButton"
-        ).onclick =
-            function() {
-
-                navigator
-                    .clipboard
-                    .writeText(
-                        invitationUrl.href
-                    )
-                    .then(
-                        function() {
-
-                            this.textContent =
-                                "COPIED ✓";
-
-                            setTimeout(
-                                () => {
-
-                                    this.textContent =
-                                        "COPY LINK";
-
-                                },
-                                2000
-                            );
-
-                        }.bind(this)
-                    );
-
-            };
-
-    }
-);
+}
 
 </script>
-
-</body>
-
-</html>

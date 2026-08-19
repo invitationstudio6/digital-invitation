@@ -7,71 +7,58 @@ const invitations = {
 
     "aysel-murad": {
 
-        id: "aysel-murad",
-
         package: "basic",
 
-        category: "wedding",
-
-        design: "amelia",
-
         bride: "Aysel",
-
         groom: "Murad",
 
         date: "12 September 2026",
-
         dateShort: "12 · 09 · 2026",
-
         time: "19:00",
 
-        location: "Baku, Azerbaijan",
-
+        location: "Bakı, Azərbaycan",
         venue: "Example Wedding Hall",
 
         map: "https://www.google.com/maps",
 
         story: `
             <p>
-                Some stories are written in books.
-                Ours was written in little moments,
-                shared smiles and unforgettable memories.
+                Bəzi hekayələr kitablarda yazılır.
+                Bizimki isə kiçik anlarda,
+                paylaşılan gülüşlərdə və
+                unudulmaz xatirələrdə yazıldı.
             </p>
 
             <br>
 
             <p>
-                From the day we met to this beautiful
-                moment, every chapter has brought us
-                closer together.
+                Birlikdə keçirdiyimiz hər an bizi
+                bu gözəl günə gətirdi.
             </p>
 
             <br>
 
             <p>
-                And now, we are ready to begin
-                our next chapter.
+                İndi isə həyatımızın yeni fəslinə
+                birlikdə başlayırıq.
             </p>
         `,
 
         images: [
-
-            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
-
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90"
         ],
 
-        countdown: "September 12, 2026 19:00:00"
-
+        /*
+         * VACİB:
+         * YYYY-MM-DDTHH:MM:SS
+         * formatında saxlayırıq.
+         */
+        countdown: "2026-09-12T19:00:00"
     },
 
 
@@ -82,72 +69,55 @@ const invitations = {
 
     "leyla-kamran": {
 
-        id: "leyla-kamran",
-
         package: "premium",
 
-        category: "wedding",
-
-        design: "amelia",
-
         bride: "Leyla",
-
         groom: "Kamran",
 
         date: "20 October 2026",
-
         dateShort: "20 · 10 · 2026",
-
         time: "18:30",
 
-        location: "Baku, Azerbaijan",
-
+        location: "Bakı, Azərbaycan",
         venue: "Example Wedding Hall",
 
         map: "https://www.google.com/maps",
 
         story: `
             <p>
-                Our story began with a simple hello
-                and grew into something beautiful.
+                Hekayəmiz sadə bir salamla başladı
+                və zaman keçdikcə gözəl bir hekayəyə çevrildi.
             </p>
 
             <br>
 
             <p>
-                Every moment brought us closer
-                and every memory became part
-                of our journey.
+                Birlikdə yaşadığımız hər an
+                bizi bir-birimizə daha da yaxınlaşdırdı.
             </p>
 
             <br>
 
             <p>
-                Now we are ready to begin
-                a new chapter together.
+                İndi isə həyatımızın yeni fəslinə
+                birlikdə başlayırıq.
             </p>
         `,
 
         images: [
-
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85"
-
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90"
         ],
 
-        countdown: "October 20, 2026 18:30:00"
-
+        countdown: "2026-10-20T18:30:00"
     },
 
 
@@ -158,74 +128,58 @@ const invitations = {
 
     "nigar-elvin": {
 
-        id: "nigar-elvin",
-
         package: "luxury",
 
-        category: "wedding",
-
-        design: "amelia",
-
         bride: "Nigar",
-
         groom: "Elvin",
 
         date: "20 October 2026",
-
         dateShort: "20 · 10 · 2026",
-
         time: "19:00",
 
-        location: "Baku, Azerbaijan",
-
+        location: "Bakı, Azərbaycan",
         venue: "Crystal Hall",
 
         map: "https://www.google.com/maps",
 
         story: `
             <p>
-                Our story began with a simple hello
-                and slowly became something beautiful.
+                Hekayəmiz sadə bir salamla başladı
+                və zaman keçdikcə gözəl bir hekayəyə çevrildi.
             </p>
 
             <br>
 
             <p>
-                Every moment we shared brought us
-                closer together.
+                Birlikdə paylaşdığımız hər an
+                bizi bir-birimizə daha da yaxınlaşdırdı.
             </p>
 
             <br>
 
             <p>
-                Now we are ready to begin
-                our next chapter together.
+                İndi isə həyatımızın yeni fəslinə
+                birlikdə başlayırıq.
             </p>
         `,
 
         images: [
-
-            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85"
-
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90"
         ],
 
-        countdown: "October 20, 2026 19:00:00",
+        countdown: "2026-10-20T19:00:00",
 
         music:
             "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-
     }
 
 };

@@ -127,7 +127,6 @@ button {
 .light-one {
 
     top: -100px;
-
     left: -120px;
 
     background: #fffdf8;
@@ -136,7 +135,6 @@ button {
 .light-two {
 
     right: -120px;
-
     bottom: 10%;
 
     background: #b99677;
@@ -199,6 +197,11 @@ button {
     pointer-events: none;
 }
 
+
+/* =====================================================
+   OPENING CIRCLES
+===================================================== */
+
 .opening::before {
 
     content: "";
@@ -211,8 +214,7 @@ button {
 
     border-radius: 50%;
 
-    border:
-        1px solid
+    border: 1px solid
         rgba(107,78,58,.16);
 
     animation:
@@ -231,31 +233,26 @@ button {
 
     border-radius: 50%;
 
-    border:
-        1px solid
+    border: 1px solid
         rgba(107,78,58,.1);
 }
 
 @keyframes openingPulse {
 
     0%,100% {
-
         transform: scale(.95);
-
         opacity: .5;
     }
 
     50% {
-
         transform: scale(1.04);
-
         opacity: 1;
     }
 }
 
 
 /* =====================================================
-   ENVELOPE
+   ENVELOPE SCENE
 ===================================================== */
 
 .envelope-scene {
@@ -270,6 +267,11 @@ button {
 
     z-index: 5;
 }
+
+
+/* =====================================================
+   ENVELOPE
+===================================================== */
 
 .envelope {
 
@@ -390,8 +392,7 @@ button {
 
     inset: 14px;
 
-    border:
-        1px solid
+    border: 1px solid
         rgba(130,98,74,.28);
 }
 
@@ -415,9 +416,7 @@ button {
 
 .letter h1 {
 
-    font-family:
-        "Allura",
-        cursive;
+    font-family: "Allura", cursive;
 
     font-size:
         clamp(55px,8vw,85px);
@@ -588,8 +587,7 @@ button {
 
     padding: 17px 31px;
 
-    border:
-        1px solid
+    border: 1px solid
         rgba(255,255,255,.35);
 
     background:
@@ -619,7 +617,7 @@ button {
 
 
 /* =====================================================
-   MAIN PAGE
+   INVITATION
 ===================================================== */
 
 .invitation {
@@ -679,8 +677,7 @@ button {
 
     border-radius: 50%;
 
-    border:
-        1px solid
+    border: 1px solid
         rgba(116,86,65,.15);
 }
 
@@ -746,7 +743,7 @@ button {
 
 
 /* =====================================================
-   GENERAL SECTIONS
+   SECTIONS
 ===================================================== */
 
 .section {
@@ -805,12 +802,10 @@ button {
         );
 
     border-top:
-        1px solid
-        rgba(118,91,70,.15);
+        1px solid rgba(118,91,70,.15);
 
     border-bottom:
-        1px solid
-        rgba(118,91,70,.15);
+        1px solid rgba(118,91,70,.15);
 }
 
 .details-grid {
@@ -875,6 +870,43 @@ button {
     font-size: 11px;
 
     color: #81756b;
+}
+
+
+/* =====================================================
+   MAP BUTTON
+===================================================== */
+
+.map-button {
+
+    display: inline-block;
+
+    margin-top: 25px;
+
+    padding: 13px 23px;
+
+    border: 1px solid #b8a18e;
+
+    color: #5c493b;
+
+    text-decoration: none;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    transition: .3s;
+}
+
+.map-button:hover {
+
+    background: #4a3a30;
+
+    color: white;
+
+    border-color: #4a3a30;
 }
 
 
@@ -993,37 +1025,117 @@ button {
 
 .countdown-section {
 
-    background:
+    position: relative;
 
+    background:
         radial-gradient(
             circle at center,
-            #57463a,
-            #28211c
+            #655143 0%,
+            #40342c 45%,
+            #29221e 100%
         );
 
-    color: white;
+    color: #f5eee7;
+
+    overflow: hidden;
+}
+
+.countdown-section::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+
+    height: 600px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(225,204,185,.12);
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    pointer-events: none;
 }
 
 .countdown-section .eyebrow {
 
-    color: #c9ad94;
+    position: relative;
+
+    color: #d6bda7;
+
+    font-size: 9px;
+
+    letter-spacing: 5px;
 }
 
 .countdown-section h2 {
 
-    color: #f1e6d9;
+    position: relative;
+
+    color: #f4e8dc;
+
+    margin-top: 20px;
+
+    margin-bottom: 0;
 }
 
 .timer {
 
-    display: flex;
+    position: relative;
 
-    justify-content: center;
+    max-width: 850px;
 
-    gap:
-        clamp(25px,7vw,80px);
+    margin: 70px auto 0;
 
-    margin-top: 65px;
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    border-top:
+        1px solid
+        rgba(224,202,183,.22);
+
+    border-bottom:
+        1px solid
+        rgba(224,202,183,.22);
+}
+
+.timer div {
+
+    position: relative;
+
+    padding:
+        35px 20px 32px;
+
+    text-align: center;
+}
+
+.timer div:not(:last-child)::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+
+    top: 25%;
+
+    width: 1px;
+
+    height: 50%;
+
+    background:
+        rgba(224,202,183,.22);
 }
 
 .timer strong {
@@ -1035,18 +1147,33 @@ button {
         serif;
 
     font-size:
-        clamp(45px,6vw,75px);
+        clamp(48px,6vw,78px);
+
+    line-height: 1;
 
     font-weight: 300;
+
+    letter-spacing: 1px;
+
+    color: #f6ebe1;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    min-width: 2ch;
 }
 
 .timer span {
 
+    display: block;
+
+    margin-top: 14px;
+
     font-size: 8px;
 
-    letter-spacing: 3px;
+    letter-spacing: 4px;
 
-    color: #c5b3a4;
+    color: #cdb8a5;
 }
 
 
@@ -1085,11 +1212,10 @@ button {
 
 .rsvp-button:hover {
 
-    transform:
-        translateY(-3px);
+    background: #6c5040;
 
-    background:
-        #604b3d;
+    transform:
+        translateY(-2px);
 }
 
 
@@ -1270,7 +1396,42 @@ footer p {
 
     .timer {
 
-        gap: 18px;
+        grid-template-columns:
+            repeat(2,1fr);
+
+        margin-top: 50px;
+
+        max-width: 420px;
+    }
+
+    .timer div {
+
+        padding: 30px 10px;
+    }
+
+    .timer div:nth-child(2)::after {
+
+        display: none;
+    }
+
+    .timer div:nth-child(1),
+    .timer div:nth-child(2) {
+
+        border-bottom:
+            1px solid
+            rgba(224,202,183,.22);
+    }
+
+    .timer strong {
+
+        font-size: 52px;
+    }
+
+    .timer span {
+
+        font-size: 7px;
+
+        letter-spacing: 3px;
     }
 
     footer strong {
@@ -1278,45 +1439,6 @@ footer p {
         font-size: 58px;
     }
 
-}
-
-
-/* =====================================================
-   MUSIC BUTTON
-===================================================== */
-
-.music-button {
-
-    position: fixed;
-
-    right: 22px;
-
-    bottom: 22px;
-
-    z-index: 100;
-
-    width: 48px;
-
-    height: 48px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,.5);
-
-    background:
-        rgba(50,39,30,.9);
-
-    color: white;
-
-    cursor: pointer;
-
-    display: none;
-
-    place-items: center;
-
-    font-size: 16px;
 }
 
 </style>
@@ -1394,6 +1516,7 @@ footer p {
         <button
             class="open-button"
             id="openButton"
+            type="button"
         >
             Dəvətnaməni aç
         </button>
@@ -1480,10 +1603,12 @@ footer p {
         id="story"
     >
 
-        Bəzi hekayələr kitablarda yazılır.
-        Bizimki isə kiçik anlarda,
-        paylaşılan gülüşlərdə və
-        unudulmaz xatirələrdə yazıldı.
+        <p>
+            Bəzi hekayələr kitablarda yazılır.
+            Bizimki isə kiçik anlarda,
+            paylaşılan gülüşlərdə və
+            unudulmaz xatirələrdə yazıldı.
+        </p>
 
     </div>
 
@@ -1567,30 +1692,21 @@ footer p {
                 Bakı, Azərbaycan
             </p>
 
+
+            <a
+                id="mapButton"
+                class="map-button"
+                href="#"
+                target="_blank"
+                rel="noopener"
+            >
+                Xəritədə bax
+            </a>
+
         </div>
 
+
     </div>
-
-
-    <br><br>
-
-
-    <a
-        id="mapLink"
-        href="#"
-        target="_blank"
-        style="
-            display:inline-block;
-            margin-top:20px;
-            color:#5d4839;
-            font-size:9px;
-            letter-spacing:3px;
-            text-decoration:none;
-            text-transform:uppercase;
-        "
-    >
-        MƏKANA BAX
-    </a>
 
 </section>
 
@@ -1613,38 +1729,35 @@ footer p {
     </h2>
 
 
-    <div class="gallery">
-
+    <div
+        class="gallery"
+        id="gallery"
+    >
 
         <img
             src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
             alt="Wedding"
         >
 
-
         <img
             src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=90"
             alt="Wedding"
         >
-
 
         <img
             src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
             alt="Wedding"
         >
 
-
         <img
             src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=90"
             alt="Wedding"
         >
 
-
         <img
             src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90"
             alt="Wedding"
         >
-
 
         <img
             src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1200&q=90"
@@ -1728,6 +1841,7 @@ footer p {
 
         </div>
 
+
     </div>
 
 </section>
@@ -1760,6 +1874,7 @@ footer p {
     <button
         class="rsvp-button"
         id="rsvpButton"
+        type="button"
     >
         İştirakımı təsdiqləyirəm
     </button>
@@ -1789,25 +1904,7 @@ footer p {
 
 
 <!-- =====================================================
-     MUSIC
-===================================================== -->
-
-<button
-    class="music-button"
-    id="musicButton"
-    title="Music"
->
-    ♪
-</button>
-
-<audio
-    id="backgroundMusic"
-    loop
-></audio>
-
-
-<!-- =====================================================
-     INVITATIONS DATABASE
+     INVITATIONS DATA
 ===================================================== -->
 
 <script src="invitations.js"></script>
@@ -1816,7 +1913,7 @@ footer p {
 <script>
 
 /* =====================================================
-   GET URL
+   GET INVITATION ID
 ===================================================== */
 
 const params =
@@ -1826,58 +1923,22 @@ const params =
 
 
 const invitationId =
-    params.get("id") ||
-    "aysel-murad";
+    (
+        params.get("id") ||
+        "aysel-murad"
+    ).toLowerCase().trim();
 
 
 /* =====================================================
-   GET INVITATION DATA
+   CHECK DATA
 ===================================================== */
 
 let invitation = null;
 
 
-/* =====================================================
-   1. LOCAL STORAGE
-===================================================== */
-
-const savedInvitation =
-    localStorage.getItem(
-        "luna_" +
-        invitationId
-    );
-
-
-if (savedInvitation) {
-
-    try {
-
-        invitation =
-            JSON.parse(
-                savedInvitation
-            );
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Saved invitation data is invalid:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   2. INVITATIONS.JS
-===================================================== */
-
 if (
-    !invitation &&
-    typeof invitations !== "undefined"
+    typeof invitations !== "undefined" &&
+    invitations[invitationId]
 ) {
 
     invitation =
@@ -1886,30 +1947,12 @@ if (
 }
 
 
-/* =====================================================
-   3. FALLBACK
-===================================================== */
-
 if (!invitation) {
 
-    if (
-        typeof invitations !== "undefined" &&
-        invitations["aysel-murad"]
-    ) {
-
-        invitation =
-            invitations["aysel-murad"];
-
-    }
-
-}
-
-
-/* =====================================================
-   STOP IF NOTHING FOUND
-===================================================== */
-
-if (!invitation) {
+    console.error(
+        "Invitation not found:",
+        invitationId
+    );
 
     document.body.innerHTML = `
 
@@ -1920,20 +1963,25 @@ if (!invitation) {
             justify-content:center;
             text-align:center;
             padding:30px;
+            font-family:DM Sans,sans-serif;
             background:#eee4d8;
-            color:#3d322a;
-            font-family:Arial,sans-serif;
+            color:#4b3c31;
         ">
 
             <div>
 
-                <h1>
+                <h1 style="
+                    font-family:Cormorant Garamond,serif;
+                    font-size:55px;
+                    font-weight:400;
+                    margin-bottom:20px;
+                ">
                     Invitation not found
                 </h1>
 
                 <p style="
-                    margin-top:15px;
-                    opacity:.7;
+                    font-size:13px;
+                    color:#766a60;
                 ">
                     Bu dəvətnamə mövcud deyil.
                 </p>
@@ -1945,7 +1993,8 @@ if (!invitation) {
     `;
 
     throw new Error(
-        "Invitation not found."
+        "Invitation not found: " +
+        invitationId
     );
 
 }
@@ -1960,7 +2009,7 @@ document.title =
     invitation.bride +
     " & " +
     invitation.groom +
-    " | Luna Invitation";
+    " | Luna";
 
 
 /* =====================================================
@@ -1970,115 +2019,67 @@ document.title =
 document.getElementById(
     "bride"
 ).textContent =
-    invitation.bride || "";
+    invitation.bride;
 
 
 document.getElementById(
     "groom"
 ).textContent =
-    invitation.groom || "";
-
-
-const coupleNames =
-
-    (invitation.bride || "") +
-    " & " +
-    (invitation.groom || "");
+    invitation.groom;
 
 
 document.getElementById(
     "letterNames"
 ).textContent =
-    coupleNames;
+
+    invitation.bride +
+    " & " +
+    invitation.groom;
 
 
 document.getElementById(
     "footerNames"
 ).textContent =
-    coupleNames;
 
-
-/* =====================================================
-   DATE
-===================================================== */
-
-let dateShort =
-    invitation.dateShort;
-
-
-/*
-   Əgər dateShort yoxdursa,
-   date-dən avtomatik yaradırıq.
-*/
-
-if (
-    !dateShort &&
-    invitation.date
-) {
-
-    const parts =
-        invitation.date.split("-");
-
-    if (parts.length === 3) {
-
-        dateShort =
-            parts[2] +
-            " · " +
-            parts[1] +
-            " · " +
-            parts[0];
-
-    }
-
-}
+    invitation.bride +
+    " & " +
+    invitation.groom;
 
 
 document.getElementById(
     "date"
 ).textContent =
-    dateShort || "";
+    invitation.dateShort;
 
 
 document.getElementById(
     "letterDate"
 ).textContent =
-    dateShort || "";
+    invitation.dateShort;
 
 
 document.getElementById(
     "detailDate"
 ).textContent =
-    dateShort || "";
+    invitation.dateShort;
 
-
-/* =====================================================
-   TIME
-===================================================== */
 
 document.getElementById(
     "time"
 ).textContent =
-    invitation.time || "";
+    invitation.time;
 
-
-/* =====================================================
-   VENUE
-===================================================== */
 
 document.getElementById(
     "venue"
 ).textContent =
-    invitation.venue || "";
+    invitation.venue;
 
-
-/* =====================================================
-   LOCATION
-===================================================== */
 
 document.getElementById(
     "location"
 ).textContent =
-    invitation.location || "";
+    invitation.location;
 
 
 /* =====================================================
@@ -2099,22 +2100,20 @@ if (invitation.story) {
    MAP
 ===================================================== */
 
-const mapLink =
+const mapButton =
     document.getElementById(
-        "mapLink"
+        "mapButton"
     );
 
 
 if (invitation.map) {
 
-    mapLink.href =
+    mapButton.href =
         invitation.map;
 
-}
+} else {
 
-else {
-
-    mapLink.style.display =
+    mapButton.style.display =
         "none";
 
 }
@@ -2126,43 +2125,23 @@ else {
 
 function getDayName(dateString) {
 
-    if (!dateString) {
-        return "";
-    }
+    const days = [
+
+        "Bazar",
+        "Bazar ertəsi",
+        "Çərşənbə axşamı",
+        "Çərşənbə",
+        "Cümə axşamı",
+        "Cümə",
+        "Şənbə"
+
+    ];
 
     const date =
         new Date(
             dateString +
             "T12:00:00"
         );
-
-    if (
-        isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-
-    }
-
-    const days = [
-
-        "Bazar",
-
-        "Bazar ertəsi",
-
-        "Çərşənbə",
-
-        "Cümə axşamı",
-
-        "Cümə",
-
-        "Şənbə",
-
-        "Bazar"
-
-    ];
 
     return days[
         date.getDay()
@@ -2171,18 +2150,17 @@ function getDayName(dateString) {
 }
 
 
-const dayName =
-    getDayName(
-        invitation.date
-    );
-
-
-if (dayName) {
+if (
+    invitation.countdown &&
+    invitation.countdown.date
+) {
 
     document.getElementById(
         "dayName"
     ).textContent =
-        dayName;
+        getDayName(
+            invitation.countdown.date
+        );
 
 }
 
@@ -2192,53 +2170,47 @@ if (dayName) {
 ===================================================== */
 
 const gallery =
-    document.querySelector(
-        ".gallery"
+    document.getElementById(
+        "gallery"
     );
 
 
 if (
     invitation.images &&
-    Array.isArray(
-        invitation.images
-    ) &&
     invitation.images.length
 ) {
 
     gallery.innerHTML = "";
 
-
     invitation.images
         .slice(0,6)
-        .forEach(
-            function(image) {
+        .forEach(function(image) {
 
-                const img =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                img.src =
-                    image;
-
-
-                img.alt =
-                    coupleNames;
-
-
-                gallery.appendChild(
-                    img
+            const img =
+                document.createElement(
+                    "img"
                 );
 
-            }
-        );
+            img.src = image;
+
+            img.alt =
+                invitation.bride +
+                " & " +
+                invitation.groom;
+
+            img.loading = "lazy";
+
+            gallery.appendChild(
+                img
+            );
+
+        });
 
 }
 
 
 /* =====================================================
-   OPENING
+   OPEN ENVELOPE
 ===================================================== */
 
 const openButton =
@@ -2265,31 +2237,19 @@ const invitationPage =
     );
 
 
-let invitationOpened =
-    false;
-
-
 openButton.addEventListener(
     "click",
     function() {
-
-        if (invitationOpened) {
-            return;
-        }
-
-
-        invitationOpened =
-            true;
-
 
         envelope.classList.add(
             "open"
         );
 
-
         openButton.textContent =
             "Açılır...";
 
+        openButton.disabled =
+            true;
 
         setTimeout(
             function() {
@@ -2298,19 +2258,14 @@ openButton.addEventListener(
                     "hidden"
                 );
 
-
                 invitationPage.classList.add(
                     "visible"
                 );
-
 
                 window.scrollTo(
                     0,
                     0
                 );
-
-
-                startMusic();
 
             },
             1500
@@ -2322,42 +2277,122 @@ openButton.addEventListener(
 
 /* =====================================================
    COUNTDOWN
+   BAKU TIME — UTC+4
 ===================================================== */
 
 function updateCountdown() {
 
-    if (!invitation.countdown) {
+    const daysElement =
+        document.getElementById(
+            "days"
+        );
+
+    const hoursElement =
+        document.getElementById(
+            "hours"
+        );
+
+    const minutesElement =
+        document.getElementById(
+            "minutes"
+        );
+
+    const secondsElement =
+        document.getElementById(
+            "seconds"
+        );
+
+
+    /*
+       Əgər countdown məlumatı yoxdursa
+    */
+
+    if (
+        !invitation.countdown ||
+        !invitation.countdown.date ||
+        !invitation.countdown.time
+    ) {
+
+        daysElement.textContent =
+            "00";
+
+        hoursElement.textContent =
+            "00";
+
+        minutesElement.textContent =
+            "00";
+
+        secondsElement.textContent =
+            "00";
 
         return;
 
     }
+
+
+    /*
+       Məsələn:
+
+       date = 2026-09-12
+       time = 19:00
+
+       Bakı = UTC+4
+
+       nəticə:
+       2026-09-12T19:00:00+04:00
+    */
+
+    const targetString =
+
+        invitation.countdown.date +
+        "T" +
+        invitation.countdown.time +
+        ":00+04:00";
 
 
     const target =
         new Date(
-            invitation.countdown
-        ).getTime();
+            targetString
+        );
 
 
     const now =
-        new Date().getTime();
+        new Date();
 
+
+    let difference =
+        target.getTime() -
+        now.getTime();
+
+
+    /*
+       Tədbir başlayıbsa
+    */
 
     if (
-        isNaN(target)
+        difference <= 0
     ) {
+
+        daysElement.textContent =
+            "00";
+
+        hoursElement.textContent =
+            "00";
+
+        minutesElement.textContent =
+            "00";
+
+        secondsElement.textContent =
+            "00";
 
         return;
 
     }
 
 
-    const difference =
-        Math.max(
-            0,
-            target - now
-        );
-
+    /*
+       DAYS
+    */
 
     const days =
         Math.floor(
@@ -2366,57 +2401,77 @@ function updateCountdown() {
         );
 
 
+    /*
+       HOURS
+    */
+
     const hours =
         Math.floor(
-            difference /
+            (
+                difference %
+                (1000 * 60 * 60 * 24)
+            )
+            /
             (1000 * 60 * 60)
-        ) % 24;
+        );
 
+
+    /*
+       MINUTES
+    */
 
     const minutes =
         Math.floor(
-            difference /
+            (
+                difference %
+                (1000 * 60 * 60)
+            )
+            /
             (1000 * 60)
-        ) % 60;
+        );
 
+
+    /*
+       SECONDS
+    */
 
     const seconds =
         Math.floor(
-            difference /
+            (
+                difference %
+                (1000 * 60)
+            )
+            /
             1000
-        ) % 60;
+        );
 
 
-    document.getElementById(
-        "days"
-    ).textContent =
+    /*
+       UPDATE
+    */
+
+    daysElement.textContent =
         String(days).padStart(
             2,
             "0"
         );
 
 
-    document.getElementById(
-        "hours"
-    ).textContent =
+    hoursElement.textContent =
         String(hours).padStart(
             2,
             "0"
         );
 
 
-    document.getElementById(
-        "minutes"
-    ).textContent =
+    minutesElement.textContent =
         String(minutes).padStart(
             2,
             "0"
         );
 
 
-    document.getElementById(
-        "seconds"
-    ).textContent =
+    secondsElement.textContent =
         String(seconds).padStart(
             2,
             "0"
@@ -2425,117 +2480,20 @@ function updateCountdown() {
 }
 
 
+/*
+   İlk hesab
+*/
+
 updateCountdown();
 
+
+/*
+   Hər saniyə yenilə
+*/
 
 setInterval(
     updateCountdown,
     1000
-);
-
-
-/* =====================================================
-   MUSIC
-===================================================== */
-
-const music =
-    document.getElementById(
-        "backgroundMusic"
-    );
-
-
-const musicButton =
-    document.getElementById(
-        "musicButton"
-    );
-
-
-let musicPlaying =
-    false;
-
-
-function startMusic() {
-
-    if (
-        !invitation.music
-    ) {
-
-        return;
-
-    }
-
-
-    music.src =
-        invitation.music;
-
-
-    music.volume =
-        0.45;
-
-
-    music.play()
-        .then(
-            function() {
-
-                musicPlaying =
-                    true;
-
-                musicButton.style.display =
-                    "grid";
-
-                musicButton.textContent =
-                    "♫";
-
-            }
-        )
-        .catch(
-            function() {
-
-                musicButton.style.display =
-                    "grid";
-
-            }
-        );
-
-}
-
-
-musicButton.addEventListener(
-    "click",
-    function() {
-
-        if (!music.src) {
-
-            return;
-
-        }
-
-
-        if (musicPlaying) {
-
-            music.pause();
-
-            musicPlaying =
-                false;
-
-            musicButton.textContent =
-                "♪";
-
-        }
-
-        else {
-
-            music.play();
-
-            musicPlaying =
-                true;
-
-            musicButton.textContent =
-                "♫";
-
-        }
-
-    }
 );
 
 
@@ -2556,21 +2514,6 @@ document.getElementById(
             );
 
     }
-);
-
-
-/* =====================================================
-   FINAL
-===================================================== */
-
-console.log(
-    "Luna invitation loaded:",
-    invitationId
-);
-
-console.log(
-    "Invitation data:",
-    invitation
 );
 
 </script>
