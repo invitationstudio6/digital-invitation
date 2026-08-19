@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +37,6 @@
             top: 0;
             left: 0;
             width: 100%;
-
             padding: 28px 7%;
 
             display: flex;
@@ -55,10 +53,14 @@
             letter-spacing: 1px;
         }
 
+        nav .links {
+            display: flex;
+            gap: 30px;
+        }
+
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 30px;
             font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -68,17 +70,18 @@
             opacity: 0.7;
         }
 
+
         /* =========================
            HERO
         ========================= */
 
         .hero {
-            min-height: 100vh;
+            min-height: 90vh;
 
             background:
                 linear-gradient(
-                    rgba(50, 43, 38, 0.45),
-                    rgba(50, 43, 38, 0.45)
+                    rgba(50, 42, 36, 0.38),
+                    rgba(50, 42, 36, 0.38)
                 ),
                 url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85");
 
@@ -91,42 +94,37 @@
 
             text-align: center;
             color: white;
-
-            padding: 100px 20px;
         }
 
         .hero-content {
+            padding: 30px;
             max-width: 800px;
         }
 
-        .small-title {
-            font-size: 13px;
-            letter-spacing: 6px;
+        .hero-small {
+            font-size: 12px;
+            letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 25px;
         }
 
         .hero h1 {
-            font-size: clamp(65px, 12vw, 130px);
+            font-size: clamp(60px, 12vw, 130px);
             font-weight: normal;
             line-height: 1;
-            margin-bottom: 25px;
         }
 
-        .hero p {
-            max-width: 600px;
-            margin: auto;
-
+        .hero-text {
+            margin-top: 30px;
             font-size: 18px;
             line-height: 1.8;
         }
 
         .hero-button {
             display: inline-block;
+            margin-top: 35px;
 
-            margin-top: 40px;
-
-            padding: 15px 35px;
+            padding: 14px 34px;
 
             border: 1px solid white;
             border-radius: 30px;
@@ -134,8 +132,8 @@
             color: white;
             text-decoration: none;
 
-            font-size: 13px;
             letter-spacing: 2px;
+            font-size: 12px;
 
             transition: 0.3s;
         }
@@ -145,27 +143,23 @@
             color: #403a35;
         }
 
+
         /* =========================
            INTRO
         ========================= */
 
         .intro {
-            padding: 110px 20px;
+            padding: 100px 20px;
             text-align: center;
             background: #fffdf9;
         }
 
-        .intro-inner {
-            max-width: 750px;
-            margin: auto;
-        }
-
-        .section-label {
-            color: #9a8776;
+        .intro-small {
             font-size: 12px;
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 18px;
+            color: #9a8776;
+            margin-bottom: 20px;
         }
 
         .intro h2 {
@@ -175,265 +169,433 @@
         }
 
         .intro p {
+            max-width: 650px;
+            margin: auto;
+
             font-size: 17px;
             line-height: 2;
         }
 
+
         /* =========================
-           SERVICES
+           COLLECTION
         ========================= */
 
-        .services {
-            padding: 100px 20px;
+        .collection {
+            padding: 100px 7%;
             background: #faf7f2;
         }
 
-        .section-title {
+        .collection-heading {
             text-align: center;
-            margin-bottom: 55px;
+            margin-bottom: 65px;
         }
 
-        .section-title span {
+        .collection-heading span {
             display: block;
-            color: #9a8776;
+
             font-size: 12px;
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 12px;
-        }
 
-        .section-title h2 {
-            font-size: 45px;
-            font-weight: normal;
-        }
-
-        .service-grid {
-            max-width: 1100px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 25px;
-        }
-
-        .service-card {
-            background: white;
-            padding: 45px 30px;
-
-            text-align: center;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.05);
-
-            transition: 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-7px);
-        }
-
-        .service-icon {
-            font-size: 38px;
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            font-weight: normal;
+            color: #9a8776;
             margin-bottom: 15px;
         }
 
-        .service-card p {
-            line-height: 1.8;
-            font-size: 15px;
+        .collection-heading h2 {
+            font-size: 48px;
+            font-weight: normal;
         }
+
+        .collection-heading p {
+            margin-top: 20px;
+            color: #766b62;
+        }
+
 
         /* =========================
-           HOW IT WORKS
+           INVITATION GRID
         ========================= */
 
-        .how {
-            padding: 110px 20px;
-            background: #fffdf9;
-        }
+        .invitation-grid {
 
-        .steps {
-            max-width: 1000px;
+            max-width: 1250px;
             margin: auto;
 
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
 
-            gap: 40px;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 35px;
         }
 
-        .step {
-            text-align: center;
+
+        /* =========================
+           INVITATION CARD
+        ========================= */
+
+        .invitation-card {
+            background: white;
+
+            border-radius: 5px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.07);
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease;
         }
 
-        .step-number {
-            width: 55px;
-            height: 55px;
+        .invitation-card:hover {
+            transform: translateY(-8px);
 
-            margin: 0 auto 20px;
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.12);
+        }
 
-            border: 1px solid #9a8776;
-            border-radius: 50%;
+
+        /* =========================
+           INVITATION IMAGE
+        ========================= */
+
+        .invitation-image {
+            position: relative;
+
+            width: 100%;
+            height: 430px;
+
+            overflow: hidden;
+        }
+
+        .invitation-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform 0.7s ease;
+        }
+
+        .invitation-card:hover
+        .invitation-image img {
+            transform: scale(1.04);
+        }
+
+
+        /* =========================
+           IMAGE OVERLAY
+        ========================= */
+
+        .image-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                rgba(40, 34, 29, 0.25);
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            color: #806f61;
-            font-size: 18px;
+            opacity: 0;
+
+            transition: 0.4s;
         }
 
-        .step h3 {
-            font-size: 21px;
-            font-weight: normal;
+        .invitation-card:hover
+        .image-overlay {
+            opacity: 1;
+        }
+
+        .view-button {
+
+            padding: 13px 27px;
+
+            border: 1px solid white;
+            border-radius: 30px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           CARD INFO
+        ========================= */
+
+        .invitation-info {
+
+            padding: 28px 25px 30px;
+
+            text-align: center;
+        }
+
+        .invitation-number {
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            color: #a18d7b;
+
             margin-bottom: 12px;
         }
 
-        .step p {
-            line-height: 1.7;
-            font-size: 15px;
+        .invitation-info h3 {
+
+            font-size: 25px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
         }
+
+        .invitation-info p {
+
+            font-size: 14px;
+
+            color: #8a7c70;
+
+            line-height: 1.6;
+        }
+
 
         /* =========================
            CTA
         ========================= */
 
         .cta {
+
             padding: 120px 20px;
 
-            background:
-                linear-gradient(
-                    rgba(64, 58, 53, 0.88),
-                    rgba(64, 58, 53, 0.88)
-                ),
-                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=85");
-
-            background-size: cover;
-            background-position: center;
+            background: #403a35;
 
             color: white;
+
             text-align: center;
         }
 
+        .cta span {
+
+            font-size: 12px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            opacity: 0.7;
+        }
+
         .cta h2 {
-            font-size: 50px;
+
+            margin-top: 20px;
+
+            font-size: 48px;
+
             font-weight: normal;
-            margin-bottom: 20px;
         }
 
         .cta p {
-            max-width: 650px;
-            margin: auto;
+
+            max-width: 600px;
+
+            margin: 25px auto 0;
 
             line-height: 1.8;
-            font-size: 17px;
+
+            font-size: 16px;
         }
 
         .cta-button {
+
             display: inline-block;
 
             margin-top: 35px;
 
-            padding: 15px 35px;
+            padding: 14px 35px;
 
-            background: white;
-            color: #403a35;
-
-            text-decoration: none;
+            border: 1px solid white;
 
             border-radius: 30px;
 
-            font-size: 13px;
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
             letter-spacing: 2px;
 
             transition: 0.3s;
         }
 
         .cta-button:hover {
-            opacity: 0.8;
+
+            background: white;
+
+            color: #403a35;
         }
+
 
         /* =========================
            FOOTER
         ========================= */
 
         footer {
-            padding: 70px 20px;
+
+            padding: 60px 20px;
 
             background: #2f2a26;
+
             color: white;
 
             text-align: center;
         }
 
         footer h2 {
-            font-size: 42px;
+
+            font-size: 38px;
+
             font-weight: normal;
+
             margin-bottom: 15px;
         }
 
         footer p {
-            color: #d8cec3;
-            font-size: 14px;
-        }
 
-        .footer-links {
-            margin-top: 25px;
-        }
-
-        .footer-links a {
-            color: #d8cec3;
-            text-decoration: none;
-            margin: 0 12px;
             font-size: 13px;
+
+            color: #d6cec6;
         }
+
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 750px) {
+        @media (max-width: 900px) {
 
-            nav {
-                padding: 22px 20px;
+            .invitation-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
 
-            nav .nav-links {
-                display: none;
+        }
+
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                padding: 22px 25px;
+
+            }
+
+            .logo {
+
+                font-size: 25px;
+
+            }
+
+            nav .links {
+
+                gap: 12px;
+
+            }
+
+            nav a {
+
+                font-size: 9px;
+
+                letter-spacing: 1px;
+
+            }
+
+            .hero {
+
+                min-height: 80vh;
+
             }
 
             .hero h1 {
-                font-size: 70px;
+
+                font-size: 65px;
+
             }
 
-            .hero p {
-                font-size: 16px;
+            .hero-text {
+
+                font-size: 15px;
+
             }
 
-            .intro h2,
-            .section-title h2 {
+            .intro {
+
+                padding: 75px 20px;
+
+            }
+
+            .intro h2 {
+
                 font-size: 35px;
+
             }
 
-            .service-grid {
-                grid-template-columns: 1fr;
+            .collection {
+
+                padding: 75px 20px;
+
             }
 
-            .steps {
+            .collection-heading h2 {
+
+                font-size: 36px;
+
+            }
+
+            .invitation-grid {
+
                 grid-template-columns: 1fr;
-                gap: 45px;
+
+                gap: 30px;
+
+            }
+
+            .invitation-image {
+
+                height: 450px;
+
+            }
+
+            .cta {
+
+                padding: 90px 20px;
+
             }
 
             .cta h2 {
-                font-size: 38px;
+
+                font-size: 36px;
+
             }
 
         }
@@ -446,340 +608,291 @@
 <body>
 
 
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
-    <nav>
+<nav>
 
-        <div class="logo">
+    <div class="logo">
+        Luna
+    </div>
+
+    <div class="links">
+
+        <a href="#collection">
+            Invitations
+        </a>
+
+        <a href="pricing.html">
+            Pricing
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            Digital Invitations
+        </div>
+
+        <h1>
             Luna
-        </div>
+        </h1>
 
-        <div class="nav-links">
+        <p class="hero-text">
 
-            <a href="#about">
-                About
-            </a>
+            Elegant digital invitations
+            created for your most beautiful moments.
 
-            <a href="#services">
-                Services
-            </a>
-
-            <a href="pricing.html">
-                Pricing
-            </a>
-
-        </div>
-
-    </nav>
-
-
-    <!-- =========================
-         HERO
-    ========================= -->
-
-    <header class="hero">
-
-        <div class="hero-content">
-
-            <div class="small-title">
-                Digital Invitations
-            </div>
-
-            <h1>
-                Luna
-            </h1>
-
-            <p>
-                Beautiful digital invitations
-                for your most special moments.
-            </p>
-
-            <a
-                href="pricing.html"
-                class="hero-button"
-            >
-                EXPLORE INVITATIONS
-            </a>
-
-        </div>
-
-    </header>
-
-
-    <!-- =========================
-         ABOUT
-    ========================= -->
-
-    <section
-        class="intro"
-        id="about"
-    >
-
-        <div class="intro-inner">
-
-            <div class="section-label">
-                Welcome to Luna
-            </div>
-
-            <h2>
-                Your story deserves
-                something beautiful.
-            </h2>
-
-            <p>
-                At Luna, we create elegant and
-                personalized digital invitations
-                designed especially for your
-                most meaningful celebrations.
-
-                <br><br>
-
-                From weddings and engagements
-                to birthdays and special events,
-                every invitation is created with
-                care, elegance and attention to
-                detail.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         SERVICES
-    ========================= -->
-
-    <section
-        class="services"
-        id="services"
-    >
-
-        <div class="section-title">
-
-            <span>
-                What we create
-            </span>
-
-            <h2>
-                For Every Special Moment
-            </h2>
-
-        </div>
-
-
-        <div class="service-grid">
-
-
-            <div class="service-card">
-
-                <div class="service-icon">
-                    🤍
-                </div>
-
-                <h3>
-                    Weddings
-                </h3>
-
-                <p>
-                    Elegant digital wedding
-                    invitations created to
-                    celebrate your love story.
-                </p>
-
-            </div>
-
-
-            <div class="service-card">
-
-                <div class="service-icon">
-                    ✨
-                </div>
-
-                <h3>
-                    Engagements
-                </h3>
-
-                <p>
-                    Beautiful invitations for
-                    engagement parties and
-                    unforgettable beginnings.
-                </p>
-
-            </div>
-
-
-            <div class="service-card">
-
-                <div class="service-icon">
-                    🕊️
-                </div>
-
-                <h3>
-                    Special Events
-                </h3>
-
-                <p>
-                    Personalized invitations
-                    for birthdays, celebrations
-                    and meaningful occasions.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         HOW IT WORKS
-    ========================= -->
-
-    <section class="how">
-
-        <div class="section-title">
-
-            <span>
-                Simple & effortless
-            </span>
-
-            <h2>
-                How It Works
-            </h2>
-
-        </div>
-
-
-        <div class="steps">
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    01
-                </div>
-
-                <h3>
-                    Choose Your Design
-                </h3>
-
-                <p>
-                    Explore our invitation
-                    packages and choose the
-                    one that feels right for you.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    02
-                </div>
-
-                <h3>
-                    Share Your Details
-                </h3>
-
-                <p>
-                    Complete our simple client
-                    form with your event details,
-                    photos and preferences.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    03
-                </div>
-
-                <h3>
-                    Receive Your Invitation
-                </h3>
-
-                <p>
-                    We create your personalized
-                    invitation and send you your
-                    unique link.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         CTA
-    ========================= -->
-
-    <section class="cta">
-
-        <h2>
-            Let's create something beautiful.
-        </h2>
-
-        <p>
-            Your special moment deserves an
-            invitation as unique as your story.
-            Choose your package and let Luna
-            bring your vision to life.
         </p>
 
         <a
-            href="pricing.html"
-            class="cta-button"
+            href="#collection"
+            class="hero-button"
         >
-            VIEW PRICING
+            EXPLORE COLLECTION
         </a>
 
-    </section>
+    </div>
+
+</header>
 
 
-    <!-- =========================
-         FOOTER
-    ========================= -->
+<!-- =========================
+     INTRO
+========================= -->
 
-    <footer>
+<section class="intro">
+
+    <div class="intro-small">
+        Welcome to Luna
+    </div>
+
+    <h2>
+        Made for beautiful moments
+    </h2>
+
+    <p>
+
+        From intimate weddings to unforgettable
+        celebrations, Luna creates elegant digital
+        invitations designed especially for you.
+
+    </p>
+
+</section>
+
+
+<!-- =========================
+     COLLECTION
+========================= -->
+
+<section
+    class="collection"
+    id="collection"
+>
+
+    <div class="collection-heading">
+
+        <span>
+            The Collection
+        </span>
 
         <h2>
-            Luna
+            Wedding Invitations
         </h2>
 
         <p>
-            Digital invitations for beautiful moments. 🤍
+            Explore our invitation designs
         </p>
 
-        <div class="footer-links">
+    </div>
 
-            <a href="pricing.html">
-                Pricing
-            </a>
 
-            <a href="client-form.html">
-                Client Form
-            </a>
+    <div
+        class="invitation-grid"
+        id="invitationGrid"
+    ></div>
 
-        </div>
+</section>
 
-        <br>
 
-        <p>
-            © 2026 Luna. All rights reserved.
-        </p>
+<!-- =========================
+     CTA
+========================= -->
 
-    </footer>
+<section class="cta">
+
+    <span>
+        Create yours
+    </span>
+
+    <h2>
+        Your story deserves
+        a beautiful invitation.
+    </h2>
+
+    <p>
+
+        Choose a design, share your details,
+        and let Luna create something
+        beautiful for your special day.
+
+    </p>
+
+    <a
+        href="pricing.html"
+        class="cta-button"
+    >
+        VIEW PACKAGES
+    </a>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h2>
+        Luna
+    </h2>
+
+    <p>
+        Digital invitations for beautiful moments. 🤍
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     INVITATION DATA
+========================= -->
+
+<script src="data/invitations.js"></script>
+
+
+<!-- =========================
+     COLLECTION SYSTEM
+========================= -->
+
+<script>
+
+    const grid =
+        document.getElementById(
+            "invitationGrid"
+        );
+
+
+    /*
+    ==========================================
+    CREATE INVITATION CARDS
+    ==========================================
+    */
+
+    Object.keys(invitations)
+        .forEach(function(id, index) {
+
+            const invitation =
+                invitations[id];
+
+
+            const card =
+                document.createElement("article");
+
+
+            card.className =
+                "invitation-card";
+
+
+            /*
+            IMAGE
+            */
+
+            const image =
+                invitation.images &&
+                invitation.images.length > 0
+
+                ? invitation.images[0]
+
+                : "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80";
+
+
+            /*
+            COUPLE NAME
+            */
+
+            const coupleName =
+                invitation.bride +
+                " & " +
+                invitation.groom;
+
+
+            /*
+            CARD
+            */
+
+            card.innerHTML = `
+
+                <div class="invitation-image">
+
+                    <img
+                        src="${image}"
+                        alt="${coupleName}"
+                    >
+
+                    <div class="image-overlay">
+
+                        <a
+                            href="index.html?id=${id}"
+                            class="view-button"
+                        >
+                            View Invitation
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="invitation-info">
+
+                    <div class="invitation-number">
+                        ${String(index + 1).padStart(2, "0")}
+                    </div>
+
+                    <h3>
+                        ${coupleName}
+                    </h3>
+
+                    <p>
+                        ${invitation.date || "Wedding Invitation"}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+</script>
 
 
 </body>
 
 </html>
-```
