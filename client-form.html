@@ -81,10 +81,6 @@
         }
 
 
-        /* =========================
-           SELECTED PACKAGE
-        ========================= */
-
         .selected-package {
 
             display: none;
@@ -344,10 +340,6 @@
 <div class="container">
 
 
-    <!-- =========================
-         BRAND
-    ========================= -->
-
     <div class="brand">
         Luna
     </div>
@@ -436,10 +428,8 @@
 
 
             <label>
-
                 Your Name
                 <span class="required">*</span>
-
             </label>
 
             <input
@@ -451,10 +441,8 @@
 
 
             <label>
-
                 Email
                 <span class="required">*</span>
-
             </label>
 
             <input
@@ -466,10 +454,8 @@
 
 
             <label>
-
                 Phone / WhatsApp
                 <span class="required">*</span>
-
             </label>
 
             <input
@@ -495,14 +481,11 @@
 
             <div class="row">
 
-
                 <div>
 
                     <label>
-
                         Bride's Name
                         <span class="required">*</span>
-
                     </label>
 
                     <input
@@ -518,10 +501,8 @@
                 <div>
 
                     <label>
-
                         Groom's Name
                         <span class="required">*</span>
-
                     </label>
 
                     <input
@@ -532,7 +513,6 @@
                     >
 
                 </div>
-
 
             </div>
 
@@ -552,14 +532,11 @@
 
             <div class="row">
 
-
                 <div>
 
                     <label>
-
                         Wedding Date
                         <span class="required">*</span>
-
                     </label>
 
                     <input
@@ -574,10 +551,8 @@
                 <div>
 
                     <label>
-
                         Wedding Time
                         <span class="required">*</span>
-
                     </label>
 
                     <input
@@ -588,15 +563,12 @@
 
                 </div>
 
-
             </div>
 
 
             <label>
-
                 City / Location
                 <span class="required">*</span>
-
             </label>
 
             <input
@@ -608,10 +580,8 @@
 
 
             <label>
-
                 Venue / Wedding Hall
                 <span class="required">*</span>
-
             </label>
 
             <input
@@ -639,7 +609,6 @@
                 press Share and paste the link here.
 
             </span>
-
 
         </div>
 
@@ -762,6 +731,50 @@
                 placeholder="Paste photo link"
             >
 
+
+            <label>
+                Photo 7
+            </label>
+
+            <input
+                type="url"
+                name="photo_7"
+                placeholder="Paste photo link"
+            >
+
+
+            <label>
+                Photo 8
+            </label>
+
+            <input
+                type="url"
+                name="photo_8"
+                placeholder="Paste photo link"
+            >
+
+
+            <label>
+                Photo 9
+            </label>
+
+            <input
+                type="url"
+                name="photo_9"
+                placeholder="Paste photo link"
+            >
+
+
+            <label>
+                Photo 10
+            </label>
+
+            <input
+                type="url"
+                name="photo_10"
+                placeholder="Paste photo link"
+            >
+
         </div>
 
 
@@ -870,13 +883,93 @@
 
 
         <!-- =========================
-             ADDITIONAL
+             VIDEO INVITATION
+        ========================= -->
+
+        <div
+            class="section"
+            id="videoSection"
+            style="display: none;"
+        >
+
+            <h2>
+                8. Video Invitation
+            </h2>
+
+
+            <label>
+                Preferred Music
+            </label>
+
+            <input
+                type="text"
+                name="video_music"
+                placeholder="Song name / artist"
+            >
+
+
+            <label>
+                Video Style
+            </label>
+
+            <select name="video_style">
+
+                <option value="">
+                    Select a style
+                </option>
+
+                <option value="Elegant">
+                    Elegant
+                </option>
+
+                <option value="Romantic">
+                    Romantic
+                </option>
+
+                <option value="Minimal">
+                    Minimal
+                </option>
+
+                <option value="Luxury">
+                    Luxury
+                </option>
+
+                <option value="Choose for me">
+                    Choose for me
+                </option>
+
+            </select>
+
+
+            <label>
+                Additional Video Requests
+            </label>
+
+            <textarea
+                name="video_requests"
+                placeholder="Tell us anything special you would like in the video..."
+            ></textarea>
+
+
+            <span class="hint">
+
+                For the video invitation, please provide
+                your preferred photos, videos, music and
+                any special wording you would like us to use.
+
+            </span>
+
+        </div>
+
+
+        <!-- =========================
+             ADDITIONAL REQUESTS
         ========================= -->
 
         <div class="section">
 
             <h2>
-                8. Additional Requests
+                9. Additional Requests
             </h2>
 
 
@@ -921,7 +1014,7 @@
 
 
     /* =====================================================
-       PACKAGE SELECTION
+       PACKAGE FROM PRICING PAGE
     ===================================================== */
 
     const packageParams =
@@ -952,6 +1045,16 @@
         );
 
 
+    const videoSection =
+        document.getElementById(
+            "videoSection"
+        );
+
+
+    /* =====================================================
+       BASIC
+    ===================================================== */
+
     if (selectedPackage === "basic") {
 
         packageField.value =
@@ -965,6 +1068,10 @@
 
     }
 
+
+    /* =====================================================
+       PREMIUM
+    ===================================================== */
 
     else if (selectedPackage === "premium") {
 
@@ -980,6 +1087,10 @@
     }
 
 
+    /* =====================================================
+       LUXURY
+    ===================================================== */
+
     else if (selectedPackage === "luxury") {
 
         packageField.value =
@@ -994,6 +1105,10 @@
     }
 
 
+    /* =====================================================
+       CANVA VIDEO INVITATION
+    ===================================================== */
+
     else if (selectedPackage === "video") {
 
         packageField.value =
@@ -1005,8 +1120,15 @@
         packageBox.style.display =
             "block";
 
+        videoSection.style.display =
+            "block";
+
     }
 
+
+    /* =====================================================
+       NO PACKAGE
+    ===================================================== */
 
     else {
 
@@ -1014,7 +1136,6 @@
             "Not selected";
 
     }
-
 
 
     /* =====================================================
@@ -1030,7 +1151,6 @@
         "invitationId"
     ).value =
         invitationId;
-
 
 
     /* =====================================================
@@ -1058,7 +1178,6 @@
 
             }
         );
-
 
 </script>
 
