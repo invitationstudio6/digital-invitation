@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luna | Premium Kataloq</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Montserrat,sans-serif;
+
+    background:
+        radial-gradient(circle at 90% 10%,#fff,transparent 30%),
+        #e9ddd8;
+
+    color:#443431;
+}
+
+header{
+
+    padding:110px 7% 70px;
+
+    text-align:center;
+}
+
+.back{
+
+    display:inline-block;
+
+    margin-bottom:30px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+}
+
+h1{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:90px;
+
+    font-weight:400;
+}
+
+.subtitle{
+
+    max-width:600px;
+
+    margin:20px auto;
+
+    font-size:12px;
+
+    line-height:2;
+
+    color:#796763;
+}
+
+.catalog{
+
+    width:min(1200px,90%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:30px;
+
+    padding-bottom:120px;
+}
+
+.design{
+
+    background:#fff;
+
+    box-shadow:
+        0 25px 60px rgba(50,30,25,.15);
+
+    overflow:hidden;
+
+    transition:.5s;
+}
+
+.design:hover{
+    transform:translateY(-12px);
+}
+
+.preview{
+
+    height:650px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.luxury{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            rgba(35,20,18,.2),
+            rgba(35,20,18,.6)
+        ),
+        url(
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
+        );
+
+    background-size:cover;
+}
+
+.botanical{
+
+    background:
+        linear-gradient(
+            145deg,
+            #d9dfd2,
+            #f3f0e7
+        );
+
+    color:#49513f;
+}
+
+.pastel{
+
+    background:
+        linear-gradient(
+            145deg,
+            #e8d7df,
+            #f7ebe5
+        );
+
+    color:#664e5c;
+}
+
+.henna{
+
+    background:
+        linear-gradient(
+            145deg,
+            #8c4034,
+            #d29469
+        );
+
+    color:#fff2e8;
+}
+
+.card{
+
+    width:76%;
+
+    padding:65px 30px;
+
+    border:1px solid currentColor;
+
+}
+
+.small{
+
+    font-size:8px;
+
+    letter-spacing:4px;
+
+    margin-bottom:25px;
+}
+
+.names{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:70px;
+
+    line-height:.72;
+}
+
+.date{
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    margin-top:25px;
+}
+
+.info{
+
+    padding:30px;
+}
+
+.info h2{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:36px;
+
+    font-weight:400;
+}
+
+.info p{
+
+    font-size:10px;
+
+    color:#806e68;
+
+    margin:8px 0 20px;
+}
+
+.choose{
+
+    display:inline-block;
+
+    padding:13px 25px;
+
+    border-radius:30px;
+
+    background:#4d3935;
+
+    color:white;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+}
+
+
+@media(max-width:750px){
+
+    h1{
+        font-size:65px;
+    }
+
+    .catalog{
+        grid-template-columns:1fr;
+    }
+
+    .preview{
+        height:570px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="../index.html" class="back">
+    ← Luna
+</a>
+
+<h1>
+    Premium
+</h1>
+
+<p class="subtitle">
+
+Daha interaktiv, animasiyalı və
+xüsusi bölmələrə sahib
+dəvətnamələr.
+
+</p>
+
+</header>
+
+
+<main class="catalog">
+
+
+<article class="design">
+
+<div class="preview luxury">
+
+<div class="card">
+
+<div class="small">
+    THE WEDDING
+</div>
+
+<div class="names">
+    Aysel
+    <br>
+    &
+    <br>
+    Murad
+</div>
+
+<div class="date">
+    12 · 09 · 2026
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>
+    Élan
+</h2>
+
+<p>
+    Cinematic Wedding
+</p>
+
+<a
+href="../templates/elan.html"
+class="choose"
+>
+Canlı bax
+</a>
+
+</div>
+
+</article>
+
+
+<article class="design">
+
+<div class="preview botanical">
+
+<div class="card">
+
+<div class="small">
+    WEDDING INVITATION
+</div>
+
+<div class="names">
+    Aysel
+    &
+    Murad
+</div>
+
+<div class="date">
+    SEPTEMBER 2026
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>
+    Olive
+</h2>
+
+<p>
+    Botanical elegance
+</p>
+
+<a
+href="../templates/olive.html"
+class="choose"
+>
+Canlı bax
+</a>
+
+</div>
+
+</article>
+
+
+<article class="design">
+
+<div class="preview pastel">
+
+<div class="card">
+
+<div class="small">
+    SAVE THE DATE
+</div>
+
+<div class="names">
+    Aysel
+    <br>
+    &
+    <br>
+    Murad
+</div>
+
+<div class="date">
+    12 SEPTEMBER
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>
+    Amelia
+</h2>
+
+<p>
+    Soft pastel romance
+</p>
+
+<a
+href="../templates/amelia.html"
+class="choose"
+>
+Canlı bax
+</a>
+
+</div>
+
+</article>
+
+
+<article class="design">
+
+<div class="preview henna">
+
+<div class="card">
+
+<div class="small">
+    XINA GECƏSİ
+</div>
+
+<div class="names">
+    Nigar
+    <br>
+    &
+    <br>
+    Elvin
+</div>
+
+<div class="date">
+    XÜSUSİ DƏVƏTNAMƏ
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>
+    Henna
+</h2>
+
+<p>
+    Oriental Henna Night
+</p>
+
+<a
+href="../templates/henna.html"
+class="choose"
+>
+Canlı bax
+</a>
+
+</div>
+
+</article>
+
+
+</main>
+
+</body>
+
+</html>
