@@ -1,0 +1,1204 @@
+```html
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Luna Invitation</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f7f1e9;
+            color: #332b25;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        /* BACK */
+
+        .back {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            z-index: 100;
+
+            background: rgba(40,32,27,.65);
+
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 30px;
+
+            font-size: 10px;
+
+            text-decoration: none;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* =========================
+           OPENING
+        ========================= */
+
+        .opening {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 50;
+
+            display: grid;
+
+            place-items: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #f8efe3,
+                    #c6ad91
+                );
+
+            transition: 1s;
+        }
+
+        .opening.hide {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+        }
+
+
+        .envelope {
+
+            width: min(600px, 85vw);
+
+            height: 390px;
+
+            position: relative;
+
+            background: #c7a37e;
+
+            box-shadow:
+                0 40px 90px rgba(50,32,20,.3);
+
+        }
+
+
+        .letter {
+
+            position: absolute;
+
+            width: 68%;
+
+            height: 110%;
+
+            left: 16%;
+
+            top: -8%;
+
+            background: #fffdf8;
+
+            z-index: 2;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            transition: 1.2s;
+        }
+
+
+        .letter h1 {
+
+            font-family: "Allura";
+
+            font-size: 80px;
+
+            font-weight: 400;
+
+            color: #755849;
+
+        }
+
+
+        .flap {
+
+            position: absolute;
+
+            inset: 0;
+
+            background: #dfc4a1;
+
+            clip-path:
+                polygon(
+                    0 0,
+                    100% 0,
+                    50% 60%
+                );
+
+            transform-origin: top;
+
+            z-index: 4;
+
+            transition: 1.2s;
+
+        }
+
+
+        .envelope.open .flap {
+
+            transform:
+                rotateX(170deg);
+
+        }
+
+
+        .envelope.open .letter {
+
+            transform:
+                translateY(-35%);
+
+        }
+
+
+        .open-button {
+
+            position: absolute;
+
+            bottom: -70px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            background: #342c26;
+
+            color: white;
+
+            border: none;
+
+            padding: 16px 28px;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================
+           INVITATION
+        ========================= */
+
+        .invitation {
+
+            display: none;
+
+        }
+
+
+        .invitation.show {
+
+            display: block;
+
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+
+            min-height: 100vh;
+
+            display: grid;
+
+            place-items: center;
+
+            text-align: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 100px 25px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #fffaf3,
+                    #e4d5c3
+                );
+
+        }
+
+
+        .eyebrow {
+
+            font-size: 9px;
+
+            letter-spacing: 5px;
+
+            color: #967b68;
+
+        }
+
+
+        .hero h1 {
+
+            font-family: "Allura";
+
+            font-size:
+                clamp(90px, 15vw, 180px);
+
+            line-height: .65;
+
+            font-weight: 400;
+
+            color: #765849;
+
+            margin-top: 40px;
+
+        }
+
+
+        .amp {
+
+            font-family:
+                "Cormorant Garamond";
+
+            font-size: 35px;
+
+            margin: 15px 0;
+
+        }
+
+
+        .date {
+
+            margin-top: 45px;
+
+            font-size: 10px;
+
+            letter-spacing: 5px;
+
+        }
+
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+
+            padding: 120px 8%;
+
+            text-align: center;
+
+        }
+
+
+        .section h2 {
+
+            font-family:
+                "Cormorant Garamond";
+
+            font-size: 65px;
+
+            font-weight: 400;
+
+            margin: 15px 0 30px;
+
+        }
+
+
+        .section > p {
+
+            max-width: 600px;
+
+            margin: auto;
+
+            color: #766c63;
+
+            line-height: 2;
+
+            font-size: 13px;
+
+        }
+
+
+        /* DETAILS */
+
+        .details {
+
+            background: #e9dfd3;
+
+        }
+
+
+        .details-grid {
+
+            max-width: 1000px;
+
+            margin: 50px auto 0;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+        }
+
+
+        .detail {
+
+            padding: 45px 25px;
+
+            border:
+                1px solid #cdbdaf;
+
+        }
+
+
+        .detail small {
+
+            font-size: 8px;
+
+            letter-spacing: 3px;
+
+            color: #927866;
+
+        }
+
+
+        .detail strong {
+
+            display: block;
+
+            font-family:
+                "Cormorant Garamond";
+
+            font-size: 34px;
+
+            font-weight: 400;
+
+            margin: 15px;
+
+        }
+
+
+        .detail p {
+
+            font-size: 11px;
+
+            color: #796e66;
+
+        }
+
+
+        /* STORY */
+
+        .story {
+
+            background: #f9f5ef;
+
+        }
+
+
+        /* GALLERY */
+
+        .gallery {
+
+            max-width: 1100px;
+
+            margin: 50px auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 12px;
+
+        }
+
+
+        .gallery img {
+
+            width: 100%;
+
+            height: 330px;
+
+            object-fit: cover;
+
+        }
+
+
+        /* COUNTDOWN */
+
+        .countdown {
+
+            background: #342c26;
+
+            color: #f5ece1;
+
+        }
+
+
+        .countdown .eyebrow {
+
+            color: #c1aa97;
+
+        }
+
+
+        .timer {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 50px;
+
+            margin-top: 50px;
+
+        }
+
+
+        .timer strong {
+
+            display: block;
+
+            font-family:
+                "Cormorant Garamond";
+
+            font-size: 60px;
+
+            font-weight: 300;
+
+        }
+
+
+        .timer span {
+
+            font-size: 8px;
+
+            letter-spacing: 3px;
+
+            color: #bca99a;
+
+        }
+
+
+        /* RSVP */
+
+        .rsvp {
+
+            background: #eee6dc;
+
+        }
+
+
+        .rsvp button {
+
+            margin-top: 30px;
+
+            padding: 16px 30px;
+
+            border: none;
+
+            background: #342c26;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        /* FOOTER */
+
+        footer {
+
+            padding: 100px 20px;
+
+            background: #2e2721;
+
+            color: white;
+
+            text-align: center;
+
+            font-family: "Allura";
+
+            font-size: 65px;
+
+        }
+
+
+        @media(max-width:700px) {
+
+            .envelope {
+                height: 280px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery img {
+                height: 350px;
+            }
+
+            .timer {
+                gap: 20px;
+            }
+
+            .timer strong {
+                font-size: 40px;
+            }
+
+            .section {
+                padding: 80px 6%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<a
+    href="index.html"
+    class="back"
+>
+    ← Kolleksiyaya qayıt
+</a>
+
+
+<!-- =========================
+     ENVELOPE OPENING
+========================= -->
+
+<div
+    class="opening"
+    id="opening"
+>
+
+    <div
+        class="envelope"
+        id="envelope"
+    >
+
+        <div class="letter">
+
+            <p class="eyebrow">
+                YOU ARE INVITED
+            </p>
+
+            <h1 id="letterNames">
+                Forever
+            </h1>
+
+        </div>
+
+        <div class="flap"></div>
+
+        <button
+            class="open-button"
+            id="openButton"
+        >
+            Dəvətnaməni aç
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     INVITATION
+========================= -->
+
+<div
+    class="invitation"
+    id="invitation"
+>
+
+
+<section class="hero">
+
+    <div>
+
+        <p class="eyebrow">
+            TOGETHER WITH LOVE
+        </p>
+
+        <h1>
+
+            <span id="bride">
+                Aysel
+            </span>
+
+            <div class="amp">
+                &
+            </div>
+
+            <span id="groom">
+                Murad
+            </span>
+
+        </h1>
+
+        <div
+            class="date"
+            id="date"
+        >
+            12 · 09 · 2026
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section class="section story">
+
+    <p class="eyebrow">
+        OUR STORY
+    </p>
+
+    <h2>
+        Bir hekayə, bir ömür.
+    </h2>
+
+    <p id="story">
+        Bəzi hekayələr kitablarda yazılır.
+        Bizimki isə kiçik anlarda,
+        paylaşılan gülüşlərdə və
+        unudulmaz xatirələrdə yazıldı.
+    </p>
+
+</section>
+
+
+<!-- DETAILS -->
+
+<section class="section details">
+
+    <p class="eyebrow">
+        THE DAY
+    </p>
+
+    <h2>
+        Bu xüsusi gündə
+    </h2>
+
+
+    <div class="details-grid">
+
+        <div class="detail">
+
+            <small>
+                TARİX
+            </small>
+
+            <strong id="detailDate">
+                12 · 09 · 2026
+            </strong>
+
+            <p>
+                Şənbə
+            </p>
+
+        </div>
+
+
+        <div class="detail">
+
+            <small>
+                SAAT
+            </small>
+
+            <strong id="time">
+                19:00
+            </strong>
+
+            <p>
+                Qonaqların qarşılanması
+            </p>
+
+        </div>
+
+
+        <div class="detail">
+
+            <small>
+                MƏKAN
+            </small>
+
+            <strong id="venue">
+                Wedding Hall
+            </strong>
+
+            <p id="location">
+                Bakı, Azərbaycan
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GALLERY -->
+
+<section class="section">
+
+    <p class="eyebrow">
+        MEMORIES
+    </p>
+
+    <h2>
+        Bizdən xatirələr.
+    </h2>
+
+
+    <div class="gallery">
+
+        <img
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=90"
+        >
+
+        <img
+            src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=90"
+        >
+
+        <img
+            src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=90"
+        >
+
+        <img
+            src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=90"
+        >
+
+        <img
+            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=90"
+        >
+
+        <img
+            src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=90"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- COUNTDOWN -->
+
+<section class="section countdown">
+
+    <p class="eyebrow">
+        UNTIL WE CELEBRATE
+    </p>
+
+    <h2>
+        Günləri birlikdə sayaq.
+    </h2>
+
+
+    <div class="timer">
+
+        <div>
+
+            <strong id="days">
+                00
+            </strong>
+
+            <span>
+                GÜN
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="hours">
+                00
+            </strong>
+
+            <span>
+                SAAT
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="minutes">
+                00
+            </strong>
+
+            <span>
+                DƏQİQƏ
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="seconds">
+                00
+            </strong>
+
+            <span>
+                SANİYƏ
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RSVP -->
+
+<section class="section rsvp">
+
+    <p class="eyebrow">
+        RSVP
+    </p>
+
+    <h2>
+        Sizi gözləyirik.
+    </h2>
+
+    <p>
+        Zəhmət olmasa iştirakınızı bizimlə bölüşün.
+    </p>
+
+    <button
+        onclick="alert('RSVP formunu növbəti mərhələdə Formspree sisteminə bağlayacağıq.')"
+    >
+        İştirakımı təsdiqləyirəm
+    </button>
+
+</section>
+
+
+<footer>
+    <span id="footerNames">
+        Aysel & Murad
+    </span>
+</footer>
+
+
+</div>
+
+
+<script src="data/invitations.js"></script>
+
+
+<script>
+
+    /*
+    =====================================
+    URL-DƏN MÜŞTƏRİNİ GÖTÜRÜRÜK
+    =====================================
+    */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const invitationId =
+        params.get("id") ||
+        "aysel-murad";
+
+
+    /*
+    =====================================
+    DATA
+    =====================================
+    */
+
+    let invitation =
+        invitations[invitationId];
+
+
+    if (!invitation) {
+
+        invitation =
+            invitations["aysel-murad"];
+
+    }
+
+
+    /*
+    =====================================
+    MƏLUMATLARI YERLƏŞDİR
+    =====================================
+    */
+
+    document.getElementById("bride")
+        .textContent =
+        invitation.bride;
+
+    document.getElementById("groom")
+        .textContent =
+        invitation.groom;
+
+    document.getElementById("letterNames")
+        .textContent =
+        invitation.bride +
+        " & " +
+        invitation.groom;
+
+    document.getElementById("footerNames")
+        .textContent =
+        invitation.bride +
+        " & " +
+        invitation.groom;
+
+    document.getElementById("date")
+        .textContent =
+        invitation.dateShort;
+
+    document.getElementById("detailDate")
+        .textContent =
+        invitation.dateShort;
+
+    document.getElementById("time")
+        .textContent =
+        invitation.time;
+
+    document.getElementById("venue")
+        .textContent =
+        invitation.venue;
+
+    document.getElementById("location")
+        .textContent =
+        invitation.location;
+
+    document.getElementById("story")
+        .textContent =
+        invitation.story;
+
+
+    /*
+    =====================================
+    ZƏRFİ AÇ
+    =====================================
+    */
+
+    const openButton =
+        document.getElementById(
+            "openButton"
+        );
+
+    const envelope =
+        document.getElementById(
+            "envelope"
+        );
+
+    const opening =
+        document.getElementById(
+            "opening"
+        );
+
+    const invitationPage =
+        document.getElementById(
+            "invitation"
+        );
+
+
+    openButton.onclick = function () {
+
+        envelope.classList.add("open");
+
+        openButton.textContent =
+            "Açılır...";
+
+
+        setTimeout(
+            function () {
+
+                opening.classList.add(
+                    "hide"
+                );
+
+                invitationPage.classList.add(
+                    "show"
+                );
+
+            },
+            1300
+        );
+
+    };
+
+
+    /*
+    =====================================
+    COUNTDOWN
+    =====================================
+    */
+
+    function countdown() {
+
+        const target =
+            new Date(
+                invitation.countdown
+            ).getTime();
+
+
+        const now =
+            new Date().getTime();
+
+
+        const difference =
+            Math.max(
+                0,
+                target - now
+            );
+
+
+        const days =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        const hours =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60)
+            ) % 24;
+
+
+        const minutes =
+            Math.floor(
+                difference /
+                (1000 * 60)
+            ) % 60;
+
+
+        const seconds =
+            Math.floor(
+                difference /
+                1000
+            ) % 60;
+
+
+        document.getElementById("days")
+            .textContent =
+            String(days).padStart(
+                2,
+                "0"
+            );
+
+
+        document.getElementById("hours")
+            .textContent =
+            String(hours).padStart(
+                2,
+                "0"
+            );
+
+
+        document.getElementById("minutes")
+            .textContent =
+            String(minutes).padStart(
+                2,
+                "0"
+            );
+
+
+        document.getElementById("seconds")
+            .textContent =
+            String(seconds).padStart(
+                2,
+                "0"
+            );
+
+    }
+
+
+    countdown();
+
+    setInterval(
+        countdown,
+        1000
+    );
+
+</script>
+
+</body>
+
+</html>
+```
