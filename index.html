@@ -1,13 +1,13 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Luna | Digital Invitations</title>
+<title>Luna | Rəqəmsal Dəvətnamələr</title>
 
 <style>
 
@@ -22,13 +22,13 @@ html {
 }
 
 body {
-    background: #f7f3ee;
-    color: #302b27;
     font-family: Georgia, "Times New Roman", serif;
+    background: #f8f5f0;
+    color: #332d29;
 }
 
 /* =========================
-   NAV
+   NAVIGATION
 ========================= */
 
 nav {
@@ -36,30 +36,51 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 28px 6%;
+    padding: 28px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 20;
+    z-index: 100;
 }
 
 .logo {
     color: white;
-    font-size: 28px;
-    letter-spacing: 3px;
+    font-size: 30px;
+    letter-spacing: 4px;
 }
 
-.nav-links {
+.nav-right {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 28px;
 }
 
-.nav-links a {
+.nav-right a {
     color: white;
     text-decoration: none;
-    font-size: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
+}
+
+.languages {
+    display: flex;
+    gap: 7px;
+    margin-left: 15px;
+}
+
+.language {
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,.6);
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.language.active {
+    color: white;
 }
 
 /* =========================
@@ -67,65 +88,130 @@ nav {
 ========================= */
 
 .hero {
-    min-height: 88vh;
+    min-height: 100vh;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     overflow: hidden;
+    text-align: center;
+
     background:
         linear-gradient(
-            rgba(45,39,34,.48),
-            rgba(45,39,34,.48)
+            rgba(43,36,31,.38),
+            rgba(43,36,31,.48)
         ),
-        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=90");
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90");
+
     background-size: cover;
     background-position: center;
 }
 
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.18)
+        );
+    pointer-events: none;
+}
+
 .hero-content {
+    position: relative;
+    z-index: 2;
     color: white;
-    max-width: 800px;
+    max-width: 900px;
     padding: 30px;
 }
 
-.hero-small {
-    font-size: 11px;
-    letter-spacing: 6px;
+.hero-eyebrow {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 7px;
     text-transform: uppercase;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .hero h1 {
-    font-size: clamp(60px, 10vw, 125px);
+    font-size: clamp(80px, 14vw, 170px);
+    line-height: .8;
     font-weight: normal;
-    letter-spacing: 2px;
-    line-height: .95;
+    letter-spacing: 5px;
 }
 
-.hero p {
-    margin: 30px auto;
-    max-width: 500px;
-    line-height: 1.8;
-    font-size: 16px;
+.hero-divider {
+    width: 70px;
+    height: 1px;
+    background: rgba(255,255,255,.7);
+    margin: 38px auto 28px;
+}
+
+.hero-description {
+    max-width: 550px;
+    margin: auto;
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+.hero-buttons {
+    margin-top: 38px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .hero-button {
     display: inline-block;
-    padding: 15px 35px;
+    padding: 15px 32px;
     border: 1px solid white;
+    border-radius: 40px;
     color: white;
     text-decoration: none;
-    border-radius: 30px;
-    font-size: 11px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
     letter-spacing: 3px;
-    transition: .3s;
+    transition: .35s;
 }
 
 .hero-button:hover {
     background: white;
-    color: #302b27;
+    color: #332d29;
+}
+
+.hero-button.dark {
+    background: white;
+    color: #332d29;
+}
+
+/* =========================
+   SCROLL
+========================= */
+
+.scroll {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    z-index: 5;
+}
+
+.scroll::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 35px;
+    background: white;
+    margin: 10px auto 0;
 }
 
 /* =========================
@@ -133,350 +219,416 @@ nav {
 ========================= */
 
 .intro {
-    padding: 110px 20px 80px;
+    padding: 125px 25px 105px;
     text-align: center;
+    background: #f8f5f0;
 }
 
-.intro span {
-    display: block;
-    color: #a18c79;
-    font-size: 11px;
+.eyebrow {
+    font-family: Arial, sans-serif;
+    color: #a28d7b;
+    font-size: 10px;
     letter-spacing: 5px;
     text-transform: uppercase;
-    margin-bottom: 18px;
 }
 
 .intro h2 {
-    font-size: 48px;
+    margin-top: 20px;
+    font-size: clamp(40px, 6vw, 65px);
     font-weight: normal;
-    margin-bottom: 20px;
 }
 
 .intro p {
-    max-width: 620px;
-    margin: auto;
+    max-width: 650px;
+    margin: 28px auto 0;
+    color: #766c65;
     line-height: 2;
-    color: #756b64;
+    font-size: 16px;
 }
 
 /* =========================
-   INVITATIONS
+   DESIGN SECTION
 ========================= */
 
 .designs {
-    padding: 30px 6% 120px;
+    padding: 40px 5% 130px;
 }
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.section-heading h2 {
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: normal;
+    margin-top: 15px;
+}
+
+.section-heading p {
+    color: #81766e;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* =========================
+   GRID
+========================= */
 
 .design-grid {
     max-width: 1250px;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 35px;
+    gap: 55px 30px;
 }
 
 .design {
-    position: relative;
     cursor: pointer;
 }
 
-.design-label {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.design-label h3 {
-    font-size: 23px;
-    font-weight: normal;
-    margin-bottom: 8px;
-}
-
-.design-label p {
-    color: #9b8d82;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-/* =========================
-   PREVIEW COMMON
-========================= */
-
 .preview {
-    height: 480px;
-    position: relative;
+    height: 520px;
     overflow: hidden;
+    position: relative;
     transition: .5s;
 }
 
 .design:hover .preview {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 55px rgba(0,0,0,.13);
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(45,35,28,.16);
+}
+
+.design-info {
+    text-align: center;
+    padding-top: 22px;
+}
+
+.design-info h3 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.design-info p {
+    font-family: Arial, sans-serif;
+    color: #a08f80;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 9px;
 }
 
 /* =========================
-   1 ENVELOPE
+   ENVELOPE
 ========================= */
 
 .envelope-preview {
-    background: #e9dfd2;
+    background: #e4d8ca;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .envelope {
     width: 78%;
     height: 55%;
     position: relative;
-    background: #f8f3eb;
-    box-shadow: 0 20px 40px rgba(0,0,0,.15);
+    background: #f1e7dc;
+    box-shadow: 0 25px 45px rgba(40,30,24,.18);
 }
 
 .envelope-paper {
     position: absolute;
-    width: 76%;
-    height: 82%;
+    width: 75%;
+    height: 85%;
+    left: 12.5%;
+    top: -27%;
     background: #fffdf8;
-    left: 12%;
-    top: -25%;
     z-index: 1;
-    padding: 30px 15px;
+    padding: 35px 15px;
     text-align: center;
-    transition: .5s;
+    transition: .7s cubic-bezier(.2,.7,.2,1);
 }
 
 .design:hover .envelope-paper {
-    top: -48%;
+    top: -55%;
 }
 
-.envelope-paper span {
-    font-size: 9px;
+.envelope-paper small {
+    font-family: Arial, sans-serif;
+    color: #a48d79;
+    font-size: 8px;
     letter-spacing: 3px;
-    color: #9b8773;
 }
 
 .envelope-paper h3 {
-    font-size: 28px;
+    font-size: 31px;
     font-weight: normal;
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
 .envelope-front {
     position: absolute;
     inset: 0;
     z-index: 3;
-    background: #e7d7c5;
-    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+    background: #e1d0bf;
+    clip-path: polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);
+}
+
+.envelope-flap {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: #eadccf;
+    clip-path: polygon(0 0,50% 55%,100% 0);
+    transform-origin: top;
+    transition: .7s;
+}
+
+.design:hover .envelope-flap {
+    transform: rotateX(180deg);
 }
 
 .seal {
     position: absolute;
-    z-index: 5;
+    z-index: 8;
     left: 50%;
-    top: 50%;
+    top: 52%;
     transform: translate(-50%,-50%);
-    width: 48px;
-    height: 48px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    background: #8d6657;
+    background: #8e6858;
     color: white;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 15px;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
 }
 
 /* =========================
-   2 BOOK
+   BOOK
 ========================= */
 
 .book-preview {
-    background: #d8d0c6;
+    background: #d4ccc2;
     display: flex;
-    align-items: center;
     justify-content: center;
-    perspective: 1000px;
+    align-items: center;
+    perspective: 1300px;
 }
 
 .book {
-    width: 82%;
-    height: 70%;
+    width: 84%;
+    height: 72%;
     display: flex;
-    box-shadow: 0 25px 45px rgba(0,0,0,.18);
+    box-shadow: 0 30px 50px rgba(30,25,20,.2);
+    transform-style: preserve-3d;
+    transition: .7s;
+}
+
+.design:hover .book {
+    transform: rotateY(-8deg);
 }
 
 .book-page {
     width: 50%;
     height: 100%;
-    background: #fbf8f2;
-    padding: 35px 20px;
+    background: #fcf9f3;
+    padding: 42px 25px;
     text-align: center;
 }
 
 .book-page.left {
-    border-right: 1px solid #ddd2c5;
+    border-right: 1px solid #d9cec2;
 }
 
 .book-page small {
-    color: #9b8773;
-    letter-spacing: 3px;
-    font-size: 9px;
+    font-family: Arial, sans-serif;
+    color: #9e8975;
+    font-size: 8px;
+    letter-spacing: 4px;
 }
 
 .book-page h3 {
-    font-size: 30px;
+    font-size: 34px;
+    line-height: 1.1;
     font-weight: normal;
-    margin: 30px 0;
+    margin: 45px 0 25px;
 }
 
-.book-page .line {
+.book-line {
     width: 45px;
     height: 1px;
-    background: #a98e78;
+    background: #a78d76;
     margin: auto;
 }
 
 .book-page p {
-    margin-top: 25px;
-    font-size: 11px;
-    line-height: 1.8;
-    color: #776c63;
+    margin-top: 28px;
+    color: #7c7168;
+    font-size: 10px;
+    line-height: 2;
 }
 
 /* =========================
-   3 FLORAL
+   BOTANICAL
 ========================= */
 
-.floral-preview {
+.botanical-preview {
     background:
-        linear-gradient(
-            rgba(255,255,255,.22),
-            rgba(255,255,255,.22)
-        ),
-        url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=85");
+        linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
+        url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=90");
     background-size: cover;
     background-position: center;
-    padding: 35px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.floral-card {
+.botanical-card {
     width: 75%;
-    height: 82%;
-    background: rgba(255,251,246,.94);
-    border: 1px solid #d8c6b7;
-    padding: 40px 20px;
+    height: 84%;
+    background: rgba(253,250,245,.95);
+    border: 1px solid #cbb9a8;
+    padding: 45px 25px;
     text-align: center;
+    transition: .5s;
 }
 
-.floral-card small {
-    font-size: 9px;
+.design:hover .botanical-card {
+    transform: scale(.97);
+}
+
+.botanical-card small {
+    font-family: Arial, sans-serif;
+    color: #98806d;
+    font-size: 8px;
     letter-spacing: 4px;
-    color: #9b8773;
 }
 
-.floral-card h3 {
-    font-size: 35px;
+.botanical-card h3 {
+    font-size: 37px;
     font-weight: normal;
-    margin: 40px 0 25px;
+    line-height: 1.1;
+    margin: 45px 0 25px;
 }
 
-.floral-card p {
-    font-size: 11px;
-    line-height: 2;
-}
-
-/* =========================
-   4 EDITORIAL
-========================= */
-
-.editorial-preview {
-    background: #f0ebe4;
-    padding: 30px;
-}
-
-.editorial-card {
-    height: 100%;
-    background: #fdfbf7;
-    padding: 45px 35px;
-    text-align: left;
-}
-
-.editorial-card .number {
-    font-size: 70px;
-    font-weight: normal;
-    color: #d2c4b5;
-}
-
-.editorial-card h3 {
-    font-size: 42px;
-    font-weight: normal;
-    line-height: 1;
-    margin: 25px 0;
-}
-
-.editorial-card p {
-    font-size: 11px;
-    letter-spacing: 1px;
-    line-height: 2;
-    color: #766b62;
-}
-
-.editorial-card .bottom {
-    margin-top: 80px;
-    border-top: 1px solid #d8cec3;
-    padding-top: 20px;
-    font-size: 10px;
-    letter-spacing: 3px;
-}
-
-/* =========================
-   5 LUXURY
-========================= */
-
-.luxury-preview {
-    background: #171513;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.luxury-card {
-    width: 78%;
-    height: 82%;
-    border: 1px solid #a8895e;
-    padding: 45px 20px;
-    text-align: center;
-    color: #e7d5b3;
-}
-
-.luxury-card small {
+.botanical-card p {
+    font-family: Arial, sans-serif;
     font-size: 9px;
-    letter-spacing: 5px;
-}
-
-.luxury-card h3 {
-    font-size: 38px;
-    font-weight: normal;
-    margin: 55px 0 30px;
-}
-
-.luxury-card .ornament {
-    font-size: 24px;
-    margin-bottom: 30px;
-}
-
-.luxury-card p {
-    font-size: 10px;
     letter-spacing: 2px;
     line-height: 2;
 }
 
 /* =========================
-   6 CLASSIC
+   EDITORIAL
+========================= */
+
+.editorial-preview {
+    background: #ebe5dd;
+    padding: 28px;
+}
+
+.editorial-card {
+    height: 100%;
+    background: #fcfaf6;
+    padding: 40px 35px;
+    position: relative;
+}
+
+.editorial-number {
+    font-size: 72px;
+    color: #c9baaa;
+    line-height: 1;
+}
+
+.editorial-card h3 {
+    font-size: 46px;
+    font-weight: normal;
+    line-height: .92;
+    margin: 30px 0;
+}
+
+.editorial-card p {
+    max-width: 220px;
+    color: #756b64;
+    font-size: 10px;
+    line-height: 2;
+}
+
+.editorial-bottom {
+    position: absolute;
+    bottom: 35px;
+    left: 35px;
+    right: 35px;
+    border-top: 1px solid #d9cec3;
+    padding-top: 15px;
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   LUXURY
+========================= */
+
+.luxury-preview {
+    background: #171513;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.luxury-card {
+    width: 78%;
+    height: 84%;
+    border: 1px solid #a8895e;
+    color: #dfc9a5;
+    padding: 48px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.luxury-card::before,
+.luxury-card::after {
+    content: "✦";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+}
+
+.luxury-card::before {
+    top: 18px;
+}
+
+.luxury-card::after {
+    bottom: 18px;
+}
+
+.luxury-card small {
+    font-family: Arial, sans-serif;
+    font-size: 7px;
+    letter-spacing: 4px;
+}
+
+.luxury-card h3 {
+    font-size: 40px;
+    font-weight: normal;
+    line-height: 1;
+    margin: 65px 0 35px;
+}
+
+.luxury-card p {
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   CLASSIC
 ========================= */
 
 .classic-preview {
@@ -487,36 +639,105 @@ nav {
 }
 
 .classic-card {
-    width: 75%;
-    height: 82%;
-    background: #faf8f2;
-    padding: 35px;
-    text-align: center;
-    border: 1px solid #cfc3b6;
-    outline: 1px solid #cfc3b6;
+    width: 76%;
+    height: 84%;
+    background: #fbf8f2;
+    border: 1px solid #c9baaa;
+    outline: 1px solid #c9baaa;
     outline-offset: -12px;
+    padding: 50px 25px;
+    text-align: center;
 }
 
 .classic-card small {
-    font-size: 8px;
+    font-family: Arial, sans-serif;
+    color: #927d69;
+    font-size: 7px;
     letter-spacing: 4px;
-    color: #8f7c6b;
 }
 
 .classic-card h3 {
-    font-size: 37px;
+    font-size: 38px;
     font-weight: normal;
-    margin: 55px 0 25px;
+    line-height: 1.05;
+    margin: 60px 0 25px;
 }
 
-.classic-card .date {
-    font-size: 11px;
+.classic-card p {
+    font-family: Arial, sans-serif;
+    font-size: 8px;
     letter-spacing: 3px;
 }
 
-.classic-card .ornament {
+.classic-symbol {
     margin-top: 55px;
     font-size: 25px;
+    color: #9a7f69;
+}
+
+/* =========================
+   VIEW ALL
+========================= */
+
+.view-all {
+    text-align: center;
+    margin-top: 70px;
+}
+
+.view-all a {
+    display: inline-block;
+    border-bottom: 1px solid #8d7968;
+    padding-bottom: 8px;
+    color: #4d4037;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    background: #fffdf9;
+    padding: 130px 8%;
+}
+
+.about-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 90px;
+    align-items: center;
+}
+
+.about-image {
+    height: 570px;
+    background:
+        linear-gradient(rgba(50,40,34,.08),rgba(50,40,34,.08)),
+        url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=90");
+    background-size: cover;
+    background-position: center;
+}
+
+.about-text .eyebrow {
+    margin-bottom: 20px;
+}
+
+.about-text h2 {
+    font-size: 52px;
+    font-weight: normal;
+    line-height: 1.05;
+    margin-bottom: 25px;
+}
+
+.about-text p {
+    color: #776c63;
+    line-height: 2;
+    font-size: 15px;
+    margin-bottom: 25px;
 }
 
 /* =========================
@@ -524,34 +745,27 @@ nav {
 ========================= */
 
 .how {
-    background: #fffdf9;
-    padding: 110px 6%;
+    padding: 130px 6%;
+    background: #f3eee8;
 }
 
-.how-title {
+.how-header {
     text-align: center;
     margin-bottom: 70px;
 }
 
-.how-title span {
-    color: #a18c79;
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-}
-
-.how-title h2 {
-    font-size: 46px;
+.how-header h2 {
+    font-size: 52px;
     font-weight: normal;
     margin-top: 15px;
 }
 
 .steps {
-    max-width: 1000px;
+    max-width: 1050px;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 50px;
+    gap: 60px;
 }
 
 .step {
@@ -559,66 +773,76 @@ nav {
 }
 
 .step-number {
-    width: 55px;
-    height: 55px;
-    border: 1px solid #b8a493;
+    width: 58px;
+    height: 58px;
+    border: 1px solid #ad9885;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto auto 25px;
     color: #8e7765;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
 }
 
 .step h3 {
-    font-size: 21px;
+    font-size: 22px;
     font-weight: normal;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .step p {
-    color: #82766e;
-    font-size: 14px;
-    line-height: 1.8;
+    color: #7c7169;
+    font-size: 13px;
+    line-height: 1.9;
 }
 
 /* =========================
-   CTA
+   PRICING CTA
 ========================= */
 
-.cta {
+.pricing-cta {
     padding: 130px 20px;
     text-align: center;
     background:
         linear-gradient(
-            rgba(47,40,35,.72),
-            rgba(47,40,35,.72)
+            rgba(48,40,34,.68),
+            rgba(48,40,34,.68)
         ),
-        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90");
+        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=90");
     background-size: cover;
     background-position: center;
     color: white;
 }
 
-.cta h2 {
-    font-size: 55px;
+.pricing-cta h2 {
+    font-size: clamp(40px,6vw,65px);
     font-weight: normal;
-    margin-bottom: 20px;
 }
 
-.cta p {
-    margin-bottom: 35px;
+.pricing-cta p {
+    max-width: 550px;
+    margin: 22px auto 35px;
+    line-height: 1.8;
 }
 
-.cta a {
+.pricing-button {
     display: inline-block;
-    padding: 15px 35px;
+    padding: 16px 35px;
     border: 1px solid white;
+    border-radius: 35px;
     color: white;
     text-decoration: none;
-    border-radius: 30px;
-    font-size: 11px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
     letter-spacing: 3px;
+    transition: .3s;
+}
+
+.pricing-button:hover {
+    background: white;
+    color: #332d29;
 }
 
 /* =========================
@@ -626,65 +850,79 @@ nav {
 ========================= */
 
 footer {
-    padding: 60px 20px;
     background: #302b27;
     color: white;
     text-align: center;
+    padding: 65px 20px;
 }
 
 footer h2 {
     font-size: 35px;
     font-weight: normal;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
 }
 
 footer p {
     margin-top: 15px;
     color: #c5b9af;
-    font-size: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
     .design-grid {
         grid-template-columns: repeat(2,1fr);
     }
 
-}
-
-@media (max-width: 600px) {
-
-    nav {
-        padding: 22px 20px;
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
     }
 
-    .nav-links {
+}
+
+@media (max-width: 650px) {
+
+    nav {
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-right {
         gap: 12px;
     }
 
-    .nav-links a {
-        font-size: 9px;
-        margin: 0;
+    .nav-right > a {
+        display: none;
+    }
+
+    .languages {
+        margin-left: 0;
     }
 
     .hero {
-        min-height: 80vh;
+        min-height: 90vh;
     }
 
     .hero h1 {
-        font-size: 65px;
+        font-size: 80px;
+    }
+
+    .hero-description {
+        font-size: 14px;
     }
 
     .intro {
-        padding-top: 80px;
-    }
-
-    .intro h2 {
-        font-size: 36px;
+        padding: 90px 20px;
     }
 
     .designs {
@@ -694,20 +932,36 @@ footer p {
 
     .design-grid {
         grid-template-columns: 1fr;
-        max-width: 450px;
+        max-width: 430px;
     }
 
     .preview {
-        height: 520px;
+        height: 540px;
+    }
+
+    .about {
+        padding: 90px 20px;
+    }
+
+    .about-image {
+        height: 430px;
+    }
+
+    .about-text h2 {
+        font-size: 40px;
+    }
+
+    .how {
+        padding: 90px 20px;
+    }
+
+    .how-header h2 {
+        font-size: 40px;
     }
 
     .steps {
         grid-template-columns: 1fr;
         gap: 55px;
-    }
-
-    .cta h2 {
-        font-size: 40px;
     }
 
 }
@@ -721,7 +975,7 @@ footer p {
 
 
 <!-- =========================
-     NAV
+     NAVIGATION
 ========================= -->
 
 <nav>
@@ -730,19 +984,44 @@ footer p {
         Luna
     </div>
 
-    <div class="nav-links">
+    <div class="nav-right">
 
-        <a href="#designs">
-            Designs
+        <a href="#designs" data-key="navDesigns">
+            Dizaynlar
         </a>
 
-        <a href="pricing.html">
-            Pricing
+        <a href="pricing.html" data-key="navPricing">
+            Paketlər
         </a>
 
-        <a href="client-form.html">
-            Order
+        <a href="client-form.html" data-key="navOrder">
+            Sifariş
         </a>
+
+        <div class="languages">
+
+            <button
+                class="language active"
+                onclick="changeLanguage('az')"
+            >
+                AZ
+            </button>
+
+            <button
+                class="language"
+                onclick="changeLanguage('tr')"
+            >
+                TR
+            </button>
+
+            <button
+                class="language"
+                onclick="changeLanguage('en')"
+            >
+                EN
+            </button>
+
+        </div>
 
     </div>
 
@@ -757,27 +1036,54 @@ footer p {
 
     <div class="hero-content">
 
-        <div class="hero-small">
-            Digital Invitations
+        <div
+            class="hero-eyebrow"
+            data-key="heroEyebrow"
+        >
+            Rəqəmsal dəvətnamələr
         </div>
 
         <h1>
             Luna
         </h1>
 
-        <p>
-            Elegant digital invitations,
-            thoughtfully designed for
-            your most beautiful moments.
+        <div class="hero-divider"></div>
+
+        <p
+            class="hero-description"
+            data-key="heroDescription"
+        >
+            Ən gözəl anlarınız üçün,
+            ən xüsusi rəqəmsal dəvətnamələr.
         </p>
 
-        <a
-            href="#designs"
-            class="hero-button"
-        >
-            EXPLORE DESIGNS
-        </a>
+        <div class="hero-buttons">
 
+            <a
+                href="#designs"
+                class="hero-button dark"
+                data-key="heroButton"
+            >
+                DİZAYNLARA BAX
+            </a>
+
+            <a
+                href="client-form.html"
+                class="hero-button"
+                data-key="heroOrder"
+            >
+                SİFARİŞ VER
+            </a>
+
+        </div>
+
+    </div>
+
+    <div
+        class="scroll"
+        data-key="scroll"
+    >
+        Kəşf et
     </div>
 
 </header>
@@ -789,21 +1095,22 @@ footer p {
 
 <section class="intro">
 
-    <span>
-        Made for your moment
-    </span>
+    <div
+        class="eyebrow"
+        data-key="introEyebrow"
+    >
+        Sizin hekayəniz
+    </div>
 
-    <h2>
-        Invitations with a story
+    <h2 data-key="introTitle">
+        Dəvətnamədən daha artığı
     </h2>
 
-    <p>
-        From romantic envelopes to elegant
-        editorial designs, choose a style
-        that feels uniquely yours.
-        Every invitation can be personalised
-        with your names, date, venue,
-        photographs and special details.
+    <p data-key="introText">
+        Hər bir dəvətnaməni sizin xüsusi gününüzün
+        ruhuna uyğun hazırlayırıq. Zərif dizayn,
+        gözəl animasiyalar və sizin hekayəniz —
+        hamısı bir yerdə.
     </p>
 
 </section>
@@ -818,10 +1125,30 @@ footer p {
     id="designs"
 >
 
+    <div class="section-heading">
+
+        <div
+            class="eyebrow"
+            data-key="designEyebrow"
+        >
+            Kolleksiyamız
+        </div>
+
+        <h2 data-key="designTitle">
+            Sizin üslubunuz. Sizin dəvətnaməniz.
+        </h2>
+
+        <p data-key="designText">
+            Fərqli üslublar arasından sizə ən uyğun olanı seçin.
+        </p>
+
+    </div>
+
+
     <div class="design-grid">
 
 
-        <!-- ENVELOPE -->
+        <!-- 01 ENVELOPE -->
 
         <div class="design">
 
@@ -831,19 +1158,22 @@ footer p {
 
                     <div class="envelope-paper">
 
-                        <span>
+                        <small>
                             YOU ARE INVITED
-                        </span>
+                        </small>
 
                         <h3>
-                            Wedding
+                            A Beautiful<br>
+                            Beginning
                         </h3>
 
-                        <span>
-                            A BEAUTIFUL BEGINNING
-                        </span>
+                        <small>
+                            WEDDING CELEBRATION
+                        </small>
 
                     </div>
+
+                    <div class="envelope-flap"></div>
 
                     <div class="envelope-front"></div>
 
@@ -855,14 +1185,14 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
-                    The Envelope
+                <h3 data-key="design1">
+                    Zərf
                 </h3>
 
-                <p>
-                    Romantic · Interactive
+                <p data-key="design1Type">
+                    Romantik · İnteraktiv
                 </p>
 
             </div>
@@ -870,7 +1200,7 @@ footer p {
         </div>
 
 
-        <!-- BOOK -->
+        <!-- 02 BOOK -->
 
         <div class="design">
 
@@ -889,12 +1219,12 @@ footer p {
                             Story
                         </h3>
 
-                        <div class="line"></div>
+                        <div class="book-line"></div>
 
                         <p>
-                            A beautiful beginning
+                            Every love story
                             deserves a beautiful
-                            invitation.
+                            beginning.
                         </p>
 
                     </div>
@@ -902,19 +1232,18 @@ footer p {
                     <div class="book-page">
 
                         <small>
-                            THE DAY
+                            CHAPTER II
                         </small>
 
                         <h3>
                             Forever
                         </h3>
 
-                        <div class="line"></div>
+                        <div class="book-line"></div>
 
                         <p>
-                            Join us as we begin
-                            our next chapter
-                            together.
+                            A new chapter
+                            begins here.
                         </p>
 
                     </div>
@@ -923,14 +1252,14 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
-                    The Storybook
+                <h3 data-key="design2">
+                    Hekayə Kitabı
                 </h3>
 
-                <p>
-                    Elegant · Editorial
+                <p data-key="design2Type">
+                    Zərif · Fərqli
                 </p>
 
             </div>
@@ -938,13 +1267,13 @@ footer p {
         </div>
 
 
-        <!-- FLORAL -->
+        <!-- 03 BOTANICAL -->
 
         <div class="design">
 
-            <div class="preview floral-preview">
+            <div class="preview botanical-preview">
 
-                <div class="floral-card">
+                <div class="botanical-card">
 
                     <small>
                         TOGETHER WITH THEIR FAMILIES
@@ -970,14 +1299,14 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
-                    Botanical
+                <h3 data-key="design3">
+                    Botanika
                 </h3>
 
-                <p>
-                    Floral · Romantic
+                <p data-key="design3Type">
+                    Çiçəkli · Romantik
                 </p>
 
             </div>
@@ -985,7 +1314,7 @@ footer p {
         </div>
 
 
-        <!-- EDITORIAL -->
+        <!-- 04 EDITORIAL -->
 
         <div class="design">
 
@@ -993,7 +1322,7 @@ footer p {
 
                 <div class="editorial-card">
 
-                    <div class="number">
+                    <div class="editorial-number">
                         01
                     </div>
 
@@ -1008,7 +1337,7 @@ footer p {
                         a new chapter.
                     </p>
 
-                    <div class="bottom">
+                    <div class="editorial-bottom">
                         SAVE THE DATE
                     </div>
 
@@ -1016,13 +1345,13 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
+                <h3 data-key="design4">
                     Editorial
                 </h3>
 
-                <p>
+                <p data-key="design4Type">
                     Modern · Minimal
                 </p>
 
@@ -1031,7 +1360,7 @@ footer p {
         </div>
 
 
-        <!-- LUXURY -->
+        <!-- 05 LUXURY -->
 
         <div class="design">
 
@@ -1048,10 +1377,6 @@ footer p {
                         Celebration
                     </h3>
 
-                    <div class="ornament">
-                        ✦
-                    </div>
-
                     <p>
                         WEDDING INVITATION
                     </p>
@@ -1060,14 +1385,14 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
+                <h3 data-key="design5">
                     Maison
                 </h3>
 
-                <p>
-                    Luxury · Timeless
+                <p data-key="design5Type">
+                    Lüks · Klassik
                 </p>
 
             </div>
@@ -1075,7 +1400,7 @@ footer p {
         </div>
 
 
-        <!-- CLASSIC -->
+        <!-- 06 CLASSIC -->
 
         <div class="design">
 
@@ -1092,11 +1417,11 @@ footer p {
                         Invited
                     </h3>
 
-                    <div class="date">
+                    <p>
                         TO CELEBRATE LOVE
-                    </div>
+                    </p>
 
-                    <div class="ornament">
+                    <div class="classic-symbol">
                         ❦
                     </div>
 
@@ -1104,20 +1429,77 @@ footer p {
 
             </div>
 
-            <div class="design-label">
+            <div class="design-info">
 
-                <h3>
-                    Classic
+                <h3 data-key="design6">
+                    Klassik
                 </h3>
 
-                <p>
-                    Traditional · Refined
+                <p data-key="design6Type">
+                    Ənənəvi · Zərif
                 </p>
 
             </div>
 
         </div>
 
+
+    </div>
+
+
+    <div class="view-all">
+
+        <a
+            href="client-form.html"
+            data-key="viewAll"
+        >
+            ÖZ DƏVƏTNAMƏNİZİ YARADIN →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="about">
+
+    <div class="about-grid">
+
+        <div class="about-image"></div>
+
+        <div class="about-text">
+
+            <div
+                class="eyebrow"
+                data-key="aboutEyebrow"
+            >
+                Luna haqqında
+            </div>
+
+            <h2 data-key="aboutTitle">
+                Kiçik bir ekran,
+                böyük bir xatirə.
+            </h2>
+
+            <p data-key="aboutText1">
+                Luna ilə dəvətnamələr sadəcə
+                məlumat vermək üçün deyil,
+                qonaqlarınızda ilk təəssüratı
+                yaratmaq üçün hazırlanır.
+            </p>
+
+            <p data-key="aboutText2">
+                Adlarınız, tarixiniz, şəkilləriniz,
+                musiqiniz, məkanınız və hekayəniz
+                sizin üçün hazırlanmış xüsusi
+                rəqəmsal dəvətnamədə birləşir.
+            </p>
+
+        </div>
 
     </div>
 
@@ -1130,14 +1512,17 @@ footer p {
 
 <section class="how">
 
-    <div class="how-title">
+    <div class="how-header">
 
-        <span>
-            Simple & beautiful
-        </span>
+        <div
+            class="eyebrow"
+            data-key="howEyebrow"
+        >
+            Sadə və rahat
+        </div>
 
-        <h2>
-            How it works
+        <h2 data-key="howTitle">
+            Necə işləyir?
         </h2>
 
     </div>
@@ -1152,14 +1537,13 @@ footer p {
                 01
             </div>
 
-            <h3>
-                Choose your design
+            <h3 data-key="step1Title">
+                Dizaynınızı seçin
             </h3>
 
-            <p>
-                Explore our invitation styles
-                and find the one that feels
-                right for your celebration.
+            <p data-key="step1Text">
+                Kolleksiyamızdan xüsusi gününüzə
+                uyğun dəvətnamə üslubunu seçin.
             </p>
 
         </div>
@@ -1171,14 +1555,13 @@ footer p {
                 02
             </div>
 
-            <h3>
-                Personalise
+            <h3 data-key="step2Title">
+                Məlumatlarınızı göndərin
             </h3>
 
-            <p>
-                Send us your names, date,
-                venue, photos, music and
-                all the details you want.
+            <p data-key="step2Text">
+                Adlarınızı, tarixi, məkanı,
+                şəkilləri və digər detalları bizə göndərin.
             </p>
 
         </div>
@@ -1190,14 +1573,13 @@ footer p {
                 03
             </div>
 
-            <h3>
-                Share your invitation
+            <h3 data-key="step3Title">
+                Linkinizi paylaşın
             </h3>
 
-            <p>
-                Receive your personalised
-                invitation link and share
-                it with your guests.
+            <p data-key="step3Text">
+                Hazır dəvətnamənizi link vasitəsilə
+                qonaqlarınızla rahatlıqla paylaşın.
             </p>
 
         </div>
@@ -1212,19 +1594,24 @@ footer p {
      CTA
 ========================= -->
 
-<section class="cta">
+<section class="pricing-cta">
 
-    <h2>
-        Your moment deserves
-        something beautiful.
+    <h2 data-key="ctaTitle">
+        Sizin hekayəniz
+        fərqli olmağa layiqdir.
     </h2>
 
-    <p>
-        Let's create your invitation.
+    <p data-key="ctaText">
+        Ən xüsusi gününüz üçün sizə uyğun
+        rəqəmsal dəvətnaməni birlikdə yaradaq.
     </p>
 
-    <a href="client-form.html">
-        CREATE MY INVITATION
+    <a
+        href="pricing.html"
+        class="pricing-button"
+        data-key="ctaButton"
+    >
+        PAKETLƏRƏ BAX
     </a>
 
 </section>
@@ -1240,11 +1627,470 @@ footer p {
         Luna
     </h2>
 
-    <p>
-        Digital invitations for beautiful moments.
+    <p data-key="footerText">
+        Ən gözəl anlarınız üçün rəqəmsal dəvətnamələr.
     </p>
 
 </footer>
+
+
+<!-- =========================
+     LANGUAGE SYSTEM
+========================= -->
+
+<script>
+
+const translations = {
+
+    az: {
+
+        navDesigns: "Dizaynlar",
+        navPricing: "Paketlər",
+        navOrder: "Sifariş",
+
+        heroEyebrow: "Rəqəmsal dəvətnamələr",
+
+        heroDescription:
+            "Ən gözəl anlarınız üçün, ən xüsusi rəqəmsal dəvətnamələr.",
+
+        heroButton:
+            "DİZAYNLARA BAX",
+
+        heroOrder:
+            "SİFARİŞ VER",
+
+        scroll:
+            "Kəşf et",
+
+        introEyebrow:
+            "Sizin hekayəniz",
+
+        introTitle:
+            "Dəvətnamədən daha artığı",
+
+        introText:
+            "Hər bir dəvətnaməni sizin xüsusi gününüzün ruhuna uyğun hazırlayırıq. Zərif dizayn, gözəl animasiyalar və sizin hekayəniz — hamısı bir yerdə.",
+
+        designEyebrow:
+            "Kolleksiyamız",
+
+        designTitle:
+            "Sizin üslubunuz. Sizin dəvətnaməniz.",
+
+        designText:
+            "Fərqli üslublar arasından sizə ən uyğun olanı seçin.",
+
+        design1:
+            "Zərf",
+
+        design1Type:
+            "Romantik · İnteraktiv",
+
+        design2:
+            "Hekayə Kitabı",
+
+        design2Type:
+            "Zərif · Fərqli",
+
+        design3:
+            "Botanika",
+
+        design3Type:
+            "Çiçəkli · Romantik",
+
+        design4:
+            "Editorial",
+
+        design4Type:
+            "Modern · Minimal",
+
+        design5:
+            "Maison",
+
+        design5Type:
+            "Lüks · Klassik",
+
+        design6:
+            "Klassik",
+
+        design6Type:
+            "Ənənəvi · Zərif",
+
+        viewAll:
+            "ÖZ DƏVƏTNAMƏNİZİ YARADIN →",
+
+        aboutEyebrow:
+            "Luna haqqında",
+
+        aboutTitle:
+            "Kiçik bir ekran, böyük bir xatirə.",
+
+        aboutText1:
+            "Luna ilə dəvətnamələr sadəcə məlumat vermək üçün deyil, qonaqlarınızda ilk təəssüratı yaratmaq üçün hazırlanır.",
+
+        aboutText2:
+            "Adlarınız, tarixiniz, şəkilləriniz, musiqiniz, məkanınız və hekayəniz sizin üçün hazırlanmış xüsusi rəqəmsal dəvətnamədə birləşir.",
+
+        howEyebrow:
+            "Sadə və rahat",
+
+        howTitle:
+            "Necə işləyir?",
+
+        step1Title:
+            "Dizaynınızı seçin",
+
+        step1Text:
+            "Kolleksiyamızdan xüsusi gününüzə uyğun dəvətnamə üslubunu seçin.",
+
+        step2Title:
+            "Məlumatlarınızı göndərin",
+
+        step2Text:
+            "Adlarınızı, tarixi, məkanı, şəkilləri və digər detalları bizə göndərin.",
+
+        step3Title:
+            "Linkinizi paylaşın",
+
+        step3Text:
+            "Hazır dəvətnamənizi link vasitəsilə qonaqlarınızla rahatlıqla paylaşın.",
+
+        ctaTitle:
+            "Sizin hekayəniz fərqli olmağa layiqdir.",
+
+        ctaText:
+            "Ən xüsusi gününüz üçün sizə uyğun rəqəmsal dəvətnaməni birlikdə yaradaq.",
+
+        ctaButton:
+            "PAKETLƏRƏ BAX",
+
+        footerText:
+            "Ən gözəl anlarınız üçün rəqəmsal dəvətnamələr."
+
+    },
+
+
+    tr: {
+
+        navDesigns: "Tasarımlar",
+        navPricing: "Paketler",
+        navOrder: "Sipariş",
+
+        heroEyebrow: "Dijital davetiyeler",
+
+        heroDescription:
+            "En güzel anlarınız için, size özel dijital davetiyeler.",
+
+        heroButton:
+            "TASARIMLARA BAK",
+
+        heroOrder:
+            "SİPARİŞ VER",
+
+        scroll:
+            "Keşfet",
+
+        introEyebrow:
+            "Sizin hikayeniz",
+
+        introTitle:
+            "Bir davetiyeden daha fazlası",
+
+        introText:
+            "Her davetiyeyi özel gününüzün ruhuna uygun olarak hazırlıyoruz. Zarif tasarım, güzel animasyonlar ve sizin hikayeniz — hepsi bir arada.",
+
+        designEyebrow:
+            "Koleksiyonumuz",
+
+        designTitle:
+            "Sizin tarzınız. Sizin davetiyeniz.",
+
+        designText:
+            "Farklı stiller arasından size en uygun olanı seçin.",
+
+        design1:
+            "Zarf",
+
+        design1Type:
+            "Romantik · İnteraktif",
+
+        design2:
+            "Hikâye Kitabı",
+
+        design2Type:
+            "Zarif · Farklı",
+
+        design3:
+            "Botanik",
+
+        design3Type:
+            "Çiçekli · Romantik",
+
+        design4:
+            "Editorial",
+
+        design4Type:
+            "Modern · Minimal",
+
+        design5:
+            "Maison",
+
+        design5Type:
+            "Lüks · Klasik",
+
+        design6:
+            "Klasik",
+
+        design6Type:
+            "Geleneksel · Zarif",
+
+        viewAll:
+            "DAVETİYENİZİ OLUŞTURUN →",
+
+        aboutEyebrow:
+            "Luna hakkında",
+
+        aboutTitle:
+            "Küçük bir ekran, büyük bir hatıra.",
+
+        aboutText1:
+            "Luna davetiyeleri sadece bilgi vermek için değil, misafirlerinizde ilk izlenimi yaratmak için tasarlanır.",
+
+        aboutText2:
+            "İsimleriniz, tarihiniz, fotoğraflarınız, müziğiniz, mekanınız ve hikayeniz size özel dijital davetiyede bir araya gelir.",
+
+        howEyebrow:
+            "Kolay ve sade",
+
+        howTitle:
+            "Nasıl çalışır?",
+
+        step1Title:
+            "Tasarımınızı seçin",
+
+        step1Text:
+            "Koleksiyonumuzdan özel gününüze uygun davetiye stilini seçin.",
+
+        step2Title:
+            "Bilgilerinizi gönderin",
+
+        step2Text:
+            "İsimlerinizi, tarihi, mekanı, fotoğrafları ve diğer detayları bize gönderin.",
+
+        step3Title:
+            "Linkinizi paylaşın",
+
+        step3Text:
+            "Hazır davetiyenizi link aracılığıyla misafirlerinizle kolayca paylaşın.",
+
+        ctaTitle:
+            "Hikayeniz farklı olmayı hak ediyor.",
+
+        ctaText:
+            "Özel gününüz için size uygun dijital davetiyeyi birlikte oluşturalım.",
+
+        ctaButton:
+            "PAKETLERE BAK",
+
+        footerText:
+            "En güzel anlarınız için dijital davetiyeler."
+
+    },
+
+
+    en: {
+
+        navDesigns: "Designs",
+        navPricing: "Pricing",
+        navOrder: "Order",
+
+        heroEyebrow:
+            "Digital invitations",
+
+        heroDescription:
+            "Beautiful digital invitations for your most special moments.",
+
+        heroButton:
+            "EXPLORE DESIGNS",
+
+        heroOrder:
+            "ORDER NOW",
+
+        scroll:
+            "Explore",
+
+        introEyebrow:
+            "Your story",
+
+        introTitle:
+            "More than an invitation",
+
+        introText:
+            "Every invitation is thoughtfully created around the feeling of your special day. Elegant design, beautiful details and your story — all in one place.",
+
+        designEyebrow:
+            "Our collection",
+
+        designTitle:
+            "Your style. Your invitation.",
+
+        designText:
+            "Choose the design that feels right for your celebration.",
+
+        design1:
+            "The Envelope",
+
+        design1Type:
+            "Romantic · Interactive",
+
+        design2:
+            "The Storybook",
+
+        design2Type:
+            "Elegant · Unique",
+
+        design3:
+            "Botanical",
+
+        design3Type:
+            "Floral · Romantic",
+
+        design4:
+            "Editorial",
+
+        design4Type:
+            "Modern · Minimal",
+
+        design5:
+            "Maison",
+
+        design5Type:
+            "Luxury · Timeless",
+
+        design6:
+            "Classic",
+
+        design6Type:
+            "Traditional · Refined",
+
+        viewAll:
+            "CREATE YOUR INVITATION →",
+
+        aboutEyebrow:
+            "About Luna",
+
+        aboutTitle:
+            "A small screen, a beautiful memory.",
+
+        aboutText1:
+            "Luna invitations are created not simply to share information, but to create a beautiful first impression for your guests.",
+
+        aboutText2:
+            "Your names, date, photographs, music, venue and story come together in a digital invitation made especially for you.",
+
+        howEyebrow:
+            "Simple & beautiful",
+
+        howTitle:
+            "How it works",
+
+        step1Title:
+            "Choose your design",
+
+        step1Text:
+            "Explore our collection and choose the invitation style that fits your celebration.",
+
+        step2Title:
+            "Send your details",
+
+        step2Text:
+            "Share your names, date, venue, photographs and all the details you would like included.",
+
+        step3Title:
+            "Share your link",
+
+        step3Text:
+            "Receive your personalised invitation and easily share it with your guests.",
+
+        ctaTitle:
+            "Your story deserves to be different.",
+
+        ctaText:
+            "Let's create a digital invitation made especially for your most beautiful day.",
+
+        ctaButton:
+            "VIEW PACKAGES",
+
+        footerText:
+            "Digital invitations for beautiful moments."
+
+    }
+
+};
+
+
+function changeLanguage(language) {
+
+    const elements =
+        document.querySelectorAll("[data-key]");
+
+    elements.forEach(function(element) {
+
+        const key =
+            element.getAttribute("data-key");
+
+        if (
+            translations[language] &&
+            translations[language][key]
+        ) {
+
+            element.textContent =
+                translations[language][key];
+
+        }
+
+    });
+
+
+    document
+        .querySelectorAll(".language")
+        .forEach(function(button) {
+
+            button.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelector(
+            `.language[onclick="changeLanguage('${language}')"]`
+        )
+        .classList.add("active");
+
+
+    document.documentElement.lang =
+        language;
+
+
+    localStorage.setItem(
+        "luna-language",
+        language
+    );
+
+}
+
+
+const savedLanguage =
+    localStorage.getItem("luna-language");
+
+
+if (savedLanguage) {
+
+    changeLanguage(savedLanguage);
+
+}
+
+</script>
 
 
 </body>
