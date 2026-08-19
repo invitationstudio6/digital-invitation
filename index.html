@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="az">
 
@@ -12,13 +11,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
 
 <style>
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 *{
     margin:0;
@@ -31,11 +30,14 @@ html{
 }
 
 body{
-    min-height:100vh;
-    color:#f7eee8;
     font-family:"DM Sans",sans-serif;
-    background:#17110e;
+    color:#30231f;
+    background:#f8f2ee;
     overflow-x:hidden;
+}
+
+body.menu-open{
+    overflow:hidden;
 }
 
 a{
@@ -43,152 +45,375 @@ a{
     text-decoration:none;
 }
 
+button{
+    font-family:inherit;
+}
 
-/* =====================================================
-   LUXURY BACKGROUND
-===================================================== */
+img{
+    max-width:100%;
+}
 
-.background{
+
+/* =========================================================
+   PAGE LOADER
+========================================================= */
+
+.loader{
     position:fixed;
     inset:0;
-    z-index:-10;
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#f8f2ee;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-logo{
+    font-family:"Italiana",serif;
+    font-size:60px;
+    letter-spacing:3px;
+    color:#34251f;
+}
+
+.loader-line{
+    width:90px;
+    height:1px;
+    background:#b87961;
+    margin:15px auto;
+    animation:loaderLine 1.5s ease-in-out infinite;
+}
+
+@keyframes loaderLine{
+
+    0%,100%{
+        transform:scaleX(.2);
+        opacity:.3;
+    }
+
+    50%{
+        transform:scaleX(1);
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+.site-background{
+    position:fixed;
+    inset:0;
+
+    z-index:-20;
+
     overflow:hidden;
 
     background:
         radial-gradient(
-            ellipse at 12% 8%,
-            rgba(178,122,91,.34) 0%,
-            rgba(178,122,91,.13) 20%,
-            transparent 42%
+            circle at 8% 12%,
+            rgba(244,185,166,.72),
+            transparent 27%
         ),
-
         radial-gradient(
-            ellipse at 88% 18%,
-            rgba(209,166,139,.22) 0%,
-            rgba(209,166,139,.08) 22%,
-            transparent 45%
+            circle at 91% 8%,
+            rgba(204,181,232,.70),
+            transparent 29%
         ),
-
         radial-gradient(
-            ellipse at 55% 72%,
-            rgba(126,77,55,.30) 0%,
-            transparent 40%
+            circle at 78% 72%,
+            rgba(168,211,226,.58),
+            transparent 31%
         ),
-
         radial-gradient(
-            ellipse at 10% 92%,
-            rgba(214,176,148,.13),
-            transparent 38%
+            circle at 15% 90%,
+            rgba(239,211,154,.52),
+            transparent 28%
         ),
-
-        linear-gradient(
-            125deg,
-            #120d0b 0%,
-            #241713 28%,
-            #17100d 55%,
-            #2a1b15 78%,
-            #110c0a 100%
-        );
+        #f8f2ee;
 }
 
-.background::before{
+.site-background::after{
     content:"";
 
     position:absolute;
-
-    width:900px;
-    height:900px;
-
-    left:-380px;
-    top:-360px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(239,205,181,.10);
-
-    box-shadow:
-        0 0 120px rgba(205,147,112,.10),
-        0 0 250px rgba(205,147,112,.07),
-        inset 0 0 120px rgba(205,147,112,.04);
-}
-
-.background::after{
-    content:"";
-
-    position:absolute;
-
-    width:1000px;
-    height:1000px;
-
-    right:-430px;
-    bottom:-480px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(239,205,181,.09);
-
-    box-shadow:
-        0 0 140px rgba(188,126,92,.08),
-        inset 0 0 150px rgba(188,126,92,.04);
-}
-
-
-/* =====================================================
-   DECORATIVE GLOW
-===================================================== */
-
-body::before{
-    content:"";
-
-    position:fixed;
-
-    width:500px;
-    height:500px;
-
-    left:35%;
-    top:25%;
-
-    border-radius:50%;
+    inset:0;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(201,151,119,.055),
-            transparent 70%
+        linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255,255,255,.20) 50%,
+            transparent 100%
         );
 
-    pointer-events:none;
-    z-index:-5;
+    animation:backgroundShine 14s linear infinite;
+}
+
+@keyframes backgroundShine{
+
+    0%{
+        transform:translateX(-100%);
+    }
+
+    100%{
+        transform:translateX(100%);
+    }
+}
+
+.blob{
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(15px);
+
+    opacity:.52;
+
+    animation:floatBlob 18s ease-in-out infinite alternate;
+}
+
+.blob-one{
+    width:460px;
+    height:460px;
+
+    left:-150px;
+    top:80px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #efb6a4,
+            #dca8cb
+        );
+}
+
+.blob-two{
+    width:390px;
+    height:390px;
+
+    right:-100px;
+    top:280px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c3afe7,
+            #a5d5df
+        );
+
+    animation-delay:-5s;
+}
+
+.blob-three{
+    width:350px;
+    height:350px;
+
+    left:28%;
+    bottom:-170px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9ca8c,
+            #e5a69d
+        );
+
+    animation-delay:-9s;
+}
+
+.blob-four{
+    width:260px;
+    height:260px;
+
+    right:25%;
+    top:42%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d9b7dc,
+            #efd3b3
+        );
+
+    opacity:.25;
+
+    animation-delay:-13s;
+}
+
+@keyframes floatBlob{
+
+    0%{
+        transform:translate3d(0,0,0) scale(1);
+    }
+
+    50%{
+        transform:translate3d(80px,-55px,0) scale(1.10);
+    }
+
+    100%{
+        transform:translate3d(-40px,60px,0) scale(.94);
+    }
 }
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+/* =========================================================
+   DECORATIVE ORBITS
+========================================================= */
+
+.orbit{
+    position:absolute;
+
+    width:760px;
+    height:760px;
+
+    border:1px solid rgba(80,54,48,.09);
+
+    border-radius:50%;
+
+    left:50%;
+    top:8%;
+
+    transform:
+        translateX(-50%)
+        rotate(-18deg);
+}
+
+.orbit::before,
+.orbit::after{
+    content:"";
+
+    position:absolute;
+
+    border:1px solid rgba(80,54,48,.065);
+
+    border-radius:50%;
+}
+
+.orbit::before{
+    inset:55px;
+}
+
+.orbit::after{
+    inset:125px;
+}
+
+.spark{
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#a66c59;
+
+    box-shadow:
+        0 0 22px rgba(166,108,89,.75);
+
+    animation:pulse 3.5s infinite ease-in-out;
+}
+
+.spark.one{
+    left:16%;
+    top:29%;
+}
+
+.spark.two{
+    right:17%;
+    top:47%;
+
+    animation-delay:1s;
+}
+
+.spark.three{
+    left:27%;
+    bottom:20%;
+
+    animation-delay:2s;
+}
+
+.spark.four{
+    right:29%;
+    bottom:25%;
+
+    animation-delay:1.5s;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        transform:scale(.65);
+        opacity:.30;
+    }
+
+    50%{
+        transform:scale(1.7);
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
 
 .navbar{
     position:fixed;
 
-    top:0;
-    left:0;
+    top:18px;
+    left:50%;
 
-    width:100%;
-    height:78px;
+    transform:translateX(-50%);
 
-    z-index:100;
-
-    padding:0 5%;
+    width:min(1200px,92%);
+    height:72px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    background:rgba(20,14,12,.64);
+    padding:0 25px;
 
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
+    background:rgba(255,255,255,.68);
 
-    border-bottom:1px solid rgba(255,255,255,.07);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
+    border:1px solid rgba(255,255,255,.82);
+
+    border-radius:50px;
+
+    box-shadow:
+        0 18px 60px rgba(83,58,48,.11);
+
+    z-index:5000;
+
+    transition:.4s;
+}
+
+.navbar.scrolled{
+    top:10px;
+
+    background:rgba(255,255,255,.88);
+
+    box-shadow:
+        0 15px 45px rgba(83,58,48,.15);
 }
 
 .logo{
@@ -198,29 +423,25 @@ body::before{
 
     letter-spacing:1px;
 
-    transition:.3s;
-}
-
-.logo:hover{
-    opacity:.75;
+    color:#34251f;
 }
 
 .nav-links{
     display:flex;
     align-items:center;
-    gap:32px;
+
+    gap:28px;
 }
 
 .nav-links a{
     position:relative;
 
-    color:#cbb8ae;
-
     font-size:9px;
-
-    letter-spacing:2px;
+    letter-spacing:1.8px;
 
     text-transform:uppercase;
+
+    color:#68534b;
 
     transition:.3s;
 }
@@ -236,45 +457,36 @@ body::before{
     width:0;
     height:1px;
 
-    background:#d6b49e;
+    background:#a06452;
 
     transition:.3s;
 }
 
 .nav-links a:hover{
-    color:#fff;
+    color:#a06452;
 }
 
 .nav-links a:hover::after{
     width:100%;
 }
 
-
-/* =====================================================
-   LANGUAGE SWITCHER
-===================================================== */
-
 .languages{
     display:flex;
-    gap:5px;
+    gap:4px;
 }
 
 .languages button{
-    border:1px solid rgba(255,255,255,.13);
+    border:0;
 
-    background:rgba(255,255,255,.025);
+    background:transparent;
 
-    color:#bda99f;
-
-    border-radius:30px;
-
-    padding:7px 10px;
-
-    font-family:"DM Sans",sans-serif;
+    color:#806c64;
 
     font-size:8px;
 
-    letter-spacing:1px;
+    padding:8px 9px;
+
+    border-radius:20px;
 
     cursor:pointer;
 
@@ -282,137 +494,151 @@ body::before{
 }
 
 .languages button:hover{
-    border-color:rgba(235,205,186,.35);
-    color:#fff;
+    background:rgba(255,255,255,.8);
 }
 
 .languages button.active{
-    background:#eee0d7;
-    color:#211713;
-
-    border-color:#eee0d7;
+    background:#34251f;
+    color:white;
 }
 
 
-/* =====================================================
+/* MOBILE MENU BUTTON */
+
+.menu-toggle{
+    display:none;
+
+    width:42px;
+    height:42px;
+
+    border:0;
+    border-radius:50%;
+
+    background:#34251f;
+    color:white;
+
+    cursor:pointer;
+}
+
+.menu-toggle span{
+    display:block;
+
+    width:17px;
+    height:1px;
+
+    margin:4px auto;
+
+    background:white;
+
+    transition:.3s;
+}
+
+
+/* MOBILE MENU */
+
+.mobile-menu{
+    position:fixed;
+
+    top:0;
+    right:-100%;
+
+    width:min(360px,85%);
+
+    height:100vh;
+
+    z-index:4500;
+
+    padding:120px 35px 40px;
+
+    background:rgba(248,242,238,.96);
+
+    backdrop-filter:blur(30px);
+
+    box-shadow:-20px 0 70px rgba(50,30,20,.15);
+
+    transition:.5s ease;
+}
+
+.mobile-menu.open{
+    right:0;
+}
+
+.mobile-menu a{
+    display:block;
+
+    padding:18px 0;
+
+    border-bottom:1px solid rgba(70,45,35,.1);
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:30px;
+
+    color:#34251f;
+}
+
+.mobile-languages{
+    display:flex;
+    gap:8px;
+    margin-top:30px;
+}
+
+.mobile-languages button{
+    padding:9px 13px;
+
+    border:1px solid rgba(70,45,35,.12);
+
+    border-radius:20px;
+
+    background:white;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
     min-height:100vh;
 
-    padding:160px 6% 100px;
+    padding:
+        170px 6%
+        110px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
-    text-align:center;
-
     position:relative;
-}
 
-.hero-circle{
-    position:absolute;
-
-    width:min(75vw,820px);
-
-    aspect-ratio:1;
-
-    border-radius:50%;
-
-    border:1px solid rgba(226,192,169,.11);
-
-    box-shadow:
-        0 0 100px rgba(183,125,94,.12),
-        0 0 200px rgba(183,125,94,.05),
-        inset 0 0 120px rgba(183,125,94,.035);
-}
-
-.hero-circle::before{
-    content:"";
-
-    position:absolute;
-
-    inset:35px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(226,192,169,.045);
+    text-align:center;
 }
 
 .hero-content{
-    max-width:1000px;
+    width:min(950px,100%);
 
     position:relative;
 
-    z-index:2;
+    z-index:10;
 }
 
-.eyebrow{
-    color:#c9a18b;
+.hero-label{
+    display:inline-flex;
 
-    font-size:8px;
+    align-items:center;
 
-    letter-spacing:7px;
+    gap:12px;
 
-    text-transform:uppercase;
-}
+    padding:10px 18px;
 
-.hero h1{
-    font-family:"Cormorant Garamond",serif;
+    background:rgba(255,255,255,.56);
 
-    font-size:clamp(100px,15vw,190px);
+    border:1px solid rgba(255,255,255,.85);
 
-    line-height:.7;
-
-    font-weight:300;
-
-    letter-spacing:-7px;
-
-    margin:40px 0;
-}
-
-.hero h1 span{
-    display:block;
-
-    margin-top:32px;
-
-    font-family:"Italiana",serif;
-
-    font-size:27px;
-
-    letter-spacing:7px;
-
-    line-height:1.25;
-
-    color:#cba28e;
-}
-
-.hero-text{
-    max-width:580px;
-
-    margin:auto;
-
-    color:#b7a59c;
-
-    font-size:11px;
-
-    line-height:2;
-}
-
-.main-button{
-    display:inline-block;
-
-    margin-top:35px;
-
-    padding:16px 31px;
-
-    border:1px solid rgba(255,255,255,.19);
-
-    border-radius:50px;
-
-    background:rgba(255,255,255,.025);
+    border-radius:30px;
 
     font-size:8px;
 
@@ -420,57 +646,368 @@ body::before{
 
     text-transform:uppercase;
 
-    transition:.35s;
-}
-
-.main-button:hover{
-    background:#eee0d7;
-
-    color:#241b17;
-
-    transform:translateY(-4px);
+    color:#76594e;
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,.25);
+        0 10px 35px rgba(60,40,30,.08);
+
+    animation:fadeDown 1s ease both;
 }
 
+.hero-label::before{
+    content:"✦";
 
-/* =====================================================
-   SECTION
-===================================================== */
+    color:#b27763;
 
-.section{
-    padding:140px 5%;
+    animation:starRotate 4s linear infinite;
 }
 
-.section-header{
-    max-width:1200px;
-
-    margin:0 auto 60px;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:space-between;
-
-    gap:50px;
+@keyframes starRotate{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.section-header h2{
+.hero h1{
+    margin-top:35px;
+
     font-family:"Cormorant Garamond",serif;
 
     font-weight:300;
 
-    font-size:clamp(55px,8vw,100px);
+    font-size:clamp(90px,15vw,190px);
 
-    line-height:.82;
+    line-height:.72;
+
+    letter-spacing:-7px;
+
+    color:#34251f;
+
+    animation:heroTitle 1.2s .15s ease both;
 }
 
-.section-header p{
-    max-width:390px;
+.hero h1 span{
+    display:block;
 
-    color:#aa978e;
+    margin-top:38px;
+
+    font-family:"Italiana",serif;
+
+    font-size:clamp(20px,3vw,36px);
+
+    letter-spacing:5px;
+
+    line-height:1.3;
+
+    color:#a06452;
+}
+
+.hero-text{
+    width:min(610px,100%);
+
+    margin:42px auto 0;
+
+    font-size:11px;
+
+    line-height:2;
+
+    color:#725f57;
+
+    animation:fadeUp 1s .4s ease both;
+}
+
+.hero-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:34px;
+
+    animation:fadeUp 1s .6s ease both;
+}
+
+@keyframes heroTitle{
+
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeDown{
+
+    from{
+        opacity:0;
+        transform:translateY(-15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    min-height:50px;
+
+    padding:0 27px;
+
+    border-radius:30px;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    transition:.35s;
+}
+
+.btn-dark{
+    background:#34251f;
+
+    color:white;
+
+    box-shadow:
+        0 12px 30px rgba(52,37,31,.20);
+}
+
+.btn-dark:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 18px 38px rgba(52,37,31,.28);
+}
+
+.btn-light{
+    background:rgba(255,255,255,.65);
+
+    border:1px solid rgba(100,70,60,.16);
+
+    color:#4e3a32;
+}
+
+.btn-light:hover{
+    background:white;
+
+    transform:translateY(-4px);
+}
+
+
+/* =========================================================
+   FLOATING INVITATIONS
+========================================================= */
+
+.floating-card{
+    position:absolute;
+
+    z-index:4;
+
+    background:rgba(255,255,255,.75);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.9);
+
+    box-shadow:
+        0 25px 70px rgba(70,45,35,.15);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    animation:cardFloat 7s ease-in-out infinite;
+}
+
+.floating-card img{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.float-left{
+    width:170px;
+    height:235px;
+
+    left:5%;
+    top:30%;
+
+    transform:rotate(-8deg);
+}
+
+.float-right{
+    width:155px;
+    height:215px;
+
+    right:6%;
+    bottom:20%;
+
+    transform:rotate(8deg);
+
+    animation-delay:-3s;
+}
+
+.float-small{
+    width:115px;
+    height:155px;
+
+    right:17%;
+    top:22%;
+
+    transform:rotate(7deg);
+
+    animation-delay:-5s;
+
+    opacity:.8;
+}
+
+@keyframes cardFloat{
+
+    0%,100%{
+        translate:0 0;
+    }
+
+    50%{
+        translate:0 -18px;
+    }
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator{
+    position:absolute;
+
+    bottom:30px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#806c64;
+
+    font-size:7px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+.scroll-line{
+    width:1px;
+    height:40px;
+
+    background:#a66c59;
+
+    animation:scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine{
+
+    0%,100%{
+        transform:scaleY(.3);
+        transform-origin:top;
+    }
+
+    50%{
+        transform:scaleY(1);
+        transform-origin:top;
+    }
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section{
+    padding:115px 5%;
+}
+
+.section-inner{
+    width:min(1200px,100%);
+
+    margin:auto;
+}
+
+.section-heading{
+    margin-bottom:55px;
+}
+
+.kicker{
+    font-size:8px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#a06452;
+
+    margin-bottom:14px;
+}
+
+.section-heading h2{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:clamp(55px,7vw,95px);
+
+    line-height:.84;
+
+    font-weight:300;
+
+    color:#34251f;
+}
+
+.section-heading p{
+    max-width:590px;
+
+    margin-top:26px;
+
+    color:#75625a;
 
     font-size:10px;
 
@@ -478,15 +1015,287 @@ body::before{
 }
 
 
-/* =====================================================
-   CATEGORIES
-===================================================== */
+/* =========================================================
+   CATEGORY GRID
+========================================================= */
 
-.categories{
-    max-width:1200px;
+.category-grid{
+    display:grid;
 
-    margin:auto;
+    grid-template-columns:
+        repeat(4,1fr);
 
+    gap:16px;
+}
+
+.category{
+    min-height:330px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    background:white;
+
+    box-shadow:
+        0 18px 50px rgba(65,43,34,.10);
+
+    transition:
+        transform .5s,
+        box-shadow .5s;
+}
+
+.category:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 30px 70px rgba(65,43,34,.19);
+}
+
+.category-image{
+    position:absolute;
+
+    inset:0;
+}
+
+.category-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .8s ease,
+        filter .5s;
+}
+
+.category:hover img{
+    transform:scale(1.10);
+
+    filter:saturate(1.08);
+}
+
+.category-overlay{
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(25,17,14,.78),
+            rgba(25,17,14,.03) 65%
+        );
+}
+
+.category-content{
+    position:absolute;
+
+    left:22px;
+    right:22px;
+    bottom:22px;
+
+    color:white;
+}
+
+.category-number{
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    opacity:.65;
+}
+
+.category h3{
+    margin-top:7px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:34px;
+
+    font-weight:400;
+}
+
+.category span{
+    display:block;
+
+    margin-top:5px;
+
+    font-size:7px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    opacity:.75;
+}
+
+
+/* =========================================================
+   FEATURED INVITATIONS
+========================================================= */
+
+.featured-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:22px;
+}
+
+.invitation-card{
+    position:relative;
+
+    background:rgba(255,255,255,.72);
+
+    border:1px solid rgba(255,255,255,.9);
+
+    border-radius:26px;
+
+    padding:12px;
+
+    box-shadow:
+        0 18px 55px rgba(66,44,35,.10);
+
+    transition:.5s;
+
+    overflow:hidden;
+}
+
+.invitation-card:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 30px 75px rgba(66,44,35,.19);
+}
+
+.invitation-preview{
+    height:520px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:18px;
+}
+
+.invitation-preview img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.7s;
+}
+
+.invitation-card:hover
+.invitation-preview img{
+    transform:scale(1.05);
+}
+
+.invitation-overlay{
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            rgba(25,15,12,.08),
+            rgba(25,15,12,.58)
+        );
+
+    color:white;
+}
+
+.invitation-copy small{
+    font-size:7px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+}
+
+.invitation-copy h3{
+    margin:25px 0;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-weight:300;
+
+    font-size:57px;
+
+    line-height:.8;
+}
+
+.invitation-copy h3 span{
+    font-size:30px;
+}
+
+.invitation-copy p{
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+.card-bottom{
+    padding:18px 8px 7px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+}
+
+.card-bottom strong{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:29px;
+
+    font-weight:400;
+}
+
+.card-bottom span{
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:#9a7061;
+}
+
+.design-action{
+    display:block;
+
+    margin-top:5px;
+
+    font-size:7px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    color:#a06452;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services{
     display:grid;
 
     grid-template-columns:
@@ -495,332 +1304,264 @@ body::before{
     gap:15px;
 }
 
-.category{
-    min-height:250px;
+.service{
+    padding:30px 25px;
 
-    padding:25px;
+    min-height:240px;
 
-    position:relative;
+    background:rgba(255,255,255,.60);
 
-    overflow:hidden;
+    border:1px solid rgba(255,255,255,.85);
 
-    border:1px solid rgba(255,255,255,.085);
+    border-radius:23px;
 
-    background:
-        radial-gradient(
-            circle at 75% 15%,
-            rgba(205,154,121,.22),
-            transparent 38%
-        ),
+    box-shadow:
+        0 15px 45px rgba(67,44,34,.07);
 
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.012)
-        );
+    transition:.4s;
+}
+
+.service:hover{
+    transform:translateY(-8px);
+
+    background:rgba(255,255,255,.88);
+
+    box-shadow:
+        0 25px 60px rgba(67,44,34,.12);
+}
+
+.service-icon{
+    width:48px;
+    height:48px;
 
     display:flex;
 
-    flex-direction:column;
-
-    justify-content:flex-end;
-
-    transition:.5s;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.025);
-}
-
-.category::before{
-    content:"";
-
-    position:absolute;
-
-    width:170px;
-    height:170px;
-
-    right:-80px;
-    top:-80px;
+    align-items:center;
+    justify-content:center;
 
     border-radius:50%;
 
-    border:1px solid rgba(237,204,182,.08);
+    background:#ead7cf;
+
+    color:#815142;
+
+    font-size:18px;
+
+    margin-bottom:28px;
+
+    transition:.4s;
 }
 
-.category::after{
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            135deg,
-            transparent 40%,
-            rgba(255,255,255,.025)
-        );
-
-    pointer-events:none;
+.service:hover .service-icon{
+    transform:rotate(10deg) scale(1.08);
 }
 
-.category:hover{
-    transform:translateY(-9px);
-
-    border-color:rgba(213,172,148,.38);
-
-    background:
-        radial-gradient(
-            circle at 75% 15%,
-            rgba(205,154,121,.30),
-            transparent 40%
-        ),
-
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.06),
-            rgba(255,255,255,.015)
-        );
-
-    box-shadow:
-        0 25px 55px rgba(0,0,0,.22);
-}
-
-.category h3{
-    position:relative;
-
-    z-index:2;
-
+.service h3{
     font-family:"Cormorant Garamond",serif;
 
-    font-size:38px;
+    font-size:28px;
 
-    font-weight:400;
+    font-weight:500;
 }
 
-.category span{
-    position:relative;
+.service p{
+    margin-top:10px;
 
-    z-index:2;
+    color:#76645d;
 
-    color:#ae9183;
+    font-size:9px;
 
-    font-size:7px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    margin-top:7px;
+    line-height:1.9;
 }
 
 
-/* =====================================================
-   FEATURED DESIGNS
-===================================================== */
+/* =========================================================
+   PRICING
+========================================================= */
 
-.featured{
-    max-width:1200px;
-
-    margin:auto;
-
+.pricing-wrapper{
     display:grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap:25px;
+    gap:18px;
+
+    align-items:start;
 }
 
-.invitation-card{
-    display:block;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.015)
-        );
-
-    border:1px solid rgba(255,255,255,.08);
-
-    padding:15px;
-
-    transition:.5s;
-}
-
-.invitation-card:hover{
-    transform:translateY(-10px);
-
-    border-color:rgba(220,182,157,.25);
-
-    box-shadow:
-        0 30px 70px rgba(0,0,0,.28);
-}
-
-.invitation-preview{
-    height:530px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
+.price-card{
     position:relative;
 
-    overflow:hidden;
+    padding:40px 30px;
+
+    background:rgba(255,255,255,.70);
+
+    border:1px solid rgba(255,255,255,.9);
+
+    border-radius:26px;
 
     box-shadow:
-        0 30px 70px rgba(0,0,0,.5);
+        0 18px 55px rgba(66,44,35,.09);
+
+    transition:.4s;
 }
 
-.invitation-preview::before{
-    content:"";
+.price-card:hover{
+    transform:translateY(-8px);
+}
 
+.price-card.featured-price{
+    background:#34251f;
+
+    color:white;
+
+    transform:translateY(-14px);
+
+    box-shadow:
+        0 30px 70px rgba(52,37,31,.25);
+}
+
+.price-card.featured-price:hover{
+    transform:translateY(-20px);
+}
+
+.price-badge{
     position:absolute;
 
-    width:260px;
-    height:260px;
+    right:20px;
+    top:20px;
 
-    border-radius:50%;
+    padding:7px 12px;
 
-    border:1px solid rgba(255,255,255,.08);
-}
+    border-radius:20px;
 
-.amelia{
-    background:
-        radial-gradient(
-            circle at 70% 20%,
-            rgba(222,170,139,.25),
-            transparent 35%
-        ),
+    background:#cda58f;
 
-        linear-gradient(
-            145deg,
-            #754b3b,
-            #241a16 80%
-        );
-}
+    color:white;
 
-.amour{
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(255,255,255,.45),
-            transparent 35%
-        ),
-
-        linear-gradient(
-            145deg,
-            #eee1d8,
-            #c8a99a
-        );
-
-    color:#49362e;
-}
-
-.noir{
-    background:
-        radial-gradient(
-            circle at 75% 15%,
-            rgba(189,144,117,.25),
-            transparent 35%
-        ),
-
-        linear-gradient(
-            145deg,
-            #111,
-            #58443a
-        );
-}
-
-.invitation-inner{
-    position:relative;
-
-    z-index:2;
-
-    width:82%;
-    height:84%;
-
-    border:1px solid rgba(255,255,255,.35);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-}
-
-.invitation-inner small{
     font-size:7px;
 
-    letter-spacing:5px;
+    letter-spacing:1.5px;
 
     text-transform:uppercase;
 }
 
-.invitation-inner h3{
+.price-name{
     font-family:"Cormorant Garamond",serif;
 
-    font-weight:300;
+    font-size:39px;
+}
+
+.price{
+    margin:12px 0 25px;
+
+    font-family:"Cormorant Garamond",serif;
 
     font-size:60px;
 
-    line-height:.8;
-
-    margin:30px 0;
+    line-height:1;
 }
 
-.invitation-inner p{
+.price small{
+    font-family:"DM Sans",sans-serif;
+
+    font-size:10px;
+
+    color:#9d8277;
+}
+
+.featured-price .price small{
+    color:#cbb8af;
+}
+
+.price-description{
+    min-height:52px;
+
+    color:#806e66;
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.featured-price .price-description{
+    color:#d3c4bd;
+}
+
+.features{
+    list-style:none;
+
+    margin:25px 0;
+}
+
+.features li{
+    padding:10px 0;
+
+    border-bottom:
+        1px solid rgba(100,70,60,.10);
+
     font-size:8px;
 
-    letter-spacing:3px;
-
-    text-transform:uppercase;
+    color:#65534c;
 }
 
-.card-info{
-    padding:17px 3px;
+.featured-price .features li{
+    border-color:
+        rgba(255,255,255,.12);
 
+    color:#e8ddd8;
+}
+
+.features li::before{
+    content:"✦";
+
+    margin-right:9px;
+
+    color:#b87961;
+}
+
+.price-button{
     display:flex;
 
-    justify-content:space-between;
-
     align-items:center;
-}
+    justify-content:center;
 
-.card-info strong{
-    font-family:"Cormorant Garamond",serif;
+    height:47px;
 
-    font-size:29px;
+    border-radius:30px;
 
-    font-weight:400;
-}
+    background:#34251f;
 
-.card-info span{
-    color:#b9998b;
+    color:white;
 
-    font-size:7px;
+    font-size:8px;
 
     letter-spacing:2px;
 
     text-transform:uppercase;
+
+    transition:.3s;
+}
+
+.price-button:hover{
+    transform:translateY(-3px);
+
+    opacity:.9;
+}
+
+.featured-price .price-button{
+    background:#f1e3dc;
+
+    color:#34251f;
 }
 
 
-/* =====================================================
-   PRICING PREVIEW
-===================================================== */
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
 
-.pricing-preview{
-    max-width:1200px;
-
-    margin:0 auto;
-
+.steps{
     display:grid;
 
     grid-template-columns:
@@ -829,193 +1570,98 @@ body::before{
     gap:18px;
 }
 
-.price-card{
+.step{
     position:relative;
 
-    padding:42px 32px;
+    padding:38px;
 
-    min-height:270px;
+    background:rgba(255,255,255,.58);
 
-    border:1px solid rgba(255,255,255,.09);
+    border-radius:25px;
 
-    background:
-        radial-gradient(
-            circle at 80% 10%,
-            rgba(200,148,116,.20),
-            transparent 40%
-        ),
+    border:1px solid rgba(255,255,255,.85);
 
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.012)
-        );
-
-    transition:.45s;
+    transition:.4s;
 }
 
-.price-card:hover{
-    transform:translateY(-8px);
+.step:hover{
+    transform:translateY(-7px);
 
-    border-color:rgba(220,182,157,.32);
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.25);
+    background:rgba(255,255,255,.78);
 }
 
-.price-card.featured-price{
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(214,174,147,.24),
-            transparent 48%
-        ),
+.step-number{
+    font-family:"Cormorant Garamond",serif;
 
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.065),
-            rgba(255,255,255,.018)
-        );
+    font-size:60px;
+
+    color:#b87961;
+
+    line-height:1;
 }
 
-.price-card .price-label{
-    color:#c59e89;
+.step h3{
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:8px;
+    font-size:31px;
 
-    letter-spacing:4px;
-
-    text-transform:uppercase;
+    margin-top:15px;
 }
 
-.price-card h3{
+.step p{
+    margin-top:10px;
+
+    color:#76645d;
+
+    font-size:9px;
+
+    line-height:1.9;
+}
+
+
+/* =========================================================
+   MINI STATS
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-top:55px;
+}
+
+.stat{
+    padding:25px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.48);
+
+    border:1px solid rgba(255,255,255,.75);
+
+    border-radius:20px;
+}
+
+.stat strong{
+    display:block;
+
     font-family:"Cormorant Garamond",serif;
 
     font-size:42px;
 
     font-weight:400;
 
-    margin:18px 0 12px;
+    color:#34251f;
 }
 
-.price-card p{
-    color:#aa9890;
+.stat span{
+    display:block;
 
-    font-size:10px;
-
-    line-height:1.9;
-}
-
-.price-card .price-arrow{
-    position:absolute;
-
-    right:30px;
-    bottom:28px;
-
-    font-size:18px;
-
-    color:#c9a28e;
-}
-
-
-/* =====================================================
-   CTA
-===================================================== */
-
-.cta{
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:130px 30px;
-
-    text-align:center;
-
-    position:relative;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(181,124,94,.22),
-            transparent 62%
-        ),
-
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.035),
-            rgba(255,255,255,.01)
-        );
-}
-
-.cta::before{
-    content:"";
-
-    position:absolute;
-
-    width:450px;
-    height:450px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    border-radius:50%;
-
-    border:1px solid rgba(239,207,184,.07);
-}
-
-.cta h2{
-    position:relative;
-
-    z-index:2;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:75px;
-
-    font-weight:300;
-}
-
-.cta p{
-    position:relative;
-
-    z-index:2;
-
-    max-width:500px;
-
-    margin:25px auto;
-
-    color:#a9948b;
-
-    font-size:10px;
-
-    line-height:2;
-}
-
-.cta .main-button{
-    position:relative;
-
-    z-index:2;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer{
-    padding:60px 5%;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#806f66;
+    margin-top:4px;
 
     font-size:7px;
 
@@ -1023,39 +1669,256 @@ footer{
 
     text-transform:uppercase;
 
-    border-top:1px solid rgba(255,255,255,.06);
+    color:#806c64;
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   CTA
+========================================================= */
 
-@media(max-width:900px){
+.cta{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:105px 30px;
+
+    border-radius:38px;
+
+    text-align:center;
+
+    background:
+        radial-gradient(
+            circle at 18% 30%,
+            rgba(239,185,168,.82),
+            transparent 31%
+        ),
+        radial-gradient(
+            circle at 82% 70%,
+            rgba(201,182,229,.75),
+            transparent 31%
+        ),
+        rgba(255,255,255,.65);
+
+    border:1px solid rgba(255,255,255,.9);
+
+    box-shadow:
+        0 25px 80px rgba(66,44,35,.13);
+}
+
+.cta::before,
+.cta::after{
+    content:"";
+
+    position:absolute;
+
+    border:1px solid rgba(90,60,50,.12);
+
+    border-radius:50%;
+
+    pointer-events:none;
+}
+
+.cta::before{
+    width:430px;
+    height:430px;
+
+    left:-180px;
+    top:-210px;
+}
+
+.cta::after{
+    width:300px;
+    height:300px;
+
+    right:-130px;
+    bottom:-150px;
+}
+
+.cta > *{
+    position:relative;
+    z-index:2;
+}
+
+.cta h2{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:clamp(55px,7vw,90px);
+
+    font-weight:300;
+
+    line-height:.85;
+}
+
+.cta p{
+    max-width:540px;
+
+    margin:25px auto 30px;
+
+    color:#725f57;
+
+    font-size:10px;
+
+    line-height:2;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    padding:65px 5% 35px;
+
+    border-top:
+        1px solid rgba(80,55,45,.10);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    color:#806c64;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+.footer-logo{
+    font-family:"Italiana",serif;
+
+    font-size:34px;
+
+    color:#34251f;
+
+    letter-spacing:1px;
+}
+
+.footer-center{
+    text-align:center;
+
+    line-height:2;
+}
+
+.footer-socials{
+    display:flex;
+
+    gap:15px;
+}
+
+.footer-socials a{
+    transition:.3s;
+}
+
+.footer-socials a:hover{
+    color:#a06452;
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal{
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .category-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .services{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .float-left,
+    .float-right,
+    .float-small{
+        opacity:.35;
+    }
+
+    .nav-links{
+        gap:17px;
+    }
+
+}
+
+@media(max-width:850px){
+
+    .navbar{
+        height:64px;
+    }
 
     .nav-links{
         display:none;
     }
 
-    .categories{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .featured{
-        grid-template-columns:1fr;
-    }
-
-    .pricing-preview{
-        grid-template-columns:1fr;
-    }
-
-    .section-header{
+    .menu-toggle{
         display:block;
     }
 
-    .section-header p{
-        margin-top:25px;
+    .languages{
+        margin-left:auto;
+        margin-right:10px;
+    }
+
+    .logo{
+        font-size:31px;
+    }
+
+    .hero{
+        padding-top:145px;
+    }
+
+    .float-left,
+    .float-right,
+    .float-small{
+        display:none;
+    }
+
+    .featured-grid,
+    .pricing-wrapper,
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .price-card.featured-price{
+        transform:none;
+    }
+
+    .price-card.featured-price:hover{
+        transform:translateY(-8px);
     }
 
 }
@@ -1063,55 +1926,111 @@ footer{
 @media(max-width:600px){
 
     .navbar{
-        padding:0 4%;
-    }
-
-    .logo{
-        font-size:30px;
-    }
-
-    .languages{
-        gap:3px;
+        width:94%;
+        padding:0 15px;
     }
 
     .languages button{
-        padding:6px 8px;
-    }
-
-    .categories{
-        grid-template-columns:1fr;
+        padding:6px;
+        font-size:7px;
     }
 
     .hero{
-        padding-top:130px;
+        padding:
+            140px 20px
+            90px;
     }
 
     .hero h1{
         font-size:85px;
 
-        letter-spacing:-4px;
+        letter-spacing:-5px;
     }
 
     .hero h1 span{
-        font-size:20px;
+        font-size:18px;
 
-        letter-spacing:4px;
+        letter-spacing:2.5px;
+    }
+
+    .hero-text{
+        font-size:10px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+    .hero-buttons .btn{
+        width:220px;
+    }
+
+    .category-grid,
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .category{
+        min-height:340px;
+    }
+
+    .invitation-preview{
+        height:470px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
     }
 
     .section{
-        padding:100px 5%;
+        padding:
+            85px 5%;
     }
 
-    .cta h2{
-        font-size:52px;
+    .section-heading{
+        margin-bottom:38px;
+    }
+
+    .section-heading h2{
+        font-size:58px;
+    }
+
+    .cta{
+        padding:
+            80px 22px;
     }
 
     footer{
-        display:block;
+        flex-direction:column;
+
+        gap:25px;
 
         text-align:center;
+    }
 
-        line-height:3;
+    .orbit{
+        width:500px;
+        height:500px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
     }
 
 }
@@ -1124,905 +2043,2598 @@ footer{
 <body>
 
 
-<div class="background"></div>
+<!-- ======================================================
+     LOADER
+====================================================== -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-logo">
+            Luna
+        </div>
+
+        <div class="loader-line"></div>
+
+    </div>
+
+</div>
 
 
-<!-- =====================================================
+<!-- ======================================================
+     BACKGROUND
+====================================================== -->
+
+<div class="site-background">
+
+    <div class="blob blob-one"></div>
+    <div class="blob blob-two"></div>
+    <div class="blob blob-three"></div>
+    <div class="blob blob-four"></div>
+
+    <div class="orbit"></div>
+
+    <div class="spark one"></div>
+    <div class="spark two"></div>
+    <div class="spark three"></div>
+    <div class="spark four"></div>
+
+</div>
+
+
+<!-- ======================================================
      NAVBAR
-===================================================== -->
+====================================================== -->
 
-<nav class="navbar">
+<nav class="navbar" id="navbar">
 
-<a href="index.html" class="logo">
-Luna
-</a>
-
-
-<div class="nav-links">
-
-<a href="#home" data-i18n="home">
-Ana səhifə
-</a>
-
-<a href="#categories" data-i18n="collections">
-Kolleksiyalar
-</a>
-
-<a href="pricing.html" data-i18n="pricing">
-Qiymətlər
-</a>
-
-<a href="#contact" data-i18n="contact">
-Əlaqə
-</a>
-
-</div>
+    <a href="#home" class="logo">
+        Luna
+    </a>
 
 
-<div class="languages">
+    <div class="nav-links">
 
-<button data-lang="az" class="active">
-AZ
-</button>
+        <a href="#home" data-i18n="home">
+            Ana səhifə
+        </a>
 
-<button data-lang="en">
-EN
-</button>
+        <a href="#categories" data-i18n="collections">
+            Kolleksiyalar
+        </a>
 
-<button data-lang="it">
-IT
-</button>
+        <a href="#designs" data-i18n="designs">
+            Dəvətnamələr
+        </a>
 
-<button data-lang="ru">
-RU
-</button>
+        <a href="#services" data-i18n="services">
+            Xidmətlər
+        </a>
 
-</div>
+        <a href="#pricing" data-i18n="pricing">
+            Qiymətlər
+        </a>
+
+        <a href="#contact" data-i18n="contact">
+            Əlaqə
+        </a>
+
+    </div>
+
+
+    <div class="languages">
+
+        <button
+            data-lang="az"
+            class="active"
+        >
+            AZ
+        </button>
+
+        <button data-lang="en">
+            EN
+        </button>
+
+        <button data-lang="it">
+            IT
+        </button>
+
+        <button data-lang="ru">
+            RU
+        </button>
+
+    </div>
+
+
+    <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Menu"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
 
 </nav>
 
 
+<!-- ======================================================
+     MOBILE MENU
+====================================================== -->
 
-<!-- =====================================================
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="#home" data-mobile-i18n="home">
+        Ana səhifə
+    </a>
+
+    <a href="#categories" data-mobile-i18n="collections">
+        Kolleksiyalar
+    </a>
+
+    <a href="#designs" data-mobile-i18n="designs">
+        Dəvətnamələr
+    </a>
+
+    <a href="#services" data-mobile-i18n="services">
+        Xidmətlər
+    </a>
+
+    <a href="#pricing" data-mobile-i18n="pricing">
+        Qiymətlər
+    </a>
+
+    <a href="#contact" data-mobile-i18n="contact">
+        Əlaqə
+    </a>
+
+
+    <div class="mobile-languages">
+
+        <button data-lang="az">
+            AZ
+        </button>
+
+        <button data-lang="en">
+            EN
+        </button>
+
+        <button data-lang="it">
+            IT
+        </button>
+
+        <button data-lang="ru">
+            RU
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
      HERO
-===================================================== -->
+====================================================== -->
 
 <section class="hero" id="home">
 
-<div class="hero-circle"></div>
+
+    <div class="floating-card float-left">
+
+        <img
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85"
+            alt="Luna wedding invitation"
+        >
+
+    </div>
 
 
-<div class="hero-content">
+    <div class="floating-card float-right">
 
-<div class="eyebrow" data-i18n="eyebrow">
-Digital dəvətnamələr
-</div>
+        <img
+            src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=85"
+            alt="Luna celebration"
+        >
 
-
-<h1>
-
-Luna
-
-<span data-i18n="heroTitle">
-gözəl anlar, gözəl dəvətlərlə
-</span>
-
-</h1>
+    </div>
 
 
-<p class="hero-text" data-i18n="heroText">
+    <div class="floating-card float-small">
 
-Ən xüsusi anlarınız üçün zərif,
-canlı və fərdiləşdirilə bilən
-digital dəvətnamələr.
+        <img
+            src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=85"
+            alt="Luna event"
+        >
 
-</p>
+    </div>
 
 
-<a
-href="#categories"
-class="main-button"
-data-i18n="explore">
+    <div class="hero-content">
 
-Kolleksiyanı kəşf et
 
-</a>
+        <div
+            class="hero-label"
+            data-i18n="heroLabel"
+        >
+            Digital dəvətnamələr
+        </div>
 
-</div>
+
+        <h1>
+
+            Luna
+
+            <span data-i18n="heroTitle">
+                gözəl anlar, gözəl dəvətlərlə
+            </span>
+
+        </h1>
+
+
+        <p
+            class="hero-text"
+            data-i18n="heroText"
+        >
+            Ən xüsusi günləriniz üçün zərif, müasir və
+            fərdiləşdirilə bilən digital dəvətnamələr.
+            Dizaynınızı seçin, məlumatlarınızı göndərin
+            və xüsusi linkinizi paylaşın.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#categories"
+                class="btn btn-dark"
+                data-i18n="explore"
+            >
+                Kolleksiyanı kəşf et
+            </a>
+
+
+            <a
+                href="#pricing"
+                class="btn btn-light"
+                data-i18n="viewPricing"
+            >
+                Qiymətlərə bax
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="scroll-indicator">
+
+        <span data-i18n="scroll">
+            Kəşf et
+        </span>
+
+        <div class="scroll-line"></div>
+
+    </div>
 
 </section>
 
 
-
-<!-- =====================================================
+<!-- ======================================================
      COLLECTIONS
-===================================================== -->
-
-<section class="section" id="categories">
-
-
-<div class="section-header">
-
-<div>
-
-<div class="eyebrow">
-Luna Collections
-</div>
-
-<h2 data-i18n="choose">
-Sənin anın.<br>
-Sənin Luna-n.
-</h2>
-
-</div>
-
-
-<p data-i18n="collectionText">
-
-Toydan ad gününə, nişandan xınaya
-qədər hər xüsusi an üçün ayrıca
-dizayn kolleksiyaları.
-
-</p>
-
-</div>
-
-
-
-<div class="categories">
-
-
-<!-- WEDDING -->
-
-<a
-class="category"
-href="catalog/wedding.html">
-
-<h3 data-i18n="wedding">
-Wedding
-</h3>
-
-<span data-i18n="exploreCollection">
-Kolleksiyaya bax
-</span>
-
-</a>
-
-
-<!-- ENGAGEMENT -->
-
-<a
-class="category"
-href="catalog/engagement.html">
-
-<h3 data-i18n="engagement">
-Engagement
-</h3>
-
-<span data-i18n="exploreCollection">
-Kolleksiyaya bax
-</span>
-
-</a>
-
-
-<!-- HENNA -->
-
-<a
-class="category"
-href="catalog/henna.html">
-
-<h3 data-i18n="henna">
-Henna
-</h3>
-
-<span data-i18n="exploreCollection">
-Kolleksiyaya bax
-</span>
-
-</a>
-
-
-<!-- BIRTHDAY -->
-
-<a
-class="category"
-href="catalog/birthday.html">
-
-<h3 data-i18n="birthday">
-Birthday
-</h3>
-
-<span data-i18n="exploreCollection">
-Kolleksiyaya bax
-</span>
-
-</a>
-
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-     FEATURED DESIGNS
-===================================================== -->
-
-<section class="section">
-
-
-<div class="section-header">
-
-<div>
-
-<div class="eyebrow">
-Featured Designs
-</div>
-
-<h2 data-i18n="featured">
-Sənin anın üçün.
-</h2>
-
-</div>
-
-
-<p data-i18n="featuredText">
-
-Luna-nın seçilmiş dəvətnamə
-dizaynlarına baxın və bəyəndiyinizi seçin.
-
-</p>
-
-</div>
-
-
-
-<div class="featured">
-
-
-<!-- AMELIA -->
-
-<a
-href="client-form.html?design=amelia&package=luxury&category=wedding"
-class="invitation-card">
-
-
-<div class="invitation-preview amelia">
-
-<div class="invitation-inner">
-
-<small>
-Wedding Invitation
-</small>
-
-<h3>
-Aysel
-<br>
-<span style="font-size:35px">&</span>
-<br>
-Murad
-</h3>
-
-<p>
-12 · 09 · 2026
-</p>
-
-</div>
-
-</div>
-
-
-<div class="card-info">
-
-<strong>
-Amelia
-</strong>
-
-<span>
-Luxury
-</span>
-
-</div>
-
-</a>
-
-
-
-<!-- AMOUR -->
-
-<a
-href="client-form.html?design=amour&package=premium&category=wedding"
-class="invitation-card">
-
-
-<div class="invitation-preview amour">
-
-<div class="invitation-inner">
-
-<small>
-The Wedding Of
-</small>
-
-<h3>
-Amour
-</h3>
-
-<p>
-A & M
-</p>
-
-</div>
-
-</div>
-
-
-<div class="card-info">
-
-<strong>
-Amour
-</strong>
-
-<span>
-Premium
-</span>
-
-</div>
-
-</a>
-
-
-
-<!-- NOIR -->
-
-<a
-href="client-form.html?design=noir&package=luxury&category=wedding"
-class="invitation-card">
-
-
-<div class="invitation-preview noir">
-
-<div class="invitation-inner">
-
-<small>
-Wedding Collection
-</small>
-
-<h3>
-Noir
-</h3>
-
-<p>
-Forever begins here
-</p>
-
-</div>
-
-</div>
-
-
-<div class="card-info">
-
-<strong>
-Noir
-</strong>
-
-<span>
-Luxury
-</span>
-
-</div>
-
-</a>
-
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-     PRICING
-===================================================== -->
-
-<section class="section" id="pricing">
-
-
-<div class="section-header">
-
-<div>
-
-<div class="eyebrow" data-i18n="pricingEyebrow">
-Luna Pricing
-</div>
-
-<h2 data-i18n="pricingTitle">
-Choose your<br>
-Luna experience.
-</h2>
-
-</div>
-
-
-<p data-i18n="pricingText">
-
-Sadə və zərif dəvətnamələrdən
-tam fərdiləşdirilmiş premium dizaynlara qədər
-sizə uyğun paket seçin.
-
-</p>
-
-</div>
-
-
-
-<div class="pricing-preview">
-
-
-<a
-href="pricing.html"
-class="price-card">
-
-<div
-class="price-label"
-data-i18n="basic">
-Basic
-</div>
-
-<h3>
-Basic
-</h3>
-
-<p data-i18n="basicText">
-Zərif və sadə digital dəvətnamə.
-</p>
-
-<div class="price-arrow">
-→
-</div>
-
-</a>
-
-
-
-<a
-href="pricing.html"
-class="price-card featured-price">
-
-<div
-class="price-label"
-data-i18n="premium">
-Premium
-</div>
-
-<h3>
-Premium
-</h3>
-
-<p data-i18n="premiumText">
-Daha geniş imkanlar və fərdiləşdirilmiş dizayn.
-</p>
-
-<div class="price-arrow">
-→
-</div>
-
-</a>
-
-
-
-<a
-href="pricing.html"
-class="price-card">
-
-<div
-class="price-label"
-data-i18n="luxury">
-Luxury
-</div>
-
-<h3>
-Luxury
-</h3>
-
-<p data-i18n="luxuryText">
-Tam fərdiləşdirilmiş və xüsusi hazırlanmış dəvətnamə.
-</p>
-
-<div class="price-arrow">
-→
-</div>
-
-</a>
-
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-     CTA
-===================================================== -->
+====================================================== -->
 
 <section
-class="section"
-id="contact">
+    class="section reveal"
+    id="categories"
+>
+
+<div class="section-inner">
 
 
-<div class="cta">
+    <div class="section-heading">
+
+        <div
+            class="kicker"
+            data-i18n="collectionsKicker"
+        >
+            Luna Collections
+        </div>
 
 
-<div class="eyebrow">
-Luna
-</div>
+        <h2 data-i18n="collectionsTitle">
+            Hər an üçün<br>
+            bir Luna.
+        </h2>
 
 
-<h2 data-i18n="cta">
-Dəvətnaməni birlikdə yaradaq.
-</h2>
+        <p data-i18n="collectionsText">
+            Toydan ad gününə, nişandan məzuniyyətə qədər
+            ən xüsusi anlarınız üçün hazırlanmış kolleksiyalar.
+        </p>
+
+    </div>
 
 
-<p data-i18n="ctaText">
-
-Dizaynınızı seçin, məlumatlarınızı
-doldurun və öz xüsusi dəvətnamənizi yaradın.
-
-</p>
+    <div class="category-grid">
 
 
-<a
-href="client-form.html"
-class="main-button"
-data-i18n="start">
+        <!-- 01 WEDDING -->
 
-Dəvətnaməni yarat
+        <a
+            href="catalog/wedding.html"
+            class="category"
+        >
 
-</a>
+            <div class="category-image">
 
+                <img
+                    src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85"
+                    alt="Wedding"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    01
+                </div>
+
+                <h3 data-i18n="wedding">
+                    Wedding
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 02 ENGAGEMENT -->
+
+        <a
+            href="catalog/engagement.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85"
+                    alt="Engagement"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    02
+                </div>
+
+                <h3 data-i18n="engagement">
+                    Engagement
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 03 HENNA -->
+
+        <a
+            href="catalog/henna.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=85"
+                    alt="Henna"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    03
+                </div>
+
+                <h3 data-i18n="henna">
+                    Henna
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 04 BIRTHDAY -->
+
+        <a
+            href="catalog/birthday.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=85"
+                    alt="Birthday"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    04
+                </div>
+
+                <h3 data-i18n="birthday">
+                    Birthday
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 05 BABY SHOWER -->
+
+        <a
+            href="catalog/baby-shower.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1522771930-78848d9293e8?auto=format&fit=crop&w=900&q=85"
+                    alt="Baby Shower"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    05
+                </div>
+
+                <h3 data-i18n="babyShower">
+                    Baby Shower
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 06 GRADUATION -->
+
+        <a
+            href="catalog/graduation.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85"
+                    alt="Graduation"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    06
+                </div>
+
+                <h3 data-i18n="graduation">
+                    Graduation
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 07 ANNIVERSARY -->
+
+        <a
+            href="catalog/anniversary.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85"
+                    alt="Anniversary"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    07
+                </div>
+
+                <h3 data-i18n="anniversary">
+                    Anniversary
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- 08 EVENTS -->
+
+        <a
+            href="catalog/events.html"
+            class="category"
+        >
+
+            <div class="category-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=85"
+                    alt="Events"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="category-overlay"></div>
+
+
+            <div class="category-content">
+
+                <div class="category-number">
+                    08
+                </div>
+
+                <h3 data-i18n="events">
+                    Events
+                </h3>
+
+                <span data-i18n="discover">
+                    Kolleksiyanı kəşf et
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
 
 </div>
 
 </section>
 
 
+<!-- ======================================================
+     FEATURED DESIGNS
+====================================================== -->
 
-<!-- =====================================================
+<section
+    class="section reveal"
+    id="designs"
+>
+
+<div class="section-inner">
+
+
+    <div class="section-heading">
+
+        <div
+            class="kicker"
+            data-i18n="featuredKicker"
+        >
+            Featured Designs
+        </div>
+
+
+        <h2 data-i18n="featuredTitle">
+            Dəvətnaməniz<br>
+            belə görünə bilər.
+        </h2>
+
+
+        <p data-i18n="featuredText">
+            Luna kolleksiyasından seçilmiş nümunələrə baxın.
+            Bəyəndiyiniz dizaynı seçin və məlumatlarınızı
+            göndərin.
+        </p>
+
+    </div>
+
+
+    <div class="featured-grid">
+
+
+        <!-- AMELIA -->
+
+        <a
+            href="client-form.html?design=amelia&package=luxury&category=wedding"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85"
+                    alt="Amelia"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="weddingInvitation">
+                            Wedding Invitation
+                        </small>
+
+                        <h3>
+                            Aysel
+                            <br>
+                            <span>&</span>
+                            <br>
+                            Murad
+                        </h3>
+
+                        <p>
+                            12 · 09 · 2026
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Amelia
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="luxury"
+                    >
+                        Luxury
+                    </span>
+
+                </div>
+
+                <span>
+                    01
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- AMOUR -->
+
+        <a
+            href="client-form.html?design=amour&package=premium&category=wedding"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85"
+                    alt="Amour"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="weddingOf">
+                            The Wedding Of
+                        </small>
+
+                        <h3>
+                            Amour
+                        </h3>
+
+                        <p>
+                            A & M
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Amour
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="premium"
+                    >
+                        Premium
+                    </span>
+
+                </div>
+
+                <span>
+                    02
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- NOIR -->
+
+        <a
+            href="client-form.html?design=noir&package=luxury&category=wedding"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85"
+                    alt="Noir"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="weddingCollection">
+                            Wedding Collection
+                        </small>
+
+                        <h3>
+                            Noir
+                        </h3>
+
+                        <p data-i18n="forever">
+                            Forever begins here
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Noir
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="luxury"
+                    >
+                        Luxury
+                    </span>
+
+                </div>
+
+                <span>
+                    03
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- SERENA -->
+
+        <a
+            href="client-form.html?design=serena&package=premium&category=engagement"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=85"
+                    alt="Serena"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="engagementInvitation">
+                            Engagement Invitation
+                        </small>
+
+                        <h3>
+                            Serena
+                        </h3>
+
+                        <p>
+                            S & A
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Serena
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="premium"
+                    >
+                        Premium
+                    </span>
+
+                </div>
+
+                <span>
+                    04
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- FLORENCE -->
+
+        <a
+            href="client-form.html?design=florence&package=basic&category=birthday"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=85"
+                    alt="Florence"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="birthdayInvitation">
+                            Birthday Invitation
+                        </small>
+
+                        <h3>
+                            Florence
+                        </h3>
+
+                        <p>
+                            Birthday
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Florence
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="basic"
+                    >
+                        Basic
+                    </span>
+
+                </div>
+
+                <span>
+                    05
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- AURORA -->
+
+        <a
+            href="client-form.html?design=aurora&package=luxury&category=graduation"
+            class="invitation-card"
+        >
+
+            <div class="invitation-preview">
+
+                <img
+                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85"
+                    alt="Aurora"
+                    loading="lazy"
+                >
+
+                <div class="invitation-overlay">
+
+                    <div class="invitation-copy">
+
+                        <small data-i18n="graduationInvitation">
+                            Graduation Invitation
+                        </small>
+
+                        <h3>
+                            Aurora
+                        </h3>
+
+                        <p>
+                            Class of 2026
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <strong>
+                        Aurora
+                    </strong>
+
+                    <span
+                        style="display:block;"
+                        data-i18n="luxury"
+                    >
+                        Luxury
+                    </span>
+
+                </div>
+
+                <span>
+                    06
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     SERVICES
+====================================================== -->
+
+<section
+    class="section reveal"
+    id="services"
+>
+
+<div class="section-inner">
+
+
+    <div class="section-heading">
+
+        <div
+            class="kicker"
+            data-i18n="servicesKicker"
+        >
+            What Luna offers
+        </div>
+
+
+        <h2 data-i18n="servicesTitle">
+            Sadəcə dəvətnamə<br>
+            deyil.
+        </h2>
+
+
+        <p data-i18n="servicesText">
+            Luna ilə dəvətnaməniz həm gözəl görünür,
+            həm də qonaqlarınız üçün rahat istifadə olunur.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ✦
+            </div>
+
+            <h3 data-i18n="service1Title">
+                Fərdi dizayn
+            </h3>
+
+            <p data-i18n="service1Text">
+                Seçdiyiniz dizayn sizin tədbirinizə uyğun
+                məlumatlarla fərdiləşdirilir.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ♡
+            </div>
+
+            <h3 data-i18n="service2Title">
+                RSVP
+            </h3>
+
+            <p data-i18n="service2Text">
+                Qonaqlarınız dəvətnamə üzərindən
+                iştiraklarını rahat şəkildə təsdiqləyə bilərlər.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ⌖
+            </div>
+
+            <h3 data-i18n="service3Title">
+                Google Maps
+            </h3>
+
+            <p data-i18n="service3Text">
+                Məkan məlumatı və xəritə birbaşa
+                dəvətnaməyə əlavə olunur.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ◷
+            </div>
+
+            <h3 data-i18n="service4Title">
+                Countdown
+            </h3>
+
+            <p data-i18n="service4Text">
+                Tədbirinizə qədər qalan vaxt canlı şəkildə
+                dəvətnamədə göstərilir.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ◉
+            </div>
+
+            <h3 data-i18n="service5Title">
+                Foto qalereya
+            </h3>
+
+            <p data-i18n="service5Text">
+                Sevdiyiniz fotoşəkilləri gözəl qalereya
+                formasında dəvətnaməyə əlavə edin.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ▶
+            </div>
+
+            <h3 data-i18n="service6Title">
+                Video
+            </h3>
+
+            <p data-i18n="service6Text">
+                Luxury paketində xüsusi video və
+                multimedia bölməsi əlavə etmək mümkündür.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ♫
+            </div>
+
+            <h3 data-i18n="service7Title">
+                Musiqi
+            </h3>
+
+            <p data-i18n="service7Text">
+                Dəvətnamənizə xüsusi ab-hava yaratmaq üçün
+                musiqi əlavə edilə bilər.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                ∞
+            </div>
+
+            <h3 data-i18n="service8Title">
+                Xüsusi link
+            </h3>
+
+            <p data-i18n="service8Text">
+                Qonaqlarınız üçün rahat paylaşa biləcəyiniz
+                fərdi digital dəvətnamə linki.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     STATS
+====================================================== -->
+
+<section
+    class="section reveal"
+>
+
+<div class="section-inner">
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <strong>
+                08
+            </strong>
+
+            <span data-i18n="stat1">
+                Kateqoriya
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong>
+                06+
+            </strong>
+
+            <span data-i18n="stat2">
+                Dizayn
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong>
+                04
+            </strong>
+
+            <span data-i18n="stat3">
+                Dil
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong>
+                24/7
+            </strong>
+
+            <span data-i18n="stat4">
+                Paylaşım
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     PRICING
+====================================================== -->
+
+<section
+    class="section reveal"
+    id="pricing"
+>
+
+<div class="section-inner">
+
+
+    <div class="section-heading">
+
+        <div
+            class="kicker"
+            data-i18n="pricingKicker"
+        >
+            Luna Pricing
+        </div>
+
+
+        <h2 data-i18n="pricingTitle">
+            Sənə uyğun<br>
+            paketi seç.
+        </h2>
+
+
+        <p data-i18n="pricingText">
+            Sadə və şəffaf qiymətlər. İstədiyiniz paketi
+            seçin və dəvətnamənizi yaratmağa başlayın.
+        </p>
+
+    </div>
+
+
+    <div class="pricing-wrapper">
+
+
+        <!-- BASIC -->
+
+        <div class="price-card">
+
+            <div class="price-name">
+                Basic
+            </div>
+
+
+            <div class="price">
+
+                25
+
+                <small>
+                    AZN
+                </small>
+
+            </div>
+
+
+            <p
+                class="price-description"
+                data-i18n="basicDescription"
+            >
+                Sadə və zərif digital dəvətnamə.
+            </p>
+
+
+            <ul class="features">
+
+                <li data-i18n="basic1">
+                    Hazır dizayn seçimi
+                </li>
+
+                <li data-i18n="basic2">
+                    Fərdi məlumatların əlavə edilməsi
+                </li>
+
+                <li data-i18n="basic3">
+                    Fotoşəkil əlavə etmək
+                </li>
+
+                <li data-i18n="basic4">
+                    Paylaşılabilən link
+                </li>
+
+            </ul>
+
+
+            <a
+                href="client-form.html?package=basic"
+                class="price-button"
+                data-i18n="choosePackage"
+            >
+                Paketi seç
+            </a>
+
+        </div>
+
+
+        <!-- PREMIUM -->
+
+        <div class="price-card featured-price">
+
+            <div
+                class="price-badge"
+                data-i18n="popular"
+            >
+                Ən populyar
+            </div>
+
+
+            <div class="price-name">
+                Premium
+            </div>
+
+
+            <div class="price">
+
+                40
+
+                <small>
+                    AZN
+                </small>
+
+            </div>
+
+
+            <p
+                class="price-description"
+                data-i18n="premiumDescription"
+            >
+                Daha zəngin və interaktiv dəvətnamə.
+            </p>
+
+
+            <ul class="features">
+
+                <li data-i18n="premium1">
+                    Premium dizayn
+                </li>
+
+                <li data-i18n="premium2">
+                    Foto qalereyası
+                </li>
+
+                <li data-i18n="premium3">
+                    Countdown
+                </li>
+
+                <li data-i18n="premium4">
+                    Google Maps
+                </li>
+
+                <li data-i18n="premium5">
+                    RSVP formu
+                </li>
+
+            </ul>
+
+
+            <a
+                href="client-form.html?package=premium"
+                class="price-button"
+                data-i18n="choosePackage"
+            >
+                Paketi seç
+            </a>
+
+        </div>
+
+
+        <!-- LUXURY -->
+
+        <div class="price-card">
+
+            <div class="price-name">
+                Luxury
+            </div>
+
+
+            <div class="price">
+
+                60
+
+                <small>
+                    AZN
+                </small>
+
+            </div>
+
+
+            <p
+                class="price-description"
+                data-i18n="luxuryDescription"
+            >
+                Tam interaktiv və premium təcrübə.
+            </p>
+
+
+            <ul class="features">
+
+                <li data-i18n="luxury1">
+                    Luxury dizayn
+                </li>
+
+                <li data-i18n="luxury2">
+                    Foto və video qalereyası
+                </li>
+
+                <li data-i18n="luxury3">
+                    Countdown
+                </li>
+
+                <li data-i18n="luxury4">
+                    Google Maps
+                </li>
+
+                <li data-i18n="luxury5">
+                    RSVP
+                </li>
+
+                <li data-i18n="luxury6">
+                    Fərdi hekayə bölməsi
+                </li>
+
+                <li data-i18n="luxury7">
+                    Musiqi
+                </li>
+
+            </ul>
+
+
+            <a
+                href="client-form.html?package=luxury"
+                class="price-button"
+                data-i18n="choosePackage"
+            >
+                Paketi seç
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     HOW IT WORKS
+====================================================== -->
+
+<section
+    class="section reveal"
+>
+
+<div class="section-inner">
+
+
+    <div class="section-heading">
+
+        <div
+            class="kicker"
+            data-i18n="howKicker"
+        >
+            How it works
+        </div>
+
+
+        <h2 data-i18n="howTitle">
+            Bir neçə addım.<br>
+            Bir gözəl dəvət.
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3 data-i18n="step1Title">
+                Dizaynını seç
+            </h3>
+
+            <p data-i18n="step1Text">
+                Kolleksiyalardan tədbirinizə uyğun
+                dəvətnamə dizaynını seçin.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h3 data-i18n="step2Title">
+                Məlumatlarını göndər
+            </h3>
+
+            <p data-i18n="step2Text">
+                Ad, tarix, saat, məkan, foto və digər
+                məlumatları form vasitəsilə göndərin.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3 data-i18n="step3Title">
+                Linkini paylaş
+            </h3>
+
+            <p data-i18n="step3Text">
+                Hazır dəvətnamənizi qonaqlarınızla
+                WhatsApp, Instagram və digər platformalarda paylaşın.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     CTA
+====================================================== -->
+
+<section
+    class="section reveal"
+    id="contact"
+>
+
+<div class="section-inner">
+
+    <div class="cta">
+
+
+        <div
+            class="kicker"
+            data-i18n="ctaKicker"
+        >
+            Luna
+        </div>
+
+
+        <h2 data-i18n="ctaTitle">
+            Sənin hekayən<br>
+            burada başlayır.
+        </h2>
+
+
+        <p data-i18n="ctaText">
+            Dizaynını seç, məlumatlarını göndər və
+            xüsusi günün üçün öz Luna dəvətnaməni yarat.
+        </p>
+
+
+        <a
+            href="client-form.html"
+            class="btn btn-dark"
+            data-i18n="start"
+        >
+            Dəvətnaməni yarat
+        </a>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
      FOOTER
-===================================================== -->
+====================================================== -->
 
 <footer>
 
-<span>
-© Luna Digital Invitations
-</span>
 
-<span data-i18n="footer">
-Weddings · Engagements · Henna · Birthdays
-</span>
+    <div>
+
+        <div class="footer-logo">
+            Luna
+        </div>
+
+        <div style="margin-top:8px;">
+            Digital Invitations
+        </div>
+
+    </div>
+
+
+    <div class="footer-center">
+
+        <div>
+            © 2026 Luna
+        </div>
+
+        <div data-i18n="footerTagline">
+            Weddings · Events · Moments
+        </div>
+
+    </div>
+
+
+    <div class="footer-socials">
+
+        <a
+            href="#"
+            aria-label="Instagram"
+        >
+            Instagram
+        </a>
+
+        <a
+            href="mailto:hello@luna-invites.com"
+            aria-label="Email"
+        >
+            Email
+        </a>
+
+    </div>
+
 
 </footer>
 
 
-
-<!-- =====================================================
-     LANGUAGE SYSTEM
-===================================================== -->
+<!-- ======================================================
+     TRANSLATIONS
+====================================================== -->
 
 <script>
 
 const translations = {
 
+
+/* =======================================================
+   AZERBAIJANI
+======================================================= */
+
 az:{
 
-home:"Ana səhifə",
+    home:"Ana səhifə",
+    collections:"Kolleksiyalar",
+    designs:"Dəvətnamələr",
+    services:"Xidmətlər",
+    pricing:"Qiymətlər",
+    contact:"Əlaqə",
 
-collections:"Kolleksiyalar",
+    heroLabel:"Digital dəvətnamələr",
 
-pricing:"Qiymətlər",
+    heroTitle:
+    "gözəl anlar, gözəl dəvətlərlə",
 
-contact:"Əlaqə",
+    heroText:
+    "Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın.",
 
-eyebrow:"Digital dəvətnamələr",
+    explore:"Kolleksiyanı kəşf et",
 
-heroTitle:"gözəl anlar, gözəl dəvətlərlə",
+    viewPricing:"Qiymətlərə bax",
 
-heroText:
-"Ən xüsusi anlarınız üçün zərif, canlı və fərdiləşdirilə bilən digital dəvətnamələr.",
+    scroll:"Kəşf et",
 
-explore:"Kolleksiyanı kəşf et",
+    collectionsKicker:"Luna Collections",
 
-choose:"Sənin anın.<br>Sənin Luna-n.",
+    collectionsTitle:
+    "Hər an üçün<br>bir Luna.",
 
-collectionText:
-"Toydan ad gününə, nişandan xınaya qədər hər xüsusi an üçün ayrıca dizayn kolleksiyaları.",
+    collectionsText:
+    "Toydan ad gününə, nişandan məzuniyyətə qədər ən xüsusi anlarınız üçün hazırlanmış kolleksiyalar.",
 
-exploreCollection:"Kolleksiyaya bax",
+    wedding:"Wedding",
+    engagement:"Engagement",
+    henna:"Henna",
+    birthday:"Birthday",
+    babyShower:"Baby Shower",
+    graduation:"Graduation",
+    anniversary:"Anniversary",
+    events:"Events",
 
-wedding:"Toy",
+    discover:"Kolleksiyanı kəşf et",
 
-engagement:"Nişan",
+    featuredKicker:"Featured Designs",
 
-henna:"Xına",
+    featuredTitle:
+    "Dəvətnaməniz<br>belə görünə bilər.",
 
-birthday:"Ad günü",
+    featuredText:
+    "Luna kolleksiyasından seçilmiş nümunələrə baxın. Bəyəndiyiniz dizaynı seçin və məlumatlarınızı göndərin.",
 
-featured:"Sənin anın üçün.",
+    weddingInvitation:"Wedding Invitation",
+    weddingOf:"The Wedding Of",
+    weddingCollection:"Wedding Collection",
+    engagementInvitation:"Engagement Invitation",
+    birthdayInvitation:"Birthday Invitation",
+    graduationInvitation:"Graduation Invitation",
 
-featuredText:
-"Luna-nın seçilmiş dəvətnamə dizaynlarına baxın və bəyəndiyinizi seçin.",
+    forever:"Forever begins here",
 
-pricingEyebrow:"Luna Qiymətləri",
+    basic:"Basic",
+    premium:"Premium",
+    luxury:"Luxury",
 
-pricingTitle:"Sənin üçün<br>Luna paketi.",
+    servicesKicker:"What Luna offers",
 
-pricingText:
-"Sadə və zərif dəvətnamələrdən tam fərdiləşdirilmiş premium dizaynlara qədər sizə uyğun paket seçin.",
+    servicesTitle:
+    "Sadəcə dəvətnamə<br>deyil.",
 
-basic:"Basic",
+    servicesText:
+    "Luna ilə dəvətnaməniz həm gözəl görünür, həm də qonaqlarınız üçün rahat istifadə olunur.",
 
-basicText:
-"Zərif və sadə digital dəvətnamə.",
+    service1Title:"Fərdi dizayn",
 
-premium:"Premium",
+    service1Text:
+    "Seçdiyiniz dizayn sizin tədbirinizə uyğun məlumatlarla fərdiləşdirilir.",
 
-premiumText:
-"Daha geniş imkanlar və fərdiləşdirilmiş dizayn.",
+    service2Title:"RSVP",
 
-luxury:"Luxury",
+    service2Text:
+    "Qonaqlarınız dəvətnamə üzərindən iştiraklarını rahat şəkildə təsdiqləyə bilərlər.",
 
-luxuryText:
-"Tam fərdiləşdirilmiş və xüsusi hazırlanmış dəvətnamə.",
+    service3Title:"Google Maps",
 
-cta:"Dəvətnaməni birlikdə yaradaq.",
+    service3Text:
+    "Məkan məlumatı və xəritə birbaşa dəvətnaməyə əlavə olunur.",
 
-ctaText:
-"Dizaynınızı seçin, məlumatlarınızı doldurun və öz xüsusi dəvətnamənizi yaradın.",
+    service4Title:"Countdown",
 
-start:"Dəvətnaməni yarat",
+    service4Text:
+    "Tədbirinizə qədər qalan vaxt canlı şəkildə dəvətnamədə göstərilir.",
 
-footer:
-"Toylar · Nişanlar · Xınalar · Ad günləri"
+    service5Title:"Foto qalereya",
+
+    service5Text:
+    "Sevdiyiniz fotoşəkilləri gözəl qalereya formasında dəvətnaməyə əlavə edin.",
+
+    service6Title:"Video",
+
+    service6Text:
+    "Luxury paketində xüsusi video və multimedia bölməsi əlavə etmək mümkündür.",
+
+    service7Title:"Musiqi",
+
+    service7Text:
+    "Dəvətnamənizə xüsusi ab-hava yaratmaq üçün musiqi əlavə edilə bilər.",
+
+    service8Title:"Xüsusi link",
+
+    service8Text:
+    "Qonaqlarınız üçün rahat paylaşa biləcəyiniz fərdi digital dəvətnamə linki.",
+
+    stat1:"Kateqoriya",
+    stat2:"Dizayn",
+    stat3:"Dil",
+    stat4:"Paylaşım",
+
+    pricingKicker:"Luna Pricing",
+
+    pricingTitle:
+    "Sənə uyğun<br>paketi seç.",
+
+    pricingText:
+    "Sadə və şəffaf qiymətlər. İstədiyiniz paketi seçin və dəvətnamənizi yaratmağa başlayın.",
+
+    basicDescription:
+    "Sadə və zərif digital dəvətnamə.",
+
+    premiumDescription:
+    "Daha zəngin və interaktiv dəvətnamə.",
+
+    luxuryDescription:
+    "Tam interaktiv və premium təcrübə.",
+
+    basic1:"Hazır dizayn seçimi",
+    basic2:"Fərdi məlumatların əlavə edilməsi",
+    basic3:"Fotoşəkil əlavə etmək",
+    basic4:"Paylaşılabilən link",
+
+    premium1:"Premium dizayn",
+    premium2:"Foto qalereyası",
+    premium3:"Countdown",
+    premium4:"Google Maps",
+    premium5:"RSVP formu",
+
+    luxury1:"Luxury dizayn",
+    luxury2:"Foto və video qalereyası",
+    luxury3:"Countdown",
+    luxury4:"Google Maps",
+    luxury5:"RSVP",
+    luxury6:"Fərdi hekayə bölməsi",
+    luxury7:"Musiqi",
+
+    popular:"Ən populyar",
+
+    choosePackage:"Paketi seç",
+
+    howKicker:"How it works",
+
+    howTitle:
+    "Bir neçə addım.<br>Bir gözəl dəvət.",
+
+    step1Title:"Dizaynını seç",
+
+    step1Text:
+    "Kolleksiyalardan tədbirinizə uyğun dəvətnamə dizaynını seçin.",
+
+    step2Title:"Məlumatlarını göndər",
+
+    step2Text:
+    "Ad, tarix, saat, məkan, foto və digər məlumatları form vasitəsilə göndərin.",
+
+    step3Title:"Linkini paylaş",
+
+    step3Text:
+    "Hazır dəvətnamənizi qonaqlarınızla WhatsApp, Instagram və digər platformalarda paylaşın.",
+
+    ctaKicker:"Luna",
+
+    ctaTitle:
+    "Sənin hekayən<br>burada başlayır.",
+
+    ctaText:
+    "Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.",
+
+    start:"Dəvətnaməni yarat",
+
+    footerTagline:
+    "Weddings · Events · Moments"
 
 },
 
+
+/* =======================================================
+   ENGLISH
+======================================================= */
 
 en:{
 
-home:"Home",
+    home:"Home",
+    collections:"Collections",
+    designs:"Invitations",
+    services:"Services",
+    pricing:"Pricing",
+    contact:"Contact",
 
-collections:"Collections",
+    heroLabel:"Digital invitations",
 
-pricing:"Pricing",
+    heroTitle:
+    "beautiful moments, beautifully invited",
 
-contact:"Contact",
+    heroText:
+    "Elegant, modern and customizable digital invitations for your most meaningful moments. Choose your design, send your details and share your personal invitation link.",
 
-eyebrow:"Digital invitations",
+    explore:"Explore collections",
 
-heroTitle:"beautiful moments, beautifully invited",
+    viewPricing:"View pricing",
 
-heroText:
-"Elegant, live and customizable digital invitations for your most meaningful moments.",
+    scroll:"Explore",
 
-explore:"Explore",
+    collectionsKicker:"Luna Collections",
 
-choose:"Your moment.<br>Your Luna.",
+    collectionsTitle:
+    "One Luna<br>for every moment.",
 
-collectionText:
-"Dedicated invitation collections for weddings, engagements, henna nights, birthdays and every celebration.",
+    collectionsText:
+    "Beautiful invitation collections for weddings, engagements, henna nights, birthdays, graduations and every celebration.",
 
-exploreCollection:"Explore collection",
+    wedding:"Wedding",
+    engagement:"Engagement",
+    henna:"Henna",
+    birthday:"Birthday",
+    babyShower:"Baby Shower",
+    graduation:"Graduation",
+    anniversary:"Anniversary",
+    events:"Events",
 
-wedding:"Wedding",
+    discover:"Explore collection",
 
-engagement:"Engagement",
+    featuredKicker:"Featured Designs",
 
-henna:"Henna",
+    featuredTitle:
+    "Your invitation<br>could look like this.",
 
-birthday:"Birthday",
+    featuredText:
+    "Explore selected Luna designs, choose your favorite and send us your event details.",
 
-featured:"Made for your moment.",
+    weddingInvitation:"Wedding Invitation",
+    weddingOf:"The Wedding Of",
+    weddingCollection:"Wedding Collection",
+    engagementInvitation:"Engagement Invitation",
+    birthdayInvitation:"Birthday Invitation",
+    graduationInvitation:"Graduation Invitation",
 
-featuredText:
-"Discover Luna's selected invitation designs and choose your favorite.",
+    forever:"Forever begins here",
 
-pricingEyebrow:"Luna Pricing",
+    basic:"Basic",
+    premium:"Premium",
+    luxury:"Luxury",
 
-pricingTitle:"Choose your<br>Luna experience.",
+    servicesKicker:"What Luna offers",
 
-pricingText:
-"From simple elegant invitations to fully customized premium designs, choose the package that suits you.",
+    servicesTitle:
+    "More than<br>an invitation.",
 
-basic:"Basic",
+    servicesText:
+    "Beautiful designs combined with useful interactive features for your guests.",
 
-basicText:
-"An elegant and simple digital invitation.",
+    service1Title:"Custom design",
 
-premium:"Premium",
+    service1Text:
+    "Your selected design is personalized with your event information.",
 
-premiumText:
-"More features and a personalized design.",
+    service2Title:"RSVP",
 
-luxury:"Luxury",
+    service2Text:
+    "Guests can easily confirm their attendance directly from the invitation.",
 
-luxuryText:
-"A fully customized invitation created especially for you.",
+    service3Title:"Google Maps",
 
-cta:"Let's create your invitation.",
+    service3Text:
+    "Your venue and map location can be added directly to the invitation.",
 
-ctaText:
-"Choose your design, fill in your details and create your own beautiful invitation.",
+    service4Title:"Countdown",
 
-start:"Create invitation",
+    service4Text:
+    "A live countdown shows your guests how much time is left until your event.",
 
-footer:
-"Weddings · Engagements · Henna · Birthdays"
+    service5Title:"Photo gallery",
+
+    service5Text:
+    "Add your favorite photos to a beautiful gallery inside your invitation.",
+
+    service6Title:"Video",
+
+    service6Text:
+    "The Luxury package can include a special video and multimedia section.",
+
+    service7Title:"Music",
+
+    service7Text:
+    "Add music to create the perfect atmosphere for your invitation.",
+
+    service8Title:"Personal link",
+
+    service8Text:
+    "A personal digital invitation link that you can easily share with your guests.",
+
+    stat1:"Categories",
+    stat2:"Designs",
+    stat3:"Languages",
+    stat4:"Sharing",
+
+    pricingKicker:"Luna Pricing",
+
+    pricingTitle:
+    "Choose the<br>perfect package.",
+
+    pricingText:
+    "Simple and transparent pricing. Choose the package that fits your celebration.",
+
+    basicDescription:
+    "A simple and elegant digital invitation.",
+
+    premiumDescription:
+    "A richer and more interactive invitation.",
+
+    luxuryDescription:
+    "The complete premium invitation experience.",
+
+    basic1:"Ready-made design",
+    basic2:"Personal event details",
+    basic3:"Photo addition",
+    basic4:"Shareable invitation link",
+
+    premium1:"Premium design",
+    premium2:"Photo gallery",
+    premium3:"Countdown",
+    premium4:"Google Maps",
+    premium5:"RSVP form",
+
+    luxury1:"Luxury design",
+    luxury2:"Photo & video gallery",
+    luxury3:"Countdown",
+    luxury4:"Google Maps",
+    luxury5:"RSVP",
+    luxury6:"Personal story section",
+    luxury7:"Music",
+
+    popular:"Most popular",
+
+    choosePackage:"Choose package",
+
+    howKicker:"How it works",
+
+    howTitle:
+    "A few steps.<br>One beautiful invitation.",
+
+    step1Title:"Choose your design",
+
+    step1Text:
+    "Choose an invitation design from the Luna collections.",
+
+    step2Title:"Send your details",
+
+    step2Text:
+    "Send names, date, time, venue, photos and other information through the form.",
+
+    step3Title:"Share your link",
+
+    step3Text:
+    "Share your finished invitation with your guests through WhatsApp, Instagram and more.",
+
+    ctaKicker:"Luna",
+
+    ctaTitle:
+    "Your story<br>starts here.",
+
+    ctaText:
+    "Choose your design, send your details and create your own Luna invitation.",
+
+    start:"Create invitation",
+
+    footerTagline:
+    "Weddings · Events · Moments"
 
 },
 
+
+/* =======================================================
+   ITALIAN
+======================================================= */
 
 it:{
 
-home:"Home",
+    home:"Home",
+    collections:"Collezioni",
+    designs:"Inviti",
+    services:"Servizi",
+    pricing:"Prezzi",
+    contact:"Contatti",
 
-collections:"Collezioni",
+    heroLabel:"Inviti digitali",
 
-pricing:"Prezzi",
+    heroTitle:
+    "momenti belli, invitati con eleganza",
 
-contact:"Contatti",
+    heroText:
+    "Inviti digitali eleganti, moderni e personalizzabili per i vostri momenti più importanti. Scegliete il design, inviate i vostri dati e condividete il vostro invito.",
 
-eyebrow:"Inviti digitali",
+    explore:"Scopri le collezioni",
 
-heroTitle:"momenti belli, invitati con eleganza",
+    viewPricing:"Vedi i prezzi",
 
-heroText:
-"Inviti digitali eleganti e personalizzabili per i vostri momenti più importanti.",
+    scroll:"Scopri",
 
-explore:"Scopri",
+    collectionsKicker:"Luna Collections",
 
-choose:"Il tuo momento.<br>La tua Luna.",
+    collectionsTitle:
+    "Una Luna<br>per ogni momento.",
 
-collectionText:
-"Collezioni dedicate a matrimoni, fidanzamenti, henné, compleanni e ogni celebrazione.",
+    collectionsText:
+    "Collezioni per matrimoni, fidanzamenti, henné, compleanni, lauree e ogni celebrazione.",
 
-exploreCollection:"Scopri la collezione",
+    wedding:"Matrimonio",
+    engagement:"Fidanzamento",
+    henna:"Henné",
+    birthday:"Compleanno",
+    babyShower:"Baby Shower",
+    graduation:"Laurea",
+    anniversary:"Anniversario",
+    events:"Eventi",
 
-wedding:"Matrimonio",
+    discover:"Scopri la collezione",
 
-engagement:"Fidanzamento",
+    featuredKicker:"Design selezionati",
 
-henna:"Henné",
+    featuredTitle:
+    "Il tuo invito<br>può essere così.",
 
-birthday:"Compleanno",
+    featuredText:
+    "Scopri i design Luna, scegli il tuo preferito e inviaci i dati del tuo evento.",
 
-featured:"Creato per il tuo momento.",
+    weddingInvitation:"Invito di matrimonio",
+    weddingOf:"Il matrimonio di",
+    weddingCollection:"Collezione matrimonio",
+    engagementInvitation:"Invito di fidanzamento",
+    birthdayInvitation:"Invito di compleanno",
+    graduationInvitation:"Invito di laurea",
 
-featuredText:
-"Scopri i design Luna e scegli il tuo preferito.",
+    forever:"Per sempre inizia qui",
 
-pricingEyebrow:"Prezzi Luna",
+    basic:"Basic",
+    premium:"Premium",
+    luxury:"Luxury",
 
-pricingTitle:"Scegli la tua<br>esperienza Luna.",
+    servicesKicker:"Cosa offre Luna",
 
-pricingText:
-"Dagli inviti semplici ed eleganti ai design premium completamente personalizzati, scegli il pacchetto più adatto a te.",
+    servicesTitle:
+    "Più di<br>un invito.",
 
-basic:"Basic",
+    servicesText:
+    "Design eleganti combinati con funzioni interattive utili per i vostri ospiti.",
 
-basicText:
-"Un invito digitale elegante e semplice.",
+    service1Title:"Design personalizzato",
 
-premium:"Premium",
+    service1Text:
+    "Il design scelto viene personalizzato con i dati del vostro evento.",
 
-premiumText:
-"Più funzionalità e un design personalizzato.",
+    service2Title:"RSVP",
 
-luxury:"Luxury",
+    service2Text:
+    "Gli ospiti possono confermare facilmente la loro partecipazione.",
 
-luxuryText:
-"Un invito completamente personalizzato creato per te.",
+    service3Title:"Google Maps",
 
-cta:"Creiamo insieme il tuo invito.",
+    service3Text:
+    "La posizione e la mappa del luogo possono essere aggiunte direttamente all'invito.",
 
-ctaText:
-"Scegli il design, inserisci i tuoi dati e crea il tuo invito.",
+    service4Title:"Countdown",
 
-start:"Crea invito",
+    service4Text:
+    "Un conto alla rovescia mostra il tempo rimanente fino all'evento.",
 
-footer:
-"Matrimoni · Fidanzamenti · Henné · Compleanni"
+    service5Title:"Galleria fotografica",
+
+    service5Text:
+    "Aggiungete le vostre foto preferite in una bellissima galleria.",
+
+    service6Title:"Video",
+
+    service6Text:
+    "Il pacchetto Luxury può includere una sezione video e multimedia.",
+
+    service7Title:"Musica",
+
+    service7Text:
+    "Aggiungete musica per creare l'atmosfera perfetta.",
+
+    service8Title:"Link personale",
+
+    service8Text:
+    "Un link personale per condividere facilmente il vostro invito.",
+
+    stat1:"Categorie",
+    stat2:"Design",
+    stat3:"Lingue",
+    stat4:"Condivisione",
+
+    pricingKicker:"Luna Pricing",
+
+    pricingTitle:
+    "Scegli il<br>tuo pacchetto.",
+
+    pricingText:
+    "Prezzi semplici e trasparenti. Scegli il pacchetto più adatto alla tua celebrazione.",
+
+    basicDescription:
+    "Un invito digitale semplice ed elegante.",
+
+    premiumDescription:
+    "Un invito più ricco e interattivo.",
+
+    luxuryDescription:
+    "L'esperienza completa di un invito premium.",
+
+    basic1:"Design pronto",
+    basic2:"Dati personali dell'evento",
+    basic3:"Aggiunta foto",
+    basic4:"Link condivisibile",
+
+    premium1:"Design premium",
+    premium2:"Galleria fotografica",
+    premium3:"Countdown",
+    premium4:"Google Maps",
+    premium5:"Modulo RSVP",
+
+    luxury1:"Design luxury",
+    luxury2:"Galleria foto e video",
+    luxury3:"Countdown",
+    luxury4:"Google Maps",
+    luxury5:"RSVP",
+    luxury6:"Sezione storia personale",
+    luxury7:"Musica",
+
+    popular:"Più popolare",
+
+    choosePackage:"Scegli pacchetto",
+
+    howKicker:"Come funziona",
+
+    howTitle:
+    "Pochi passi.<br>Un invito speciale.",
+
+    step1Title:"Scegli il design",
+
+    step1Text:
+    "Scegli il design più adatto al tuo evento.",
+
+    step2Title:"Invia i tuoi dati",
+
+    step2Text:
+    "Invia nomi, data, ora, luogo, foto e altre informazioni.",
+
+    step3Title:"Condividi il link",
+
+    step3Text:
+    "Condividi il tuo invito con gli ospiti tramite WhatsApp, Instagram e altri canali.",
+
+    ctaKicker:"Luna",
+
+    ctaTitle:
+    "La tua storia<br>inizia qui.",
+
+    ctaText:
+    "Scegli il design, invia i tuoi dati e crea il tuo invito Luna.",
+
+    start:"Crea invito",
+
+    footerTagline:
+    "Matrimoni · Eventi · Momenti"
 
 },
 
 
+/* =======================================================
+   RUSSIAN
+======================================================= */
+
 ru:{
 
-home:"Главная",
+    home:"Главная",
+    collections:"Коллекции",
+    designs:"Приглашения",
+    services:"Услуги",
+    pricing:"Цены",
+    contact:"Контакты",
 
-collections:"Коллекции",
+    heroLabel:"Цифровые приглашения",
 
-pricing:"Цены",
+    heroTitle:
+    "красивые моменты — красиво приглашены",
 
-contact:"Контакты",
+    heroText:
+    "Элегантные, современные и персонализируемые цифровые приглашения для ваших особенных событий. Выберите дизайн, отправьте данные и поделитесь ссылкой.",
 
-eyebrow:"Цифровые приглашения",
+    explore:"Смотреть коллекции",
 
-heroTitle:"красивые моменты — красиво приглашены",
+    viewPricing:"Смотреть цены",
 
-heroText:
-"Элегантные цифровые приглашения для ваших особенных событий.",
+    scroll:"Открыть",
 
-explore:"Смотреть",
+    collectionsKicker:"Luna Collections",
 
-choose:"Ваш момент.<br>Ваша Luna.",
+    collectionsTitle:
+    "Luna<br>для каждого момента.",
 
-collectionText:
-"Коллекции для свадеб, помолвок, хны и дней рождения.",
+    collectionsText:
+    "Коллекции для свадеб, помолвок, хны, дней рождения, выпускных и других особенных событий.",
 
-exploreCollection:"Смотреть коллекцию",
+    wedding:"Свадьба",
+    engagement:"Помолвка",
+    henna:"Хна",
+    birthday:"День рождения",
+    babyShower:"Baby Shower",
+    graduation:"Выпускной",
+    anniversary:"Годовщина",
+    events:"События",
 
-wedding:"Свадьба",
+    discover:"Смотреть коллекцию",
 
-engagement:"Помолвка",
+    featuredKicker:"Избранные дизайны",
 
-henna:"Хна",
+    featuredTitle:
+    "Ваше приглашение<br>может выглядеть так.",
 
-birthday:"День рождения",
+    featuredText:
+    "Посмотрите избранные дизайны Luna, выберите понравившийся и отправьте нам информацию о вашем событии.",
 
-featured:"Создано для вашего момента.",
+    weddingInvitation:"Свадебное приглашение",
+    weddingOf:"Свадьба",
+    weddingCollection:"Свадебная коллекция",
+    engagementInvitation:"Приглашение на помолвку",
+    birthdayInvitation:"Приглашение на день рождения",
+    graduationInvitation:"Приглашение на выпускной",
 
-featuredText:
-"Выберите красивый дизайн Luna.",
+    forever:"Навсегда начинается здесь",
 
-pricingEyebrow:"Цены Luna",
+    basic:"Basic",
+    premium:"Premium",
+    luxury:"Luxury",
 
-pricingTitle:"Выберите<br>свою Luna.",
+    servicesKicker:"Что предлагает Luna",
 
-pricingText:
-"От простых элегантных приглашений до полностью индивидуальных премиальных дизайнов.",
+    servicesTitle:
+    "Больше, чем<br>приглашение.",
 
-basic:"Basic",
+    servicesText:
+    "Красивый дизайн и удобные интерактивные функции для ваших гостей.",
 
-basicText:
-"Элегантное и простое цифровое приглашение.",
+    service1Title:"Персональный дизайн",
 
-premium:"Premium",
+    service1Text:
+    "Выбранный дизайн персонализируется информацией о вашем событии.",
 
-premiumText:
-"Больше возможностей и персонализированный дизайн.",
+    service2Title:"RSVP",
 
-luxury:"Luxury",
+    service2Text:
+    "Гости могут легко подтвердить своё участие прямо в приглашении.",
 
-luxuryText:
-"Полностью индивидуальное приглашение, созданное специально для вас.",
+    service3Title:"Google Maps",
 
-cta:"Создадим ваше приглашение.",
+    service3Text:
+    "Место проведения и карта могут быть добавлены прямо в приглашение.",
 
-ctaText:
-"Выберите дизайн, заполните данные и создайте своё приглашение.",
+    service4Title:"Countdown",
 
-start:"Создать приглашение",
+    service4Text:
+    "Обратный отсчёт показывает время до вашего события.",
 
-footer:
-"Свадьбы · Помолвки · Хна · Дни рождения"
+    service5Title:"Фотогалерея",
+
+    service5Text:
+    "Добавьте любимые фотографии в красивую галерею приглашения.",
+
+    service6Title:"Видео",
+
+    service6Text:
+    "Пакет Luxury может включать специальный видео- и мультимедийный раздел.",
+
+    service7Title:"Музыка",
+
+    service7Text:
+    "Добавьте музыку, чтобы создать особую атмосферу.",
+
+    service8Title:"Персональная ссылка",
+
+    service8Text:
+    "Удобная персональная ссылка для отправки приглашения гостям.",
+
+    stat1:"Категории",
+    stat2:"Дизайны",
+    stat3:"Языки",
+    stat4:"Обмен",
+
+    pricingKicker:"Luna Pricing",
+
+    pricingTitle:
+    "Выберите<br>свой пакет.",
+
+    pricingText:
+    "Простые и прозрачные цены. Выберите пакет, который подходит вашему событию.",
+
+    basicDescription:
+    "Простое и элегантное цифровое приглашение.",
+
+    premiumDescription:
+    "Более насыщенное и интерактивное приглашение.",
+
+    luxuryDescription:
+    "Полный премиальный опыт приглашения.",
+
+    basic1:"Готовый дизайн",
+    basic2:"Персональная информация",
+    basic3:"Добавление фотографий",
+    basic4:"Ссылка на приглашение",
+
+    premium1:"Премиальный дизайн",
+    premium2:"Фотогалерея",
+    premium3:"Countdown",
+    premium4:"Google Maps",
+    premium5:"RSVP форма",
+
+    luxury1:"Luxury дизайн",
+    luxury2:"Фото и видео галерея",
+    luxury3:"Countdown",
+    luxury4:"Google Maps",
+    luxury5:"RSVP",
+    luxury6:"Персональный раздел истории",
+    luxury7:"Музыка",
+
+    popular:"Самый популярный",
+
+    choosePackage:"Выбрать пакет",
+
+    howKicker:"Как это работает",
+
+    howTitle:
+    "Несколько шагов.<br>Одно красивое приглашение.",
+
+    step1Title:"Выберите дизайн",
+
+    step1Text:
+    "Выберите подходящий дизайн из коллекций Luna.",
+
+    step2Title:"Отправьте данные",
+
+    step2Text:
+    "Отправьте имена, дату, время, место, фотографии и другую информацию.",
+
+    step3Title:"Поделитесь ссылкой",
+
+    step3Text:
+    "Поделитесь готовым приглашением с гостями через WhatsApp, Instagram и другие платформы.",
+
+    ctaKicker:"Luna",
+
+    ctaTitle:
+    "Ваша история<br>начинается здесь.",
+
+    ctaText:
+    "Выберите дизайн, отправьте данные и создайте своё приглашение Luna.",
+
+    start:"Создать приглашение",
+
+    footerTagline:
+    "Свадьбы · События · Моменты"
 
 }
 
 };
 
 
-/* =====================================================
-   LANGUAGE FUNCTION
-===================================================== */
+/* =========================================================
+   LANGUAGE SYSTEM
+========================================================= */
 
 function changeLanguage(lang){
 
-    if(!translations[lang]){
-        lang="az";
+    const data = translations[lang];
+
+    if(!data){
+        return;
     }
+
+
+    /* SAVE LANGUAGE */
 
     localStorage.setItem(
         "lunaLanguage",
@@ -2030,11 +4642,16 @@ function changeLanguage(lang){
     );
 
 
+    /* HTML LANGUAGE */
+
     document.documentElement.lang = lang;
 
 
-    document.querySelectorAll("[data-lang]")
-    .forEach(button=>{
+    /* NAV BUTTONS */
+
+    document.querySelectorAll(
+        "[data-lang]"
+    ).forEach(button => {
 
         button.classList.toggle(
             "active",
@@ -2044,19 +4661,48 @@ function changeLanguage(lang){
     });
 
 
-    document.querySelectorAll("[data-i18n]")
-    .forEach(element=>{
+    /* DESKTOP + GENERAL TRANSLATIONS */
+
+    document.querySelectorAll(
+        "[data-i18n]"
+    ).forEach(element => {
 
         const key =
             element.dataset.i18n;
 
         if(
-            translations[lang] &&
-            translations[lang][key]
+            Object.prototype.hasOwnProperty.call(
+                data,
+                key
+            )
         ){
 
             element.innerHTML =
-                translations[lang][key];
+                data[key];
+
+        }
+
+    });
+
+
+    /* MOBILE MENU */
+
+    document.querySelectorAll(
+        "[data-mobile-i18n]"
+    ).forEach(element => {
+
+        const key =
+            element.dataset.mobileI18n;
+
+        if(
+            Object.prototype.hasOwnProperty.call(
+                data,
+                key
+            )
+        ){
+
+            element.innerHTML =
+                data[key];
 
         }
 
@@ -2065,29 +4711,89 @@ function changeLanguage(lang){
 }
 
 
-/* =====================================================
+/* =========================================================
    LANGUAGE BUTTONS
-===================================================== */
+========================================================= */
 
-document
-.querySelectorAll("[data-lang]")
-.forEach(button=>{
+document.querySelectorAll(
+    "[data-lang]"
+).forEach(button => {
 
     button.addEventListener(
         "click",
-        ()=>{
+        function(){
+
             changeLanguage(
-                button.dataset.lang
+                this.dataset.lang
             );
+
+            closeMobileMenu();
+
         }
     );
 
 });
 
 
-/* =====================================================
-   LOAD SAVED LANGUAGE
-===================================================== */
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menuToggle =
+    document.getElementById(
+        "menuToggle"
+    );
+
+const mobileMenu =
+    document.getElementById(
+        "mobileMenu"
+    );
+
+
+function closeMobileMenu(){
+
+    mobileMenu.classList.remove(
+        "open"
+    );
+
+    document.body.classList.remove(
+        "menu-open"
+    );
+
+}
+
+
+menuToggle.addEventListener(
+    "click",
+    function(){
+
+        mobileMenu.classList.toggle(
+            "open"
+        );
+
+        document.body.classList.toggle(
+            "menu-open"
+        );
+
+    }
+);
+
+
+document.querySelectorAll(
+    ".mobile-menu a"
+).forEach(link => {
+
+    link.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+});
+
+
+/* =========================================================
+   RESTORE LANGUAGE
+========================================================= */
 
 changeLanguage(
     localStorage.getItem(
@@ -2095,10 +4801,159 @@ changeLanguage(
     ) || "az"
 );
 
-</script>
 
+/* =========================================================
+   NAVBAR SCROLL
+========================================================= */
+
+const navbar =
+    document.getElementById(
+        "navbar"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    function(){
+
+        if(window.scrollY > 40){
+
+            navbar.classList.add(
+                "scrolled"
+            );
+
+        }else{
+
+            navbar.classList.remove(
+                "scrolled"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal"
+    );
+
+
+const revealObserver =
+    new IntersectionObserver(
+        function(entries){
+
+            entries.forEach(
+                entry => {
+
+                    if(entry.isIntersecting){
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+
+revealElements.forEach(
+    element => {
+
+        revealObserver.observe(
+            element
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        setTimeout(
+            function(){
+
+                document
+                    .getElementById("loader")
+                    .classList.add("hide");
+
+            },
+            600
+        );
+
+    }
+);
+
+
+/* =========================================================
+   PARALLAX EFFECT
+========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    function(event){
+
+        if(window.innerWidth < 900){
+            return;
+        }
+
+        const x =
+            (event.clientX /
+            window.innerWidth - .5);
+
+        const y =
+            (event.clientY /
+            window.innerHeight - .5);
+
+
+        const cards =
+            document.querySelectorAll(
+                ".floating-card"
+            );
+
+
+        cards.forEach(
+            (card,index) => {
+
+                const strength =
+                    (index + 1) * 5;
+
+                card.style.marginLeft =
+                    `${x * strength}px`;
+
+                card.style.marginTop =
+                    `${y * strength}px`;
+
+            }
+        );
+
+    }
+);
+
+</script>
 
 </body>
 
 </html>
-```
