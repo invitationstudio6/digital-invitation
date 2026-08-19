@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="az">
 
@@ -10,957 +11,946 @@
 
 <style>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    background: #f8f5f0;
-    color: #332d29;
+body{
+    font-family:Georgia, "Times New Roman", serif;
+    background:#f8f5ef;
+    color:#292722;
 }
 
 /* =========================
    NAVIGATION
 ========================= */
 
-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 28px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:100;
+
+    padding:22px 6%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(248,245,239,.88);
+    backdrop-filter:blur(14px);
+
+    border-bottom:1px solid rgba(0,0,0,.06);
 }
 
-.logo {
-    color: white;
-    font-size: 30px;
-    letter-spacing: 4px;
+.logo{
+    font-size:30px;
+    letter-spacing:3px;
+    color:#292722;
 }
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 28px;
+.nav-links{
+    display:flex;
+    gap:30px;
 }
 
-.nav-right a {
-    color: white;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.nav-links a{
+    text-decoration:none;
+    color:#292722;
+
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
 }
 
-.languages {
-    display: flex;
-    gap: 7px;
-    margin-left: 15px;
-}
-
-.language {
-    border: none;
-    background: transparent;
-    color: rgba(255,255,255,.6);
-    cursor: pointer;
-    font-size: 10px;
-    letter-spacing: 1px;
-}
-
-.language.active {
-    color: white;
+.nav-links a:hover{
+    opacity:.55;
 }
 
 /* =========================
    HERO
 ========================= */
 
-.hero {
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    text-align: center;
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:150px 20px 100px;
 
     background:
-        linear-gradient(
-            rgba(43,36,31,.38),
-            rgba(43,36,31,.48)
-        ),
-        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90");
-
-    background-size: cover;
-    background-position: center;
+        radial-gradient(circle at 20% 20%, #eee5d7 0, transparent 30%),
+        radial-gradient(circle at 80% 80%, #e7ded2 0, transparent 30%),
+        #f8f5ef;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(
-            circle at center,
-            transparent 20%,
-            rgba(0,0,0,.18)
-        );
-    pointer-events: none;
+.hero-content{
+    max-width:900px;
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2;
-    color: white;
-    max-width: 900px;
-    padding: 30px;
+.hero-small{
+    font-size:12px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#8d7867;
+    margin-bottom:30px;
 }
 
-.hero-eyebrow {
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 7px;
-    text-transform: uppercase;
-    margin-bottom: 30px;
+.hero h1{
+    font-size:clamp(60px,11vw,130px);
+    font-weight:normal;
+    line-height:.9;
+    letter-spacing:-5px;
 }
 
-.hero h1 {
-    font-size: clamp(80px, 14vw, 170px);
-    line-height: .8;
-    font-weight: normal;
-    letter-spacing: 5px;
+.hero h1 span{
+    font-style:italic;
 }
 
-.hero-divider {
-    width: 70px;
-    height: 1px;
-    background: rgba(255,255,255,.7);
-    margin: 38px auto 28px;
+.hero-text{
+    max-width:580px;
+    margin:40px auto;
+
+    font-size:18px;
+    line-height:1.9;
+    color:#6e665e;
 }
 
-.hero-description {
-    max-width: 550px;
-    margin: auto;
-    font-size: 17px;
-    line-height: 1.9;
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-.hero-buttons {
-    margin-top: 38px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
+.hero-button{
+    display:inline-block;
+
+    padding:15px 30px;
+
+    border:1px solid #4d463f;
+    border-radius:40px;
+
+    text-decoration:none;
+    color:#292722;
+
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+
+    transition:.3s;
 }
 
-.hero-button {
-    display: inline-block;
-    padding: 15px 32px;
-    border: 1px solid white;
-    border-radius: 40px;
-    color: white;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    transition: .35s;
+.hero-button:hover{
+    background:#292722;
+    color:white;
 }
 
-.hero-button:hover {
-    background: white;
-    color: #332d29;
-}
-
-.hero-button.dark {
-    background: white;
-    color: #332d29;
-}
-
-/* =========================
-   SCROLL
-========================= */
-
-.scroll {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    z-index: 5;
-}
-
-.scroll::after {
-    content: "";
-    display: block;
-    width: 1px;
-    height: 35px;
-    background: white;
-    margin: 10px auto 0;
+.hero-button.dark{
+    background:#292722;
+    color:white;
 }
 
 /* =========================
    INTRO
 ========================= */
 
-.intro {
-    padding: 125px 25px 105px;
-    text-align: center;
-    background: #f8f5f0;
+.intro{
+    padding:120px 20px 70px;
+    text-align:center;
 }
 
-.eyebrow {
-    font-family: Arial, sans-serif;
-    color: #a28d7b;
-    font-size: 10px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
+.intro-label{
+    color:#9b8673;
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:20px;
 }
 
-.intro h2 {
-    margin-top: 20px;
-    font-size: clamp(40px, 6vw, 65px);
-    font-weight: normal;
+.intro h2{
+    font-size:48px;
+    font-weight:normal;
 }
 
-.intro p {
-    max-width: 650px;
-    margin: 28px auto 0;
-    color: #766c65;
-    line-height: 2;
-    font-size: 16px;
+.intro p{
+    max-width:650px;
+    margin:25px auto 0;
+    line-height:1.9;
+    color:#766e66;
 }
 
 /* =========================
-   DESIGN SECTION
+   FILTERS
 ========================= */
 
-.designs {
-    padding: 40px 5% 130px;
+.filters{
+    max-width:1200px;
+    margin:30px auto 60px;
+
+    padding:0 25px;
+
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.section-heading {
-    text-align: center;
-    margin-bottom: 70px;
+.filter{
+    border:1px solid #d4ccc2;
+    background:transparent;
+
+    padding:11px 18px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:12px;
+    letter-spacing:1px;
+
+    transition:.3s;
 }
 
-.section-heading h2 {
-    font-size: clamp(38px, 5vw, 58px);
-    font-weight: normal;
-    margin-top: 15px;
-}
-
-.section-heading p {
-    color: #81766e;
-    margin-top: 15px;
-    font-size: 14px;
+.filter:hover,
+.filter.active{
+    background:#292722;
+    color:white;
+    border-color:#292722;
 }
 
 /* =========================
-   GRID
+   COLLECTION
 ========================= */
 
-.design-grid {
-    max-width: 1250px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 55px 30px;
+.collection{
+    max-width:1350px;
+    margin:auto;
+
+    padding:0 25px 120px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:28px;
 }
 
-.design {
-    cursor: pointer;
+/* =========================
+   TEMPLATE
+========================= */
+
+.template{
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.45s ease;
 }
 
-.preview {
-    height: 520px;
-    overflow: hidden;
-    position: relative;
-    transition: .5s;
+.template:hover{
+    transform:translateY(-8px);
 }
 
-.design:hover .preview {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(45,35,28,.16);
-}
+.preview{
+    height:520px;
 
-.design-info {
-    text-align: center;
-    padding-top: 22px;
-}
+    position:relative;
 
-.design-info h3 {
-    font-size: 24px;
-    font-weight: normal;
-}
+    overflow:hidden;
 
-.design-info p {
-    font-family: Arial, sans-serif;
-    color: #a08f80;
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 9px;
+    border-radius:4px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.10);
 }
 
 /* =========================
    ENVELOPE
 ========================= */
 
-.envelope-preview {
-    background: #e4d8ca;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.envelope{
+    background:#e8dfd1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.envelope {
-    width: 78%;
-    height: 55%;
-    position: relative;
-    background: #f1e7dc;
-    box-shadow: 0 25px 45px rgba(40,30,24,.18);
+.envelope-paper{
+    width:65%;
+    height:70%;
+
+    background:#fffdf8;
+
+    padding:50px 25px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    transform:rotate(-2deg);
 }
 
-.envelope-paper {
-    position: absolute;
-    width: 75%;
-    height: 85%;
-    left: 12.5%;
-    top: -27%;
-    background: #fffdf8;
-    z-index: 1;
-    padding: 35px 15px;
-    text-align: center;
-    transition: .7s cubic-bezier(.2,.7,.2,1);
+.envelope-paper small{
+    letter-spacing:4px;
+    font-size:9px;
 }
 
-.design:hover .envelope-paper {
-    top: -55%;
+.envelope-paper h3{
+    margin:35px 0;
+
+    font-size:38px;
+    font-weight:normal;
 }
 
-.envelope-paper small {
-    font-family: Arial, sans-serif;
-    color: #a48d79;
-    font-size: 8px;
-    letter-spacing: 3px;
-}
+.envelope-flap{
+    position:absolute;
 
-.envelope-paper h3 {
-    font-size: 31px;
-    font-weight: normal;
-    margin: 25px 0;
-}
+    top:-5%;
+    left:-10%;
 
-.envelope-front {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    background: #e1d0bf;
-    clip-path: polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);
-}
+    width:120%;
+    height:60%;
 
-.envelope-flap {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    background: #eadccf;
-    clip-path: polygon(0 0,50% 55%,100% 0);
-    transform-origin: top;
-    transition: .7s;
-}
+    background:#d9cdbd;
 
-.design:hover .envelope-flap {
-    transform: rotateX(180deg);
-}
-
-.seal {
-    position: absolute;
-    z-index: 8;
-    left: 50%;
-    top: 52%;
-    transform: translate(-50%,-50%);
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #8e6858;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+    clip-path:polygon(0 0,100% 0,50% 100%);
 }
 
 /* =========================
    BOOK
 ========================= */
 
-.book-preview {
-    background: #d4ccc2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1300px;
+.book{
+    background:#403b36;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.book {
-    width: 84%;
-    height: 72%;
-    display: flex;
-    box-shadow: 0 30px 50px rgba(30,25,20,.2);
-    transform-style: preserve-3d;
-    transition: .7s;
+.book-cover{
+    width:65%;
+    height:78%;
+
+    background:#6f6255;
+
+    border-radius:3px;
+
+    padding:25px;
+
+    box-shadow:
+        inset 8px 0 rgba(0,0,0,.12),
+        10px 20px 40px rgba(0,0,0,.35);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.design:hover .book {
-    transform: rotateY(-8deg);
+.book-page{
+    width:90%;
+    height:90%;
+
+    background:#f7f0e5;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:#493f35;
 }
 
-.book-page {
-    width: 50%;
-    height: 100%;
-    background: #fcf9f3;
-    padding: 42px 25px;
-    text-align: center;
-}
-
-.book-page.left {
-    border-right: 1px solid #d9cec2;
-}
-
-.book-page small {
-    font-family: Arial, sans-serif;
-    color: #9e8975;
-    font-size: 8px;
-    letter-spacing: 4px;
-}
-
-.book-page h3 {
-    font-size: 34px;
-    line-height: 1.1;
-    font-weight: normal;
-    margin: 45px 0 25px;
-}
-
-.book-line {
-    width: 45px;
-    height: 1px;
-    background: #a78d76;
-    margin: auto;
-}
-
-.book-page p {
-    margin-top: 28px;
-    color: #7c7168;
-    font-size: 10px;
-    line-height: 2;
+.book-page h3{
+    font-size:34px;
+    font-weight:normal;
 }
 
 /* =========================
-   BOTANICAL
+   GARDEN
 ========================= */
 
-.botanical-preview {
+.garden{
     background:
-        linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
-        url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=90");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        radial-gradient(circle at 10% 20%, #d4dec9 0, transparent 20%),
+        radial-gradient(circle at 90% 80%, #d6c8b7 0, transparent 20%),
+        #eee8dc;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.botanical-card {
-    width: 75%;
-    height: 84%;
-    background: rgba(253,250,245,.95);
-    border: 1px solid #cbb9a8;
-    padding: 45px 25px;
-    text-align: center;
-    transition: .5s;
+.garden-card{
+    width:70%;
+    height:75%;
+
+    background:#f8f5ec;
+
+    border:1px solid #aaa18f;
+
+    padding:55px 25px;
+
+    text-align:center;
+
+    position:relative;
 }
 
-.design:hover .botanical-card {
-    transform: scale(.97);
+.garden-card:before,
+.garden-card:after{
+    content:"✿";
+
+    position:absolute;
+
+    font-size:55px;
+
+    color:#8b9b7c;
 }
 
-.botanical-card small {
-    font-family: Arial, sans-serif;
-    color: #98806d;
-    font-size: 8px;
-    letter-spacing: 4px;
+.garden-card:before{
+    top:15px;
+    left:20px;
 }
 
-.botanical-card h3 {
-    font-size: 37px;
-    font-weight: normal;
-    line-height: 1.1;
-    margin: 45px 0 25px;
+.garden-card:after{
+    bottom:15px;
+    right:20px;
 }
 
-.botanical-card p {
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 2px;
-    line-height: 2;
+.garden-card h3{
+    font-size:40px;
+    font-weight:normal;
+
+    margin:35px 0;
 }
 
 /* =========================
    EDITORIAL
 ========================= */
 
-.editorial-preview {
-    background: #ebe5dd;
-    padding: 28px;
+.editorial{
+    background:#ddd7cf;
+
+    padding:35px;
 }
 
-.editorial-card {
-    height: 100%;
-    background: #fcfaf6;
-    padding: 40px 35px;
-    position: relative;
+.editorial-paper{
+    height:100%;
+
+    background:#f6f2ec;
+
+    padding:35px;
+
+    position:relative;
 }
 
-.editorial-number {
-    font-size: 72px;
-    color: #c9baaa;
-    line-height: 1;
+.editorial-top{
+    font-family:Arial,sans-serif;
+
+    font-size:10px;
+    letter-spacing:3px;
+
+    border-bottom:1px solid #333;
+
+    padding-bottom:10px;
 }
 
-.editorial-card h3 {
-    font-size: 46px;
-    font-weight: normal;
-    line-height: .92;
-    margin: 30px 0;
+.editorial-paper h3{
+    font-family:Georgia,serif;
+
+    font-size:68px;
+    line-height:.8;
+
+    margin-top:70px;
+
+    font-weight:normal;
 }
 
-.editorial-card p {
-    max-width: 220px;
-    color: #756b64;
-    font-size: 10px;
-    line-height: 2;
-}
+.editorial-paper p{
+    margin-top:35px;
 
-.editorial-bottom {
-    position: absolute;
-    bottom: 35px;
-    left: 35px;
-    right: 35px;
-    border-top: 1px solid #d9cec3;
-    padding-top: 15px;
-    font-family: Arial, sans-serif;
-    font-size: 8px;
-    letter-spacing: 3px;
-}
+    font-family:Arial,sans-serif;
 
-/* =========================
-   LUXURY
-========================= */
+    font-size:11px;
 
-.luxury-preview {
-    background: #171513;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.luxury-card {
-    width: 78%;
-    height: 84%;
-    border: 1px solid #a8895e;
-    color: #dfc9a5;
-    padding: 48px 20px;
-    text-align: center;
-    position: relative;
-}
-
-.luxury-card::before,
-.luxury-card::after {
-    content: "✦";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-}
-
-.luxury-card::before {
-    top: 18px;
-}
-
-.luxury-card::after {
-    bottom: 18px;
-}
-
-.luxury-card small {
-    font-family: Arial, sans-serif;
-    font-size: 7px;
-    letter-spacing: 4px;
-}
-
-.luxury-card h3 {
-    font-size: 40px;
-    font-weight: normal;
-    line-height: 1;
-    margin: 65px 0 35px;
-}
-
-.luxury-card p {
-    font-family: Arial, sans-serif;
-    font-size: 8px;
-    letter-spacing: 3px;
+    line-height:1.6;
 }
 
 /* =========================
-   CLASSIC
+   NOIR
 ========================= */
 
-.classic-preview {
-    background: #ddd6cd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.noir{
+    background:#171615;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#d9c4a2;
 }
 
-.classic-card {
-    width: 76%;
-    height: 84%;
-    background: #fbf8f2;
-    border: 1px solid #c9baaa;
-    outline: 1px solid #c9baaa;
-    outline-offset: -12px;
-    padding: 50px 25px;
-    text-align: center;
+.noir-card{
+    width:70%;
+    height:80%;
+
+    border:1px solid #a98d68;
+
+    padding:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
 }
 
-.classic-card small {
-    font-family: Arial, sans-serif;
-    color: #927d69;
-    font-size: 7px;
-    letter-spacing: 4px;
+.noir-card h3{
+    font-size:48px;
+    font-weight:normal;
+
+    color:#e1c59d;
 }
 
-.classic-card h3 {
-    font-size: 38px;
-    font-weight: normal;
-    line-height: 1.05;
-    margin: 60px 0 25px;
-}
+.noir-card span{
+    display:block;
 
-.classic-card p {
-    font-family: Arial, sans-serif;
-    font-size: 8px;
-    letter-spacing: 3px;
-}
+    margin-bottom:35px;
 
-.classic-symbol {
-    margin-top: 55px;
-    font-size: 25px;
-    color: #9a7f69;
+    font-size:10px;
+    letter-spacing:5px;
 }
 
 /* =========================
-   VIEW ALL
+   COASTAL
 ========================= */
 
-.view-all {
-    text-align: center;
-    margin-top: 70px;
-}
-
-.view-all a {
-    display: inline-block;
-    border-bottom: 1px solid #8d7968;
-    padding-bottom: 8px;
-    color: #4d4037;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-}
-
-/* =========================
-   ABOUT
-========================= */
-
-.about {
-    background: #fffdf9;
-    padding: 130px 8%;
-}
-
-.about-grid {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 90px;
-    align-items: center;
-}
-
-.about-image {
-    height: 570px;
-    background:
-        linear-gradient(rgba(50,40,34,.08),rgba(50,40,34,.08)),
-        url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=90");
-    background-size: cover;
-    background-position: center;
-}
-
-.about-text .eyebrow {
-    margin-bottom: 20px;
-}
-
-.about-text h2 {
-    font-size: 52px;
-    font-weight: normal;
-    line-height: 1.05;
-    margin-bottom: 25px;
-}
-
-.about-text p {
-    color: #776c63;
-    line-height: 2;
-    font-size: 15px;
-    margin-bottom: 25px;
-}
-
-/* =========================
-   HOW IT WORKS
-========================= */
-
-.how {
-    padding: 130px 6%;
-    background: #f3eee8;
-}
-
-.how-header {
-    text-align: center;
-    margin-bottom: 70px;
-}
-
-.how-header h2 {
-    font-size: 52px;
-    font-weight: normal;
-    margin-top: 15px;
-}
-
-.steps {
-    max-width: 1050px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 60px;
-}
-
-.step {
-    text-align: center;
-}
-
-.step-number {
-    width: 58px;
-    height: 58px;
-    border: 1px solid #ad9885;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto auto 25px;
-    color: #8e7765;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-}
-
-.step h3 {
-    font-size: 22px;
-    font-weight: normal;
-    margin-bottom: 15px;
-}
-
-.step p {
-    color: #7c7169;
-    font-size: 13px;
-    line-height: 1.9;
-}
-
-/* =========================
-   PRICING CTA
-========================= */
-
-.pricing-cta {
-    padding: 130px 20px;
-    text-align: center;
+.coastal{
     background:
         linear-gradient(
-            rgba(48,40,34,.68),
-            rgba(48,40,34,.68)
-        ),
-        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=90");
-    background-size: cover;
-    background-position: center;
-    color: white;
+            140deg,
+            #b7d1d1,
+            #e9e1cf
+        );
+
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
 }
 
-.pricing-cta h2 {
-    font-size: clamp(40px,6vw,65px);
-    font-weight: normal;
+.coastal-card{
+    width:72%;
+    height:82%;
+
+    background:#f4eee1;
+
+    padding:55px 25px;
+
+    text-align:center;
+
+    position:relative;
 }
 
-.pricing-cta p {
-    max-width: 550px;
-    margin: 22px auto 35px;
-    line-height: 1.8;
+.coastal-card:before{
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    border-radius:50%;
+
+    background:#a9c8c9;
+
+    top:-40px;
+    right:-40px;
 }
 
-.pricing-button {
-    display: inline-block;
-    padding: 16px 35px;
-    border: 1px solid white;
-    border-radius: 35px;
-    color: white;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    transition: .3s;
+.coastal-card h3{
+    margin-top:120px;
+
+    font-size:40px;
+
+    font-weight:normal;
 }
 
-.pricing-button:hover {
-    background: white;
-    color: #332d29;
+/* =========================
+   FILM
+========================= */
+
+.film{
+    background:#252525;
+
+    padding:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.film-card{
+    width:75%;
+    height:75%;
+
+    background:#eee9df;
+
+    padding:15px;
+
+    transform:rotate(-3deg);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.4);
+}
+
+.film-photo{
+    height:58%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b99b7c,
+            #59483c
+        );
+}
+
+.film-info{
+    padding:20px;
+
+    text-align:center;
+}
+
+.film-info h3{
+    font-size:29px;
+
+    font-weight:normal;
+}
+
+/* =========================
+   MINIMAL
+========================= */
+
+.minimal{
+    background:#f4f1eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.minimal-card{
+    width:65%;
+    height:75%;
+
+    border:1px solid #bbb3a9;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.minimal-card span{
+    font-size:9px;
+    letter-spacing:5px;
+}
+
+.minimal-card h3{
+    margin:30px 0;
+
+    font-size:45px;
+
+    font-weight:normal;
+}
+
+/* =========================
+   VINTAGE
+========================= */
+
+.vintage{
+    background:#c8b69a;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.vintage-card{
+    width:70%;
+    height:78%;
+
+    background:#e7d8bb;
+
+    border:7px double #806b50;
+
+    padding:40px 20px;
+
+    text-align:center;
+}
+
+.vintage-card h3{
+    font-size:38px;
+    font-weight:normal;
+
+    margin:40px 0;
+}
+
+.vintage-card span{
+    letter-spacing:4px;
+    font-size:10px;
+}
+
+/* =========================
+   POSTCARD
+========================= */
+
+.postcard{
+    background:#d9d1c3;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:35px;
+}
+
+.postcard-card{
+    width:82%;
+    height:70%;
+
+    background:#f5ead7;
+
+    padding:25px;
+
+    position:relative;
+
+    transform:rotate(2deg);
+}
+
+.postcard-card h3{
+    font-size:42px;
+
+    font-weight:normal;
+
+    margin-top:45px;
+}
+
+.postcard-card .stamp{
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    border:1px dashed #826f59;
+
+    padding:12px;
+
+    font-size:20px;
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+.template-info{
+    padding:18px 4px 5px;
+}
+
+.template-info .category{
+    font-size:10px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#9a8877;
+}
+
+.template-info h3{
+    font-size:25px;
+    font-weight:normal;
+    margin:7px 0;
+}
+
+.template-info p{
+    font-size:13px;
+    color:#777069;
+}
+
+.view{
+    display:inline-block;
+
+    margin-top:12px;
+
+    text-decoration:none;
+
+    color:#403a35;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    border-bottom:1px solid #403a35;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    padding:130px 20px;
+
+    text-align:center;
+
+    background:#292722;
+
+    color:white;
+}
+
+.cta small{
+    letter-spacing:4px;
+    font-size:10px;
+    color:#c8b9a7;
+}
+
+.cta h2{
+    font-size:55px;
+    font-weight:normal;
+
+    margin:25px 0;
+}
+
+.cta p{
+    max-width:550px;
+    margin:auto;
+
+    line-height:1.8;
+
+    color:#c7c0b8;
+}
+
+.cta-button{
+    display:inline-block;
+
+    margin-top:35px;
+
+    padding:15px 35px;
+
+    border:1px solid #ddd3c6;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.cta-button:hover{
+    background:white;
+    color:#292722;
 }
 
 /* =========================
    FOOTER
 ========================= */
 
-footer {
-    background: #302b27;
-    color: white;
-    text-align: center;
-    padding: 65px 20px;
+footer{
+    background:#1d1c1a;
+
+    color:white;
+
+    text-align:center;
+
+    padding:60px 20px;
 }
 
-footer h2 {
-    font-size: 35px;
-    font-weight: normal;
-    letter-spacing: 5px;
+footer h2{
+    font-size:35px;
+    font-weight:normal;
+
+    letter-spacing:4px;
 }
 
-footer p {
-    margin-top: 15px;
-    color: #c5b9af;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 1px;
+footer p{
+    margin-top:15px;
+
+    color:#aaa39b;
+
+    font-size:13px;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media (max-width: 950px) {
+@media(max-width:900px){
 
-    .design-grid {
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 50px;
+    .collection{
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
-@media (max-width: 650px) {
+@media(max-width:650px){
 
-    nav {
-        padding: 20px;
+    nav{
+        padding:18px 20px;
     }
 
-    .logo {
-        font-size: 24px;
+    .nav-links{
+        gap:12px;
     }
 
-    .nav-right {
-        gap: 12px;
+    .nav-links a{
+        font-size:9px;
+        letter-spacing:1px;
     }
 
-    .nav-right > a {
-        display: none;
+    .logo{
+        font-size:24px;
     }
 
-    .languages {
-        margin-left: 0;
+    .hero h1{
+        letter-spacing:-3px;
     }
 
-    .hero {
-        min-height: 90vh;
+    .intro h2{
+        font-size:38px;
     }
 
-    .hero h1 {
-        font-size: 80px;
+    .collection{
+        grid-template-columns:1fr;
+        padding:0 18px 80px;
     }
 
-    .hero-description {
-        font-size: 14px;
+    .preview{
+        height:500px;
     }
 
-    .intro {
-        padding: 90px 20px;
-    }
-
-    .designs {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .design-grid {
-        grid-template-columns: 1fr;
-        max-width: 430px;
-    }
-
-    .preview {
-        height: 540px;
-    }
-
-    .about {
-        padding: 90px 20px;
-    }
-
-    .about-image {
-        height: 430px;
-    }
-
-    .about-text h2 {
-        font-size: 40px;
-    }
-
-    .how {
-        padding: 90px 20px;
-    }
-
-    .how-header h2 {
-        font-size: 40px;
-    }
-
-    .steps {
-        grid-template-columns: 1fr;
-        gap: 55px;
+    .cta h2{
+        font-size:40px;
     }
 
 }
@@ -969,58 +959,32 @@ footer p {
 
 </head>
 
-
 <body>
 
 
 <!-- =========================
-     NAVIGATION
+     NAV
 ========================= -->
 
 <nav>
 
     <div class="logo">
-        Luna
+        LUNA
     </div>
 
-    <div class="nav-right">
+    <div class="nav-links">
 
-        <a href="#designs" data-key="navDesigns">
-            Dizaynlar
+        <a href="#collection">
+            Dəvətnamələr
         </a>
 
-        <a href="pricing.html" data-key="navPricing">
-            Paketlər
+        <a href="pricing.html">
+            Qiymətlər
         </a>
 
-        <a href="client-form.html" data-key="navOrder">
+        <a href="client-form.html">
             Sifariş
         </a>
-
-        <div class="languages">
-
-            <button
-                class="language active"
-                onclick="changeLanguage('az')"
-            >
-                AZ
-            </button>
-
-            <button
-                class="language"
-                onclick="changeLanguage('tr')"
-            >
-                TR
-            </button>
-
-            <button
-                class="language"
-                onclick="changeLanguage('en')"
-            >
-                EN
-            </button>
-
-        </div>
 
     </div>
 
@@ -1031,560 +995,750 @@ footer p {
      HERO
 ========================= -->
 
-<header class="hero">
+<section class="hero">
 
     <div class="hero-content">
 
-        <div
-            class="hero-eyebrow"
-            data-key="heroEyebrow"
-        >
-            Rəqəmsal dəvətnamələr
+        <div class="hero-small">
+            Digital invitations · Made with love
         </div>
 
         <h1>
-            Luna
+            Your moment.<br>
+            <span>Your invitation.</span>
         </h1>
 
-        <div class="hero-divider"></div>
+        <p class="hero-text">
 
-        <p
-            class="hero-description"
-            data-key="heroDescription"
-        >
-            Ən gözəl anlarınız üçün,
-            ən xüsusi rəqəmsal dəvətnamələr.
+            Ən gözəl günlərinizi özəl edən,
+            zövqünüzə uyğun hazırlanmış
+            rəqəmsal dəvətnamələr.
+
         </p>
 
         <div class="hero-buttons">
 
             <a
-                href="#designs"
+                href="#collection"
                 class="hero-button dark"
-                data-key="heroButton"
             >
-                DİZAYNLARA BAX
+                Kolleksiyaya bax
             </a>
 
             <a
-                href="client-form.html"
+                href="pricing.html"
                 class="hero-button"
-                data-key="heroOrder"
             >
-                SİFARİŞ VER
+                Qiymətlər
             </a>
 
         </div>
 
     </div>
 
-    <div
-        class="scroll"
-        data-key="scroll"
-    >
-        Kəşf et
-    </div>
-
-</header>
+</section>
 
 
 <!-- =========================
      INTRO
 ========================= -->
 
-<section class="intro">
+<section class="intro" id="collection">
 
-    <div
-        class="eyebrow"
-        data-key="introEyebrow"
-    >
-        Sizin hekayəniz
+    <div class="intro-label">
+        Luna Collection
     </div>
 
-    <h2 data-key="introTitle">
-        Dəvətnamədən daha artığı
+    <h2>
+        Sizin hekayəniz.<br>
+        Sizin üslubunuz.
     </h2>
 
-    <p data-key="introText">
-        Hər bir dəvətnaməni sizin xüsusi gününüzün
-        ruhuna uyğun hazırlayırıq. Zərif dizayn,
-        gözəl animasiyalar və sizin hekayəniz —
-        hamısı bir yerdə.
+    <p>
+
+        Klassik zəriflikdən müasir editorial
+        dizaynlara qədər — xüsusi gününüz üçün
+        özünüzə uyğun dəvətnaməni seçin.
+
     </p>
 
 </section>
 
 
 <!-- =========================
-     DESIGNS
+     FILTERS
 ========================= -->
 
-<section
-    class="designs"
-    id="designs"
->
+<div class="filters">
 
-    <div class="section-heading">
+    <button
+        class="filter active"
+        onclick="filterTemplates('all', this)"
+    >
+        Hamısı
+    </button>
 
-        <div
-            class="eyebrow"
-            data-key="designEyebrow"
-        >
-            Kolleksiyamız
-        </div>
+    <button
+        class="filter"
+        onclick="filterTemplates('toy', this)"
+    >
+        Toy
+    </button>
 
-        <h2 data-key="designTitle">
-            Sizin üslubunuz. Sizin dəvətnaməniz.
-        </h2>
+    <button
+        class="filter"
+        onclick="filterTemplates('nisan', this)"
+    >
+        Nişan
+    </button>
 
-        <p data-key="designText">
-            Fərqli üslublar arasından sizə ən uyğun olanı seçin.
-        </p>
+    <button
+        class="filter"
+        onclick="filterTemplates('kina', this)"
+    >
+        Kına
+    </button>
 
-    </div>
+    <button
+        class="filter"
+        onclick="filterTemplates('birthday', this)"
+    >
+        Ad günü
+    </button>
+
+    <button
+        class="filter"
+        onclick="filterTemplates('baby', this)"
+    >
+        Baby
+    </button>
+
+    <button
+        class="filter"
+        onclick="filterTemplates('other', this)"
+    >
+        Digər
+    </button>
+
+</div>
 
 
-    <div class="design-grid">
+<!-- =========================
+     COLLECTION
+========================= -->
+
+<section class="collection">
 
 
-        <!-- 01 ENVELOPE -->
+    <!-- ENVELOPE -->
 
-        <div class="design">
+    <article
+        class="template"
+        data-category="toy"
+    >
 
-            <div class="preview envelope-preview">
+        <div class="preview envelope">
 
-                <div class="envelope">
+            <div class="envelope-flap"></div>
 
-                    <div class="envelope-paper">
+            <div class="envelope-paper">
 
-                        <small>
-                            YOU ARE INVITED
-                        </small>
+                <small>
+                    TOGETHER WITH THEIR FAMILIES
+                </small>
 
-                        <h3>
-                            A Beautiful<br>
-                            Beginning
-                        </h3>
-
-                        <small>
-                            WEDDING CELEBRATION
-                        </small>
-
-                    </div>
-
-                    <div class="envelope-flap"></div>
-
-                    <div class="envelope-front"></div>
-
-                    <div class="seal">
-                        L
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="design-info">
-
-                <h3 data-key="design1">
-                    Zərf
+                <h3>
+                    The<br>
+                    Envelope
                 </h3>
 
-                <p data-key="design1Type">
-                    Romantik · İnteraktiv
-                </p>
+                <small>
+                    A NEW CHAPTER BEGINS
+                </small>
 
             </div>
 
         </div>
 
+        <div class="template-info">
 
-        <!-- 02 BOOK -->
-
-        <div class="design">
-
-            <div class="preview book-preview">
-
-                <div class="book">
-
-                    <div class="book-page left">
-
-                        <small>
-                            CHAPTER I
-                        </small>
-
-                        <h3>
-                            Our<br>
-                            Story
-                        </h3>
-
-                        <div class="book-line"></div>
-
-                        <p>
-                            Every love story
-                            deserves a beautiful
-                            beginning.
-                        </p>
-
-                    </div>
-
-                    <div class="book-page">
-
-                        <small>
-                            CHAPTER II
-                        </small>
-
-                        <h3>
-                            Forever
-                        </h3>
-
-                        <div class="book-line"></div>
-
-                        <p>
-                            A new chapter
-                            begins here.
-                        </p>
-
-                    </div>
-
-                </div>
-
+            <div class="category">
+                Toy · Interactive
             </div>
 
-            <div class="design-info">
+            <h3>
+                The Envelope
+            </h3>
 
-                <h3 data-key="design2">
-                    Hekayə Kitabı
-                </h3>
+            <p>
+                Zərf kimi açılan romantik dəvətnamə.
+            </p>
 
-                <p data-key="design2Type">
-                    Zərif · Fərqli
-                </p>
-
-            </div>
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
 
         </div>
 
+    </article>
 
-        <!-- 03 BOTANICAL -->
 
-        <div class="design">
+    <!-- BOOK -->
 
-            <div class="preview botanical-preview">
+    <article
+        class="template"
+        data-category="toy"
+    >
 
-                <div class="botanical-card">
+        <div class="preview book">
 
-                    <small>
-                        TOGETHER WITH THEIR FAMILIES
-                    </small>
+            <div class="book-cover">
+
+                <div class="book-page">
 
                     <h3>
-                        A New<br>
-                        Beginning
+                        Our<br>
+                        Story
                     </h3>
-
-                    <p>
-                        REQUEST THE PLEASURE<br>
-                        OF YOUR COMPANY
-                    </p>
-
-                    <br>
-
-                    <small>
-                        WEDDING CELEBRATION
-                    </small>
 
                 </div>
 
             </div>
 
-            <div class="design-info">
+        </div>
 
-                <h3 data-key="design3">
-                    Botanika
+        <div class="template-info">
+
+            <div class="category">
+                Toy · Story
+            </div>
+
+            <h3>
+                The Book
+            </h3>
+
+            <p>
+                Sevgi hekayənizi kitab səhifələrində təqdim edin.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- GARDEN -->
+
+    <article
+        class="template"
+        data-category="toy nisan"
+    >
+
+        <div class="preview garden">
+
+            <div class="garden-card">
+
+                <span>
+                    YOU ARE INVITED
+                </span>
+
+                <h3>
+                    Garden<br>
+                    Romance
                 </h3>
 
-                <p data-key="design3Type">
-                    Çiçəkli · Romantik
+                <span>
+                    A BEAUTIFUL BEGINNING
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="template-info">
+
+            <div class="category">
+                Toy · Nişan
+            </div>
+
+            <h3>
+                Garden Romance
+            </h3>
+
+            <p>
+                Çiçəkli və romantik bağ estetikasında.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- EDITORIAL -->
+
+    <article
+        class="template"
+        data-category="toy nisan"
+    >
+
+        <div class="preview editorial">
+
+            <div class="editorial-paper">
+
+                <div class="editorial-top">
+                    THE LOVE EDITION · 2026
+                </div>
+
+                <h3>
+                    LOVE<br>
+                    STORY
+                </h3>
+
+                <p>
+                    A celebration of two people,
+                    one story and a lifetime together.
                 </p>
 
             </div>
 
         </div>
 
+        <div class="template-info">
 
-        <!-- 04 EDITORIAL -->
-
-        <div class="design">
-
-            <div class="preview editorial-preview">
-
-                <div class="editorial-card">
-
-                    <div class="editorial-number">
-                        01
-                    </div>
-
-                    <h3>
-                        THE<br>
-                        WEDDING
-                    </h3>
-
-                    <p>
-                        A celebration of love,
-                        beautiful memories and
-                        a new chapter.
-                    </p>
-
-                    <div class="editorial-bottom">
-                        SAVE THE DATE
-                    </div>
-
-                </div>
-
+            <div class="category">
+                Toy · Nişan · Editorial
             </div>
 
-            <div class="design-info">
+            <h3>
+                The Editorial
+            </h3>
 
-                <h3 data-key="design4">
-                    Editorial
-                </h3>
+            <p>
+                Moda jurnalından ilhamlanan müasir dizayn.
+            </p>
 
-                <p data-key="design4Type">
-                    Modern · Minimal
-                </p>
-
-            </div>
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
 
         </div>
 
+    </article>
 
-        <!-- 05 LUXURY -->
 
-        <div class="design">
+    <!-- NOIR -->
 
-            <div class="preview luxury-preview">
+    <article
+        class="template"
+        data-category="toy nisan kina"
+    >
 
-                <div class="luxury-card">
+        <div class="preview noir">
 
-                    <small>
+            <div class="noir-card">
+
+                <div>
+
+                    <span>
                         AN EVENING TO REMEMBER
-                    </small>
+                    </span>
 
                     <h3>
-                        The<br>
-                        Celebration
+                        Forever
                     </h3>
-
-                    <p>
-                        WEDDING INVITATION
-                    </p>
 
                 </div>
 
             </div>
 
-            <div class="design-info">
+        </div>
 
-                <h3 data-key="design5">
-                    Maison
+        <div class="template-info">
+
+            <div class="category">
+                Toy · Nişan · Kına
+            </div>
+
+            <h3>
+                Noir
+            </h3>
+
+            <p>
+                Qaranlıq və lüks estetika.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- COASTAL -->
+
+    <article
+        class="template"
+        data-category="toy"
+    >
+
+        <div class="preview coastal">
+
+            <div class="coastal-card">
+
+                <span>
+                    SAVE THE DATE
+                </span>
+
+                <h3>
+                    By The<br>
+                    Sea
                 </h3>
 
-                <p data-key="design5Type">
-                    Lüks · Klassik
-                </p>
+                <span>
+                    2026
+                </span>
 
             </div>
 
         </div>
 
+        <div class="template-info">
 
-        <!-- 06 CLASSIC -->
+            <div class="category">
+                Toy · Coastal
+            </div>
 
-        <div class="design">
+            <h3>
+                By The Sea
+            </h3>
 
-            <div class="preview classic-preview">
+            <p>
+                Dənizdən ilhamlanan yüngül və təmiz dizayn.
+            </p>
 
-                <div class="classic-card">
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- FILM -->
+
+    <article
+        class="template"
+        data-category="toy birthday"
+    >
+
+        <div class="preview film">
+
+            <div class="film-card">
+
+                <div class="film-photo"></div>
+
+                <div class="film-info">
+
+                    <h3>
+                        Our Moment
+                    </h3>
 
                     <small>
-                        WITH JOY IN OUR HEARTS
+                        A LOVE STORY
                     </small>
-
-                    <h3>
-                        You Are<br>
-                        Invited
-                    </h3>
-
-                    <p>
-                        TO CELEBRATE LOVE
-                    </p>
-
-                    <div class="classic-symbol">
-                        ❦
-                    </div>
 
                 </div>
 
             </div>
 
-            <div class="design-info">
+        </div>
 
-                <h3 data-key="design6">
-                    Klassik
+        <div class="template-info">
+
+            <div class="category">
+                Toy · Ad günü
+            </div>
+
+            <h3>
+                The Film
+            </h3>
+
+            <p>
+                Foto və video sevənlər üçün film estetikasında.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- MINIMAL -->
+
+    <article
+        class="template"
+        data-category="toy nisan kina"
+    >
+
+        <div class="preview minimal">
+
+            <div class="minimal-card">
+
+                <span>
+                    YOU ARE INVITED
+                </span>
+
+                <h3>
+                    Simply<br>
+                    Us
                 </h3>
 
-                <p data-key="design6Type">
-                    Ənənəvi · Zərif
-                </p>
+                <span>
+                    12 · 09 · 2026
+                </span>
 
             </div>
 
         </div>
 
+        <div class="template-info">
 
-    </div>
-
-
-    <div class="view-all">
-
-        <a
-            href="client-form.html"
-            data-key="viewAll"
-        >
-            ÖZ DƏVƏTNAMƏNİZİ YARADIN →
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section class="about">
-
-    <div class="about-grid">
-
-        <div class="about-image"></div>
-
-        <div class="about-text">
-
-            <div
-                class="eyebrow"
-                data-key="aboutEyebrow"
-            >
-                Luna haqqında
+            <div class="category">
+                Toy · Nişan · Kına
             </div>
 
-            <h2 data-key="aboutTitle">
-                Kiçik bir ekran,
-                böyük bir xatirə.
-            </h2>
-
-            <p data-key="aboutText1">
-                Luna ilə dəvətnamələr sadəcə
-                məlumat vermək üçün deyil,
-                qonaqlarınızda ilk təəssüratı
-                yaratmaq üçün hazırlanır.
-            </p>
-
-            <p data-key="aboutText2">
-                Adlarınız, tarixiniz, şəkilləriniz,
-                musiqiniz, məkanınız və hekayəniz
-                sizin üçün hazırlanmış xüsusi
-                rəqəmsal dəvətnamədə birləşir.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     HOW IT WORKS
-========================= -->
-
-<section class="how">
-
-    <div class="how-header">
-
-        <div
-            class="eyebrow"
-            data-key="howEyebrow"
-        >
-            Sadə və rahat
-        </div>
-
-        <h2 data-key="howTitle">
-            Necə işləyir?
-        </h2>
-
-    </div>
-
-
-    <div class="steps">
-
-
-        <div class="step">
-
-            <div class="step-number">
-                01
-            </div>
-
-            <h3 data-key="step1Title">
-                Dizaynınızı seçin
+            <h3>
+                Simply Us
             </h3>
 
-            <p data-key="step1Text">
-                Kolleksiyamızdan xüsusi gününüzə
-                uyğun dəvətnamə üslubunu seçin.
+            <p>
+                Sakit, minimal və zamansız görünüş.
             </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
 
         </div>
 
+    </article>
 
-        <div class="step">
 
-            <div class="step-number">
-                02
+    <!-- VINTAGE -->
+
+    <article
+        class="template"
+        data-category="nisan kina"
+    >
+
+        <div class="preview vintage">
+
+            <div class="vintage-card">
+
+                <span>
+                    YOU ARE CORDIALLY INVITED
+                </span>
+
+                <h3>
+                    An Evening<br>
+                    of Love
+                </h3>
+
+                <span>
+                    EST. 2026
+                </span>
+
             </div>
 
-            <h3 data-key="step2Title">
-                Məlumatlarınızı göndərin
-            </h3>
-
-            <p data-key="step2Text">
-                Adlarınızı, tarixi, məkanı,
-                şəkilləri və digər detalları bizə göndərin.
-            </p>
-
         </div>
 
+        <div class="template-info">
 
-        <div class="step">
-
-            <div class="step-number">
-                03
+            <div class="category">
+                Nişan · Kına · Vintage
             </div>
 
-            <h3 data-key="step3Title">
-                Linkinizi paylaşın
+            <h3>
+                Vintage Love
             </h3>
 
-            <p data-key="step3Text">
-                Hazır dəvətnamənizi link vasitəsilə
-                qonaqlarınızla rahatlıqla paylaşın.
+            <p>
+                Retro və klassik dəvətnamə üslubu.
             </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
 
         </div>
 
+    </article>
 
-    </div>
+
+    <!-- POSTCARD -->
+
+    <article
+        class="template"
+        data-category="birthday other"
+    >
+
+        <div class="preview postcard">
+
+            <div class="postcard-card">
+
+                <div class="stamp">
+                    ♡
+                </div>
+
+                <small>
+                    GREETINGS FROM
+                </small>
+
+                <h3>
+                    Our<br>
+                    Celebration
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="template-info">
+
+            <div class="category">
+                Ad günü · Digər
+            </div>
+
+            <h3>
+                The Postcard
+            </h3>
+
+            <p>
+                Açıqca formasında əyləncəli dizayn.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- BABY -->
+
+    <article
+        class="template"
+        data-category="baby"
+    >
+
+        <div class="preview garden">
+
+            <div class="garden-card">
+
+                <span>
+                    A LITTLE MIRACLE
+                </span>
+
+                <h3>
+                    Baby<br>
+                    on the Way
+                </h3>
+
+                <span>
+                    WITH LOVE
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="template-info">
+
+            <div class="category">
+                Baby Shower
+            </div>
+
+            <h3>
+                Little Miracle
+            </h3>
+
+            <p>
+                Baby shower üçün incə və sevimli dizayn.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- BIRTHDAY -->
+
+    <article
+        class="template"
+        data-category="birthday"
+    >
+
+        <div class="preview noir">
+
+            <div class="noir-card">
+
+                <div>
+
+                    <span>
+                        LET'S CELEBRATE
+                    </span>
+
+                    <h3>
+                        Birthday
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="template-info">
+
+            <div class="category">
+                Ad günü
+            </div>
+
+            <h3>
+                Birthday Night
+            </h3>
+
+            <p>
+                Gecə tədbirləri və ad günləri üçün cəsarətli dizayn.
+            </p>
+
+            <a href="client-form.html" class="view">
+                BU DİZAYNI SEÇ →
+            </a>
+
+        </div>
+
+    </article>
+
 
 </section>
 
@@ -1593,24 +1747,31 @@ footer p {
      CTA
 ========================= -->
 
-<section class="pricing-cta">
+<section class="cta">
 
-    <h2 data-key="ctaTitle">
-        Sizin hekayəniz
-        fərqli olmağa layiqdir.
+    <small>
+        MADE FOR YOUR MOMENT
+    </small>
+
+    <h2>
+        Öz hekayənizi<br>
+        yaradaq.
     </h2>
 
-    <p data-key="ctaText">
-        Ən xüsusi gününüz üçün sizə uyğun
-        rəqəmsal dəvətnaməni birlikdə yaradaq.
+    <p>
+
+        Hazır dizaynlardan birini seçin
+        və məlumatlarınızı bizə göndərin.
+        Dəvətnamənizi sizin üçün
+        fərdiləşdirək.
+
     </p>
 
     <a
-        href="pricing.html"
-        class="pricing-button"
-        data-key="ctaButton"
+        href="client-form.html"
+        class="cta-button"
     >
-        PAKETLƏRƏ BAX
+        SİFARİŞƏ BAŞLA
     </a>
 
 </section>
@@ -1623,474 +1784,60 @@ footer p {
 <footer>
 
     <h2>
-        Luna
+        LUNA
     </h2>
 
-    <p data-key="footerText">
+    <p>
         Ən gözəl anlarınız üçün rəqəmsal dəvətnamələr.
+    </p>
+
+    <p>
+        © 2026 Luna Invitations
     </p>
 
 </footer>
 
 
-<!-- =========================
-     LANGUAGE SYSTEM
-========================= -->
-
 <script>
 
-const translations = {
-
-    az: {
-
-        navDesigns: "Dizaynlar",
-        navPricing: "Paketlər",
-        navOrder: "Sifariş",
-
-        heroEyebrow: "Rəqəmsal dəvətnamələr",
-
-        heroDescription:
-            "Ən gözəl anlarınız üçün, ən xüsusi rəqəmsal dəvətnamələr.",
-
-        heroButton:
-            "DİZAYNLARA BAX",
-
-        heroOrder:
-            "SİFARİŞ VER",
-
-        scroll:
-            "Kəşf et",
-
-        introEyebrow:
-            "Sizin hekayəniz",
-
-        introTitle:
-            "Dəvətnamədən daha artığı",
-
-        introText:
-            "Hər bir dəvətnaməni sizin xüsusi gününüzün ruhuna uyğun hazırlayırıq. Zərif dizayn, gözəl animasiyalar və sizin hekayəniz — hamısı bir yerdə.",
-
-        designEyebrow:
-            "Kolleksiyamız",
-
-        designTitle:
-            "Sizin üslubunuz. Sizin dəvətnaməniz.",
-
-        designText:
-            "Fərqli üslublar arasından sizə ən uyğun olanı seçin.",
-
-        design1:
-            "Zərf",
-
-        design1Type:
-            "Romantik · İnteraktiv",
-
-        design2:
-            "Hekayə Kitabı",
-
-        design2Type:
-            "Zərif · Fərqli",
-
-        design3:
-            "Botanika",
-
-        design3Type:
-            "Çiçəkli · Romantik",
-
-        design4:
-            "Editorial",
-
-        design4Type:
-            "Modern · Minimal",
-
-        design5:
-            "Maison",
-
-        design5Type:
-            "Lüks · Klassik",
-
-        design6:
-            "Klassik",
-
-        design6Type:
-            "Ənənəvi · Zərif",
-
-        viewAll:
-            "ÖZ DƏVƏTNAMƏNİZİ YARADIN →",
-
-        aboutEyebrow:
-            "Luna haqqında",
-
-        aboutTitle:
-            "Kiçik bir ekran, böyük bir xatirə.",
-
-        aboutText1:
-            "Luna ilə dəvətnamələr sadəcə məlumat vermək üçün deyil, qonaqlarınızda ilk təəssüratı yaratmaq üçün hazırlanır.",
-
-        aboutText2:
-            "Adlarınız, tarixiniz, şəkilləriniz, musiqiniz, məkanınız və hekayəniz sizin üçün hazırlanmış xüsusi rəqəmsal dəvətnamədə birləşir.",
-
-        howEyebrow:
-            "Sadə və rahat",
-
-        howTitle:
-            "Necə işləyir?",
-
-        step1Title:
-            "Dizaynınızı seçin",
-
-        step1Text:
-            "Kolleksiyamızdan xüsusi gününüzə uyğun dəvətnamə üslubunu seçin.",
-
-        step2Title:
-            "Məlumatlarınızı göndərin",
-
-        step2Text:
-            "Adlarınızı, tarixi, məkanı, şəkilləri və digər detalları bizə göndərin.",
-
-        step3Title:
-            "Linkinizi paylaşın",
-
-        step3Text:
-            "Hazır dəvətnamənizi link vasitəsilə qonaqlarınızla rahatlıqla paylaşın.",
-
-        ctaTitle:
-            "Sizin hekayəniz fərqli olmağa layiqdir.",
-
-        ctaText:
-            "Ən xüsusi gününüz üçün sizə uyğun rəqəmsal dəvətnaməni birlikdə yaradaq.",
-
-        ctaButton:
-            "PAKETLƏRƏ BAX",
-
-        footerText:
-            "Ən gözəl anlarınız üçün rəqəmsal dəvətnamələr."
-
-    },
-
-
-    tr: {
-
-        navDesigns: "Tasarımlar",
-        navPricing: "Paketler",
-        navOrder: "Sipariş",
-
-        heroEyebrow: "Dijital davetiyeler",
-
-        heroDescription:
-            "En güzel anlarınız için, size özel dijital davetiyeler.",
-
-        heroButton:
-            "TASARIMLARA BAK",
-
-        heroOrder:
-            "SİPARİŞ VER",
-
-        scroll:
-            "Keşfet",
-
-        introEyebrow:
-            "Sizin hikayeniz",
-
-        introTitle:
-            "Bir davetiyeden daha fazlası",
-
-        introText:
-            "Her davetiyeyi özel gününüzün ruhuna uygun olarak hazırlıyoruz. Zarif tasarım, güzel animasyonlar ve sizin hikayeniz — hepsi bir arada.",
-
-        designEyebrow:
-            "Koleksiyonumuz",
-
-        designTitle:
-            "Sizin tarzınız. Sizin davetiyeniz.",
-
-        designText:
-            "Farklı stiller arasından size en uygun olanı seçin.",
-
-        design1:
-            "Zarf",
-
-        design1Type:
-            "Romantik · İnteraktif",
-
-        design2:
-            "Hikâye Kitabı",
-
-        design2Type:
-            "Zarif · Farklı",
-
-        design3:
-            "Botanik",
-
-        design3Type:
-            "Çiçekli · Romantik",
-
-        design4:
-            "Editorial",
-
-        design4Type:
-            "Modern · Minimal",
-
-        design5:
-            "Maison",
-
-        design5Type:
-            "Lüks · Klasik",
-
-        design6:
-            "Klasik",
-
-        design6Type:
-            "Geleneksel · Zarif",
-
-        viewAll:
-            "DAVETİYENİZİ OLUŞTURUN →",
-
-        aboutEyebrow:
-            "Luna hakkında",
-
-        aboutTitle:
-            "Küçük bir ekran, büyük bir hatıra.",
-
-        aboutText1:
-            "Luna davetiyeleri sadece bilgi vermek için değil, misafirlerinizde ilk izlenimi yaratmak için tasarlanır.",
-
-        aboutText2:
-            "İsimleriniz, tarihiniz, fotoğraflarınız, müziğiniz, mekanınız ve hikayeniz size özel dijital davetiyede bir araya gelir.",
-
-        howEyebrow:
-            "Kolay ve sade",
-
-        howTitle:
-            "Nasıl çalışır?",
-
-        step1Title:
-            "Tasarımınızı seçin",
-
-        step1Text:
-            "Koleksiyonumuzdan özel gününüze uygun davetiye stilini seçin.",
-
-        step2Title:
-            "Bilgilerinizi gönderin",
-
-        step2Text:
-            "İsimlerinizi, tarihi, mekanı, fotoğrafları ve diğer detayları bize gönderin.",
-
-        step3Title:
-            "Linkinizi paylaşın",
-
-        step3Text:
-            "Hazır davetiyenizi link aracılığıyla misafirlerinizle kolayca paylaşın.",
-
-        ctaTitle:
-            "Hikayeniz farklı olmayı hak ediyor.",
-
-        ctaText:
-            "Özel gününüz için size uygun dijital davetiyeyi birlikte oluşturalım.",
-
-        ctaButton:
-            "PAKETLERE BAK",
-
-        footerText:
-            "En güzel anlarınız için dijital davetiyeler."
-
-    },
-
-
-    en: {
-
-        navDesigns: "Designs",
-        navPricing: "Pricing",
-        navOrder: "Order",
-
-        heroEyebrow:
-            "Digital invitations",
-
-        heroDescription:
-            "Beautiful digital invitations for your most special moments.",
-
-        heroButton:
-            "EXPLORE DESIGNS",
-
-        heroOrder:
-            "ORDER NOW",
-
-        scroll:
-            "Explore",
-
-        introEyebrow:
-            "Your story",
-
-        introTitle:
-            "More than an invitation",
-
-        introText:
-            "Every invitation is thoughtfully created around the feeling of your special day. Elegant design, beautiful details and your story — all in one place.",
-
-        designEyebrow:
-            "Our collection",
-
-        designTitle:
-            "Your style. Your invitation.",
-
-        designText:
-            "Choose the design that feels right for your celebration.",
-
-        design1:
-            "The Envelope",
-
-        design1Type:
-            "Romantic · Interactive",
-
-        design2:
-            "The Storybook",
-
-        design2Type:
-            "Elegant · Unique",
-
-        design3:
-            "Botanical",
-
-        design3Type:
-            "Floral · Romantic",
-
-        design4:
-            "Editorial",
-
-        design4Type:
-            "Modern · Minimal",
-
-        design5:
-            "Maison",
-
-        design5Type:
-            "Luxury · Timeless",
-
-        design6:
-            "Classic",
-
-        design6Type:
-            "Traditional · Refined",
-
-        viewAll:
-            "CREATE YOUR INVITATION →",
-
-        aboutEyebrow:
-            "About Luna",
-
-        aboutTitle:
-            "A small screen, a beautiful memory.",
-
-        aboutText1:
-            "Luna invitations are created not simply to share information, but to create a beautiful first impression for your guests.",
-
-        aboutText2:
-            "Your names, date, photographs, music, venue and story come together in a digital invitation made especially for you.",
-
-        howEyebrow:
-            "Simple & beautiful",
-
-        howTitle:
-            "How it works",
-
-        step1Title:
-            "Choose your design",
-
-        step1Text:
-            "Explore our collection and choose the invitation style that fits your celebration.",
-
-        step2Title:
-            "Send your details",
-
-        step2Text:
-            "Share your names, date, venue, photographs and all the details you would like included.",
-
-        step3Title:
-            "Share your link",
-
-        step3Text:
-            "Receive your personalised invitation and easily share it with your guests.",
-
-        ctaTitle:
-            "Your story deserves to be different.",
-
-        ctaText:
-            "Let's create a digital invitation made especially for your most beautiful day.",
-
-        ctaButton:
-            "VIEW PACKAGES",
-
-        footerText:
-            "Digital invitations for beautiful moments."
-
-    }
-
-};
-
-
-function changeLanguage(language) {
-
-    const elements =
-        document.querySelectorAll("[data-key]");
-
-    elements.forEach(function(element) {
-
-        const key =
-            element.getAttribute("data-key");
-
-        if (
-            translations[language] &&
-            translations[language][key]
-        ) {
-
-            element.textContent =
-                translations[language][key];
-
-        }
-
-    });
-
+function filterTemplates(category, button){
 
     document
-        .querySelectorAll(".language")
-        .forEach(function(button) {
+        .querySelectorAll(".filter")
+        .forEach(function(btn){
 
-            button.classList.remove("active");
+            btn.classList.remove("active");
 
         });
 
+    button.classList.add("active");
+
 
     document
-        .querySelector(
-            `.language[onclick="changeLanguage('${language}')"]`
-        )
-        .classList.add("active");
+        .querySelectorAll(".template")
+        .forEach(function(template){
 
+            const categories =
+                template.dataset.category.split(" ");
 
-    document.documentElement.lang =
-        language;
+            if(
+                category === "all" ||
+                categories.includes(category)
+            ){
 
+                template.style.display = "block";
 
-    localStorage.setItem(
-        "luna-language",
-        language
-    );
+            }else{
 
-}
+                template.style.display = "none";
 
+            }
 
-const savedLanguage =
-    localStorage.getItem("luna-language");
-
-
-if (savedLanguage) {
-
-    changeLanguage(savedLanguage);
+        });
 
 }
 
 </script>
-
 
 </body>
 
