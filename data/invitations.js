@@ -1,23 +1,21 @@
 const invitations = {
 
     /* =====================================================
-       AYSEL & MURAD
+       AYSEL & MURAD — BASIC
     ===================================================== */
 
     "aysel-murad": {
 
-        bride: "Aysel",
+        package: "basic",
 
+        bride: "Aysel",
         groom: "Murad",
 
         date: "12 September 2026",
-
         dateShort: "12 · 09 · 2026",
-
         time: "19:00",
 
         location: "Baku, Azerbaijan",
-
         venue: "Example Wedding Hall",
 
         map:
@@ -67,23 +65,21 @@ const invitations = {
 
 
     /* =====================================================
-       LEYLA & KAMRAN
+       LEYLA & KAMRAN — PREMIUM
     ===================================================== */
 
     "leyla-kamran": {
 
-        bride: "Leyla",
+        package: "premium",
 
+        bride: "Leyla",
         groom: "Kamran",
 
         date: "20 October 2026",
-
         dateShort: "20 · 10 · 2026",
-
         time: "18:30",
 
         location: "Baku, Azerbaijan",
-
         venue: "Example Wedding Hall",
 
         map:
@@ -132,23 +128,21 @@ const invitations = {
 
 
     /* =====================================================
-       NIGAR & ELVIN
+       NIGAR & ELVIN — LUXURY
     ===================================================== */
 
     "nigar-elvin": {
 
-        bride: "Nigar",
+        package: "luxury",
 
+        bride: "Nigar",
         groom: "Elvin",
 
         date: "20 October 2026",
-
         dateShort: "20 · 10 · 2026",
-
         time: "19:00",
 
         location: "Baku, Azerbaijan",
-
         venue: "Crystal Hall",
 
         map:
