@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +34,6 @@
             margin: auto;
             padding: 0 20px;
         }
-
 
         /* =========================
            HERO
@@ -102,7 +102,6 @@
             color: #403a35;
         }
 
-
         /* =========================
            COUNTDOWN
         ========================= */
@@ -155,7 +154,6 @@
             color: #9a8776;
         }
 
-
         /* =========================
            COMMON SECTION
         ========================= */
@@ -185,7 +183,6 @@
             font-weight: normal;
         }
 
-
         /* =========================
            STORY
         ========================= */
@@ -203,7 +200,6 @@
             line-height: 2;
             font-size: 17px;
         }
-
 
         /* =========================
            GALLERY
@@ -242,7 +238,6 @@
         .gallery-item:hover img {
             transform: scale(1.05);
         }
-
 
         /* =========================
            DETAILS
@@ -304,7 +299,6 @@
             color: white;
         }
 
-
         /* =========================
            MUSIC
         ========================= */
@@ -319,7 +313,6 @@
             max-width: 500px;
             margin: auto;
         }
-
 
         /* =========================
            RSVP
@@ -381,7 +374,6 @@
             opacity: 0.85;
         }
 
-
         /* =========================
            FOOTER
         ========================= */
@@ -400,7 +392,6 @@
             font-weight: normal;
             margin-bottom: 15px;
         }
-
 
         /* =========================
            ERROR
@@ -423,7 +414,6 @@
             font-weight: normal;
             margin-bottom: 15px;
         }
-
 
         /* =========================
            MOBILE
@@ -483,9 +473,7 @@
 
 </head>
 
-
 <body>
-
 
     <!-- =========================
          ERROR
@@ -565,7 +553,6 @@
 
             </div>
 
-
             <div class="time-box">
 
                 <span
@@ -581,7 +568,6 @@
 
             </div>
 
-
             <div class="time-box">
 
                 <span
@@ -596,7 +582,6 @@
                 </span>
 
             </div>
-
 
             <div class="time-box">
 
@@ -699,7 +684,6 @@
             </div>
 
             <div class="details">
-
 
                 <div class="card">
 
@@ -804,7 +788,6 @@
 
             </div>
 
-
             <form
                 action="https://formspree.io/f/mqpzyklb"
                 method="POST"
@@ -816,13 +799,11 @@
                     id="invitationIdField"
                 >
 
-
                 <input
                     type="hidden"
                     name="couple"
                     id="coupleField"
                 >
-
 
                 <label for="guestName">
                     Your Name
@@ -835,7 +816,6 @@
                     placeholder="Enter your name"
                     required
                 >
-
 
                 <label for="attendance">
                     Will you join us?
@@ -860,7 +840,6 @@
                     </option>
 
                 </select>
-
 
                 <label for="guestNumber">
                     Number of guests
@@ -890,7 +869,6 @@
 
                 </select>
 
-
                 <label for="message">
                     Message
                 </label>
@@ -900,7 +878,6 @@
                     id="message"
                     placeholder="Leave a message..."
                 ></textarea>
-
 
                 <button
                     class="submit"
@@ -958,8 +935,6 @@
 
         Customer information:
         data/invitations.js
-
-        DO NOT EDIT CUSTOMER DATA HERE.
         =====================================================
         */
 
@@ -973,8 +948,27 @@
                 window.location.search
             );
 
+
+        /*
+        IMPORTANT:
+
+        If there is no ?id=... in the URL,
+        Aysel & Murad will open by default.
+
+        Example:
+
+        Main page:
+        /digital-invitation/
+
+        Aysel:
+        /digital-invitation/?id=aysel-murad
+
+        Nigar & Elvin:
+        /digital-invitation/?id=nigar-elvin
+        */
+
         const invitationId =
-            params.get("id");
+            params.get("id") || "aysel-murad";
 
 
         /* =========================
@@ -1014,7 +1008,6 @@
         ========================= */
 
         if (invitation) {
-
 
             /* =========================
                COUPLE NAME
@@ -1143,42 +1136,49 @@
             gallery.innerHTML = "";
 
 
-            invitation.images
-                .slice(0, photoLimit)
-                .forEach(
-                    function(image) {
+            if (
+                invitation.images &&
+                invitation.images.length > 0
+            ) {
 
-                        const item =
-                            document.createElement(
-                                "div"
-                            );
+                invitation.images
+                    .slice(0, photoLimit)
+                    .forEach(
+                        function(image) {
 
-
-                        item.className =
-                            "gallery-item";
-
-
-                        const img =
-                            document.createElement(
-                                "img"
-                            );
+                            const item =
+                                document.createElement(
+                                    "div"
+                                );
 
 
-                        img.src =
-                            image;
+                            item.className =
+                                "gallery-item";
 
 
-                        img.alt =
-                            coupleName +
-                            " wedding photo";
+                            const img =
+                                document.createElement(
+                                    "img"
+                                );
 
 
-                        item.appendChild(img);
+                            img.src =
+                                image;
 
-                        gallery.appendChild(item);
 
-                    }
-                );
+                            img.alt =
+                                coupleName +
+                                " wedding photo";
+
+
+                            item.appendChild(img);
+
+                            gallery.appendChild(item);
+
+                        }
+                    );
+
+            }
 
 
             /* =========================
@@ -1411,3 +1411,4 @@
 </body>
 
 </html>
+```
