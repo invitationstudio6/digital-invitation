@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="az">
 
@@ -7,12 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Luna | Dəvətnamələr</title>
+<title>Luna — Rəqəmsal Dəvətnamələr</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&family=Great+Vibes&family=Italiana&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
 
 <style>
 
@@ -20,80 +20,125 @@
    RESET
 ===================================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    background: #f5f0e9;
-    color: #302923;
-    font-family: "DM Sans", sans-serif;
+body{
+    background:#f4efe8;
+    color:#302923;
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
 }
 
-button {
-    font-family: inherit;
+button{
+    font-family:inherit;
 }
 
 
 /* =====================================================
-   NAVIGATION
+   BACKGROUND DECORATION
 ===================================================== */
 
-nav {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-
-    height: 78px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 6%;
-
-    background: rgba(249,246,240,.88);
-    backdrop-filter: blur(20px);
-
-    border-bottom: 1px solid rgba(50,40,30,.08);
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:#ded0bf;
+    filter:blur(100px);
+    opacity:.22;
+    top:-180px;
+    left:-180px;
+    pointer-events:none;
 }
 
-.logo {
-    font-family: "Italiana", serif;
-    font-size: 36px;
-    letter-spacing: 2px;
+body::after{
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:#cbb7a0;
+    filter:blur(120px);
+    opacity:.18;
+    right:-180px;
+    bottom:-150px;
+    pointer-events:none;
 }
 
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+
+/* =====================================================
+   NAV
+===================================================== */
+
+nav{
+    height:82px;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(247,243,237,.78);
+    backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(60,45,30,.08);
 }
 
-.nav-links a {
-    color: #443a32;
-    text-decoration: none;
-
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.logo{
+    font-family:"Italiana",serif;
+    font-size:37px;
+    letter-spacing:2px;
 }
 
-.lang {
-    border: 1px solid #cfc4b7;
-    background: transparent;
+.nav-center{
+    display:flex;
+    gap:35px;
+}
 
-    border-radius: 30px;
+.nav-center a{
+    text-decoration:none;
+    color:#4b4139;
 
-    padding: 8px 13px;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
 
-    font-size: 10px;
+    transition:.3s;
+}
+
+.nav-center a:hover{
+    color:#9a765f;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.language{
+    border:1px solid #cdbfb1;
+    background:transparent;
+
+    padding:9px 12px;
+
+    border-radius:30px;
+
+    font-size:10px;
 }
 
 
@@ -101,149 +146,262 @@ nav {
    HERO
 ===================================================== */
 
-.hero {
-    min-height: 58vh;
+.hero{
+    min-height:650px;
 
-    position: relative;
+    position:relative;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    text-align: center;
+    text-align:center;
 
-    overflow: hidden;
+    overflow:hidden;
 
     background:
-        radial-gradient(circle at 15% 20%, #fffdfa 0 4%, transparent 25%),
-        radial-gradient(circle at 85% 75%, #d9c7b4 0, transparent 27%),
-        linear-gradient(135deg,#eee7dc,#f7f3ed);
+        radial-gradient(
+            circle at 20% 40%,
+            rgba(255,255,255,.9),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 80% 60%,
+            rgba(205,187,165,.5),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #eee7dd,
+            #faf7f2
+        );
 }
 
-.hero::before {
-    content: "✦";
+.hero-decoration{
+    position:absolute;
 
-    position: absolute;
+    width:420px;
+    height:560px;
 
-    left: 9%;
-    top: 20%;
+    border:1px solid rgba(110,85,65,.14);
 
-    font-size: 100px;
+    transform:rotate(25deg);
 
-    color: rgba(90,70,50,.06);
-
-    animation: float 6s ease-in-out infinite;
+    left:-210px;
+    top:80px;
 }
 
-.hero::after {
-    content: "✦";
+.hero-decoration.two{
+    left:auto;
+    right:-210px;
 
-    position: absolute;
-
-    right: 10%;
-    bottom: 15%;
-
-    font-size: 130px;
-
-    color: rgba(90,70,50,.05);
-
-    animation: float 7s ease-in-out infinite reverse;
+    transform:rotate(-25deg);
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2;
+.hero-inner{
+    position:relative;
+    z-index:2;
 
-    max-width: 850px;
+    max-width:950px;
 
-    padding: 80px 25px;
+    padding:100px 25px;
 }
 
-.hero-label {
-    color: #988674;
+.hero-small{
+    font-size:10px;
 
-    font-size: 10px;
+    letter-spacing:7px;
 
-    letter-spacing: 6px;
+    color:#9c806b;
 
-    text-transform: uppercase;
+    text-transform:uppercase;
 
-    margin-bottom: 25px;
+    margin-bottom:30px;
 }
 
-.hero h1 {
-    font-family: "Cormorant Garamond", serif;
+.hero h1{
+    font-family:"Cormorant Garamond",serif;
 
-    font-weight: 300;
+    font-size:clamp(70px,10vw,145px);
 
-    font-size: clamp(65px,10vw,125px);
+    line-height:.78;
 
-    line-height: .8;
+    font-weight:300;
+
+    letter-spacing:-4px;
 }
 
-.hero h1 em {
-    font-family: "Playfair Display", serif;
+.hero h1 span{
+    display:block;
 
-    font-size: .65em;
+    font-family:"Playfair Display",serif;
 
-    display: block;
+    font-size:.42em;
 
-    margin-top: 20px;
+    font-style:italic;
+
+    letter-spacing:0;
+
+    margin-top:28px;
+
+    color:#806956;
 }
 
-.hero p {
-    max-width: 600px;
+.hero-description{
+    max-width:590px;
 
-    margin: 35px auto 0;
+    margin:42px auto 0;
 
-    color: #776b61;
+    font-size:13px;
 
-    font-size: 14px;
+    line-height:2;
 
-    line-height: 1.9;
+    color:#776b60;
+}
+
+.hero-button{
+    display:inline-flex;
+
+    margin-top:40px;
+
+    padding:15px 27px;
+
+    background:#3d342d;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    transition:.35s;
+}
+
+.hero-button:hover{
+    transform:translateY(-3px);
+
+    background:#725747;
 }
 
 
 /* =====================================================
-   FILTER
+   INTRO
 ===================================================== */
 
-.filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.intro{
+    max-width:1150px;
 
-    gap: 10px;
+    margin:auto;
 
-    padding: 28px 20px;
+    padding:100px 30px 55px;
 
-    background: #eee8df;
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:80px;
+
+    align-items:end;
 }
 
-.filter {
-    border: 1px solid #cfc2b4;
+.intro-label{
+    font-size:9px;
 
-    background: transparent;
+    letter-spacing:5px;
 
-    border-radius: 40px;
+    color:#9b816d;
 
-    padding: 11px 21px;
+    text-transform:uppercase;
+}
 
-    font-size: 10px;
+.intro h2{
+    font-family:"Cormorant Garamond",serif;
 
-    letter-spacing: 2px;
+    font-size:55px;
 
-    text-transform: uppercase;
+    line-height:.95;
 
-    cursor: pointer;
+    font-weight:400;
 
-    transition: .3s;
+    margin-top:20px;
+}
+
+.intro-text{
+    color:#776c62;
+
+    font-size:13px;
+
+    line-height:2;
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.filters-wrapper{
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:20px 30px 50px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid rgba(60,45,30,.1);
+}
+
+.collection-count{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:22px;
+
+    color:#8c7969;
+}
+
+.filters{
+    display:flex;
+
+    gap:8px;
+}
+
+.filter{
+    border:1px solid #cfc1b3;
+
+    background:transparent;
+
+    color:#55483e;
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-size:9px;
+
+    letter-spacing:1.8px;
+
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+    transition:.3s;
 }
 
 .filter:hover,
-.filter.active {
-    background: #40372f;
-    color: white;
+.filter.active{
+    background:#3d342d;
+
+    border-color:#3d342d;
+
+    color:#fff;
 }
 
 
@@ -251,766 +409,805 @@ nav {
    COLLECTION
 ===================================================== */
 
-.collection {
-    max-width: 1450px;
+.collection{
+    max-width:1250px;
 
-    margin: auto;
+    margin:auto;
 
-    padding: 65px 5% 120px;
+    padding:65px 30px 130px;
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns:repeat(12,1fr);
 
-    gap: 70px 45px;
+    gap:75px 35px;
 }
 
-.design {
-    cursor: pointer;
+
+/* =====================================================
+   DESIGN ITEM
+===================================================== */
+
+.design{
+    grid-column:span 6;
+
+    min-width:0;
 }
 
-.preview {
-    height: min(700px,70vw);
+.design:nth-child(3),
+.design:nth-child(6){
+    grid-column:span 7;
+}
 
-    min-height: 480px;
+.design:nth-child(4),
+.design:nth-child(5){
+    grid-column:span 5;
+}
 
-    position: relative;
+.preview{
+    position:relative;
 
-    overflow: hidden;
+    height:650px;
 
-    border-radius: 3px;
+    overflow:hidden;
 
     box-shadow:
-        0 30px 70px rgba(40,30,20,.14);
+        0 25px 70px rgba(50,35,20,.15);
 
     transition:
-        transform .6s cubic-bezier(.2,.8,.2,1),
-        box-shadow .6s ease;
+        transform .7s cubic-bezier(.2,.8,.2,1),
+        box-shadow .7s;
 }
 
-.design:hover .preview {
-    transform: translateY(-12px);
+.design:hover .preview{
+    transform:translateY(-12px);
 
     box-shadow:
-        0 45px 90px rgba(40,30,20,.22);
+        0 40px 90px rgba(50,35,20,.23);
 }
 
-.design-info {
-    padding: 20px 4px;
+.design-info{
+    padding:22px 3px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    gap:20px;
 }
 
-.design-info h2 {
-    font-family: "Cormorant Garamond",serif;
+.design-title h3{
+    font-family:"Cormorant Garamond",serif;
 
-    font-size: 32px;
+    font-size:31px;
 
-    font-weight: 400;
+    font-weight:400;
 }
 
-.design-info p {
-    margin-top: 6px;
+.design-title p{
+    margin-top:5px;
 
-    color: #8d7e70;
+    color:#968476;
 
-    font-size: 10px;
+    font-size:9px;
 
-    letter-spacing: 2px;
+    letter-spacing:2px;
+}
+
+.view-button{
+    white-space:nowrap;
+
+    border:1px solid #c8b8a9;
+
+    background:transparent;
+
+    padding:12px 18px;
+
+    color:#54483f;
+
+    font-size:9px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.view-button:hover{
+    background:#3d342d;
+
+    border-color:#3d342d;
+
+    color:#fff;
 }
 
 
 /* =====================================================
-   01 — ENVELOPE
+   ENVELOPE
 ===================================================== */
 
-.envelope-design {
+.envelope-preview{
     background:
-        radial-gradient(circle at 50% 0,#fff,#ead9c4 60%);
+        radial-gradient(circle at 50% 15%,#fff,#e4d2bd);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    perspective: 1200px;
+    align-items:center;
+    justify-content:center;
+
+    perspective:1300px;
 }
 
-.envelope-scene {
-    width: 72%;
-    height: 48%;
+.envelope-scene{
+    width:68%;
+    height:46%;
 
-    position: relative;
+    position:relative;
 
-    transform-style: preserve-3d;
+    transform-style:preserve-3d;
 
-    animation: envelopeFloat 4s ease-in-out infinite;
+    animation:sceneFloat 5s ease-in-out infinite;
 }
 
-.envelope-back {
-    position: absolute;
+.env-back{
+    position:absolute;
 
-    inset: 0;
+    inset:0;
 
-    background: #d8bea2;
-
-    border-radius: 3px;
+    background:#d4b89a;
 
     box-shadow:
-        0 35px 45px rgba(50,35,20,.25);
+        0 40px 60px rgba(50,30,15,.25);
 }
 
-.envelope-left {
-    position: absolute;
+.env-paper{
+    position:absolute;
 
-    inset: 0;
+    width:70%;
+    height:110%;
 
-    background: #cdae8d;
+    left:15%;
+    top:-35%;
 
-    clip-path: polygon(0 0,50% 50%,0 100%);
+    background:#fffdf8;
 
-    z-index: 5;
+    z-index:3;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(50,30,15,.15);
+
+    animation:paperRise 5s ease-in-out infinite;
 }
 
-.envelope-right {
-    position: absolute;
+.env-paper h4{
+    font-family:"Allura",cursive;
 
-    inset: 0;
+    font-size:54px;
 
-    background: #d7bda0;
+    color:#765a4c;
 
-    clip-path: polygon(100% 0,50% 50%,100% 100%);
-
-    z-index: 5;
+    font-weight:400;
 }
 
-.envelope-bottom {
-    position: absolute;
+.env-left{
+    position:absolute;
+    inset:0;
 
-    inset: 0;
+    background:#c4a482;
 
-    background: #c7a886;
+    clip-path:polygon(0 0,50% 50%,0 100%);
 
-    clip-path: polygon(0 100%,50% 50%,100% 100%);
-
-    z-index: 6;
+    z-index:5;
 }
 
-.envelope-letter {
-    position: absolute;
+.env-right{
+    position:absolute;
+    inset:0;
 
-    width: 66%;
-    height: 105%;
+    background:#d2b496;
 
-    left: 17%;
+    clip-path:polygon(100% 0,50% 50%,100% 100%);
 
-    top: -38%;
-
-    background: #fffdf8;
-
-    z-index: 3;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    box-shadow:
-        0 10px 30px rgba(50,30,15,.15);
-
-    animation: letterMove 4s ease-in-out infinite;
+    z-index:5;
 }
 
-.envelope-letter h3 {
-    font-family: "Great Vibes",cursive;
+.env-bottom{
+    position:absolute;
+    inset:0;
 
-    font-size: 48px;
+    background:#c19d78;
 
-    font-weight: 400;
+    clip-path:polygon(0 100%,50% 50%,100% 100%);
 
-    color: #695346;
+    z-index:6;
 }
 
-.envelope-flap {
-    position: absolute;
+.env-flap{
+    position:absolute;
+    inset:0;
 
-    inset: 0;
+    background:#e4cdb1;
 
-    background: #ead8c1;
+    clip-path:polygon(0 0,100% 0,50% 58%);
 
-    clip-path: polygon(0 0,100% 0,50% 58%);
+    transform-origin:top center;
 
-    z-index: 10;
+    z-index:9;
 
-    transform-origin: top center;
-
-    animation: flapMove 4s ease-in-out infinite;
+    animation:flapOpen 5s ease-in-out infinite;
 }
 
-.envelope-seal {
-    position: absolute;
+.env-seal{
+    position:absolute;
 
-    z-index: 20;
+    width:53px;
+    height:53px;
 
-    left: calc(50% - 25px);
+    border-radius:50%;
 
-    bottom: -25px;
+    background:#825747;
 
-    width: 50px;
-    height: 50px;
+    color:#f8e9d8;
 
-    border-radius: 50%;
+    z-index:20;
 
-    background: #8c5b4d;
+    left:calc(50% - 26px);
+    bottom:-27px;
 
-    color: #f8eee2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family:"Italiana",serif;
 
-    font-family: "Italiana",serif;
-
-    font-size: 20px;
+    font-size:22px;
 }
 
 
 /* =====================================================
-   02 — BOOK
+   BOOK
 ===================================================== */
 
-.book-design {
+.book-preview{
     background:
-        linear-gradient(135deg,#bca48b,#e4d6c4);
+        linear-gradient(135deg,#9d856d,#e2d1bd);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    perspective: 1600px;
+    align-items:center;
+    justify-content:center;
+
+    perspective:1600px;
 }
 
-.book {
-    width: 67%;
-    height: 68%;
+.book{
+    width:67%;
+    height:68%;
 
-    position: relative;
+    position:relative;
 
-    transform-style: preserve-3d;
+    transform-style:preserve-3d;
 
-    animation: bookFloat 5s ease-in-out infinite;
+    animation:bookFloat 5s ease-in-out infinite;
 }
 
-.book-page {
-    position: absolute;
+.book-cover{
+    position:absolute;
 
-    width: 50%;
-    height: 100%;
+    width:50%;
+    height:100%;
 
-    top: 0;
+    left:0;
 
-    background: #fbf7ef;
+    background:#806953;
 
-    box-shadow:
-        inset 0 0 20px rgba(50,30,15,.08);
+    transform-origin:right center;
+
+    z-index:5;
+
+    animation:coverOpen 5s ease-in-out infinite;
 }
 
-.book-left {
-    left: 0;
+.book-cover::after{
+    content:"L";
 
-    transform-origin: right center;
+    position:absolute;
 
-    border-radius: 5px 0 0 5px;
+    inset:10%;
 
-    animation: bookOpen 5s ease-in-out infinite;
+    border:1px solid rgba(255,240,210,.5);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#ead9c0;
+
+    font-family:"Italiana",serif;
+
+    font-size:60px;
 }
 
-.book-right {
-    right: 0;
+.book-page-left,
+.book-page-right{
+    position:absolute;
 
-    border-radius: 0 5px 5px 0;
+    top:0;
+
+    width:50%;
+    height:100%;
+
+    background:#fbf7ef;
 }
 
-.book-content {
-    position: absolute;
-
-    inset: 12%;
-
-    border: 1px solid #c9b394;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    color: #806c55;
+.book-page-left{
+    left:0;
 }
 
-.book-content h3 {
-    font-family: "Cormorant Garamond",serif;
-
-    font-size: 46px;
-
-    font-weight: 400;
+.book-page-right{
+    right:0;
 }
 
-.book-spine {
-    position: absolute;
+.book-middle{
+    position:absolute;
 
-    left: calc(50% - 2px);
+    left:50%;
 
-    top: 0;
+    top:0;
 
-    height: 100%;
+    width:2px;
+    height:100%;
 
-    width: 4px;
+    background:#b9a48c;
 
-    background: #bca27f;
+    z-index:10;
+}
 
-    z-index: 10;
+.book-writing{
+    position:absolute;
+
+    z-index:15;
+
+    inset:12%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:#715d4c;
+}
+
+.book-writing h4{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:48px;
+
+    font-weight:400;
 }
 
 
 /* =====================================================
-   03 — FLORAL
+   FLORAL
 ===================================================== */
 
-.floral-design {
+.floral-preview{
     background:
         linear-gradient(
-            rgba(60,35,30,.25),
-            rgba(60,35,30,.25)
+            rgba(55,35,30,.18),
+            rgba(55,35,30,.3)
         ),
-        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=90");
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1300&q=90")
+        center/cover;
 
-    background-size: cover;
-    background-position: center;
+    display:flex;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+    justify-content:center;
 }
 
-.floral-card {
-    width: 67%;
-    height: 75%;
+.floral-card{
+    width:67%;
+    height:76%;
 
-    background: rgba(255,250,246,.91);
+    background:rgba(255,249,245,.93);
 
-    backdrop-filter: blur(7px);
+    backdrop-filter:blur(8px);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:160px 160px 5px 5px;
 
-    text-align: center;
+    display:flex;
 
-    border-radius: 150px 150px 4px 4px;
+    align-items:center;
+    justify-content:center;
 
-    animation: floralCard 4s ease-in-out infinite;
+    text-align:center;
+
+    animation:floralFloat 5s ease-in-out infinite;
 }
 
-.floral-card small {
-    letter-spacing: 4px;
+.floral-card small{
+    font-size:8px;
 
-    font-size: 8px;
+    letter-spacing:5px;
 
-    color: #9b8176;
+    color:#a18176;
 }
 
-.floral-card h3 {
-    font-family: "Allura",cursive;
+.floral-card h4{
+    font-family:"Allura",cursive;
 
-    font-size: 65px;
+    font-size:78px;
 
-    font-weight: 400;
+    color:#79534e;
 
-    color: #754e4c;
+    font-weight:400;
 
-    margin: 18px 0;
+    margin:15px 0;
 }
 
-.floral-card span {
-    font-size: 22px;
+.floral-card span{
+    font-size:22px;
 
-    color: #b28b80;
+    color:#b99487;
 }
 
 
 /* =====================================================
-   04 — LUXURY BLACK
+   LUXURY
 ===================================================== */
 
-.black-design {
+.luxury-preview{
     background:
-        radial-gradient(
-            circle at center,
-            #29251f,
-            #090807
+        radial-gradient(circle at center,#302b25,#090807);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.luxury-card{
+    width:69%;
+    height:77%;
+
+    border:1px solid #b9985b;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    color:#d5b170;
+}
+
+.luxury-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:170%;
+    height:30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,222,153,.8),
+            transparent
         );
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transform:rotate(-28deg);
+
+    animation:goldSweep 4s linear infinite;
 }
 
-.black-card {
-    width: 69%;
-    height: 76%;
+.luxury-inner{
+    width:88%;
+    height:91%;
 
-    border: 1px solid #b99351;
+    border:1px solid rgba(211,174,104,.4);
 
-    position: relative;
+    display:flex;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+    justify-content:center;
 
-    text-align: center;
+    position:relative;
 
-    color: #d9b878;
-
-    overflow: hidden;
+    z-index:2;
 }
 
-.black-card::before {
-    content: "";
+.luxury-inner h4{
+    font-family:"Cormorant Garamond",serif;
 
-    position: absolute;
+    font-size:62px;
 
-    width: 170%;
-    height: 30px;
+    font-weight:300;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,220,145,.65),
-        transparent
-    );
-
-    transform: rotate(-25deg);
-
-    animation: goldLight 4s linear infinite;
-}
-
-.black-inner {
-    position: relative;
-    z-index: 2;
-
-    width: 86%;
-    height: 90%;
-
-    border: 1px solid rgba(207,169,95,.45);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.black-inner h3 {
-    font-family: "Cormorant Garamond",serif;
-
-    font-size: 55px;
-
-    font-weight: 300;
-
-    line-height: .9;
+    line-height:.9;
 }
 
 
 /* =====================================================
-   05 — EDITORIAL
+   EDITORIAL
 ===================================================== */
 
-.editorial-design {
-    background: #e5ded4;
+.editorial-preview{
+    background:#ddd3c6;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    padding: 8%;
+    align-items:center;
+    justify-content:center;
+
+    padding:7%;
 }
 
-.editorial {
-    width: 82%;
-    height: 84%;
+.editorial-card{
+    width:85%;
+    height:85%;
 
-    background: #f9f6f0;
+    background:#f9f6f0;
 
-    position: relative;
+    display:grid;
 
-    overflow: hidden;
+    grid-template-columns:53% 47%;
 
-    display: grid;
+    box-shadow:0 35px 60px rgba(40,30,20,.18);
 
-    grid-template-columns: 52% 48%;
+    transform:rotate(-2deg);
 
-    box-shadow:
-        0 30px 50px rgba(50,40,30,.18);
+    transition:.7s;
 
-    transform: rotate(-2deg);
-
-    transition: .8s;
+    overflow:hidden;
 }
 
-.design:hover .editorial {
-    transform: rotate(0deg) scale(1.02);
+.design:hover .editorial-card{
+    transform:rotate(0) scale(1.02);
 }
 
-.editorial-photo {
+.editorial-photo{
     background:
-        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=90")
+        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=90")
         center/cover;
 }
 
-.editorial-text {
-    display: flex;
+.editorial-writing{
+    display:flex;
 
-    align-items: center;
+    align-items:center;
+    justify-content:center;
 
-    justify-content: center;
+    text-align:center;
 
-    text-align: center;
-
-    padding: 20px;
+    padding:20px;
 }
 
-.editorial-text h3 {
-    font-family: "Italiana",serif;
+.editorial-writing h4{
+    font-family:"Italiana",serif;
 
-    font-size: 38px;
+    font-size:42px;
 
-    font-weight: 400;
+    font-weight:400;
 }
 
-.editorial-text p {
-    margin-top: 15px;
+.editorial-writing p{
+    margin-top:18px;
 
-    font-size: 8px;
+    font-size:8px;
 
-    letter-spacing: 3px;
+    letter-spacing:4px;
 
-    color: #87796c;
+    color:#897a6c;
 }
 
 
 /* =====================================================
-   06 — GARDEN
+   GARDEN
 ===================================================== */
 
-.garden-design {
-    background:
-        url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=90")
-        center/cover;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-}
-
-.garden-design::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
+.garden-preview{
     background:
         linear-gradient(
-            rgba(30,50,38,.28),
+            rgba(30,50,38,.2),
             rgba(30,50,38,.4)
-        );
-}
-
-.garden-card {
-    position: relative;
-    z-index: 2;
-
-    width: 70%;
-    height: 72%;
-
-    background: rgba(247,243,232,.94);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    transform: translateY(0);
-
-    animation: gardenFloat 5s ease-in-out infinite;
-}
-
-.garden-card h3 {
-    font-family: "Italiana",serif;
-
-    font-size: 54px;
-
-    color: #38503f;
-
-    font-weight: 400;
-}
-
-.garden-card small {
-    letter-spacing: 4px;
-
-    color: #697a6d;
-
-    font-size: 8px;
-}
-
-
-/* =====================================================
-   07 — ENGAGEMENT
-===================================================== */
-
-.engagement-design {
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            #f8e7eb,
-            transparent 30%
         ),
-        linear-gradient(
-            135deg,
-            #e5c9d0,
-            #f2dfe2
-        );
+        url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1300&q=90")
+        center/cover;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    perspective: 1000px;
+    align-items:center;
+    justify-content:center;
 }
 
-.engagement-card {
-    width: 70%;
-    height: 78%;
+.garden-card{
+    width:70%;
+    height:74%;
 
-    background: #fffaf9;
+    background:rgba(249,245,235,.94);
 
-    border-radius: 50% 50% 8px 8px;
+    display:flex;
 
-    border: 1px solid #d2aab4;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align:center;
 
-    text-align: center;
-
-    box-shadow:
-        0 30px 60px rgba(100,55,70,.18);
-
-    animation: engagementTilt 5s ease-in-out infinite;
+    animation:gardenFloat 5s ease-in-out infinite;
 }
 
-.engagement-card h3 {
-    font-family: "Allura",cursive;
+.garden-card small{
+    font-size:8px;
 
-    font-size: 70px;
+    letter-spacing:5px;
 
-    font-weight: 400;
-
-    color: #855966;
+    color:#718074;
 }
 
-.engagement-card small {
-    color: #a37d86;
+.garden-card h4{
+    font-family:"Italiana",serif;
 
-    font-size: 8px;
+    font-size:65px;
 
-    letter-spacing: 4px;
+    font-weight:400;
+
+    color:#405646;
+
+    margin:15px 0;
 }
 
 
 /* =====================================================
-   08 — HENNA
+   ENGAGEMENT
 ===================================================== */
 
-.henna-design {
+.engagement-preview{
     background:
-        radial-gradient(
-            circle at center,
-            #753f2e,
-            #321712
-        );
+        radial-gradient(circle at 20% 20%,#fff,#f2dce1 35%,#dfc1c9);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    perspective:1000px;
 }
 
-.henna-card {
-    width: 72%;
-    height: 78%;
+.engagement-card{
+    width:70%;
+    height:78%;
 
-    border: 1px solid #d5aa65;
+    background:#fffafa;
 
-    color: #e2bd7d;
+    border:1px solid #d8aeb9;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:180px 180px 8px 8px;
 
-    text-align: center;
+    display:flex;
 
-    position: relative;
+    align-items:center;
+    justify-content:center;
 
-    overflow: hidden;
+    text-align:center;
+
+    box-shadow:0 35px 70px rgba(100,55,70,.18);
+
+    animation:engagementTilt 5s ease-in-out infinite;
 }
 
-.henna-card::before {
-    content: "✦";
+.engagement-card small{
+    font-size:8px;
 
-    position: absolute;
+    letter-spacing:5px;
 
-    top: 10px;
-    left: 20px;
-
-    font-size: 70px;
-
-    opacity: .4;
-
-    animation: rotateSlow 8s linear infinite;
+    color:#a17b85;
 }
 
-.henna-card::after {
-    content: "✦";
+.engagement-card h4{
+    font-family:"Allura",cursive;
 
-    position: absolute;
+    font-size:78px;
 
-    bottom: 10px;
-    right: 20px;
+    font-weight:400;
 
-    font-size: 70px;
+    color:#835764;
 
-    opacity: .4;
-
-    animation: rotateSlow 8s linear infinite reverse;
+    margin:15px 0;
 }
 
-.henna-card h3 {
-    font-family: "Great Vibes",cursive;
 
-    font-size: 68px;
+/* =====================================================
+   HENNA
+===================================================== */
 
-    font-weight: 400;
+.henna-preview{
+    background:
+        radial-gradient(circle at center,#753f2f,#321713);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
 }
 
-.henna-card small {
-    display: block;
+.henna-card{
+    width:72%;
+    height:78%;
 
-    margin-bottom: 15px;
+    border:1px solid #d6aa63;
 
-    letter-spacing: 5px;
+    display:flex;
 
-    font-size: 8px;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:#dfb875;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.henna-card::before{
+    content:"✦";
+
+    position:absolute;
+
+    top:15px;
+    left:25px;
+
+    font-size:75px;
+
+    opacity:.4;
+
+    animation:spin 9s linear infinite;
+}
+
+.henna-card::after{
+    content:"✦";
+
+    position:absolute;
+
+    right:25px;
+    bottom:15px;
+
+    font-size:75px;
+
+    opacity:.4;
+
+    animation:spin 9s linear infinite reverse;
+}
+
+.henna-card h4{
+    font-family:"Allura",cursive;
+
+    font-size:78px;
+
+    font-weight:400;
 }
 
 
@@ -1018,30 +1215,554 @@ nav {
    FOOTER
 ===================================================== */
 
-footer {
-    padding: 90px 20px;
+footer{
+    background:#332c26;
 
-    text-align: center;
+    color:#f0e7dc;
 
-    background: #302923;
+    padding:100px 30px;
 
-    color: #eee4d8;
+    text-align:center;
 }
 
-footer h2 {
-    font-family: "Italiana",serif;
+footer .footer-logo{
+    font-family:"Italiana",serif;
 
-    font-size: 50px;
+    font-size:60px;
 
-    font-weight: 400;
+    letter-spacing:2px;
 }
 
-footer p {
-    margin-top: 15px;
+footer p{
+    margin-top:15px;
 
-    color: #b9aa9a;
+    color:#b8aa9c;
 
-    font-size: 13px;
+    font-size:12px;
+
+    letter-spacing:.5px;
+}
+
+
+/* =====================================================
+   DEMO MODAL
+===================================================== */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    background:rgba(25,20,16,.75);
+
+    backdrop-filter:blur(15px);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:30px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(1100px,95vw);
+
+    height:min(850px,90vh);
+
+    background:#eee8df;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 40px 100px rgba(0,0,0,.4);
+
+    animation:modalIn .5s ease;
+}
+
+.close{
+    position:absolute;
+
+    top:18px;
+    right:18px;
+
+    z-index:50;
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.5);
+
+    background:rgba(30,25,20,.5);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+.demo{
+    width:100%;
+    height:100%;
+
+    display:none;
+
+    position:relative;
+}
+
+.demo.active{
+    display:flex;
+}
+
+
+/* =====================================================
+   DEMO ENVELOPE
+===================================================== */
+
+.demo-envelope{
+    background:
+        radial-gradient(circle at center,#fff,#d8c1a7);
+
+    align-items:center;
+    justify-content:center;
+
+    perspective:1400px;
+}
+
+.demo-envelope-scene{
+    width:min(650px,80vw);
+
+    height:390px;
+
+    position:relative;
+
+    transform-style:preserve-3d;
+}
+
+.demo-envelope-back{
+    position:absolute;
+
+    inset:0;
+
+    background:#d0ae8a;
+
+    box-shadow:0 50px 70px rgba(50,30,15,.3);
+}
+
+.demo-envelope-paper{
+    position:absolute;
+
+    width:72%;
+    height:110%;
+
+    left:14%;
+    top:-5%;
+
+    background:#fffdf8;
+
+    z-index:3;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    box-shadow:0 20px 40px rgba(50,30,15,.18);
+
+    transform:translateY(20%);
+
+    transition:1.2s cubic-bezier(.2,.8,.2,1);
+}
+
+.demo-envelope-paper h2{
+    font-family:"Allura",cursive;
+
+    font-size:80px;
+
+    color:#735647;
+
+    font-weight:400;
+}
+
+.demo-envelope-left,
+.demo-envelope-right,
+.demo-envelope-bottom{
+    position:absolute;
+
+    inset:0;
+}
+
+.demo-envelope-left{
+    background:#c19d79;
+
+    clip-path:polygon(0 0,50% 50%,0 100%);
+
+    z-index:5;
+}
+
+.demo-envelope-right{
+    background:#d0af8e;
+
+    clip-path:polygon(100% 0,50% 50%,100% 100%);
+
+    z-index:5;
+}
+
+.demo-envelope-bottom{
+    background:#bd9872;
+
+    clip-path:polygon(0 100%,50% 50%,100% 100%);
+
+    z-index:6;
+}
+
+.demo-envelope-flap{
+    position:absolute;
+
+    inset:0;
+
+    background:#dfc4a3;
+
+    clip-path:polygon(0 0,100% 0,50% 58%);
+
+    transform-origin:top;
+
+    z-index:10;
+
+    transition:1s cubic-bezier(.2,.8,.2,1);
+}
+
+.demo-envelope-scene.open
+.demo-envelope-flap{
+    transform:rotateX(180deg);
+}
+
+.demo-envelope-scene.open
+.demo-envelope-paper{
+    transform:translateY(-55%);
+}
+
+.open-button{
+    position:absolute;
+
+    bottom:35px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:30;
+
+    background:#3d342d;
+
+    color:white;
+
+    border:none;
+
+    padding:15px 28px;
+
+    letter-spacing:2px;
+
+    font-size:10px;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   DEMO BOOK
+===================================================== */
+
+.demo-book{
+    background:linear-gradient(135deg,#8e745d,#dfcbb5);
+
+    align-items:center;
+    justify-content:center;
+
+    perspective:1600px;
+}
+
+.demo-book-scene{
+    width:min(720px,82vw);
+
+    height:470px;
+
+    position:relative;
+
+    transform-style:preserve-3d;
+}
+
+.demo-book-page{
+    position:absolute;
+
+    width:50%;
+    height:100%;
+
+    top:0;
+
+    background:#fffaf1;
+
+    box-shadow:inset 0 0 25px rgba(70,45,25,.08);
+}
+
+.demo-book-left{
+    left:0;
+}
+
+.demo-book-right{
+    right:0;
+}
+
+.demo-book-cover{
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:50%;
+    height:100%;
+
+    background:#79624d;
+
+    transform-origin:right center;
+
+    z-index:10;
+
+    transition:1.4s cubic-bezier(.2,.8,.2,1);
+}
+
+.demo-book-cover div{
+    position:absolute;
+
+    inset:30px;
+
+    border:1px solid rgba(255,240,210,.5);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#ead8bd;
+
+    font-family:"Italiana",serif;
+
+    font-size:70px;
+}
+
+.demo-book-scene.open
+.demo-book-cover{
+    transform:rotateY(-155deg);
+}
+
+.demo-book-writing{
+    position:absolute;
+
+    inset:50px;
+
+    z-index:4;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:#75604d;
+}
+
+.demo-book-writing h2{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:70px;
+
+    font-weight:400;
+}
+
+
+/* =====================================================
+   SIMPLE DEMOS
+===================================================== */
+
+.demo-floral{
+    background:
+        linear-gradient(rgba(60,35,30,.2),rgba(60,35,30,.3)),
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90")
+        center/cover;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.demo-floral-card{
+    width:55%;
+    height:75%;
+
+    background:rgba(255,250,246,.94);
+
+    border-radius:200px 200px 5px 5px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    animation:demoFloat 4s ease-in-out infinite;
+}
+
+.demo-floral-card h2{
+    font-family:"Allura",cursive;
+
+    font-size:100px;
+
+    font-weight:400;
+
+    color:#765049;
+}
+
+.demo-luxury{
+    background:radial-gradient(circle,#302a23,#080706);
+
+    align-items:center;
+    justify-content:center;
+}
+
+.demo-luxury-card{
+    width:55%;
+    height:75%;
+
+    border:1px solid #c3a061;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:#d8b978;
+}
+
+.demo-luxury-card h2{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:90px;
+
+    font-weight:300;
+}
+
+.demo-garden{
+    background:
+        linear-gradient(rgba(30,50,38,.25),rgba(30,50,38,.4)),
+        url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90")
+        center/cover;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.demo-garden-card{
+    width:58%;
+    height:70%;
+
+    background:rgba(249,245,235,.95);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.demo-garden-card h2{
+    font-family:"Italiana",serif;
+
+    font-size:90px;
+
+    color:#405746;
+
+    font-weight:400;
+}
+
+.demo-engagement{
+    background:linear-gradient(135deg,#e7cbd2,#fff6f7);
+
+    align-items:center;
+    justify-content:center;
+}
+
+.demo-engagement-card{
+    width:58%;
+    height:73%;
+
+    border:1px solid #d2a9b4;
+
+    background:#fffafa;
+
+    border-radius:200px 200px 8px 8px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.demo-engagement-card h2{
+    font-family:"Allura",cursive;
+
+    font-size:100px;
+
+    color:#825462;
+
+    font-weight:400;
+}
+
+.demo-henna{
+    background:radial-gradient(circle,#7a402e,#2d120d);
+
+    align-items:center;
+    justify-content:center;
+}
+
+.demo-henna-card{
+    width:60%;
+    height:75%;
+
+    border:1px solid #d6aa63;
+
+    color:#dfb875;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.demo-henna-card h2{
+    font-family:"Allura",cursive;
+
+    font-size:105px;
+
+    font-weight:400;
 }
 
 
@@ -1049,144 +1770,150 @@ footer p {
    ANIMATIONS
 ===================================================== */
 
-@keyframes float {
+@keyframes sceneFloat{
 
-    0%,100% {
-        transform: translateY(0) rotate(0);
+    0%,100%{
+        transform:translateY(0) rotateY(-3deg);
     }
 
-    50% {
-        transform: translateY(-20px) rotate(8deg);
+    50%{
+        transform:translateY(-15px) rotateY(3deg);
     }
-
 }
 
-@keyframes envelopeFloat {
+@keyframes paperRise{
 
-    0%,100% {
-        transform: translateY(0) rotateX(0) rotateY(-3deg);
+    0%,20%{
+        transform:translateY(25%);
     }
 
-    50% {
-        transform: translateY(-12px) rotateX(3deg) rotateY(3deg);
+    45%,75%{
+        transform:translateY(-10%);
     }
 
+    100%{
+        transform:translateY(25%);
+    }
 }
 
-@keyframes letterMove {
+@keyframes flapOpen{
 
-    0%,100% {
-        transform: translateY(20%);
+    0%,25%{
+        transform:rotateX(0);
     }
 
-    45%,65% {
-        transform: translateY(-7%);
+    45%,75%{
+        transform:rotateX(170deg);
     }
 
+    100%{
+        transform:rotateX(0);
+    }
 }
 
-@keyframes flapMove {
+@keyframes bookFloat{
 
-    0%,30% {
-        transform: rotateX(0);
+    0%,100%{
+        transform:translateY(0) rotateY(0);
     }
 
-    50%,72% {
-        transform: rotateX(165deg);
+    50%{
+        transform:translateY(-12px) rotateY(-3deg);
     }
-
-    100% {
-        transform: rotateX(0);
-    }
-
 }
 
-@keyframes bookFloat {
+@keyframes coverOpen{
 
-    0%,100% {
-        transform: translateY(0) rotateY(0);
+    0%,25%{
+        transform:rotateY(0);
     }
 
-    50% {
-        transform: translateY(-10px) rotateY(-3deg);
+    45%,75%{
+        transform:rotateY(-150deg);
     }
 
+    100%{
+        transform:rotateY(0);
+    }
 }
 
-@keyframes bookOpen {
+@keyframes floralFloat{
 
-    0%,25% {
-        transform: rotateY(0);
+    0%,100%{
+        transform:translateY(0);
     }
 
-    45%,70% {
-        transform: rotateY(-130deg);
+    50%{
+        transform:translateY(-12px) scale(1.015);
     }
-
-    100% {
-        transform: rotateY(0);
-    }
-
 }
 
-@keyframes floralCard {
+@keyframes goldSweep{
 
-    0%,100% {
-        transform: translateY(0) scale(1);
+    0%{
+        left:-120%;
     }
 
-    50% {
-        transform: translateY(-10px) scale(1.015);
+    100%{
+        left:120%;
     }
-
 }
 
-@keyframes goldLight {
+@keyframes gardenFloat{
 
-    0% {
-        left: -120%;
+    0%,100%{
+        transform:translateY(0);
     }
 
-    100% {
-        left: 120%;
+    50%{
+        transform:translateY(-12px);
     }
-
 }
 
-@keyframes gardenFloat {
+@keyframes engagementTilt{
 
-    0%,100% {
-        transform: translateY(0);
+    0%,100%{
+        transform:rotateY(-3deg);
     }
 
-    50% {
-        transform: translateY(-14px);
+    50%{
+        transform:rotateY(4deg) translateY(-8px);
     }
-
 }
 
-@keyframes engagementTilt {
+@keyframes spin{
 
-    0%,100% {
-        transform: rotateY(-3deg) rotateX(0);
+    from{
+        transform:rotate(0);
     }
 
-    50% {
-        transform: rotateY(4deg) rotateX(2deg);
+    to{
+        transform:rotate(360deg);
     }
-
 }
 
-@keyframes rotateSlow {
+@keyframes demoFloat{
 
-    from {
-        transform: rotate(0);
+    0%,100%{
+        transform:translateY(0);
     }
 
-    to {
-        transform: rotate(360deg);
+    50%{
+        transform:translateY(-15px);
+    }
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+        transform:scale(.94);
     }
 
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
 
 
@@ -1194,58 +1921,69 @@ footer p {
    MOBILE
 ===================================================== */
 
-@media(max-width:850px) {
+@media(max-width:850px){
 
-    .collection {
-        grid-template-columns: 1fr;
-
-        padding-left: 20px;
-        padding-right: 20px;
+    .nav-center{
+        display:none;
     }
 
-    .preview {
-        height: 620px;
+    .hero{
+        min-height:580px;
     }
 
-}
+    .intro{
+        grid-template-columns:1fr;
 
-@media(max-width:600px) {
+        gap:30px;
 
-    nav {
-        height: 68px;
-        padding: 0 20px;
+        padding-top:70px;
     }
 
-    .logo {
-        font-size: 31px;
+    .filters-wrapper{
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        gap:25px;
     }
 
-    .nav-links a {
-        display: none;
+    .collection{
+        display:grid;
+
+        grid-template-columns:1fr;
+
+        padding-left:20px;
+        padding-right:20px;
     }
 
-    .hero {
-        min-height: 55vh;
+    .design,
+    .design:nth-child(3),
+    .design:nth-child(4),
+    .design:nth-child(5),
+    .design:nth-child(6){
+        grid-column:span 1;
     }
 
-    .hero h1 {
-        font-size: 70px;
+    .preview{
+        height:580px;
     }
 
-    .collection {
-        gap: 45px;
-
-        padding-top: 40px;
+    .modal{
+        padding:10px;
     }
 
-    .preview {
-        height: 560px;
-
-        min-height: 0;
+    .modal-box{
+        height:92vh;
     }
 
-    .design-info h2 {
-        font-size: 28px;
+    .demo-envelope-paper h2,
+    .demo-book-writing h2,
+    .demo-floral-card h2,
+    .demo-luxury-card h2,
+    .demo-garden-card h2,
+    .demo-engagement-card h2,
+    .demo-henna-card h2{
+        font-size:55px;
     }
 
 }
@@ -1268,22 +2006,28 @@ footer p {
         Luna
     </div>
 
-    <div class="nav-links">
+    <div class="nav-center">
 
         <a href="../index.html">
             Ana səhifə
+        </a>
+
+        <a href="#designs">
+            Dəvətnamələr
         </a>
 
         <a href="../index.html#pricing">
             Qiymətlər
         </a>
 
-        <select class="lang">
+    </div>
 
+    <div class="nav-right">
+
+        <select class="language">
             <option>AZ</option>
             <option>TR</option>
             <option>EN</option>
-
         </select>
 
     </div>
@@ -1297,9 +2041,12 @@ footer p {
 
 <section class="hero">
 
-    <div class="hero-content">
+    <div class="hero-decoration"></div>
+    <div class="hero-decoration two"></div>
 
-        <div class="hero-label">
+    <div class="hero-inner">
+
+        <div class="hero-small">
             Luna Digital Invitations
         </div>
 
@@ -1307,19 +2054,54 @@ footer p {
 
             Your story,
 
-            <em>
+            <span>
                 beautifully invited.
-            </em>
+            </span>
 
         </h1>
 
-        <p>
+        <p class="hero-description">
 
-            Zərf kimi açılan, kitab kimi səhifələnən,
-            hərəkət edən və sizin hekayənizə uyğun
-            hazırlanmış rəqəmsal dəvətnamələr.
+            Sadəcə dəvətnamə deyil.
+            Açılan, hərəkət edən və sizin hekayənizi
+            hiss etdirən rəqəmsal bir təcrübə.
 
         </p>
+
+        <a href="#designs" class="hero-button">
+            Dizaynlara bax
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="intro" id="designs">
+
+    <div>
+
+        <div class="intro-label">
+            Our Collection
+        </div>
+
+        <h2>
+            Sizin hekayənizə<br>
+            uyğun bir dizayn.
+        </h2>
+
+    </div>
+
+    <div class="intro-text">
+
+        Hər dəvətnamə fərqli bir hiss yaratmaq üçün
+        hazırlanır. Zərf kimi açılan, kitab kimi
+        səhifələnən və ya sadəcə zərif bir animasiya
+        ilə başlayan dizaynınızı seçin.
 
     </div>
 
@@ -1330,23 +2112,31 @@ footer p {
      FILTERS
 ===================================================== -->
 
-<div class="filters">
+<div class="filters-wrapper">
 
-    <button class="filter active" data-filter="all">
-        Hamısı
-    </button>
+    <div class="collection-count">
+        08 Designs
+    </div>
 
-    <button class="filter" data-filter="wedding">
-        Toy
-    </button>
+    <div class="filters">
 
-    <button class="filter" data-filter="engagement">
-        Nişan
-    </button>
+        <button class="filter active" data-filter="all">
+            Hamısı
+        </button>
 
-    <button class="filter" data-filter="henna">
-        Xına
-    </button>
+        <button class="filter" data-filter="wedding">
+            Toy
+        </button>
+
+        <button class="filter" data-filter="engagement">
+            Nişan
+        </button>
+
+        <button class="filter" data-filter="henna">
+            Xına
+        </button>
+
+    </div>
 
 </div>
 
@@ -1358,202 +2148,209 @@ footer p {
 <main class="collection">
 
 
-<!-- =====================================================
-     ENVELOPE
-===================================================== -->
+<!-- ENVELOPE -->
 
 <article class="design" data-category="wedding">
 
-<div class="preview envelope-design">
+    <div class="preview envelope-preview">
 
-    <div class="envelope-scene">
+        <div class="envelope-scene">
 
-        <div class="envelope-back"></div>
+            <div class="env-back"></div>
 
-        <div class="envelope-letter">
+            <div class="env-paper">
 
-            <div>
+                <div>
 
-                <div style="
-                    font-size:8px;
-                    letter-spacing:4px;
-                    color:#9a8675;
-                    margin-bottom:12px;
-                ">
-                    YOU ARE INVITED
+                    <div style="
+                        font-size:8px;
+                        letter-spacing:4px;
+                        color:#9b8574;
+                        margin-bottom:15px;
+                    ">
+                        YOU ARE INVITED
+                    </div>
+
+                    <h4>
+                        Forever
+                    </h4>
+
                 </div>
 
-                <h3>
-                    Our Wedding
-                </h3>
+            </div>
 
+            <div class="env-left"></div>
+            <div class="env-right"></div>
+            <div class="env-bottom"></div>
+            <div class="env-flap"></div>
+
+            <div class="env-seal">
+                L
             </div>
 
         </div>
 
-        <div class="envelope-left"></div>
-
-        <div class="envelope-right"></div>
-
-        <div class="envelope-bottom"></div>
-
-        <div class="envelope-flap"></div>
-
-        <div class="envelope-seal">
-            L
-        </div>
-
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
-
-    <h2>
-        The Envelope
-    </h2>
-
-    <p>
-        TOY · 3D · AÇILAN ZƏRF
-    </p>
-
-</div>
-
-</article>
-
-
-<!-- =====================================================
-     BOOK
-===================================================== -->
-
-<article class="design" data-category="wedding">
-
-<div class="preview book-design">
-
-    <div class="book">
-
-        <div class="book-page book-left"></div>
-
-        <div class="book-page book-right"></div>
-
-        <div class="book-content">
-
-            <div>
-
-                <div style="
-                    font-size:8px;
-                    letter-spacing:4px;
-                    margin-bottom:15px;
-                ">
-                    CHAPTER ONE
-                </div>
-
-                <h3>
-                    Our<br>
-                    Story
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="book-spine"></div>
-
-    </div>
-
-</div>
-
-<div class="design-info">
-
-    <h2>
-        The Wedding Book
-    </h2>
-
-    <p>
-        TOY · 3D · KİTAB KİMİ AÇILAN
-    </p>
-
-</div>
-
-</article>
-
-
-<!-- =====================================================
-     FLORAL
-===================================================== -->
-
-<article class="design" data-category="wedding">
-
-<div class="preview floral-design">
-
-    <div class="floral-card">
-
-        <div>
-
-            <small>
-                TOGETHER WITH LOVE
-            </small>
+        <div class="design-title">
 
             <h3>
-                Forever
+                The Envelope
             </h3>
 
-            <span>
-                ♡
-            </span>
+            <p>
+                TOY · 3D · AÇILAN ZƏRF
+            </p>
+
+        </div>
+
+        <button class="view-button" data-demo="envelope">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
+
+</article>
+
+
+<!-- BOOK -->
+
+<article class="design" data-category="wedding">
+
+    <div class="preview book-preview">
+
+        <div class="book">
+
+            <div class="book-page-left"></div>
+            <div class="book-page-right"></div>
+
+            <div class="book-cover"></div>
+
+            <div class="book-middle"></div>
+
+            <div class="book-writing">
+
+                <div>
+
+                    <small style="
+                        letter-spacing:4px;
+                        font-size:8px;
+                    ">
+                        CHAPTER ONE
+                    </small>
+
+                    <h4>
+                        Our<br>
+                        Story
+                    </h4>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
+        <div class="design-title">
 
-    <h2>
-        Floral Romance
-    </h2>
+            <h3>
+                The Wedding Book
+            </h3>
 
-    <p>
-        TOY · FLORAL · ROMANTIC
-    </p>
+            <p>
+                TOY · 3D · KİTAB
+            </p>
 
-</div>
+        </div>
+
+        <button class="view-button" data-demo="book">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
 
 </article>
 
 
-<!-- =====================================================
-     BLACK GOLD
-===================================================== -->
+<!-- FLORAL -->
 
 <article class="design" data-category="wedding">
 
-<div class="preview black-design">
+    <div class="preview floral-preview">
 
-    <div class="black-card">
-
-        <div class="black-inner">
+        <div class="floral-card">
 
             <div>
 
-                <div style="
-                    font-size:8px;
-                    letter-spacing:5px;
-                    margin-bottom:18px;
-                ">
-                    AN EVENING TO REMEMBER
-                </div>
+                <small>
+                    TOGETHER WITH LOVE
+                </small>
 
-                <h3>
+                <h4>
                     Forever
-                </h3>
+                </h4>
 
-                <div style="
-                    margin-top:25px;
-                    font-size:18px;
-                ">
-                    ✦
+                <span>
+                    ♡
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="design-info">
+
+        <div class="design-title">
+
+            <h3>
+                Floral Romance
+            </h3>
+
+            <p>
+                TOY · FLORAL · ROMANTIC
+            </p>
+
+        </div>
+
+        <button class="view-button" data-demo="floral">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
+
+</article>
+
+
+<!-- LUXURY -->
+
+<article class="design" data-category="wedding">
+
+    <div class="preview luxury-preview">
+
+        <div class="luxury-card">
+
+            <div class="luxury-inner">
+
+                <div>
+
+                    <small style="
+                        font-size:8px;
+                        letter-spacing:5px;
+                    ">
+                        AN EVENING TO REMEMBER
+                    </small>
+
+                    <h4>
+                        Forever
+                    </h4>
+
                 </div>
 
             </div>
@@ -1562,223 +2359,244 @@ footer p {
 
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
+        <div class="design-title">
 
-    <h2>
-        Black & Gold
-    </h2>
+            <h3>
+                Black & Gold
+            </h3>
 
-    <p>
-        TOY · LUXURY · CINEMATIC
-    </p>
+            <p>
+                TOY · LUXURY · CINEMATIC
+            </p>
 
-</div>
+        </div>
+
+        <button class="view-button" data-demo="luxury">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
 
 </article>
 
 
-<!-- =====================================================
-     EDITORIAL
-===================================================== -->
+<!-- EDITORIAL -->
 
 <article class="design" data-category="wedding">
 
-<div class="preview editorial-design">
+    <div class="preview editorial-preview">
 
-    <div class="editorial">
+        <div class="editorial-card">
 
-        <div class="editorial-photo"></div>
+            <div class="editorial-photo"></div>
 
-        <div class="editorial-text">
+            <div class="editorial-writing">
+
+                <div>
+
+                    <small style="
+                        font-size:8px;
+                        letter-spacing:4px;
+                    ">
+                        THE WEDDING
+                    </small>
+
+                    <h4>
+                        A New<br>
+                        Chapter
+                    </h4>
+
+                    <p>
+                        12 · 09 · 2026
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="design-info">
+
+        <div class="design-title">
+
+            <h3>
+                Editorial Love
+            </h3>
+
+            <p>
+                TOY · PHOTO · EDITORIAL
+            </p>
+
+        </div>
+
+        <button class="view-button" data-demo="floral">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
+
+</article>
+
+
+<!-- GARDEN -->
+
+<article class="design" data-category="wedding">
+
+    <div class="preview garden-preview">
+
+        <div class="garden-card">
 
             <div>
+
+                <small>
+                    AN ITALIAN GARDEN
+                </small>
+
+                <h4>
+                    Amore
+                </h4>
 
                 <div style="
                     font-size:8px;
                     letter-spacing:4px;
-                    color:#9a8c80;
-                    margin-bottom:15px;
+                    color:#718074;
                 ">
-                    THE WEDDING
+                    12 · 09 · 2026
                 </div>
 
-                <h3>
-                    A New<br>
-                    Chapter
-                </h3>
-
-                <p>
-                    12 · 09 · 2026
-                </p>
-
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
-
-    <h2>
-        Editorial Love
-    </h2>
-
-    <p>
-        TOY · PHOTO · EDITORIAL
-    </p>
-
-</div>
-
-</article>
-
-
-<!-- =====================================================
-     GARDEN
-===================================================== -->
-
-<article class="design" data-category="wedding">
-
-<div class="preview garden-design">
-
-    <div class="garden-card">
-
-        <div>
-
-            <small>
-                AN ITALIAN GARDEN
-            </small>
+        <div class="design-title">
 
             <h3>
-                Amore
+                Italian Garden
             </h3>
 
-            <div style="
-                font-size:9px;
-                letter-spacing:4px;
-                color:#6e7e70;
-            ">
-                12 · 09 · 2026
-            </div>
+            <p>
+                TOY · GARDEN · NATURE
+            </p>
 
         </div>
 
+        <button class="view-button" data-demo="garden">
+            Dəvətnaməyə bax
+        </button>
+
     </div>
-
-</div>
-
-<div class="design-info">
-
-    <h2>
-        Italian Garden
-    </h2>
-
-    <p>
-        TOY · GARDEN · NATURE
-    </p>
-
-</div>
 
 </article>
 
 
-<!-- =====================================================
-     ENGAGEMENT
-===================================================== -->
+<!-- ENGAGEMENT -->
 
 <article class="design" data-category="engagement">
 
-<div class="preview engagement-design">
+    <div class="preview engagement-preview">
 
-    <div class="engagement-card">
+        <div class="engagement-card">
 
-        <div>
+            <div>
 
-            <small>
-                THE ENGAGEMENT OF
-            </small>
+                <small>
+                    THE ENGAGEMENT OF
+                </small>
 
-            <h3>
-                Forever
-            </h3>
+                <h4>
+                    Forever
+                </h4>
 
-            <div style="
-                font-size:8px;
-                letter-spacing:4px;
-                color:#a07d86;
-            ">
-                WITH LOVE
+                <small>
+                    WITH LOVE
+                </small>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
+        <div class="design-title">
 
-    <h2>
-        Blush Engagement
-    </h2>
+            <h3>
+                Blush Engagement
+            </h3>
 
-    <p>
-        NİŞAN · ROMANTIC · BLUSH
-    </p>
+            <p>
+                NİŞAN · ROMANTIC · BLUSH
+            </p>
 
-</div>
+        </div>
+
+        <button class="view-button" data-demo="engagement">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
 
 </article>
 
 
-<!-- =====================================================
-     HENNA
-===================================================== -->
+<!-- HENNA -->
 
 <article class="design" data-category="henna">
 
-<div class="preview henna-design">
+    <div class="preview henna-preview">
 
-    <div class="henna-card">
+        <div class="henna-card">
 
-        <div>
+            <div>
 
-            <small>
-                HENNA NIGHT
-            </small>
+                <small style="
+                    display:block;
+                    letter-spacing:5px;
+                    font-size:8px;
+                    margin-bottom:15px;
+                ">
+                    HENNA NIGHT
+                </small>
 
-            <h3>
-                Henna
-            </h3>
+                <h4>
+                    Henna
+                </h4>
 
-            <div style="
-                margin-top:14px;
-                font-size:8px;
-                letter-spacing:5px;
-            ">
-                A SPECIAL NIGHT
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <div class="design-info">
 
-<div class="design-info">
+        <div class="design-title">
 
-    <h2>
-        Oriental Henna
-    </h2>
+            <h3>
+                Oriental Henna
+            </h3>
 
-    <p>
-        XINA · ORIENTAL · LUXURY
-    </p>
+            <p>
+                XINA · ORIENTAL · LUXURY
+            </p>
 
-</div>
+        </div>
+
+        <button class="view-button" data-demo="henna">
+            Dəvətnaməyə bax
+        </button>
+
+    </div>
 
 </article>
 
@@ -1792,9 +2610,9 @@ footer p {
 
 <footer>
 
-    <h2>
+    <div class="footer-logo">
         Luna
-    </h2>
+    </div>
 
     <p>
         Ən gözəl anlarınız üçün,
@@ -1804,51 +2622,332 @@ footer p {
 </footer>
 
 
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div class="modal" id="demoModal">
+
+    <div class="modal-box">
+
+        <button class="close" id="closeModal">
+            ×
+        </button>
+
+
+        <!-- ENVELOPE DEMO -->
+
+        <div class="demo demo-envelope" data-demo-view="envelope">
+
+            <div class="demo-envelope-scene" id="demoEnvelopeScene">
+
+                <div class="demo-envelope-back"></div>
+
+                <div class="demo-envelope-paper">
+
+                    <div>
+
+                        <small style="
+                            font-size:9px;
+                            letter-spacing:5px;
+                            color:#9a8170;
+                        ">
+                            YOU ARE INVITED
+                        </small>
+
+                        <h2>
+                            Forever
+                        </h2>
+
+                        <div style="
+                            font-size:11px;
+                            letter-spacing:3px;
+                            color:#8b7767;
+                        ">
+                            12 · 09 · 2026
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="demo-envelope-left"></div>
+                <div class="demo-envelope-right"></div>
+                <div class="demo-envelope-bottom"></div>
+                <div class="demo-envelope-flap"></div>
+
+                <button class="open-button" id="openEnvelope">
+                    Dəvətnaməni aç
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOK DEMO -->
+
+        <div class="demo demo-book" data-demo-view="book">
+
+            <div class="demo-book-scene" id="demoBookScene">
+
+                <div class="demo-book-page demo-book-left"></div>
+                <div class="demo-book-page demo-book-right"></div>
+
+                <div class="demo-book-writing">
+
+                    <div>
+
+                        <small style="
+                            letter-spacing:5px;
+                            font-size:8px;
+                        ">
+                            OUR WEDDING
+                        </small>
+
+                        <h2>
+                            Our Story
+                        </h2>
+
+                        <p style="
+                            margin-top:20px;
+                            font-size:11px;
+                            letter-spacing:2px;
+                        ">
+                            12 · 09 · 2026
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="demo-book-cover">
+
+                    <div>
+                        L
+                    </div>
+
+                </div>
+
+                <button class="open-button" id="openBook">
+                    Kitabı aç
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- FLORAL DEMO -->
+
+        <div class="demo demo-floral" data-demo-view="floral">
+
+            <div class="demo-floral-card">
+
+                <div>
+
+                    <small style="
+                        letter-spacing:5px;
+                        font-size:8px;
+                        color:#9b8175;
+                    ">
+                        TOGETHER WITH LOVE
+                    </small>
+
+                    <h2>
+                        Forever
+                    </h2>
+
+                    <p style="
+                        color:#a7887e;
+                        letter-spacing:4px;
+                        font-size:9px;
+                    ">
+                        12 · 09 · 2026
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LUXURY DEMO -->
+
+        <div class="demo demo-luxury" data-demo-view="luxury">
+
+            <div class="demo-luxury-card">
+
+                <div>
+
+                    <small style="
+                        letter-spacing:6px;
+                        font-size:8px;
+                    ">
+                        AN EVENING TO REMEMBER
+                    </small>
+
+                    <h2>
+                        Forever
+                    </h2>
+
+                    <div>
+                        ✦
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GARDEN DEMO -->
+
+        <div class="demo demo-garden" data-demo-view="garden">
+
+            <div class="demo-garden-card">
+
+                <div>
+
+                    <small style="
+                        letter-spacing:5px;
+                        font-size:8px;
+                        color:#718074;
+                    ">
+                        AN ITALIAN GARDEN
+                    </small>
+
+                    <h2>
+                        Amore
+                    </h2>
+
+                    <p style="
+                        font-size:9px;
+                        letter-spacing:4px;
+                        color:#718074;
+                    ">
+                        12 · 09 · 2026
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ENGAGEMENT DEMO -->
+
+        <div class="demo demo-engagement" data-demo-view="engagement">
+
+            <div class="demo-engagement-card">
+
+                <div>
+
+                    <small style="
+                        letter-spacing:5px;
+                        font-size:8px;
+                        color:#a17c86;
+                    ">
+                        THE ENGAGEMENT OF
+                    </small>
+
+                    <h2>
+                        Forever
+                    </h2>
+
+                    <small style="
+                        letter-spacing:4px;
+                        font-size:8px;
+                        color:#a17c86;
+                    ">
+                        WITH LOVE
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HENNA DEMO -->
+
+        <div class="demo demo-henna" data-demo-view="henna">
+
+            <div class="demo-henna-card">
+
+                <div>
+
+                    <small style="
+                        display:block;
+                        letter-spacing:5px;
+                        font-size:8px;
+                        margin-bottom:15px;
+                    ">
+                        HENNA NIGHT
+                    </small>
+
+                    <h2>
+                        Henna
+                    </h2>
+
+                    <small style="
+                        letter-spacing:4px;
+                        font-size:8px;
+                    ">
+                        A SPECIAL NIGHT
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
 /* =====================================================
-   FILTER SYSTEM
+   FILTERS
 ===================================================== */
 
-const filterButtons =
+const filters =
     document.querySelectorAll(".filter");
 
 const designs =
     document.querySelectorAll(".design");
 
 
-filterButtons.forEach(function(button) {
+filters.forEach(filter => {
 
-    button.addEventListener("click", function() {
+    filter.addEventListener("click", () => {
 
         const selected =
-            button.dataset.filter;
+            filter.dataset.filter;
 
+        filters.forEach(item =>
+            item.classList.remove("active")
+        );
 
-        filterButtons.forEach(function(item) {
+        filter.classList.add("active");
 
-            item.classList.remove("active");
+        designs.forEach(design => {
 
-        });
-
-
-        button.classList.add("active");
-
-
-        designs.forEach(function(design) {
-
-            const category =
-                design.dataset.category;
-
-
-            if (
+            if(
                 selected === "all" ||
-                category === selected
-            ) {
+                design.dataset.category === selected
+            ){
 
-                design.style.display = "block";
+                design.style.display = "";
 
-            } else {
+            }else{
 
                 design.style.display = "none";
 
@@ -1862,25 +2961,135 @@ filterButtons.forEach(function(button) {
 
 
 /* =====================================================
-   PAUSE ANIMATION ON HOVER
-   Makes preview feel interactive
+   MODAL
 ===================================================== */
 
-designs.forEach(function(design) {
+const modal =
+    document.getElementById("demoModal");
 
-    const preview =
-        design.querySelector(".preview");
+const closeModal =
+    document.getElementById("closeModal");
+
+const demoViews =
+    document.querySelectorAll(".demo");
 
 
-    design.addEventListener("mouseenter",function() {
+document.querySelectorAll(".view-button")
+.forEach(button => {
 
-        preview.style.transition =
-            "transform .5s ease";
+    button.addEventListener("click", () => {
+
+        const type =
+            button.dataset.demo;
+
+        demoViews.forEach(view => {
+
+            view.classList.remove("active");
+
+            if(
+                view.dataset.demoView === type
+            ){
+
+                view.classList.add("active");
+
+            }
+
+        });
+
+        modal.classList.add("show");
+
+        document.body.style.overflow = "hidden";
 
     });
 
 });
 
+
+closeModal.addEventListener("click", closeDemo);
+
+modal.addEventListener("click", event => {
+
+    if(event.target === modal){
+
+        closeDemo();
+
+    }
+
+});
+
+
+function closeDemo(){
+
+    modal.classList.remove("show");
+
+    document.body.style.overflow = "";
+
+    document
+        .getElementById("demoEnvelopeScene")
+        .classList.remove("open");
+
+    document
+        .getElementById("demoBookScene")
+        .classList.remove("open");
+
+}
+
+
+/* =====================================================
+   ENVELOPE OPEN
+===================================================== */
+
+document
+    .getElementById("openEnvelope")
+    .addEventListener("click", function(){
+
+        const scene =
+            document.getElementById("demoEnvelopeScene");
+
+        scene.classList.toggle("open");
+
+        this.textContent =
+            scene.classList.contains("open")
+            ? "Dəvətnaməni bağla"
+            : "Dəvətnaməni aç";
+
+    });
+
+
+/* =====================================================
+   BOOK OPEN
+===================================================== */
+
+document
+    .getElementById("openBook")
+    .addEventListener("click", function(){
+
+        const scene =
+            document.getElementById("demoBookScene");
+
+        scene.classList.toggle("open");
+
+        this.textContent =
+            scene.classList.contains("open")
+            ? "Kitabı bağla"
+            : "Kitabı aç";
+
+    });
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener("keydown", event => {
+
+    if(event.key === "Escape"){
+
+        closeDemo();
+
+    }
+
+});
 
 </script>
 
@@ -1888,4 +3097,3 @@ designs.forEach(function(design) {
 </body>
 
 </html>
-```
