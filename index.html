@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Wedding Invitation</title>
+    <title>Luna | Digital Invitations</title>
 
     <style>
 
@@ -29,10 +29,43 @@
             color: #403a35;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 0 20px;
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            padding: 28px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 30px;
+            color: white;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            opacity: 0.7;
         }
 
         /* =========================
@@ -44,10 +77,10 @@
 
             background:
                 linear-gradient(
-                    rgba(0, 0, 0, 0.30),
-                    rgba(0, 0, 0, 0.30)
+                    rgba(50, 43, 38, 0.45),
+                    rgba(50, 43, 38, 0.45)
                 ),
-                var(--hero-image);
+                url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85");
 
             background-size: cover;
             background-position: center;
@@ -58,35 +91,42 @@
 
             text-align: center;
             color: white;
+
+            padding: 100px 20px;
         }
 
         .hero-content {
-            padding: 30px;
+            max-width: 800px;
         }
 
-        .subtitle {
-            font-size: 14px;
+        .small-title {
+            font-size: 13px;
             letter-spacing: 6px;
             text-transform: uppercase;
             margin-bottom: 25px;
         }
 
         .hero h1 {
-            font-size: clamp(55px, 12vw, 110px);
+            font-size: clamp(65px, 12vw, 130px);
             font-weight: normal;
-            line-height: 1.1;
+            line-height: 1;
+            margin-bottom: 25px;
         }
 
-        .date {
-            margin-top: 25px;
+        .hero p {
+            max-width: 600px;
+            margin: auto;
+
             font-size: 18px;
-            letter-spacing: 3px;
+            line-height: 1.8;
         }
 
-        .button {
+        .hero-button {
             display: inline-block;
-            margin-top: 35px;
-            padding: 14px 32px;
+
+            margin-top: 40px;
+
+            padding: 15px 35px;
 
             border: 1px solid white;
             border-radius: 30px;
@@ -94,284 +134,231 @@
             color: white;
             text-decoration: none;
 
+            font-size: 13px;
+            letter-spacing: 2px;
+
             transition: 0.3s;
         }
 
-        .button:hover {
+        .hero-button:hover {
             background: white;
             color: #403a35;
         }
 
         /* =========================
-           COUNTDOWN
+           INTRO
         ========================= */
 
-        .countdown-section {
-            background: #fffdf9;
-            padding: 80px 20px;
+        .intro {
+            padding: 110px 20px;
             text-align: center;
+            background: #fffdf9;
         }
 
-        .section-small-title {
-            font-size: 13px;
+        .intro-inner {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .section-label {
+            color: #9a8776;
+            font-size: 12px;
             letter-spacing: 5px;
             text-transform: uppercase;
-            color: #9a8776;
-            margin-bottom: 35px;
+            margin-bottom: 18px;
         }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .intro h2 {
+            font-size: 45px;
+            font-weight: normal;
+            margin-bottom: 25px;
         }
 
-        .time-box {
-            min-width: 110px;
-            padding: 25px 15px;
-
-            background: #faf7f2;
-            border-radius: 10px;
-
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.06);
-        }
-
-        .time-number {
-            display: block;
-            font-size: 42px;
-        }
-
-        .time-label {
-            display: block;
-            margin-top: 8px;
-
-            font-size: 11px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-
-            color: #9a8776;
+        .intro p {
+            font-size: 17px;
+            line-height: 2;
         }
 
         /* =========================
-           COMMON SECTION
+           SERVICES
         ========================= */
 
-        section {
-            padding: 90px 20px;
+        .services {
+            padding: 100px 20px;
+            background: #faf7f2;
         }
 
-        .title {
+        .section-title {
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 55px;
         }
 
-        .title span {
+        .section-title span {
             display: block;
-
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-
             color: #9a8776;
-            margin-bottom: 10px;
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
-        .title h2 {
-            font-size: 42px;
+        .section-title h2 {
+            font-size: 45px;
             font-weight: normal;
         }
 
-        /* =========================
-           STORY
-        ========================= */
-
-        .story {
-            background: #faf7f2;
-        }
-
-        .story-text {
-            max-width: 700px;
-            margin: auto;
-
-            text-align: center;
-
-            line-height: 2;
-            font-size: 17px;
-        }
-
-        /* =========================
-           GALLERY
-        ========================= */
-
-        .gallery-section {
-            background: #fffdf9;
-        }
-
-        .gallery {
-            max-width: 900px;
+        .service-grid {
+            max-width: 1100px;
             margin: auto;
 
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 18px;
-        }
-
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            aspect-ratio: 4 / 3;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-            display: block;
-
-            transition: transform 0.6s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        /* =========================
-           DETAILS
-        ========================= */
-
-        .details {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
 
             gap: 25px;
         }
 
-        .card {
+        .service-card {
             background: white;
-
-            padding: 40px;
+            padding: 45px 30px;
 
             text-align: center;
 
             border-radius: 10px;
 
             box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .icon {
-            font-size: 35px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            font-size: 22px;
-            font-weight: normal;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            line-height: 1.8;
-        }
-
-        .map-button {
-            display: inline-block;
-
-            margin-top: 20px;
-
-            padding: 12px 25px;
-
-            border: 1px solid #806f61;
-            border-radius: 25px;
-
-            color: #806f61;
-            text-decoration: none;
+                0 12px 35px rgba(0, 0, 0, 0.05);
 
             transition: 0.3s;
         }
 
-        .map-button:hover {
-            background: #806f61;
-            color: white;
+        .service-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .service-icon {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            line-height: 1.8;
+            font-size: 15px;
         }
 
         /* =========================
-           MUSIC
+           HOW IT WORKS
         ========================= */
 
-        .music-section {
-            background: #faf7f2;
-            text-align: center;
-        }
-
-        .music-player {
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        /* =========================
-           RSVP
-        ========================= */
-
-        .rsvp {
+        .how {
+            padding: 110px 20px;
             background: #fffdf9;
         }
 
-        form {
-            max-width: 600px;
+        .steps {
+            max-width: 1000px;
             margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 40px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+        .step {
+            text-align: center;
         }
 
-        input,
-        select,
-        textarea {
-            width: 100%;
+        .step-number {
+            width: 55px;
+            height: 55px;
 
-            padding: 14px;
-            margin-bottom: 22px;
+            margin: 0 auto 20px;
 
-            border: 1px solid #d8cec3;
-            border-radius: 5px;
+            border: 1px solid #9a8776;
+            border-radius: 50%;
 
-            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #806f61;
+            font-size: 18px;
+        }
+
+        .step h3 {
+            font-size: 21px;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            line-height: 1.7;
             font-size: 15px;
         }
 
-        textarea {
-            min-height: 120px;
-            resize: vertical;
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            padding: 120px 20px;
+
+            background:
+                linear-gradient(
+                    rgba(64, 58, 53, 0.88),
+                    rgba(64, 58, 53, 0.88)
+                ),
+                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+
+            color: white;
+            text-align: center;
         }
 
-        .submit {
-            width: 100%;
+        .cta h2 {
+            font-size: 50px;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
 
-            padding: 15px;
+        .cta p {
+            max-width: 650px;
+            margin: auto;
 
-            border: none;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .cta-button {
+            display: inline-block;
+
+            margin-top: 35px;
+
+            padding: 15px 35px;
+
+            background: white;
+            color: #403a35;
+
+            text-decoration: none;
+
             border-radius: 30px;
 
-            background: #806f61;
-            color: white;
-
-            font-size: 15px;
+            font-size: 13px;
             letter-spacing: 2px;
 
-            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .submit:hover {
-            opacity: 0.85;
+        .cta-button:hover {
+            opacity: 0.8;
         }
 
         /* =========================
@@ -381,7 +368,7 @@
         footer {
             padding: 70px 20px;
 
-            background: #403a35;
+            background: #2f2a26;
             color: white;
 
             text-align: center;
@@ -393,78 +380,60 @@
             margin-bottom: 15px;
         }
 
-        /* =========================
-           ERROR
-        ========================= */
-
-        .error-message {
-            display: none;
-
-            min-height: 100vh;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 30px;
+        footer p {
+            color: #d8cec3;
+            font-size: 14px;
         }
 
-        .error-message h1 {
-            font-weight: normal;
-            margin-bottom: 15px;
+        .footer-links {
+            margin-top: 25px;
+        }
+
+        .footer-links a {
+            color: #d8cec3;
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 13px;
         }
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 700px) {
+        @media (max-width: 750px) {
+
+            nav {
+                padding: 22px 20px;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
 
             .hero h1 {
-                font-size: 55px;
+                font-size: 70px;
             }
 
-            .date {
-                font-size: 14px;
+            .hero p {
+                font-size: 16px;
             }
 
-            .countdown {
-                gap: 10px;
+            .intro h2,
+            .section-title h2 {
+                font-size: 35px;
             }
 
-            .time-box {
-                min-width: 75px;
-                padding: 18px 8px;
-            }
-
-            .time-number {
-                font-size: 30px;
-            }
-
-            .time-label {
-                font-size: 9px;
-                letter-spacing: 1px;
-            }
-
-            .gallery {
+            .service-grid {
                 grid-template-columns: 1fr;
             }
 
-            .details {
+            .steps {
                 grid-template-columns: 1fr;
+                gap: 45px;
             }
 
-            section {
-                padding: 70px 18px;
-            }
-
-            .title h2 {
-                font-size: 32px;
-            }
-
-            footer h2 {
-                font-size: 32px;
+            .cta h2 {
+                font-size: 38px;
             }
 
         }
@@ -473,25 +442,37 @@
 
 </head>
 
+
 <body>
 
+
     <!-- =========================
-         ERROR
+         NAVIGATION
     ========================= -->
 
-    <div class="error-message" id="errorMessage">
+    <nav>
 
-        <div>
+        <div class="logo">
+            Luna
+        </div>
 
-            <h1>Invitation not found</h1>
+        <div class="nav-links">
 
-            <p>
-                Please check your invitation link.
-            </p>
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#services">
+                Services
+            </a>
+
+            <a href="pricing.html">
+                Pricing
+            </a>
 
         </div>
 
-    </div>
+    </nav>
 
 
     <!-- =========================
@@ -502,20 +483,24 @@
 
         <div class="hero-content">
 
-            <div class="subtitle">
-                You are invited
+            <div class="small-title">
+                Digital Invitations
             </div>
 
-            <h1 id="coupleNames">
-                Aysel & Murad
+            <h1>
+                Luna
             </h1>
 
-            <div class="date" id="weddingDateText">
-                12 September 2026 · Baku
-            </div>
+            <p>
+                Beautiful digital invitations
+                for your most special moments.
+            </p>
 
-            <a href="#countdown" class="button">
-                VIEW INVITATION
+            <a
+                href="pricing.html"
+                class="hero-button"
+            >
+                EXPLORE INVITATIONS
             </a>
 
         </div>
@@ -524,79 +509,39 @@
 
 
     <!-- =========================
-         COUNTDOWN
+         ABOUT
     ========================= -->
 
     <section
-        class="countdown-section"
-        id="countdown"
+        class="intro"
+        id="about"
     >
 
-        <div class="section-small-title">
-            Until we say "I do"
-        </div>
+        <div class="intro-inner">
 
-        <div class="countdown">
-
-            <div class="time-box">
-
-                <span
-                    class="time-number"
-                    id="days"
-                >
-                    00
-                </span>
-
-                <span class="time-label">
-                    Days
-                </span>
-
+            <div class="section-label">
+                Welcome to Luna
             </div>
 
-            <div class="time-box">
+            <h2>
+                Your story deserves
+                something beautiful.
+            </h2>
 
-                <span
-                    class="time-number"
-                    id="hours"
-                >
-                    00
-                </span>
+            <p>
+                At Luna, we create elegant and
+                personalized digital invitations
+                designed especially for your
+                most meaningful celebrations.
 
-                <span class="time-label">
-                    Hours
-                </span>
+                <br><br>
 
-            </div>
-
-            <div class="time-box">
-
-                <span
-                    class="time-number"
-                    id="minutes"
-                >
-                    00
-                </span>
-
-                <span class="time-label">
-                    Minutes
-                </span>
-
-            </div>
-
-            <div class="time-box">
-
-                <span
-                    class="time-number"
-                    id="seconds"
-                >
-                    00
-                </span>
-
-                <span class="time-label">
-                    Seconds
-                </span>
-
-            </div>
+                From weddings and engagements
+                to birthdays and special events,
+                every invitation is created with
+                care, elegance and attention to
+                detail.
+            </p>
 
         </div>
 
@@ -604,125 +549,84 @@
 
 
     <!-- =========================
-         STORY
+         SERVICES
     ========================= -->
 
-    <section class="story">
+    <section
+        class="services"
+        id="services"
+    >
 
-        <div class="container">
+        <div class="section-title">
 
-            <div class="title">
+            <span>
+                What we create
+            </span>
 
-                <span>
-                    Our journey
-                </span>
-
-                <h2>
-                    Our Story
-                </h2>
-
-            </div>
-
-            <div
-                class="story-text"
-                id="storyText"
-            ></div>
+            <h2>
+                For Every Special Moment
+            </h2>
 
         </div>
 
-    </section>
+
+        <div class="service-grid">
 
 
-    <!-- =========================
-         GALLERY
-    ========================= -->
+            <div class="service-card">
 
-    <section class="gallery-section">
-
-        <div class="container">
-
-            <div class="title">
-
-                <span>
-                    Our memories
-                </span>
-
-                <h2>
-                    Moments
-                </h2>
-
-            </div>
-
-            <div
-                class="gallery"
-                id="gallery"
-            ></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         DETAILS
-    ========================= -->
-
-    <section>
-
-        <div class="container">
-
-            <div class="title">
-
-                <span>
-                    Join us
-                </span>
-
-                <h2>
-                    Wedding Details
-                </h2>
-
-            </div>
-
-            <div class="details">
-
-                <div class="card">
-
-                    <div class="icon">
-                        📅
-                    </div>
-
-                    <h3>
-                        Date & Time
-                    </h3>
-
-                    <p id="detailsDate"></p>
-
+                <div class="service-icon">
+                    🤍
                 </div>
 
+                <h3>
+                    Weddings
+                </h3>
 
-                <div class="card">
+                <p>
+                    Elegant digital wedding
+                    invitations created to
+                    celebrate your love story.
+                </p>
 
-                    <div class="icon">
-                        📍
-                    </div>
+            </div>
 
-                    <h3>
-                        Location
-                    </h3>
 
-                    <p id="detailsLocation"></p>
+            <div class="service-card">
 
-                    <a
-                        href="#"
-                        target="_blank"
-                        class="map-button"
-                        id="mapLink"
-                    >
-                        VIEW MAP
-                    </a>
-
+                <div class="service-icon">
+                    ✨
                 </div>
 
+                <h3>
+                    Engagements
+                </h3>
+
+                <p>
+                    Beautiful invitations for
+                    engagement parties and
+                    unforgettable beginnings.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🕊️
+                </div>
+
+                <h3>
+                    Special Events
+                </h3>
+
+                <p>
+                    Personalized invitations
+                    for birthdays, celebrations
+                    and meaningful occasions.
+                </p>
+
             </div>
 
         </div>
@@ -731,34 +635,82 @@
 
 
     <!-- =========================
-         LUXURY MUSIC
+         HOW IT WORKS
     ========================= -->
 
-    <section
-        class="music-section"
-        id="musicSection"
-        style="display:none;"
-    >
+    <section class="how">
 
-        <div class="container">
+        <div class="section-title">
 
-            <div class="title">
+            <span>
+                Simple & effortless
+            </span>
 
-                <span>
-                    Our soundtrack
-                </span>
+            <h2>
+                How It Works
+            </h2>
 
-                <h2>
-                    Music
-                </h2>
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Choose Your Design
+                </h3>
+
+                <p>
+                    Explore our invitation
+                    packages and choose the
+                    one that feels right for you.
+                </p>
 
             </div>
 
-            <audio
-                id="weddingMusic"
-                class="music-player"
-                controls
-            ></audio>
+
+            <div class="step">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Share Your Details
+                </h3>
+
+                <p>
+                    Complete our simple client
+                    form with your event details,
+                    photos and preferences.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Receive Your Invitation
+                </h3>
+
+                <p>
+                    We create your personalized
+                    invitation and send you your
+                    unique link.
+                </p>
+
+            </div>
 
         </div>
 
@@ -766,129 +718,28 @@
 
 
     <!-- =========================
-         RSVP
+         CTA
     ========================= -->
 
-    <section
-        class="rsvp"
-        id="rsvpSection"
-    >
+    <section class="cta">
 
-        <div class="container">
+        <h2>
+            Let's create something beautiful.
+        </h2>
 
-            <div class="title">
+        <p>
+            Your special moment deserves an
+            invitation as unique as your story.
+            Choose your package and let Luna
+            bring your vision to life.
+        </p>
 
-                <span>
-                    We hope to see you
-                </span>
-
-                <h2>
-                    RSVP
-                </h2>
-
-            </div>
-
-            <form
-                action="https://formspree.io/f/mqpzyklb"
-                method="POST"
-            >
-
-                <input
-                    type="hidden"
-                    name="invitation_id"
-                    id="invitationIdField"
-                >
-
-                <input
-                    type="hidden"
-                    name="couple"
-                    id="coupleField"
-                >
-
-                <label for="guestName">
-                    Your Name
-                </label>
-
-                <input
-                    type="text"
-                    name="name"
-                    id="guestName"
-                    placeholder="Enter your name"
-                    required
-                >
-
-                <label for="attendance">
-                    Will you join us?
-                </label>
-
-                <select
-                    name="attendance"
-                    id="attendance"
-                    required
-                >
-
-                    <option value="">
-                        Please select
-                    </option>
-
-                    <option value="yes">
-                        Yes, I'll be there 🤍
-                    </option>
-
-                    <option value="no">
-                        Sorry, I can't attend
-                    </option>
-
-                </select>
-
-                <label for="guestNumber">
-                    Number of guests
-                </label>
-
-                <select
-                    name="guest_number"
-                    id="guestNumber"
-                    required
-                >
-
-                    <option value="1">
-                        1
-                    </option>
-
-                    <option value="2">
-                        2
-                    </option>
-
-                    <option value="3">
-                        3
-                    </option>
-
-                    <option value="4">
-                        4
-                    </option>
-
-                </select>
-
-                <label for="message">
-                    Message
-                </label>
-
-                <textarea
-                    name="message"
-                    id="message"
-                    placeholder="Leave a message..."
-                ></textarea>
-
-                <button
-                    class="submit"
-                    type="submit"
-                >
-                    SEND RSVP
-                </button>
-
-            </form>
-
-        </div>
+        <a
+            href="pricing.html"
+            class="cta-button"
+        >
+            VIEW PRICING
+        </a>
 
     </section>
 
@@ -899,514 +750,34 @@
 
     <footer>
 
-        <h2 id="footerNames">
-            Aysel & Murad
+        <h2>
+            Luna
         </h2>
 
         <p>
-            We can't wait to celebrate with you 🤍
+            Digital invitations for beautiful moments. 🤍
         </p>
+
+        <div class="footer-links">
+
+            <a href="pricing.html">
+                Pricing
+            </a>
+
+            <a href="client-form.html">
+                Client Form
+            </a>
+
+        </div>
 
         <br>
 
-        <p id="footerDate">
-            12 · 09 · 2026
+        <p>
+            © 2026 Luna. All rights reserved.
         </p>
 
     </footer>
 
-
-    <!-- =========================
-         CUSTOMER DATA
-    ========================= -->
-
-    <script src="data/invitations.js"></script>
-
-
-    <!-- =========================
-         MAIN SYSTEM
-    ========================= -->
-
-    <script>
-
-        /*
-        =====================================================
-        LUNA INVITATION SYSTEM
-
-        Customer information:
-        data/invitations.js
-        =====================================================
-        */
-
-
-        /* =========================
-           GET CUSTOMER ID
-        ========================= */
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-
-        /*
-        IMPORTANT:
-
-        If there is no ?id=... in the URL,
-        Aysel & Murad will open by default.
-
-        Example:
-
-        Main page:
-        /digital-invitation/
-
-        Aysel:
-        /digital-invitation/?id=aysel-murad
-
-        Nigar & Elvin:
-        /digital-invitation/?id=nigar-elvin
-        */
-
-        const invitationId =
-            params.get("id") || "aysel-murad";
-
-
-        /* =========================
-           FIND CUSTOMER
-        ========================= */
-
-        const invitation =
-            invitations[invitationId];
-
-
-        /* =========================
-           NOT FOUND
-        ========================= */
-
-        if (!invitation) {
-
-            document.querySelector(".hero").style.display =
-                "none";
-
-            document.querySelectorAll("section")
-                .forEach(function(section) {
-                    section.style.display = "none";
-                });
-
-            document.querySelector("footer").style.display =
-                "none";
-
-            document.getElementById(
-                "errorMessage"
-            ).style.display = "flex";
-
-        }
-
-
-        /* =========================
-           LOAD INVITATION
-        ========================= */
-
-        if (invitation) {
-
-            /* =========================
-               COUPLE NAME
-            ========================= */
-
-            const coupleName =
-                invitation.bride +
-                " & " +
-                invitation.groom;
-
-
-            document.title =
-                coupleName +
-                " | Wedding Invitation";
-
-
-            document.getElementById(
-                "coupleNames"
-            ).innerText =
-                coupleName;
-
-
-            document.getElementById(
-                "footerNames"
-            ).innerText =
-                coupleName;
-
-
-            /* =========================
-               HERO DATE
-            ========================= */
-
-            document.getElementById(
-                "weddingDateText"
-            ).innerText =
-                invitation.date +
-                " · " +
-                invitation.location;
-
-
-            /* =========================
-               DATE
-            ========================= */
-
-            document.getElementById(
-                "detailsDate"
-            ).innerHTML =
-                invitation.date +
-                "<br>" +
-                invitation.time;
-
-
-            document.getElementById(
-                "footerDate"
-            ).innerText =
-                invitation.dateShort;
-
-
-            /* =========================
-               LOCATION
-            ========================= */
-
-            document.getElementById(
-                "detailsLocation"
-            ).innerHTML =
-                invitation.location +
-                "<br>" +
-                invitation.venue;
-
-
-            document.getElementById(
-                "mapLink"
-            ).href =
-                invitation.map;
-
-
-            /* =========================
-               STORY
-            ========================= */
-
-            document.getElementById(
-                "storyText"
-            ).innerHTML =
-                invitation.story;
-
-
-            /* =========================
-               PACKAGE SYSTEM
-            ========================= */
-
-            const packageType =
-                invitation.package || "basic";
-
-
-            /* =========================
-               PHOTO LIMIT
-            ========================= */
-
-            let photoLimit = 6;
-
-
-            if (packageType === "premium") {
-
-                photoLimit = 10;
-
-            }
-
-
-            if (packageType === "luxury") {
-
-                photoLimit = 10;
-
-            }
-
-
-            /* =========================
-               GALLERY
-            ========================= */
-
-            const gallery =
-                document.getElementById(
-                    "gallery"
-                );
-
-
-            gallery.innerHTML = "";
-
-
-            if (
-                invitation.images &&
-                invitation.images.length > 0
-            ) {
-
-                invitation.images
-                    .slice(0, photoLimit)
-                    .forEach(
-                        function(image) {
-
-                            const item =
-                                document.createElement(
-                                    "div"
-                                );
-
-
-                            item.className =
-                                "gallery-item";
-
-
-                            const img =
-                                document.createElement(
-                                    "img"
-                                );
-
-
-                            img.src =
-                                image;
-
-
-                            img.alt =
-                                coupleName +
-                                " wedding photo";
-
-
-                            item.appendChild(img);
-
-                            gallery.appendChild(item);
-
-                        }
-                    );
-
-            }
-
-
-            /* =========================
-               HERO IMAGE
-            ========================= */
-
-            if (
-                invitation.images &&
-                invitation.images.length > 0
-            ) {
-
-                document.documentElement.style
-                    .setProperty(
-                        "--hero-image",
-                        `url("${invitation.images[0]}")`
-                    );
-
-            }
-
-
-            /* =========================
-               RSVP
-            ========================= */
-
-            const rsvpSection =
-                document.getElementById(
-                    "rsvpSection"
-                );
-
-
-            if (packageType === "basic") {
-
-                rsvpSection.style.display =
-                    "none";
-
-            } else {
-
-                rsvpSection.style.display =
-                    "block";
-
-            }
-
-
-            /* =========================
-               RSVP DATA
-            ========================= */
-
-            document.getElementById(
-                "invitationIdField"
-            ).value =
-                invitationId;
-
-
-            document.getElementById(
-                "coupleField"
-            ).value =
-                coupleName;
-
-
-            /* =========================
-               LUXURY MUSIC
-            ========================= */
-
-            const musicSection =
-                document.getElementById(
-                    "musicSection"
-                );
-
-
-            const weddingMusic =
-                document.getElementById(
-                    "weddingMusic"
-                );
-
-
-            if (
-                packageType === "luxury" &&
-                invitation.music
-            ) {
-
-                musicSection.style.display =
-                    "block";
-
-
-                weddingMusic.src =
-                    invitation.music;
-
-            } else {
-
-                musicSection.style.display =
-                    "none";
-
-            }
-
-
-            /* =========================
-               COUNTDOWN
-            ========================= */
-
-            const weddingDate =
-                new Date(
-                    invitation.countdown
-                ).getTime();
-
-
-            function updateCountdown() {
-
-                const now =
-                    new Date().getTime();
-
-
-                const difference =
-                    weddingDate - now;
-
-
-                if (difference <= 0) {
-
-                    document.getElementById(
-                        "days"
-                    ).innerText = "00";
-
-
-                    document.getElementById(
-                        "hours"
-                    ).innerText = "00";
-
-
-                    document.getElementById(
-                        "minutes"
-                    ).innerText = "00";
-
-
-                    document.getElementById(
-                        "seconds"
-                    ).innerText = "00";
-
-
-                    return;
-
-                }
-
-
-                const days =
-                    Math.floor(
-                        difference /
-                        (1000 * 60 * 60 * 24)
-                    );
-
-
-                const hours =
-                    Math.floor(
-                        (
-                            difference %
-                            (1000 * 60 * 60 * 24)
-                        ) /
-                        (1000 * 60 * 60)
-                    );
-
-
-                const minutes =
-                    Math.floor(
-                        (
-                            difference %
-                            (1000 * 60 * 60)
-                        ) /
-                        (1000 * 60)
-                    );
-
-
-                const seconds =
-                    Math.floor(
-                        (
-                            difference %
-                            (1000 * 60)
-                        ) /
-                        1000
-                    );
-
-
-                document.getElementById(
-                    "days"
-                ).innerText =
-                    String(days).padStart(
-                        2,
-                        "0"
-                    );
-
-
-                document.getElementById(
-                    "hours"
-                ).innerText =
-                    String(hours).padStart(
-                        2,
-                        "0"
-                    );
-
-
-                document.getElementById(
-                    "minutes"
-                ).innerText =
-                    String(minutes).padStart(
-                        2,
-                        "0"
-                    );
-
-
-                document.getElementById(
-                    "seconds"
-                ).innerText =
-                    String(seconds).padStart(
-                        2,
-                        "0"
-                    );
-
-            }
-
-
-            updateCountdown();
-
-
-            setInterval(
-                updateCountdown,
-                1000
-            );
-
-        }
-
-    </script>
 
 </body>
 
