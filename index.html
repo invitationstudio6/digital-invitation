@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="az">
 
@@ -27,19 +26,18 @@ html {
 
 body {
     font-family: Georgia, "Times New Roman", serif;
-    color: #302b28;
-    background: #f4efe8;
+    color: #342f2a;
+    background: #f7f2eb;
     overflow-x: hidden;
-}
-
-button,
-a {
-    font-family: inherit;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+button {
+    font-family: inherit;
 }
 
 
@@ -51,25 +49,39 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    pointer-events: none;
     z-index: -2;
 
     background:
         radial-gradient(
             circle at 10% 10%,
-            rgba(191, 164, 130, .18),
-            transparent 28%
+            rgba(213, 190, 165, .35),
+            transparent 30%
         ),
         radial-gradient(
             circle at 90% 20%,
-            rgba(160, 132, 105, .12),
-            transparent 25%
+            rgba(232, 215, 194, .4),
+            transparent 30%
         ),
         radial-gradient(
             circle at 50% 100%,
-            rgba(203, 179, 151, .16),
-            transparent 30%
+            rgba(214, 194, 174, .25),
+            transparent 35%
         );
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    opacity: .35;
+
+    background-image:
+        radial-gradient(#9d8a77 0.5px, transparent 0.5px);
+
+    background-size: 18px 18px;
 }
 
 
@@ -82,30 +94,33 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 82px;
+
+    padding: 22px 6%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 6%;
+    z-index: 100;
 
-    background: rgba(248, 244, 238, .82);
-    backdrop-filter: blur(18px);
+    background: rgba(247, 242, 235, .72);
+    backdrop-filter: blur(14px);
 
-    border-bottom: 1px solid rgba(80,60,45,.08);
-
-    z-index: 1000;
+    border-bottom: 1px solid rgba(100, 80, 60, .08);
 }
 
 .logo {
-    font-size: 30px;
-    letter-spacing: 3px;
+    font-size: 31px;
+    letter-spacing: 2px;
     font-weight: normal;
 }
 
 .logo span {
-    font-style: italic;
+    font-size: 11px;
+    display: block;
+    letter-spacing: 4px;
+    margin-top: -2px;
+    color: #8b7765;
 }
 
 .nav-links {
@@ -119,18 +134,19 @@ nav {
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #5f554e;
+    color: #51483f;
 }
 
 .nav-links a:hover {
-    color: #9b7454;
+    color: #a27e61;
 }
 
 .language {
-    border: 1px solid #cfc2b5;
-    padding: 8px 12px;
-    border-radius: 30px;
+    border: none;
     background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
 
 
@@ -140,561 +156,435 @@ nav {
 
 .hero {
     min-height: 100vh;
+
     padding: 150px 6% 90px;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     align-items: center;
     gap: 70px;
 
     position: relative;
 }
 
-.hero-text {
-    max-width: 620px;
+.hero-content {
+    max-width: 650px;
 }
 
 .eyebrow {
     font-family: Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 5px;
     font-size: 11px;
-    color: #96775d;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #9b8069;
     margin-bottom: 25px;
 }
 
 .hero h1 {
-    font-size: clamp(55px, 7vw, 100px);
-    line-height: .95;
+    font-size: clamp(55px, 7vw, 105px);
+    line-height: .94;
     font-weight: normal;
     letter-spacing: -3px;
 }
 
 .hero h1 em {
-    font-style: italic;
-    color: #96775d;
+    font-weight: normal;
+    color: #a27e61;
 }
 
-.hero-description {
+.hero-text {
+    max-width: 470px;
+
     margin-top: 30px;
-    max-width: 500px;
+
     font-size: 18px;
-    line-height: 1.8;
-    color: #766b62;
+    line-height: 1.9;
+    color: #665b51;
 }
 
 .hero-buttons {
-    margin-top: 38px;
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 35px;
 }
 
-.primary-button,
-.secondary-button {
-    padding: 15px 27px;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px 28px;
+
     border-radius: 40px;
+
     font-family: Arial, sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
+
     transition: .3s;
 }
 
-.primary-button {
-    background: #40362f;
+.btn-dark {
+    background: #40372f;
     color: white;
 }
 
-.primary-button:hover {
+.btn-dark:hover {
     transform: translateY(-3px);
+    background: #6d5848;
 }
 
-.secondary-button {
-    border: 1px solid #a9998b;
-    color: #554b44;
+.btn-light {
+    border: 1px solid #b9a28d;
+    color: #69584b;
 }
 
-.secondary-button:hover {
-    background: white;
+.btn-light:hover {
+    background: #eee3d7;
 }
 
 
 /* =====================================================
-   HERO VISUAL
+   HERO INVITATION DISPLAY
 ===================================================== */
 
-.hero-visual {
-    height: 650px;
+.hero-preview {
+    height: 610px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: relative;
 }
 
-.hero-card {
+.preview-shadow {
     position: absolute;
-    width: 340px;
-    height: 490px;
 
-    background: #fffaf4;
+    width: 370px;
+    height: 520px;
+
+    background: rgba(70, 50, 35, .12);
+
+    filter: blur(35px);
+
+    transform: translate(25px, 30px) rotate(5deg);
+}
+
+
+/* Main invitation */
+
+.invitation-card {
+    position: relative;
+
+    width: 340px;
+    height: 500px;
+
+    padding: 18px;
+
+    background: #e7d4bf;
 
     box-shadow:
-        0 35px 70px rgba(50,35,25,.18);
+        0 30px 70px rgba(63, 45, 32, .22);
+
+    transform: rotate(3deg);
 
     transition: .6s;
 }
 
-.hero-card.one {
-    right: 30px;
-    top: 40px;
-    transform: rotate(6deg);
+.invitation-card:hover {
+    transform: rotate(0deg) translateY(-10px);
+}
+
+.invitation-inner {
+    height: 100%;
+
+    border: 1px solid rgba(86, 62, 43, .5);
+
     background:
         linear-gradient(
-            rgba(35,25,20,.12),
-            rgba(35,25,20,.12)
+            rgba(60,40,25,.15),
+            rgba(60,40,25,.15)
         ),
-        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=90")
-        center / cover;
-}
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85");
 
-.hero-card.two {
-    left: 35px;
-    bottom: 25px;
-    transform: rotate(-7deg);
-    background: #eee5da;
-    padding: 35px;
-}
-
-.hero-card.two::before {
-    content: "";
-    position: absolute;
-    inset: 18px;
-    border: 1px solid #b5a08d;
-}
-
-.hero-card-content {
-    position: relative;
-    z-index: 2;
-
-    height: 100%;
+    background-size: cover;
+    background-position: center;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     text-align: center;
+
+    color: white;
+
+    position: relative;
 }
 
-.hero-card-content small {
+.invitation-inner::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+
+    border: 1px solid rgba(255,255,255,.65);
+}
+
+.invitation-inner small {
     font-family: Arial, sans-serif;
+    letter-spacing: 5px;
     font-size: 9px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
 }
 
-.hero-card-content h2 {
-    font-size: 50px;
+.invitation-inner h2 {
+    font-size: 52px;
     font-weight: normal;
-    margin: 20px 0;
+    margin: 18px 0;
+    line-height: 1;
 }
 
-.hero-card-content p {
-    font-size: 14px;
-    letter-spacing: 2px;
+.invitation-inner p {
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+
+/* floating cards */
+
+.floating-card {
+    position: absolute;
+
+    width: 180px;
+    height: 245px;
+
+    padding: 10px;
+
+    background: white;
+
+    box-shadow:
+        0 20px 45px rgba(60,45,35,.16);
+}
+
+.floating-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.float-one {
+    left: 0;
+    top: 60px;
+    transform: rotate(-8deg);
+}
+
+.float-two {
+    right: 0;
+    bottom: 60px;
+    transform: rotate(7deg);
 }
 
 
 /* =====================================================
-   SECTION HEADER
+   SECTION
 ===================================================== */
 
 .section {
     padding: 120px 6%;
 }
 
-.section-header {
+.section-heading {
     text-align: center;
-    margin-bottom: 65px;
+    max-width: 700px;
+    margin: auto auto 65px;
 }
 
-.section-label {
+.section-heading span {
+    display: block;
+
     font-family: Arial, sans-serif;
-    color: #9a795e;
-    letter-spacing: 4px;
     font-size: 10px;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    margin-bottom: 17px;
+
+    color: #a0836d;
+
+    margin-bottom: 18px;
 }
 
-.section-header h2 {
-    font-size: clamp(40px, 5vw, 68px);
+.section-heading h2 {
+    font-size: clamp(40px, 5vw, 70px);
     font-weight: normal;
+    line-height: 1;
 }
 
-.section-header p {
-    max-width: 600px;
-    margin: 20px auto 0;
-    color: #776d65;
+.section-heading p {
+    margin-top: 20px;
+
+    font-size: 16px;
     line-height: 1.8;
+
+    color: #71665c;
 }
 
 
 /* =====================================================
-   CATEGORY FILTER
+   CATEGORY
 ===================================================== */
 
-.filters {
+.categories {
     display: flex;
     justify-content: center;
-    gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 60px;
+    gap: 12px;
+
+    margin-bottom: 55px;
 }
 
-.filter {
-    border: 1px solid #cbbeb0;
-    background: transparent;
-    padding: 11px 19px;
+.category {
+    border: 1px solid #cdb9a5;
+
+    background: rgba(255,255,255,.4);
+
+    padding: 12px 22px;
+
     border-radius: 30px;
+
+    cursor: pointer;
 
     font-family: Arial, sans-serif;
     font-size: 10px;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 
-    cursor: pointer;
-    color: #665b53;
+    transition: .3s;
 }
 
-.filter.active,
-.filter:hover {
-    background: #40362f;
+.category:hover,
+.category.active {
+    background: #40372f;
     color: white;
-    border-color: #40362f;
+    border-color: #40372f;
 }
 
 
 /* =====================================================
-   TEMPLATE GRID
+   INVITATION COLLECTION
 ===================================================== */
 
-.templates {
+.collection {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
 
-    max-width: 1450px;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 35px;
+
+    max-width: 1250px;
     margin: auto;
 }
 
-.template {
+.design {
+    position: relative;
+
     cursor: pointer;
+
+    transition: .4s;
 }
 
-.template-preview {
-    height: 560px;
+.design:hover {
+    transform: translateY(-10px);
+}
+
+.design-image {
     position: relative;
+
+    aspect-ratio: 3 / 4;
+
     overflow: hidden;
 
     box-shadow:
-        0 25px 60px rgba(50,35,25,.13);
-
-    transition:
-        transform .5s ease,
-        box-shadow .5s ease;
+        0 18px 45px rgba(70,50,35,.14);
 }
 
-.template:hover .template-preview {
-    transform: translateY(-10px);
-    box-shadow:
-        0 35px 70px rgba(50,35,25,.22);
+.design-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: .7s;
 }
 
-.template-info {
-    padding: 18px 3px 5px;
+.design:hover img {
+    transform: scale(1.06);
 }
 
-.template-info h3 {
-    font-size: 23px;
+.design-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(40,30,20,.25);
+
+    opacity: 0;
+
+    transition: .4s;
+}
+
+.design:hover .design-overlay {
+    opacity: 1;
+}
+
+.view-button {
+    padding: 13px 22px;
+
+    border: 1px solid white;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.design-info {
+    padding: 18px 3px 0;
+}
+
+.design-info h3 {
+    font-size: 22px;
     font-weight: normal;
 }
 
-.template-info p {
-    margin-top: 7px;
+.design-info p {
+    margin-top: 6px;
+
+    color: #8d7d6e;
+
     font-family: Arial, sans-serif;
     font-size: 10px;
-    letter-spacing: 1.5px;
-    color: #8b7d72;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
 
 /* =====================================================
-   DESIGN 01 — IVORY EDITORIAL
-===================================================== */
-
-.design-editorial {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.8),
-            rgba(232,220,205,.75)
-        );
-    padding: 40px;
-}
-
-.editorial-inner {
-    height: 100%;
-    border: 1px solid #b9a897;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.editorial-inner .tiny {
-    font-family: Arial, sans-serif;
-    letter-spacing: 4px;
-    font-size: 8px;
-}
-
-.editorial-inner h3 {
-    font-size: 58px;
-    line-height: .95;
-    font-weight: normal;
-    margin: 30px 0;
-}
-
-.editorial-inner h3 em {
-    font-style: italic;
-}
-
-.editorial-inner .line {
-    width: 55px;
-    height: 1px;
-    background: #8f7964;
-    margin: 20px auto;
-}
-
-.editorial-inner p {
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-
-/* =====================================================
-   DESIGN 02 — DARK LUXURY
-===================================================== */
-
-.design-dark {
-    background:
-        radial-gradient(
-            circle at center,
-            #40352d,
-            #171412
-        );
-
-    color: #eee4d6;
-
-    padding: 28px;
-}
-
-.dark-inner {
-    height: 100%;
-    border: 1px solid rgba(210,185,150,.55);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-}
-
-.dark-inner .ornament {
-    font-size: 30px;
-    color: #c5a77c;
-}
-
-.dark-inner h3 {
-    font-size: 54px;
-    font-weight: normal;
-    margin: 25px 0;
-}
-
-.dark-inner h3 em {
-    color: #c9ad83;
-    font-style: italic;
-}
-
-.dark-inner p {
-    font-family: Arial, sans-serif;
-    letter-spacing: 3px;
-    font-size: 8px;
-}
-
-
-/* =====================================================
-   DESIGN 03 — FLORAL
-===================================================== */
-
-.design-floral {
-    background:
-        linear-gradient(
-            rgba(255,248,243,.3),
-            rgba(255,248,243,.3)
-        ),
-        url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=90")
-        center / cover;
-
-    padding: 25px;
-}
-
-.floral-inner {
-    height: 100%;
-    background: rgba(255,250,247,.86);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    backdrop-filter: blur(3px);
-}
-
-.floral-inner small {
-    font-family: Arial, sans-serif;
-    letter-spacing: 4px;
-    font-size: 8px;
-}
-
-.floral-inner h3 {
-    font-size: 52px;
-    line-height: 1;
-    font-weight: normal;
-    margin: 25px 0;
-    color: #655348;
-}
-
-.floral-inner p {
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-
-/* =====================================================
-   DESIGN 04 — PHOTO STORY
-===================================================== */
-
-.design-photo {
-    background:
-        url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=90")
-        center / cover;
-
-    position: relative;
-}
-
-.photo-overlay {
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            transparent 35%,
-            rgba(20,15,12,.85)
-        );
-
-    display: flex;
-    align-items: flex-end;
-    padding: 40px;
-
-    color: white;
-}
-
-.photo-overlay h3 {
-    font-size: 55px;
-    line-height: .9;
-    font-weight: normal;
-}
-
-.photo-overlay h3 em {
-    font-style: italic;
-}
-
-
-/* =====================================================
-   DESIGN 05 — BOOK
-===================================================== */
-
-.design-book {
-    background: #cbbca9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
-}
-
-.book {
-    width: 82%;
-    height: 82%;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    box-shadow:
-        0 25px 45px rgba(40,25,15,.3);
-
-    transform: rotateY(-7deg);
-}
-
-.book-page {
-    background: #f8f0e4;
-    padding: 25px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    position: relative;
-}
-
-.book-page:first-child {
-    border-right: 1px solid #c9b9a6;
-}
-
-.book-page::before {
-    content: "";
-    position: absolute;
-    inset: 15px;
-    border: 1px solid #c6b19a;
-}
-
-.book-page h3 {
-    font-size: 34px;
-    font-weight: normal;
-    position: relative;
-}
-
-.book-page h3 em {
-    font-style: italic;
-}
-
-
-/* =====================================================
-   DESIGN 06 — ENVELOPE
+   SPECIAL DESIGN TYPES
 ===================================================== */
 
 .design-envelope {
     background:
         linear-gradient(
-            145deg,
-            #e7d7ca,
-            #c9b2a2
+            135deg,
+            #eee1d2,
+            #c8ad91
         );
 
     display: flex;
@@ -703,116 +593,60 @@ nav {
 }
 
 .envelope {
-    width: 78%;
-    height: 55%;
-    background: #f8f1e9;
+    width: 72%;
+    height: 60%;
+
+    background: #f8f2e9;
 
     position: relative;
 
     box-shadow:
-        0 25px 45px rgba(50,30,20,.22);
+        0 20px 40px rgba(60,40,25,.18);
 }
 
 .envelope::before {
     content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
 
-    border-left: 50% solid transparent;
-    border-right: 50% solid transparent;
-    border-top: 180px solid #e4d5c8;
+    position: absolute;
+    top: 0;
+    left: 0;
 
     width: 0;
     height: 0;
+
+    border-left: 50% solid transparent;
+    border-right: 50% solid transparent;
+
+    border-top: 120px solid #d7c1a8;
 }
 
-.envelope-content {
+.envelope-text {
     position: absolute;
     inset: 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 2;
-}
-
-.envelope-content h3 {
-    font-size: 38px;
-    font-weight: normal;
-    margin-top: 25px;
-}
-
-.seal {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-
-    background: #8c6b55;
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 20px;
-}
-
-
-/* =====================================================
-   DESIGN 07 — KINA
-===================================================== */
-
-.design-kina {
-    background:
-        radial-gradient(
-            circle at 50% 0,
-            #a94345,
-            #3c151c
-        );
-
-    color: #f6dfb7;
-    padding: 30px;
-}
-
-.kina-inner {
-    height: 100%;
-
-    border: 1px solid rgba(239,207,151,.55);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     text-align: center;
+
+    z-index: 2;
 }
 
-.kina-inner h3 {
-    font-size: 52px;
+.envelope-text h3 {
+    font-size: 31px;
     font-weight: normal;
-    line-height: .95;
-}
-
-.kina-inner h3 span {
-    display: block;
-    font-size: 17px;
-    letter-spacing: 5px;
-    margin-bottom: 22px;
 }
 
 
-/* =====================================================
-   DESIGN 08 — ENGAGEMENT
-===================================================== */
+/* book */
 
-.design-engagement {
+.book-design {
     background:
         linear-gradient(
-            150deg,
-            #efe8df,
-            #d9cbbd
+            110deg,
+            #c9b09a,
+            #eee1d1
         );
 
     display: flex;
@@ -820,228 +654,119 @@ nav {
     justify-content: center;
 }
 
-.engagement-card {
-    width: 72%;
-    height: 82%;
+.book {
+    width: 76%;
+    height: 72%;
 
-    background:
-        url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=90")
-        center / cover;
-
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
     box-shadow:
-        0 25px 50px rgba(50,35,25,.25);
+        0 20px 45px rgba(60,40,25,.2);
+
+    transform: perspective(800px) rotateY(-8deg);
 }
 
-.engagement-card::after {
-    content: "";
-    position: absolute;
-    inset: 18px;
-    border: 1px solid white;
-}
+.book-page {
+    background: #fbf7f0;
 
-.engagement-text {
-    position: absolute;
-    inset: 0;
+    padding: 30px 18px;
+
+    text-align: center;
 
     display: flex;
     align-items: center;
     justify-content: center;
-
-    text-align: center;
-
-    color: white;
-
-    z-index: 2;
-}
-
-.engagement-text h3 {
-    font-size: 45px;
-    font-weight: normal;
-    text-shadow: 0 2px 15px rgba(0,0,0,.3);
-}
-
-
-/* =====================================================
-   DESIGN 09 — MINIMAL
-===================================================== */
-
-.design-minimal {
-    background: #f5f3ee;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.minimal-inner {
-    text-align: center;
-}
-
-.minimal-inner small {
-    font-family: Arial, sans-serif;
-    letter-spacing: 5px;
-    font-size: 8px;
-}
-
-.minimal-inner h3 {
-    font-size: 65px;
-    font-weight: normal;
-    margin: 30px 0;
-    letter-spacing: -2px;
-}
-
-.minimal-inner .date {
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 3px;
-}
-
-
-/* =====================================================
-   DESIGN 10 — GARDEN
-===================================================== */
-
-.design-garden {
-    background:
-        url("https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=90")
-        center / cover;
-
-    padding: 28px;
-}
-
-.garden-inner {
-    height: 100%;
-    background: rgba(247,240,229,.83);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-}
-
-.garden-inner h3 {
-    font-size: 53px;
-    font-weight: normal;
-    color: #53634d;
-}
-
-.garden-inner p {
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 3px;
-}
-
-
-/* =====================================================
-   DESIGN 11 — MAGAZINE
-===================================================== */
-
-.design-magazine {
-    background: #ebe7df;
-    padding: 32px;
-}
-
-.magazine {
-    height: 100%;
-    background: white;
-
-    padding: 35px;
-
-    display: flex;
     flex-direction: column;
 }
 
-.magazine-top {
-    font-family: Arial, sans-serif;
-    font-size: 8px;
-    letter-spacing: 3px;
-    display: flex;
-    justify-content: space-between;
+.book-page:first-child {
+    border-right: 1px solid #d9cbbd;
 }
 
-.magazine h3 {
-    font-size: 72px;
+.book-page h3 {
+    font-size: 25px;
     font-weight: normal;
-    line-height: .8;
-    margin-top: auto;
 }
 
-.magazine h3 em {
-    font-style: italic;
-}
+.book-page small {
+    margin-top: 12px;
 
-.magazine-bottom {
-    margin-top: 30px;
     font-family: Arial, sans-serif;
-    font-size: 8px;
+    font-size: 7px;
     letter-spacing: 2px;
 }
 
 
 /* =====================================================
-   DESIGN 12 — CELEBRATION
+   EVENT SECTION
 ===================================================== */
 
-.design-celebration {
-    background:
-        radial-gradient(
-            circle,
-            #d7c1aa,
-            #8b725c
-        );
+.events {
+    background: #40372f;
+    color: white;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
 }
 
-.celebration-card {
-    width: 72%;
-    height: 82%;
-    background: #f8f1e7;
+.events .section-heading span {
+    color: #c9ab8c;
+}
+
+.events .section-heading p {
+    color: #cfc3b8;
+}
+
+.event-grid {
+    max-width: 1150px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.event {
+    min-height: 230px;
+
+    border: 1px solid rgba(255,255,255,.15);
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 
     text-align: center;
 
-    box-shadow:
-        0 25px 50px rgba(40,25,15,.3);
+    padding: 25px;
+
+    transition: .4s;
 }
 
-.celebration-card h3 {
-    font-size: 48px;
+.event:hover {
+    background: rgba(255,255,255,.08);
+    transform: translateY(-8px);
+}
+
+.event-icon {
+    font-size: 34px;
+    margin-bottom: 20px;
+}
+
+.event h3 {
+    font-size: 25px;
     font-weight: normal;
-    margin: 20px 0;
 }
 
-
-/* =====================================================
-   MORE BUTTON
-===================================================== */
-
-.load-more {
-    display: block;
-    margin: 60px auto 0;
-
-    padding: 15px 35px;
-
-    background: transparent;
-    border: 1px solid #a99787;
-    border-radius: 40px;
-
-    cursor: pointer;
+.event p {
+    margin-top: 10px;
 
     font-family: Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
+
+    color: #c8bbb0;
 }
 
 
@@ -1050,144 +775,83 @@ nav {
 ===================================================== */
 
 .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
     max-width: 1100px;
     margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 50px;
 }
 
 .step {
-    background: rgba(255,255,255,.5);
-    padding: 45px 35px;
     text-align: center;
-
-    border: 1px solid rgba(120,100,80,.12);
 }
 
 .step-number {
-    font-size: 13px;
-    color: #a07b5d;
-    margin-bottom: 20px;
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 22px;
+
+    border: 1px solid #b69c83;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
 }
 
 .step h3 {
-    font-size: 25px;
+    font-size: 23px;
     font-weight: normal;
-    margin-bottom: 15px;
 }
 
 .step p {
-    color: #776d65;
+    margin-top: 13px;
+
     line-height: 1.8;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
+
+    color: #76695e;
 }
 
 
 /* =====================================================
-   PRICING
-===================================================== */
-
-.pricing {
-    background:
-        linear-gradient(
-            135deg,
-            #ded2c5,
-            #eee7df
-        );
-}
-
-.pricing-grid {
-    max-width: 1100px;
-    margin: auto;
-
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-}
-
-.price-card {
-    background: rgba(255,255,255,.75);
-    padding: 45px 35px;
-
-    text-align: center;
-
-    border: 1px solid rgba(90,70,50,.12);
-
-    position: relative;
-}
-
-.price-card.featured {
-    background: #40362f;
-    color: white;
-    transform: translateY(-15px);
-}
-
-.price-card .tag {
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #a17e60;
-    margin-bottom: 18px;
-}
-
-.price-card h3 {
-    font-size: 30px;
-    font-weight: normal;
-}
-
-.price {
-    font-size: 43px;
-    margin: 20px 0;
-}
-
-.price-card ul {
-    list-style: none;
-    text-align: left;
-}
-
-.price-card li {
-    padding: 11px 0;
-    border-bottom: 1px solid rgba(120,100,80,.12);
-
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-}
-
-.price-card li::before {
-    content: "✦";
-    margin-right: 10px;
-    color: #a17e60;
-}
-
-
-/* =====================================================
-   LANGUAGE
+   LANGUAGES
 ===================================================== */
 
 .language-section {
+    padding: 55px 6%;
+
+    border-top: 1px solid rgba(80,60,40,.1);
+    border-bottom: 1px solid rgba(80,60,40,.1);
+
     text-align: center;
-    padding: 80px 20px;
 }
 
-.languages {
+.language-section p {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    color: #857567;
+}
+
+.language-list {
+    margin-top: 20px;
+
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 35px;
     flex-wrap: wrap;
 }
 
-.lang {
-    padding: 13px 22px;
-    border: 1px solid #cbbdad;
-    border-radius: 30px;
-
-    background: rgba(255,255,255,.4);
-
-    font-family: Arial, sans-serif;
-    font-size: 11px;
+.language-list span {
+    font-size: 18px;
 }
 
 
@@ -1196,40 +860,33 @@ nav {
 ===================================================== */
 
 .cta {
-    margin: 0 6% 100px;
-
-    min-height: 430px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 130px 6%;
 
     text-align: center;
 
-    color: white;
-
     background:
         linear-gradient(
-            rgba(42,32,27,.68),
-            rgba(42,32,27,.68)
+            rgba(245,236,226,.88),
+            rgba(245,236,226,.88)
         ),
-        url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=90")
-        center / cover;
-}
+        url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=85");
 
-.cta-inner {
-    max-width: 700px;
+    background-size: cover;
+    background-position: center;
 }
 
 .cta h2 {
-    font-size: clamp(42px, 6vw, 70px);
+    font-size: clamp(45px, 6vw, 80px);
     font-weight: normal;
 }
 
 .cta p {
-    margin: 20px 0 30px;
+    margin: 20px auto 30px;
+
+    max-width: 550px;
+
     line-height: 1.8;
-    color: #e6ddd5;
+    color: #6d6259;
 }
 
 
@@ -1238,25 +895,27 @@ nav {
 ===================================================== */
 
 footer {
-    padding: 60px 6% 35px;
+    padding: 60px 6%;
 
-    border-top: 1px solid rgba(80,60,45,.1);
+    background: #302a25;
+    color: white;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
 }
 
 .footer-logo {
-    font-size: 27px;
+    font-size: 35px;
     letter-spacing: 3px;
 }
 
 footer p {
+    margin-top: 12px;
+
     font-family: Arial, sans-serif;
     font-size: 10px;
-    letter-spacing: 1px;
-    color: #83766c;
+    letter-spacing: 2px;
+
+    color: #bdb1a7;
 }
 
 
@@ -1264,105 +923,116 @@ footer p {
    MOBILE
 ===================================================== */
 
-@media (max-width: 1000px) {
+@media(max-width: 900px) {
 
     .hero {
         grid-template-columns: 1fr;
-        padding-top: 130px;
+        text-align: center;
     }
 
-    .hero-visual {
-        max-width: 650px;
-        width: 100%;
+    .hero-content {
         margin: auto;
     }
 
-    .templates {
+    .hero-text {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .collection {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .pricing-grid {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-    }
-
-    .price-card.featured {
-        transform: none;
+    .event-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .steps {
         grid-template-columns: 1fr;
-        max-width: 500px;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    nav {
-        padding: 0 20px;
+        gap: 55px;
     }
 
     .nav-links {
         display: none;
     }
 
-    .logo {
-        font-size: 25px;
+}
+
+
+@media(max-width: 600px) {
+
+    nav {
+        padding: 18px 5%;
     }
 
     .hero {
-        padding: 120px 20px 70px;
+        padding: 125px 5% 70px;
     }
 
-    .hero h1 {
-        font-size: 55px;
+    .hero-preview {
+        height: 500px;
     }
 
-    .hero-visual {
-        height: 520px;
+    .invitation-card {
+        width: 270px;
+        height: 410px;
     }
 
-    .hero-card {
-        width: 250px;
-        height: 370px;
+    .invitation-inner h2 {
+        font-size: 40px;
     }
 
-    .hero-card.one {
-        right: 5px;
+    .floating-card {
+        width: 120px;
+        height: 175px;
     }
 
-    .hero-card.two {
-        left: 5px;
+    .float-one {
+        left: -5px;
+    }
+
+    .float-two {
+        right: -5px;
+    }
+
+    .collection {
+        grid-template-columns: 1fr;
+    }
+
+    .event-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
     .section {
-        padding: 80px 20px;
+        padding: 85px 5%;
     }
 
-    .templates {
-        grid-template-columns: 1fr;
-        max-width: 430px;
+    .hero h1 {
+        letter-spacing: -2px;
     }
 
-    .template-preview {
-        height: 560px;
-    }
+}
 
-    .pricing-grid {
-        max-width: 100%;
-    }
 
-    .cta {
-        margin: 0 20px 70px;
-    }
+/* =====================================================
+   REVEAL
+===================================================== */
 
-    footer {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
 
+    transition: opacity .8s ease,
+                transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 </style>
@@ -1374,29 +1044,30 @@ footer p {
 
 
 <!-- =====================================================
-     NAVIGATION
+     NAV
 ===================================================== -->
 
 <nav>
 
     <a href="#" class="logo">
-        <span>Luna</span>
+        Luna
+        <span>INVITATIONS</span>
     </a>
 
     <div class="nav-links">
 
-        <a href="#templates">Dəvətnamələr</a>
+        <a href="#designs">Dizaynlar</a>
+
+        <a href="#events">Tədbirlər</a>
 
         <a href="#how">Necə işləyir?</a>
 
         <a href="#pricing">Qiymətlər</a>
 
-        <a href="#contact">Əlaqə</a>
-
     </div>
 
     <button class="language">
-        AZ
+        AZ ▾
     </button>
 
 </nav>
@@ -1408,31 +1079,31 @@ footer p {
 
 <header class="hero">
 
-    <div class="hero-text">
+    <div class="hero-content reveal">
 
         <div class="eyebrow">
-            Digital invitations by Luna
+            Rəqəmsal dəvətnamələr
         </div>
 
         <h1>
-            Sizin gününüz.<br>
-            Sizin <em>hekayəniz.</em>
+            Your moment.<br>
+            <em>Your story.</em>
         </h1>
 
-        <p class="hero-description">
-            Toy, nişan, xına və digər xüsusi günləriniz üçün
-            zövqlə hazırlanmış rəqəmsal dəvətnamələr.
-            Sadəcə bir linklə bütün hekayənizi paylaşın.
+        <p class="hero-text">
+            Ən xüsusi günləriniz üçün zərif,
+            fərqli və yadda qalan rəqəmsal
+            dəvətnamələr hazırlayırıq.
         </p>
 
         <div class="hero-buttons">
 
-            <a href="#templates" class="primary-button">
-                Dəvətnamələrə bax
+            <a href="#designs" class="btn btn-dark">
+                Dizaynlara bax
             </a>
 
-            <a href="#pricing" class="secondary-button">
-                Qiymətlər
+            <a href="#how" class="btn btn-light">
+                Daha çox
             </a>
 
         </div>
@@ -1440,30 +1111,47 @@ footer p {
     </div>
 
 
-    <div class="hero-visual">
+    <div class="hero-preview reveal">
 
-        <div class="hero-card one"></div>
+        <div class="preview-shadow"></div>
 
-        <div class="hero-card two">
 
-            <div class="hero-card-content">
+        <div class="floating-card float-one">
+
+            <img
+                src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=85"
+            >
+
+        </div>
+
+
+        <div class="invitation-card">
+
+            <div class="invitation-inner">
 
                 <small>
-                    You are invited
+                    YOU ARE INVITED
                 </small>
 
                 <h2>
-                    Your<br>
-                    Story
+                    The<br>
+                    Wedding
                 </h2>
 
-                <div class="line"></div>
-
                 <p>
-                    A beautiful beginning
+                    A BEAUTIFUL BEGINNING
                 </p>
 
             </div>
+
+        </div>
+
+
+        <div class="floating-card float-two">
+
+            <img
+                src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=500&q=85"
+            >
 
         </div>
 
@@ -1473,502 +1161,405 @@ footer p {
 
 
 <!-- =====================================================
-     TEMPLATES
+     COLLECTION
 ===================================================== -->
 
-<section class="section" id="templates">
+<section class="section" id="designs">
 
-    <div class="section-header">
+    <div class="section-heading reveal">
 
-        <div class="section-label">
-            Choose your style
-        </div>
+        <span>
+            Luna collection
+        </span>
 
         <h2>
-            Dəvətnamələr
+            Sizin dəvətnaməniz
         </h2>
 
         <p>
-            Hər hekayənin öz üslubu var.
-            Siz bəyəndiyiniz dizaynı seçin,
-            biz onu sizin gününüzə uyğunlaşdıraq.
+            Fərqli üslublardan birini seçin və
+            onu öz hekayənizə uyğunlaşdırın.
         </p>
 
     </div>
 
 
-    <div class="filters">
+    <div class="categories">
 
-        <button class="filter active" data-filter="all">
+        <button class="category active">
             Hamısı
         </button>
 
-        <button class="filter" data-filter="wedding">
+        <button class="category">
             Toy
         </button>
 
-        <button class="filter" data-filter="engagement">
+        <button class="category">
             Nişan
         </button>
 
-        <button class="filter" data-filter="kina">
-            Xına
+        <button class="category">
+            Kına
         </button>
 
-        <button class="filter" data-filter="birthday">
+        <button class="category">
             Ad günü
         </button>
 
-        <button class="filter" data-filter="minimal">
-            Minimal
-        </button>
-
-        <button class="filter" data-filter="luxury">
-            Luxury
+        <button class="category">
+            Baby
         </button>
 
     </div>
 
 
-    <div class="templates">
+    <div class="collection">
 
 
-        <!-- 01 -->
+        <!-- DESIGN 1 -->
 
-        <article class="template" data-category="wedding luxury">
+        <article class="design reveal">
 
-            <div class="template-preview design-editorial">
+            <div class="design-image">
 
-                <div class="editorial-inner">
+                <img
+                    src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85"
+                >
 
-                    <span class="tiny">
-                        The wedding celebration
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
                     </span>
-
-                    <h3>
-                        Your<br>
-                        <em>Forever</em>
-                    </h3>
-
-                    <div class="line"></div>
-
-                    <p>
-                        SAVE THE DATE
-                    </p>
-
                 </div>
 
             </div>
 
-            <div class="template-info">
+            <div class="design-info">
 
-                <h3>Ivory Editorial</h3>
+                <h3>
+                    Élan
+                </h3>
 
-                <p>Toy · Elegant · Editorial</p>
+                <p>
+                    Wedding · Elegant
+                </p>
 
             </div>
 
         </article>
 
 
-        <!-- 02 -->
+        <!-- DESIGN 2 -->
 
-        <article class="template" data-category="wedding luxury">
+        <article class="design reveal">
 
-            <div class="template-preview design-dark">
+            <div class="design-image">
 
-                <div class="dark-inner">
+                <img
+                    src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=85"
+                >
 
-                    <div class="ornament">
-                        ✦
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="design-info">
+
+                <h3>
+                    Flora
+                </h3>
+
+                <p>
+                    Wedding · Floral
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- DESIGN 3 -->
+
+        <article class="design reveal">
+
+            <div class="design-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85"
+                >
+
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="design-info">
+
+                <h3>
+                    Maison
+                </h3>
+
+                <p>
+                    Wedding · Luxury
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- ENVELOPE -->
+
+        <article class="design reveal">
+
+            <div class="design-image design-envelope">
+
+                <div class="envelope">
+
+                    <div class="envelope-text">
+
+                        <h3>
+                            With Love
+                        </h3>
+
                     </div>
 
-                    <h3>
-                        <em>Forever</em><br>
-                        Begins
-                    </h3>
+                </div>
 
-                    <p>
-                        A CELEBRATION OF LOVE
-                    </p>
-
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
+                    </span>
                 </div>
 
             </div>
 
-            <div class="template-info">
+            <div class="design-info">
 
-                <h3>Midnight</h3>
+                <h3>
+                    Lettre
+                </h3>
 
-                <p>Toy · Dark · Luxury</p>
+                <p>
+                    Envelope · Romantic
+                </p>
 
             </div>
 
         </article>
 
 
-        <!-- 03 -->
+        <!-- BOOK -->
 
-        <article class="template" data-category="wedding">
+        <article class="design reveal">
 
-            <div class="template-preview design-floral">
-
-                <div class="floral-inner">
-
-                    <small>
-                        Together with their families
-                    </small>
-
-                    <h3>
-                        A New<br>
-                        Chapter
-                    </h3>
-
-                    <p>
-                        WE INVITE YOU
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Garden Romance</h3>
-
-                <p>Toy · Floral · Romantic</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 04 -->
-
-        <article class="template" data-category="wedding luxury">
-
-            <div class="template-preview design-photo">
-
-                <div class="photo-overlay">
-
-                    <h3>
-                        <em>Love</em><br>
-                        In Focus
-                    </h3>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Photo Story</h3>
-
-                <p>Toy · Photo · Modern</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 05 -->
-
-        <article class="template" data-category="wedding">
-
-            <div class="template-preview design-book">
+            <div class="design-image book-design">
 
                 <div class="book">
 
                     <div class="book-page">
 
+                        <small>
+                            OUR
+                        </small>
+
                         <h3>
-                            Once<br>
-                            Upon<br>
-                            <em>A Time</em>
+                            Story
                         </h3>
 
                     </div>
 
                     <div class="book-page">
 
+                        <small>
+                            BEGINNING
+                        </small>
+
                         <h3>
-                            Our<br>
-                            Story
+                            Forever
                         </h3>
 
                     </div>
 
                 </div>
 
-            </div>
-
-            <div class="template-info">
-
-                <h3>The Book</h3>
-
-                <p>Toy · Book · Story</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 06 -->
-
-        <article class="template" data-category="wedding">
-
-            <div class="template-preview design-envelope">
-
-                <div class="envelope">
-
-                    <div class="envelope-content">
-
-                        <div class="seal">
-                            L
-                        </div>
-
-                        <h3>
-                            You're Invited
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>The Envelope</h3>
-
-                <p>Toy · Envelope · Interactive</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 07 -->
-
-        <article class="template" data-category="kina luxury">
-
-            <div class="template-preview design-kina">
-
-                <div class="kina-inner">
-
-                    <div>
-
-                        <h3>
-
-                            <span>
-                                Xına Gecəsi
-                            </span>
-
-                            A Night<br>
-                            to Remember
-
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Henna Night</h3>
-
-                <p>Xına · Traditional · Luxury</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 08 -->
-
-        <article class="template" data-category="engagement">
-
-            <div class="template-preview design-engagement">
-
-                <div class="engagement-card">
-
-                    <div class="engagement-text">
-
-                        <h3>
-                            A Promise<br>
-                            <em>to Forever</em>
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>The Promise</h3>
-
-                <p>Nişan · Romantic · Modern</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 09 -->
-
-        <article class="template" data-category="minimal wedding">
-
-            <div class="template-preview design-minimal">
-
-                <div class="minimal-inner">
-
-                    <small>
-                        THE BEGINNING
-                    </small>
-
-                    <h3>
-                        Forever
-                    </h3>
-
-                    <div class="date">
-                        SAVE THE DATE
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Pure</h3>
-
-                <p>Minimal · Clean · Elegant</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 10 -->
-
-        <article class="template" data-category="wedding">
-
-            <div class="template-preview design-garden">
-
-                <div class="garden-inner">
-
-                    <div>
-
-                        <h3>
-                            In the<br>
-                            Garden
-                        </h3>
-
-                        <p>
-                            A CELEBRATION OF LOVE
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Secret Garden</h3>
-
-                <p>Toy · Garden · Soft</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 11 -->
-
-        <article class="template" data-category="wedding luxury">
-
-            <div class="template-preview design-magazine">
-
-                <div class="magazine">
-
-                    <div class="magazine-top">
-
-                        <span>
-                            LUNA
-                        </span>
-
-                        <span>
-                            NO. 01
-                        </span>
-
-                    </div>
-
-                    <h3>
-                        The<br>
-                        <em>Wedding</em><br>
-                        Issue
-                    </h3>
-
-                    <div class="magazine-bottom">
-                        A SPECIAL EDITION
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="template-info">
-
-                <h3>Magazine</h3>
-
-                <p>Editorial · Fashion · Luxury</p>
-
-            </div>
-
-        </article>
-
-
-        <!-- 12 -->
-
-        <article class="template" data-category="birthday">
-
-            <div class="template-preview design-celebration">
-
-                <div class="celebration-card">
-
-                    <span>
-                        LET'S CELEBRATE
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
                     </span>
-
-                    <h3>
-                        Your<br>
-                        Special Day
-                    </h3>
-
-                    <span>
-                        YOU'RE INVITED
-                    </span>
-
                 </div>
 
             </div>
 
-            <div class="template-info">
+            <div class="design-info">
 
-                <h3>Celebration</h3>
+                <h3>
+                    Chapitre
+                </h3>
 
-                <p>Ad günü · Celebration · Chic</p>
+                <p>
+                    Book · Editorial
+                </p>
 
             </div>
 
         </article>
 
+
+        <!-- DESIGN 6 -->
+
+        <article class="design reveal">
+
+            <div class="design-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85"
+                >
+
+                <div class="design-overlay">
+                    <span class="view-button">
+                        Dizayna bax
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="design-info">
+
+                <h3>
+                    Noire
+                </h3>
+
+                <p>
+                    Wedding · Modern
+                </p>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EVENTS
+===================================================== -->
+
+<section class="section events" id="events">
+
+    <div class="section-heading reveal">
+
+        <span>
+            For every celebration
+        </span>
+
+        <h2>
+            Hər xüsusi an üçün
+        </h2>
+
+        <p>
+            Toydan kına gecəsinə qədər,
+            hər tədbir üçün sizə uyğun dizayn.
+        </p>
+
+    </div>
+
+
+    <div class="event-grid">
+
+
+        <div class="event reveal">
+
+            <div>
+
+                <div class="event-icon">
+                    ♡
+                </div>
+
+                <h3>
+                    Toy
+                </h3>
+
+                <p>
+                    Wedding
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="event reveal">
+
+            <div>
+
+                <div class="event-icon">
+                    ♢
+                </div>
+
+                <h3>
+                    Nişan
+                </h3>
+
+                <p>
+                    Engagement
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="event reveal">
+
+            <div>
+
+                <div class="event-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Kına
+                </h3>
+
+                <p>
+                    Henna Night
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="event reveal">
+
+            <div>
+
+                <div class="event-icon">
+                    ✧
+                </div>
+
+                <h3>
+                    Baby
+                </h3>
+
+                <p>
+                    Baby Shower
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -1981,11 +1572,11 @@ footer p {
 
 <section class="section" id="how">
 
-    <div class="section-header">
+    <div class="section-heading reveal">
 
-        <div class="section-label">
+        <span>
             Simple & beautiful
-        </div>
+        </span>
 
         <h2>
             Necə işləyir?
@@ -1996,44 +1587,44 @@ footer p {
 
     <div class="steps">
 
-        <div class="step">
+
+        <div class="step reveal">
 
             <div class="step-number">
                 01
             </div>
 
             <h3>
-                Dizaynınızı seçin
+                Dizaynı seç
             </h3>
 
             <p>
-                Sizə ən uyğun dəvətnamə üslubunu
-                seçin və ya tamamilə sizə özəl
-                dizayn istəyin.
+                Luna kolleksiyasından sizə
+                ən çox uyğun olan üslubu seçin.
             </p>
 
         </div>
 
 
-        <div class="step">
+        <div class="step reveal">
 
             <div class="step-number">
                 02
             </div>
 
             <h3>
-                Məlumatları göndərin
+                Detalları göndər
             </h3>
 
             <p>
-                Adlar, tarix, məkan, şəkillər və
-                digər məlumatları bizimlə paylaşın.
+                Adlar, tarix, məkan, fotoşəkillər
+                və digər məlumatları bizə göndərin.
             </p>
 
         </div>
 
 
-        <div class="step">
+        <div class="step reveal">
 
             <div class="step-number">
                 03
@@ -2044,136 +1635,9 @@ footer p {
             </h3>
 
             <p>
-                Hazır dəvətnamənizi bir linklə
-                qonaqlarınızla paylaşın.
+                Hazır dəvətnaməniz sizə xüsusi
+                link ilə təqdim olunur.
             </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PRICING
-===================================================== -->
-
-<section class="section pricing" id="pricing">
-
-    <div class="section-header">
-
-        <div class="section-label">
-            Simple pricing
-        </div>
-
-        <h2>
-            Paketlər
-        </h2>
-
-        <p>
-            Xüsusi gününüz üçün sizə uyğun paketi seçin.
-        </p>
-
-    </div>
-
-
-    <div class="pricing-grid">
-
-
-        <div class="price-card">
-
-            <div class="tag">
-                Basic
-            </div>
-
-            <h3>
-                Essential
-            </h3>
-
-            <div class="price">
-                25 ₼
-            </div>
-
-            <ul>
-
-                <li>Rəqəmsal dəvətnamə</li>
-
-                <li>Mobil uyğun dizayn</li>
-
-                <li>6 foto</li>
-
-                <li>Countdown</li>
-
-                <li>Şəxsi link</li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="price-card featured">
-
-            <div class="tag">
-                Ən çox seçilən
-            </div>
-
-            <h3>
-                Premium
-            </h3>
-
-            <div class="price">
-                40 ₼
-            </div>
-
-            <ul>
-
-                <li>Premium dizayn</li>
-
-                <li>10 foto</li>
-
-                <li>Countdown</li>
-
-                <li>RSVP formu</li>
-
-                <li>Google Maps</li>
-
-                <li>Şəxsi link</li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="price-card">
-
-            <div class="tag">
-                Luxury
-            </div>
-
-            <h3>
-                Signature
-            </h3>
-
-            <div class="price">
-                60 ₼
-            </div>
-
-            <ul>
-
-                <li>Eksklüziv dizayn</li>
-
-                <li>10+ foto</li>
-
-                <li>RSVP</li>
-
-                <li>Google Maps</li>
-
-                <li>Music</li>
-
-                <li>Premium animasiyalar</li>
-
-            </ul>
 
         </div>
 
@@ -2188,44 +1652,159 @@ footer p {
 
 <section class="language-section">
 
-    <div class="section-header">
+    <p>
+        Dəvətnamənizi istədiyiniz dildə hazırlayaq
+    </p>
 
-        <div class="section-label">
-            Your language
-        </div>
+    <div class="language-list">
+
+        <span>
+            🇦🇿 Azərbaycan
+        </span>
+
+        <span>
+            🇹🇷 Türk
+        </span>
+
+        <span>
+            🇬🇧 English
+        </span>
+
+        <span>
+            🇮🇹 Italiano
+        </span>
+
+        <span>
+            🇷🇺 Русский
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRICING
+===================================================== -->
+
+<section class="section" id="pricing">
+
+    <div class="section-heading reveal">
+
+        <span>
+            Luna pricing
+        </span>
 
         <h2>
-            Dillər
+            Sizin üçün uyğun paket
         </h2>
 
         <p>
-            Dəvətnamələrinizi qonaqlarınız üçün
-            müxtəlif dillərdə hazırlaya bilərik.
+            Sadə dəvətnamədən daha xüsusi
+            və interaktiv təcrübəyə qədər.
         </p>
 
     </div>
 
 
-    <div class="languages">
+    <div style="
+        max-width:1100px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:22px;
+    ">
 
-        <div class="lang">
-            🇦🇿 Azərbaycan dili
+
+        <div class="step" style="
+            background:#fffaf4;
+            padding:45px 30px;
+            border:1px solid #dfd0c0;
+        ">
+
+            <span style="
+                font-family:Arial;
+                font-size:10px;
+                letter-spacing:3px;
+                color:#9a806a;
+            ">
+                BASIC
+            </span>
+
+            <h3 style="
+                font-size:35px;
+                margin:20px 0;
+                font-weight:normal;
+            ">
+                Sadə & zərif
+            </h3>
+
+            <p>
+                Əsas dəvətnamə dizaynı,
+                məlumatlar və şəxsi link.
+            </p>
+
         </div>
 
-        <div class="lang">
-            🇹🇷 Türkçe
+
+        <div class="step" style="
+            background:#40372f;
+            color:white;
+            padding:45px 30px;
+        ">
+
+            <span style="
+                font-family:Arial;
+                font-size:10px;
+                letter-spacing:3px;
+                color:#d3b79b;
+            ">
+                PREMIUM
+            </span>
+
+            <h3 style="
+                font-size:35px;
+                margin:20px 0;
+                font-weight:normal;
+            ">
+                Daha xüsusi
+            </h3>
+
+            <p style="color:#d4c9bf;">
+                Daha çox foto, RSVP və
+                interaktiv xüsusiyyətlər.
+            </p>
+
         </div>
 
-        <div class="lang">
-            🇬🇧 English
-        </div>
 
-        <div class="lang">
-            🇷🇺 Русский
-        </div>
+        <div class="step" style="
+            background:#e5d5c4;
+            padding:45px 30px;
+        ">
 
-        <div class="lang">
-            🇮🇹 Italiano
+            <span style="
+                font-family:Arial;
+                font-size:10px;
+                letter-spacing:3px;
+                color:#816b58;
+            ">
+                LUXURY
+            </span>
+
+            <h3 style="
+                font-size:35px;
+                margin:20px 0;
+                font-weight:normal;
+            ">
+                Tam təcrübə
+            </h3>
+
+            <p>
+                Premium dizayn, musiqi,
+                RSVP və daha çox.
+            </p>
+
         </div>
 
     </div>
@@ -2237,27 +1816,26 @@ footer p {
      CTA
 ===================================================== -->
 
-<section class="cta" id="contact">
+<section class="cta">
 
-    <div class="cta-inner">
+    <div class="reveal">
 
-        <div class="section-label">
-            Your story starts here
+        <div class="eyebrow">
+            Your invitation awaits
         </div>
 
         <h2>
-            Gəlin sizin dəvətnamənizi yaradaq.
+            Let's create<br>
+            something beautiful.
         </h2>
 
         <p>
-            Hazır dizaynlardan birini seçin və ya
-            sizin üçün tamamilə fərqli bir dəvətnamə
-            hazırlamağımızı istəyin.
+            Sizin hekayənizi əks etdirən,
+            yadda qalan bir dəvətnamə yaradaq.
         </p>
 
-        <a href="mailto:hello@luna-invites.com"
-           class="primary-button">
-            Bizimlə əlaqə
+        <a href="#designs" class="btn btn-dark">
+            Dizaynlara bax
         </a>
 
     </div>
@@ -2276,67 +1854,129 @@ footer p {
     </div>
 
     <p>
-        Digital invitations for beautiful moments ✦
+        DIGITAL INVITATIONS · MADE WITH LOVE
+    </p>
+
+    <p>
+        © 2026 Luna Invitations
     </p>
 
 </footer>
 
 
 <!-- =====================================================
-     FILTER SCRIPT
+     JAVASCRIPT
 ===================================================== -->
 
 <script>
 
-const filters =
-    document.querySelectorAll(".filter");
+/* =====================================================
+   CATEGORY BUTTONS
+===================================================== */
 
-const templates =
-    document.querySelectorAll(".template");
+const categories =
+    document.querySelectorAll(".category");
 
+categories.forEach(function(button) {
 
-filters.forEach(function(filter) {
+    button.addEventListener("click", function() {
 
-    filter.addEventListener("click", function() {
-
-        filters.forEach(function(item) {
+        categories.forEach(function(item) {
 
             item.classList.remove("active");
 
         });
 
-        filter.classList.add("active");
-
-        const selected =
-            filter.dataset.filter;
-
-
-        templates.forEach(function(template) {
-
-            const categories =
-                template.dataset.category;
-
-
-            if (
-                selected === "all" ||
-                categories.includes(selected)
-            ) {
-
-                template.style.display =
-                    "block";
-
-            } else {
-
-                template.style.display =
-                    "none";
-
-            }
-
-        });
+        button.classList.add("active");
 
     });
 
 });
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const observer =
+    new IntersectionObserver(
+        function(entries) {
+
+            entries.forEach(function(entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+revealElements.forEach(function(element) {
+
+    observer.observe(element);
+
+});
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+const languageButton =
+    document.querySelector(".language");
+
+
+const languages = [
+    "AZ",
+    "TR",
+    "EN",
+    "IT",
+    "RU"
+];
+
+
+let languageIndex = 0;
+
+
+languageButton.addEventListener(
+    "click",
+    function() {
+
+        languageIndex++;
+
+        if (
+            languageIndex >=
+            languages.length
+        ) {
+
+            languageIndex = 0;
+
+        }
+
+        languageButton.innerText =
+            languages[languageIndex] +
+            " ▾";
+
+    }
+);
 
 </script>
 
@@ -2344,4 +1984,3 @@ filters.forEach(function(filter) {
 </body>
 
 </html>
-```
