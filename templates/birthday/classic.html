@@ -1,0 +1,1275 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Wedding Invitation</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: #f8f4ee;
+            color: #403a35;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(45, 39, 34, 0.35),
+                    rgba(45, 39, 34, 0.35)
+                ),
+                var(--hero-image);
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            color: white;
+
+            padding: 40px 20px;
+
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .subtitle {
+
+            font-size: 13px;
+
+            letter-spacing: 6px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 30px;
+
+        }
+
+        .hero h1 {
+
+            font-size: clamp(
+                55px,
+                11vw,
+                110px
+            );
+
+            font-weight: normal;
+
+            line-height: 1.1;
+
+        }
+
+        .hero-date {
+
+            margin-top: 30px;
+
+            font-size: 17px;
+
+            letter-spacing: 3px;
+
+        }
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        section {
+            padding: 100px 20px;
+        }
+
+        .container {
+
+            max-width: 950px;
+
+            margin: auto;
+
+        }
+
+        .intro {
+
+            text-align: center;
+
+            background: #fffdf9;
+
+        }
+
+        .small-title {
+
+            color: #9a8776;
+
+            font-size: 12px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+
+        }
+
+        .intro h2 {
+
+            font-size: 42px;
+
+            font-weight: normal;
+
+            margin-bottom: 30px;
+
+        }
+
+        .story {
+
+            max-width: 700px;
+
+            margin: auto;
+
+            font-size: 17px;
+
+            line-height: 2;
+
+        }
+
+        /* =========================
+           COUNTDOWN
+        ========================= */
+
+        .countdown-section {
+
+            text-align: center;
+
+            background: #f8f4ee;
+
+        }
+
+        .countdown {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+            margin-top: 40px;
+
+        }
+
+        .time-box {
+
+            width: 110px;
+
+            padding: 25px 10px;
+
+            background: #fffdf9;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.05);
+
+        }
+
+        .time-number {
+
+            display: block;
+
+            font-size: 38px;
+
+        }
+
+        .time-label {
+
+            display: block;
+
+            margin-top: 8px;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: #9a8776;
+
+        }
+
+        /* =========================
+           GALLERY
+        ========================= */
+
+        .gallery-section {
+
+            background: #fffdf9;
+
+        }
+
+        .section-title {
+
+            text-align: center;
+
+            margin-bottom: 45px;
+
+        }
+
+        .section-title h2 {
+
+            font-size: 42px;
+
+            font-weight: normal;
+
+        }
+
+        .gallery {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+        }
+
+        .gallery-item {
+
+            overflow: hidden;
+
+            border-radius: 8px;
+
+            aspect-ratio: 4 / 3;
+
+        }
+
+        .gallery-item img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform 0.6s ease;
+
+        }
+
+        .gallery-item:hover img {
+
+            transform: scale(1.05);
+
+        }
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details {
+
+            background: #f8f4ee;
+
+        }
+
+        .details-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.05);
+
+        }
+
+        .icon {
+
+            font-size: 30px;
+
+            margin-bottom: 18px;
+
+        }
+
+        .card h3 {
+
+            font-size: 22px;
+
+            font-weight: normal;
+
+            margin-bottom: 15px;
+
+        }
+
+        .card p {
+
+            line-height: 1.8;
+
+        }
+
+        .map-button {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 25px;
+
+            border: 1px solid #806f61;
+
+            border-radius: 25px;
+
+            color: #806f61;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+        }
+
+        /* =========================
+           RSVP
+        ========================= */
+
+        .rsvp {
+
+            background: #fffdf9;
+
+        }
+
+        form {
+
+            max-width: 600px;
+
+            margin: auto;
+
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid #d8cec3;
+
+            border-radius: 5px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+        }
+
+        textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background: #806f61;
+
+            color: white;
+
+            font-family: inherit;
+
+            letter-spacing: 2px;
+
+            cursor: pointer;
+
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            padding: 70px 20px;
+
+            background: #403a35;
+
+            color: white;
+
+            text-align: center;
+
+        }
+
+        footer h2 {
+
+            font-size: 42px;
+
+            font-weight: normal;
+
+            margin-bottom: 15px;
+
+        }
+
+        footer p {
+
+            color: #ddd4cb;
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+
+                font-size: 55px;
+
+            }
+
+            .gallery {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .details-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .time-box {
+
+                width: 75px;
+
+            }
+
+            .time-number {
+
+                font-size: 28px;
+
+            }
+
+            section {
+
+                padding: 75px 18px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <div class="subtitle">
+                You are invited
+            </div>
+
+            <h1 id="coupleNames">
+                Aysel & Murad
+            </h1>
+
+            <div
+                class="hero-date"
+                id="heroDate"
+            >
+                12 September 2026 · Baku
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         INTRO / STORY
+    ========================= -->
+
+    <section class="intro">
+
+        <div class="container">
+
+            <div class="small-title">
+                Our journey
+            </div>
+
+            <h2>
+                Our Story
+            </h2>
+
+            <div
+                class="story"
+                id="storyText"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         COUNTDOWN
+    ========================= -->
+
+    <section class="countdown-section">
+
+        <div class="container">
+
+            <div class="small-title">
+                Until we say "I do"
+            </div>
+
+            <div class="countdown">
+
+                <div class="time-box">
+
+                    <span
+                        class="time-number"
+                        id="days"
+                    >
+                        00
+                    </span>
+
+                    <span class="time-label">
+                        Days
+                    </span>
+
+                </div>
+
+
+                <div class="time-box">
+
+                    <span
+                        class="time-number"
+                        id="hours"
+                    >
+                        00
+                    </span>
+
+                    <span class="time-label">
+                        Hours
+                    </span>
+
+                </div>
+
+
+                <div class="time-box">
+
+                    <span
+                        class="time-number"
+                        id="minutes"
+                    >
+                        00
+                    </span>
+
+                    <span class="time-label">
+                        Minutes
+                    </span>
+
+                </div>
+
+
+                <div class="time-box">
+
+                    <span
+                        class="time-number"
+                        id="seconds"
+                    >
+                        00
+                    </span>
+
+                    <span class="time-label">
+                        Seconds
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GALLERY
+    ========================= -->
+
+    <section class="gallery-section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <div class="small-title">
+                    Our memories
+                </div>
+
+                <h2>
+                    Moments
+                </h2>
+
+            </div>
+
+            <div
+                class="gallery"
+                id="gallery"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DETAILS
+    ========================= -->
+
+    <section class="details">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <div class="small-title">
+                    Join us
+                </div>
+
+                <h2>
+                    Wedding Details
+                </h2>
+
+            </div>
+
+
+            <div class="details-grid">
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        📅
+                    </div>
+
+                    <h3>
+                        Date & Time
+                    </h3>
+
+                    <p id="detailsDate"></p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        📍
+                    </div>
+
+                    <h3>
+                        Location
+                    </h3>
+
+                    <p id="detailsLocation"></p>
+
+                    <a
+                        href="#"
+                        target="_blank"
+                        class="map-button"
+                        id="mapLink"
+                    >
+                        VIEW MAP
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RSVP
+    ========================= -->
+
+    <section class="rsvp">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <div class="small-title">
+                    We hope to see you
+                </div>
+
+                <h2>
+                    RSVP
+                </h2>
+
+            </div>
+
+
+            <form
+                action="https://formspree.io/f/mqpzyklb"
+                method="POST"
+            >
+
+                <input
+                    type="hidden"
+                    name="invitation_id"
+                    id="invitationIdField"
+                >
+
+                <input
+                    type="hidden"
+                    name="couple"
+                    id="coupleField"
+                >
+
+
+                <label>
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+
+                <label>
+                    Will you join us?
+                </label>
+
+                <select
+                    name="attendance"
+                    required
+                >
+
+                    <option value="">
+                        Please select
+                    </option>
+
+                    <option value="yes">
+                        Yes, I'll be there 🤍
+                    </option>
+
+                    <option value="no">
+                        Sorry, I can't attend
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Number of guests
+                </label>
+
+                <select
+                    name="guest_number"
+                    required
+                >
+
+                    <option value="1">
+                        1
+                    </option>
+
+                    <option value="2">
+                        2
+                    </option>
+
+                    <option value="3">
+                        3
+                    </option>
+
+                    <option value="4">
+                        4
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Message
+                </label>
+
+                <textarea
+                    name="message"
+                    placeholder="Leave a message..."
+                ></textarea>
+
+
+                <button type="submit">
+                    SEND RSVP
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <h2 id="footerNames">
+            Aysel & Murad
+        </h2>
+
+        <p>
+            We can't wait to celebrate with you 🤍
+        </p>
+
+        <br>
+
+        <p id="footerDate">
+            12 · 09 · 2026
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         DATA
+    ========================= -->
+
+    <script src="../data/invitations.js"></script>
+
+
+    <!-- =========================
+         SYSTEM
+    ========================= -->
+
+    <script>
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const invitationId =
+            params.get("id");
+
+
+        const invitation =
+            invitations[invitationId];
+
+
+        if (!invitation) {
+
+            document.body.innerHTML = `
+
+                <div style="
+                    min-height:100vh;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    text-align:center;
+                    padding:30px;
+                    font-family:Georgia,serif;
+                    background:#faf7f2;
+                    color:#403a35;
+                ">
+
+                    <div>
+
+                        <h1 style="
+                            font-weight:normal;
+                            margin-bottom:15px;
+                        ">
+                            Invitation not found
+                        </h1>
+
+                        <p>
+                            Please check your invitation link.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        if (invitation) {
+
+
+            /* =========================
+               NAME
+            ========================= */
+
+            const coupleName =
+                invitation.bride +
+                " & " +
+                invitation.groom;
+
+
+            document.title =
+                coupleName +
+                " | Luna";
+
+
+            document.getElementById(
+                "coupleNames"
+            ).innerText =
+                coupleName;
+
+
+            document.getElementById(
+                "footerNames"
+            ).innerText =
+                coupleName;
+
+
+            /* =========================
+               DATE
+            ========================= */
+
+            document.getElementById(
+                "heroDate"
+            ).innerText =
+                invitation.date +
+                " · " +
+                invitation.location;
+
+
+            document.getElementById(
+                "detailsDate"
+            ).innerHTML =
+                invitation.date +
+                "<br>" +
+                invitation.time;
+
+
+            document.getElementById(
+                "footerDate"
+            ).innerText =
+                invitation.dateShort;
+
+
+            /* =========================
+               LOCATION
+            ========================= */
+
+            document.getElementById(
+                "detailsLocation"
+            ).innerHTML =
+                invitation.location +
+                "<br>" +
+                invitation.venue;
+
+
+            document.getElementById(
+                "mapLink"
+            ).href =
+                invitation.map;
+
+
+            /* =========================
+               STORY
+            ========================= */
+
+            document.getElementById(
+                "storyText"
+            ).innerHTML =
+                invitation.story || "";
+
+
+            /* =========================
+               GALLERY
+            ========================= */
+
+            const gallery =
+                document.getElementById(
+                    "gallery"
+                );
+
+
+            gallery.innerHTML = "";
+
+
+            if (
+                invitation.images &&
+                invitation.images.length
+            ) {
+
+                invitation.images
+                    .forEach(
+                        function(image) {
+
+                            const item =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            item.className =
+                                "gallery-item";
+
+
+                            const img =
+                                document.createElement(
+                                    "img"
+                                );
+
+
+                            img.src =
+                                image;
+
+
+                            img.alt =
+                                coupleName +
+                                " wedding photo";
+
+
+                            item.appendChild(img);
+
+                            gallery.appendChild(item);
+
+                        }
+                    );
+
+
+                document.documentElement.style
+                    .setProperty(
+                        "--hero-image",
+                        `url("${invitation.images[0]}")`
+                    );
+
+            }
+
+
+            /* =========================
+               RSVP
+            ========================= */
+
+            document.getElementById(
+                "invitationIdField"
+            ).value =
+                invitationId;
+
+
+            document.getElementById(
+                "coupleField"
+            ).value =
+                coupleName;
+
+
+            /* =========================
+               COUNTDOWN
+            ========================= */
+
+            const weddingDate =
+                new Date(
+                    invitation.countdown
+                ).getTime();
+
+
+            function updateCountdown() {
+
+                const now =
+                    new Date().getTime();
+
+
+                const difference =
+                    weddingDate - now;
+
+
+                if (difference <= 0) {
+
+                    document.getElementById(
+                        "days"
+                    ).innerText = "00";
+
+                    document.getElementById(
+                        "hours"
+                    ).innerText = "00";
+
+                    document.getElementById(
+                        "minutes"
+                    ).innerText = "00";
+
+                    document.getElementById(
+                        "seconds"
+                    ).innerText = "00";
+
+                    return;
+
+                }
+
+
+                const days =
+                    Math.floor(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+
+                const hours =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60 * 60 * 24)
+                        ) /
+                        (1000 * 60 * 60)
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60 * 60)
+                        ) /
+                        (1000 * 60)
+                    );
+
+
+                const seconds =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60)
+                        ) /
+                        1000
+                    );
+
+
+                document.getElementById(
+                    "days"
+                ).innerText =
+                    String(days).padStart(2, "0");
+
+
+                document.getElementById(
+                    "hours"
+                ).innerText =
+                    String(hours).padStart(2, "0");
+
+
+                document.getElementById(
+                    "minutes"
+                ).innerText =
+                    String(minutes).padStart(2, "0");
+
+
+                document.getElementById(
+                    "seconds"
+                ).innerText =
+                    String(seconds).padStart(2, "0");
+
+            }
+
+
+            updateCountdown();
+
+
+            setInterval(
+                updateCountdown,
+                1000
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+```

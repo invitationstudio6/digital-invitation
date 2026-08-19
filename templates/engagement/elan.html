@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amour | Luna</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:"DM Sans",sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%,#fff,#f3dedb 35%,transparent 60%),
+        linear-gradient(135deg,#d9b5b0,#f7e9e4,#d8bbb6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px 20px;
+}
+
+.scene{
+    perspective:1400px;
+}
+
+.invitation{
+    width:min(390px,92vw);
+    min-height:680px;
+    background:
+        linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)),
+        #fbf1ed;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        0 40px 90px rgba(72,38,35,.25),
+        0 5px 15px rgba(72,38,35,.12);
+    animation:appear 1.3s ease forwards;
+    transform:rotateY(-8deg) rotateX(2deg);
+}
+
+@keyframes appear{
+
+    from{
+        opacity:0;
+        transform:rotateY(-40deg) translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:rotateY(-8deg) translateY(0);
+    }
+
+}
+
+.invitation:before{
+    content:"";
+    position:absolute;
+    inset:20px;
+    border:1px solid #c99c95;
+    pointer-events:none;
+}
+
+.corner{
+    position:absolute;
+    font-size:100px;
+    color:#b87970;
+    opacity:.18;
+}
+
+.corner.one{
+    top:-35px;
+    left:-20px;
+}
+
+.corner.two{
+    bottom:-40px;
+    right:-20px;
+}
+
+.content{
+    position:relative;
+    z-index:2;
+    min-height:680px;
+    padding:65px 45px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.small{
+    font-size:10px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#96635d;
+}
+
+h1{
+    margin:35px 0 8px;
+    font-family:"Cormorant Garamond",serif;
+    font-size:76px;
+    font-weight:400;
+    color:#684541;
+}
+
+.and{
+    font-family:"Cormorant Garamond",serif;
+    font-size:22px;
+    font-style:italic;
+    color:#a87870;
+}
+
+.names{
+    font-family:"Cormorant Garamond",serif;
+    font-size:50px;
+    color:#76504b;
+}
+
+.date{
+    margin-top:40px;
+    letter-spacing:4px;
+    font-size:12px;
+    color:#795750;
+}
+
+.line{
+    width:70px;
+    height:1px;
+    background:#bc918a;
+    margin:25px auto;
+}
+
+.place{
+    font-family:"Cormorant Garamond",serif;
+    font-size:21px;
+    color:#76504b;
+}
+
+.info{
+    font-size:11px;
+    color:#91736d;
+    margin-top:8px;
+}
+
+.buttons{
+    position:fixed;
+    top:20px;
+    left:20px;
+    z-index:20;
+}
+
+a{
+    color:#5e4743;
+    text-decoration:none;
+    background:rgba(255,255,255,.7);
+    padding:11px 18px;
+    border-radius:30px;
+    font-size:12px;
+    backdrop-filter:blur(10px);
+}
+
+@media(max-width:500px){
+
+    body{
+        padding:30px 10px;
+    }
+
+    .invitation{
+        min-height:600px;
+    }
+
+    .content{
+        min-height:600px;
+    }
+
+    h1{
+        font-size:60px;
+    }
+
+    .names{
+        font-size:42px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="buttons">
+
+<a href="../index.html">
+← Luna
+</a>
+
+</div>
+
+
+<div class="scene">
+
+<div class="invitation">
+
+<div class="corner one">❀</div>
+<div class="corner two">❁</div>
+
+<div class="content">
+
+<div class="small">
+Together with their families
+</div>
+
+<h1>Amour</h1>
+
+<div class="and">we invite you to celebrate</div>
+
+<div class="names">
+Aysel
+<br>
+<span class="and">&</span>
+<br>
+Murad
+</div>
+
+<div class="line"></div>
+
+<div class="date">
+12 · SEPTEMBER · 2026
+</div>
+
+<div class="info">
+19:00
+</div>
+
+<div class="place">
+Example Wedding Hall
+</div>
+
+<div class="info">
+Baku, Azerbaijan
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

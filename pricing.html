@@ -1,493 +1,1352 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luna — Digital Invitations</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <title>Luna | Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+<style>
 
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
 
-    <style>
+body{
+    min-height:100vh;
+    background:#f4ebe4;
+    color:#3d2c25;
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
 
-        html {
-            scroll-behavior: smooth;
-        }
+/* =====================================================
+   LUXURY BACKGROUND
+===================================================== */
 
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-20;
+    overflow:hidden;
 
-        body {
+    background:
 
-            font-family: Georgia, serif;
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(190,130,101,.30),
+            transparent 27%
+        ),
 
-            background: #faf7f2;
+        radial-gradient(
+            circle at 94% 8%,
+            rgba(216,177,159,.48),
+            transparent 31%
+        ),
 
-            color: #403a35;
+        radial-gradient(
+            circle at 52% 48%,
+            rgba(255,250,246,.95),
+            transparent 48%
+        ),
 
-        }
+        radial-gradient(
+            circle at 100% 75%,
+            rgba(182,120,91,.22),
+            transparent 31%
+        ),
 
+        radial-gradient(
+            circle at 0% 90%,
+            rgba(218,186,168,.38),
+            transparent 35%
+        ),
 
-        /* =========================
-           HEADER
-        ========================= */
+        linear-gradient(
+            135deg,
+            #eadcd3 0%,
+            #f8f2ed 32%,
+            #f6ece5 62%,
+            #ead8ce 100%
+        );
+}
 
-        header {
 
-            padding: 35px 20px;
+/* organic shape 1 */
 
-            text-align: center;
+.background::before{
+    content:"";
 
-        }
+    position:absolute;
 
+    width:850px;
+    height:850px;
 
-        .logo {
+    left:-390px;
+    top:-350px;
 
-            font-size: 34px;
+    border-radius:
+        55% 45% 63% 37%
+        /
+        43% 58% 42% 57%;
 
-            font-weight: normal;
+    background:
+        radial-gradient(
+            circle at 55% 50%,
+            rgba(163,101,73,.22),
+            rgba(210,159,133,.10) 48%,
+            transparent 70%
+        );
 
-            letter-spacing: 2px;
+    filter:blur(2px);
 
-        }
+    transform:rotate(-15deg);
+}
 
 
-        .intro {
+/* organic shape 2 */
 
-            max-width: 650px;
+.background::after{
+    content:"";
 
-            margin: 15px auto 0;
+    position:absolute;
 
-            color: #806f61;
+    width:950px;
+    height:950px;
 
-            line-height: 1.8;
+    right:-430px;
+    bottom:-450px;
 
-            font-size: 15px;
+    border-radius:
+        45% 55% 37% 63%
+        /
+        58% 40% 60% 42%;
 
-        }
+    background:
+        radial-gradient(
+            circle,
+            rgba(171,108,79,.18),
+            rgba(220,181,159,.08) 48%,
+            transparent 72%
+        );
 
+    filter:blur(4px);
 
-        /* =========================
-           PRICING
-        ========================= */
+    transform:rotate(18deg);
+}
 
-        .pricing {
 
-            max-width: 1100px;
+/* =====================================================
+   EXTRA LIGHT
+===================================================== */
 
-            margin: 40px auto 90px;
+body::before{
+    content:"";
 
-            padding: 0 20px;
+    position:fixed;
 
-            display: grid;
+    width:500px;
+    height:500px;
 
-            grid-template-columns:
-                repeat(3, 1fr);
+    left:42%;
+    top:5%;
 
-            gap: 25px;
+    border-radius:50%;
 
-            align-items: stretch;
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.58),
+            transparent 68%
+        );
 
-        }
+    filter:blur(18px);
 
+    pointer-events:none;
 
-        .package {
+    z-index:-10;
+}
 
-            position: relative;
 
-            background: white;
+/* =====================================================
+   NAVBAR
+===================================================== */
 
-            padding: 40px 30px;
+.navbar{
+    position:fixed;
 
-            border-radius: 16px;
+    top:0;
+    left:0;
 
-            box-shadow:
-                0 10px 35px
-                rgba(0, 0, 0, 0.06);
+    width:100%;
+    height:82px;
 
-            display: flex;
+    z-index:100;
 
-            flex-direction: column;
+    padding:0 5.5%;
 
-        }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
+    background:
+        rgba(249,243,238,.72);
 
-        .package.recommended {
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
 
-            border: 1px solid #806f61;
+    border-bottom:
+        1px solid rgba(92,61,48,.10);
+}
 
-            transform: translateY(-10px);
+.logo{
+    font-family:"Italiana",serif;
 
-        }
+    font-size:37px;
 
+    letter-spacing:1px;
 
-        .recommended-badge {
+    color:#39261f;
 
-            position: absolute;
+    transition:.3s;
+}
 
-            top: -14px;
+.logo:hover{
+    opacity:.65;
+}
 
-            left: 50%;
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:35px;
+}
 
-            transform: translateX(-50%);
+.nav-links a{
+    position:relative;
 
-            background: #806f61;
+    color:#685047;
 
-            color: white;
+    font-size:9px;
 
-            padding: 7px 18px;
+    letter-spacing:2px;
 
-            border-radius: 20px;
+    text-transform:uppercase;
 
-            font-size: 11px;
+    transition:.3s;
+}
 
-            letter-spacing: 1px;
+.nav-links a::after{
+    content:"";
 
-            white-space: nowrap;
+    position:absolute;
 
-        }
+    left:0;
+    bottom:-8px;
 
+    width:0;
+    height:1px;
 
-        .package-number {
+    background:#a96e50;
 
-            font-size: 12px;
+    transition:.3s;
+}
 
-            letter-spacing: 4px;
+.nav-links a:hover{
+    color:#a4674a;
+}
 
-            color: #9a8776;
+.nav-links a:hover::after{
+    width:100%;
+}
 
-            margin-bottom: 15px;
 
-        }
+/* =====================================================
+   LANGUAGE
+===================================================== */
 
+.languages{
+    display:flex;
+    gap:5px;
+}
 
-        .package h2 {
+.languages button{
+    border:
+        1px solid rgba(83,56,45,.15);
 
-            font-size: 30px;
+    background:
+        rgba(255,255,255,.30);
 
-            font-weight: normal;
+    color:#765b4f;
 
-            margin-bottom: 10px;
+    border-radius:30px;
 
-        }
+    padding:7px 10px;
 
+    font-family:"DM Sans",sans-serif;
 
-        .description {
+    font-size:8px;
 
-            color: #806f61;
+    letter-spacing:1px;
 
-            font-size: 14px;
+    cursor:pointer;
 
-            line-height: 1.7;
+    transition:.3s;
+}
 
-            min-height: 48px;
+.languages button:hover{
+    background:#fff;
 
-            margin-bottom: 25px;
+    border-color:#b9876e;
+}
 
-        }
+.languages button.active{
+    background:#49332a;
 
+    color:#fff;
 
-        .price {
+    border-color:#49332a;
+}
 
-            font-size: 38px;
 
-            margin-bottom: 25px;
+/* =====================================================
+   HERO
+===================================================== */
 
-        }
+.hero{
+    min-height:100vh;
 
+    padding:
+        170px 6%
+        100px;
 
-        .features {
+    position:relative;
 
-            list-style: none;
+    display:flex;
 
-            margin-bottom: 30px;
+    align-items:center;
 
-            flex: 1;
+    justify-content:center;
 
-        }
+    text-align:center;
+}
 
 
-        .features li {
+/* decorative rings */
 
-            padding: 9px 0;
+.hero-ring{
+    position:absolute;
 
-            border-bottom: 1px solid #eee5dc;
+    width:min(72vw,780px);
 
-            font-size: 14px;
+    aspect-ratio:1;
 
-            line-height: 1.5;
+    border-radius:50%;
 
-        }
+    border:
+        1px solid rgba(146,99,76,.15);
 
+    box-shadow:
+        0 0 90px rgba(170,112,83,.08);
+}
 
-        .features li::before {
+.hero-ring::before{
+    content:"";
 
-            content: "✓";
+    position:absolute;
 
-            margin-right: 9px;
+    inset:35px;
 
-            color: #806f61;
+    border-radius:50%;
 
-        }
+    border:
+        1px solid rgba(146,99,76,.08);
+}
 
+.hero-ring::after{
+    content:"";
 
-        .choose-button {
+    position:absolute;
 
-            display: block;
+    inset:90px;
 
-            width: 100%;
+    border-radius:50%;
 
-            padding: 15px;
+    border:
+        1px solid rgba(146,99,76,.055);
+}
 
-            border: 1px solid #806f61;
 
-            border-radius: 30px;
+/* little floating decoration */
 
-            background: #806f61;
+.hero-decoration{
+    position:absolute;
 
-            color: white;
+    width:130px;
+    height:130px;
 
-            text-align: center;
+    right:13%;
+    top:24%;
 
-            text-decoration: none;
+    border-radius:50%;
 
-            font-family: Georgia, serif;
+    border:
+        1px solid rgba(160,105,80,.18);
 
-            font-size: 14px;
+    transform:rotate(25deg);
+}
 
-            letter-spacing: 1.5px;
+.hero-decoration::before{
+    content:"";
 
-            transition: 0.3s;
+    position:absolute;
 
-        }
+    inset:18px;
 
+    border:
+        1px solid rgba(160,105,80,.10);
 
-        .choose-button:hover {
+    border-radius:50%;
+}
 
-            background: transparent;
 
-            color: #806f61;
+/* hero content */
 
-        }
+.hero-content{
+    max-width:1050px;
 
+    position:relative;
 
-        /* =========================
-           VIDEO INVITATION
-        ========================= */
+    z-index:2;
+}
 
-        .video-section {
+.eyebrow{
+    color:#a86c4d;
 
-            max-width: 1100px;
+    font-size:8px;
 
-            margin: -45px auto 90px;
+    letter-spacing:7px;
 
-            padding: 0 20px;
+    text-transform:uppercase;
+}
 
-        }
+.hero h1{
+    margin:
+        42px 0 35px;
 
+    font-family:"Cormorant Garamond",serif;
 
-        .video-package {
+    font-size:
+        clamp(105px,16vw,205px);
 
-            background: white;
+    font-weight:300;
 
-            border-radius: 16px;
+    line-height:.65;
 
-            padding: 40px 35px;
+    letter-spacing:-8px;
 
-            box-shadow:
-                0 10px 35px
-                rgba(0, 0, 0, 0.06);
+    color:#39271f;
+}
 
-            text-align: center;
+.hero h1 span{
+    display:block;
 
-            border: 1px solid #eee5dc;
+    margin-top:42px;
 
-        }
+    font-family:"Italiana",serif;
 
+    font-size:27px;
 
-        .video-package .package-number {
+    line-height:1.3;
 
-            margin-bottom: 12px;
+    letter-spacing:7px;
 
-        }
+    color:#9d654b;
+}
 
+.hero-text{
+    max-width:580px;
 
-        .video-package h2 {
+    margin:auto;
 
-            font-size: 30px;
+    color:#755e54;
 
-            font-weight: normal;
+    font-size:11px;
 
-            margin-bottom: 12px;
+    line-height:2.1;
+}
 
-        }
+.main-button{
+    display:inline-flex;
 
+    align-items:center;
 
-        .video-description {
+    justify-content:center;
 
-            max-width: 600px;
+    gap:12px;
 
-            margin: 0 auto 20px;
+    margin-top:35px;
 
-            color: #806f61;
+    padding:16px 29px;
 
-            font-size: 14px;
+    border-radius:50px;
 
-            line-height: 1.8;
+    border:
+        1px solid rgba(67,43,34,.20);
 
-        }
+    background:
+        rgba(255,255,255,.32);
 
+    color:#49342a;
 
-        .video-price {
+    font-size:8px;
 
-            font-size: 38px;
+    letter-spacing:3px;
 
-            margin-bottom: 25px;
+    text-transform:uppercase;
 
-        }
+    transition:.4s;
 
+    backdrop-filter:blur(10px);
+}
 
-        .video-features {
+.main-button:hover{
+    background:#49332a;
 
-            list-style: none;
+    color:#fff;
 
-            max-width: 500px;
+    transform:translateY(-4px);
 
-            margin: 0 auto 30px;
+    box-shadow:
+        0 18px 35px rgba(75,46,34,.17);
+}
 
-            text-align: left;
 
-        }
+/* =====================================================
+   SECTION
+===================================================== */
 
+.section{
+    padding:
+        145px 5.5%;
+}
 
-        .video-features li {
+.section-header{
+    max-width:1200px;
 
-            padding: 9px 0;
+    margin:
+        0 auto 60px;
 
-            border-bottom: 1px solid #eee5dc;
+    display:flex;
 
-            font-size: 14px;
+    align-items:flex-end;
 
-        }
+    justify-content:space-between;
 
+    gap:60px;
+}
 
-        .video-features li::before {
+.section-header h2{
+    margin-top:17px;
 
-            content: "✓";
+    font-family:"Cormorant Garamond",serif;
 
-            margin-right: 9px;
+    font-size:
+        clamp(55px,8vw,98px);
 
-            color: #806f61;
+    font-weight:300;
 
-        }
+    line-height:.82;
 
+    color:#3b2922;
+}
 
-        .video-button {
+.section-header p{
+    max-width:390px;
 
-            max-width: 500px;
+    color:#79655c;
 
-            margin: auto;
+    font-size:10px;
 
-        }
+    line-height:2;
+}
 
 
-        /* =========================
-           FOOTER
-        ========================= */
+/* =====================================================
+   COLLECTIONS
+===================================================== */
 
-        footer {
+.categories{
+    max-width:1200px;
 
-            padding: 60px 20px;
+    margin:auto;
 
-            background: #403a35;
+    display:grid;
 
-            color: white;
+    grid-template-columns:
+        repeat(4,1fr);
 
-            text-align: center;
+    gap:16px;
+}
 
-        }
+.category{
+    min-height:270px;
 
+    padding:28px;
 
-        footer h2 {
+    position:relative;
 
-            font-size: 35px;
+    overflow:hidden;
 
-            font-weight: normal;
+    display:flex;
 
-            margin-bottom: 12px;
+    flex-direction:column;
 
-        }
+    justify-content:flex-end;
 
+    border:
+        1px solid rgba(84,56,44,.13);
 
-        footer p {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.60),
+            rgba(255,255,255,.20)
+        );
 
-            font-size: 14px;
+    box-shadow:
+        0 15px 50px rgba(112,74,56,.06);
 
-            opacity: 0.8;
+    transition:.5s;
+}
 
-        }
+.category::before{
+    content:"";
 
+    position:absolute;
 
-        /* =========================
-           MOBILE
-        ========================= */
+    width:180px;
+    height:180px;
 
-        @media (max-width: 850px) {
+    right:-70px;
+    top:-70px;
 
-            .pricing {
+    border-radius:50%;
 
-                grid-template-columns: 1fr;
+    border:
+        1px solid rgba(161,103,77,.13);
+}
 
-                max-width: 600px;
+.category::after{
+    content:"";
 
-            }
+    position:absolute;
 
+    width:150px;
+    height:150px;
 
-            .package.recommended {
+    left:-80px;
+    top:35px;
 
-                transform: none;
+    border-radius:50%;
 
-            }
+    background:
+        radial-gradient(
+            circle,
+            rgba(194,132,101,.12),
+            transparent 70%
+        );
+}
 
+.category:hover{
+    transform:translateY(-10px);
 
-            .video-section {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.84),
+            rgba(250,237,229,.50)
+        );
 
-                max-width: 600px;
+    border-color:
+        rgba(159,101,75,.30);
 
-            }
+    box-shadow:
+        0 25px 60px rgba(101,64,47,.13);
+}
 
-        }
+.category-number{
+    position:absolute;
 
+    top:25px;
+    left:27px;
 
-        @media (max-width: 500px) {
+    font-family:"Cormorant Garamond",serif;
 
-            .package {
+    font-size:17px;
 
-                padding: 35px 25px;
+    color:#b38b77;
+}
 
-            }
+.category h3{
+    position:relative;
 
+    z-index:2;
 
-            .video-package {
+    font-family:"Cormorant Garamond",serif;
 
-                padding: 35px 25px;
+    font-size:42px;
 
-            }
+    font-weight:400;
 
-        }
+    color:#48332a;
+}
 
-    </style>
+.category span{
+    position:relative;
+
+    z-index:2;
+
+    margin-top:8px;
+
+    color:#a16f58;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+
+/* =====================================================
+   FEATURED
+===================================================== */
+
+.featured{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:24px;
+}
+
+.invitation-card{
+    padding:14px;
+
+    display:block;
+
+    background:
+        rgba(255,255,255,.47);
+
+    border:
+        1px solid rgba(76,49,39,.12);
+
+    box-shadow:
+        0 15px 45px rgba(86,55,42,.07);
+
+    transition:.5s;
+}
+
+.invitation-card:hover{
+    transform:translateY(-11px);
+
+    box-shadow:
+        0 30px 70px rgba(86,55,42,.16);
+
+    border-color:
+        rgba(157,100,76,.28);
+}
+
+.invitation-preview{
+    height:535px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-shadow:
+        0 20px 50px rgba(57,37,29,.18);
+}
+
+
+/* AMELIA */
+
+.amelia{
+    color:#fff;
+
+    background:
+
+        radial-gradient(
+            circle at 75% 18%,
+            rgba(235,187,160,.35),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 20% 85%,
+            rgba(184,120,90,.25),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            145deg,
+            #845743,
+            #3d2922
+        );
+}
+
+
+/* AMOUR */
+
+.amour{
+    color:#50382e;
+
+    background:
+
+        radial-gradient(
+            circle at 20% 15%,
+            rgba(255,255,255,.70),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(177,117,91,.20),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            #f5e8df,
+            #d5b9a9
+        );
+}
+
+
+/* NOIR */
+
+.noir{
+    color:#fff;
+
+    background:
+
+        radial-gradient(
+            circle at 75% 12%,
+            rgba(214,166,138,.28),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            145deg,
+            #27201c,
+            #705447
+        );
+}
+
+
+/* invitation border */
+
+.invitation-inner{
+    width:82%;
+    height:84%;
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border:
+        1px solid rgba(255,255,255,.45);
+}
+
+.invitation-inner::before{
+    content:"";
+
+    position:absolute;
+
+    inset:10px;
+
+    border:
+        1px solid rgba(255,255,255,.13);
+}
+
+.invitation-inner small{
+    font-size:7px;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+}
+
+.invitation-inner h3{
+    margin:30px 0;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:62px;
+
+    font-weight:300;
+
+    line-height:.78;
+}
+
+.invitation-inner p{
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+.card-info{
+    padding:
+        18px 4px 5px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.card-info strong{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:30px;
+
+    font-weight:400;
+
+    color:#49332a;
+}
+
+.card-info span{
+    color:#a16e57;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+
+/* =====================================================
+   PRICING
+===================================================== */
+
+.pricing-grid{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:17px;
+}
+
+.price-card{
+    min-height:300px;
+
+    padding:38px 32px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(82,54,42,.13);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.68),
+            rgba(255,255,255,.25)
+        );
+
+    transition:.5s;
+}
+
+.price-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+    height:230px;
+
+    right:-110px;
+    bottom:-110px;
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(167,107,81,.12);
+}
+
+.price-card:hover{
+    transform:translateY(-9px);
+
+    box-shadow:
+        0 25px 60px rgba(94,60,45,.12);
+
+    border-color:
+        rgba(161,103,78,.28);
+}
+
+.price-card.highlight{
+    background:
+        linear-gradient(
+            145deg,
+            #5b4034,
+            #392820
+        );
+
+    color:#fff;
+
+    border-color:#5b4034;
+}
+
+.price-card.highlight p{
+    color:#d5c1b7;
+}
+
+.price-label{
+    font-size:8px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#a16b51;
+}
+
+.highlight .price-label{
+    color:#d5ab91;
+}
+
+.price-card h3{
+    margin:
+        18px 0 15px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:46px;
+
+    font-weight:400;
+}
+
+.price-card p{
+    max-width:280px;
+
+    color:#786258;
+
+    font-size:10px;
+
+    line-height:1.9;
+}
+
+.price-link{
+    position:absolute;
+
+    left:32px;
+    bottom:30px;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:#9d674d;
+}
+
+.highlight .price-link{
+    color:#efd6c6;
+}
+
+
+/* =====================================================
+   CTA
+===================================================== */
+
+.cta{
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        130px 30px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    border:
+        1px solid rgba(86,56,44,.12);
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(211,161,135,.30),
+            transparent 60%
+        ),
+
+        rgba(255,255,255,.36);
+}
+
+.cta::before{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(155,99,75,.12);
+}
+
+.cta h2{
+    position:relative;
+
+    z-index:2;
+
+    margin-top:18px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(55px,7vw,82px);
+
+    font-weight:300;
+
+    color:#402d25;
+}
+
+.cta p{
+    position:relative;
+
+    z-index:2;
+
+    max-width:500px;
+
+    margin:
+        25px auto;
+
+    color:#776258;
+
+    font-size:10px;
+
+    line-height:2;
+}
+
+.cta .main-button{
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    padding:
+        55px 5%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#80685d;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    border-top:
+        1px solid rgba(83,55,43,.10);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .categories{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .featured{
+        grid-template-columns:1fr;
+    }
+
+    .pricing-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-header{
+        display:block;
+    }
+
+    .section-header p{
+        margin-top:25px;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:
+            0 4%;
+    }
+
+    .logo{
+        font-size:31px;
+    }
+
+    .languages{
+        gap:3px;
+    }
+
+    .languages button{
+        padding:
+            6px 8px;
+    }
+
+    .hero{
+        padding:
+            145px 6% 90px;
+    }
+
+    .hero h1{
+        font-size:86px;
+
+        letter-spacing:-5px;
+    }
+
+    .hero h1 span{
+        font-size:19px;
+
+        letter-spacing:4px;
+
+        margin-top:35px;
+    }
+
+    .hero-ring{
+        width:90vw;
+    }
+
+    .hero-decoration{
+        width:80px;
+        height:80px;
+
+        right:4%;
+        top:21%;
+    }
+
+    .section{
+        padding:
+            100px 5%;
+    }
+
+    .categories{
+        grid-template-columns:1fr;
+    }
+
+    .category{
+        min-height:230px;
+    }
+
+    .invitation-preview{
+        height:500px;
+    }
+
+    .cta{
+        padding:
+            100px 20px;
+    }
+
+    footer{
+        display:block;
+
+        text-align:center;
+
+        line-height:3;
+    }
+
+}
+
+</style>
 
 </head>
 
@@ -495,357 +1354,1168 @@
 <body>
 
 
-<header>
+<div class="background"></div>
 
-    <div class="logo">
-        Luna
-    </div>
 
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
-    <p class="intro">
+<nav class="navbar">
 
-        Choose the invitation package
-        that feels right for your special day. 🤍
+<a href="index.html" class="logo">
+Luna
+</a>
 
-        <br>
 
-        We create beautiful digital invitations
-        with care, elegance and attention to detail.
+<div class="nav-links">
 
-    </p>
+<a href="#home" data-i18n="home">
+Ana səhifə
+</a>
 
-</header>
+<a href="#collections" data-i18n="collections">
+Kolleksiyalar
+</a>
 
+<a href="pricing.html" data-i18n="pricing">
+Qiymətlər
+</a>
 
+<a href="#contact" data-i18n="contact">
+Əlaqə
+</a>
 
-<main class="pricing">
+</div>
 
 
-    <!-- =========================
-         BASIC
-    ========================= -->
+<div class="languages">
 
-    <div class="package">
+<button
+data-lang="az"
+class="active">
+AZ
+</button>
 
-        <div class="package-number">
-            01
-        </div>
+<button data-lang="en">
+EN
+</button>
 
+<button data-lang="it">
+IT
+</button>
 
-        <h2>
-            Basic
-        </h2>
+<button data-lang="ru">
+RU
+</button>
 
+</div>
 
-        <p class="description">
+</nav>
 
-            Sadə və zərif rəqəmsal
-            dəvətnamə.
 
-        </p>
 
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-        <div class="price">
+<section
+class="hero"
+id="home">
 
-            25 AZN
 
-        </div>
+<div class="hero-ring"></div>
 
+<div class="hero-decoration"></div>
 
-        <ul class="features">
 
-            <li>
-                Digital invitation
-            </li>
+<div class="hero-content">
 
-            <li>
-                Cütlüyün adları
-            </li>
+<div
+class="eyebrow"
+data-i18n="eyebrow">
 
-            <li>
-                Tarix və saat
-            </li>
+Digital dəvətnamələr
 
-            <li>
-                Məkan + Google Maps
-            </li>
+</div>
 
-            <li>
-                Countdown
-            </li>
 
-            <li>
-                "Our Story" bölməsi
-            </li>
+<h1>
 
-            <li>
-                6 foto
-            </li>
+Luna
 
-        </ul>
+<span data-i18n="heroTitle">
+gözəl anlar, gözəl dəvətlərlə
+</span>
 
+</h1>
 
-        <a
-            href="client-form.html?package=basic"
-            class="choose-button"
-        >
-            CHOOSE BASIC
-        </a>
 
-    </div>
+<p
+class="hero-text"
+data-i18n="heroText">
 
+Ən xüsusi anlarınız üçün zərif,
+fərdiləşdirilə bilən digital dəvətnamələr.
 
+</p>
 
-    <!-- =========================
-         PREMIUM
-    ========================= -->
 
-    <div class="package recommended">
+<a
+href="#collections"
+class="main-button"
+data-i18n="explore">
 
-        <div class="recommended-badge">
-            MOST RECOMMENDED
-        </div>
+Kolleksiyanı kəşf et
 
+</a>
 
-        <div class="package-number">
-            02
-        </div>
-
-
-        <h2>
-            Premium
-        </h2>
-
-
-        <p class="description">
-
-            Ən çox tövsiyə olunan
-            paket.
-
-        </p>
-
-
-        <div class="price">
-
-            40 AZN
-
-        </div>
-
-
-        <ul class="features">
-
-            <li>
-                Basic paketdə olan hər şey
-            </li>
-
-            <li>
-                RSVP forması
-            </li>
-
-            <li>
-                Qonaq sayı
-            </li>
-
-            <li>
-                Qonaqdan mesaj
-            </li>
-
-            <li>
-                Rəng və üslub seçimi
-            </li>
-
-            <li>
-                10 foto qalereyası
-            </li>
-
-        </ul>
-
-
-        <a
-            href="client-form.html?package=premium"
-            class="choose-button"
-        >
-            CHOOSE PREMIUM
-        </a>
-
-    </div>
-
-
-
-    <!-- =========================
-         LUXURY
-    ========================= -->
-
-    <div class="package">
-
-        <div class="package-number">
-            03
-        </div>
-
-
-        <h2>
-            Luxury
-        </h2>
-
-
-        <p class="description">
-
-            Daha xüsusi və premium
-            görünüş istəyənlər üçün.
-
-        </p>
-
-
-        <div class="price">
-
-            60 AZN
-
-        </div>
-
-
-        <ul class="features">
-
-            <li>
-                Fərdiləşdirilmiş dizayn
-            </li>
-
-            <li>
-                Cütlüyə xüsusi mətn
-            </li>
-
-            <li>
-                Foto qalereya
-            </li>
-
-            <li>
-                Countdown
-            </li>
-
-            <li>
-                Google Maps
-            </li>
-
-            <li>
-                RSVP
-            </li>
-
-            <li>
-                Qonaq sayı
-            </li>
-
-            <li>
-                Mesaj bölməsi
-            </li>
-
-            <li>
-                Musiqi
-            </li>
-
-        </ul>
-
-
-        <a
-            href="client-form.html?package=luxury"
-            class="choose-button"
-        >
-            CHOOSE LUXURY
-        </a>
-
-    </div>
-
-
-</main>
-
-
-
-<!-- =========================
-     VIDEO INVITATION
-========================= -->
-
-<section class="video-section">
-
-    <div class="video-package">
-
-        <div class="package-number">
-            04
-        </div>
-
-
-        <h2>
-            Video Invitation
-        </h2>
-
-
-        <p class="video-description">
-
-            Xüsusi gününüz üçün hazırlanmış
-            zərif və fərdiləşdirilmiş video
-            dəvətnamə.
-
-        </p>
-
-
-        <div class="video-price">
-            20 AZN
-        </div>
-
-
-        <ul class="video-features">
-
-            <li>
-                Fərdiləşdirilmiş video dəvətnamə
-            </li>
-
-            <li>
-                Cütlüyün adları
-            </li>
-
-            <li>
-                Tarix və saat
-            </li>
-
-            <li>
-                Foto və video materialların əlavə edilməsi
-            </li>
-
-            <li>
-                Musiqi seçimi
-            </li>
-
-            <li>
-                Elegant və fərdiləşdirilmiş dizayn
-            </li>
-
-        </ul>
-
-
-        <a
-            href="client-form.html?package=video"
-            class="choose-button video-button"
-        >
-            CHOOSE VIDEO INVITATION
-        </a>
-
-    </div>
+</div>
 
 </section>
 
 
 
+<!-- =====================================================
+     COLLECTIONS
+===================================================== -->
+
+<section
+class="section"
+id="collections">
+
+
+<div class="section-header">
+
+<div>
+
+<div class="eyebrow">
+Luna Collections
+</div>
+
+<h2 data-i18n="choose">
+Sənin anın.<br>
+Sənin Luna-n.
+</h2>
+
+</div>
+
+
+<p data-i18n="collectionText">
+
+Həyatınızdakı ən gözəl anlar üçün
+zərif və xüsusi dəvətnamə kolleksiyaları.
+
+</p>
+
+</div>
+
+
+
+<div class="categories">
+
+
+<a
+href="catalog/wedding.html"
+class="category">
+
+<span class="category-number">
+01
+</span>
+
+<h3 data-i18n="wedding">
+Toy
+</h3>
+
+<span data-i18n="exploreCollection">
+Kolleksiyaya bax
+</span>
+
+</a>
+
+
+
+<a
+href="catalog/engagement.html"
+class="category">
+
+<span class="category-number">
+02
+</span>
+
+<h3 data-i18n="engagement">
+Nişan
+</h3>
+
+<span data-i18n="exploreCollection">
+Kolleksiyaya bax
+</span>
+
+</a>
+
+
+
+<a
+href="catalog/henna.html"
+class="category">
+
+<span class="category-number">
+03
+</span>
+
+<h3 data-i18n="henna">
+Xına
+</h3>
+
+<span data-i18n="exploreCollection">
+Kolleksiyaya bax
+</span>
+
+</a>
+
+
+
+<a
+href="catalog/birthday.html"
+class="category">
+
+<span class="category-number">
+04
+</span>
+
+<h3 data-i18n="birthday">
+Ad günü
+</h3>
+
+<span data-i18n="exploreCollection">
+Kolleksiyaya bax
+</span>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURED DESIGNS
+===================================================== -->
+
+<section class="section">
+
+
+<div class="section-header">
+
+<div>
+
+<div class="eyebrow">
+Luna Selection
+</div>
+
+<h2 data-i18n="featured">
+Seçilmiş dizaynlar.
+</h2>
+
+</div>
+
+
+<p data-i18n="featuredText">
+
+Luna kolleksiyasından seçilmiş
+üç fərqli wedding dəvətnaməsi.
+
+</p>
+
+</div>
+
+
+
+<div class="featured">
+
+
+<!-- AMELIA -->
+
+<a
+href="client-form.html?design=amelia&package=luxury&category=wedding"
+class="invitation-card">
+
+
+<div class="invitation-preview amelia">
+
+<div class="invitation-inner">
+
+<small>
+Wedding Invitation
+</small>
+
+<h3>
+Aysel
+<br>
+
+<span style="font-size:34px">
+&
+</span>
+
+<br>
+Murad
+</h3>
+
+<p>
+12 · 09 · 2026
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card-info">
+
+<strong>
+Amelia
+</strong>
+
+<span>
+Luxury
+</span>
+
+</div>
+
+</a>
+
+
+
+<!-- AMOUR -->
+
+<a
+href="client-form.html?design=amour&package=premium&category=wedding"
+class="invitation-card">
+
+
+<div class="invitation-preview amour">
+
+<div class="invitation-inner">
+
+<small>
+The Wedding Of
+</small>
+
+<h3>
+Amour
+</h3>
+
+<p>
+A & M
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card-info">
+
+<strong>
+Amour
+</strong>
+
+<span>
+Premium
+</span>
+
+</div>
+
+</a>
+
+
+
+<!-- NOIR -->
+
+<a
+href="client-form.html?design=noir&package=luxury&category=wedding"
+class="invitation-card">
+
+
+<div class="invitation-preview noir">
+
+<div class="invitation-inner">
+
+<small>
+Wedding Collection
+</small>
+
+<h3>
+Noir
+</h3>
+
+<p>
+Forever begins here
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card-info">
+
+<strong>
+Noir
+</strong>
+
+<span>
+Luxury
+</span>
+
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PRICING
+===================================================== -->
+
+<section
+class="section"
+id="pricing">
+
+
+<div class="section-header">
+
+<div>
+
+<div
+class="eyebrow"
+data-i18n="pricingEyebrow">
+
+Luna Pricing
+
+</div>
+
+<h2 data-i18n="pricingTitle">
+
+Sənə uyğun<br>
+Luna paketi.
+
+</h2>
+
+</div>
+
+
+<p data-i18n="pricingText">
+
+Sadə və zərif dəvətnamələrdən
+tam fərdiləşdirilmiş premium dizaynlara qədər
+sizə uyğun paketi seçin.
+
+</p>
+
+</div>
+
+
+
+<div class="pricing-grid">
+
+
+<!-- BASIC -->
+
+<a
+href="pricing.html"
+class="price-card">
+
+<div
+class="price-label"
+data-i18n="basic">
+
+Basic
+
+</div>
+
+<h3>
+Basic
+</h3>
+
+<p data-i18n="basicText">
+
+Sadə, zərif və gözəl
+digital dəvətnamə.
+
+</p>
+
+<div
+class="price-link"
+data-i18n="viewPackage">
+
+Paketi gör →
+</div>
+
+</a>
+
+
+
+<!-- PREMIUM -->
+
+<a
+href="pricing.html"
+class="price-card highlight">
+
+<div
+class="price-label"
+data-i18n="premium">
+
+Premium
+
+</div>
+
+<h3>
+Premium
+</h3>
+
+<p data-i18n="premiumText">
+
+Daha geniş imkanlar,
+fərdiləşdirilmiş dizayn
+və xüsusi detallar.
+
+</p>
+
+<div
+class="price-link"
+data-i18n="viewPackage">
+
+Paketi gör →
+
+</div>
+
+</a>
+
+
+
+<!-- LUXURY -->
+
+<a
+href="pricing.html"
+class="price-card">
+
+<div
+class="price-label"
+data-i18n="luxury">
+
+Luxury
+
+</div>
+
+<h3>
+Luxury
+</h3>
+
+<p data-i18n="luxuryText">
+
+Tam fərdiləşdirilmiş,
+premium və xüsusi hazırlanmış
+dəvətnamə.
+
+</p>
+
+<div
+class="price-link"
+data-i18n="viewPackage">
+
+Paketi gör →
+
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section
+class="section"
+id="contact">
+
+
+<div class="cta">
+
+
+<div class="eyebrow">
+Luna
+</div>
+
+
+<h2 data-i18n="cta">
+
+Ən gözəl anlarınız
+Luna ilə başlayır.
+
+</h2>
+
+
+<p data-i18n="ctaText">
+
+Dizaynınızı seçin, məlumatlarınızı
+doldurun və öz xüsusi dəvətnamənizi yaradın.
+
+</p>
+
+
+<a
+href="client-form.html"
+class="main-button"
+data-i18n="start">
+
+Dəvətnaməni yarat
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
 <footer>
 
-    <h2>
-        Luna
-    </h2>
+<span>
+© Luna Digital Invitations
+</span>
 
-    <p>
-        Digital invitations for beautiful moments. 🤍
-    </p>
+<span data-i18n="footer">
+
+Weddings · Engagements · Henna · Birthdays
+
+</span>
 
 </footer>
 
 
-</body>
 
+<!-- =====================================================
+     TRANSLATIONS
+===================================================== -->
+
+<script>
+
+const translations = {
+
+
+/* =====================================================
+   AZERBAIJANI
+===================================================== */
+
+az:{
+
+home:"Ana səhifə",
+
+collections:"Kolleksiyalar",
+
+pricing:"Qiymətlər",
+
+contact:"Əlaqə",
+
+eyebrow:"Digital dəvətnamələr",
+
+heroTitle:
+"gözəl anlar, gözəl dəvətlərlə",
+
+heroText:
+"Ən xüsusi anlarınız üçün zərif, fərdiləşdirilə bilən digital dəvətnamələr.",
+
+explore:
+"Kolleksiyanı kəşf et",
+
+choose:
+"Sənin anın.<br>Sənin Luna-n.",
+
+collectionText:
+"Həyatınızdakı ən gözəl anlar üçün zərif və xüsusi dəvətnamə kolleksiyaları.",
+
+exploreCollection:
+"Kolleksiyaya bax",
+
+wedding:
+"Toy",
+
+engagement:
+"Nişan",
+
+henna:
+"Xına",
+
+birthday:
+"Ad günü",
+
+featured:
+"Seçilmiş dizaynlar.",
+
+featuredText:
+"Luna kolleksiyasından seçilmiş üç fərqli wedding dəvətnaməsi.",
+
+pricingEyebrow:
+"Luna Qiymətləri",
+
+pricingTitle:
+"Sənə uyğun<br>Luna paketi.",
+
+pricingText:
+"Sadə və zərif dəvətnamələrdən tam fərdiləşdirilmiş premium dizaynlara qədər sizə uyğun paketi seçin.",
+
+basic:
+"Basic",
+
+basicText:
+"Sadə, zərif və gözəl digital dəvətnamə.",
+
+premium:
+"Premium",
+
+premiumText:
+"Daha geniş imkanlar, fərdiləşdirilmiş dizayn və xüsusi detallar.",
+
+luxury:
+"Luxury",
+
+luxuryText:
+"Tam fərdiləşdirilmiş, premium və xüsusi hazırlanmış dəvətnamə.",
+
+viewPackage:
+"Paketi gör →",
+
+cta:
+"Ən gözəl anlarınız<br>Luna ilə başlayır.",
+
+ctaText:
+"Dizaynınızı seçin, məlumatlarınızı doldurun və öz xüsusi dəvətnamənizi yaradın.",
+
+start:
+"Dəvətnaməni yarat",
+
+footer:
+"Toylar · Nişanlar · Xınalar · Ad günləri"
+
+},
+
+
+/* =====================================================
+   ENGLISH
+===================================================== */
+
+en:{
+
+home:
+"Home",
+
+collections:
+"Collections",
+
+pricing:
+"Pricing",
+
+contact:
+"Contact",
+
+eyebrow:
+"Digital invitations",
+
+heroTitle:
+"beautiful moments, beautifully invited",
+
+heroText:
+"Elegant, personalized digital invitations created for your most meaningful moments.",
+
+explore:
+"Explore collection",
+
+choose:
+"Your moment.<br>Your Luna.",
+
+collectionText:
+"Elegant invitation collections created for life's most beautiful celebrations.",
+
+exploreCollection:
+"Explore collection",
+
+wedding:
+"Wedding",
+
+engagement:
+"Engagement",
+
+henna:
+"Henna",
+
+birthday:
+"Birthday",
+
+featured:
+"Selected designs.",
+
+featuredText:
+"Discover three selected wedding invitations from the Luna collection.",
+
+pricingEyebrow:
+"Luna Pricing",
+
+pricingTitle:
+"Find your<br>Luna package.",
+
+pricingText:
+"From simple elegant invitations to fully customized premium designs, choose the package that suits you.",
+
+basic:
+"Basic",
+
+basicText:
+"A simple, elegant and beautiful digital invitation.",
+
+premium:
+"Premium",
+
+premiumText:
+"More features, personalized design and special details.",
+
+luxury:
+"Luxury",
+
+luxuryText:
+"A fully customized premium invitation created especially for you.",
+
+viewPackage:
+"View package →",
+
+cta:
+"Your most beautiful moments<br>begin with Luna.",
+
+ctaText:
+"Choose your design, add your details and create your own beautiful invitation.",
+
+start:
+"Create invitation",
+
+footer:
+"Weddings · Engagements · Henna · Birthdays"
+
+},
+
+
+/* =====================================================
+   ITALIAN
+===================================================== */
+
+it:{
+
+home:
+"Home",
+
+collections:
+"Collezioni",
+
+pricing:
+"Prezzi",
+
+contact:
+"Contatti",
+
+eyebrow:
+"Inviti digitali",
+
+heroTitle:
+"momenti belli, invitati con eleganza",
+
+heroText:
+"Inviti digitali eleganti e personalizzati creati per i vostri momenti più importanti.",
+
+explore:
+"Scopri la collezione",
+
+choose:
+"Il tuo momento.<br>La tua Luna.",
+
+collectionText:
+"Collezioni di inviti eleganti per celebrare i momenti più belli della vostra vita.",
+
+exploreCollection:
+"Scopri la collezione",
+
+wedding:
+"Matrimonio",
+
+engagement:
+"Fidanzamento",
+
+henna:
+"Henné",
+
+birthday:
+"Compleanno",
+
+featured:
+"Design selezionati.",
+
+featuredText:
+"Scopri tre inviti di matrimonio selezionati dalla collezione Luna.",
+
+pricingEyebrow:
+"Prezzi Luna",
+
+pricingTitle:
+"Scegli il tuo<br>pacchetto Luna.",
+
+pricingText:
+"Dagli inviti semplici ed eleganti ai design premium completamente personalizzati.",
+
+basic:
+"Basic",
+
+basicText:
+"Un invito digitale semplice, elegante e raffinato.",
+
+premium:
+"Premium",
+
+premiumText:
+"Più funzionalità, design personalizzato e dettagli speciali.",
+
+luxury:
+"Luxury",
+
+luxuryText:
+"Un invito premium completamente personalizzato creato per te.",
+
+viewPackage:
+"Scopri il pacchetto →",
+
+cta:
+"I tuoi momenti più belli<br>iniziano con Luna.",
+
+ctaText:
+"Scegli il design, inserisci i tuoi dati e crea il tuo invito.",
+
+start:
+"Crea il tuo invito",
+
+footer:
+"Matrimoni · Fidanzamenti · Henné · Compleanni"
+
+},
+
+
+/* =====================================================
+   RUSSIAN
+===================================================== */
+
+ru:{
+
+home:
+"Главная",
+
+collections:
+"Коллекции",
+
+pricing:
+"Цены",
+
+contact:
+"Контакты",
+
+eyebrow:
+"Цифровые приглашения",
+
+heroTitle:
+"красивые моменты — красиво приглашены",
+
+heroText:
+"Элегантные персонализированные цифровые приглашения для ваших самых важных событий.",
+
+explore:
+"Смотреть коллекцию",
+
+choose:
+"Ваш момент.<br>Ваша Luna.",
+
+collectionText:
+"Элегантные коллекции приглашений для самых красивых событий вашей жизни.",
+
+exploreCollection:
+"Смотреть коллекцию",
+
+wedding:
+"Свадьба",
+
+engagement:
+"Помолвка",
+
+henna:
+"Хна",
+
+birthday:
+"День рождения",
+
+featured:
+"Избранные дизайны.",
+
+featuredText:
+"Три избранных свадебных приглашения из коллекции Luna.",
+
+pricingEyebrow:
+"Цены Luna",
+
+pricingTitle:
+"Выберите свой<br>пакет Luna.",
+
+pricingText:
+"От простых элегантных приглашений до полностью индивидуальных премиальных дизайнов.",
+
+basic:
+"Basic",
+
+basicText:
+"Простое, элегантное и красивое цифровое приглашение.",
+
+premium:
+"Premium",
+
+premiumText:
+"Больше возможностей, персонализированный дизайн и особые детали.",
+
+luxury:
+"Luxury",
+
+luxuryText:
+"Полностью индивидуальное премиальное приглашение, созданное специально для вас.",
+
+viewPackage:
+"Посмотреть пакет →",
+
+cta:
+"Ваши самые красивые моменты<br>начинаются с Luna.",
+
+ctaText:
+"Выберите дизайн, добавьте свои данные и создайте собственное приглашение.",
+
+start:
+"Создать приглашение",
+
+footer:
+"Свадьбы · Помолвки · Хна · Дни рождения"
+
+}
+
+};
+
+
+/* =====================================================
+   LANGUAGE CHANGE
+===================================================== */
+
+function changeLanguage(lang){
+
+    if(!translations[lang]){
+        lang="az";
+    }
+
+
+    localStorage.setItem(
+        "lunaLanguage",
+        lang
+    );
+
+
+    document.documentElement.lang=lang;
+
+
+    document
+    .querySelectorAll("[data-lang]")
+    .forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.dataset.lang===lang
+        );
+
+    });
+
+
+    document
+    .querySelectorAll("[data-i18n]")
+    .forEach(element=>{
+
+        const key=
+            element.dataset.i18n;
+
+        if(
+            translations[lang] &&
+            translations[lang][key]
+        ){
+
+            element.innerHTML=
+                translations[lang][key];
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   LANGUAGE BUTTONS
+===================================================== */
+
+document
+.querySelectorAll("[data-lang]")
+.forEach(button=>{
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            changeLanguage(
+                this.dataset.lang
+            );
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   INITIAL LANGUAGE
+===================================================== */
+
+changeLanguage(
+    localStorage.getItem(
+        "lunaLanguage"
+    ) || "az"
+);
+
+</script>
+
+
+</body>
 </html>
 ```

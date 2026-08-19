@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Luna | Digital Invitation</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400&family=Italiana&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    font-family: "DM Sans", sans-serif;
+
+    color: #3d322a;
+
+    background: #eee4d8;
+
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.page-background {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -10;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,255,255,.95),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 90% 25%,
+            rgba(213,184,156,.55),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(182,151,121,.45),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f7f0e8,
+            #e5d4c2 52%,
+            #d1b89e
+        );
+}
+
+
+/* =====================================================
+   FLOATING LIGHTS
+===================================================== */
+
+.light {
+
+    position: fixed;
+
+    width: 430px;
+    height: 430px;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    opacity: .28;
+
+    pointer-events: none;
+
+    z-index: -5;
+
+    animation:
+        floatingLight 15s ease-in-out infinite;
+}
+
+.light-one {
+
+    top: -100px;
+
+    left: -120px;
+
+    background: #fffdf8;
+}
+
+.light-two {
+
+    right: -120px;
+
+    bottom: 10%;
+
+    background: #b99677;
+
+    animation-delay: -7s;
+}
+
+@keyframes floatingLight {
+
+    0%,100% {
+        transform: translate(0,0);
+    }
+
+    50% {
+        transform: translate(50px,-35px);
+    }
+}
+
+
+/* =====================================================
+   OPENING
+===================================================== */
+
+.opening {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #fffaf4 0%,
+            #ead9c6 44%,
+            #bd9b7c 100%
+        );
+
+    transition:
+
+        opacity 1.2s ease,
+
+        visibility 1.2s ease;
+}
+
+.opening.hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+.opening::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: min(650px,90vw);
+
+    height: min(650px,90vw);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(107,78,58,.16);
+
+    animation:
+        openingPulse 5s ease-in-out infinite;
+}
+
+.opening::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: min(430px,70vw);
+
+    height: min(430px,70vw);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(107,78,58,.1);
+}
+
+@keyframes openingPulse {
+
+    0%,100% {
+
+        transform: scale(.95);
+
+        opacity: .5;
+    }
+
+    50% {
+
+        transform: scale(1.04);
+
+        opacity: 1;
+    }
+}
+
+
+/* =====================================================
+   ENVELOPE
+===================================================== */
+
+.envelope-scene {
+
+    position: relative;
+
+    width: min(650px,88vw);
+
+    height: 470px;
+
+    perspective: 1600px;
+
+    z-index: 5;
+}
+
+.envelope {
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 350px;
+
+    left: 0;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    transform-style: preserve-3d;
+}
+
+.envelope-body {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #dcc0a2,
+            #b38b69
+        );
+
+    box-shadow:
+
+        0 45px 80px
+        rgba(57,38,24,.30);
+
+    overflow: hidden;
+}
+
+.envelope-body::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            35deg,
+            transparent 49.7%,
+            rgba(83,54,36,.22) 50%,
+            transparent 50.3%
+        ),
+
+        linear-gradient(
+            -35deg,
+            transparent 49.7%,
+            rgba(83,54,36,.22) 50%,
+            transparent 50.3%
+        );
+}
+
+
+/* =====================================================
+   LETTER
+===================================================== */
+
+.letter {
+
+    position: absolute;
+
+    width: 82%;
+
+    height: 325px;
+
+    left: 9%;
+
+    top: 15px;
+
+    z-index: 3;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fffdf9,
+            #f7eee4
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    box-shadow:
+
+        0 18px 40px
+        rgba(48,32,22,.18);
+
+    transition:
+
+        transform 1.5s
+        cubic-bezier(.19,1,.22,1);
+}
+
+.letter::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 14px;
+
+    border:
+        1px solid
+        rgba(130,98,74,.28);
+}
+
+.letter-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 20px;
+}
+
+.letter small {
+
+    font-size: 8px;
+
+    letter-spacing: 5px;
+
+    color: #927762;
+}
+
+.letter h1 {
+
+    font-family:
+        "Allura",
+        cursive;
+
+    font-size:
+        clamp(55px,8vw,85px);
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    color: #704e3d;
+
+    margin: 18px 0;
+}
+
+.letter p {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 16px;
+
+    letter-spacing: 3px;
+
+    color: #806b5b;
+}
+
+
+/* =====================================================
+   FLAP
+===================================================== */
+
+.flap {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 6;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #e4c7a7,
+            #c29870
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 63%
+        );
+
+    transform-origin:
+        top center;
+
+    transition:
+
+        transform 1.35s
+        cubic-bezier(.19,1,.22,1);
+
+    backface-visibility: hidden;
+}
+
+
+/* =====================================================
+   SEAL
+===================================================== */
+
+.seal {
+
+    position: absolute;
+
+    z-index: 10;
+
+    width: 64px;
+
+    height: 64px;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-family:
+        "Italiana",
+        serif;
+
+    font-size: 25px;
+
+    color: #ead6be;
+
+    background:
+
+        radial-gradient(
+            circle at 30% 25%,
+            #aa725e,
+            #60372d
+        );
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(48,27,18,.3),
+
+        inset 0 1px 2px
+        rgba(255,255,255,.25);
+
+    transition:
+
+        opacity .5s ease,
+
+        transform .7s ease;
+}
+
+
+/* =====================================================
+   OPEN ANIMATION
+===================================================== */
+
+.envelope.open .flap {
+
+    transform:
+        rotateX(180deg);
+}
+
+.envelope.open .letter {
+
+    transform:
+        translateY(-205px);
+}
+
+.envelope.open .seal {
+
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        scale(.5);
+}
+
+
+/* =====================================================
+   OPEN BUTTON
+===================================================== */
+
+.open-button {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -10px;
+
+    z-index: 20;
+
+    transform:
+        translateX(-50%);
+
+    padding: 17px 31px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
+    background:
+        rgba(50,39,30,.94);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    transition: .35s;
+}
+
+.open-button:hover {
+
+    background: #6c5040;
+
+    transform:
+        translateX(-50%)
+        translateY(-4px);
+}
+
+
+/* =====================================================
+   MAIN PAGE
+===================================================== */
+
+.invitation {
+
+    opacity: 0;
+
+    transition:
+        opacity 1.4s ease;
+}
+
+.invitation.visible {
+
+    opacity: 1;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 25px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.7),
+            transparent 60%
+        );
+}
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: min(780px,90vw);
+
+    height: min(780px,90vw);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(116,86,65,.15);
+}
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.eyebrow {
+
+    font-size: 9px;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+    color: #927762;
+}
+
+.hero h1 {
+
+    margin-top: 30px;
+
+    font-family:
+        "Allura",
+        cursive;
+
+    font-size:
+        clamp(90px,15vw,180px);
+
+    line-height: .72;
+
+    font-weight: 400;
+
+    color: #765443;
+}
+
+.amp {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 32px;
+
+    line-height: 1;
+
+    margin: 24px;
+}
+
+.hero-date {
+
+    margin-top: 60px;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    color: #66574c;
+}
+
+
+/* =====================================================
+   GENERAL SECTIONS
+===================================================== */
+
+.section {
+
+    padding:
+        140px 7%;
+
+    text-align: center;
+}
+
+.section h2 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(50px,7vw,82px);
+
+    line-height: .9;
+
+    font-weight: 400;
+
+    color: #4b3c31;
+
+    margin:
+        20px 0 35px;
+}
+
+.section-text {
+
+    max-width: 590px;
+
+    margin: auto;
+
+    font-size: 13px;
+
+    line-height: 2;
+
+    color: #766a60;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.details-section {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.3),
+            rgba(207,181,155,.35)
+        );
+
+    border-top:
+        1px solid
+        rgba(118,91,70,.15);
+
+    border-bottom:
+        1px solid
+        rgba(118,91,70,.15);
+}
+
+.details-grid {
+
+    max-width: 1050px;
+
+    margin: 60px auto 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    border-top:
+        1px solid #cbb8a5;
+
+    border-bottom:
+        1px solid #cbb8a5;
+}
+
+.detail {
+
+    padding: 50px 25px;
+
+    border-right:
+        1px solid #cbb8a5;
+}
+
+.detail:last-child {
+
+    border-right: none;
+}
+
+.detail small {
+
+    font-size: 8px;
+
+    letter-spacing: 4px;
+
+    color: #927763;
+}
+
+.detail strong {
+
+    display: block;
+
+    margin: 20px 0 10px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 34px;
+
+    font-weight: 400;
+
+    color: #514237;
+}
+
+.detail p {
+
+    font-size: 11px;
+
+    color: #81756b;
+}
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+.gallery-section {
+
+    padding-left: 0;
+
+    padding-right: 0;
+}
+
+.gallery {
+
+    width: 100%;
+
+    margin-top: 70px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12,1fr);
+
+    grid-template-rows:
+        repeat(8,100px);
+
+    gap: 4px;
+
+    overflow: hidden;
+}
+
+.gallery img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+
+        transform 1s ease,
+
+        filter 1s ease;
+}
+
+.gallery img:hover {
+
+    transform:
+        scale(1.035);
+
+    filter:
+        brightness(.9);
+}
+
+.gallery img:nth-child(1) {
+
+    grid-column:
+        1 / 8;
+
+    grid-row:
+        1 / 6;
+}
+
+.gallery img:nth-child(2) {
+
+    grid-column:
+        8 / 13;
+
+    grid-row:
+        1 / 4;
+}
+
+.gallery img:nth-child(3) {
+
+    grid-column:
+        8 / 13;
+
+    grid-row:
+        4 / 6;
+}
+
+.gallery img:nth-child(4) {
+
+    grid-column:
+        1 / 5;
+
+    grid-row:
+        6 / 9;
+}
+
+.gallery img:nth-child(5) {
+
+    grid-column:
+        5 / 9;
+
+    grid-row:
+        6 / 9;
+}
+
+.gallery img:nth-child(6) {
+
+    grid-column:
+        9 / 13;
+
+    grid-row:
+        6 / 9;
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+.countdown-section {
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #57463a,
+            #28211c
+        );
+
+    color: white;
+}
+
+.countdown-section .eyebrow {
+
+    color: #c9ad94;
+}
+
+.countdown-section h2 {
+
+    color: #f1e6d9;
+}
+
+.timer {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap:
+        clamp(25px,7vw,80px);
+
+    margin-top: 65px;
+}
+
+.timer strong {
+
+    display: block;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(45px,6vw,75px);
+
+    font-weight: 300;
+}
+
+.timer span {
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    color: #c5b3a4;
+}
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+.rsvp {
+
+    background:
+        rgba(255,250,244,.55);
+}
+
+.rsvp-button {
+
+    margin-top: 35px;
+
+    padding: 17px 30px;
+
+    border: none;
+
+    background: #3b3028;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    transition: .3s;
+}
+
+.rsvp-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    background:
+        #604b3d;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+    padding:
+        100px 20px;
+
+    text-align: center;
+
+    background:
+        #2b231e;
+
+    color: #eee1d2;
+}
+
+footer strong {
+
+    font-family:
+        "Allura",
+        cursive;
+
+    font-size: 75px;
+
+    font-weight: 400;
+}
+
+footer p {
+
+    margin-top: 10px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #a99a8c;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px) {
+
+    .envelope-scene {
+
+        width: 90vw;
+
+        height: 390px;
+    }
+
+    .envelope {
+
+        height: 270px;
+    }
+
+    .letter {
+
+        width: 82%;
+
+        height: 250px;
+
+        left: 9%;
+
+        top: 10px;
+    }
+
+    .letter h1 {
+
+        font-size: 52px;
+    }
+
+    .letter p {
+
+        font-size: 13px;
+    }
+
+    .envelope.open .letter {
+
+        transform:
+            translateY(-160px);
+    }
+
+    .seal {
+
+        width: 50px;
+
+        height: 50px;
+
+        font-size: 20px;
+
+        bottom: 18px;
+    }
+
+    .details-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .detail {
+
+        border-right: none;
+
+        border-bottom:
+            1px solid #cbb8a5;
+    }
+
+    .detail:last-child {
+
+        border-bottom: none;
+    }
+
+    .gallery {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        grid-template-rows:
+            repeat(4,180px);
+
+        gap: 3px;
+    }
+
+    .gallery img:nth-child(1) {
+
+        grid-column:
+            1 / 3;
+
+        grid-row:
+            1 / 3;
+    }
+
+    .gallery img:nth-child(2) {
+
+        grid-column:
+            1 / 2;
+
+        grid-row:
+            3 / 4;
+    }
+
+    .gallery img:nth-child(3) {
+
+        grid-column:
+            2 / 3;
+
+        grid-row:
+            3 / 4;
+    }
+
+    .gallery img:nth-child(4) {
+
+        grid-column:
+            1 / 2;
+
+        grid-row:
+            4 / 5;
+    }
+
+    .gallery img:nth-child(5) {
+
+        grid-column:
+            2 / 3;
+
+        grid-row:
+            4 / 5;
+    }
+
+    .gallery img:nth-child(6) {
+
+        display: none;
+    }
+
+    .timer {
+
+        gap: 18px;
+    }
+
+    footer strong {
+
+        font-size: 58px;
+    }
+
+}
+
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
+
+.music-button {
+
+    position: fixed;
+
+    right: 22px;
+
+    bottom: 22px;
+
+    z-index: 100;
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.5);
+
+    background:
+        rgba(50,39,30,.9);
+
+    color: white;
+
+    cursor: pointer;
+
+    display: none;
+
+    place-items: center;
+
+    font-size: 16px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="page-background"></div>
+
+<div class="light light-one"></div>
+
+<div class="light light-two"></div>
+
+
+<!-- =====================================================
+     OPENING
+===================================================== -->
+
+<div
+    class="opening"
+    id="opening"
+>
+
+    <div class="envelope-scene">
+
+        <div
+            class="envelope"
+            id="envelope"
+        >
+
+            <div class="envelope-body"></div>
+
+
+            <div class="letter">
+
+                <div class="letter-content">
+
+                    <small>
+                        YOU ARE INVITED
+                    </small>
+
+                    <h1 id="letterNames">
+                        Aysel & Murad
+                    </h1>
+
+                    <p id="letterDate">
+                        12 · 09 · 2026
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flap"></div>
+
+
+            <div
+                class="seal"
+                id="seal"
+            >
+                L
+            </div>
+
+        </div>
+
+
+        <button
+            class="open-button"
+            id="openButton"
+        >
+            Dəvətnaməni aç
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN INVITATION
+===================================================== -->
+
+<main
+    class="invitation"
+    id="invitation"
+>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            SİZİ SEVGİ İLƏ DƏVƏT EDİRİK
+        </p>
+
+
+        <h1>
+
+            <span id="bride">
+                Aysel
+            </span>
+
+            <div class="amp">
+                &
+            </div>
+
+            <span id="groom">
+                Murad
+            </span>
+
+        </h1>
+
+
+        <p
+            class="hero-date"
+            id="date"
+        >
+            12 · 09 · 2026
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section class="section">
+
+    <p class="eyebrow">
+        HEKAYƏMİZ
+    </p>
+
+
+    <h2>
+
+        Bir hekayə,
+        <br>
+        bir ömür.
+
+    </h2>
+
+
+    <div
+        class="section-text"
+        id="story"
+    >
+
+        Bəzi hekayələr kitablarda yazılır.
+        Bizimki isə kiçik anlarda,
+        paylaşılan gülüşlərdə və
+        unudulmaz xatirələrdə yazıldı.
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DETAILS
+===================================================== -->
+
+<section
+    class="section details-section"
+>
+
+    <p class="eyebrow">
+        XÜSUSİ GÜNÜMÜZ
+    </p>
+
+
+    <h2>
+        Bu gün bizimdir.
+    </h2>
+
+
+    <div class="details-grid">
+
+
+        <div class="detail">
+
+            <small>
+                TARİX
+            </small>
+
+
+            <strong
+                id="detailDate"
+            >
+                12 · 09 · 2026
+            </strong>
+
+
+            <p id="dayName">
+                Şənbə
+            </p>
+
+        </div>
+
+
+        <div class="detail">
+
+            <small>
+                SAAT
+            </small>
+
+
+            <strong id="time">
+                19:00
+            </strong>
+
+
+            <p>
+                Qonaqların qarşılanması
+            </p>
+
+        </div>
+
+
+        <div class="detail">
+
+            <small>
+                MƏKAN
+            </small>
+
+
+            <strong id="venue">
+                Wedding Hall
+            </strong>
+
+
+            <p id="location">
+                Bakı, Azərbaycan
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <br><br>
+
+
+    <a
+        id="mapLink"
+        href="#"
+        target="_blank"
+        style="
+            display:inline-block;
+            margin-top:20px;
+            color:#5d4839;
+            font-size:9px;
+            letter-spacing:3px;
+            text-decoration:none;
+            text-transform:uppercase;
+        "
+    >
+        MƏKANA BAX
+    </a>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY
+===================================================== -->
+
+<section
+    class="section gallery-section"
+>
+
+    <p class="eyebrow">
+        XATİRƏLƏRİMİZ
+    </p>
+
+
+    <h2>
+        Bizdən sizə.
+    </h2>
+
+
+    <div class="gallery">
+
+
+        <img
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
+            alt="Wedding"
+        >
+
+
+        <img
+            src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=90"
+            alt="Wedding"
+        >
+
+
+        <img
+            src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
+            alt="Wedding"
+        >
+
+
+        <img
+            src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=90"
+            alt="Wedding"
+        >
+
+
+        <img
+            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90"
+            alt="Wedding"
+        >
+
+
+        <img
+            src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1200&q=90"
+            alt="Wedding"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
+<section
+    class="section countdown-section"
+>
+
+    <p class="eyebrow">
+        GÖRÜŞƏNƏDƏK
+    </p>
+
+
+    <h2>
+        Birlikdə sayağ.
+    </h2>
+
+
+    <div class="timer">
+
+
+        <div>
+
+            <strong id="days">
+                00
+            </strong>
+
+            <span>
+                GÜN
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="hours">
+                00
+            </strong>
+
+            <span>
+                SAAT
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="minutes">
+                00
+            </strong>
+
+            <span>
+                DƏQİQƏ
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong id="seconds">
+                00
+            </strong>
+
+            <span>
+                SANİYƏ
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RSVP
+===================================================== -->
+
+<section class="section rsvp">
+
+    <p class="eyebrow">
+        RSVP
+    </p>
+
+
+    <h2>
+        Sizi gözləyirik.
+    </h2>
+
+
+    <p class="section-text">
+
+        Bu xüsusi gündə bizimlə olmağınızı
+        səbirsizliklə gözləyirik.
+
+    </p>
+
+
+    <button
+        class="rsvp-button"
+        id="rsvpButton"
+    >
+        İştirakımı təsdiqləyirəm
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong id="footerNames">
+        Aysel & Murad
+    </strong>
+
+
+    <p>
+        WITH LOVE · LUNA
+    </p>
+
+</footer>
+
+
+</main>
+
+
+<!-- =====================================================
+     MUSIC
+===================================================== -->
+
+<button
+    class="music-button"
+    id="musicButton"
+    title="Music"
+>
+    ♪
+</button>
+
+<audio
+    id="backgroundMusic"
+    loop
+></audio>
+
+
+<!-- =====================================================
+     INVITATIONS DATABASE
+===================================================== -->
+
+<script src="invitations.js"></script>
+
+
+<script>
+
+/* =====================================================
+   GET URL
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const invitationId =
+    params.get("id") ||
+    "aysel-murad";
+
+
+/* =====================================================
+   GET INVITATION DATA
+===================================================== */
+
+let invitation = null;
+
+
+/* =====================================================
+   1. LOCAL STORAGE
+===================================================== */
+
+const savedInvitation =
+    localStorage.getItem(
+        "luna_" +
+        invitationId
+    );
+
+
+if (savedInvitation) {
+
+    try {
+
+        invitation =
+            JSON.parse(
+                savedInvitation
+            );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Saved invitation data is invalid:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   2. INVITATIONS.JS
+===================================================== */
+
+if (
+    !invitation &&
+    typeof invitations !== "undefined"
+) {
+
+    invitation =
+        invitations[invitationId];
+
+}
+
+
+/* =====================================================
+   3. FALLBACK
+===================================================== */
+
+if (!invitation) {
+
+    if (
+        typeof invitations !== "undefined" &&
+        invitations["aysel-murad"]
+    ) {
+
+        invitation =
+            invitations["aysel-murad"];
+
+    }
+
+}
+
+
+/* =====================================================
+   STOP IF NOTHING FOUND
+===================================================== */
+
+if (!invitation) {
+
+    document.body.innerHTML = `
+
+        <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            padding:30px;
+            background:#eee4d8;
+            color:#3d322a;
+            font-family:Arial,sans-serif;
+        ">
+
+            <div>
+
+                <h1>
+                    Invitation not found
+                </h1>
+
+                <p style="
+                    margin-top:15px;
+                    opacity:.7;
+                ">
+                    Bu dəvətnamə mövcud deyil.
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+    throw new Error(
+        "Invitation not found."
+    );
+
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+document.title =
+
+    invitation.bride +
+    " & " +
+    invitation.groom +
+    " | Luna Invitation";
+
+
+/* =====================================================
+   BASIC INFORMATION
+===================================================== */
+
+document.getElementById(
+    "bride"
+).textContent =
+    invitation.bride || "";
+
+
+document.getElementById(
+    "groom"
+).textContent =
+    invitation.groom || "";
+
+
+const coupleNames =
+
+    (invitation.bride || "") +
+    " & " +
+    (invitation.groom || "");
+
+
+document.getElementById(
+    "letterNames"
+).textContent =
+    coupleNames;
+
+
+document.getElementById(
+    "footerNames"
+).textContent =
+    coupleNames;
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+let dateShort =
+    invitation.dateShort;
+
+
+/*
+   Əgər dateShort yoxdursa,
+   date-dən avtomatik yaradırıq.
+*/
+
+if (
+    !dateShort &&
+    invitation.date
+) {
+
+    const parts =
+        invitation.date.split("-");
+
+    if (parts.length === 3) {
+
+        dateShort =
+            parts[2] +
+            " · " +
+            parts[1] +
+            " · " +
+            parts[0];
+
+    }
+
+}
+
+
+document.getElementById(
+    "date"
+).textContent =
+    dateShort || "";
+
+
+document.getElementById(
+    "letterDate"
+).textContent =
+    dateShort || "";
+
+
+document.getElementById(
+    "detailDate"
+).textContent =
+    dateShort || "";
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+document.getElementById(
+    "time"
+).textContent =
+    invitation.time || "";
+
+
+/* =====================================================
+   VENUE
+===================================================== */
+
+document.getElementById(
+    "venue"
+).textContent =
+    invitation.venue || "";
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+document.getElementById(
+    "location"
+).textContent =
+    invitation.location || "";
+
+
+/* =====================================================
+   STORY
+===================================================== */
+
+if (invitation.story) {
+
+    document.getElementById(
+        "story"
+    ).innerHTML =
+        invitation.story;
+
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+const mapLink =
+    document.getElementById(
+        "mapLink"
+    );
+
+
+if (invitation.map) {
+
+    mapLink.href =
+        invitation.map;
+
+}
+
+else {
+
+    mapLink.style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   DAY NAME
+===================================================== */
+
+function getDayName(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date =
+        new Date(
+            dateString +
+            "T12:00:00"
+        );
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+    const days = [
+
+        "Bazar",
+
+        "Bazar ertəsi",
+
+        "Çərşənbə",
+
+        "Cümə axşamı",
+
+        "Cümə",
+
+        "Şənbə",
+
+        "Bazar"
+
+    ];
+
+    return days[
+        date.getDay()
+    ];
+
+}
+
+
+const dayName =
+    getDayName(
+        invitation.date
+    );
+
+
+if (dayName) {
+
+    document.getElementById(
+        "dayName"
+    ).textContent =
+        dayName;
+
+}
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+const gallery =
+    document.querySelector(
+        ".gallery"
+    );
+
+
+if (
+    invitation.images &&
+    Array.isArray(
+        invitation.images
+    ) &&
+    invitation.images.length
+) {
+
+    gallery.innerHTML = "";
+
+
+    invitation.images
+        .slice(0,6)
+        .forEach(
+            function(image) {
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    image;
+
+
+                img.alt =
+                    coupleNames;
+
+
+                gallery.appendChild(
+                    img
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   OPENING
+===================================================== */
+
+const openButton =
+    document.getElementById(
+        "openButton"
+    );
+
+
+const envelope =
+    document.getElementById(
+        "envelope"
+    );
+
+
+const opening =
+    document.getElementById(
+        "opening"
+    );
+
+
+const invitationPage =
+    document.getElementById(
+        "invitation"
+    );
+
+
+let invitationOpened =
+    false;
+
+
+openButton.addEventListener(
+    "click",
+    function() {
+
+        if (invitationOpened) {
+            return;
+        }
+
+
+        invitationOpened =
+            true;
+
+
+        envelope.classList.add(
+            "open"
+        );
+
+
+        openButton.textContent =
+            "Açılır...";
+
+
+        setTimeout(
+            function() {
+
+                opening.classList.add(
+                    "hidden"
+                );
+
+
+                invitationPage.classList.add(
+                    "visible"
+                );
+
+
+                window.scrollTo(
+                    0,
+                    0
+                );
+
+
+                startMusic();
+
+            },
+            1500
+        );
+
+    }
+);
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+function updateCountdown() {
+
+    if (!invitation.countdown) {
+
+        return;
+
+    }
+
+
+    const target =
+        new Date(
+            invitation.countdown
+        ).getTime();
+
+
+    const now =
+        new Date().getTime();
+
+
+    if (
+        isNaN(target)
+    ) {
+
+        return;
+
+    }
+
+
+    const difference =
+        Math.max(
+            0,
+            target - now
+        );
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60)
+        ) % 24;
+
+
+    const minutes =
+        Math.floor(
+            difference /
+            (1000 * 60)
+        ) % 60;
+
+
+    const seconds =
+        Math.floor(
+            difference /
+            1000
+        ) % 60;
+
+
+    document.getElementById(
+        "days"
+    ).textContent =
+        String(days).padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "hours"
+    ).textContent =
+        String(hours).padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "minutes"
+    ).textContent =
+        String(minutes).padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "seconds"
+    ).textContent =
+        String(seconds).padStart(
+            2,
+            "0"
+        );
+
+}
+
+
+updateCountdown();
+
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =====================================================
+   MUSIC
+===================================================== */
+
+const music =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+let musicPlaying =
+    false;
+
+
+function startMusic() {
+
+    if (
+        !invitation.music
+    ) {
+
+        return;
+
+    }
+
+
+    music.src =
+        invitation.music;
+
+
+    music.volume =
+        0.45;
+
+
+    music.play()
+        .then(
+            function() {
+
+                musicPlaying =
+                    true;
+
+                musicButton.style.display =
+                    "grid";
+
+                musicButton.textContent =
+                    "♫";
+
+            }
+        )
+        .catch(
+            function() {
+
+                musicButton.style.display =
+                    "grid";
+
+            }
+        );
+
+}
+
+
+musicButton.addEventListener(
+    "click",
+    function() {
+
+        if (!music.src) {
+
+            return;
+
+        }
+
+
+        if (musicPlaying) {
+
+            music.pause();
+
+            musicPlaying =
+                false;
+
+            musicButton.textContent =
+                "♪";
+
+        }
+
+        else {
+
+            music.play();
+
+            musicPlaying =
+                true;
+
+            musicButton.textContent =
+                "♫";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+document.getElementById(
+    "rsvpButton"
+).addEventListener(
+    "click",
+    function() {
+
+        window.location.href =
+            "../client-form.html?id=" +
+            encodeURIComponent(
+                invitationId
+            );
+
+    }
+);
+
+
+/* =====================================================
+   FINAL
+===================================================== */
+
+console.log(
+    "Luna invitation loaded:",
+    invitationId
+);
+
+console.log(
+    "Invitation data:",
+    invitation
+);
+
+</script>
+
+
+</body>
+
+</html>

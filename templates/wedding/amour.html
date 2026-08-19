@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aysel & Murad | Luna</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap"
+rel="stylesheet"
+>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#eee1dc;
+    color:#493632;
+    font-family:"Montserrat",sans-serif;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+
+/* =====================================================
+   OPENING
+===================================================== */
+
+.opening{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:10000;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fffaf7 0%,
+            #f3e3de 45%,
+            #d8bbb4 100%
+        );
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+.opening.closed{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   ENVELOPE
+===================================================== */
+
+.envelope-area{
+
+    width:min(430px,88vw);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+}
+
+
+.envelope{
+
+    position:relative;
+
+    width:100%;
+
+    aspect-ratio:1.55;
+
+    cursor:pointer;
+
+    perspective:1600px;
+}
+
+
+/* envelope body */
+
+.envelope-body{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #e6cbc4,
+            #cfa9a1
+        );
+
+    border-radius:4px;
+
+    box-shadow:
+        0 35px 80px rgba(70,40,35,.25);
+
+    overflow:hidden;
+}
+
+
+/* left/right folds */
+
+.envelope-body::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            transparent 49.5%,
+            rgba(110,70,62,.16) 50%,
+            transparent 50.5%
+        ),
+
+        linear-gradient(
+            215deg,
+            transparent 49.5%,
+            rgba(110,70,62,.16) 50%,
+            transparent 50.5%
+        );
+
+}
+
+
+/* flap */
+
+.flap{
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:72%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f1dcd7,
+            #d7b5ae
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            50% 100%,
+            100% 0
+        );
+
+    transform-origin:
+        top center;
+
+    transition:
+        transform 1.25s
+        cubic-bezier(.77,0,.18,1);
+
+    z-index:5;
+}
+
+
+/* card inside */
+
+.card-preview{
+
+    position:absolute;
+
+    left:9%;
+
+    bottom:-2%;
+
+    width:82%;
+
+    height:88%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffdf9,
+            #f8eee9
+        );
+
+    border:1px solid rgba(100,60,50,.15);
+
+    box-shadow:
+        0 15px 35px rgba(60,35,30,.18);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    transition:
+        transform 1.5s
+        cubic-bezier(.2,.8,.2,1);
+
+    z-index:2;
+}
+
+
+.card-preview-content{
+
+    width:80%;
+
+    border:1px solid rgba(130,80,70,.3);
+
+    padding:25px 10px;
+}
+
+
+.card-preview-small{
+
+    font-size:7px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    margin-bottom:12px;
+}
+
+
+.card-preview-names{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:38px;
+
+    line-height:.8;
+}
+
+
+.card-preview-date{
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    margin-top:15px;
+}
+
+
+/* seal */
+
+.seal{
+
+    position:absolute;
+
+    left:50%;
+
+    top:57%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #c8897d,
+            #8f554e
+        );
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:27px;
+
+    z-index:8;
+
+    box-shadow:
+        0 7px 20px rgba(60,30,25,.25);
+
+    transition:
+        opacity .4s,
+        transform .4s;
+}
+
+
+/* opened */
+
+.envelope.open .flap{
+
+    transform:
+        rotateX(180deg);
+
+}
+
+.envelope.open .card-preview{
+
+    transform:
+        translateY(-125px)
+        scale(1.04);
+
+}
+
+.envelope.open .seal{
+
+    opacity:0;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.5);
+}
+
+
+/* instruction */
+
+.opening-text{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    color:#765751;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+}
+
+.opening-text span{
+
+    display:block;
+
+    margin-top:10px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    opacity:.6;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.invitation{
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+        opacity 1s ease;
+
+}
+
+.invitation.show{
+
+    opacity:1;
+
+    pointer-events:auto;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            rgba(35,20,18,.18),
+            rgba(35,20,18,.32)
+        ),
+
+        url(
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90"
+        );
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-attachment:fixed;
+
+    color:white;
+}
+
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:25px;
+
+    border:1px solid rgba(255,255,255,.55);
+
+}
+
+
+.hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 20%,
+            rgba(0,0,0,.28)
+        );
+}
+
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+.hero-kicker{
+
+    font-size:10px;
+
+    letter-spacing:7px;
+
+    text-transform:uppercase;
+
+    margin-bottom:35px;
+
+    opacity:.9;
+}
+
+
+.hero-names{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(80px,15vw,180px);
+
+    line-height:.72;
+
+    font-weight:300;
+
+    text-shadow:
+        0 8px 30px rgba(0,0,0,.25);
+}
+
+
+.hero-names .and{
+
+    display:block;
+
+    font-size:.43em;
+
+    line-height:1;
+
+    font-style:italic;
+
+    margin:18px 0;
+}
+
+
+.hero-date{
+
+    margin-top:55px;
+
+    font-size:11px;
+
+    letter-spacing:7px;
+}
+
+
+.hero-scroll{
+
+    position:absolute;
+
+    bottom:35px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:8px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    z-index:3;
+
+    animation:
+        floating 2s ease-in-out infinite;
+}
+
+
+@keyframes floating{
+
+    0%,100%{
+        transform:
+            translate(-50%,0);
+    }
+
+    50%{
+        transform:
+            translate(-50%,10px);
+    }
+}
+
+
+/* =====================================================
+   PAPER SECTION
+===================================================== */
+
+.paper{
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,255,255,.9),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(201,156,146,.18),
+            transparent 35%
+        ),
+
+        #f8f0eb;
+}
+
+
+/* =====================================================
+   INTRO SECTION
+===================================================== */
+
+.intro-section{
+
+    min-height:90vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:100px 25px;
+}
+
+
+.content{
+
+    width:min(750px,92%);
+
+    margin:auto;
+}
+
+
+.eyebrow{
+
+    font-size:9px;
+
+    letter-spacing:5px;
+
+    color:#9c6c64;
+
+    text-transform:uppercase;
+
+    margin-bottom:25px;
+}
+
+
+.title{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(52px,8vw,90px);
+
+    font-weight:400;
+
+    color:#634540;
+
+    line-height:.9;
+
+    margin-bottom:35px;
+}
+
+
+.text{
+
+    max-width:600px;
+
+    margin:auto;
+
+    font-size:13px;
+
+    line-height:2.1;
+
+    color:#806e69;
+}
+
+
+/* =====================================================
+   ORNAMENT
+===================================================== */
+
+.ornament{
+
+    margin:45px auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    color:#a06d65;
+}
+
+.ornament::before,
+.ornament::after{
+
+    content:"";
+
+    width:80px;
+
+    height:1px;
+
+    background:#c7aaa4;
+}
+
+
+/* =====================================================
+   IMAGE STORY
+===================================================== */
+
+.story-image-section{
+
+    padding:
+        0 6% 120px;
+}
+
+
+.story-image{
+
+    position:relative;
+
+    width:min(1000px,100%);
+
+    height:720px;
+
+    margin:auto;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 40px 100px rgba(60,35,30,.22);
+}
+
+
+.story-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform 1.5s ease;
+}
+
+
+.story-image:hover img{
+
+    transform:scale(1.04);
+}
+
+
+.image-caption{
+
+    position:absolute;
+
+    bottom:30px;
+
+    left:30px;
+
+    color:white;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:28px;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,.4);
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.details-section{
+
+    padding:130px 6%;
+
+    text-align:center;
+}
+
+
+.details{
+
+    width:min(1000px,100%);
+
+    margin:70px auto 0;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    border-top:1px solid #ccb0aa;
+
+    border-bottom:1px solid #ccb0aa;
+}
+
+
+.detail{
+
+    padding:55px 20px;
+
+    position:relative;
+}
+
+
+.detail:not(:last-child)::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:0;
+
+    top:25%;
+
+    height:50%;
+
+    width:1px;
+
+    background:#ccb0aa;
+}
+
+
+.detail-number{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:38px;
+
+    color:#9a665f;
+
+    margin-bottom:10px;
+}
+
+
+.detail h3{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:29px;
+
+    font-weight:400;
+
+    margin-bottom:13px;
+}
+
+
+.detail p{
+
+    font-size:11px;
+
+    line-height:1.8;
+
+    color:#7c6964;
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+.countdown-section{
+
+    position:relative;
+
+    min-height:600px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            rgba(55,30,28,.65),
+            rgba(55,30,28,.65)
+        ),
+
+        url(
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=2200&q=90"
+        );
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-attachment:fixed;
+}
+
+
+.countdown-inner{
+
+    width:90%;
+}
+
+
+.countdown-title{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(55px,8vw,90px);
+
+    font-weight:300;
+
+    margin-bottom:55px;
+}
+
+
+.countdown{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:clamp(20px,5vw,70px);
+
+    flex-wrap:wrap;
+}
+
+
+.time{
+
+    min-width:90px;
+}
+
+
+.time strong{
+
+    display:block;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:70px;
+
+    font-weight:300;
+}
+
+
+.time span{
+
+    display:block;
+
+    font-size:8px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    opacity:.75;
+}
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+.gallery-section{
+
+    padding:130px 5%;
+
+    text-align:center;
+}
+
+
+.gallery{
+
+    width:min(1100px,100%);
+
+    margin:70px auto 0;
+
+    display:grid;
+
+    grid-template-columns:
+        1.2fr .8fr;
+
+    grid-template-rows:
+        360px 360px;
+
+    gap:18px;
+}
+
+
+.gallery-image{
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+
+.gallery-image:first-child{
+
+    grid-row:
+        1 / 3;
+}
+
+
+.gallery-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform 1s ease;
+}
+
+
+.gallery-image:hover img{
+
+    transform:scale(1.06);
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+.location-section{
+
+    padding:120px 25px;
+
+    text-align:center;
+
+    background:#eadbd6;
+}
+
+
+.location-card{
+
+    width:min(700px,100%);
+
+    margin:60px auto 0;
+
+    padding:60px 30px;
+
+    background:
+        rgba(255,255,255,.45);
+
+    border:1px solid rgba(120,80,70,.15);
+
+    backdrop-filter:blur(15px);
+}
+
+
+.location-card h3{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:40px;
+
+    font-weight:400;
+
+    margin-bottom:15px;
+}
+
+
+.location-card p{
+
+    color:#77635e;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+
+.map-button{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:14px 30px;
+
+    border-radius:40px;
+
+    background:#65443f;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    transition:.3s;
+}
+
+
+.map-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(60,35,30,.18);
+}
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+.rsvp-section{
+
+    padding:150px 25px;
+
+    text-align:center;
+
+    background:#f8f0eb;
+}
+
+
+.rsvp-title{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(55px,8vw,90px);
+
+    font-weight:400;
+
+    color:#60433f;
+
+    margin-bottom:25px;
+}
+
+
+.rsvp-text{
+
+    max-width:520px;
+
+    margin:auto;
+
+    color:#806e69;
+
+    line-height:2;
+
+    font-size:13px;
+}
+
+
+.rsvp-button{
+
+    display:inline-block;
+
+    margin-top:40px;
+
+    padding:17px 45px;
+
+    border-radius:50px;
+
+    background:#60433f;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    transition:.3s;
+}
+
+
+.rsvp-button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 18px 35px rgba(60,35,30,.2);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    min-height:450px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            rgba(55,30,28,.7),
+            rgba(55,30,28,.7)
+        ),
+
+        url(
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=90"
+        );
+
+    background-size:cover;
+
+    background-position:center;
+}
+
+
+.footer-names{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(60px,10vw,120px);
+
+    font-weight:300;
+
+    line-height:.8;
+}
+
+
+.footer-date{
+
+    margin-top:30px;
+
+    font-size:9px;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    .envelope-area{
+        width:86vw;
+    }
+
+    .opening-text{
+        margin-top:25px;
+    }
+
+    .hero{
+        min-height:100svh;
+
+        background-attachment:scroll;
+    }
+
+    .hero::before{
+        inset:15px;
+    }
+
+    .hero-names{
+        font-size:78px;
+    }
+
+    .hero-date{
+        letter-spacing:4px;
+        font-size:9px;
+    }
+
+    .intro-section{
+        min-height:75vh;
+    }
+
+    .story-image-section{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .story-image{
+        height:560px;
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+
+    .detail:not(:last-child)::after{
+        top:auto;
+        bottom:0;
+        right:10%;
+        width:80%;
+        height:1px;
+    }
+
+    .gallery{
+        display:grid;
+
+        grid-template-columns:1fr;
+
+        grid-template-rows:
+            450px
+            300px
+            300px
+            300px;
+    }
+
+    .gallery-image:first-child{
+        grid-row:auto;
+    }
+
+    .countdown-section{
+        background-attachment:scroll;
+    }
+
+    .time strong{
+        font-size:52px;
+    }
+
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     OPENING ENVELOPE
+===================================================== -->
+
+<div
+class="opening"
+id="opening"
+>
+
+    <div class="envelope-area">
+
+        <div
+        class="envelope"
+        id="envelope"
+        >
+
+            <div class="envelope-body"></div>
+
+            <div
+            class="card-preview"
+            >
+
+                <div
+                class="card-preview-content"
+                >
+
+                    <div class="card-preview-small">
+                        Wedding Invitation
+                    </div>
+
+                    <div class="card-preview-names">
+                        Aysel
+                        <br>
+                        &
+                        <br>
+                        Murad
+                    </div>
+
+                    <div class="card-preview-date">
+                        12 · 09 · 2026
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flap"></div>
+
+            <div class="seal">
+                L
+            </div>
+
+        </div>
+
+        <div class="opening-text">
+
+            Zərfi açmaq üçün toxunun
+
+            <span>
+                Aysel & Murad
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     INVITATION
+===================================================== -->
+
+<div
+class="invitation"
+id="invitation"
+>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-kicker">
+            Bir ömürlük hekayənin başlanğıcı
+        </div>
+
+        <div class="hero-names">
+
+            Aysel
+
+            <span class="and">
+                &
+            </span>
+
+            Murad
+
+        </div>
+
+        <div class="hero-date">
+            12 · SENTYABR · 2026
+        </div>
+
+    </div>
+
+    <div class="hero-scroll">
+        Aşağı sürüşdür
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WELCOME
+===================================================== -->
+
+<section class="paper">
+
+    <section class="intro-section">
+
+        <div class="content">
+
+            <div class="eyebrow">
+                Sevgimizlə
+            </div>
+
+            <h2 class="title">
+                Bu xüsusi günümüzdə
+                <br>
+                sizi də görmək istəyirik
+            </h2>
+
+            <div class="ornament">
+                ♡
+            </div>
+
+            <p class="text">
+
+                Bəzi anlar sadəcə yaşanmır,
+                ömür boyu xatırlanır.
+
+                Birlikdə başladığımız bu gözəl
+                hekayənin ən xüsusi səhifəsində
+                sevdiklərimizin yanımızda olmasını
+                istəyirik.
+
+                Sizi toy mərasimimizə
+                dəvət etməkdən böyük
+                məmnuniyyət duyuruq.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LARGE IMAGE
+    ================================================== -->
+
+    <section class="story-image-section">
+
+        <div class="story-image">
+
+            <img
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90"
+            alt="Aysel and Murad"
+            >
+
+            <div class="image-caption">
+                Our story begins here.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DETAILS
+    ================================================== -->
+
+    <section class="details-section">
+
+        <div class="eyebrow">
+            Dəvətnamə
+        </div>
+
+        <h2 class="title">
+            Ən vacib detallar
+        </h2>
+
+        <div class="details">
+
+
+            <div class="detail">
+
+                <div class="detail-number">
+                    12
+                </div>
+
+                <h3>
+                    Sentyabr
+                </h3>
+
+                <p>
+                    Şənbə
+                    <br>
+                    2026
+                </p>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-number">
+                    19:00
+                </div>
+
+                <h3>
+                    Saat
+                </h3>
+
+                <p>
+                    Qonaqların qarşılanması
+                    <br>
+                    Mərasim başlanğıcı
+                </p>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-number">
+                    ♡
+                </div>
+
+                <h3>
+                    Məkan
+                </h3>
+
+                <p>
+                    Example Wedding Hall
+                    <br>
+                    Bakı, Azərbaycan
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         COUNTDOWN
+    ================================================== -->
+
+    <section class="countdown-section">
+
+        <div class="countdown-inner">
+
+            <div class="eyebrow"
+            style="color:#e6cbc4;">
+                Geri sayım
+            </div>
+
+            <div class="countdown-title">
+                Böyük günə qalan
+            </div>
+
+
+            <div class="countdown">
+
+
+                <div class="time">
+
+                    <strong id="days">
+                        00
+                    </strong>
+
+                    <span>
+                        Gün
+                    </span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <strong id="hours">
+                        00
+                    </strong>
+
+                    <span>
+                        Saat
+                    </span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <strong id="minutes">
+                        00
+                    </strong>
+
+                    <span>
+                        Dəqiqə
+                    </span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <strong id="seconds">
+                        00
+                    </strong>
+
+                    <span>
+                        Saniyə
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GALLERY
+    ================================================== -->
+
+    <section class="gallery-section">
+
+        <div class="eyebrow">
+            Xatirələrimiz
+        </div>
+
+        <h2 class="title">
+            Bizdən sizə
+        </h2>
+
+
+        <div class="gallery">
+
+
+            <div class="gallery-image">
+
+                <img
+                src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
+                alt=""
+                >
+
+            </div>
+
+
+            <div class="gallery-image">
+
+                <img
+                src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=90"
+                alt=""
+                >
+
+            </div>
+
+
+            <div class="gallery-image">
+
+                <img
+                src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=90"
+                alt=""
+                >
+
+            </div>
+
+
+            <div class="gallery-image">
+
+                <img
+                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=90"
+                alt=""
+                >
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LOCATION
+    ================================================== -->
+
+    <section class="location-section">
+
+        <div class="eyebrow">
+            Ünvan
+        </div>
+
+        <h2 class="title">
+            Harada görüşürük?
+        </h2>
+
+
+        <div class="location-card">
+
+            <h3>
+                Example Wedding Hall
+            </h3>
+
+            <p>
+                Bakı, Azərbaycan
+                <br>
+                12 Sentyabr 2026 · 19:00
+            </p>
+
+            <a
+            class="map-button"
+            href="https://www.google.com/maps"
+            target="_blank"
+            >
+                Xəritədə aç
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         RSVP
+    ================================================== -->
+
+    <section class="rsvp-section">
+
+        <div class="eyebrow">
+            Sizinlə daha gözəl
+        </div>
+
+        <div class="rsvp-title">
+            Gələcəksiniz?
+        </div>
+
+        <p class="rsvp-text">
+
+            Bu xüsusi günümüzü sizinlə
+            birlikdə qeyd etmək bizim üçün
+            çox dəyərlidir.
+
+            İştirakınızı öncədən bildirməyinizi
+            xahiş edirik.
+
+        </p>
+
+
+        <a
+        class="rsvp-button"
+        href="../client-form.html"
+        >
+            RSVP
+        </a>
+
+    </section>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="footer">
+
+        <div>
+
+            <div class="footer-names">
+                Aysel
+                <br>
+                &
+                <br>
+                Murad
+            </div>
+
+            <div class="footer-date">
+                12 · 09 · 2026
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   OPEN ENVELOPE
+===================================================== */
+
+const opening =
+document.getElementById("opening");
+
+const envelope =
+document.getElementById("envelope");
+
+const invitation =
+document.getElementById("invitation");
+
+
+envelope.addEventListener(
+    "click",
+    function(){
+
+        envelope.classList.add("open");
+
+        setTimeout(
+            function(){
+
+                opening.classList.add("closed");
+
+                invitation.classList.add("show");
+
+                document.body.style.overflow = "auto";
+
+            },
+            1400
+        );
+
+    }
+);
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+const targetDate =
+new Date(
+    "September 12, 2026 19:00:00"
+).getTime();
+
+
+function updateCountdown(){
+
+    const now =
+    new Date().getTime();
+
+    const difference =
+    targetDate - now;
+
+
+    if(difference <= 0){
+
+        document.getElementById("days")
+        .textContent = "00";
+
+        document.getElementById("hours")
+        .textContent = "00";
+
+        document.getElementById("minutes")
+        .textContent = "00";
+
+        document.getElementById("seconds")
+        .textContent = "00";
+
+        return;
+
+    }
+
+
+    const days =
+    Math.floor(
+        difference /
+        (1000 * 60 * 60 * 24)
+    );
+
+
+    const hours =
+    Math.floor(
+        (difference %
+        (1000 * 60 * 60 * 24))
+        /
+        (1000 * 60 * 60)
+    );
+
+
+    const minutes =
+    Math.floor(
+        (difference %
+        (1000 * 60 * 60))
+        /
+        (1000 * 60)
+    );
+
+
+    const seconds =
+    Math.floor(
+        (difference %
+        (1000 * 60))
+        /
+        1000
+    );
+
+
+    document.getElementById("days")
+    .textContent =
+        String(days).padStart(2,"0");
+
+
+    document.getElementById("hours")
+    .textContent =
+        String(hours).padStart(2,"0");
+
+
+    document.getElementById("minutes")
+    .textContent =
+        String(minutes).padStart(2,"0");
+
+
+    document.getElementById("seconds")
+    .textContent =
+        String(seconds).padStart(2,"0");
+
+}
+
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =====================================================
+   PARALLAX
+===================================================== */
+
+window.addEventListener(
+    "scroll",
+    function(){
+
+        const scrolled =
+        window.scrollY;
+
+        const hero =
+        document.querySelector(".hero");
+
+        if(hero){
+
+            hero.style.backgroundPosition =
+                "center " +
+                (scrolled * 0.35) +
+                "px";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

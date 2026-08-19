@@ -1,471 +1,453 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Luna | Admin</title>
+<title>Luna — Design Manager</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <style>
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap"
+rel="stylesheet">
 
+<style>
 
-        body {
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-            font-family: Georgia, serif;
+body{
 
-            background: #faf7f2;
+    min-height:100vh;
 
-            color: #403a35;
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(155,105,80,.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(117,77,58,.25),
+            transparent 30%
+        ),
+        #17120f;
 
-            padding: 30px 15px;
+    color:#f5eee8;
 
-        }
+    font-family:"DM Sans",sans-serif;
 
+    padding:40px;
 
-        .container {
+}
 
-            max-width: 850px;
+.container{
 
-            margin: auto;
+    max-width:1200px;
 
-        }
+    margin:auto;
 
+}
 
-        .header {
+.header{
 
-            text-align: center;
+    display:flex;
 
-            margin-bottom: 35px;
+    justify-content:space-between;
 
-        }
+    align-items:center;
 
+    margin-bottom:45px;
 
-        .logo {
+}
 
-            font-size: 40px;
+.logo{
 
-            font-weight: normal;
+    font-family:"Italiana",serif;
 
-            margin-bottom: 8px;
+    font-size:38px;
 
-        }
+}
 
+.back{
 
-        .header p {
+    color:#c8a391;
 
-            color: #806f61;
+    text-decoration:none;
 
-            line-height: 1.6;
+    font-size:10px;
 
-        }
+    letter-spacing:2px;
 
+    text-transform:uppercase;
 
-        .card {
+}
 
-            background: white;
+.title{
 
-            padding: 35px;
+    margin-bottom:35px;
 
-            border-radius: 16px;
+}
 
-            box-shadow:
-                0 10px 35px
-                rgba(0, 0, 0, 0.07);
+.title small{
 
-            margin-bottom: 25px;
+    color:#b98d78;
 
-        }
+    font-size:8px;
 
+    letter-spacing:5px;
 
-        .section {
+    text-transform:uppercase;
 
-            border-top: 1px solid #eee5dc;
+}
 
-            padding-top: 25px;
+.title h1{
 
-            margin-top: 30px;
+    font-family:"Cormorant Garamond",serif;
 
-        }
+    font-size:64px;
 
+    font-weight:300;
 
-        .section:first-child {
+    margin-top:10px;
 
-            border-top: none;
+}
 
-            padding-top: 0;
+.panel{
 
-            margin-top: 0;
+    background:
+        rgba(255,255,255,.035);
 
-        }
+    border:
+        1px solid
+        rgba(255,255,255,.09);
 
+    padding:35px;
 
-        .section h2 {
+    margin-bottom:35px;
 
-            font-size: 20px;
+    backdrop-filter:blur(15px);
 
-            font-weight: normal;
+}
 
-            margin-bottom: 20px;
+.panel h2{
 
-        }
+    font-family:"Cormorant Garamond",serif;
 
+    font-size:32px;
 
-        .row {
+    font-weight:400;
 
-            display: grid;
+    margin-bottom:25px;
 
-            grid-template-columns: 1fr 1fr;
+}
 
-            gap: 18px;
+.form-grid{
 
-        }
+    display:grid;
 
+    grid-template-columns:
+        repeat(2,1fr);
 
-        label {
+    gap:20px;
 
-            display: block;
+}
 
-            font-size: 14px;
+.field{
 
-            margin-bottom: 8px;
+    display:flex;
 
-        }
+    flex-direction:column;
 
+    gap:8px;
 
-        input,
-        textarea,
-        select {
+}
 
-            width: 100%;
+.field.full{
 
-            padding: 14px;
+    grid-column:1/-1;
 
-            margin-bottom: 20px;
+}
 
-            border: 1px solid #d8cec3;
+label{
 
-            border-radius: 7px;
+    font-size:8px;
 
-            background: white;
+    letter-spacing:2px;
 
-            color: #403a35;
+    text-transform:uppercase;
 
-            font-family: inherit;
+    color:#b99583;
 
-            font-size: 15px;
+}
 
-        }
+input,
+select,
+textarea{
 
+    width:100%;
 
-        textarea {
+    padding:14px 15px;
 
-            min-height: 130px;
+    background:
+        rgba(0,0,0,.25);
 
-            resize: vertical;
+    border:
+        1px solid
+        rgba(255,255,255,.12);
 
-        }
+    color:white;
 
+    outline:none;
 
-        .hint {
+    font-family:inherit;
 
-            display: block;
+}
 
-            margin-top: -10px;
+select option{
 
-            margin-bottom: 20px;
+    background:#211914;
 
-            font-size: 12px;
+}
 
-            color: #9a8776;
+textarea{
 
-            line-height: 1.5;
+    min-height:100px;
 
-        }
+    resize:vertical;
 
+}
 
-        .checkbox {
+input:focus,
+select:focus,
+textarea:focus{
 
-            display: flex;
+    border-color:#b88c76;
 
-            align-items: center;
+}
 
-            gap: 10px;
+.file-box{
 
-            margin-bottom: 20px;
+    border:
+        1px dashed
+        rgba(255,255,255,.2);
 
-        }
+    padding:25px;
 
+    text-align:center;
 
-        .checkbox input {
+}
 
-            width: auto;
+.file-box input{
 
-            margin: 0;
+    border:none;
 
-        }
+    padding:10px;
 
+}
 
-        .checkbox label {
+.preview-image{
 
-            margin: 0;
+    margin-top:15px;
 
-        }
+    width:150px;
 
+    height:190px;
 
-        .button {
+    object-fit:cover;
 
-            width: 100%;
+    display:none;
 
-            padding: 16px;
+    border:
+        1px solid
+        rgba(255,255,255,.2);
 
-            border: none;
+}
 
-            border-radius: 30px;
+.button-row{
 
-            background: #806f61;
+    display:flex;
 
-            color: white;
+    gap:12px;
 
-            font-family: inherit;
+    margin-top:30px;
 
-            font-size: 15px;
+}
 
-            letter-spacing: 2px;
+button{
 
-            cursor: pointer;
+    border:none;
 
-        }
+    padding:15px 25px;
 
+    cursor:pointer;
 
-        .button:hover {
+    font-size:8px;
 
-            opacity: 0.85;
+    letter-spacing:2px;
 
-        }
+    text-transform:uppercase;
 
+}
 
-        .secondary-button {
+.save{
 
-            background: transparent;
+    background:#f0e3da;
 
-            color: #806f61;
+    color:#211914;
 
-            border: 1px solid #806f61;
+}
 
-            margin-top: 10px;
+.clear{
 
-        }
+    background:transparent;
 
+    color:#fff;
 
-        .result {
+    border:
+        1px solid
+        rgba(255,255,255,.2);
 
-            display: none;
+}
 
-            margin-top: 30px;
+.designs{
 
-            padding: 25px;
+    display:grid;
 
-            background: #faf7f2;
+    grid-template-columns:
+        repeat(3,1fr);
 
-            border-radius: 12px;
+    gap:20px;
 
-        }
+}
 
+.design-card{
 
-        .result h2 {
+    background:
+        rgba(255,255,255,.035);
 
-            font-weight: normal;
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 
-            margin-bottom: 15px;
+    padding:15px;
 
-        }
+}
 
+.design-card img{
 
-        .link-box {
+    width:100%;
 
-            background: white;
+    height:280px;
 
-            border: 1px solid #d8cec3;
+    object-fit:cover;
 
-            padding: 14px;
+    display:block;
 
-            border-radius: 7px;
+    margin-bottom:15px;
 
-            word-break: break-all;
+}
 
-            margin: 15px 0;
+.design-card h3{
 
-            line-height: 1.6;
+    font-family:"Cormorant Garamond",serif;
 
-        }
+    font-size:27px;
 
+    font-weight:400;
 
-        .success {
+}
 
-            color: #65745d;
+.design-card p{
 
-            margin-bottom: 15px;
+    color:#ad8c7d;
 
-        }
+    font-size:8px;
 
+    letter-spacing:1px;
 
-        .saved-title {
+    margin-top:7px;
 
-            margin-bottom: 20px;
+}
 
-        }
+.card-actions{
 
+    display:flex;
 
-        .invitation-item {
+    gap:8px;
 
-            padding: 20px;
+    margin-top:15px;
 
-            border: 1px solid #eee5dc;
+}
 
-            border-radius: 10px;
+.card-actions button{
 
-            margin-bottom: 15px;
+    flex:1;
 
-            background: #fffdf9;
+    padding:10px;
 
-        }
+}
 
+.delete{
 
-        .invitation-item h3 {
+    background:
+        rgba(150,60,50,.2);
 
-            font-size: 20px;
+    color:#e5aaa0;
 
-            font-weight: normal;
+}
 
-            margin-bottom: 8px;
+.empty{
 
-        }
+    grid-column:1/-1;
 
+    text-align:center;
 
-        .invitation-item p {
+    padding:60px;
 
-            font-size: 14px;
+    color:rgba(255,255,255,.4);
 
-            line-height: 1.7;
+}
 
-            color: #806f61;
+@media(max-width:800px){
 
-        }
+    body{
+        padding:20px;
+    }
 
+    .form-grid{
+        grid-template-columns:1fr;
+    }
 
-        .item-buttons {
+    .field.full{
+        grid-column:auto;
+    }
 
-            display: flex;
+    .designs{
+        grid-template-columns:1fr;
+    }
 
-            gap: 10px;
+    .header{
+        align-items:flex-start;
+    }
 
-            margin-top: 15px;
+    .title h1{
+        font-size:50px;
+    }
 
-        }
+}
 
-
-        .small-button {
-
-            padding: 10px 16px;
-
-            border-radius: 20px;
-
-            border: 1px solid #806f61;
-
-            background: white;
-
-            color: #806f61;
-
-            cursor: pointer;
-
-            font-family: inherit;
-
-        }
-
-
-        .small-button:hover {
-
-            background: #806f61;
-
-            color: white;
-
-        }
-
-
-        .delete-button {
-
-            border-color: #a56d5c;
-
-            color: #a56d5c;
-
-        }
-
-
-        .empty {
-
-            color: #9a8776;
-
-            text-align: center;
-
-            padding: 20px;
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            body {
-
-                padding: 15px 10px;
-
-            }
-
-
-            .card {
-
-                padding: 25px 18px;
-
-            }
-
-
-            .row {
-
-                grid-template-columns: 1fr;
-
-                gap: 0;
-
-            }
-
-
-            .logo {
-
-                font-size: 32px;
-
-            }
-
-
-            .item-buttons {
-
-                flex-direction: column;
-
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -476,853 +458,554 @@
 <div class="container">
 
 
-    <!-- HEADER -->
+<header class="header">
 
-    <div class="header">
+<div class="logo">
+Luna
+</div>
 
-        <div class="logo">
-            Luna
-        </div>
+<a
+href="index.html"
+class="back">
 
-        <p>
-            Digital Invitation Admin
-        </p>
+← Back to Luna
 
-    </div>
+</a>
 
+</header>
 
-    <!-- CREATE INVITATION -->
 
-    <div class="card">
 
+<div class="title">
 
-        <form id="generatorForm">
+<small>
+Luna Studio
+</small>
 
+<h1>
+Design Manager
+</h1>
 
-            <!-- COUPLE -->
+</div>
 
-            <div class="section">
 
-                <h2>
-                    1. Couple Information
-                </h2>
 
+<section class="panel">
 
-                <div class="row">
+<h2>
+Add New Design
+</h2>
 
 
-                    <div>
+<form id="designForm">
 
-                        <label for="bride">
-                            Bride's Name
-                        </label>
 
-                        <input
-                            type="text"
-                            id="bride"
-                            placeholder="Aysel"
-                            required
-                        >
+<div class="form-grid">
 
-                    </div>
 
+<div class="field">
 
-                    <div>
+<label>
+Design Name
+</label>
 
-                        <label for="groom">
-                            Groom's Name
-                        </label>
+<input
+id="name"
+type="text"
+placeholder="Amelia"
+required>
 
-                        <input
-                            type="text"
-                            id="groom"
-                            placeholder="Murad"
-                            required
-                        >
+</div>
 
-                    </div>
 
-                </div>
 
-            </div>
+<div class="field">
 
+<label>
+Category
+</label>
 
-            <!-- WEDDING -->
+<select id="category">
 
-            <div class="section">
+<option value="wedding">
+Wedding
+</option>
 
-                <h2>
-                    2. Wedding Details
-                </h2>
+<option value="engagement">
+Engagement
+</option>
 
+<option value="henna">
+Henna / Kına
+</option>
 
-                <div class="row">
+<option value="birthday">
+Birthday
+</option>
 
+<option value="baby-shower">
+Baby Shower
+</option>
 
-                    <div>
+<option value="graduation">
+Graduation
+</option>
 
-                        <label for="date">
-                            Wedding Date
-                        </label>
+<option value="anniversary">
+Anniversary
+</option>
 
-                        <input
-                            type="date"
-                            id="date"
-                            required
-                        >
+<option value="events">
+Events
+</option>
 
-                    </div>
+</select>
 
+</div>
 
-                    <div>
 
-                        <label for="time">
-                            Wedding Time
-                        </label>
 
-                        <input
-                            type="time"
-                            id="time"
-                            required
-                        >
+<div class="field">
 
-                    </div>
+<label>
+Package
+</label>
 
-                </div>
+<select id="package">
 
+<option value="basic">
+Basic
+</option>
 
-                <label for="location">
-                    City / Location
-                </label>
+<option value="premium">
+Premium
+</option>
 
-                <input
-                    type="text"
-                    id="location"
-                    placeholder="Baku, Azerbaijan"
-                    required
-                >
+<option value="luxury">
+Luxury
+</option>
 
+</select>
 
-                <label for="venue">
-                    Venue / Wedding Hall
-                </label>
+</div>
 
-                <input
-                    type="text"
-                    id="venue"
-                    placeholder="Wedding Hall"
-                    required
-                >
 
 
-                <label for="map">
-                    Google Maps Link
-                </label>
+<div class="field">
 
-                <input
-                    type="url"
-                    id="map"
-                    placeholder="https://maps.google.com/..."
-                >
+<label>
+Style
+</label>
 
-            </div>
+<input
+id="style"
+type="text"
+placeholder="Romantic">
 
+</div>
 
-            <!-- STORY -->
 
-            <div class="section">
 
-                <h2>
-                    3. Our Story
-                </h2>
+<div class="field full">
 
+<label>
+Short Description
+</label>
 
-                <textarea
-                    id="story"
-                    placeholder="Write the couple's story..."
-                ></textarea>
+<textarea
+id="description"
+placeholder="Elegant wedding invitation..."></textarea>
 
+</div>
 
-                <span class="hint">
 
-                    Leave blank if you want to use
-                    the standard Luna story.
 
-                </span>
+<div class="field full">
 
-            </div>
+<label>
+Preview / Cover Image</label>
 
+<div class="file-box">
 
-            <!-- GALLERY -->
+<input
+id="cover"
+type="file"
+accept="image/*"
+required>
 
-            <div class="section">
+<img
+id="coverPreview"
+class="preview-image">
 
-                <h2>
-                    4. Gallery
-                </h2>
+</div>
 
+</div>
 
-                <label>
-                    Photo 1 URL
-                </label>
 
-                <input
-                    type="url"
-                    id="photo1"
-                    placeholder="https://..."
-                >
 
+<div class="field full">
 
-                <label>
-                    Photo 2 URL
-                </label>
+<label>
+Invitation URL</label>
 
-                <input
-                    type="url"
-                    id="photo2"
-                    placeholder="https://..."
-                >
+<input
+id="url"
+type="text"
+placeholder="templates/wedding/amelia.html">
 
-
-                <label>
-                    Photo 3 URL
-                </label>
-
-                <input
-                    type="url"
-                    id="photo3"
-                    placeholder="https://..."
-                >
-
-
-                <label>
-                    Photo 4 URL
-                </label>
-
-                <input
-                    type="url"
-                    id="photo4"
-                    placeholder="https://..."
-                >
-
-
-                <label>
-                    Photo 5 URL
-                </label>
-
-                <input
-                    type="url"
-                    id="photo5"
-                    placeholder="https://..."
-                >
-
-
-                <label>
-                    Photo 6 URL
-                </label>
-
-                <input
-                    type="url"
-                    id="photo6"
-                    placeholder="https://..."
-                >
-
-            </div>
-
-
-            <!-- RSVP -->
-
-            <div class="section">
-
-                <h2>
-                    5. RSVP
-                </h2>
-
-
-                <div class="checkbox">
-
-                    <input
-                        type="checkbox"
-                        id="rsvp"
-                    >
-
-                    <label for="rsvp">
-                        Show RSVP section
-                    </label>
-
-                </div>
-
-
-                <label for="maxGuests">
-                    Maximum Number of Guests
-                </label>
-
-                <select id="maxGuests">
-
-                    <option value="1">
-                        1
-                    </option>
-
-                    <option value="2">
-                        2
-                    </option>
-
-                    <option value="3">
-                        3
-                    </option>
-
-                    <option value="4">
-                        4
-                    </option>
-
-                    <option value="5">
-                        5
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- SUBMIT -->
-
-            <button
-                type="submit"
-                class="button"
-            >
-
-                CREATE INVITATION
-
-            </button>
-
-
-        </form>
-
-
-        <!-- RESULT -->
-
-        <div
-            class="result"
-            id="result"
-        >
-
-            <h2>
-                Invitation Created 🤍
-            </h2>
-
-
-            <p class="success">
-                Your invitation is ready.
-            </p>
-
-
-            <p>
-                Invitation link:
-            </p>
-
-
-            <div
-                class="link-box"
-                id="invitationLink"
-            ></div>
-
-
-            <button
-                type="button"
-                class="button"
-                id="copyButton"
-            >
-
-                COPY LINK
-
-            </button>
-
-
-            <button
-                type="button"
-                class="button secondary-button"
-                id="openButton"
-            >
-
-                OPEN INVITATION
-
-            </button>
-
-        </div>
-
-
-    </div>
-
-
-    <!-- SAVED INVITATIONS -->
-
-    <div class="card">
-
-
-        <h2 class="saved-title">
-            Created Invitations
-        </h2>
-
-
-        <div id="savedInvitations">
-
-        </div>
-
-
-    </div>
+</div>
 
 
 </div>
 
 
+
+<div class="button-row">
+
+<button
+type="submit"
+class="save">
+
+Save Design
+
+</button>
+
+<button
+type="button"
+class="clear"
+id="clearBtn">
+
+Clear
+
+</button>
+
+</div>
+
+
+</form>
+
+</section>
+
+
+
+<section class="panel">
+
+<h2>
+Your Designs
+</h2>
+
+<div
+id="designList"
+class="designs">
+
+</div>
+
+</section>
+
+
+</div>
+
+
+
 <script>
 
+/* =====================================================
+   STORAGE
+===================================================== */
 
-/* =========================================
+const STORAGE_KEY =
+    "luna_designs";
+
+
+let designs =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+    ) || [];
+
+
+
+/* =====================================================
    ELEMENTS
-========================================= */
+===================================================== */
 
 const form =
-    document.getElementById("generatorForm");
+    document.getElementById("designForm");
 
-const result =
-    document.getElementById("result");
+const cover =
+    document.getElementById("cover");
 
-const invitationLink =
-    document.getElementById("invitationLink");
+const coverPreview =
+    document.getElementById("coverPreview");
 
-const savedInvitations =
-    document.getElementById("savedInvitations");
+const designList =
+    document.getElementById("designList");
 
 
-/* =========================================
-   CREATE ID
-========================================= */
 
-function createId(bride, groom) {
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
 
-    const cleanBride =
-        bride
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9əğıöüçş\s-]/gi, "")
-            .replace(/\s+/g, "-");
+cover.addEventListener(
+    "change",
+    function(){
 
-    const cleanGroom =
-        groom
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9əğıöüçş\s-]/gi, "")
-            .replace(/\s+/g, "-");
+        const file =
+            this.files[0];
 
-    return cleanBride + "-" + cleanGroom;
+        if(!file) return;
 
-}
+        const reader =
+            new FileReader();
 
+        reader.onload =
+            function(e){
 
-/* =========================================
-   CREATE INVITATION
-========================================= */
+                coverPreview.src =
+                    e.target.result;
 
-form.addEventListener(
-    "submit",
-    function(event) {
+                coverPreview.style.display =
+                    "block";
 
-        event.preventDefault();
+            };
 
-
-        const bride =
-            document
-                .getElementById("bride")
-                .value
-                .trim();
-
-
-        const groom =
-            document
-                .getElementById("groom")
-                .value
-                .trim();
-
-
-        const date =
-            document
-                .getElementById("date")
-                .value;
-
-
-        const time =
-            document
-                .getElementById("time")
-                .value;
-
-
-        const location =
-            document
-                .getElementById("location")
-                .value
-                .trim();
-
-
-        const venue =
-            document
-                .getElementById("venue")
-                .value
-                .trim();
-
-
-        const map =
-            document
-                .getElementById("map")
-                .value
-                .trim();
-
-
-        const story =
-            document
-                .getElementById("story")
-                .value
-                .trim();
-
-
-        const rsvp =
-            document
-                .getElementById("rsvp")
-                .checked;
-
-
-        const maxGuests =
-            document
-                .getElementById("maxGuests")
-                .value;
-
-
-        const images = [
-
-            document.getElementById("photo1").value.trim(),
-
-            document.getElementById("photo2").value.trim(),
-
-            document.getElementById("photo3").value.trim(),
-
-            document.getElementById("photo4").value.trim(),
-
-            document.getElementById("photo5").value.trim(),
-
-            document.getElementById("photo6").value.trim()
-
-        ].filter(
-            image => image !== ""
-        );
-
-
-        const id =
-            createId(
-                bride,
-                groom
-            );
-
-
-        const invitation = {
-
-            id: id,
-
-            bride: bride,
-
-            groom: groom,
-
-            date: date,
-
-            time: time,
-
-            location: location,
-
-            venue: venue,
-
-            map: map,
-
-            story: story,
-
-            images: images,
-
-            rsvp: rsvp,
-
-            maxGuests: maxGuests
-
-        };
-
-
-        /* SAVE */
-
-        localStorage.setItem(
-
-            "luna_" + id,
-
-            JSON.stringify(invitation)
-
-        );
-
-
-        /* CREATE LINK */
-
-        const baseUrl =
-            window.location.origin +
-            window.location.pathname
-                .replace(
-                    "admin.html",
-                    "index.html"
-                );
-
-
-        const link =
-            baseUrl +
-            "?id=" +
-            encodeURIComponent(id);
-
-
-        invitationLink.textContent =
-            link;
-
-
-        result.style.display =
-            "block";
-
-
-        /* REFRESH LIST */
-
-        displayInvitations();
-
-
-        /* SCROLL TO RESULT */
-
-        result.scrollIntoView({
-            behavior: "smooth"
-        });
+        reader.readAsDataURL(file);
 
     }
 );
 
 
-/* =========================================
-   COPY LINK
-========================================= */
 
-document
-    .getElementById("copyButton")
-    .addEventListener(
-        "click",
-        async function() {
+/* =====================================================
+   ADD DESIGN
+===================================================== */
 
-            const link =
-                invitationLink.textContent;
+form.addEventListener(
+    "submit",
+    function(e){
+
+        e.preventDefault();
 
 
-            try {
+        const file =
+            cover.files[0];
 
-                await navigator.clipboard.writeText(
-                    link
-                );
+        if(!file){
 
-                this.textContent =
-                    "COPIED ✓";
-
-
-                setTimeout(
-                    () => {
-
-                        this.textContent =
-                            "COPY LINK";
-
-                    },
-                    2000
-                );
-
-            }
-
-            catch {
-
-                alert(
-                    "Please copy the link manually."
-                );
-
-            }
-
-        }
-    );
-
-
-/* =========================================
-   OPEN INVITATION
-========================================= */
-
-document
-    .getElementById("openButton")
-    .addEventListener(
-        "click",
-        function() {
-
-            const link =
-                invitationLink.textContent;
-
-
-            window.open(
-                link,
-                "_blank"
+            alert(
+                "Please choose a cover image."
             );
 
-        }
-    );
-
-
-/* =========================================
-   SHOW SAVED INVITATIONS
-========================================= */
-
-function displayInvitations() {
-
-    const invitations = [];
-
-
-    for (
-        let i = 0;
-        i < localStorage.length;
-        i++
-    ) {
-
-        const key =
-            localStorage.key(i);
-
-
-        if (
-            key &&
-            key.startsWith("luna_")
-        ) {
-
-            try {
-
-                const data =
-                    JSON.parse(
-                        localStorage.getItem(key)
-                    );
-
-
-                invitations.push(data);
-
-            }
-
-            catch {
-
-                // Ignore invalid data
-
-            }
+            return;
 
         }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+                const design = {
+
+                    id:
+                        Date.now(),
+
+                    name:
+                        document
+                        .getElementById("name")
+                        .value
+                        .trim(),
+
+                    category:
+                        document
+                        .getElementById("category")
+                        .value,
+
+                    package:
+                        document
+                        .getElementById("package")
+                        .value,
+
+                    style:
+                        document
+                        .getElementById("style")
+                        .value
+                        .trim(),
+
+                    description:
+                        document
+                        .getElementById("description")
+                        .value
+                        .trim(),
+
+                    image:
+                        e.target.result,
+
+                    url:
+                        document
+                        .getElementById("url")
+                        .value
+                        .trim()
+
+                };
+
+
+                designs.push(design);
+
+
+                save();
+
+
+                form.reset();
+
+                coverPreview.style.display =
+                    "none";
+
+                alert(
+                    "Design successfully added to Luna."
+                );
+
+            };
+
+
+        reader.readAsDataURL(file);
 
     }
+);
 
 
-    if (
-        invitations.length === 0
-    ) {
 
-        savedInvitations.innerHTML =
-            `
+/* =====================================================
+   SAVE
+===================================================== */
+
+function save(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(designs)
+    );
+
+    render();
+
+}
+
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteDesign(id){
+
+    if(
+        !confirm(
+            "Delete this design?"
+        )
+    ) return;
+
+
+    designs =
+        designs.filter(
+            design =>
+                design.id !== id
+        );
+
+
+    save();
+
+}
+
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render(){
+
+    designList.innerHTML = "";
+
+
+    if(!designs.length){
+
+        designList.innerHTML = `
+
             <div class="empty">
-                No invitations created yet.
+
+                No designs yet.<br><br>
+
+                Add your first Luna design above.
+
             </div>
-            `;
+
+        `;
 
         return;
 
     }
 
 
-    savedInvitations.innerHTML =
-        "";
+    designs.forEach(
+        design => {
 
-
-    invitations.forEach(
-        function(invitation) {
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "invitation-item";
-
-
-            const name =
-                invitation.bride +
-                " & " +
-                invitation.groom;
-
-
-            const baseUrl =
-                window.location.origin +
-                window.location.pathname
-                    .replace(
-                        "admin.html",
-                        "index.html"
-                    );
-
-
-            const link =
-                baseUrl +
-                "?id=" +
-                encodeURIComponent(
-                    invitation.id
+            const card =
+                document.createElement(
+                    "div"
                 );
 
+            card.className =
+                "design-card";
 
-            item.innerHTML =
 
-                `
+            card.innerHTML = `
+
+                <img
+                    src="${design.image}"
+                    alt="${escapeHTML(design.name)}"
+                >
+
                 <h3>
-                    ${name}
+                    ${escapeHTML(design.name)}
                 </h3>
 
                 <p>
-                    ${invitation.date}
+                    ${escapeHTML(
+                        design.category
+                    )}
                     ·
-                    ${invitation.time}
+                    ${escapeHTML(
+                        design.package
+                    )}
                 </p>
 
                 <p>
-                    ${invitation.location}
-                    ·
-                    ${invitation.venue}
+                    ${escapeHTML(
+                        design.style || ""
+                    )}
                 </p>
 
-                <div class="item-buttons">
+                <div class="card-actions">
 
                     <button
-                        class="small-button"
-                        onclick="window.open('${link}', '_blank')"
-                    >
-                        OPEN
-                    </button>
+                        class="delete"
+                        onclick="
+                            deleteDesign(${design.id})
+                        ">
 
-                    <button
-                        class="small-button"
-                        onclick="copyInvitationLink('${link}')"
-                    >
-                        COPY LINK
-                    </button>
+                        Delete
 
-                    <button
-                        class="small-button delete-button"
-                        onclick="deleteInvitation('${invitation.id}')"
-                    >
-                        DELETE
                     </button>
 
                 </div>
-                `;
+
+            `;
 
 
-            savedInvitations.appendChild(
-                item
-            );
+            designList.appendChild(card);
 
         }
     );
@@ -1330,70 +1013,49 @@ function displayInvitations() {
 }
 
 
-/* =========================================
-   COPY SAVED LINK
-========================================= */
 
-async function copyInvitationLink(link) {
+/* =====================================================
+   SECURITY
+===================================================== */
 
-    try {
+function escapeHTML(value){
 
-        await navigator.clipboard.writeText(
-            link
-        );
-
-        alert(
-            "Invitation link copied."
-        );
-
-    }
-
-    catch {
-
-        alert(
-            link
-        );
-
-    }
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================================
-   DELETE INVITATION
-========================================= */
 
-function deleteInvitation(id) {
+/* =====================================================
+   CLEAR
+===================================================== */
 
-    const confirmation =
-        confirm(
-            "Delete this invitation?"
-        );
+document
+.getElementById("clearBtn")
+.addEventListener(
+    "click",
+    function(){
 
+        form.reset();
 
-    if (!confirmation) {
-
-        return;
+        coverPreview.style.display =
+            "none";
 
     }
+);
 
 
-    localStorage.removeItem(
-        "luna_" + id
-    );
 
+/* =====================================================
+   INITIAL
+===================================================== */
 
-    displayInvitations();
-
-}
-
-
-/* =========================================
-   LOAD
-========================================= */
-
-displayInvitations();
-
+render();
 
 </script>
 

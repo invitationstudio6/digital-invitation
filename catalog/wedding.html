@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Luna — Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Italiana&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(157,105,79,.28),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(106,69,52,.25),
+            transparent 35%
+        ),
+        #17120f;
+
+    color:#f5eee9;
+
+    font-family:"DM Sans",sans-serif;
+
+    min-height:100vh;
+
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.nav{
+
+    height:78px;
+
+    padding:0 5%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    background:rgba(23,18,15,.8);
+
+    backdrop-filter:blur(20px);
+
+}
+
+.logo{
+
+    font-family:"Italiana",serif;
+
+    font-size:35px;
+
+}
+
+.back{
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:#b89b8e;
+
+}
+
+.hero{
+
+    text-align:center;
+
+    padding:110px 20px 70px;
+
+}
+
+.eyebrow{
+
+    font-size:8px;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    color:#c09a86;
+
+}
+
+h1{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:120px;
+
+    font-weight:300;
+
+    line-height:.8;
+
+    margin:30px 0;
+
+}
+
+.hero p{
+
+    max-width:500px;
+
+    margin:auto;
+
+    color:#a9958b;
+
+    font-size:10px;
+
+    line-height:2;
+
+}
+
+.filters{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin-bottom:60px;
+
+}
+
+.filter{
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:transparent;
+
+    color:#bba69c;
+
+    border-radius:50px;
+
+    padding:10px 18px;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+}
+
+.filter.active{
+
+    background:#eee0d7;
+
+    color:#211914;
+
+}
+
+.grid{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 5% 120px;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.design{
+
+    transition:.4s;
+
+}
+
+.design:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.preview{
+
+    height:560px;
+
+    padding:20px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:#211814;
+
+}
+
+.paper{
+
+    height:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    box-shadow:0 30px 60px rgba(0,0,0,.6);
+
+}
+
+.paper.amelia{
+
+    background:
+        linear-gradient(
+            145deg,
+            #754b3b,
+            #241a16
+        );
+
+}
+
+.paper.amour{
+
+    background:
+        linear-gradient(
+            145deg,
+            #eee1d8,
+            #c8a99a
+        );
+
+    color:#49362e;
+
+}
+
+.paper.noir{
+
+    background:
+        linear-gradient(
+            145deg,
+            #111,
+            #58443a
+        );
+
+}
+
+.paper.olive{
+
+    background:
+        linear-gradient(
+            145deg,
+            #586251,
+            #202a23
+        );
+
+}
+
+.paper-inner{
+
+    width:80%;
+
+    height:85%;
+
+    border:1px solid rgba(255,255,255,.3);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.paper-inner small{
+
+    font-size:7px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+}
+
+.paper-inner h2{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:60px;
+
+    font-weight:300;
+
+    margin:30px 0;
+
+}
+
+.paper-inner p{
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+.meta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:17px 3px;
+
+}
+
+.meta strong{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:30px;
+
+    font-weight:400;
+
+}
+
+.meta span{
+
+    color:#b89482;
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+@media(max-width:850px){
+
+    .grid{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+}
+
+@media(max-width:550px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    h1{
+
+        font-size:80px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<nav class="nav">
+
+<a href="../index.html"
+class="logo">
+
+Luna
+
+</a>
+
+<a href="../index.html#categories"
+class="back">
+
+← Collections
+
+</a>
+
+</nav>
+
+
+<header class="hero">
+
+<div class="eyebrow">
+Luna Collection
+</div>
+
+<h1>
+Wedding
+</h1>
+
+<p>
+
+Ən xüsusi gününüz üçün
+zərif və fərdiləşdirilə bilən
+dəvətnamələr.
+
+</p>
+
+</header>
+
+
+<div class="filters">
+
+<button
+class="filter active"
+data-package="all">
+
+All
+
+</button>
+
+<button
+class="filter"
+data-package="basic">
+
+Basic
+
+</button>
+
+<button
+class="filter"
+data-package="premium">
+
+Premium
+
+</button>
+
+<button
+class="filter"
+data-package="luxury">
+
+Luxury
+
+</button>
+
+</div>
+
+
+<main class="grid">
+
+
+<a
+class="design"
+data-package="luxury"
+href="../client-form.html?design=amelia&package=luxury&category=wedding">
+
+
+<div class="preview">
+
+<div class="paper amelia">
+
+<div class="paper-inner">
+
+<small>
+Wedding Invitation
+</small>
+
+<h2>
+Amelia
+</h2>
+
+<p>
+Timeless Elegance
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="meta">
+
+<strong>
+Amelia
+</strong>
+
+<span>
+Luxury
+</span>
+
+</div>
+
+</a>
+
+
+
+<a
+class="design"
+data-package="premium"
+href="../client-form.html?design=amour&package=premium&category=wedding">
+
+
+<div class="preview">
+
+<div class="paper amour">
+
+<div class="paper-inner">
+
+<small>
+The Wedding Of
+</small>
+
+<h2>
+Amour
+</h2>
+
+<p>
+Soft Romance
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="meta">
+
+<strong>
+Amour
+</strong>
+
+<span>
+Premium
+</span>
+
+</div>
+
+</a>
+
+
+
+<a
+class="design"
+data-package="luxury"
+href="../client-form.html?design=noir&package=luxury&category=wedding">
+
+
+<div class="preview">
+
+<div class="paper noir">
+
+<div class="paper-inner">
+
+<small>
+Wedding Collection
+</small>
+
+<h2>
+Noir
+</h2>
+
+<p>
+Modern Romance
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="meta">
+
+<strong>
+Noir
+</strong>
+
+<span>
+Luxury
+</span>
+
+</div>
+
+</a>
+
+
+
+<a
+class="design"
+data-package="basic"
+href="../client-form.html?design=olive&package=basic&category=wedding">
+
+
+<div class="preview">
+
+<div class="paper olive">
+
+<div class="paper-inner">
+
+<small>
+Wedding Invitation
+</small>
+
+<h2>
+Olive
+</h2>
+
+<p>
+Natural Elegance
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="meta">
+
+<strong>
+Olive
+</strong>
+
+<span>
+Basic
+</span>
+
+</div>
+
+</a>
+
+
+</main>
+
+
+<script>
+
+const buttons=
+document.querySelectorAll(
+".filter"
+);
+
+const designs=
+document.querySelectorAll(
+".design"
+);
+
+
+buttons.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+buttons.forEach(
+b=>b.classList.remove("active")
+);
+
+button.classList.add("active");
+
+
+const selected=
+button.dataset.package;
+
+
+designs.forEach(design=>{
+
+if(
+selected==="all" ||
+design.dataset.package===selected
+){
+
+design.style.display="block";
+
+}else{
+
+design.style.display="none";
+
+}
+
+});
+
+});
+
+});
+
+</script>
+
+
+</body>
+
+</html>

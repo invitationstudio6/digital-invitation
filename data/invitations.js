@@ -2,25 +2,34 @@ const invitations = {
 
     /* =====================================================
        AYSEL & MURAD
-       BASIC PACKAGE
+       BASIC
     ===================================================== */
 
     "aysel-murad": {
 
+        id: "aysel-murad",
+
         package: "basic",
 
+        category: "wedding",
+
+        design: "amelia",
+
         bride: "Aysel",
+
         groom: "Murad",
 
         date: "12 September 2026",
+
         dateShort: "12 · 09 · 2026",
+
         time: "19:00",
 
         location: "Baku, Azerbaijan",
+
         venue: "Example Wedding Hall",
 
-        map:
-            "https://www.google.com/maps",
+        map: "https://www.google.com/maps",
 
         story: `
             <p>
@@ -61,33 +70,41 @@ const invitations = {
 
         ],
 
-        countdown:
-            "September 12, 2026 19:00:00"
+        countdown: "September 12, 2026 19:00:00"
 
     },
 
 
     /* =====================================================
        LEYLA & KAMRAN
-       PREMIUM PACKAGE
+       PREMIUM
     ===================================================== */
 
     "leyla-kamran": {
 
+        id: "leyla-kamran",
+
         package: "premium",
 
+        category: "wedding",
+
+        design: "amelia",
+
         bride: "Leyla",
+
         groom: "Kamran",
 
         date: "20 October 2026",
+
         dateShort: "20 · 10 · 2026",
+
         time: "18:30",
 
         location: "Baku, Azerbaijan",
+
         venue: "Example Wedding Hall",
 
-        map:
-            "https://www.google.com/maps",
+        map: "https://www.google.com/maps",
 
         story: `
             <p>
@@ -125,43 +142,45 @@ const invitations = {
 
             "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85",
 
-            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85"
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85"
 
         ],
 
-        countdown:
-            "October 20, 2026 18:30:00"
+        countdown: "October 20, 2026 18:30:00"
 
     },
 
 
     /* =====================================================
        NIGAR & ELVIN
-       LUXURY PACKAGE
+       LUXURY
     ===================================================== */
 
     "nigar-elvin": {
 
+        id: "nigar-elvin",
+
         package: "luxury",
 
+        category: "wedding",
+
+        design: "amelia",
+
         bride: "Nigar",
+
         groom: "Elvin",
 
         date: "20 October 2026",
+
         dateShort: "20 · 10 · 2026",
+
         time: "19:00",
 
         location: "Baku, Azerbaijan",
+
         venue: "Crystal Hall",
 
-        map:
-            "https://www.google.com/maps",
+        map: "https://www.google.com/maps",
 
         story: `
             <p>
@@ -198,18 +217,11 @@ const invitations = {
 
             "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85",
 
-            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85",
-
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85"
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85"
 
         ],
 
-        countdown:
-            "October 20, 2026 19:00:00",
+        countdown: "October 20, 2026 19:00:00",
 
         music:
             "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
