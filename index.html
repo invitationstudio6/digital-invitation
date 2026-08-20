@@ -94,127 +94,55 @@ button{font-family:inherit;cursor:pointer}
 .section-heading h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,6.5vw,88px);line-height:.88;font-weight:300;font-style:italic;color:#3E2518}
 .section-heading p{max-width:560px;margin-top:24px;color:#8A6E5E;font-size:10px;line-height:2}
 
-/* ===== PACKAGE SHOWCASE ===== */
-.packages-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+/* ===== DESIGN TEMPLATES GRID ===== */
+.designs-section{padding:115px 5%;position:relative}
+.designs-section .section-inner{width:min(1200px,100%);margin:auto}
+.cat-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;justify-content:center}
+.cat-tab{padding:10px 22px;border:1px solid rgba(92,61,46,.12);background:transparent;color:#8A6E5E;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.35s;border-radius:0}
+.cat-tab:hover{border-color:#C4A882;color:#C4A882}
+.cat-tab.active{background:#3E2518;color:#F5EDE3;border-color:#3E2518}
+.designs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.design-thumb{position:relative;overflow:hidden;border:1px solid rgba(92,61,46,.06);background:#fff;cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1)}
+.design-thumb:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(62,37,24,.12)}
+.design-thumb-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85);transition:transform 1.2s cubic-bezier(.19,1,.22,1),filter .5s}
+.design-thumb:hover .design-thumb-img{transform:scale(1.06);filter:saturate(1)}
+.design-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.7) 0%,transparent 50%);opacity:0;transition:.4s}
+.design-thumb:hover .design-thumb-overlay{opacity:1}
+.design-thumb-info{position:absolute;bottom:0;left:0;right:0;padding:18px;transform:translateY(8px);transition:.4s}
+.design-thumb:hover .design-thumb-info{transform:translateY(0)}
+.design-thumb-info .cat-badge{display:inline-block;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:2px;text-transform:uppercase;background:rgba(196,168,130,.25);color:#F5EDE3;backdrop-filter:blur(8px);margin-bottom:8px}
+.design-thumb-info h4{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:#fff}
+.design-thumb-info p{font-size:8px;letter-spacing:2px;color:rgba(255,252,247,.6);margin-top:4px;text-transform:uppercase}
+.design-thumb-info .pkg-badge{display:inline-block;margin-top:8px;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.4);color:#C4A882}
+.designs-more{display:flex;justify-content:center;margin-top:40px}
 
-.pkg-card{position:relative;background:rgba(255,252,247,.65);border:1px solid rgba(92,61,46,.06);overflow:hidden;transition:.5s cubic-bezier(.19,1,.22,1);cursor:pointer}
-.pkg-card:hover{transform:translateY(-8px);box-shadow:0 30px 70px rgba(62,37,24,.12)}
+/* ===== PACKAGE COMPARISON TABLE ===== */
+.pkg-compare{margin-top:80px}
+.pkg-compare h3{font-family:"Cormorant Garamond",serif;font-size:clamp(36px,4vw,52px);font-weight:300;font-style:italic;text-align:center;color:#3E2518;margin-bottom:40px}
+.compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.compare-card{position:relative;background:rgba(255,252,247,.7);border:1px solid rgba(92,61,46,.06);overflow:hidden;text-align:center;transition:.4s}
+.compare-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(62,37,24,.08)}
+.compare-card.featured{border-color:rgba(196,168,130,.3);background:rgba(255,252,247,.95)}
+.compare-card.featured::before{content:"ƏN POPULYAR";position:absolute;top:0;left:0;right:0;padding:8px;font-size:7px;font-weight:600;letter-spacing:3px;text-align:center;background:#C4A882;color:#3E2518}
+.compare-card.featured .compare-header{padding-top:44px}
+.compare-header{padding:28px 20px 20px;border-bottom:1px solid rgba(92,61,46,.06)}
+.compare-header h4{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;font-style:italic;color:#3E2518}
+.compare-header .price{margin-top:8px;font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:300;color:#C4A882}
+.compare-header .price small{font-size:12px;color:#8A6E5E;font-family:"DM Sans",sans-serif}
+.compare-header .pkg-tagline{margin-top:10px;font-size:9px;color:#8A6E5E;line-height:1.8}
+.compare-features{padding:20px;text-align:left}
+.compare-feats{list-style:none}
+.compare-feats li{padding:10px 0;border-bottom:1px solid rgba(92,61,46,.04);font-size:10px;color:#5C3D2E;display:flex;align-items:center;gap:10px}
+.compare-feats li::before{content:"✓";width:20px;height:20px;display:grid;place-items:center;font-size:9px;background:rgba(196,168,130,.12);color:#C4A882;flex-shrink:0;border-radius:50%}
+.compare-feats li.no{color:#8A6E5E;text-decoration:line-through;opacity:.4}
+.compare-feats li.no::before{content:"×";background:rgba(92,61,46,.04);color:#8A6E5E}
+.compare-actions{padding:0 20px 24px}
+.compare-actions .btn{width:100%}
 
-.pkg-scene{height:380px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(245,237,227,.8),rgba(237,227,213,.6))}
-
-.pkg-info{padding:28px 24px}
-.pkg-name{font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:300;font-style:italic;color:#3E2518}
-.pkg-price{margin-top:6px;font-size:11px;color:#C4A882;font-weight:500}
-.pkg-desc{margin-top:10px;font-size:10px;line-height:1.9;color:#8A6E5E}
-.pkg-features{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.pkg-feat{padding:5px 10px;border:1px solid rgba(92,61,46,.08);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#8A6E5E}
-.pkg-feat.yes{border-color:rgba(196,168,130,.3);color:#C4A882}
-.pkg-feat.no{opacity:.35;text-decoration:line-through}
-.pkg-actions{display:flex;gap:10px;margin-top:20px;padding:0 24px 24px}
-.pkg-actions .btn{flex:1}
-
-/* ===== BASIC ANIMATION: BIRDS + CARD ===== */
-.birds-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.bird{position:absolute;animation:birdFly 3s ease-in-out infinite}
-.bird svg{width:28px;height:28px;fill:none;stroke:#8A6E5E;stroke-width:1.5}
-.bird:nth-child(1){left:20%;top:60%;animation-delay:0s}
-.bird:nth-child(2){left:50%;top:50%;animation-delay:.4s}
-.bird:nth-child(3){right:20%;top:55%;animation-delay:.8s}
-.bird:nth-child(4){left:35%;top:45%;animation-delay:1.2s}
-.bird:nth-child(5){right:35%;top:48%;animation-delay:.6s}
-@keyframes birdFly{0%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-30px) rotate(-5deg)}50%{transform:translateY(-50px) rotate(0deg)}75%{transform:translateY(-30px) rotate(5deg)}100%{transform:translateY(0) rotate(0deg)}}
-
-.basic-card{position:relative;width:60%;height:70%;background:#fff;border:1px solid rgba(92,61,46,.1);box-shadow:0 20px 60px rgba(62,37,24,.1);display:flex;align-items:center;justify-content:center;text-align:center;animation:cardReveal 2s 1s ease both;z-index:2}
-@keyframes cardReveal{from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.basic-card .card-inner{padding:30px}
-.basic-card small{font-size:7px;letter-spacing:5px;color:#C4A882;text-transform:uppercase}
-.basic-card h4{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:300;font-style:italic;margin:12px 0 8px;color:#3E2518}
-.basic-card p{font-size:9px;letter-spacing:3px;color:#8A6E5E}
-
-/* ===== PREMIUM ANIMATION: ENVELOPE OPEN ===== */
-.envelope-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:1000px}
-.env{position:relative;width:55%;padding-bottom:40%;animation:envFloat 4s ease-in-out infinite}
-@keyframes envFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.env-body{position:absolute;inset:0;background:#fff;border:1px solid rgba(92,61,46,.15);box-shadow:0 15px 50px rgba(62,37,24,.12)}
-.env-flap-l,.env-flap-r{position:absolute;top:0;width:50%;height:100%;z-index:3;transition:transform 1.2s cubic-bezier(.19,1,.22,1);transform-origin:top center}
-.env-flap-l{left:0;background:linear-gradient(135deg,#f8f4ef,#ede3d5);clip-path:polygon(0 0,100% 0,0 100%);transform-origin:left center}
-.env-flap-r{right:0;background:linear-gradient(-135deg,#f8f4ef,#ede3d5);clip-path:polygon(0 0,100% 0,100% 100%);transform-origin:right center}
-.env.open .env-flap-l{transform:rotateY(-160deg)}
-.env.open .env-flap-r{transform:rotateY(160deg)}
-.env-letter{position:absolute;left:10%;right:10%;top:5%;bottom:5%;background:#fffdf8;border:1px solid rgba(196,168,130,.2);display:flex;align-items:center;justify-content:center;text-align:center;z-index:1;transition:transform 1.5s .6s cubic-bezier(.19,1,.22,1);box-shadow:0 8px 25px rgba(62,37,24,.08)}
-.env.open .env-letter{transform:translateY(-100%)}
-.env-letter small{font-size:7px;letter-spacing:4px;color:#C4A882}
-.env-letter h4{font-family:"Allura",cursive;font-size:40px;color:#3E2518;margin:10px 0}
-.env-letter p{font-size:8px;letter-spacing:3px;color:#8A6E5E}
-.env-seal{position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:#3E2518;color:#F5EDE3;display:grid;place-items:center;font-family:"Italiana",serif;font-size:14px;z-index:6;transition:.6s;box-shadow:0 4px 15px rgba(62,37,24,.2)}
-.env.open .env-seal{opacity:0;transform:translateX(-50%) scale(.3)}
-.env-btn{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);padding:10px 24px;border:1px solid #3E2518;background:transparent;color:#3E2518;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.3s;z-index:10}
-.env-btn:hover{background:#3E2518;color:#F5EDE3}
-
-/* ===== LUXURY ANIMATION: AIRPLANE DROP ===== */
-.luxury-scene{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#1a1410,#2a1f18)}
-.plane{position:absolute;top:15%;left:-15%;animation:planeFly 5s ease-in-out infinite}
-.plane svg{width:60px;height:60px;fill:#C4A882;filter:drop-shadow(0 4px 12px rgba(196,168,130,.3))}
-@keyframes planeFly{0%{left:-15%;top:15%;transform:rotate(-10deg)}30%{left:30%;top:25%;transform:rotate(0deg)}60%{left:60%;top:18%;transform:rotate(-5deg)}100%{left:110%;top:20%;transform:rotate(-10deg)}}
-.plane-trail{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
-.trail-dot{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(196,168,130,.3);animation:trailFade 2s ease-out infinite}
-@keyframes trailFade{from{opacity:.5;transform:scale(1)}to{opacity:0;transform:scale(0)}}
-
-.luxury-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:55%;background:rgba(255,252,247,.95);border:1px solid rgba(196,168,130,.3);padding:30px;text-align:center;animation:luxuryReveal 3s 1.5s ease both;box-shadow:0 30px 80px rgba(0,0,0,.3)}
-@keyframes luxuryReveal{from{opacity:0;transform:translate(-50%,-40%) scale(.9) rotateX(10deg)}to{opacity:1;transform:translate(-50%,-50%) scale(1) rotateX(0)}}
-.luxury-card small{font-size:7px;letter-spacing:5px;color:#A08A78}
-.luxury-card h4{font-family:"Cormorant Garamond",serif;font-size:42px;font-weight:300;font-style:italic;margin:12px 0 8px;color:#3E2518}
-.luxury-card .gold-line{width:40px;height:1px;background:#C4A882;margin:12px auto}
-.luxury-card p{font-size:9px;letter-spacing:3px;color:#8A6E5E}
-.luxury-stars{display:flex;justify-content:center;gap:8px;margin-top:10px;color:#C4A882;font-size:12px}
-
-/* ===== CANVA ANIMATION: GALLERY GRID ===== */
-.canva-scene{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:8px;padding:20px}
-.canva-thumb{background:linear-gradient(135deg,rgba(196,168,130,.15),rgba(196,168,130,.05));border:1px solid rgba(92,61,46,.06);display:flex;align-items:center;justify-content:center;overflow:hidden;animation:canvaReveal .8s ease both;transition:transform .4s}
-.canva-thumb:hover{transform:scale(1.05);z-index:2}
-.canva-thumb:nth-child(1){animation-delay:.1s}
-.canva-thumb:nth-child(2){animation-delay:.2s}
-.canva-thumb:nth-child(3){animation-delay:.3s}
-.canva-thumb:nth-child(4){animation-delay:.4s}
-.canva-thumb:nth-child(5){animation-delay:.5s}
-.canva-thumb:nth-child(6){animation-delay:.6s}
-@keyframes canvaReveal{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-.canva-thumb .thumb-inner{text-align:center;padding:15px}
-.canva-thumb .thumb-inner small{font-size:6px;letter-spacing:3px;color:#C4A882;text-transform:uppercase}
-.canva-thumb .thumb-inner h5{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;margin:6px 0 4px;color:#3E2518}
-.canva-thumb .thumb-inner p{font-size:7px;letter-spacing:2px;color:#8A6E5E}
-.canva-plus{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#8A6E5E}
-.canva-plus::before{content:"+";width:28px;height:28px;display:grid;place-items:center;border:1px dashed rgba(92,61,46,.2);font-size:14px}
-
-/* ===== HOW IT WORKS ===== */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.step{position:relative;padding:38px;background:rgba(255,252,247,.50);border:1px solid rgba(92,61,46,.06);transition:.4s}
-.step:hover{transform:translateY(-6px);background:rgba(255,252,247,.80)}
-.step-number{font-family:"Cormorant Garamond",serif;font-size:56px;font-weight:300;font-style:italic;color:#C4A882;line-height:1}
-.step h3{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;font-style:italic;margin-top:14px}
-.step p{margin-top:10px;color:#8A6E5E;font-size:9px;line-height:1.9}
-
-/* ===== CTA ===== */
-.cta{position:relative;overflow:hidden;padding:100px 30px;text-align:center;background:rgba(255,252,247,.50);border:1px solid rgba(92,61,46,.06)}
-.cta h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,6.5vw,85px);font-weight:300;font-style:italic;line-height:.88}
-.cta p{max-width:520px;margin:24px auto 30px;color:#8A6E5E;font-size:10px;line-height:2}
-
-/* ===== FOOTER ===== */
-footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex;align-items:center;justify-content:space-between;color:#8A6E5E;font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
-.footer-logo{font-family:"Italiana",serif;font-size:32px;color:#3E2518;letter-spacing:1px}
-.footer-center{text-align:center;line-height:2}
-.footer-socials{display:flex;gap:15px}
-.footer-socials a{transition:.3s}
-.footer-socials a:hover{color:#C4A882}
-
-/* ===== SCROLL REVEAL ===== */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE (updated) ===== */
 @media(max-width:1100px){
-    .packages-grid{grid-template-columns:1fr}
-    .steps{grid-template-columns:repeat(2,1fr)}
+    .designs-grid{grid-template-columns:repeat(3,1fr)}
+    .compare-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:850px){
     .navbar{height:62px}
@@ -223,8 +151,9 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
     .languages{margin-left:auto;margin-right:10px}
     .logo{font-size:30px}
     .hero{padding-top:140px}
-    .steps{grid-template-columns:1fr}
-    .pkg-scene{height:320px}
+    .designs-grid{grid-template-columns:repeat(2,1fr)}
+    .compare-grid{grid-template-columns:1fr}
+    .cat-tabs{gap:6px}
 }
 @media(max-width:600px){
     .navbar{width:94%;padding:0 16px}
@@ -235,7 +164,9 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
     .hero-text{font-size:10px}
     .hero-buttons{flex-direction:column;align-items:center}
     .hero-buttons .btn{width:220px}
-    .pkg-scene{height:280px}
+    .designs-section{padding:85px 5%}
+    .designs-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .design-thumb-info h4{font-size:16px}
     .section{padding:85px 5%}
     .section-heading{margin-bottom:36px}
     .section-heading h2{font-size:54px}
@@ -310,160 +241,209 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
     </div>
 </section>
 
-<!-- PACKAGES -->
-<section class="section reveal" id="packages">
+<!-- DESIGNS -->
+<section class="designs-section reveal" id="packages">
 <div class="section-inner">
-    <div class="section-heading">
-        <div class="kicker" data-i18n="pkgKicker">Luna Paketləri</div>
-        <h2 data-i18n="pkgTitle">Sizin hekayənizə<br>uyğun paket.</h2>
-        <p data-i18n="pkgText">Hər paket fərqli funksiyalar və təcrübələr təklif edir. Özünüzə uyğun olanı seçin.</p>
+    <div class="section-heading" style="text-align:center">
+        <div class="kicker" data-i18n="pkgKicker">Luna Dəvətnamələri</div>
+        <h2 style="text-align:center" data-i18n="pkgTitle">Dizaynınızı seçin.<br>Hekayənizi yaradın.</h2>
+        <p style="text-align:center;max-width:600px;margin:24px auto 0" data-i18n="pkgText">Hər dəvətnamə fərqli üslub və atmosfer təklif edir. Kateqoriyanı seçin və dizaynlara baxın.</p>
     </div>
 
-    <div class="packages-grid">
+    <div class="cat-tabs" id="catTabs">
+        <button class="cat-tab active" data-cat="all">Hamısı</button>
+        <button class="cat-tab" data-cat="wedding">Toy</button>
+        <button class="cat-tab" data-cat="engagement">Nişan</button>
+        <button class="cat-tab" data-cat="henna">Xına</button>
+        <button class="cat-tab" data-cat="birthday">Ad Günü</button>
+        <button class="cat-tab" data-cat="graduation">Məzuniyyət</button>
+    </div>
 
-        <!-- BASIC -->
-        <div class="pkg-card" data-pkg="basic">
-            <div class="pkg-scene">
-                <div class="birds-scene">
-                    <div class="bird"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 8-8 10-4s7 2 10-2" /><path d="M12 8c1-3 3-5 5-3" /></svg></div>
-                    <div class="bird"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 8-8 10-4s7 2 10-2" /><path d="M12 8c1-3 3-5 5-3" /></svg></div>
-                    <div class="bird"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 8-8 10-4s7 2 10-2" /><path d="M12 8c1-3 3-5 5-3" /></svg></div>
-                    <div class="bird"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 8-8 10-4s7 2 10-2" /><path d="M12 8c1-3 3-5 5-3" /></svg></div>
-                    <div class="bird"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 8-8 10-4s7 2 10-2" /><path d="M12 8c1-3 3-5 5-3" /></svg></div>
+    <div class="designs-grid" id="designsGrid">
+        <a href="client-form.html?design=amelia&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85" alt="Amelia" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Toy</span>
+                <h4>Amelia</h4>
+                <p>Floral · Romantik</p>
+                <span class="pkg-badge">Luxury</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=amour&package=premium&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=85" alt="Amour" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Toy</span>
+                <h4>Amour</h4>
+                <p>Romantik · Klassik</p>
+                <span class="pkg-badge">Premium</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=noir&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85" alt="Noir" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Toy</span>
+                <h4>Noir</h4>
+                <p>Lüks · Kinematik</p>
+                <span class="pkg-badge">Luxury</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=serena&package=premium&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=85" alt="Serena" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Toy</span>
+                <h4>Serena</h4>
+                <p>Lavanda · Zərif</p>
+                <span class="pkg-badge">Premium</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=florence&package=basic&category=birthday" class="design-thumb" data-cat="birthday">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85" alt="Florence" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Ad Günü</span>
+                <h4>Florence</h4>
+                <p>Şən · Rəngli</p>
+                <span class="pkg-badge">Basic</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=aurora&package=basic&category=graduation" class="design-thumb" data-cat="graduation">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85" alt="Aurora" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Məzuniyyət</span>
+                <h4>Aurora</h4>
+                <p>Akademik · Zərif</p>
+                <span class="pkg-badge">Basic</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=henna&package=premium&category=henna" class="design-thumb" data-cat="henna">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=600&q=85" alt="Henna" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Xına</span>
+                <h4>Oriental Henna</h4>
+                <p>Şərqi · Lüks</p>
+                <span class="pkg-badge">Premium</span>
+            </div>
+        </a>
+        <a href="client-form.html?design=classic&package=basic&category=engagement" class="design-thumb" data-cat="engagement">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85" alt="Classic" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge">Nişan</span>
+                <h4>Classic</h4>
+                <p>Klassik · Sadə</p>
+                <span class="pkg-badge">Basic</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="designs-more">
+        <a href="designs/index.html" class="btn btn-light" data-i18n="browseAll">Bütün dizaynlara bax →</a>
+    </div>
+</div>
+</section>
+
+<!-- PACKAGE COMPARISON -->
+<section class="section reveal" id="compare">
+<div class="section-inner">
+    <div class="pkg-compare">
+        <h3 data-i18n="compareTitle">Paketi seçin</h3>
+        <div class="compare-grid">
+
+            <div class="compare-card">
+                <div class="compare-header">
+                    <h4>Basic</h4>
+                    <div class="price">25 <small>AZN</small></div>
+                    <p class="pkg-tagline" data-i18n="basicTagline">Sadə və zərif</p>
                 </div>
-                <div class="basic-card">
-                    <div class="card-inner">
-                        <small>TOY DƏVƏTNAMƏSİ</small>
-                        <h4>Aysel & Murad</h4>
-                        <p>12 · 09 · 2026</p>
-                    </div>
+                <div class="compare-features">
+                    <ul class="compare-feats">
+                        <li data-i18n="feat1">Dizayn seçimi</li>
+                        <li data-i18n="feat2">Fərdi məlumatlar</li>
+                        <li data-i18n="feat3">Paylaşım linki</li>
+                        <li class="no" data-i18n="feat4">RSVP</li>
+                        <li class="no" data-i18n="feat5">Qalereya</li>
+                        <li class="no" data-i18n="feat6">Musiqi</li>
+                    </ul>
+                </div>
+                <div class="compare-actions">
+                    <a href="client-form.html?package=basic" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
                 </div>
             </div>
-            <div class="pkg-info">
-                <div class="pkg-name">Basic</div>
-                <div class="pkg-price">25 AZN</div>
-                <div class="pkg-desc" data-i18n="basicDesc">Sadə və zərif digital dəvətnamə. Hazır dizayn, fərdi məlumatlar və paylaşılabilən link.</div>
-                <div class="pkg-features">
-                    <span class="pkg-feat yes" data-i18n="feat1">Dizayn seçimi</span>
-                    <span class="pkg-feat yes" data-i18n="feat2">Fərdi məlumatlar</span>
-                    <span class="pkg-feat yes" data-i18n="feat3">Paylaşım linki</span>
-                    <span class="pkg-feat no" data-i18n="feat4">RSVP</span>
-                    <span class="pkg-feat no" data-i18n="feat5">Qalereya</span>
-                    <span class="pkg-feat no" data-i18n="feat6">Musiqi</span>
+
+            <div class="compare-card featured">
+                <div class="compare-header">
+                    <h4>Premium</h4>
+                    <div class="price">40 <small>AZN</small></div>
+                    <p class="pkg-tagline" data-i18n="premiumTagline">Ən populyar seçim</p>
+                </div>
+                <div class="compare-features">
+                    <ul class="compare-feats">
+                        <li data-i18n="feat1">Dizayn seçimi</li>
+                        <li data-i18n="feat2">Fərdi məlumatlar</li>
+                        <li data-i18n="feat3">Paylaşım linki</li>
+                        <li data-i18n="feat4">RSVP</li>
+                        <li data-i18n="feat5">Qalereya</li>
+                        <li data-i18n="feat7">Countdown</li>
+                        <li data-i18n="feat8">Google Maps</li>
+                        <li class="no" data-i18n="feat6">Musiqi</li>
+                    </ul>
+                </div>
+                <div class="compare-actions">
+                    <a href="client-form.html?package=premium" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
                 </div>
             </div>
-            <div class="pkg-actions">
-                <a href="client-form.html?package=basic" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
+
+            <div class="compare-card">
+                <div class="compare-header">
+                    <h4>Luxury</h4>
+                    <div class="price">65 <small>AZN</small></div>
+                    <p class="pkg-tagline" data-i18n="luxuryTagline">Tam premium təcrübə</p>
+                </div>
+                <div class="compare-features">
+                    <ul class="compare-feats">
+                        <li data-i18n="feat1">Dizayn seçimi</li>
+                        <li data-i18n="feat2">Fərdi məlumatlar</li>
+                        <li data-i18n="feat3">Paylaşım linki</li>
+                        <li data-i18n="feat4">RSVP</li>
+                        <li data-i18n="feat5">Qalereya</li>
+                        <li data-i18n="feat7">Countdown</li>
+                        <li data-i18n="feat8">Google Maps</li>
+                        <li data-i18n="feat6">Musiqi</li>
+                        <li data-i18n="feat9">Hekayə</li>
+                        <li data-i18n="feat10">Video</li>
+                    </ul>
+                </div>
+                <div class="compare-actions">
+                    <a href="client-form.html?package=luxury" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
+                </div>
             </div>
+
+            <div class="compare-card">
+                <div class="compare-header">
+                    <h4>Canva</h4>
+                    <div class="price" data-i18n="canvaPriceShort">Siz təyin edirsiniz</div>
+                    <p class="pkg-tagline" data-i18n="canvaTagline">Canvasdan yükləyin</p>
+                </div>
+                <div class="compare-features">
+                    <ul class="compare-feats">
+                        <li data-i18n="feat11">Canva yükləmə</li>
+                        <li data-i18n="feat4">RSVP</li>
+                        <li data-i18n="feat7">Countdown</li>
+                        <li data-i18n="feat3">Paylaşım linki</li>
+                    </ul>
+                </div>
+                <div class="compare-actions">
+                    <a href="client-form.html?package=canva" class="btn btn-dark" data-i18n="uploadCanva">Canva yüklə</a>
+                </div>
+            </div>
+
         </div>
-
-        <!-- PREMIUM -->
-        <div class="pkg-card" data-pkg="premium">
-            <div class="pkg-scene">
-                <div class="envelope-scene">
-                    <div class="env" id="envPremium">
-                        <div class="env-body"></div>
-                        <div class="env-flap-l"></div>
-                        <div class="env-flap-r"></div>
-                        <div class="env-letter">
-                            <div>
-                                <small>SİZİ DƏVƏT EDİRİK</small>
-                                <h4>Aysel & Murad</h4>
-                                <p>12 · 09 · 2026</p>
-                            </div>
-                        </div>
-                        <div class="env-seal">L</div>
-                    </div>
-                    <button class="env-btn" onclick="toggleEnv('envPremium',this)">Dəvətnaməni aç</button>
-                </div>
-            </div>
-            <div class="pkg-info">
-                <div class="pkg-name">Premium</div>
-                <div class="pkg-price">40 AZN <span style="font-size:8px;color:#8A6E5E;text-transform:uppercase;letter-spacing:1px" data-i18n="popularBadge">Ən populyar</span></div>
-                <div class="pkg-desc" data-i18n="premiumDesc">Daha zəngin və interaktiv dəvətnamə. Foto qalereyası, countdown, Google Maps və RSVP.</div>
-                <div class="pkg-features">
-                    <span class="pkg-feat yes" data-i18n="feat1">Dizayn seçimi</span>
-                    <span class="pkg-feat yes" data-i18n="feat2">Fərdi məlumatlar</span>
-                    <span class="pkg-feat yes" data-i18n="feat3">Paylaşım linki</span>
-                    <span class="pkg-feat yes" data-i18n="feat4">RSVP</span>
-                    <span class="pkg-feat yes" data-i18n="feat5">Qalereya</span>
-                    <span class="pkg-feat yes" data-i18n="feat7">Countdown</span>
-                    <span class="pkg-feat yes" data-i18n="feat8">Google Maps</span>
-                    <span class="pkg-feat no" data-i18n="feat6">Musiqi</span>
-                </div>
-            </div>
-            <div class="pkg-actions">
-                <a href="client-form.html?package=premium" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
-            </div>
-        </div>
-
-        <!-- LUXURY -->
-        <div class="pkg-card" data-pkg="luxury">
-            <div class="pkg-scene">
-                <div class="luxury-scene">
-                    <div class="plane">
-                        <svg viewBox="0 0 64 64"><path d="M4 32l20-8 16-20 6 2-10 22 18 4 8-14 6 2-12 18-4 10-6-2 14-20-4-22 10-2-6 20z" fill="none" stroke="#C4A882" stroke-width="1.5"/><circle cx="52" cy="16" r="2" fill="#C4A882"/></svg>
-                    </div>
-                    <div class="luxury-card">
-                        <small>LUXURY PAKET</small>
-                        <h4>Aysel & Murad</h4>
-                        <div class="gold-line"></div>
-                        <p>12 · 09 · 2026 · 19:00</p>
-                        <div class="luxury-stars">✦ ✦ ✦</div>
-                    </div>
-                </div>
-            </div>
-            <div class="pkg-info">
-                <div class="pkg-name">Luxury</div>
-                <div class="pkg-price">65 AZN</div>
-                <div class="pkg-desc" data-i18n="luxuryDesc">Tam premium təcrübə. Hekayə bölməsi, musiqi, foto və video qalereya, bütün funksiyalar.</div>
-                <div class="pkg-features">
-                    <span class="pkg-feat yes" data-i18n="feat1">Dizayn seçimi</span>
-                    <span class="pkg-feat yes" data-i18n="feat2">Fərdi məlumatlar</span>
-                    <span class="pkg-feat yes" data-i18n="feat3">Paylaşım linki</span>
-                    <span class="pkg-feat yes" data-i18n="feat4">RSVP</span>
-                    <span class="pkg-feat yes" data-i18n="feat5">Qalereya</span>
-                    <span class="pkg-feat yes" data-i18n="feat7">Countdown</span>
-                    <span class="pkg-feat yes" data-i18n="feat8">Google Maps</span>
-                    <span class="pkg-feat yes" data-i18n="feat6">Musiqi</span>
-                    <span class="pkg-feat yes" data-i18n="feat9">Hekayə</span>
-                    <span class="pkg-feat yes" data-i18n="feat10">Video</span>
-                </div>
-            </div>
-            <div class="pkg-actions">
-                <a href="client-form.html?package=luxury" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
-            </div>
-        </div>
-
-        <!-- CANVA -->
-        <div class="pkg-card" data-pkg="canva">
-            <div class="pkg-scene">
-                <div class="canva-scene">
-                    <div class="canva-thumb"><div class="thumb-inner"><small>TOY</small><h5>Amelia</h5><p>Luxury</p></div></div>
-                    <div class="canva-thumb"><div class="thumb-inner"><small>NİŞAN</small><h5>Serena</h5><p>Premium</p></div></div>
-                    <div class="canva-thumb"><div class="thumb-inner"><small>XINA</small><h5>Henna</h5><p>Basic</p></div></div>
-                    <div class="canva-thumb"><div class="thumb-inner"><small>AD GÜNÜ</small><h5>Florence</h5><p>Basic</p></div></div>
-                    <div class="canva-thumb"><div class="thumb-inner"><small>MƏZUNİYYƏT</small><h5>Aurora</h5><p>Luxury</p></div></div>
-                    <div class="canva-thumb"><div class="thumb-inner"><small>TOY</small><h5>Noir</h5><p>Luxury</p></div></div>
-                </div>
-                <div class="canva-plus" data-i18n="canvaPlus">Canvasdan yüklə</div>
-            </div>
-            <div class="pkg-info">
-                <div class="pkg-name">Canva</div>
-                <div class="pkg-price" data-i18n="canvaPrice">Siz qiymətləndirirsiniz</div>
-                <div class="pkg-desc" data-i18n="canvaDesc">Canvasdan hazırladığınız dəvətnaməni yükləyin. Luna onu interaktiv edəcək — RSVP, countdown, paylaşım.</div>
-                <div class="pkg-features">
-                    <span class="pkg-feat yes" data-i18n="feat11">Canva yükləmə</span>
-                    <span class="pkg-feat yes" data-i18n="feat4">RSVP</span>
-                    <span class="pkg-feat yes" data-i18n="feat7">Countdown</span>
-                    <span class="pkg-feat yes" data-i18n="feat3">Paylaşım linki</span>
-                </div>
-            </div>
-            <div class="pkg-actions">
-                <a href="admin.html" class="btn btn-dark" data-i18n="uploadCanva">Canva yüklə</a>
-            </div>
-        </div>
-
     </div>
 </div>
 </section>
@@ -534,8 +514,11 @@ const translations={
         heroSubtitle:"hərəkət edən, açılan və hekayənizi danışan dəvətnamələr",
         heroText:"Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.",
         explore:"Paketlərə bax",viewPricing:"Necə işləyir",scroll:"Kəşf et",
-        pkgKicker:"Luna Paketləri",pkgTitle:"Sizin hekayənizə<br>uyğun paket.",
-        pkgText:"Hər paket fərqli funksiyalar və təcrübələr təklif edir.",
+        pkgKicker:"Luna Dəvətnamələri",pkgTitle:"Dizaynınızı seçin.<br>Hekayənizi yaradın.",
+        pkgText:"Hər dəvətnamə fərqli üslub və atmosfer təklif edir. Kateqoriyanı seçin.",
+        basicTagline:"Sadə və zərif",premiumTagline:"Ən populyar seçim",luxuryTagline:"Tam premium təcrübə",
+        canvaTagline:"Canvasdan yükləyin",canvaPriceShort:"Siz təyin edirsiniz",
+        compareTitle:"Paketi seçin",browseAll:"Bütün dizaynlara bax →",
         basicDesc:"Sadə və zərif digital dəvətnamə. Hazır dizayn, fərdi məlumatlar və paylaşılabilən link.",
         premiumDesc:"Daha zəngin və interaktiv dəvətnamə. Foto qalereyası, countdown, Google Maps və RSVP.",
         luxuryDesc:"Tam premium təcrübə. Hekayə bölməsi, musiqi, foto və video qalereya, bütün funksiyalar.",
@@ -560,8 +543,11 @@ const translations={
         heroSubtitle:"moving, opening invitations that tell your story",
         heroText:"Elegant, modern and customizable digital invitations for your most special days.",
         explore:"View packages",viewPricing:"How it works",scroll:"Explore",
-        pkgKicker:"Luna Packages",pkgTitle:"A package for<br>your story.",
-        pkgText:"Each package offers different features and experiences.",
+        pkgKicker:"Luna Invitations",pkgTitle:"Choose your design.<br>Tell your story.",
+        pkgText:"Each invitation offers a different style and atmosphere. Pick a category and browse designs.",
+        basicTagline:"Simple & elegant",premiumTagline:"Most popular choice",luxuryTagline:"Full premium experience",
+        canvaTagline:"Upload from Canva",canvaPriceShort:"You set the price",
+        compareTitle:"Choose a package",browseAll:"Browse all designs →",
         basicDesc:"Simple and elegant digital invitation. Ready design, personal info and shareable link.",
         premiumDesc:"Richer and more interactive invitation. Photo gallery, countdown, Google Maps and RSVP.",
         luxuryDesc:"Full premium experience. Story section, music, photo and video gallery, all features.",
@@ -586,8 +572,11 @@ const translations={
         heroSubtitle:"движущиеся, открывающиеся приглашения, которые рассказывают вашу историю",
         heroText:"Элегантные, современные и настраиваемые цифровые приглашения для ваших самых особых дней.",
         explore:"Смотреть пакеты",viewPricing:"Как это работает",scroll:"Исследовать",
-        pkgKicker:"Пакеты Luna",pkgTitle:"Пакет для<br>вашей истории.",
-        pkgText:"Каждый пакет предлагает разные функции и впечатления.",
+        pkgKicker:"Приглашения Luna",pkgTitle:"Выберите дизайн.<br>Расскажите свою историю.",
+        pkgText:"Каждое приглашение предлагает свой стиль и атмосферу. Выберите категорию и просматривайте дизайны.",
+        basicTagline:"Простое и элегантное",premiumTagline:"Самый популярный выбор",luxuryTagline:"Полный премиальный опыт",
+        canvaTagline:"Загрузить из Canva",canvaPriceShort:"Вы устанавливаете цену",
+        compareTitle:"Выберите пакет",browseAll:"Смотреть все дизайны →",
         basicDesc:"Простое и элегантное цифровое приглашение. Готовый дизайн, личная информация и ссылка.",
         premiumDesc:"Более насыщенное и интерактивное приглашение. Фотогалерея, обратный отсчёт, Google Maps и RSVP.",
         luxuryDesc:"Полный премиальный опыт. Раздел истории, музыка, фото и видео галерея, все функции.",
@@ -639,17 +628,19 @@ document.querySelectorAll(".reveal").forEach(el=>{revealObs.observe(el)});
 /* ===== LOADER ===== */
 window.addEventListener("load",function(){setTimeout(function(){document.getElementById("loader").classList.add("hide")},600)});
 
-/* ===== ENVELOPE TOGGLE ===== */
-function toggleEnv(id,btn){
-    const el=document.getElementById(id);
-    if(!el)return;
-    el.classList.toggle("open");
-    btn.textContent=el.classList.contains("open")?"Dəvətnaməni bağla":"Dəvətnaməni aç";
-}
+/* ===== CATEGORY FILTER ===== */
+document.querySelectorAll(".cat-tab").forEach(function(tab){
+    tab.addEventListener("click",function(){
+        document.querySelectorAll(".cat-tab").forEach(function(t){t.classList.remove("active")});
+        this.classList.add("active");
+        var cat=this.dataset.cat;
+        document.querySelectorAll(".design-thumb").forEach(function(card){
+            if(cat==="all"||card.dataset.cat===cat){card.style.display="";card.style.animation="canvaReveal .5s ease both"}
+            else{card.style.display="none"}
+        });
+    });
+});
 
-/* ===== INTERSECTION FOR ENVELOPE ANIMATION ===== */
-const envObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){setTimeout(function(){const el=e.target.querySelector(".env");if(el)el.classList.add("open")},1500);envObs.unobserve(e.target)}})},{threshold:.5});
-document.querySelectorAll(".envelope-scene").forEach(function(s){envObs.observe(s)});
 </script>
 </body>
 </html>
