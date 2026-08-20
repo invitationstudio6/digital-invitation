@@ -85,6 +85,7 @@ const LUNA_PACKAGES = [
             animations: false,
             videoBackground: true
         },
+        formFields: ["names", "date", "time", "venue", "location", "message", "videoFile"],
         featureLabels: {
             az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
             en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
@@ -112,6 +113,7 @@ const LUNA_PACKAGES = [
             animations: false,
             videoBackground: false
         },
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map"],
         featureLabels: {
             az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
             en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
@@ -139,6 +141,7 @@ const LUNA_PACKAGES = [
             animations: true,
             videoBackground: false
         },
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "story", "agenda"],
         featureLabels: {
             az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
             en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
@@ -166,6 +169,7 @@ const LUNA_PACKAGES = [
             animations: true,
             videoBackground: false
         },
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "music", "story", "agenda", "animations"],
         featureLabels: {
             az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
             en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },

@@ -425,85 +425,76 @@ button,input,textarea,select{font-family:inherit}
         var isCouple = (category === "wedding" || category === "engagement" || category === "henna");
 
         if (isCouple) {
-            f.push({ name: "bride", type: "text", labelI18n: "formBride", required: true, col: "half", placeholder: "Aysel" });
-            f.push({ name: "groom", type: "text", labelI18n: "formGroom", required: (category !== "henna"), col: "half", placeholder: "Murad" });
+            f.push({ name: "bride", type: "text", labelI18n: "formBride", required: true, col: "half", placeholder: "Aysel", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "groom", type: "text", labelI18n: "formGroom", required: (category !== "henna"), col: "half", placeholder: "Murad", forPackages: ["video", "basic", "premium", "luxury"] });
         } else if (category === "birthday") {
-            f.push({ name: "celebrant", type: "text", labelI18n: "formCelebrant", required: true, col: "half", placeholder: "Leyla" });
-            f.push({ name: "age", type: "number", labelKey: "formAge", col: "half", placeholder: "25" });
+            f.push({ name: "celebrant", type: "text", labelI18n: "formCelebrant", required: true, col: "half", placeholder: "Leyla", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "age", type: "number", labelKey: "formAge", col: "half", placeholder: "25", forPackages: ["premium", "luxury"] });
         } else if (category === "graduation") {
-            f.push({ name: "graduate", type: "text", labelI18n: "formGraduate", required: true, col: "half", placeholder: "Ali" });
-            f.push({ name: "school", type: "text", labelI18n: "formSchool", col: "half", placeholder: "ADA Universiteti" });
-            f.push({ name: "degree", type: "text", labelI18n: "formDegree", col: "full", placeholder: "Komp\u00fcter elml\u00e9ri" });
+            f.push({ name: "graduate", type: "text", labelI18n: "formGraduate", required: true, col: "half", placeholder: "Ali", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "school", type: "text", labelI18n: "formSchool", col: "half", placeholder: "ADA Universiteti", forPackages: ["premium", "luxury"] });
+            f.push({ name: "degree", type: "text", labelI18n: "formDegree", col: "full", placeholder: "Komp\u00fcter elml\u00e9ri", forPackages: ["premium", "luxury"] });
         } else if (category === "business") {
-            f.push({ name: "companyName", type: "text", labelI18n: "formCompanyName", required: true, col: "half", placeholder: "Tech Corp" });
-            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "\u0130llik konfrans" });
-            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES });
-            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "full", placeholder: "\u018eli H\u00e9s\u00e9nov" });
+            f.push({ name: "companyName", type: "text", labelI18n: "formCompanyName", required: true, col: "half", placeholder: "Tech Corp", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "\u0130llik konfrans", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES, forPackages: ["premium", "luxury"] });
+            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "full", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["premium", "luxury"] });
         } else {
-            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "X\u00fcsusi t\u00e9dbir" });
-            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov" });
-            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Konfrans, Ad g\u00fcnu..." });
+            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "X\u00fcsusi t\u00e9dbir", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["basic", "premium", "luxury"] });
+            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Konfrans, Ad g\u00fcnu...", forPackages: ["premium", "luxury"] });
         }
 
-        f.push({ name: "date", type: "date", labelI18n: "formDate", required: true, col: "half" });
-        f.push({ name: "time", type: "time", labelI18n: "formTime", required: true, col: "half", value: "19:00" });
-        f.push({ name: "venue", type: "text", labelI18n: "formVenue", required: true, col: "half", placeholder: "Crystal Hall" });
-        f.push({ name: "location", type: "text", labelI18n: "formLocation", required: true, col: "half", placeholder: "Bak\u0131, Az\u0259rbaycan" });
+        f.push({ name: "date", type: "date", labelI18n: "formDate", required: true, col: "half", forPackages: ["video", "basic", "premium", "luxury"] });
+        f.push({ name: "time", type: "time", labelI18n: "formTime", required: true, col: "half", value: "19:00", forPackages: ["video", "basic", "premium", "luxury"] });
+        f.push({ name: "venue", type: "text", labelI18n: "formVenue", required: true, col: "half", placeholder: "Crystal Hall", forPackages: ["video", "basic", "premium", "luxury"] });
+        f.push({ name: "location", type: "text", labelI18n: "formLocation", required: true, col: "half", placeholder: "Bak\u0131, Az\u0259rbaycan", forPackages: ["video", "basic", "premium", "luxury"] });
 
         if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "address", type: "text", labelI18n: "formAddress", col: "full", placeholder: "\u00dcnvan" });
+            f.push({ name: "address", type: "text", labelI18n: "formAddress", col: "full", placeholder: "\u00dcnvan", forPackages: ["premium", "luxury"] });
         }
 
-        f.push({ name: "map", type: "url", labelI18n: "formMap", tier: "premium", col: "full", placeholder: "https://maps.google.com/..." });
+        f.push({ name: "map", type: "url", labelI18n: "formMap", col: "full", placeholder: "https://maps.google.com/...", forPackages: ["premium", "luxury"] });
 
-        f.push({ name: "message", type: "textarea", labelKey: "formMessage", col: "full", placeholder: getMessagePlaceholder(), rows: 3 });
+        f.push({ name: "message", type: "textarea", labelKey: "formMessage", col: "full", placeholder: getMessagePlaceholder(), rows: 3, forPackages: ["video", "basic", "premium", "luxury"] });
 
         if (isCouple) {
-            f.push({ name: "story", type: "textarea", labelI18n: "formStory", tier: "luxury", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5 });
+            f.push({ name: "story", type: "textarea", labelI18n: "formStory", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5, forPackages: ["luxury"] });
         }
 
         if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4 });
+            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4, forPackages: ["premium", "luxury"] });
         }
 
         if (category === "business") {
-            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", tier: "premium", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5 });
+            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5, forPackages: ["premium", "luxury"] });
         }
 
         if (category === "other" || category === "baby-shower") {
-            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4 });
+            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4, forPackages: ["premium", "luxury"] });
         }
 
         if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX" });
+            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
         }
 
         if (category === "business") {
-            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "full", placeholder: "https://company.com" });
+            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "full", placeholder: "https://company.com", forPackages: ["luxury"] });
         }
 
-        if (category === "business") {
-            f.push({ name: "logo", type: "file", labelKey: "formCompanyLogo", tier: "premium", col: "full", accept: "image/*", feature: "gallery" });
-        }
+        f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS, forPackages: ["video", "basic", "premium", "luxury"] });
 
-        f.push({ name: "images", type: "textarea", labelI18n: "formImages", tier: "premium", col: "full", hintI18n: "formImagesHint", placeholder: "https://... (h\u00e9r s\u00e9tird\u00e9 bir link)", feature: "gallery" });
-        f.push({ name: "photos", type: "file", labelI18n: "formPhotos", tier: "premium", col: "full", accept: "image/*", multiple: true, feature: "gallery" });
-        f.push({ name: "music", type: "url", labelI18n: "formMusic", tier: "luxury", col: "full", placeholder: "https://.../song.mp3", feature: "music" });
-        f.push({ name: "videoFile", type: "file", labelI18n: "formVideo", col: "full", accept: "video/*", hintI18n: "formVideoHint", feature: "video", hidden: true });
-
-        f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS });
         return f;
     }
 
     function renderField(field, index) {
         var delay = (index * 0.035).toFixed(2);
         var colClass = field.col === "full" ? " full" : "";
-        var tierAttr = field.tier ? ' data-tier="' + field.tier + '"' : ' data-tier="default"';
-        var featureAttr = field.feature ? ' data-feature="' + field.feature + '"' : '';
+        var pkgAttr = field.forPackages ? ' data-packages="' + field.forPackages.join(",") + '"' : '';
         var hiddenStyle = field.hidden ? ' style="display:none;animation-delay:' + delay + 's"' : ' style="animation-delay:' + delay + 's"';
         var fieldId = field.id || field.name;
 
-        var html = '<div class="form-field' + colClass + '"' + tierAttr + featureAttr + hiddenStyle + ' data-field="' + field.name + '">';
+        var html = '<div class="form-field' + colClass + '"' + pkgAttr + hiddenStyle + ' data-field="' + field.name + '">';
 
         if (field.labelI18n) {
             html += '<label for="' + fieldId + '" data-i18n="' + field.labelI18n + '">' + lunaT(field.labelI18n) + '</label>';
@@ -562,35 +553,18 @@ button,input,textarea,select{font-family:inherit}
             html += renderField(field, i);
         });
         document.getElementById("formGrid").innerHTML = html;
+        applyVisibility();
     }
 
     function applyVisibility() {
-        var isVideo = (packageName === "video");
-        var tierRank = { default: 0, premium: 2, luxury: 3 };
-        var pkgRank = { video: 0, basic: 0, premium: 2, luxury: 3 };
-        var currentRank = isVideo ? 0 : (pkgRank[packageName] || 0);
-
         document.querySelectorAll(".form-field").forEach(function(el) {
-            var tier = el.getAttribute("data-tier") || "default";
-            var feature = el.getAttribute("data-feature");
-
-            if (isVideo) {
-                if (feature === "gallery" || feature === "maps" || feature === "music") {
-                    el.style.display = "none";
-                    return;
-                }
-                if (feature === "video") {
-                    el.style.display = "";
-                    return;
-                }
-                if (feature === "story") {
-                    el.style.display = "none";
-                    return;
-                }
+            var allowedPkgs = el.getAttribute("data-packages");
+            if (!allowedPkgs) {
+                el.style.display = "";
+                return;
             }
-
-            var fieldRank = tierRank[tier] || 0;
-            el.style.display = (currentRank < fieldRank) ? "none" : "";
+            var pkgs = allowedPkgs.split(",");
+            el.style.display = (pkgs.indexOf(packageName) !== -1) ? "" : "none";
         });
     }
 
@@ -738,6 +712,7 @@ button,input,textarea,select{font-family:inherit}
                 this.classList.add("selected");
                 packageName = pkg.id;
                 document.getElementById("pillPackage").textContent = pkg.name;
+                applyVisibility();
             });
             container.appendChild(card);
         });

@@ -925,7 +925,7 @@ function renderTemplates(filter) {
         var minPkg = tpl.minPackage ? tpl.minPackage.charAt(0).toUpperCase() + tpl.minPackage.slice(1) : "";
 
         card.innerHTML =
-            '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy">' +
+            '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
             '<div class="design-thumb-overlay"></div>' +
             '<div class="design-thumb-info">' +
                 '<span class="cat-badge">' + catName + '</span>' +
@@ -1188,7 +1188,7 @@ function renderCatCollection(catId, gridId, limit) {
         var catName = lunaCategoryName(tpl.category);
         var minPkg = tpl.minPackage ? tpl.minPackage.charAt(0).toUpperCase() + tpl.minPackage.slice(1) : "";
         card.innerHTML =
-            '<img class="cat-col-card-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy">' +
+            '<img class="cat-col-card-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
             '<div class="cat-col-card-overlay"></div>' +
             '<div class="cat-col-card-info">' +
                 '<h4>' + tpl.name + '</h4>' +
