@@ -172,9 +172,9 @@ input:focus,textarea:focus,select:focus{border-color:#b87961;box-shadow:0 0 0 4p
                 <input id="music" name="music" type="url" placeholder="https://.../song.mp3">
             </div>
             <div class="field full" id="canvaField" style="display:none">
-                <label for="canvaImage">Canva dəvətnamə şəkli</label>
-                <input id="canvaImage" name="canvaImage" type="file" accept="image/*">
-                <span class="hint">Canvasdan hazırladığınız dəvətnamə şəklini yükləyin.</span>
+                <label for="canvaImage">Video faylı</label>
+                <input id="canvaImage" name="videoFile" type="file" accept="video/*">
+                <span class="hint">Video dəvətnamə faylını yükləyin (mp4).</span>
             </div>
         </div>
         <div class="actions">
@@ -215,14 +215,14 @@ if (!isCouple) {
     document.getElementById("groom").required = false;
 }
 
-const rank = { basic: 1, premium: 2, luxury: 3, canva: 2 };
+const rank = { video: 1, basic: 1, premium: 2, luxury: 3 };
 const currentRank = rank[packageName] || 1;
 
-/* Canva package: show upload field, hide design field */
-const isCanva = packageName === "canva";
+/* Video package: show video upload field */
+const isVideo = packageName === "video";
 
-if (isCanva) {
-    document.getElementById("pillDesign").textContent = "Canva";
+if (isVideo) {
+    document.getElementById("pillDesign").textContent = "Video";
     document.getElementById("pillDesign").style.background = "#C4A882";
     document.getElementById("pillDesign").style.color = "#3E2518";
 }
@@ -234,9 +234,12 @@ document.querySelectorAll("[data-tier]").forEach(function (field) {
     }
 });
 
-/* Show Canva upload field for canva package */
-if (isCanva) {
+/* Show video upload field for video package */
+if (isVideo) {
     document.getElementById("canvaField").style.display = "flex";
+    document.getElementById("canvaField").querySelector("label").textContent = "Video faylı (mp4)";
+    document.getElementById("canvaImage").accept = "video/*";
+    document.getElementById("canvaImage").name = "videoFile";
 }
 
 const defaultImages = [
@@ -299,14 +302,11 @@ document.getElementById("invitationForm").addEventListener("submit", function (e
 
     filesToDataUrls(document.getElementById("photos").files).then(function (fromFiles) {
 
-        var canvaInput = document.getElementById("canvaImage");
-        var canvaFile = canvaInput && canvaInput.files[0] ? canvaInput.files[0] : null;
+        var videoInput = document.getElementById("canvaImage");
+        var videoFile = videoInput && videoInput.files[0] ? videoInput.files[0] : null;
 
-        function proceedWithCanva(canvaDataUrl) {
+        function proceedWithVideo(videoDataUrl) {
             var images = fromText.concat(fromFiles);
-            if (canvaDataUrl) {
-                images.unshift(canvaDataUrl);
-            }
 
             const invitationData = {
                 id: invitationId,
@@ -327,8 +327,8 @@ document.getElementById("invitationForm").addEventListener("submit", function (e
                 music: music
             };
 
-            if (canvaDataUrl) {
-                invitationData.canvaImage = canvaDataUrl;
+            if (videoDataUrl) {
+                invitationData.videoUrl = videoDataUrl;
             }
 
             try {
@@ -350,12 +350,12 @@ document.getElementById("invitationForm").addEventListener("submit", function (e
             document.getElementById("result").scrollIntoView({ behavior: "smooth" });
         }
 
-        if (canvaFile) {
+        if (videoFile) {
             var reader = new FileReader();
-            reader.onload = function(e) { proceedWithCanva(e.target.result); };
-            reader.readAsDataURL(canvaFile);
+            reader.onload = function(e) { proceedWithVideo(e.target.result); };
+            reader.readAsDataURL(videoFile);
         } else {
-            proceedWithCanva(null);
+            proceedWithVideo(null);
         }
     });
 });

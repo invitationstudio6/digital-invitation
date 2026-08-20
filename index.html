@@ -14,6 +14,7 @@ body{font-family:"DM Sans",sans-serif;color:#5C3D2E;background:#F5EDE3;overflow-
 body.menu-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%}
 
 /* ===== LOADER ===== */
 .loader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#F5EDE3;transition:opacity .8s ease,visibility .8s ease}
@@ -66,6 +67,17 @@ button{font-family:inherit;cursor:pointer}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 
+/* ===== FLOATING INVITATION CARDS (hero) ===== */
+.hero-floats{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.float-card{position:absolute;border-radius:4px;overflow:hidden;box-shadow:0 15px 50px rgba(62,37,24,.15);animation:floatDrift linear infinite;opacity:.55}
+.float-card img{width:100%;height:100%;object-fit:cover}
+.float-card:nth-child(1){width:140px;height:190px;top:12%;left:5%;animation:floatDrift 18s ease-in-out infinite;animation-delay:0s;transform:rotate(-8deg)}
+.float-card:nth-child(2){width:120px;height:160px;top:20%;right:8%;animation:floatDrift 22s ease-in-out infinite;animation-delay:-5s;transform:rotate(5deg)}
+.float-card:nth-child(3){width:100px;height:140px;bottom:18%;left:10%;animation:floatDrift 20s ease-in-out infinite;animation-delay:-10s;transform:rotate(3deg)}
+.float-card:nth-child(4){width:130px;height:175px;bottom:25%;right:5%;animation:floatDrift 25s ease-in-out infinite;animation-delay:-8s;transform:rotate(-4deg)}
+.float-card:nth-child(5){width:110px;height:150px;top:55%;left:50%;animation:floatDrift 20s ease-in-out infinite;animation-delay:-12s;transform:rotate(7deg)}
+@keyframes floatDrift{0%{transform:translateY(0) translateX(0) rotate(var(--r,-5deg))}25%{transform:translateY(-20px) translateX(15px) rotate(calc(var(--r,-5deg) + 3deg))}50%{transform:translateY(-8px) translateX(-10px) rotate(calc(var(--r,-5deg) - 2deg))}75%{transform:translateY(-25px) translateX(8px) rotate(calc(var(--r,-5deg) + 4deg))}100%{transform:translateY(0) translateX(0) rotate(var(--r,-5deg))}}
+
 /* ===== FLOATING PARTICLES ===== */
 .particles{position:absolute;inset:0;pointer-events:none;z-index:1}
 .particle{position:absolute;border-radius:50%;animation:particleFloat linear infinite}
@@ -102,11 +114,11 @@ button{font-family:inherit;cursor:pointer}
 .cat-tab:hover{border-color:#C4A882;color:#C4A882}
 .cat-tab.active{background:#3E2518;color:#F5EDE3;border-color:#3E2518}
 .designs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.design-thumb{position:relative;overflow:hidden;border:1px solid rgba(92,61,46,.06);background:#fff;cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1)}
+.design-thumb{position:relative;overflow:hidden;border:1px solid rgba(92,61,46,.06);background:#fff;cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1);text-decoration:none;display:block}
 .design-thumb:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(62,37,24,.12)}
 .design-thumb-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85);transition:transform 1.2s cubic-bezier(.19,1,.22,1),filter .5s}
 .design-thumb:hover .design-thumb-img{transform:scale(1.06);filter:saturate(1)}
-.design-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.7) 0%,transparent 50%);opacity:0;transition:.4s}
+.design-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.75) 0%,transparent 50%);opacity:0;transition:.4s}
 .design-thumb:hover .design-thumb-overlay{opacity:1}
 .design-thumb-info{position:absolute;bottom:0;left:0;right:0;padding:18px;transform:translateY(8px);transition:.4s}
 .design-thumb:hover .design-thumb-info{transform:translateY(0)}
@@ -116,14 +128,14 @@ button{font-family:inherit;cursor:pointer}
 .design-thumb-info .pkg-badge{display:inline-block;margin-top:8px;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.4);color:#C4A882}
 .designs-more{display:flex;justify-content:center;margin-top:40px}
 
-/* ===== PACKAGE COMPARISON TABLE ===== */
+/* ===== PACKAGE COMPARISON ===== */
 .pkg-compare{margin-top:80px}
 .pkg-compare h3{font-family:"Cormorant Garamond",serif;font-size:clamp(36px,4vw,52px);font-weight:300;font-style:italic;text-align:center;color:#3E2518;margin-bottom:40px}
 .compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .compare-card{position:relative;background:rgba(255,252,247,.7);border:1px solid rgba(92,61,46,.06);overflow:hidden;text-align:center;transition:.4s}
 .compare-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(62,37,24,.08)}
 .compare-card.featured{border-color:rgba(196,168,130,.3);background:rgba(255,252,247,.95)}
-.compare-card.featured::before{content:"ƏN POPULYAR";position:absolute;top:0;left:0;right:0;padding:8px;font-size:7px;font-weight:600;letter-spacing:3px;text-align:center;background:#C4A882;color:#3E2518}
+.compare-card.featured::before{content:"ƏN POPULYAR";position:absolute;top:0;left:0;right:0;padding:8px;font-size:7px;font-weight:600;letter-spacing:3px;text-align:center;background:#C4A882;color:#3E2518;z-index:2}
 .compare-card.featured .compare-header{padding-top:44px}
 .compare-header{padding:28px 20px 20px;border-bottom:1px solid rgba(92,61,46,.06)}
 .compare-header h4{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;font-style:italic;color:#3E2518}
@@ -139,10 +151,44 @@ button{font-family:inherit;cursor:pointer}
 .compare-actions{padding:0 20px 24px}
 .compare-actions .btn{width:100%}
 
-/* ===== RESPONSIVE (updated) ===== */
+/* ===== FEATURES ===== */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature-card{padding:38px;background:rgba(255,252,247,.50);border:1px solid rgba(92,61,46,.06);transition:.4s;text-align:center}
+.feature-card:hover{transform:translateY(-6px);background:rgba(255,252,247,.80);box-shadow:0 15px 40px rgba(62,37,24,.08)}
+.feature-icon{font-size:28px;margin-bottom:18px;color:#C4A882}
+.feature-card h3{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:300;font-style:italic;color:#3E2518}
+.feature-card p{margin-top:10px;color:#8A6E5E;font-size:9px;line-height:1.9}
+
+/* ===== HOW IT WORKS ===== */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{position:relative;padding:38px;background:rgba(255,252,247,.50);border:1px solid rgba(92,61,46,.06);transition:.4s}
+.step:hover{transform:translateY(-6px);background:rgba(255,252,247,.80)}
+.step-number{font-family:"Cormorant Garamond",serif;font-size:56px;font-weight:300;font-style:italic;color:#C4A882;line-height:1}
+.step h3{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;font-style:italic;margin-top:14px}
+.step p{margin-top:10px;color:#8A6E5E;font-size:9px;line-height:1.9}
+
+/* ===== CTA ===== */
+.cta{position:relative;overflow:hidden;padding:100px 30px;text-align:center;background:rgba(255,252,247,.50);border:1px solid rgba(92,61,46,.06)}
+.cta h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,6.5vw,85px);font-weight:300;font-style:italic;line-height:.88}
+.cta p{max-width:520px;margin:24px auto 30px;color:#8A6E5E;font-size:10px;line-height:2}
+
+/* ===== FOOTER ===== */
+footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex;align-items:center;justify-content:space-between;color:#8A6E5E;font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+.footer-logo{font-family:"Italiana",serif;font-size:32px;color:#3E2518;letter-spacing:1px}
+.footer-center{text-align:center;line-height:2}
+.footer-socials{display:flex;gap:15px}
+.footer-socials a{transition:.3s}
+.footer-socials a:hover{color:#C4A882}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
 @media(max-width:1100px){
     .designs-grid{grid-template-columns:repeat(3,1fr)}
     .compare-grid{grid-template-columns:repeat(2,1fr)}
+    .features-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:850px){
     .navbar{height:62px}
@@ -153,7 +199,9 @@ button{font-family:inherit;cursor:pointer}
     .hero{padding-top:140px}
     .designs-grid{grid-template-columns:repeat(2,1fr)}
     .compare-grid{grid-template-columns:1fr}
-    .cat-tabs{gap:6px}
+    .features-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .float-card{display:none}
 }
 @media(max-width:600px){
     .navbar{width:94%;padding:0 16px}
@@ -198,9 +246,10 @@ button{font-family:inherit;cursor:pointer}
     <a href="#home" class="logo">Luna</a>
     <div class="nav-links">
         <a href="#home" data-i18n="home">Ana səhifə</a>
+        <a href="#designs" data-i18n="designs">Dəvətnamələr</a>
         <a href="#packages" data-i18n="packages">Paketlər</a>
         <a href="#how" data-i18n="how">Necə işləyir</a>
-        <a href="designs/index.html" data-i18n="designs">Dəvətnamələr</a>
+        <a href="pricing.html" data-i18n="pricing">Qiymətlər</a>
     </div>
     <div class="languages">
         <button class="active" data-lang="az">AZ</button>
@@ -213,9 +262,10 @@ button{font-family:inherit;cursor:pointer}
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
     <a href="#home" data-mobile-i18n="home">Ana səhifə</a>
+    <a href="#designs" data-mobile-i18n="designs">Dəvətnamələr</a>
     <a href="#packages" data-mobile-i18n="packages">Paketlər</a>
     <a href="#how" data-mobile-i18n="how">Necə işləyir</a>
-    <a href="designs/index.html" data-mobile-i18n="designs">Dəvətnamələr</a>
+    <a href="pricing.html" data-mobile-i18n="pricing">Qiymətlər</a>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
@@ -226,12 +276,19 @@ button{font-family:inherit;cursor:pointer}
 <!-- HERO -->
 <section class="hero" id="home">
     <div class="particles" id="particles"></div>
+    <div class="hero-floats">
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+    </div>
     <div class="hero-content">
         <div class="hero-label" data-i18n="heroLabel">Digital dəvətnamələr</div>
         <h1 data-i18n="heroTitle">gözəl anlar,<br>gözəl dəvətlərlə<span data-i18n="heroSubtitle">hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
         <p class="hero-text" data-i18n="heroText">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın.</p>
         <div class="hero-buttons">
-            <a href="#packages" class="btn btn-dark" data-i18n="explore">Paketlərə bax</a>
+            <a href="#designs" class="btn btn-dark" data-i18n="explore">Dəvətnamələrə bax</a>
             <a href="#how" class="btn btn-light" data-i18n="viewPricing">Necə işləyir</a>
         </div>
     </div>
@@ -241,105 +298,160 @@ button{font-family:inherit;cursor:pointer}
     </div>
 </section>
 
+
 <!-- DESIGNS -->
-<section class="designs-section reveal" id="packages">
+<section class="designs-section reveal" id="designs">
 <div class="section-inner">
     <div class="section-heading" style="text-align:center">
-        <div class="kicker" data-i18n="pkgKicker">Luna Dəvətnamələri</div>
-        <h2 style="text-align:center" data-i18n="pkgTitle">Dizaynınızı seçin.<br>Hekayənizi yaradın.</h2>
-        <p style="text-align:center;max-width:600px;margin:24px auto 0" data-i18n="pkgText">Hər dəvətnamə fərqli üslub və atmosfer təklif edir. Kateqoriyanı seçin və dizaynlara baxın.</p>
+        <div class="kicker" data-i18n="designKicker">Dəvətnamə dizaynları</div>
+        <h2 style="text-align:center" data-i18n="designTitle">Dizaynınızı seçin.<br>Hekayənizi yaradın.</h2>
+        <p style="text-align:center;max-width:600px;margin:24px auto 0" data-i18n="designText">Toy, nişan, xına, ad günü, məzuniyyət və ya biznes tədbiri — hər hadisə üçün xüsusi dizayn.</p>
     </div>
 
     <div class="cat-tabs" id="catTabs">
-        <button class="cat-tab active" data-cat="all">Hamısı</button>
-        <button class="cat-tab" data-cat="wedding">Toy</button>
-        <button class="cat-tab" data-cat="engagement">Nişan</button>
-        <button class="cat-tab" data-cat="henna">Xına</button>
-        <button class="cat-tab" data-cat="birthday">Ad Günü</button>
-        <button class="cat-tab" data-cat="graduation">Məzuniyyət</button>
+        <button class="cat-tab active" data-cat="all" data-i18n="catAll">Hamısı</button>
+        <button class="cat-tab" data-cat="wedding" data-i18n="catWedding">Toy</button>
+        <button class="cat-tab" data-cat="engagement" data-i18n="catEngagement">Nişan</button>
+        <button class="cat-tab" data-cat="henna" data-i18n="catHenna">Xına</button>
+        <button class="cat-tab" data-cat="birthday" data-i18n="catBirthday">Ad Günü</button>
+        <button class="cat-tab" data-cat="graduation" data-i18n="catGraduation">Məzuniyyət</button>
+        <button class="cat-tab" data-cat="business" data-i18n="catBusiness">Biznes</button>
     </div>
 
     <div class="designs-grid" id="designsGrid">
+
         <a href="client-form.html?design=amelia&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85" alt="Amelia" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Toy</span>
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
                 <h4>Amelia</h4>
                 <p>Floral · Romantik</p>
                 <span class="pkg-badge">Luxury</span>
             </div>
         </a>
+
         <a href="client-form.html?design=amour&package=premium&category=wedding" class="design-thumb" data-cat="wedding">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=85" alt="Amour" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Toy</span>
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
                 <h4>Amour</h4>
                 <p>Romantik · Klassik</p>
                 <span class="pkg-badge">Premium</span>
             </div>
         </a>
+
         <a href="client-form.html?design=noir&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85" alt="Noir" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Toy</span>
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
                 <h4>Noir</h4>
                 <p>Lüks · Kinematik</p>
                 <span class="pkg-badge">Luxury</span>
             </div>
         </a>
+
         <a href="client-form.html?design=serena&package=premium&category=wedding" class="design-thumb" data-cat="wedding">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=85" alt="Serena" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Toy</span>
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
                 <h4>Serena</h4>
                 <p>Lavanda · Zərif</p>
                 <span class="pkg-badge">Premium</span>
             </div>
         </a>
-        <a href="client-form.html?design=florence&package=basic&category=birthday" class="design-thumb" data-cat="birthday">
-            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85" alt="Florence" loading="lazy">
-            <div class="design-thumb-overlay"></div>
-            <div class="design-thumb-info">
-                <span class="cat-badge">Ad Günü</span>
-                <h4>Florence</h4>
-                <p>Şən · Rəngli</p>
-                <span class="pkg-badge">Basic</span>
-            </div>
-        </a>
-        <a href="client-form.html?design=aurora&package=basic&category=graduation" class="design-thumb" data-cat="graduation">
-            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85" alt="Aurora" loading="lazy">
-            <div class="design-thumb-overlay"></div>
-            <div class="design-thumb-info">
-                <span class="cat-badge">Məzuniyyət</span>
-                <h4>Aurora</h4>
-                <p>Akademik · Zərif</p>
-                <span class="pkg-badge">Basic</span>
-            </div>
-        </a>
+
         <a href="client-form.html?design=henna&package=premium&category=henna" class="design-thumb" data-cat="henna">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=600&q=85" alt="Henna" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Xına</span>
+                <span class="cat-badge" data-i18n="catHenna">Xına</span>
                 <h4>Oriental Henna</h4>
                 <p>Şərqi · Lüks</p>
                 <span class="pkg-badge">Premium</span>
             </div>
         </a>
+
         <a href="client-form.html?design=classic&package=basic&category=engagement" class="design-thumb" data-cat="engagement">
             <img class="design-thumb-img" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85" alt="Classic" loading="lazy">
             <div class="design-thumb-overlay"></div>
             <div class="design-thumb-info">
-                <span class="cat-badge">Nişan</span>
+                <span class="cat-badge" data-i18n="catEngagement">Nişan</span>
                 <h4>Classic</h4>
                 <p>Klassik · Sadə</p>
                 <span class="pkg-badge">Basic</span>
             </div>
         </a>
+
+        <a href="client-form.html?design=florence&package=basic&category=birthday" class="design-thumb" data-cat="birthday">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85" alt="Florence" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catBirthday">Ad Günü</span>
+                <h4>Florence</h4>
+                <p>Şən · Rəngli</p>
+                <span class="pkg-badge">Basic</span>
+            </div>
+        </a>
+
+        <a href="client-form.html?design=aurora&package=basic&category=graduation" class="design-thumb" data-cat="graduation">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85" alt="Aurora" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catGraduation">Məzuniyyət</span>
+                <h4>Aurora</h4>
+                <p>Akademik · Zərif</p>
+                <span class="pkg-badge">Basic</span>
+            </div>
+        </a>
+
+        <a href="client-form.html?design=blossom&package=video&category=birthday" class="design-thumb" data-cat="birthday">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=600&q=85" alt="Blossom" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catBirthday">Ad Günü</span>
+                <h4>Blossom</h4>
+                <p>Video · Animasiyalı</p>
+                <span class="pkg-badge">Video</span>
+            </div>
+        </a>
+
+        <a href="client-form.html?design=business&package=premium&category=business" class="design-thumb" data-cat="business">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85" alt="Business" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catBusiness">Biznes</span>
+                <h4>Executive</h4>
+                <p>Korporativ · Peşəkar</p>
+                <span class="pkg-badge">Premium</span>
+            </div>
+        </a>
+
+        <a href="client-form.html?design=garden&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85" alt="Garden" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
+                <h4>Italian Garden</h4>
+                <p>Baq · Təbiət</p>
+                <span class="pkg-badge">Luxury</span>
+            </div>
+        </a>
+
+        <a href="client-form.html?design=editorial&package=luxury&category=wedding" class="design-thumb" data-cat="wedding">
+            <img class="design-thumb-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85" alt="Editorial" loading="lazy">
+            <div class="design-thumb-overlay"></div>
+            <div class="design-thumb-info">
+                <span class="cat-badge" data-i18n="catWedding">Toy</span>
+                <h4>Editorial Love</h4>
+                <p>Foto · Redaksiya</p>
+                <span class="pkg-badge">Luxury</span>
+            </div>
+        </a>
+
     </div>
 
     <div class="designs-more">
@@ -348,12 +460,80 @@ button{font-family:inherit;cursor:pointer}
 </div>
 </section>
 
+
+<!-- FEATURES -->
+<section class="section reveal" id="features">
+<div class="section-inner">
+    <div class="section-heading" style="text-align:center">
+        <div class="kicker" data-i18n="featuresKicker">Xüsusiyyətlər</div>
+        <h2 style="text-align:center" data-i18n="featuresTitle">Hər dəvətnamədə<br>ən yaxşı.</h2>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3 data-i18n="featMobileTitle">Mobil uyğunlaşma</h3>
+            <p data-i18n="featMobileText">Hər telefon ekranında mükəmməl görünür. Qonaqlar asanlıqla baxa bilər.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <h3 data-i18n="featMapTitle">Google Maps</h3>
+            <p data-i18n="featMapText">Qonaqlar məkanı bir toxunuşla xəritədə tapsın.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📸</div>
+            <h3 data-i18n="featGalleryTitle">Foto qalereya</h3>
+            <p data-i18n="featGalleryText">Ən gözəl fotoşəkillərinizi qonaqlarla paylaşın.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">✉️</div>
+            <h3 data-i18n="featRsvpTitle">RSVP</h3>
+            <p data-i18n="featRsvpText">Qonaqlar iştiraklarını təsdiqləsin, siz isə onları izləyin.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⏳</div>
+            <h3 data-i18n="featCountdownTitle">Countdown</h3>
+            <p data-i18n="featCountdownText">Görüşənədək real vaxt sayğacı.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3 data-i18n="featShareTitle">Asan paylaşım</h3>
+            <p data-i18n="featShareText">WhatsApp, Instagram və ya istənilən platformada paylaşın.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+
 <!-- PACKAGE COMPARISON -->
-<section class="section reveal" id="compare">
+<section class="section reveal" id="packages">
 <div class="section-inner">
     <div class="pkg-compare">
-        <h3 data-i18n="compareTitle">Paketi seçin</h3>
+        <div class="section-heading" style="text-align:center">
+            <div class="kicker" data-i18n="pkgKicker">Paketlər</div>
+            <h2 style="text-align:center" data-i18n="pkgTitle">Özünüzə uyğun paketi seçin.</h2>
+        </div>
         <div class="compare-grid">
+
+            <div class="compare-card">
+                <div class="compare-header">
+                    <h4>Video</h4>
+                    <div class="price">20 <small>AZN</small></div>
+                    <p class="pkg-tagline" data-i18n="videoTagline">Animasiyalı video dəvətnamə</p>
+                </div>
+                <div class="compare-features">
+                    <ul class="compare-feats">
+                        <li data-i18n="featVideo">Video dəvətnamə</li>
+                        <li data-i18n="featPersonalInfo">Fərdi məlumatlar</li>
+                        <li data-i18n="featShareLink">Paylaşım linki</li>
+                        <li class="no" data-i18n="featRsvp">RSVP</li>
+                        <li class="no" data-i18n="featGallery">Qalereya</li>
+                        <li class="no" data-i18n="featMusic">Musiqi</li>
+                    </ul>
+                </div>
+                <div class="compare-actions">
+                    <a href="client-form.html?package=video" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
+                </div>
+            </div>
 
             <div class="compare-card">
                 <div class="compare-header">
@@ -363,12 +543,12 @@ button{font-family:inherit;cursor:pointer}
                 </div>
                 <div class="compare-features">
                     <ul class="compare-feats">
-                        <li data-i18n="feat1">Dizayn seçimi</li>
-                        <li data-i18n="feat2">Fərdi məlumatlar</li>
-                        <li data-i18n="feat3">Paylaşım linki</li>
-                        <li class="no" data-i18n="feat4">RSVP</li>
-                        <li class="no" data-i18n="feat5">Qalereya</li>
-                        <li class="no" data-i18n="feat6">Musiqi</li>
+                        <li data-i18n="featDesignChoice">Dizayn seçimi</li>
+                        <li data-i18n="featPersonalInfo">Fərdi məlumatlar</li>
+                        <li data-i18n="featShareLink">Paylaşım linki</li>
+                        <li class="no" data-i18n="featRsvp">RSVP</li>
+                        <li class="no" data-i18n="featGallery">Qalereya</li>
+                        <li class="no" data-i18n="featMusic">Musiqi</li>
                     </ul>
                 </div>
                 <div class="compare-actions">
@@ -384,14 +564,14 @@ button{font-family:inherit;cursor:pointer}
                 </div>
                 <div class="compare-features">
                     <ul class="compare-feats">
-                        <li data-i18n="feat1">Dizayn seçimi</li>
-                        <li data-i18n="feat2">Fərdi məlumatlar</li>
-                        <li data-i18n="feat3">Paylaşım linki</li>
-                        <li data-i18n="feat4">RSVP</li>
-                        <li data-i18n="feat5">Qalereya</li>
-                        <li data-i18n="feat7">Countdown</li>
-                        <li data-i18n="feat8">Google Maps</li>
-                        <li class="no" data-i18n="feat6">Musiqi</li>
+                        <li data-i18n="featDesignChoice">Dizayn seçimi</li>
+                        <li data-i18n="featPersonalInfo">Fərdi məlumatlar</li>
+                        <li data-i18n="featShareLink">Paylaşım linki</li>
+                        <li data-i18n="featRsvp">RSVP</li>
+                        <li data-i18n="featGallery">Qalereya</li>
+                        <li data-i18n="featCountdown">Countdown</li>
+                        <li data-i18n="featMaps">Google Maps</li>
+                        <li class="no" data-i18n="featMusic">Musiqi</li>
                     </ul>
                 </div>
                 <div class="compare-actions">
@@ -407,39 +587,20 @@ button{font-family:inherit;cursor:pointer}
                 </div>
                 <div class="compare-features">
                     <ul class="compare-feats">
-                        <li data-i18n="feat1">Dizayn seçimi</li>
-                        <li data-i18n="feat2">Fərdi məlumatlar</li>
-                        <li data-i18n="feat3">Paylaşım linki</li>
-                        <li data-i18n="feat4">RSVP</li>
-                        <li data-i18n="feat5">Qalereya</li>
-                        <li data-i18n="feat7">Countdown</li>
-                        <li data-i18n="feat8">Google Maps</li>
-                        <li data-i18n="feat6">Musiqi</li>
-                        <li data-i18n="feat9">Hekayə</li>
-                        <li data-i18n="feat10">Video</li>
+                        <li data-i18n="featDesignChoice">Dizayn seçimi</li>
+                        <li data-i18n="featPersonalInfo">Fərdi məlumatlar</li>
+                        <li data-i18n="featShareLink">Paylaşım linki</li>
+                        <li data-i18n="featRsvp">RSVP</li>
+                        <li data-i18n="featGallery">Qalereya</li>
+                        <li data-i18n="featCountdown">Countdown</li>
+                        <li data-i18n="featMaps">Google Maps</li>
+                        <li data-i18n="featMusic">Musiqi</li>
+                        <li data-i18n="featStory">Hekayə</li>
+                        <li data-i18n="featVideoSection">Video</li>
                     </ul>
                 </div>
                 <div class="compare-actions">
                     <a href="client-form.html?package=luxury" class="btn btn-dark" data-i18n="choosePkg">Paketi seç</a>
-                </div>
-            </div>
-
-            <div class="compare-card">
-                <div class="compare-header">
-                    <h4>Canva</h4>
-                    <div class="price" data-i18n="canvaPriceShort">Siz təyin edirsiniz</div>
-                    <p class="pkg-tagline" data-i18n="canvaTagline">Canvasdan yükləyin</p>
-                </div>
-                <div class="compare-features">
-                    <ul class="compare-feats">
-                        <li data-i18n="feat11">Canva yükləmə</li>
-                        <li data-i18n="feat4">RSVP</li>
-                        <li data-i18n="feat7">Countdown</li>
-                        <li data-i18n="feat3">Paylaşım linki</li>
-                    </ul>
-                </div>
-                <div class="compare-actions">
-                    <a href="client-form.html?package=canva" class="btn btn-dark" data-i18n="uploadCanva">Canva yüklə</a>
                 </div>
             </div>
 
@@ -448,18 +609,19 @@ button{font-family:inherit;cursor:pointer}
 </div>
 </section>
 
+
 <!-- HOW IT WORKS -->
 <section class="section reveal" id="how">
 <div class="section-inner">
-    <div class="section-heading">
+    <div class="section-heading" style="text-align:center">
         <div class="kicker" data-i18n="howKicker">Necə işləyir</div>
-        <h2 data-i18n="howTitle">Bir neçə addım.<br>Bir gözəl dəvətnamə.</h2>
+        <h2 style="text-align:center" data-i18n="howTitle">Bir neçə addım.<br>Bir gözəl dəvətnamə.</h2>
     </div>
     <div class="steps">
         <div class="step">
             <div class="step-number">01</div>
-            <h3 data-i18n="step1Title">Paketi seç</h3>
-            <p data-i18n="step1Text">Basic, Premium, Luxury və ya Canva — sizin ehtiyacınıza uyğun paketi seçin.</p>
+            <h3 data-i18n="step1Title">Dizaynı seç</h3>
+            <p data-i18n="step1Text">Toy, ad günü, biznes və ya başqa tədbir — gözəl dizaynınızı seçin.</p>
         </div>
         <div class="step">
             <div class="step-number">02</div>
@@ -475,6 +637,7 @@ button{font-family:inherit;cursor:pointer}
 </div>
 </section>
 
+
 <!-- CTA -->
 <section class="section reveal" id="contact">
 <div class="section-inner">
@@ -482,7 +645,7 @@ button{font-family:inherit;cursor:pointer}
         <div class="kicker" data-i18n="ctaKicker">Luna</div>
         <h2 data-i18n="ctaTitle">Sənin hekayən<br>burada başlayır.</h2>
         <p data-i18n="ctaText">Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.</p>
-        <a href="client-form.html" class="btn btn-dark" data-i18n="start">Dəvətnaməni yarat</a>
+        <a href="#designs" class="btn btn-dark" data-i18n="start">Dəvətnaməni yarat</a>
     </div>
 </div>
 </section>
@@ -508,88 +671,103 @@ button{font-family:inherit;cursor:pointer}
 /* ===== TRANSLATIONS ===== */
 const translations={
     az:{
-        home:"Ana səhifə",packages:"Paketlər",how:"Necə işləyir",designs:"Dəvətnamələr",
+        home:"Ana səhifə",designs:"Dəvətnamələr",packages:"Paketlər",how:"Necə işləyir",pricing:"Qiymətlər",
         heroLabel:"Digital dəvətnamələr",
         heroTitle:"gözəl anlar,<br>gözəl dəvətlərlə",
         heroSubtitle:"hərəkət edən, açılan və hekayənizi danışan dəvətnamələr",
         heroText:"Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.",
-        explore:"Paketlərə bax",viewPricing:"Necə işləyir",scroll:"Kəşf et",
-        pkgKicker:"Luna Dəvətnamələri",pkgTitle:"Dizaynınızı seçin.<br>Hekayənizi yaradın.",
-        pkgText:"Hər dəvətnamə fərqli üslub və atmosfer təklif edir. Kateqoriyanı seçin.",
-        basicTagline:"Sadə və zərif",premiumTagline:"Ən populyar seçim",luxuryTagline:"Tam premium təcrübə",
-        canvaTagline:"Canvasdan yükləyin",canvaPriceShort:"Siz təyin edirsiniz",
-        compareTitle:"Paketi seçin",browseAll:"Bütün dizaynlara bax →",
-        basicDesc:"Sadə və zərif digital dəvətnamə. Hazır dizayn, fərdi məlumatlar və paylaşılabilən link.",
-        premiumDesc:"Daha zəngin və interaktiv dəvətnamə. Foto qalereyası, countdown, Google Maps və RSVP.",
-        luxuryDesc:"Tam premium təcrübə. Hekayə bölməsi, musiqi, foto və video qalereya, bütün funksiyalar.",
-        canvaDesc:"Canvasdan hazırladığınız dəvətnaməni yükləyin. Luna onu interaktiv edəcək.",
-        canvaPrice:"Siz qiymətləndirirsiniz",canvaPlus:"Canvasdan yüklə",uploadCanva:"Canva yüklə",
-        popularBadge:"Ən populyar",choosePkg:"Paketi seç",
-        feat1:"Dizayn seçimi",feat2:"Fərdi məlumatlar",feat3:"Paylaşım linki",
-        feat4:"RSVP",feat5:"Qalereya",feat6:"Musiqi",feat7:"Countdown",
-        feat8:"Google Maps",feat9:"Hekayə",feat10:"Video",feat11:"Canva yükləmə",
+        explore:"Dəvətnamələrə bax",viewPricing:"Necə işləyir",scroll:"Kəşf et",
+        designKicker:"Dəvətnamə dizaynları",designTitle:"Dizaynınızı seçin.<br>Hekayənizi yaradın.",
+        designText:"Toy, nişan, xına, ad günü, məzuniyyət və ya biznes tədbiri — hər hadisə üçün xüsusi dizayn.",
+        catAll:"Hamısı",catWedding:"Toy",catEngagement:"Nişan",catHenna:"Xına",catBirthday:"Ad Günü",catGraduation:"Məzuniyyət",catBusiness:"Biznes",
+        browseAll:"Bütün dizaynlara bax →",
+        featuresKicker:"Xüsusiyyətlər",featuresTitle:"Hər dəvətnamədə<br>ən yaxşı.",
+        featMobileTitle:"Mobil uyğunlaşma",featMobileText:"Hər telefon ekranında mükəmməl görünür.",
+        featMapTitle:"Google Maps",featMapText:"Qonaqlar məkanı bir toxunuşla tapsın.",
+        featGalleryTitle:"Foto qalereya",featGalleryText:"Ən gözəl fotoşəkillərinizi paylaşın.",
+        featRsvpTitle:"RSVP",featRsvpText:"Qonaqlar iştiraklarını təsdiqləsin.",
+        featCountdownTitle:"Countdown",featCountdownText:"Görüşənədək real vaxt sayğacı.",
+        featShareTitle:"Asan paylaşım",featShareText:"WhatsApp, Instagram və ya istənilən platformada.",
+        pkgKicker:"Paketlər",pkgTitle:"Özünüzə uyğun paketi seçin.",
+        videoTagline:"Animasiyalı video dəvətnamə",basicTagline:"Sadə və zərif",
+        premiumTagline:"Ən populyar seçim",luxuryTagline:"Tam premium təcrübə",
+        choosePkg:"Paketi seç",
+        featVideo:"Video dəvətnamə",featDesignChoice:"Dizayn seçimi",
+        featPersonalInfo:"Fərdi məlumatlar",featShareLink:"Paylaşım linki",
+        featRsvp:"RSVP",featGallery:"Qalereya",featMusic:"Musiqi",
+        featCountdown:"Countdown",featMaps:"Google Maps",featStory:"Hekayə",featVideoSection:"Video",
         howKicker:"Necə işləyir",howTitle:"Bir neçə addım.<br>Bir gözəl dəvətnamə.",
-        step1Title:"Paketi seç",step1Text:"Basic, Premium, Luxury və ya Canva — sizin ehtiyacınıza uyğun paketi seçin.",
+        step1Title:"Dizaynı seç",step1Text:"Toy, ad günü, biznes və ya başqa tədbir — gözəl dizaynınızı seçin.",
         step2Title:"Məlumatları göndər",step2Text:"Adlar, tarix, məkan, fotoşəkillər və digər məlumatları doldurun.",
-        step3Title:"Linkini paylaş",step3Text:"Hazır dəvətnamənizi qonaqlarınızla WhatsApp, Instagram və digər platformalarda paylaşın.",
+        step3Title:"Linkini paylaş",step3Text:"Hazır dəvətnamənizi qonaqlarınızla paylaşın.",
         ctaKicker:"Luna",ctaTitle:"Sənin hekayən<br>burada başlayır.",
         ctaText:"Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.",
         start:"Dəvətnaməni yarat",footerTagline:"Weddings · Events · Moments"
     },
     en:{
-        home:"Home",packages:"Packages",how:"How it works",designs:"Invitations",
+        home:"Home",designs:"Invitations",packages:"Packages",how:"How it works",pricing:"Pricing",
         heroLabel:"Digital invitations",
         heroTitle:"beautiful moments,<br>beautiful invites",
         heroSubtitle:"moving, opening invitations that tell your story",
         heroText:"Elegant, modern and customizable digital invitations for your most special days.",
-        explore:"View packages",viewPricing:"How it works",scroll:"Explore",
-        pkgKicker:"Luna Invitations",pkgTitle:"Choose your design.<br>Tell your story.",
-        pkgText:"Each invitation offers a different style and atmosphere. Pick a category and browse designs.",
-        basicTagline:"Simple & elegant",premiumTagline:"Most popular choice",luxuryTagline:"Full premium experience",
-        canvaTagline:"Upload from Canva",canvaPriceShort:"You set the price",
-        compareTitle:"Choose a package",browseAll:"Browse all designs →",
-        basicDesc:"Simple and elegant digital invitation. Ready design, personal info and shareable link.",
-        premiumDesc:"Richer and more interactive invitation. Photo gallery, countdown, Google Maps and RSVP.",
-        luxuryDesc:"Full premium experience. Story section, music, photo and video gallery, all features.",
-        canvaDesc:"Upload your Canva-made invitation. Luna will make it interactive.",
-        canvaPrice:"You set the price",canvaPlus:"Upload from Canva",uploadCanva:"Upload Canva",
-        popularBadge:"Most popular",choosePkg:"Choose package",
-        feat1:"Design choice",feat2:"Personal info",feat3:"Share link",
-        feat4:"RSVP",feat5:"Gallery",feat6:"Music",feat7:"Countdown",
-        feat8:"Google Maps",feat9:"Story",feat10:"Video",feat11:"Canva upload",
+        explore:"View invitations",viewPricing:"How it works",scroll:"Explore",
+        designKicker:"Invitation designs",designTitle:"Choose your design.<br>Tell your story.",
+        designText:"Wedding, engagement, henna, birthday, graduation or business event — a design for every occasion.",
+        catAll:"All",catWedding:"Wedding",catEngagement:"Engagement",catHenna:"Henna",catBirthday:"Birthday",catGraduation:"Graduation",catBusiness:"Business",
+        browseAll:"Browse all designs →",
+        featuresKicker:"Features",featuresTitle:"Everything your<br>invitation needs.",
+        featMobileTitle:"Mobile optimized",featMobileText:"Perfectly responsive on any phone screen.",
+        featMapTitle:"Google Maps",featMapText:"Guests find your venue in one tap.",
+        featGalleryTitle:"Photo gallery",featGalleryText:"Share your best photos with guests.",
+        featRsvpTitle:"RSVP",featRsvpText:"Guests confirm their attendance.",
+        featCountdownTitle:"Countdown",featCountdownText:"Live countdown until the big day.",
+        featShareTitle:"Easy sharing",featShareText:"On WhatsApp, Instagram or any platform.",
+        pkgKicker:"Packages",pkgTitle:"Choose the package<br>that fits you.",
+        videoTagline:"Animated video invitation",basicTagline:"Simple & elegant",
+        premiumTagline:"Most popular choice",luxuryTagline:"Full premium experience",
+        choosePkg:"Choose package",
+        featVideo:"Video invitation",featDesignChoice:"Design choice",
+        featPersonalInfo:"Personal info",featShareLink:"Share link",
+        featRsvp:"RSVP",featGallery:"Gallery",featMusic:"Music",
+        featCountdown:"Countdown",featMaps:"Google Maps",featStory:"Story",featVideoSection:"Video",
         howKicker:"How it works",howTitle:"A few steps.<br>One beautiful invitation.",
-        step1Title:"Choose package",step1Text:"Basic, Premium, Luxury or Canva — choose the package that fits your needs.",
+        step1Title:"Choose design",step1Text:"Wedding, birthday, business or other event — pick your beautiful design.",
         step2Title:"Send details",step2Text:"Fill in names, date, venue, photos and other information.",
-        step3Title:"Share link",step3Text:"Share your ready invitation with guests on WhatsApp, Instagram and other platforms.",
+        step3Title:"Share link",step3Text:"Share your ready invitation on WhatsApp, Instagram and other platforms.",
         ctaKicker:"Luna",ctaTitle:"Your story<br>starts here.",
         ctaText:"Choose your design, send your details and create your Luna invitation for your special day.",
         start:"Create invitation",footerTagline:"Weddings · Events · Moments"
     },
     ru:{
-        home:"Главная",packages:"Пакеты",how:"Как это работает",designs:"Приглашения",
+        home:"Главная",designs:"Приглашения",packages:"Пакеты",how:"Как это работает",pricing:"Цены",
         heroLabel:"Цифровые приглашения",
         heroTitle:"красивые моменты,<br>красивые приглашения",
         heroSubtitle:"движущиеся, открывающиеся приглашения, которые рассказывают вашу историю",
         heroText:"Элегантные, современные и настраиваемые цифровые приглашения для ваших самых особых дней.",
-        explore:"Смотреть пакеты",viewPricing:"Как это работает",scroll:"Исследовать",
-        pkgKicker:"Приглашения Luna",pkgTitle:"Выберите дизайн.<br>Расскажите свою историю.",
-        pkgText:"Каждое приглашение предлагает свой стиль и атмосферу. Выберите категорию и просматривайте дизайны.",
-        basicTagline:"Простое и элегантное",premiumTagline:"Самый популярный выбор",luxuryTagline:"Полный премиальный опыт",
-        canvaTagline:"Загрузить из Canva",canvaPriceShort:"Вы устанавливаете цену",
-        compareTitle:"Выберите пакет",browseAll:"Смотреть все дизайны →",
-        basicDesc:"Простое и элегантное цифровое приглашение. Готовый дизайн, личная информация и ссылка.",
-        premiumDesc:"Более насыщенное и интерактивное приглашение. Фотогалерея, обратный отсчёт, Google Maps и RSVP.",
-        luxuryDesc:"Полный премиальный опыт. Раздел истории, музыка, фото и видео галерея, все функции.",
-        canvaDesc:"Загрузите приглашение из Canva. Luna сделает его интерактивным.",
-        canvaPrice:"Вы устанавливаете цену",canvaPlus:"Загрузить из Canva",uploadCanva:"Загрузить Canva",
-        popularBadge:"Самый популярный",choosePkg:"Выбрать пакет",
-        feat1:"Выбор дизайна",feat2:"Личная информация",feat3:"Ссылка",
-        feat4:"RSVP",feat5:"Галерея",feat6:"Музыка",feat7:"Обратный отсчёт",
-        feat8:"Google Maps",feat9:"История",feat10:"Видео",feat11:"Загрузка Canva",
+        explore:"Смотреть приглашения",viewPricing:"Как это работает",scroll:"Исследовать",
+        designKicker:"Дизайны приглашений",designTitle:"Выберите дизайн.<br>Расскажите свою историю.",
+        designText:"Свадьба, помолвка, хна, день рождения, выпускное или бизнес-мероприятие — дизайн для каждого события.",
+        catAll:"Все",catWedding:"Свадьба",catEngagement:"Помолвка",catHenna:"Хна",catBirthday:"День рождения",catGraduation:"Выпускное",catBusiness:"Бизнес",
+        browseAll:"Смотреть все дизайны →",
+        featuresKicker:"Возможности",featuresTitle:"Всё, что нужно<br>в вашем приглашении.",
+        featMobileTitle:"Мобильная адаптация",featMobileText:"Идеально отображается на любом телефоне.",
+        featMapTitle:"Google Maps",featMapText:"Гости находят место одним нажатием.",
+        featGalleryTitle:"Фотогалерея",featGalleryText:"Поделитесь лучшими фото с гостями.",
+        featRsvpTitle:"RSVP",featRsvpText:"Гости подтверждают присутствие.",
+        featCountdownTitle:"Обратный отсчёт",featCountdownText:"Живой отсчёт до важного дня.",
+        featShareTitle:"Лёгкая отправка",featShareText:"Через WhatsApp, Instagram или любую платформу.",
+        pkgKicker:"Пакеты",pkgTitle:"Выберите пакет,<br>который вам подходит.",
+        videoTagline:"Анимированное видео-приглашение",basicTagline:"Простое и элегантное",
+        premiumTagline:"Самый популярный выбор",luxuryTagline:"Полный премиальный опыт",
+        choosePkg:"Выбрать пакет",
+        featVideo:"Видео-приглашение",featDesignChoice:"Выбор дизайна",
+        featPersonalInfo:"Личная информация",featShareLink:"Ссылка",
+        featRsvp:"RSVP",featGallery:"Галерея",featMusic:"Музыка",
+        featCountdown:"Обратный отсчёт",featMaps:"Google Maps",featStory:"История",featVideoSection:"Видео",
         howKicker:"Как это работает",howTitle:"Несколько шагов.<br>Одно красивое приглашение.",
-        step1Title:"Выберите пакет",step1Text:"Basic, Premium, Luxury или Canva — выберите пакет, который подходит вам.",
+        step1Title:"Выберите дизайн",step1Text:"Свадьба, день рождения, бизнес или другое мероприятие — выберите красивый дизайн.",
         step2Title:"Отправьте данные",step2Text:"Заполните имена, дату, место, фотографии и другую информацию.",
-        step3Title:"Поделитесь ссылкой",step3Text:"Поделитесь готовым приглашением с гостями через WhatsApp, Instagram и другие платформы.",
+        step3Title:"Поделитесь ссылкой",step3Text:"Поделитесь готовым приглашением через WhatsApp, Instagram и другие платформы.",
         ctaKicker:"Luna",ctaTitle:"Ваша история<br>начинается здесь.",
         ctaText:"Выберите дизайн, отправьте данные и создайте своё приглашение Luna.",
         start:"Создать приглашение",footerTagline:"Свадьбы · События · Моменты"
@@ -635,12 +813,11 @@ document.querySelectorAll(".cat-tab").forEach(function(tab){
         this.classList.add("active");
         var cat=this.dataset.cat;
         document.querySelectorAll(".design-thumb").forEach(function(card){
-            if(cat==="all"||card.dataset.cat===cat){card.style.display="";card.style.animation="canvaReveal .5s ease both"}
+            if(cat==="all"||card.dataset.cat===cat){card.style.display="";card.style.animation="fadeUp .5s ease both"}
             else{card.style.display="none"}
         });
     });
 });
-
 </script>
 </body>
 </html>
