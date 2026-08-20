@@ -267,6 +267,20 @@ button{
     transition:all .3s;
 }
 .toast.show{transform:translateY(0);opacity:1;}
+.toggle-switch{position:relative;display:inline-block;width:36px;height:18px;cursor:pointer;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.15);border-radius:18px;transition:.3s;}
+.toggle-slider:before{content:"";position:absolute;height:12px;width:12px;left:3px;bottom:3px;background:rgba(255,255,255,.5);border-radius:50%;transition:.3s;}
+.toggle-switch input:checked + .toggle-slider{background:rgba(100,180,100,.4);}
+.toggle-switch input:checked + .toggle-slider:before{transform:translateX(18px);background:#8dd88d;}
+.pkg-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.pkg-tag{font-size:7px;padding:2px 6px;border:1px solid rgba(184,140,118,.3);color:#b88c76;letter-spacing:.5px;text-transform:uppercase;}
+.lang-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+.lang-tag{font-size:7px;padding:2px 5px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);letter-spacing:.5px;}
+.checkbox-group{display:flex;gap:12px;flex-wrap:wrap;}
+.checkbox-group label{display:flex;align-items:center;gap:5px;font-size:11px;text-transform:none;letter-spacing:0;color:rgba(255,255,255,.7);cursor:pointer;}
+.checkbox-group input[type="checkbox"]{width:auto;accent-color:#b88c76;}
+.template-card .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
 @media(max-width:1024px){
     .sidebar{width:60px;}
     .sidebar-logo{font-size:20px;margin-bottom:25px;}
@@ -310,6 +324,10 @@ button{
         <a class="sidebar-link" data-section="videos" onclick="switchSection('videos')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             <span>Video Dəvətnamələr</span>
+        </a>
+        <a class="sidebar-link" data-section="templates" onclick="switchSection('templates')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            <span>Şablonlar</span>
         </a>
         <a class="sidebar-link" data-section="settings" onclick="switchSection('settings')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -473,6 +491,37 @@ button{
     </div>
 </div>
 
+<!-- ========== TEMPLATES ========== -->
+<div id="section-templates" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Şablonlar</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="openAddTemplate()">+ Yeni Şablon</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="filter-row">
+            <select id="templateCategoryFilter" onchange="renderTemplates()">
+                <option value="all">Hamısı</option>
+                <option value="wedding">Toy</option>
+                <option value="engagement">Nişan</option>
+                <option value="henna">Xına</option>
+                <option value="birthday">Ad Günü</option>
+                <option value="graduation">Məzuniyyət</option>
+                <option value="baby-shower">Körpə Partisi</option>
+                <option value="business">Biznes</option>
+                <option value="other">Digər</option>
+            </select>
+            <span style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;" id="templateCount"></span>
+        </div>
+        <div id="templateList" class="grid-3"></div>
+    </div>
+</div>
+
 <!-- ========== SETTINGS ========== -->
 <div id="section-settings" class="section">
     <div class="header">
@@ -549,6 +598,61 @@ button{
 
 <div class="toast" id="toast"></div>
 
+<!-- Template Modal (Add/Edit) -->
+<div class="modal-overlay" id="templateModal">
+    <div class="modal" style="max-width:750px;">
+        <button class="modal-close" onclick="closeModal('templateModal')">&times;</button>
+        <h2 id="templateModalTitle">Yeni Şablon Əlavə Et</h2>
+        <form id="templateForm">
+            <input type="hidden" id="templateEditId">
+            <div class="form-grid">
+                <div class="field"><label>Şablon Adı</label><input id="tplName" type="text" placeholder="Amelia" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="tplCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Stil</label><input id="tplStyle" type="text" placeholder="Romantik, Minimalist..."></div>
+                <div class="field"><label>Göstərmə Sırası</label><input id="tplOrder" type="number" value="0"></div>
+                <div class="field"><label>Thumbnail URL</label><input id="tplThumb" type="text" placeholder="https://..."></div>
+                <div class="field"><label>Cover URL</label><input id="tplCover" type="text" placeholder="https://..."></div>
+                <div class="field full">
+                    <label>Mövcud Paketlər</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="tplPkgBasic" value="basic"> Basic</label>
+                        <label><input type="checkbox" id="tplPkgPremium" value="premium"> Premium</label>
+                        <label><input type="checkbox" id="tplPkgLuxury" value="luxury"> Luxury</label>
+                        <label><input type="checkbox" id="tplPkgVideo" value="video"> Video</label>
+                    </div>
+                </div>
+                <div class="field full">
+                    <label>Mövcud Dillər</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="tplLangAz" value="az"> AZ</label>
+                        <label><input type="checkbox" id="tplLangEn" value="en"> EN</label>
+                        <label><input type="checkbox" id="tplLangTr" value="tr"> TR</label>
+                        <label><input type="checkbox" id="tplLangRu" value="ru"> RU</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Seçilmiş (Featured)</label>
+                    <label class="toggle-switch" style="margin-top:6px;">
+                        <input type="checkbox" id="tplFeatured">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="field">
+                    <label>Aktiv (Active)</label>
+                    <label class="toggle-switch" style="margin-top:6px;">
+                        <input type="checkbox" id="tplActive" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Saxla</button>
+                <button type="button" class="clear" onclick="closeModal('templateModal')">Ləğv Et</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="data/luna.js"></script>
 <script src="js/data.js"></script>
 <script src="js/i18n.js"></script>
@@ -568,6 +672,7 @@ function switchSection(name){
     if(name === 'customers') renderCustomers();
     if(name === 'designs') renderDesigns();
     if(name === 'videos') renderVideos();
+    if(name === 'templates') renderTemplates();
 }
 
 
@@ -1100,6 +1205,217 @@ function clearAllData(){
     renderCustomers();
     renderDesigns();
     renderVideos();
+    renderTemplates();
+}
+
+
+/* =====================================================
+   TEMPLATES
+===================================================== */
+
+function getCustomTemplates(){
+    return JSON.parse(localStorage.getItem('luna_custom_templates') || '[]');
+}
+
+function saveCustomTemplates(tpls){
+    localStorage.setItem('luna_custom_templates', JSON.stringify(tpls));
+}
+
+function getAllTemplates(){
+    var builtIn = (typeof LUNA_TEMPLATES !== 'undefined') ? LUNA_TEMPLATES.map(function(t){
+        return {
+            id: t.id,
+            name: t.name || '',
+            category: t.category || '',
+            style: t.style || '',
+            thumbnail: t.thumbnail || '',
+            cover: t.cover || '',
+            packages: t.packages || [],
+            languages: t.languages || [],
+            featured: t.featured || false,
+            active: t.active !== undefined ? t.active : true,
+            order: t.order || 0,
+            isCustom: false
+        };
+    }) : [];
+    var custom = getCustomTemplates().map(function(t){
+        t.isCustom = true;
+        return t;
+    });
+    return builtIn.concat(custom);
+}
+
+function renderTemplates(){
+    var all = getAllTemplates();
+    var filter = document.getElementById('templateCategoryFilter').value;
+    var list = document.getElementById('templateList');
+    var count = document.getElementById('templateCount');
+
+    if(filter !== 'all'){
+        all = all.filter(function(t){ return t.category === filter; });
+    }
+
+    all.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
+
+    count.textContent = all.length + ' şablon';
+
+    list.innerHTML = '';
+    if(!all.length){
+        list.innerHTML = '<div class="empty">Bu kateqoriyada şablon yoxdur.</div>';
+        return;
+    }
+
+    all.forEach(function(t){
+        var card = document.createElement('div');
+        card.className = 'card template-card';
+        var thumb = t.thumbnail ? '<img src="' + lunaEscapeHtml(t.thumbnail) + '" alt="' + lunaEscapeHtml(t.name) + '">' : '<div style="width:100%;height:240px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">ŞABLON</div>';
+        var statusBadge = t.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
+        var featuredBadge = t.featured ? '<span class="badge featured">Featured</span>' : '';
+        var customBadge = t.isCustom ? '<span class="badge" style="border-color:rgba(180,180,100,.3);color:#d4d488;">Custom</span>' : '';
+        var catLabel = '';
+        if(typeof lunaCategoryName === 'function'){
+            catLabel = lunaCategoryName(t.category || '');
+        } else {
+            catLabel = t.category || '';
+        }
+        var pkgTags = (t.packages || []).map(function(p){ return '<span class="pkg-tag">' + lunaEscapeHtml(p) + '</span>'; }).join('');
+        var langTags = (t.languages || []).map(function(l){ return '<span class="lang-tag">' + lunaEscapeHtml(l.toUpperCase()) + '</span>'; }).join('');
+
+        card.innerHTML =
+            thumb +
+            '<h3>' + lunaEscapeHtml(t.name || '') + '</h3>' +
+            '<div class="card-meta">' +
+                '<span class="badge">' + lunaEscapeHtml(catLabel) + '</span>' +
+                (t.style ? '<span class="badge">' + lunaEscapeHtml(t.style) + '</span>' : '') +
+                statusBadge + featuredBadge + customBadge +
+            '</div>' +
+            (pkgTags ? '<div class="pkg-tags">' + pkgTags + '</div>' : '') +
+            (langTags ? '<div class="lang-tags">' + langTags + '</div>' : '') +
+            '<div class="template-card card-footer">' +
+                '<div class="card-actions" style="width:100%;">' +
+                    (t.isCustom ? '<button class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' : '') +
+                    '<button class="toggle-btn" onclick="toggleTemplateActive(\'' + lunaEscapeHtml(t.id) + '\')">' + (t.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                    (t.isCustom ? '<button class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>' : '') +
+                '</div>' +
+            '</div>';
+        list.appendChild(card);
+    });
+}
+
+function openAddTemplate(){
+    document.getElementById('templateModalTitle').textContent = 'Yeni Şablon Əlavə Et';
+    document.getElementById('templateEditId').value = '';
+    document.getElementById('tplName').value = '';
+    document.getElementById('tplCategory').value = 'wedding';
+    document.getElementById('tplStyle').value = '';
+    document.getElementById('tplThumb').value = '';
+    document.getElementById('tplCover').value = '';
+    document.getElementById('tplOrder').value = '0';
+    document.getElementById('tplPkgBasic').checked = true;
+    document.getElementById('tplPkgPremium').checked = false;
+    document.getElementById('tplPkgLuxury').checked = false;
+    document.getElementById('tplPkgVideo').checked = false;
+    document.getElementById('tplLangAz').checked = true;
+    document.getElementById('tplLangEn').checked = false;
+    document.getElementById('tplLangTr').checked = false;
+    document.getElementById('tplLangRu').checked = false;
+    document.getElementById('tplFeatured').checked = false;
+    document.getElementById('tplActive').checked = true;
+    document.getElementById('templateModal').classList.add('open');
+}
+
+function openEditTemplate(id){
+    var custom = getCustomTemplates();
+    var t = custom.find(function(x){ return x.id === id; });
+    if(!t) return;
+    document.getElementById('templateModalTitle').textContent = 'Şablonu Redaktə Et';
+    document.getElementById('templateEditId').value = t.id;
+    document.getElementById('tplName').value = t.name || '';
+    document.getElementById('tplCategory').value = t.category || 'wedding';
+    document.getElementById('tplStyle').value = t.style || '';
+    document.getElementById('tplThumb').value = t.thumbnail || '';
+    document.getElementById('tplCover').value = t.cover || '';
+    document.getElementById('tplOrder').value = t.order || 0;
+    var pkgs = t.packages || [];
+    document.getElementById('tplPkgBasic').checked = pkgs.indexOf('basic') !== -1;
+    document.getElementById('tplPkgPremium').checked = pkgs.indexOf('premium') !== -1;
+    document.getElementById('tplPkgLuxury').checked = pkgs.indexOf('luxury') !== -1;
+    document.getElementById('tplPkgVideo').checked = pkgs.indexOf('video') !== -1;
+    var langs = t.languages || [];
+    document.getElementById('tplLangAz').checked = langs.indexOf('az') !== -1;
+    document.getElementById('tplLangEn').checked = langs.indexOf('en') !== -1;
+    document.getElementById('tplLangTr').checked = langs.indexOf('tr') !== -1;
+    document.getElementById('tplLangRu').checked = langs.indexOf('ru') !== -1;
+    document.getElementById('tplFeatured').checked = t.featured || false;
+    document.getElementById('tplActive').checked = t.active !== undefined ? t.active : true;
+    document.getElementById('templateModal').classList.add('open');
+}
+
+document.getElementById('templateForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var editId = document.getElementById('templateEditId').value;
+    var custom = getCustomTemplates();
+
+    var pkgs = [];
+    if(document.getElementById('tplPkgBasic').checked) pkgs.push('basic');
+    if(document.getElementById('tplPkgPremium').checked) pkgs.push('premium');
+    if(document.getElementById('tplPkgLuxury').checked) pkgs.push('luxury');
+    if(document.getElementById('tplPkgVideo').checked) pkgs.push('video');
+
+    var langs = [];
+    if(document.getElementById('tplLangAz').checked) langs.push('az');
+    if(document.getElementById('tplLangEn').checked) langs.push('en');
+    if(document.getElementById('tplLangTr').checked) langs.push('tr');
+    if(document.getElementById('tplLangRu').checked) langs.push('ru');
+
+    var data = {
+        name: document.getElementById('tplName').value.trim(),
+        category: document.getElementById('tplCategory').value,
+        style: document.getElementById('tplStyle').value.trim(),
+        thumbnail: document.getElementById('tplThumb').value.trim(),
+        cover: document.getElementById('tplCover').value.trim(),
+        packages: pkgs,
+        languages: langs,
+        featured: document.getElementById('tplFeatured').checked,
+        active: document.getElementById('tplActive').checked,
+        order: parseInt(document.getElementById('tplOrder').value) || 0
+    };
+
+    if(editId){
+        var idx = custom.findIndex(function(x){ return x.id === editId; });
+        if(idx !== -1){
+            data.id = editId;
+            custom[idx] = data;
+        }
+        showToast('Şablon yeniləndi');
+    } else {
+        data.id = 'tpl_' + Date.now();
+        custom.push(data);
+        showToast('Şablon əlavə edildi');
+    }
+
+    saveCustomTemplates(custom);
+    closeModal('templateModal');
+    renderTemplates();
+});
+
+function toggleTemplateActive(id){
+    var custom = getCustomTemplates();
+    var t = custom.find(function(x){ return x.id === id; });
+    if(t){
+        t.active = !t.active;
+        saveCustomTemplates(custom);
+        renderTemplates();
+        showToast(t.active ? 'Şablon aktiv edildi' : 'Şablon deaktiv edildi');
+    }
+}
+
+function deleteTemplate(id){
+    if(!confirm('Bu şablonu silmək istədiyinizə əminsiniz?')) return;
+    var custom = getCustomTemplates().filter(function(t){ return t.id !== id; });
+    saveCustomTemplates(custom);
+    renderTemplates();
+    showToast('Şablon silindi');
 }
 
 

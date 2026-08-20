@@ -1188,6 +1188,52 @@ footer p {
 
 
 /* =====================================================
+   OPENING STYLE VARIANTS
+===================================================== */
+
+.opening-elegant .envelope-scene { /* default — keep existing */ }
+
+.opening-editorial .envelope { border-radius: 0; }
+.opening-editorial .envelope-body { background: transparent; border: none; }
+.opening-editorial .letter { font-family: "Italiana", serif; font-size: 18px; letter-spacing: 4px; text-transform: uppercase; }
+.opening-editorial .envelope-scene { background: linear-gradient(135deg, #1a1410, #2a1f16); }
+.opening-editorial .envelope-body { border: 1px solid rgba(196,168,130,.3); }
+.opening-editorial .seal { background: var(--gold); }
+
+.opening-floral .envelope-scene { background: linear-gradient(to bottom, #f5ede3, #efe4d6); }
+.opening-floral .envelope-body { border: 2px solid rgba(196,168,130,.3); border-radius: 4px; }
+.opening-floral .seal { background: #d4a574; box-shadow: 0 0 30px rgba(196,168,130,.3); }
+.opening-floral .letter { background: #fff; border: 1px solid rgba(196,168,130,.15); }
+
+.opening-luxury .envelope-scene { background: linear-gradient(135deg, #0a0a0a, #1a1410); }
+.opening-luxury .envelope-body { background: #1a1410; border-color: rgba(196,168,130,.2); }
+.opening-luxury .seal { background: linear-gradient(135deg, #c4a882, #d4b892); }
+.opening-luxury .letter { background: #1a1410; color: #f5ede3; }
+.opening-luxury .letter .names { color: var(--gold); }
+
+.opening-minimal .envelope-scene { background: #fff; }
+.opening-minimal .envelope { border: none; box-shadow: none; }
+.opening-minimal .envelope-body { background: transparent; border: 1px solid rgba(0,0,0,.1); }
+.opening-minimal .seal { background: #333; width: 40px; height: 40px; }
+.opening-minimal .letter { font-family: "DM Sans", sans-serif; font-size: 14px; letter-spacing: 1px; }
+
+/* RSVP premium polish */
+.rsvp-form input:focus,
+.rsvp-form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.rsvp-button:active {
+    transform: scale(.97);
+}
+
+#rsvpThanks {
+    animation: nameReveal .8s cubic-bezier(.19,1,.22,1) both;
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -1614,6 +1660,21 @@ if (invitation.design) {
         invitation.design.toLowerCase()
     );
 }
+
+
+/* =====================================================
+   OPENING STYLE (based on theme)
+===================================================== */
+
+(function() {
+    var theme = (invitation.theme || "default").toLowerCase();
+    var openingClass = "opening-elegant";
+    if (theme === "editorial" || theme === "editorial-love") openingClass = "opening-editorial";
+    else if (theme === "floral" || theme === "botanical" || theme === "garden") openingClass = "opening-floral";
+    else if (theme === "noir" || theme === "black-gold" || theme === "luxe-gold" || theme === "dark") openingClass = "opening-luxury";
+    else if (theme === "minimal" || theme === "minimal-white" || theme === "modern-classic") openingClass = "opening-minimal";
+    document.querySelector(".envelope-scene").classList.add(openingClass);
+})();
 
 
 /* =====================================================

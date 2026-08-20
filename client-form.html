@@ -132,6 +132,64 @@ button,input,textarea,select{font-family:inherit}
     .template-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
     .tpl-card-info h4{font-size:12px}
 }
+
+/* ===== STEP INDICATOR ===== */
+.step-indicator{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;margin-bottom:24px;overflow-x:auto}
+.step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:60px;cursor:pointer;transition:.3s}
+.step-dot span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid rgba(92,61,46,.12);font-size:11px;font-weight:600;color:var(--muted);transition:.3s;background:#fff}
+.step-dot label{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);transition:.3s;white-space:nowrap}
+.step-dot.active span{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.step-dot.active label{color:var(--dark);font-weight:600}
+.step-dot.done span{background:var(--gold);color:#fff;border-color:var(--gold)}
+.step-dot.done label{color:var(--gold)}
+.step-line{width:24px;height:1px;background:rgba(92,61,46,.12);flex-shrink:0;margin-bottom:18px}
+.step-line.done{background:var(--gold)}
+
+/* ===== FORM STEPS ===== */
+.form-step{display:none;animation:stepFadeIn .4s ease both}
+.form-step.active{display:block}
+@keyframes stepFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-title{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:6px}
+.step-desc{font-size:10px;color:var(--muted);margin-bottom:24px;line-height:1.8}
+
+/* ===== CATEGORY PICKER ===== */
+.category-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cat-pick{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border:2px solid rgba(92,61,46,.08);border-radius:8px;cursor:pointer;transition:.35s;background:#fff}
+.cat-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,37,24,.08)}
+.cat-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.06)}
+.cat-pick-icon{font-size:28px}
+.cat-pick-name{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--text)}
+
+/* ===== PACKAGE PICKER ===== */
+.pkg-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pkg-pick{position:relative;padding:24px 16px;border:2px solid rgba(92,61,46,.08);border-radius:8px;cursor:pointer;transition:.35s;background:#fff;text-align:center}
+.pkg-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px)}
+.pkg-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.06)}
+.pkg-pick.featured::before{content:"ƏN POPULYAR";position:absolute;top:-1px;left:0;right:0;padding:5px;font-size:7px;font-weight:700;letter-spacing:2px;text-align:center;background:var(--gold);color:var(--dark);border-radius:6px 6px 0 0}
+.pkg-pick.featured{padding-top:36px}
+.pkg-pick-name{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:var(--dark)}
+.pkg-pick-price{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;color:var(--gold);margin-top:4px}
+.pkg-pick-price small{font-size:11px;font-family:"DM Sans",sans-serif;color:var(--muted)}
+.pkg-pick-tagline{font-size:9px;color:var(--muted);margin-top:6px}
+.pkg-pick-features{margin-top:12px;text-align:left}
+.pkg-pick-feat{font-size:9px;color:var(--text);padding:3px 0;display:flex;align-items:center;gap:6px}
+.pkg-pick-feat::before{content:"✓";color:var(--gold);font-size:8px;font-weight:700}
+
+/* ===== STEP NAVIGATION ===== */
+.step-nav{display:flex;align-items:center;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid rgba(92,61,46,.08)}
+
+/* ===== PREVIEW SUMMARY ===== */
+.preview-summary{background:rgba(245,237,227,.4);border:1px solid var(--border);border-radius:8px;padding:24px}
+.preview-summary h4{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:16px}
+.preview-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(92,61,46,.04);font-size:10px}
+.preview-row-label{color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.preview-row-value{color:var(--dark);font-weight:500}
+
+@media(max-width:720px){
+    .category-picker{grid-template-columns:repeat(2,1fr)}
+    .pkg-picker{grid-template-columns:1fr}
+    .step-dot label{display:none}
+}
 </style>
 </head>
 <body>
@@ -186,19 +244,80 @@ button,input,textarea,select{font-family:inherit}
 
     <section class="form-section">
         <div class="form-wrap">
-            <form id="invitationForm" class="form-card" novalidate>
-                <div class="form-grid" id="formGrid"></div>
+            <!-- STEP INDICATOR -->
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-dot active" data-step="1"><span>1</span><label>Kateqoriya</label></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="2"><span>2</span><label>Paket</label></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="3"><span>3</span><label>Dizayn</label></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="4"><span>4</span><label>Təfərrüatlar</label></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="5"><span>5</span><label>Şəkillər</label></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="6"><span>6</span><label>Preview</label></div>
+            </div>
 
-                <!-- VISUAL TEMPLATE SELECTOR -->
-                <div class="template-selector" id="templateSelector">
-                    <label data-i18n="formTemplate">Dizayn seçin</label>
+            <form id="invitationForm" class="form-card" novalidate>
+                <!-- Step 1: Category -->
+                <div class="form-step active" id="formStep1">
+                    <h3 class="step-title">Hadisə kateqoriyası</h3>
+                    <p class="step-desc">Dəvətnamənizin kateqoriyasını seçin</p>
+                    <div class="category-picker" id="categoryPicker">
+                        <div class="cat-pick" data-cat="wedding"><span class="cat-pick-icon">💒</span><span class="cat-pick-name">Toy</span></div>
+                        <div class="cat-pick" data-cat="engagement"><span class="cat-pick-icon">💍</span><span class="cat-pick-name">Nişan</span></div>
+                        <div class="cat-pick" data-cat="henna"><span class="cat-pick-icon">🎶</span><span class="cat-pick-name">Xına</span></div>
+                        <div class="cat-pick" data-cat="birthday"><span class="cat-pick-icon">🎂</span><span class="cat-pick-name">Ad Günü</span></div>
+                        <div class="cat-pick" data-cat="graduation"><span class="cat-pick-icon">🎓</span><span class="cat-pick-name">Məzuniyyət</span></div>
+                        <div class="cat-pick" data-cat="baby-shower"><span class="cat-pick-icon">👶</span><span class="cat-pick-name">Körpə Partisi</span></div>
+                        <div class="cat-pick" data-cat="business"><span class="cat-pick-icon">💼</span><span class="cat-pick-name">Biznes</span></div>
+                        <div class="cat-pick" data-cat="other"><span class="cat-pick-icon">✨</span><span class="cat-pick-name">Digər</span></div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Package -->
+                <div class="form-step" id="formStep2">
+                    <h3 class="step-title">Paket seçin</h3>
+                    <p class="step-desc">Lazimi funksiyaları daxil edən paketi seçin</p>
+                    <div class="pkg-picker" id="pkgPicker"></div>
+                </div>
+
+                <!-- Step 3: Template -->
+                <div class="form-step" id="formStep3">
+                    <h3 class="step-title">Dizayn seçin</h3>
+                    <p class="step-desc">Bəyəndiyiniz dəvətnamə dizaynını seçin</p>
                     <div class="template-grid" id="templateGrid"></div>
                     <input type="hidden" id="selectedTemplate" name="template" value="">
                 </div>
 
-                <div class="form-actions">
-                    <button class="btn btn-primary" type="submit" data-i18n="formSubmit">Dəvətnaməni yarat</button>
-                    <a class="btn btn-ghost" href="index.html" data-i18n="formBack">Geri</a>
+                <!-- Step 4: Details -->
+                <div class="form-step" id="formStep4">
+                    <h3 class="step-title">Təfərrüatlar</h3>
+                    <p class="step-desc">Dəvətnamənizin məlumatlarını doldurun</p>
+                    <div class="form-grid" id="formGrid"></div>
+                </div>
+
+                <!-- Step 5: Media -->
+                <div class="form-step" id="formStep5">
+                    <h3 class="step-title">Şəkillər və musiqi</h3>
+                    <p class="step-desc">Qalereya şəkilləri və fon musiqisi əlavə edin</p>
+                    <div class="form-grid" id="mediaGrid"></div>
+                </div>
+
+                <!-- Step 6: Preview & Submit -->
+                <div class="form-step" id="formStep6">
+                    <h3 class="step-title">Önizləmə</h3>
+                    <p class="step-desc">Dəvətnamənizi nəzərdən keçirin və yaradın</p>
+                    <div class="preview-summary" id="previewSummary"></div>
+                </div>
+
+                <!-- Step navigation -->
+                <div class="step-nav">
+                    <button class="btn btn-ghost" type="button" id="stepBack" style="display:none">← Geri</button>
+                    <div style="flex:1"></div>
+                    <button class="btn btn-primary" type="button" id="stepNext">Davam et →</button>
+                    <button class="btn btn-primary" type="submit" id="stepSubmit" style="display:none" data-i18n="formSubmit">Dəvətnaməni yarat</button>
                 </div>
             </form>
 
@@ -517,9 +636,173 @@ button,input,textarea,select{font-family:inherit}
         });
     }
 
+    /* ===== MULTI-STEP WIZARD ===== */
+    var currentStep = 1;
+    var totalSteps = 6;
+
+    function goToStep(step) {
+        if (step < 1 || step > totalSteps) return;
+        currentStep = step;
+
+        document.querySelectorAll(".form-step").forEach(function(el) { el.classList.remove("active"); });
+        var stepEl = document.getElementById("formStep" + step);
+        if (stepEl) stepEl.classList.add("active");
+
+        document.querySelectorAll(".step-dot").forEach(function(dot) {
+            var s = parseInt(dot.getAttribute("data-step"));
+            dot.classList.remove("active", "done");
+            if (s === step) dot.classList.add("active");
+            else if (s < step) dot.classList.add("done");
+        });
+        document.querySelectorAll(".step-line").forEach(function(line, i) {
+            line.classList.toggle("done", i < step - 1);
+        });
+
+        document.getElementById("stepBack").style.display = step > 1 ? "" : "none";
+
+        var isLast = step === totalSteps;
+        document.getElementById("stepNext").style.display = isLast ? "none" : "";
+        document.getElementById("stepSubmit").style.display = isLast ? "" : "none";
+
+        if (step === 2) renderPkgPicker();
+        if (step === 3) populateTemplateSelect();
+        if (step === 5) renderMediaFields();
+        if (step === 6) renderPreviewSummary();
+
+        var formCard = document.querySelector(".form-card");
+        if (formCard) formCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.querySelectorAll(".step-dot").forEach(function(dot) {
+        dot.addEventListener("click", function() {
+            var s = parseInt(this.getAttribute("data-step"));
+            if (s <= currentStep) goToStep(s);
+        });
+    });
+
+    document.getElementById("stepNext").addEventListener("click", function() {
+        if (currentStep === 1 && !category) {
+            alert("Kateqoriya seçin");
+            return;
+        }
+        if (currentStep === 2 && !packageName) {
+            alert("Paket seçin");
+            return;
+        }
+        goToStep(currentStep + 1);
+    });
+
+    document.getElementById("stepBack").addEventListener("click", function() {
+        goToStep(currentStep - 1);
+    });
+
+    document.getElementById("categoryPicker").addEventListener("click", function(e) {
+        var pick = e.target.closest(".cat-pick");
+        if (!pick) return;
+        document.querySelectorAll(".cat-pick").forEach(function(p) { p.classList.remove("selected"); });
+        pick.classList.add("selected");
+        category = pick.getAttribute("data-cat");
+
+        var catObj = typeof LUNA_CATEGORIES !== "undefined" ? LUNA_CATEGORIES.find(function(c) { return c.id === category; }) : null;
+        if (catObj) {
+            var catName = lunaCategoryName(category);
+            document.getElementById("pillCategory").textContent = catName;
+        }
+
+        setTimeout(function() { goToStep(2); }, 300);
+    });
+
+    function renderPkgPicker() {
+        var container = document.getElementById("pkgPicker");
+        if (!container || typeof LUNA_PACKAGES === "undefined") return;
+        container.innerHTML = "";
+        LUNA_PACKAGES.forEach(function(pkg) {
+            var card = document.createElement("div");
+            card.className = "pkg-pick" + (pkg.id === packageName ? " selected" : "") + (pkg.featured ? " featured" : "");
+            card.setAttribute("data-pkg", pkg.id);
+            var tagline = (pkg.tagline && pkg.tagline[LUNA_LANG]) || (pkg.tagline && pkg.tagline.az) || "";
+            var labels = (pkg.featureLabels && pkg.featureLabels[LUNA_LANG]) || (pkg.featureLabels && pkg.featureLabels.az) || {};
+            var featsHtml = "";
+            Object.keys(pkg.features).forEach(function(key) {
+                if (pkg.features[key]) {
+                    featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
+                }
+            });
+            card.innerHTML =
+                '<div class="pkg-pick-name">' + pkg.name + '</div>' +
+                '<div class="pkg-pick-price">' + pkg.price + ' <small>' + pkg.currency + '</small></div>' +
+                '<div class="pkg-pick-tagline">' + tagline + '</div>' +
+                '<div class="pkg-pick-features">' + featsHtml + '</div>';
+            card.addEventListener("click", function() {
+                container.querySelectorAll(".pkg-pick").forEach(function(c) { c.classList.remove("selected"); });
+                this.classList.add("selected");
+                packageName = pkg.id;
+                document.getElementById("pillPackage").textContent = pkg.name;
+            });
+            container.appendChild(card);
+        });
+    }
+
+    function renderMediaFields() {
+        var grid = document.getElementById("mediaGrid");
+        if (!grid) return;
+        var html = '';
+        var tierRank = {"default":0,"basic":1,"premium":2,"luxury":3};
+        var currentRank = tierRank[packageName] || 0;
+
+        if (currentRank >= 2) {
+            html += '<div class="form-field full" style="animation-delay:.05s"><label>Şəkil linkləri</label><textarea name="images" placeholder="https://... (hər sətirdə bir link)" rows="3"></textarea></div>';
+            html += '<div class="form-field full" style="animation-delay:.1s"><label>Şəkillər yüklə</label><input type="file" name="photos" accept="image/*" multiple></div>';
+        }
+        if (currentRank >= 3) {
+            html += '<div class="form-field full" style="animation-delay:.15s"><label>Musiqi linki</label><input type="url" name="music" placeholder="https://.../song.mp3"></div>';
+        }
+        if (packageName === "video") {
+            html += '<div class="form-field full" style="animation-delay:.05s"><label>Video yüklə</label><input type="file" name="videoFile" accept="video/*"></div>';
+        }
+        if (!html) {
+            html = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Bu paketdə əlavə media sahəsi yoxdur.</div>';
+        }
+        grid.innerHTML = html;
+    }
+
+    function renderPreviewSummary() {
+        var container = document.getElementById("previewSummary");
+        if (!container) return;
+        var fields = document.getElementById("formGrid");
+        var rows = '';
+
+        var catName = lunaCategoryName(category);
+        rows += '<div class="preview-row"><span class="preview-row-label">Kateqoriya</span><span class="preview-row-value">' + catName + '</span></div>';
+
+        var pkgObj = typeof LUNA_PACKAGES !== "undefined" ? LUNA_PACKAGES.find(function(p) { return p.id === packageName; }) : null;
+        rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + (pkgObj ? pkgObj.price + ' AZN' : '') + '</span></div>';
+
+        var tplId = document.getElementById("selectedTemplate") ? document.getElementById("selectedTemplate").value : "";
+        var tplObj = typeof LUNA_TEMPLATES !== "undefined" ? LUNA_TEMPLATES.find(function(t) { return t.id === tplId; }) : null;
+        rows += '<div class="preview-row"><span class="preview-row-label">Dizayn</span><span class="preview-row-value">' + (tplObj ? tplObj.name + ' (' + tplObj.style + ')' : tplId || '—') + '</span></div>';
+
+        if (fields) {
+            var labels = fields.querySelectorAll("label");
+            var inputs = fields.querySelectorAll("input, textarea, select");
+            for (var i = 0; i < inputs.length; i++) {
+                var inp = inputs[i];
+                var lbl = labels[i];
+                if (!inp.name || inp.type === "file" || inp.type === "hidden") continue;
+                var val = inp.value.trim();
+                if (!val) continue;
+                var name = lbl ? lbl.textContent.trim() : inp.name;
+                rows += '<div class="preview-row"><span class="preview-row-label">' + name + '</span><span class="preview-row-value">' + val + '</span></div>';
+            }
+        }
+
+        container.innerHTML = '<h4>Dəvətnamə xülasəsi</h4>' + rows;
+    }
+
     renderForm();
     applyVisibility();
     populateTemplateSelect();
+    goToStep(1);
 
     // Override lunaSetLanguage to also re-apply extra labels
     var origSetLang = lunaSetLanguage;
