@@ -1885,10 +1885,8 @@ if (experienceType === "interactive" && sceneConfig) {
 
 function startInteractiveExperience(config) {
     var engineEl = document.getElementById("sceneEngine");
-    var progressEl = document.getElementById("sceneProgress");
 
     engineEl.style.display = "";
-    progressEl.style.display = "";
 
     /* Build customer data for interpolation */
     var customerData = buildCustomerData();
@@ -1905,9 +1903,6 @@ function startInteractiveExperience(config) {
         engineEl,
         customerData
     );
-
-    /* Setup progress dots */
-    setupProgress(config.scenes.length, progressEl);
 
     engine.init();
 }
@@ -1953,32 +1948,13 @@ function buildCustomerData() {
     };
 }
 
-function setupProgress(count, container) {
-    var html = "";
-    for (var i = 0; i < count; i++) {
-        html += '<div class="scene-progress-dot' + (i === 0 ? " active" : "") + '" data-index="' + i + '"></div>';
-    }
-    container.innerHTML = html;
-}
-
-function updateProgress(index) {
-    var dots = document.querySelectorAll(".scene-progress-dot");
-    dots.forEach(function(dot, i) {
-        dot.classList.remove("active", "completed");
-        if (i < index) dot.classList.add("completed");
-        if (i === index) dot.classList.add("active");
-    });
-}
-
 function revealMainInvitation(customerData) {
     var engineEl = document.getElementById("sceneEngine");
-    var progressEl = document.getElementById("sceneProgress");
     var curtain = document.getElementById("revealCurtain");
     var card = document.getElementById("revealCard");
 
     /* Hide engine */
     engineEl.style.display = "none";
-    progressEl.style.display = "none";
 
     /* Show reveal */
     curtain.style.display = "";

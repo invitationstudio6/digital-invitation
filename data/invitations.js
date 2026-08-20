@@ -305,7 +305,7 @@ const invitations = {
 
         map: "https://www.google.com/maps",
 
-        message: "30 yaşımə qədər的生活中的美好时刻。İndi isə yeni yaşımın qeydini sizinlə birlikdə etmək istəyirəm.",
+        message: "30 yaşıma qədər həyatımdakı gözəl anları paylaşdım. İndi isə yeni yaşımın qeydini sizinlə birlikdə etmək istəyirəm.",
 
         images: [
             "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1500&q=90",
