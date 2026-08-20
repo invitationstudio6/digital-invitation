@@ -1470,6 +1470,34 @@ if (invitation.design) {
     );
 }
 
+/* Canva: use uploaded image as hero cover */
+if (invitation.canvaImage) {
+    document.querySelector(".hero").style.backgroundImage =
+        "url('" + invitation.canvaImage + "')";
+}
+
+/* Package-based section visibility */
+var pkg = (invitation.package || "basic").toLowerCase();
+
+if (pkg === "basic") {
+    var gallerySection = document.querySelector(".gallery-section");
+    var storySection = document.querySelectorAll(".section")[0];
+    var rsvpSection = document.querySelector(".rsvp-section");
+    var musicBtn = document.getElementById("musicButton");
+    if (gallerySection) gallerySection.style.display = "none";
+    if (rsvpSection) rsvpSection.style.display = "none";
+    if (musicBtn) musicBtn.style.display = "none";
+}
+
+/* Non-couple categories: hide ampersand and groom */
+var coupleCategories = ["wedding", "engagement", "anniversary"];
+if (coupleCategories.indexOf(invitation.category) === -1) {
+    var amp = document.getElementById("amp");
+    var groom = document.getElementById("groom");
+    if (amp) amp.style.display = "none";
+    if (groom) groom.style.display = "none";
+}
+
 
 /* =====================================================
    SCROLL REVEAL
@@ -1629,15 +1657,15 @@ function getDayName(dateString) {
 
 
 if (
-    invitation.countdown &&
-    invitation.countdown.date
+    invitation.countdown
 ) {
-    document.getElementById(
-        "dayName"
-    ).textContent =
-        getDayName(
-            invitation.countdown.date
-        );
+    var dateForDay = invitation.date || "";
+    if (dateForDay) {
+        document.getElementById(
+            "dayName"
+        ).textContent =
+            getDayName(dateForDay);
+    }
 }
 
 

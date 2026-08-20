@@ -171,6 +171,11 @@ input:focus,textarea:focus,select:focus{border-color:#b87961;box-shadow:0 0 0 4p
                 <label for="music">Musiqi (mp3 linki)</label>
                 <input id="music" name="music" type="url" placeholder="https://.../song.mp3">
             </div>
+            <div class="field full" id="canvaField" style="display:none">
+                <label for="canvaImage">Canva dəvətnamə şəkli</label>
+                <input id="canvaImage" name="canvaImage" type="file" accept="image/*">
+                <span class="hint">Canvasdan hazırladığınız dəvətnamə şəklini yükləyin.</span>
+            </div>
         </div>
         <div class="actions">
             <button class="btn btn-dark" type="submit">Dəvətnaməni yarat</button>
@@ -210,8 +215,17 @@ if (!isCouple) {
     document.getElementById("groom").required = false;
 }
 
-const rank = { basic: 1, premium: 2, luxury: 3 };
+const rank = { basic: 1, premium: 2, luxury: 3, canva: 2 };
 const currentRank = rank[packageName] || 1;
+
+/* Canva package: show upload field, hide design field */
+const isCanva = packageName === "canva";
+
+if (isCanva) {
+    document.getElementById("pillDesign").textContent = "Canva";
+    document.getElementById("pillDesign").style.background = "#C4A882";
+    document.getElementById("pillDesign").style.color = "#3E2518";
+}
 
 document.querySelectorAll("[data-tier]").forEach(function (field) {
     const needed = rank[field.getAttribute("data-tier")] || 1;
@@ -219,6 +233,11 @@ document.querySelectorAll("[data-tier]").forEach(function (field) {
         field.style.display = "none";
     }
 });
+
+/* Show Canva upload field for canva package */
+if (isCanva) {
+    document.getElementById("canvaField").style.display = "flex";
+}
 
 const defaultImages = [
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
@@ -279,43 +298,65 @@ document.getElementById("invitationForm").addEventListener("submit", function (e
         : [];
 
     filesToDataUrls(document.getElementById("photos").files).then(function (fromFiles) {
-        const images = fromText.concat(fromFiles);
-        const invitationData = {
-            id: invitationId,
-            package: packageName,
-            category: category,
-            design: design,
-            bride: bride,
-            groom: groom,
-            date: date,
-            dateShort: dateShort,
-            time: time,
-            venue: venue,
-            location: location,
-            map: map || "https://www.google.com/maps",
-            story: lunaFormatStory(story),
-            images: images.length ? images : defaultImages,
-            countdown: date + "T" + time + ":00",
-            music: music
-        };
 
-        try {
-            lunaSaveInvitation(invitationData);
-        } catch (error) {
-            invitationData.images = fromText.length ? fromText : defaultImages;
-            lunaSaveInvitation(invitationData);
-            alert("Şəkillər çox böyük olduğu üçün yalnız linklər saxlanıldı.");
+        var canvaInput = document.getElementById("canvaImage");
+        var canvaFile = canvaInput && canvaInput.files[0] ? canvaInput.files[0] : null;
+
+        function proceedWithCanva(canvaDataUrl) {
+            var images = fromText.concat(fromFiles);
+            if (canvaDataUrl) {
+                images.unshift(canvaDataUrl);
+            }
+
+            const invitationData = {
+                id: invitationId,
+                package: packageName,
+                category: category,
+                design: design,
+                bride: bride,
+                groom: groom,
+                date: date,
+                dateShort: dateShort,
+                time: time,
+                venue: venue,
+                location: location,
+                map: map || "https://www.google.com/maps",
+                story: lunaFormatStory(story),
+                images: images.length ? images : defaultImages,
+                countdown: date + "T" + time + ":00",
+                music: music
+            };
+
+            if (canvaDataUrl) {
+                invitationData.canvaImage = canvaDataUrl;
+            }
+
+            try {
+                lunaSaveInvitation(invitationData);
+            } catch (error) {
+                invitationData.images = fromText.length ? fromText : defaultImages;
+                lunaSaveInvitation(invitationData);
+                alert("Şəkillər çox böyük olduğu üçün yalnız linklər saxlanıldı.");
+            }
+
+            const url = new URL("data/invitation.html", window.location.href);
+            url.searchParams.set("id", invitationId);
+
+            const link = document.getElementById("generatedLink");
+            link.href = url.href;
+            link.textContent = url.href;
+            document.getElementById("openLink").href = url.href;
+            document.getElementById("result").style.display = "block";
+            document.getElementById("result").scrollIntoView({ behavior: "smooth" });
         }
 
-        const url = new URL("data/invitation.html", window.location.href);
-        url.searchParams.set("id", invitationId);
-
-        const link = document.getElementById("generatedLink");
-        link.href = url.href;
-        link.textContent = url.href;
-        document.getElementById("openLink").href = url.href;
-        document.getElementById("result").style.display = "block";
-        document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+        if (canvaFile) {
+            var reader = new FileReader();
+            reader.onload = function(e) { proceedWithCanva(e.target.result); };
+            reader.readAsDataURL(canvaFile);
+        } else {
+            proceedWithCanva(null);
+        }
     });
 });
 
