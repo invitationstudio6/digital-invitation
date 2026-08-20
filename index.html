@@ -327,15 +327,16 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
     <a href="#home" class="logo">Luna</a>
     <div class="nav-links">
         <a href="#home" data-i18n="navHome">Ana səhifə</a>
-        <a href="#categories" data-i18n="navCategories">Kolleksiyalar</a>
-        <a href="#templates" data-i18n="navInvitations">Dəvətnamələr</a>
-        <a href="#packages" data-i18n="navPricing">Qiymətlər</a>
-        <a href="#how" data-i18n="navHowItWorks">Necə işləyir</a>
+        <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+        <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+        <a href="how-it-works.html" data-i18n="navHowItWorks">Necə işləyir</a>
+        <a href="admin.html" style="opacity:.5" data-i18n="navAdmin">Admin</a>
     </div>
     <div class="languages">
         <button class="active" data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
         <button data-lang="ru">RU</button>
+        <button data-lang="tr">TR</button>
     </div>
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
 </nav>
@@ -343,14 +344,15 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
     <a href="#home" data-i18n="navHome">Ana səhifə</a>
-    <a href="#categories" data-i18n="navCategories">Kolleksiyalar</a>
-    <a href="#templates" data-i18n="navInvitations">Dəvətnamələr</a>
-    <a href="#packages" data-i18n="navPricing">Qiymətlər</a>
-    <a href="#how" data-i18n="navHowItWorks">Necə işləyir</a>
+    <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+    <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+    <a href="how-it-works.html" data-i18n="navHowItWorks">Necə işləyir</a>
+    <a href="admin.html" style="opacity:.5" data-i18n="navAdmin">Admin</a>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
         <button data-lang="ru">RU</button>
+        <button data-lang="tr">TR</button>
     </div>
 </div>
 
@@ -369,7 +371,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <h1><span class="hero-gradient" data-i18n="heroTitle">gözəl anlar,<br>gözəl dəvətlərlə</span><span data-i18n="heroSubtitle">hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
         <p class="hero-text" data-i18n="heroText">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın.</p>
         <div class="hero-buttons">
-            <a href="#templates" class="btn btn-dark" data-i18n="heroCTA1">Dəvətnamələrə bax</a>
+            <a href="invitations.html" class="btn btn-dark" data-i18n="heroCTA1">Dəvətnamələrə bax</a>
             <a href="#categories" class="btn btn-light" data-i18n="heroCTA2">Dəvətnaməni yarat</a>
         </div>
     </div>
@@ -415,10 +417,11 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <h2 data-i18n="vidTitle">Animasiyalı<br>video dəvətnəmələr.</h2>
         <p data-i18n="vidText">Qısa və təsirli video dəvətnəmələrlə qonaqlarınızı heyrətləndirin.</p>
         <div style="margin-top:24px">
-            <a href="client-form.html?package=video" class="btn btn-dark" data-i18n="vidChoose">Video seçin</a>
+            <a href="videos.html" class="btn btn-dark" data-i18n="vidChoose">Video seçin</a>
         </div>
     </div>
-    <div>
+    <div id="videoFeaturedContainer">
+        <!-- Dynamic video cards rendered by JS -->
         <div class="video-featured">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Video Invitation">
             <div class="video-price-badge" data-i18n="vidPrice">20 AZN</div>
@@ -516,13 +519,20 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <div style="margin-top:8px;">Digital Invitations</div>
     </div>
     <div class="footer-center">
+        <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
+            <a href="index.html">Home</a>
+            <a href="invitations.html">Invitations</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="videos.html">Videos</a>
+            <a href="admin.html">Admin</a>
+        </div>
         <div>© 2026 Luna</div>
         <div data-i18n="footerTagline">Toy · Tədbir · An</div>
     </div>
     <div class="footer-socials">
         <a href="#">Instagram</a>
         <a href="mailto:hello@luna-invites.com">Email</a>
-        <a href="admin.html" style="opacity:.4" data-i18n="navAdmin">Admin</a>
     </div>
 </footer>
 

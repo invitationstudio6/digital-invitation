@@ -113,6 +113,25 @@ button,input,textarea,select{font-family:inherit}
     .result-actions{flex-direction:column}
     .result-actions .btn{width:100%;justify-content:center}
 }
+
+/* ===== VISUAL TEMPLATE SELECTOR ===== */
+.template-selector{margin-top:28px;padding-top:24px;border-top:1px solid rgba(92,61,46,.08)}
+.template-selector>label{display:block;font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tpl-card{position:relative;border:2px solid rgba(92,61,46,.08);border-radius:8px;overflow:hidden;cursor:pointer;transition:.35s;background:#fff}
+.tpl-card:hover{border-color:rgba(196,168,130,.3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(62,37,24,.1)}
+.tpl-card.selected{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,168,130,.2)}
+.tpl-card.selected::after{content:"✓";position:absolute;top:8px;right:8px;width:24px;height:24px;background:var(--gold);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;z-index:2}
+.tpl-card-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85);transition:transform .6s,filter .4s}
+.tpl-card:hover .tpl-card-img{transform:scale(1.04);filter:saturate(1)}
+.tpl-card-info{padding:10px;text-align:center}
+.tpl-card-info h4{font-family:"Cormorant Garamond",serif;font-size:14px;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2}
+.tpl-card-info p{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+.tpl-card-info .pkg{display:inline-block;margin-top:5px;padding:2px 8px;font-size:7px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.3);color:var(--gold);border-radius:3px}
+@media(max-width:720px){
+    .template-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+    .tpl-card-info h4{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -169,6 +188,14 @@ button,input,textarea,select{font-family:inherit}
         <div class="form-wrap">
             <form id="invitationForm" class="form-card" novalidate>
                 <div class="form-grid" id="formGrid"></div>
+
+                <!-- VISUAL TEMPLATE SELECTOR -->
+                <div class="template-selector" id="templateSelector">
+                    <label data-i18n="formTemplate">Dizayn seçin</label>
+                    <div class="template-grid" id="templateGrid"></div>
+                    <input type="hidden" id="selectedTemplate" name="template" value="">
+                </div>
+
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit" data-i18n="formSubmit">Dəvətnaməni yarat</button>
                     <a class="btn btn-ghost" href="index.html" data-i18n="formBack">Geri</a>
@@ -346,8 +373,6 @@ button,input,textarea,select{font-family:inherit}
         f.push({ name: "videoFile", type: "file", labelI18n: "formVideo", col: "full", accept: "video/*", hintI18n: "formVideoHint", feature: "video", hidden: true });
 
         f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS });
-        f.push({ name: "template", type: "select", labelI18n: "formTemplate", col: "half", id: "templateSelect" });
-
         return f;
     }
 
@@ -451,17 +476,45 @@ button,input,textarea,select{font-family:inherit}
     }
 
     function populateTemplateSelect() {
-        var select = document.getElementById("templateSelect");
-        if (!select) return;
+        var grid = document.getElementById("templateGrid");
+        var hidden = document.getElementById("selectedTemplate");
+        var selector = document.getElementById("templateSelector");
+        if (!grid || !hidden) return;
         var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : [];
         var filtered = templates.filter(function(t) {
             return t.category === category && t.packages.indexOf(packageName) !== -1;
         });
-        var html = '<option value="">\u2014</option>';
+        if (filtered.length === 0) {
+            selector.style.display = "none";
+            return;
+        }
+        selector.style.display = "";
+        grid.innerHTML = "";
+        var currentDesign = design || (filtered[0] && filtered[0].id) || "";
+        hidden.value = currentDesign;
+
         filtered.forEach(function(t) {
-            html += '<option value="' + t.id + '">' + t.name + ' \u2014 ' + t.style + '</option>';
+            var card = document.createElement("div");
+            card.className = "tpl-card" + (t.id === currentDesign ? " selected" : "");
+            card.setAttribute("data-tpl", t.id);
+            var minPkg = t.minPackage ? t.minPackage.charAt(0).toUpperCase() + t.minPackage.slice(1) : "";
+            card.innerHTML =
+                '<img class="tpl-card-img" src="' + t.thumbnail + '" alt="' + t.name + '" loading="lazy">' +
+                '<div class="tpl-card-info">' +
+                    '<h4>' + t.name + '</h4>' +
+                    '<p>' + t.style + '</p>' +
+                    '<span class="pkg">' + minPkg + '</span>' +
+                '</div>';
+            card.addEventListener("click", function() {
+                grid.querySelectorAll(".tpl-card").forEach(function(c) { c.classList.remove("selected"); });
+                this.classList.add("selected");
+                hidden.value = this.getAttribute("data-tpl");
+                design = this.getAttribute("data-tpl");
+                var pillEl = document.getElementById("pillDesign");
+                if (pillEl) pillEl.textContent = t.name;
+            });
+            grid.appendChild(card);
         });
-        select.innerHTML = html;
     }
 
     renderForm();
