@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna — Dəvətnamələr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+<style>
+:root{
+    --cream:#F5EDE3;
+    --dark:#3E2518;
+    --gold:#C4A882;
+    --text:#5C3D2E;
+    --muted:#8A6E5E;
+    --light:rgba(255,252,247,.7);
+    --border:rgba(92,61,46,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.menu-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+
+/* ===== LOADER ===== */
+.loader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:var(--cream);transition:opacity .8s ease,visibility .8s ease}
+.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-inner{text-align:center}
+.loader-logo{font-family:"Italiana",serif;font-size:56px;letter-spacing:2px;color:var(--dark)}
+.loader-line{width:60px;height:1px;background:var(--gold);margin:18px auto;animation:loaderLine 1.5s ease-in-out infinite}
+@keyframes loaderLine{0%,100%{transform:scaleX(.2);opacity:.3}50%{transform:scaleX(1);opacity:1}}
+
+/* ===== BACKGROUND ===== */
+.site-bg{position:fixed;inset:0;z-index:-20;background:var(--cream);overflow:hidden}
+.site-bg::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(196,168,130,.08),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(196,168,130,.06),transparent 50%)}
+.floating-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-15;filter:blur(80px);opacity:.06;animation:orbFloat 30s ease-in-out infinite}
+.orb-1{width:600px;height:600px;background:var(--gold);top:-200px;left:-200px}
+.orb-2{width:500px;height:500px;background:#A896BC;bottom:-150px;right:-150px;animation-delay:-15s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.95)}}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(1100px,90%);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(245,237,227,.80);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);z-index:5000;transition:.4s}
+.navbar.scrolled{top:10px;background:rgba(245,237,227,.92);border-color:rgba(92,61,46,.12)}
+.logo{font-family:"Italiana",serif;font-size:34px;letter-spacing:1px;color:var(--dark)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{position:relative;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:.3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.current{color:var(--dark)}
+.nav-links a.current::after{width:100%}
+.languages{display:flex;gap:3px}
+.languages button{border:0;background:transparent;color:var(--muted);font-size:8px;font-weight:500;padding:7px 10px;border-radius:20px;transition:.3s}
+.languages button:hover{background:rgba(196,168,130,.12)}
+.languages button.active{background:var(--dark);color:var(--cream)}
+.menu-toggle{display:none;width:42px;height:42px;border:0;border-radius:50%;background:var(--dark);color:var(--cream)}
+.menu-toggle span{display:block;width:16px;height:1px;margin:4px auto;background:var(--cream);transition:.3s}
+.menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:0;right:-100%;width:min(360px,85%);height:100vh;z-index:4500;padding:120px 35px 40px;background:rgba(245,237,227,.96);backdrop-filter:blur(25px);transition:.5s ease}
+.mobile-menu.open{right:0}
+.mobile-menu a{display:block;padding:18px 0;border-bottom:1px solid var(--border);font-family:"Cormorant Garamond",serif;font-size:30px;font-style:italic;color:var(--dark)}
+.mobile-languages{display:flex;gap:8px;margin-top:30px}
+.mobile-languages button{padding:9px 13px;border:1px solid rgba(92,61,46,.10);border-radius:20px;background:rgba(255,252,247,.8);font-size:9px;font-weight:500;color:var(--text)}
+
+/* ===== HERO ===== */
+.hero{min-height:55vh;padding:170px 6% 80px;display:flex;align-items:center;justify-content:center;position:relative;text-align:center;overflow:hidden}
+.hero-content{width:min(900px,100%);position:relative;z-index:10}
+.hero-label{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border:1px solid rgba(196,168,130,.25);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--muted);animation:fadeDown 1s ease both}
+.hero-label::before{content:"✦";color:var(--gold)}
+.hero h1{margin-top:40px;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(50px,12vw,120px);line-height:.82;letter-spacing:-3px;color:var(--dark);animation:heroTitle 1.2s .15s ease both}
+.hero-desc{width:min(540px,100%);margin:30px auto 0;font-size:11px;line-height:2.1;color:var(--muted);animation:fadeUp 1s .4s ease both}
+@keyframes heroTitle{from{opacity:0;transform:translateY(25px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:.35s;position:relative;overflow:hidden;border:0;cursor:pointer}
+.btn::before{content:"";position:absolute;inset:0;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:-1}
+.btn-dark{background:var(--dark);color:var(--cream)}
+.btn-dark::before{background:var(--text)}
+.btn-dark:hover{transform:translateY(-3px)}
+.btn-light{background:transparent;border:1px solid rgba(92,61,46,.15);color:var(--text)}
+.btn-light::before{background:rgba(196,168,130,.10)}
+.btn-light:hover{transform:translateY(-3px)}
+
+/* ===== SECTIONS ===== */
+.section{padding:80px 5%}
+.section-inner{width:min(1200px,100%);margin:auto}
+.section-heading{margin-bottom:45px}
+.kicker{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.section-heading h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,6.5vw,88px);line-height:.88;font-weight:300;font-style:italic;color:var(--dark)}
+.section-heading p{max-width:560px;margin-top:24px;color:var(--muted);font-size:10px;line-height:2}
+
+/* ===== FILTER BAR ===== */
+.filter-bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;align-items:center;justify-content:space-between}
+.cat-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cat-tab{padding:10px 22px;border:1px solid rgba(92,61,46,.12);background:transparent;color:var(--muted);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.35s;border-radius:0}
+.cat-tab:hover{border-color:var(--gold);color:var(--gold)}
+.cat-tab.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.style-filter{position:relative}
+.style-filter select{appearance:none;-webkit-appearance:none;padding:10px 36px 10px 22px;border:1px solid rgba(92,61,46,.12);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.35s;border-radius:0}
+.style-filter select:hover{border-color:var(--gold);color:var(--gold)}
+.style-filter select:focus{outline:none;border-color:var(--gold)}
+.style-filter::after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:10px;pointer-events:none}
+
+/* ===== TEMPLATE GRID ===== */
+.designs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.design-thumb{position:relative;overflow:hidden;border:1px solid rgba(92,37,24,.06);background:#fff;cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1);text-decoration:none;display:block;opacity:1;transform:translateY(0)}
+.design-thumb.hidden{display:none}
+.design-thumb.entering{animation:cardEnter .5s ease both}
+@keyframes cardEnter{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.design-thumb:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(62,37,24,.12)}
+.design-thumb-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85);transition:transform 1.2s cubic-bezier(.19,1,.22,1),filter .5s}
+.design-thumb:hover .design-thumb-img{transform:scale(1.06);filter:saturate(1)}
+.design-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.75) 0%,transparent 50%);opacity:0;transition:.4s}
+.design-thumb:hover .design-thumb-overlay{opacity:1}
+.design-thumb-info{position:absolute;bottom:0;left:0;right:0;padding:18px;transform:translateY(8px);transition:.4s}
+.design-thumb:hover .design-thumb-info{transform:translateY(0)}
+.design-thumb-info .cat-badge{display:inline-block;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:2px;text-transform:uppercase;background:rgba(196,168,130,.25);color:var(--cream);backdrop-filter:blur(8px);margin-bottom:8px}
+.design-thumb-info h4{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:#fff}
+.design-thumb-info p{font-size:8px;letter-spacing:2px;color:rgba(255,252,247,.6);margin-top:4px;text-transform:uppercase}
+.design-thumb-info .pkg-badge{display:inline-block;margin-top:8px;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.4);color:var(--gold)}
+.design-thumb-actions{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;transition:.4s;z-index:3}
+.design-thumb:hover .design-thumb-actions{opacity:1}
+.design-thumb-actions .btn{font-size:8px;min-height:40px;padding:0 20px;z-index:1}
+.design-thumb-actions .btn-preview{background:rgba(255,252,247,.9);color:var(--dark)}
+.design-thumb-actions .btn-preview:hover{background:#fff}
+.design-thumb-actions .btn-choose{background:var(--gold);color:var(--dark)}
+.design-thumb-actions .btn-choose:hover{background:#d4b892}
+
+/* ===== NO RESULTS ===== */
+.no-results{text-align:center;padding:80px 20px;color:var(--muted)}
+.no-results h3{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:12px}
+.no-results p{font-size:10px;line-height:2}
+
+/* ===== VIDEO SECTION ===== */
+.video-section{background:rgba(255,252,247,.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.video-section .section-inner{width:min(1100px,100%);margin:auto}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.video-card{position:relative;border-radius:4px;overflow:hidden;box-shadow:0 15px 45px rgba(62,37,24,.10);cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1);text-decoration:none;display:block}
+.video-card:hover{transform:translateY(-6px);box-shadow:0 25px 60px rgba(62,37,24,.15)}
+.video-card img{width:100%;aspect-ratio:16/9;object-fit:cover;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.video-card:hover img{transform:scale(1.05)}
+.video-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.7) 0%,transparent 50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px;text-align:center}
+.video-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,252,247,.5);background:rgba(255,252,247,.15);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:.3s}
+.video-card:hover .video-play-btn{background:rgba(255,252,247,.25);border-color:rgba(255,252,247,.7);transform:translate(-50%,-50%) scale(1.1)}
+.video-play-btn::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:4px}
+.video-card-info{position:relative;z-index:2;width:100%}
+.video-card-info .cat-badge{display:inline-block;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:2px;text-transform:uppercase;background:rgba(196,168,130,.25);color:var(--cream);backdrop-filter:blur(8px);margin-bottom:8px}
+.video-card-info h4{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:#fff}
+.video-card-info .video-price{display:inline-block;margin-top:8px;padding:5px 14px;font-size:10px;font-weight:600;letter-spacing:1px;background:var(--gold);color:var(--dark);border-radius:20px}
+
+/* ===== CTA ===== */
+.cta-section{position:relative;overflow:hidden}
+.cta-box{padding:100px 30px;text-align:center;background:rgba(255,252,247,.50);border:1px solid var(--border);position:relative}
+.cta-box h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,6.5vw,85px);font-weight:300;font-style:italic;line-height:.88}
+.cta-box p{max-width:520px;margin:24px auto 30px;color:var(--muted);font-size:10px;line-height:2}
+
+/* ===== FOOTER ===== */
+footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+.footer-logo{font-family:"Italiana",serif;font-size:32px;color:var(--dark);letter-spacing:1px}
+.footer-center{text-align:center;line-height:2}
+.footer-socials{display:flex;gap:15px}
+.footer-socials a{transition:.3s}
+.footer-socials a:hover{color:var(--gold)}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(62,37,24,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s;padding:30px}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal-close{position:fixed;top:24px;right:24px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,252,247,.2);background:rgba(62,37,24,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;z-index:10001}
+.modal-close:hover{background:rgba(62,37,24,.8);border-color:rgba(255,252,247,.4)}
+.modal-content{width:min(600px,100%);max-height:85vh;overflow-y:auto;border-radius:4px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.3);transform:translateY(30px) scale(.95);transition:.5s cubic-bezier(.19,1,.22,1)}
+.modal-overlay.open .modal-content{transform:translateY(0) scale(1)}
+.modal-cover{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden}
+.modal-cover img{width:100%;height:100%;object-fit:cover}
+.modal-cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(62,37,24,.1),rgba(62,37,24,.6));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:40px 30px;text-align:center}
+.modal-eyebrow{font-size:8px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,252,247,.7);margin-bottom:12px}
+.modal-names{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,6vw,48px);font-weight:300;font-style:italic;color:#fff;line-height:1.1}
+.modal-date{margin-top:16px;font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:500}
+.modal-body{padding:30px}
+.modal-message{text-align:center;font-family:"Cormorant Garamond",serif;font-size:16px;font-style:italic;color:var(--text);line-height:1.8;padding:20px 10px;border-bottom:1px solid var(--border)}
+.modal-details{padding:20px 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.modal-detail{display:flex;flex-direction:column;gap:4px}
+.modal-detail-label{font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.modal-detail-value{font-family:"Cormorant Garamond",serif;font-size:16px;font-style:italic;color:var(--dark)}
+.modal-actions{display:flex;gap:10px;padding:0 30px 30px;justify-content:center}
+.modal-actions .btn{min-height:42px;font-size:8px}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+    .designs-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:850px){
+    .navbar{height:62px}
+    .nav-links{display:none}
+    .menu-toggle{display:block}
+    .languages{margin-left:auto;margin-right:10px}
+    .logo{font-size:30px}
+    .hero{padding-top:140px;min-height:45vh}
+    .designs-grid{grid-template-columns:repeat(2,1fr)}
+    .filter-bar{flex-direction:column;gap:16px}
+    .cat-tabs{justify-content:center}
+}
+@media(max-width:600px){
+    .navbar{width:94%;padding:0 16px}
+    .languages button{padding:6px;font-size:7px}
+    .hero{padding:135px 20px 60px}
+    .hero h1{font-size:48px;letter-spacing:-2px}
+    .hero-desc{font-size:10px}
+    .designs-section{padding:60px 5%}
+    .designs-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .design-thumb-info h4{font-size:16px}
+    .section{padding:60px 5%}
+    .section-heading{margin-bottom:30px}
+    .section-heading h2{font-size:50px}
+    .video-grid{grid-template-columns:1fr}
+    .cta-box{padding:70px 20px}
+    footer{flex-direction:column;gap:22px;text-align:center}
+    .modal-content{max-height:90vh}
+    .modal-names{font-size:28px}
+    .cat-tab{padding:8px 16px;font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-logo">Luna</div>
+        <div class="loader-line"></div>
+    </div>
+</div>
+
+<!-- BACKGROUND -->
+<div class="site-bg"></div>
+<div class="floating-orb orb-1"></div>
+<div class="floating-orb orb-2"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">Luna</a>
+    <div class="nav-links">
+        <a href="index.html" data-i18n="navHome">Ana səhifə</a>
+        <a href="invitations.html" class="current" data-i18n="navInvitations">Dəvətnamələr</a>
+        <a href="index.html#categories" data-i18n="navCategories">Kolleksiyalar</a>
+        <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+        <a href="index.html#how" data-i18n="navHowItWorks">Necə işləyir</a>
+    </div>
+    <div class="languages">
+        <button class="active" data-lang="az">AZ</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" data-i18n="navHome">Ana səhifə</a>
+    <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+    <a href="index.html#categories" data-i18n="navCategories">Kolleksiyalar</a>
+    <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+    <a href="index.html#how" data-i18n="navHowItWorks">Necə işləyir</a>
+    <div class="mobile-languages">
+        <button data-lang="az">AZ</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+    <div class="hero-content">
+        <div class="hero-label" data-i18n="tplKicker">Dəvətnamə dizaynları</div>
+        <h1 data-i18n="tplTitle">Dəvətnamələr</h1>
+        <p class="hero-desc" data-i18n="tplText">Hər hadisə üçün xüsusi dizayn. Bəyəndiyinizi seçin və fərdiləşdirin.</p>
+    </div>
+</section>
+
+<!-- TEMPLATES SECTION -->
+<section class="section designs-section reveal" id="designs">
+    <div class="section-inner">
+        <div class="filter-bar">
+            <div class="cat-tabs" id="catTabs"></div>
+            <div class="style-filter">
+                <select id="styleFilter">
+                    <option value="all">STYLES</option>
+                </select>
+            </div>
+        </div>
+        <div class="designs-grid" id="designsGrid"></div>
+        <div class="no-results" id="noResults" style="display:none">
+            <h3>Dizayn tapılmadı</h3>
+            <p>Bu kateqoriya və ya stil üçün dizayn yoxdur.</p>
+        </div>
+    </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="section video-section reveal" id="videoSection" style="display:none">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center">
+            <div class="kicker" data-i18n="vidKicker">Video dəvətnamələr</div>
+            <h2 data-i18n="vidTitle">Animasiyalı<br>video dəvətnəmələr.</h2>
+            <p data-i18n="vidText" style="text-align:center;max-width:600px;margin:24px auto 0">Qısa və təsirli video dəvətnəmələrlə qonaqlarınızı heyrətləndirin.</p>
+        </div>
+        <div class="video-grid" id="videoGrid"></div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section reveal">
+    <div class="section-inner">
+        <div class="cta-box">
+            <div class="kicker" data-i18n="ctaKicker">Luna</div>
+            <h2 data-i18n="ctaTitle">Sənin hekayən<br>burada başlayır.</h2>
+            <p data-i18n="ctaText">Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.</p>
+            <a href="index.html#templates" class="btn btn-dark" data-i18n="ctaStart">Dəvətnaməni yarat</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <div class="footer-logo">Luna</div>
+        <div style="margin-top:8px;">Digital Invitations</div>
+    </div>
+    <div class="footer-center">
+        <div>© 2026 Luna</div>
+        <div data-i18n="footerTagline">Toy · Tədbir · An</div>
+    </div>
+    <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="mailto:hello@luna-invites.com">Email</a>
+        <a href="admin.html" style="opacity:.4" data-i18n="navAdmin">Admin</a>
+    </div>
+</footer>
+
+<!-- PREVIEW MODAL -->
+<div class="modal-overlay" id="previewModal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-content">
+        <div class="modal-cover">
+            <img id="modalCoverImg" src="" alt="Invitation Preview">
+            <div class="modal-cover-overlay">
+                <div class="modal-eyebrow" id="modalEyebrow"></div>
+                <div class="modal-names" id="modalNames"></div>
+                <div class="modal-date" id="modalDate"></div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-message" id="modalMessage"></div>
+            <div class="modal-details">
+                <div class="modal-detail">
+                    <span class="modal-detail-label" data-i18n="invVenueLabel">MƏKAN</span>
+                    <span class="modal-detail-value" id="modalVenue"></span>
+                </div>
+                <div class="modal-detail">
+                    <span class="modal-detail-label" data-i18n="invDateLabel">TARİX</span>
+                    <span class="modal-detail-value" id="modalDateDetail"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <a id="modalFormLink" href="#" class="btn btn-dark" data-i18n="tplChoose">Bu dizaynı seç</a>
+            <button class="btn btn-light" id="modalCloseBtn" data-i18n="formBack">Geri</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+/* ===== INIT LANGUAGE ===== */
+lunaInitLanguage();
+
+/* ===== MOBILE MENU ===== */
+var menuToggle = document.getElementById("menuToggle");
+var mobileMenu = document.getElementById("mobileMenu");
+function closeMobileMenu() {
+    mobileMenu.classList.remove("open");
+    menuToggle.classList.remove("open");
+    document.body.classList.remove("menu-open");
+}
+menuToggle.addEventListener("click", function() {
+    mobileMenu.classList.toggle("open");
+    menuToggle.classList.toggle("open");
+    document.body.classList.toggle("menu-open");
+});
+document.querySelectorAll(".mobile-menu a").forEach(function(a) {
+    a.addEventListener("click", closeMobileMenu);
+});
+
+/* ===== NAVBAR SCROLL ===== */
+window.addEventListener("scroll", function() {
+    document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 40);
+});
+
+/* ===== SCROLL REVEAL ===== */
+var revealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+        if (e.isIntersecting) {
+            e.target.classList.add("visible");
+            revealObs.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(function(el) { revealObs.observe(el); });
+
+/* ===== LOADER ===== */
+window.addEventListener("load", function() {
+    setTimeout(function() {
+        document.getElementById("loader").classList.add("hide");
+    }, 600);
+});
+
+/* ===== GET ALL TEMPLATES (data.js + localStorage admin designs) ===== */
+function getAllTemplates() {
+    var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.slice() : [];
+    try {
+        var adminDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
+        if (Array.isArray(adminDesigns)) {
+            adminDesigns.forEach(function(d) {
+                if (d && d.id && d.name) {
+                    templates.push({
+                        id: d.id,
+                        name: d.name,
+                        category: d.category || "other",
+                        style: d.style || "",
+                        thumbnail: d.thumbnail || d.image || "",
+                        cover: d.cover || d.thumbnail || d.image || "",
+                        minPackage: d.minPackage || d.package || "basic",
+                        packages: d.packages || [d.minPackage || d.package || "basic"],
+                        preview: d.preview || null
+                    });
+                }
+            });
+        }
+    } catch(e) {}
+    return templates;
+}
+
+/* ===== BUILD UNIQUE STYLES LIST ===== */
+function buildStylesList(templates) {
+    var stylesMap = {};
+    templates.forEach(function(t) {
+        if (t.style) {
+            var parts = t.style.split(/[·,]/);
+            parts.forEach(function(s) {
+                var trimmed = s.trim();
+                if (trimmed) stylesMap[trimmed] = true;
+            });
+        }
+    });
+    return Object.keys(stylesMap).sort();
+}
+
+/* ===== URL PARAMS ===== */
+var urlParams = new URLSearchParams(window.location.search);
+var urlCategory = urlParams.get("category") || "all";
+var currentStyle = "all";
+
+/* ===== RENDER CATEGORY TABS ===== */
+function renderTabs() {
+    var tabs = document.getElementById("catTabs");
+    if (!tabs || typeof LUNA_CATEGORIES === "undefined") return;
+    tabs.innerHTML = "";
+    var allBtn = document.createElement("button");
+    allBtn.className = "cat-tab";
+    allBtn.setAttribute("data-cat", "all");
+    allBtn.textContent = lunaT("tplFilterAll");
+    tabs.appendChild(allBtn);
+    LUNA_CATEGORIES.forEach(function(cat) {
+        var btn = document.createElement("button");
+        btn.className = "cat-tab";
+        btn.setAttribute("data-cat", cat.id);
+        btn.textContent = lunaCategoryName(cat.id);
+        tabs.appendChild(btn);
+    });
+    var activeTab = tabs.querySelector('[data-cat="' + urlCategory + '"]');
+    if (activeTab) {
+        activeTab.classList.add("active");
+    } else {
+        tabs.querySelector('[data-cat="all"]').classList.add("active");
+    }
+}
+
+/* ===== RENDER STYLE FILTER ===== */
+function renderStyleFilter() {
+    var select = document.getElementById("styleFilter");
+    if (!select) return;
+    var templates = getAllTemplates();
+    var styles = buildStylesList(templates);
+    select.innerHTML = '<option value="all">STYLES</option>';
+    styles.forEach(function(s) {
+        var opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        select.appendChild(opt);
+    });
+}
+
+/* ===== RENDER TEMPLATES ===== */
+function renderTemplates(catFilter, styleFilter) {
+    var grid = document.getElementById("designsGrid");
+    var noResults = document.getElementById("noResults");
+    if (!grid) return;
+    grid.innerHTML = "";
+    catFilter = catFilter || "all";
+    styleFilter = styleFilter || "all";
+    var allTemplates = getAllTemplates();
+
+    var filtered = allTemplates.filter(function(t) {
+        var catMatch = catFilter === "all" || t.category === catFilter;
+        var styleMatch = true;
+        if (styleFilter !== "all" && t.style) {
+            styleMatch = t.style.toLowerCase().indexOf(styleFilter.toLowerCase()) !== -1;
+        } else if (styleFilter !== "all") {
+            styleMatch = false;
+        }
+        return catMatch && styleMatch;
+    });
+
+    if (filtered.length === 0) {
+        noResults.style.display = "block";
+        return;
+    }
+    noResults.style.display = "none";
+
+    filtered.forEach(function(tpl, idx) {
+        var card = document.createElement("div");
+        card.className = "design-thumb entering";
+        card.setAttribute("data-cat", tpl.category);
+        card.setAttribute("data-style", tpl.style || "");
+        card.style.animationDelay = (idx * 0.06) + "s";
+
+        var catName = lunaCategoryName(tpl.category);
+        var minPkg = tpl.minPackage ? tpl.minPackage.charAt(0).toUpperCase() + tpl.minPackage.slice(1) : "";
+
+        card.innerHTML =
+            '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy">' +
+            '<div class="design-thumb-overlay"></div>' +
+            '<div class="design-thumb-info">' +
+                '<span class="cat-badge">' + catName + '</span>' +
+                '<h4>' + tpl.name + '</h4>' +
+                '<p>' + (tpl.style || "") + '</p>' +
+                '<span class="pkg-badge">' + minPkg + '</span>' +
+            '</div>' +
+            '<div class="design-thumb-actions">' +
+                '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
+                '<a href="client-form.html?design=' + tpl.id + '&package=' + tpl.minPackage + '&category=' + tpl.category + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
+            '</div>';
+
+        grid.appendChild(card);
+    });
+
+    grid.querySelectorAll(".btn-preview").forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openPreviewModal(this.getAttribute("data-tpl"));
+        });
+    });
+}
+
+/* ===== FILTER HANDLER ===== */
+function applyFilters() {
+    var activeTab = document.querySelector(".cat-tab.active");
+    var cat = activeTab ? activeTab.getAttribute("data-cat") : "all";
+    var style = document.getElementById("styleFilter").value;
+    urlCategory = cat;
+    currentStyle = style;
+    renderTemplates(cat, style);
+}
+
+/* ===== CATEGORY TAB CLICK ===== */
+document.getElementById("catTabs").addEventListener("click", function(e) {
+    var tab = e.target.closest(".cat-tab");
+    if (!tab) return;
+    document.querySelectorAll(".cat-tab").forEach(function(t) { t.classList.remove("active"); });
+    tab.classList.add("active");
+    applyFilters();
+});
+
+/* ===== STYLE FILTER CHANGE ===== */
+document.getElementById("styleFilter").addEventListener("change", function() {
+    applyFilters();
+});
+
+/* ===== RENDER VIDEO INVITATIONS ===== */
+function renderVideos() {
+    var section = document.getElementById("videoSection");
+    var grid = document.getElementById("videoGrid");
+    if (!section || !grid) return;
+    var videos = [];
+    try {
+        videos = LUNA_VIDEO_INVITATIONS || [];
+    } catch(e) {}
+    var featured = videos.filter(function(v) { return v.featured && v.active; });
+    if (featured.length === 0) {
+        section.style.display = "none";
+        return;
+    }
+    section.style.display = "block";
+    grid.innerHTML = "";
+    featured.forEach(function(v) {
+        var card = document.createElement("a");
+        card.href = v.url || "#";
+        card.target = "_blank";
+        card.className = "video-card";
+        card.innerHTML =
+            '<img src="' + (v.thumbnail || v.image || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85") + '" alt="' + (v.name || "Video") + '" loading="lazy">' +
+            '<div class="video-card-overlay">' +
+                '<div class="video-play-btn"></div>' +
+                '<div class="video-card-info">' +
+                    '<span class="cat-badge">' + (v.category ? lunaCategoryName(v.category) : "") + '</span>' +
+                    '<h4>' + (v.name || "Video Dəvətnamə") + '</h4>' +
+                    '<span class="video-price">20 AZN</span>' +
+                '</div>' +
+            '</div>';
+        grid.appendChild(card);
+    });
+}
+
+/* ===== PREVIEW MODAL ===== */
+function openPreviewModal(tplId) {
+    var allTemplates = getAllTemplates();
+    var tpl = allTemplates.find(function(t) { return t.id === tplId; });
+    if (!tpl) return;
+    if (tpl.preview) {
+        var p = tpl.preview;
+        var names = Array.isArray(p.names) ? p.names.join(" & ") : (p.name || "");
+        document.getElementById("modalCoverImg").src = tpl.cover || tpl.thumbnail;
+        document.getElementById("modalEyebrow").textContent = p.eyebrow || "";
+        document.getElementById("modalNames").textContent = names;
+        document.getElementById("modalDate").textContent = p.date || "";
+        document.getElementById("modalMessage").textContent = p.message || "";
+        document.getElementById("modalVenue").textContent = (p.venue || "") + (p.location ? ", " + p.location : "");
+        document.getElementById("modalDateDetail").textContent = p.date || "";
+    } else {
+        document.getElementById("modalCoverImg").src = tpl.cover || tpl.thumbnail;
+        document.getElementById("modalEyebrow").textContent = tpl.category ? lunaCategoryName(tpl.category) : "";
+        document.getElementById("modalNames").textContent = tpl.name;
+        document.getElementById("modalDate").textContent = "";
+        document.getElementById("modalMessage").textContent = tpl.style || "";
+        document.getElementById("modalVenue").textContent = "";
+        document.getElementById("modalDateDetail").textContent = "";
+    }
+    var formLink = "client-form.html?design=" + tpl.id + "&package=" + (tpl.minPackage || "basic") + "&category=" + (tpl.category || "other");
+    document.getElementById("modalFormLink").href = formLink;
+    document.getElementById("previewModal").classList.add("open");
+    document.body.classList.add("menu-open");
+}
+
+function closePreviewModal() {
+    document.getElementById("previewModal").classList.remove("open");
+    document.body.classList.remove("menu-open");
+}
+document.getElementById("modalClose").addEventListener("click", closePreviewModal);
+document.getElementById("modalCloseBtn").addEventListener("click", closePreviewModal);
+document.getElementById("previewModal").addEventListener("click", function(e) {
+    if (e.target === this) closePreviewModal();
+});
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closePreviewModal();
+});
+
+/* ===== RE-RENDER ON LANGUAGE CHANGE ===== */
+var _origSetLang = lunaSetLanguage;
+lunaSetLanguage = function(lang) {
+    _origSetLang(lang);
+    renderTabs();
+    renderStyleFilter();
+    renderTemplates(urlCategory, currentStyle);
+    renderVideos();
+    /* update no results text */
+    var noRes = document.getElementById("noResults");
+    if (noRes) {
+        noRes.querySelector("h3").textContent = lunaT("tplFilterAll") === "All" || lunaT("tplFilterAll") === "Hamısı" || lunaT("tplFilterAll") === "Все" ? "Dizayn tapılmadı" : "No designs found";
+        noRes.querySelector("p").textContent = "";
+    }
+};
+
+/* ===== INIT ===== */
+renderTabs();
+renderStyleFilter();
+renderTemplates(urlCategory, currentStyle);
+renderVideos();
+</script>
+</body>
+</html>

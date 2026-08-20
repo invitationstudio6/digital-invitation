@@ -1,373 +1,711 @@
 <!DOCTYPE html>
 <html lang="az">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna — Dəvətnaməni yarat</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
 <style>
+:root{
+    --cream:#F5EDE3;
+    --dark:#3E2518;
+    --gold:#C4A882;
+    --text:#5C3D2E;
+    --muted:#8A6E5E;
+    --light:rgba(255,252,247,.7);
+    --border:rgba(92,61,46,.08);
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-    min-height:100vh;
-    font-family:"DM Sans",sans-serif;
-    color:#32251f;
-    background:
-        radial-gradient(circle at 8% 12%,rgba(244,185,166,.55),transparent 28%),
-        radial-gradient(circle at 92% 8%,rgba(204,181,232,.45),transparent 28%),
-        radial-gradient(circle at 80% 80%,rgba(168,211,226,.35),transparent 30%),
-        #f8f2ee;
-}
+body{font-family:"DM Sans",sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.menu-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
 button,input,textarea,select{font-family:inherit}
-nav{
-    height:78px;
-    padding:0 6%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+
+.site-bg{position:fixed;inset:0;z-index:-20;background:var(--cream);overflow:hidden}
+.site-bg::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(196,168,130,.08),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(196,168,130,.06),transparent 50%)}
+.floating-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-15;filter:blur(80px);opacity:.06;animation:orbFloat 30s ease-in-out infinite}
+.orb-1{width:600px;height:600px;background:var(--gold);top:-200px;left:-200px}
+.orb-2{width:500px;height:500px;background:#A896BC;bottom:-150px;right:-150px;animation-delay:-15s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.95)}}
+
+.navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(1100px,90%);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(245,237,227,.80);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);z-index:5000;transition:.4s}
+.navbar.scrolled{top:10px;background:rgba(245,237,227,.92);border-color:rgba(92,61,46,.12)}
+.logo{font-family:"Italiana",serif;font-size:34px;letter-spacing:1px;color:var(--dark)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{position:relative;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:.3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-links a:hover::after{width:100%}
+.languages{display:flex;gap:3px}
+.languages button{border:0;background:transparent;color:var(--muted);font-size:8px;font-weight:500;padding:7px 10px;border-radius:20px;transition:.3s;cursor:pointer}
+.languages button:hover{background:rgba(196,168,130,.12)}
+.languages button.active{background:var(--dark);color:var(--cream)}
+.menu-toggle{display:none;width:42px;height:42px;border:0;border-radius:50%;background:var(--dark);color:var(--cream);cursor:pointer}
+.menu-toggle span{display:block;width:16px;height:1px;margin:4px auto;background:var(--cream);transition:.3s}
+.menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:0;right:-100%;width:min(360px,85%);height:100vh;z-index:4500;padding:120px 35px 40px;background:rgba(245,237,227,.96);backdrop-filter:blur(25px);transition:.5s ease}
+.mobile-menu.open{right:0}
+.mobile-menu a{display:block;padding:18px 0;border-bottom:1px solid var(--border);font-family:"Cormorant Garamond",serif;font-size:30px;font-style:italic;color:var(--dark)}
+.mobile-languages{display:flex;gap:8px;margin-top:30px}
+.mobile-languages button{padding:9px 13px;border:1px solid rgba(92,61,46,.10);border-radius:20px;background:rgba(255,252,247,.8);font-size:9px;font-weight:500;color:var(--text);cursor:pointer}
+.mobile-languages button.active{background:var(--dark);color:var(--cream)}
+
+.hero{padding:160px 6% 20px;text-align:center}
+.hero-content{width:min(700px,100%);margin:0 auto}
+.hero-label{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border:1px solid rgba(196,168,130,.25);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.hero-label::before{content:"\2726";color:var(--gold)}
+.hero h1{margin-top:32px;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(42px,8vw,80px);line-height:.88;letter-spacing:-2px;color:var(--dark);animation:heroIn 1s .1s ease both}
+.hero-desc{width:min(480px,100%);margin:22px auto 0;font-size:12px;line-height:2;color:var(--muted);animation:fadeUp .8s .3s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.meta-pills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;animation:fadeUp .8s .5s ease both}
+.pill{border:1px solid rgba(92,61,46,.10);background:rgba(255,252,247,.65);padding:8px 18px;border-radius:999px;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+
+.form-section{padding:10px 6% 100px}
+.form-wrap{width:min(880px,100%);margin:0 auto}
+.form-card{background:rgba(255,252,249,.82);border:1px solid rgba(92,61,46,.06);box-shadow:0 40px 100px rgba(80,50,30,.07),0 1px 3px rgba(80,50,30,.04);padding:44px;border-radius:28px;animation:fadeUp .6s .6s ease both}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form-field{display:flex;flex-direction:column;gap:7px;opacity:0;transform:translateY(10px);animation:fieldIn .4s ease forwards}
+.form-field.full{grid-column:1 / -1}
+@keyframes fieldIn{to{opacity:1;transform:translateY(0)}}
+.form-field label{font-size:10px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.form-field input,.form-field textarea,.form-field select{
+    width:100%;border:1px solid rgba(92,61,46,.12);background:#fff;padding:14px 18px;border-radius:14px;font-size:14px;color:var(--dark);outline:none;transition:.3s
 }
-.logo{font-family:"Italiana",serif;font-size:34px}
-.nav-links{display:flex;gap:28px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6d5b52}
-.wrap{width:min(920px,90%);margin:20px auto 90px}
-.hero{text-align:center;margin-bottom:48px}
-.kicker{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#b87961}
-h1{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:clamp(42px,8vw,72px);line-height:.95;margin:16px 0 14px}
-.hero p{max-width:520px;margin:0 auto;color:#7a6a62;font-size:14px;line-height:1.8}
-.meta-pills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
-.pill{
-    border:1px solid rgba(50,37,31,.12);
-    background:rgba(255,255,255,.55);
-    padding:8px 14px;
-    border-radius:999px;
-    font-size:10px;
-    letter-spacing:1.6px;
-    text-transform:uppercase;
-    color:#6c5040;
-}
-form, .result-card{
-    background:rgba(255,252,249,.78);
-    border:1px solid rgba(50,37,31,.08);
-    box-shadow:0 30px 80px rgba(80,50,30,.08);
-    padding:36px;
-    border-radius:28px;
-}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field.full{grid-column:1 / -1}
-label{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#6c5040}
-input,textarea,select{
-    width:100%;
-    border:1px solid rgba(50,37,31,.14);
-    background:#fff;
-    padding:14px 16px;
-    border-radius:14px;
-    font-size:15px;
-    color:#32251f;
-    outline:none;
-}
-textarea{min-height:140px;resize:vertical;line-height:1.7}
-input:focus,textarea:focus,select:focus{border-color:#b87961;box-shadow:0 0 0 4px rgba(184,121,97,.12)}
-.hint{font-size:12px;color:#8a7870}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.btn{
-    border:0;
-    cursor:pointer;
-    padding:16px 26px;
-    border-radius:999px;
-    letter-spacing:1.6px;
-    text-transform:uppercase;
-    font-size:11px;
-}
-.btn-dark{background:#32251f;color:#fff}
-.btn-ghost{background:transparent;border:1px solid rgba(50,37,31,.18);color:#32251f}
-.result-card{display:none;margin-top:22px;text-align:center}
-.result-card h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:36px;margin-bottom:10px}
-.result-card p{color:#7a6a62;margin-bottom:18px}
-.result-card a.link{
-    display:inline-block;
-    word-break:break-all;
-    color:#6c5040;
-    border-bottom:1px solid #b87961;
-    margin-bottom:22px;
-}
+.form-field textarea{min-height:110px;resize:vertical;line-height:1.7}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(196,168,130,.10)}
+.form-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A6E5E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
+.form-field input[type="file"]{padding:12px 14px;cursor:pointer}
+.form-field-hint{font-size:11px;color:var(--muted);line-height:1.5}
+.form-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+
+.btn{border:0;cursor:pointer;padding:16px 32px;border-radius:999px;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--dark);color:var(--cream)}
+.btn-primary:hover{background:#2a1a10;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(92,61,46,.15);color:var(--dark)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+.result-card{display:none;background:rgba(255,252,249,.82);border:1px solid rgba(92,61,46,.06);box-shadow:0 40px 100px rgba(80,50,30,.07);padding:52px 44px;border-radius:28px;text-align:center;margin-top:28px;animation:fadeUp .5s ease both}
+.result-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#d4b896);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.result-card h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:40px;color:var(--dark);margin-bottom:8px}
+.result-card p{color:var(--muted);font-size:13px;margin-bottom:24px}
+.result-link{display:inline-block;word-break:break-all;padding:14px 28px;background:rgba(196,168,130,.08);border:1px solid rgba(196,168,130,.2);border-radius:14px;color:var(--dark);font-size:13px;margin-bottom:28px;transition:.3s;max-width:100%}
+.result-link:hover{background:rgba(196,168,130,.15);border-color:var(--gold)}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
 @media(max-width:720px){
-    .grid{grid-template-columns:1fr}
-    form,.result-card{padding:24px}
+    .navbar{width:min(1100px,94%);padding:0 18px}
     .nav-links{display:none}
+    .menu-toggle{display:flex;align-items:center;justify-content:center}
+    .hero{padding:130px 6% 16px}
+    .hero h1{font-size:clamp(36px,10vw,56px)}
+    .form-card{padding:24px;border-radius:20px}
+    .form-grid{grid-template-columns:1fr;gap:16px}
+    .form-actions{flex-direction:column}
+    .form-actions .btn{width:100%;justify-content:center}
+    .result-card{padding:36px 24px}
+    .result-actions{flex-direction:column}
+    .result-actions .btn{width:100%;justify-content:center}
 }
 </style>
 </head>
 <body>
 
-<nav>
+<div class="site-bg"></div>
+<div class="floating-orb orb-1"></div>
+<div class="floating-orb orb-2"></div>
+
+<nav class="navbar" id="navbar">
     <a class="logo" href="index.html">Luna</a>
     <div class="nav-links">
-        <a href="index.html#categories">Kolleksiyalar</a>
-        <a href="index.html#pricing">Qiymətlər</a>
-        <a href="designs/index.html">Dizaynlar</a>
+        <a href="index.html" data-i18n="navHome">Ana səhifə</a>
+        <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+        <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+        <div class="languages">
+            <button data-lang="az" class="active">AZ</button>
+            <button data-lang="en">EN</button>
+            <button data-lang="ru">RU</button>
+            <button data-lang="tr">TR</button>
+        </div>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
-<div class="wrap">
-    <header class="hero">
-        <div class="kicker">Luna Studio</div>
-        <h1>Dəvətnaməni<br>birlikdə yazaq.</h1>
-        <p>Adlar, tarix, məkan və hekayənizi əlavə edin. Hazır linki qonaqlarınızla dərhal paylaşa bilərsiniz.</p>
-        <div class="meta-pills">
-            <span class="pill" id="pillDesign">Amelia</span>
-            <span class="pill" id="pillPackage">Luxury</span>
-            <span class="pill" id="pillCategory">Wedding</span>
-        </div>
-    </header>
-
-    <form id="invitationForm">
-        <div class="grid">
-            <div class="field" id="nameOneField">
-                <label id="nameOneLabel" for="bride">Gəlin</label>
-                <input id="bride" name="bride" required placeholder="Aysel">
-            </div>
-            <div class="field" id="nameTwoField">
-                <label id="nameTwoLabel" for="groom">Bəy</label>
-                <input id="groom" name="groom" placeholder="Murad">
-            </div>
-            <div class="field">
-                <label for="date">Tarix</label>
-                <input id="date" name="date" type="date" required>
-            </div>
-            <div class="field">
-                <label for="time">Saat</label>
-                <input id="time" name="time" type="time" required value="19:00">
-            </div>
-            <div class="field">
-                <label for="venue">Məkan</label>
-                <input id="venue" name="venue" required placeholder="Crystal Hall">
-            </div>
-            <div class="field">
-                <label for="location">Şəhər</label>
-                <input id="location" name="location" required placeholder="Bakı, Azərbaycan">
-            </div>
-            <div class="field full" data-tier="premium">
-                <label for="map">Google Maps linki</label>
-                <input id="map" name="map" type="url" placeholder="https://maps.google.com/...">
-            </div>
-            <div class="field full" data-tier="luxury">
-                <label for="story">Hekayəniz</label>
-                <textarea id="story" name="story" placeholder="Bu günə necə gəldiyinizi qonaqlarınıza danışın..."></textarea>
-            </div>
-            <div class="field full" data-tier="premium">
-                <label for="images">Foto linkləri</label>
-                <textarea id="images" name="images" placeholder="Hər sətirdə bir Unsplash və ya şəkil linki"></textarea>
-                <span class="hint">Link yoxdursa, Luna sizin üçün zərif nümunə şəkillər əlavə edəcək.</span>
-            </div>
-            <div class="field full" data-tier="premium">
-                <label for="photos">Və ya cihazdan şəkil seçin</label>
-                <input id="photos" name="photos" type="file" accept="image/*" multiple>
-            </div>
-            <div class="field full" data-tier="luxury">
-                <label for="music">Musiqi (mp3 linki)</label>
-                <input id="music" name="music" type="url" placeholder="https://.../song.mp3">
-            </div>
-            <div class="field full" id="canvaField" style="display:none">
-                <label for="canvaImage">Video faylı</label>
-                <input id="canvaImage" name="videoFile" type="file" accept="video/*">
-                <span class="hint">Video dəvətnamə faylını yükləyin (mp4).</span>
-            </div>
-        </div>
-        <div class="actions">
-            <button class="btn btn-dark" type="submit">Dəvətnaməni yarat</button>
-            <a class="btn btn-ghost" href="index.html">Geri</a>
-        </div>
-    </form>
-
-    <div class="result-card" id="result">
-        <h2>Hazırdır.</h2>
-        <p>Bu linki qonaqlarınızla paylaşın. Eyni brauzerdə açıldığında dəvətnamə görünəcək.</p>
-        <a class="link" id="generatedLink" href="#" target="_blank"></a>
-        <div class="actions" style="justify-content:center">
-            <button class="btn btn-dark" type="button" onclick="copyLink()">Linki kopyala</button>
-            <a class="btn btn-ghost" id="openLink" href="#" target="_blank">Dəvətnaməni aç</a>
-        </div>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" data-i18n="navHome">Ana səhifə</a>
+    <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+    <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+    <div class="mobile-languages">
+        <button data-lang="az" class="active">AZ</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+        <button data-lang="tr">TR</button>
     </div>
 </div>
 
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Luna Studio</div>
+            <h1 data-i18n="formTitle">Dəvətnaməni<br>birlikdə yazaq.</h1>
+            <p class="hero-desc" data-i18n="formDesc">Adlar, tarix, məkan və hekayənizi əlavə edin.</p>
+            <div class="meta-pills">
+                <span class="pill" id="pillDesign">—</span>
+                <span class="pill" id="pillPackage">—</span>
+                <span class="pill" id="pillCategory">—</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <div class="form-wrap">
+            <form id="invitationForm" class="form-card" novalidate>
+                <div class="form-grid" id="formGrid"></div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit" data-i18n="formSubmit">Dəvətnaməni yarat</button>
+                    <a class="btn btn-ghost" href="index.html" data-i18n="formBack">Geri</a>
+                </div>
+            </form>
+
+            <div class="result-card" id="resultCard">
+                <div class="result-icon">&#10003;</div>
+                <h2 data-i18n="formReady">Hazırdır.</h2>
+                <p data-i18n="formReadyDesc">Bu linki qonaqlarınızla paylaşın.</p>
+                <a class="result-link" id="generatedLink" href="#" target="_blank"></a>
+                <div class="result-actions">
+                    <button class="btn btn-primary" type="button" onclick="copyLink()">
+                        <span data-i18n="formCopyLink">Linki kopyala</span>
+                    </button>
+                    <a class="btn btn-ghost" id="openLink" href="#" target="_blank" data-i18n="formOpenLink">Dəvətnaməni aç</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
 <script src="data/luna.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
 <script>
-const params = new URLSearchParams(window.location.search);
-const design = params.get("design") || "amelia";
-const packageName = (params.get("package") || "basic").toLowerCase();
-const category = (params.get("category") || "wedding").toLowerCase();
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    var design = (params.get("design") || "amelia").toLowerCase();
+    var packageName = (params.get("package") || "basic").toLowerCase();
+    var category = (params.get("category") || "wedding").toLowerCase();
 
-document.getElementById("pillDesign").textContent = design.charAt(0).toUpperCase() + design.slice(1);
-document.getElementById("pillPackage").textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1);
-document.getElementById("pillCategory").textContent = category.charAt(0).toUpperCase() + category.slice(1);
+    lunaInitLanguage();
 
-const coupleCategories = ["wedding", "engagement", "anniversary"];
-const isCouple = coupleCategories.indexOf(category) !== -1;
+    document.getElementById("pillDesign").textContent = design.charAt(0).toUpperCase() + design.slice(1);
+    document.getElementById("pillPackage").textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1);
+    document.getElementById("pillCategory").textContent = lunaCategoryName(category);
 
-if (!isCouple) {
-    document.getElementById("nameOneLabel").textContent = "Ad / tədbir";
-    document.getElementById("bride").placeholder = "Leyla";
-    document.getElementById("nameTwoField").style.display = "none";
-    document.getElementById("groom").required = false;
-}
-
-const rank = { video: 1, basic: 1, premium: 2, luxury: 3 };
-const currentRank = rank[packageName] || 1;
-
-/* Video package: show video upload field */
-const isVideo = packageName === "video";
-
-if (isVideo) {
-    document.getElementById("pillDesign").textContent = "Video";
-    document.getElementById("pillDesign").style.background = "#C4A882";
-    document.getElementById("pillDesign").style.color = "#3E2518";
-}
-
-document.querySelectorAll("[data-tier]").forEach(function (field) {
-    const needed = rank[field.getAttribute("data-tier")] || 1;
-    if (currentRank < needed) {
-        field.style.display = "none";
-    }
-});
-
-/* Show video upload field for video package */
-if (isVideo) {
-    document.getElementById("canvaField").style.display = "flex";
-    document.getElementById("canvaField").querySelector("label").textContent = "Video faylı (mp4)";
-    document.getElementById("canvaImage").accept = "video/*";
-    document.getElementById("canvaImage").name = "videoFile";
-}
-
-const defaultImages = [
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
-    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90"
-];
-
-function filesToDataUrls(files) {
-    const list = Array.from(files || []).slice(0, 8);
-    return Promise.all(list.map(function (file) {
-        return new Promise(function (resolve) {
-            const reader = new FileReader();
-            reader.onload = function () { resolve(reader.result); };
-            reader.onerror = function () { resolve(null); };
-            reader.readAsDataURL(file);
-        });
-    })).then(function (urls) {
-        return urls.filter(Boolean);
-    });
-}
-
-document.getElementById("invitationForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const bride = document.getElementById("bride").value.trim();
-    const groom = isCouple ? document.getElementById("groom").value.trim() : "";
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-    const venue = document.getElementById("venue").value.trim();
-    const location = document.getElementById("location").value.trim();
-    const map = document.getElementById("map").value.trim();
-    const story = document.getElementById("story").value.trim();
-    const music = document.getElementById("music").value.trim();
-    const imageText = document.getElementById("images").value.trim();
-
-    if (isCouple && !groom) {
-        alert("Zəhmət olmasa bəyin adını da yazın.");
-        return;
+    if (packageName === "video") {
+        document.getElementById("pillDesign").textContent = "Video";
+        document.getElementById("pillDesign").style.background = "var(--gold)";
+        document.getElementById("pillDesign").style.color = "var(--dark)";
     }
 
-    if (date && new Date(date + "T00:00:00") < new Date(new Date().toDateString())) {
-        alert("Tarix keçmişdə ola bilməz. Zəhmət olmasa düzgün tarix seçin.");
-        return;
+    var BUSINESS_EVENT_TYPES = [
+        { value: "konfrans", text: "Konfrans" },
+        { value: "korporativ", text: "Korporativ tədbir" },
+        { value: "mehsul", text: "Məhsul təqdimatı" },
+        { value: "sam-yemeyi", text: "Biznes şam yeməyi" },
+        { value: "sebekelesme", text: "Şəbəkələşmə" },
+        { value: "seminar", text: "Seminar" },
+        { value: "workshop", text: "Workshop" },
+        { value: "ildonum", text: "Şirkət ildönümü" },
+        { value: "acilis", text: "Açılış mərasimi" }
+    ];
+
+    var LANGUAGE_OPTIONS = [
+        { value: "az", text: "Azərbaycan" },
+        { value: "en", text: "English" },
+        { value: "ru", text: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439" },
+        { value: "tr", text: "T\u00fcrk\u00e7e" }
+    ];
+
+    var EXTRA_LABELS = {
+        az: { formMessage: "D\u00e9v\u00e9tnam\u00e9 m\u00e9tni", formAge: "Ya\u015f", formEventType: "T\u00e9dbir n\u00f6v\u00fc", formCompanyLogo: "\u015eirk\u00e9t loqosu", formSchedule: "C\u00e9dv\u00e9l" },
+        en: { formMessage: "Invitation text", formAge: "Age", formEventType: "Event type", formCompanyLogo: "Company logo", formSchedule: "Schedule" },
+        ru: { formMessage: "\u0422\u0435\u043a\u0441\u0442 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u044f", formAge: "\u0412\u043e\u0437\u0440\u0430\u0441\u0442", formEventType: "\u0422\u0438\u043f \u043c\u0435\u0440\u043e\u043f\u0440\u0438\u044f\u0442\u0438\u044f", formCompanyLogo: "\u041b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438", formSchedule: "\u0420\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u0435" },
+        tr: { formMessage: "Davetiye metni", formAge: "Ya\u015f", formEventType: "Etkinlik t\u00fcr\u00fc", formCompanyLogo: "\u015eirket logosu", formSchedule: "Program" }
+    };
+
+    function extraLabel(key) {
+        if (LUNA_I18N[LUNA_LANG] && LUNA_I18N[LUNA_LANG][key]) return LUNA_I18N[LUNA_LANG][key];
+        if (EXTRA_LABELS[LUNA_LANG] && EXTRA_LABELS[LUNA_LANG][key]) return EXTRA_LABELS[LUNA_LANG][key];
+        if (LUNA_I18N.en && LUNA_I18N.en[key]) return LUNA_I18N.en[key];
+        return key;
     }
 
-    const invitationId = groom
-        ? lunaCreateSlug(bride) + "-" + lunaCreateSlug(groom)
-        : lunaCreateSlug(bride);
+    function lbl(i18nKey) {
+        if (i18nKey) return '<span data-i18n="' + i18nKey + '">' + lunaT(i18nKey) + '</span>';
+        return "";
+    }
 
-    const parts = date.split("-");
-    const dateShort = parts.length === 3
-        ? parts[2] + " · " + parts[1] + " · " + parts[0]
-        : date;
+    function extraLbl(key) {
+        return '<span data-i18n="_x_' + key + '">' + extraLabel(key) + '</span>';
+    }
 
-    const fromText = imageText
-        ? imageText.split(/\s+/).filter(function (url) { return /^https?:\/\//i.test(url); })
-        : [];
+    function placeholderText(val) {
+        if (!val) return "";
+        if (LUNA_I18N.en && LUNA_I18N.en[val]) return lunaT(val);
+        return val;
+    }
 
-    filesToDataUrls(document.getElementById("photos").files).then(function (fromFiles) {
+    function getMessagePlaceholder() {
+        var map = {
+            wedding: "Sizi toyumuzda g\u00f6rm\u00e9yi s\u00e9birsizlikl\u00e9 g\u00f6zl\u00e9yirik...",
+            engagement: "Ni\u015fan m\u00e9rasimimizd\u00e9 i\u015ftirak\u0131n\u0131z\u0131 g\u00f6zl\u00e9yirik...",
+            henna: "X\u0131na gec\u00e9mizd\u00e9 sizinl\u00e9 birlikd\u00e9 r\u00e9qs etm\u00e9k ist\u00e9yirik...",
+            birthday: "Do\u011fum g\u00fcn\u00fcm\u00fc sizinl\u00e9 birlikd\u00e9 qeyd etm\u00e9k ist\u00e9yirik...",
+            graduation: "M\u00e9zuniyy\u00e9t sevincimi sizinl\u00e9 b\u00f6l\u00fc\u015fm\u00e9k ist\u00e9yir\u00e9m...",
+            business: "Bu vacib t\u00e9dbird\u00e9 i\u015ftirak\u0131n\u0131z\u0131 g\u00f6zl\u00e9yirik...",
+            other: "Sizi d\u00e9v\u00e9t edirik..."
+        };
+        return map[category] || map.other;
+    }
 
-        var videoInput = document.getElementById("canvaImage");
-        var videoFile = videoInput && videoInput.files[0] ? videoInput.files[0] : null;
+    function getCategoryFields() {
+        var f = [];
+        var isCouple = (category === "wedding" || category === "engagement" || category === "henna");
 
-        function proceedWithVideo(videoDataUrl) {
-            var images = fromText.concat(fromFiles);
-
-            const invitationData = {
-                id: invitationId,
-                package: packageName,
-                category: category,
-                design: design,
-                bride: bride,
-                groom: groom,
-                date: date,
-                dateShort: dateShort,
-                time: time,
-                venue: venue,
-                location: location,
-                map: map || "https://www.google.com/maps",
-                story: lunaFormatStory(story),
-                images: images.length ? images : defaultImages,
-                countdown: date + "T" + time + ":00",
-                music: music
-            };
-
-            if (videoDataUrl) {
-                invitationData.videoUrl = videoDataUrl;
-            }
-
-            try {
-                lunaSaveInvitation(invitationData);
-            } catch (error) {
-                invitationData.images = fromText.length ? fromText : defaultImages;
-                lunaSaveInvitation(invitationData);
-                alert("Şəkillər çox böyük olduğu üçün yalnız linklər saxlanıldı.");
-            }
-
-            const url = new URL("data/invitation.html", window.location.href);
-            url.searchParams.set("id", invitationId);
-
-            const link = document.getElementById("generatedLink");
-            link.href = url.href;
-            link.textContent = url.href;
-            document.getElementById("openLink").href = url.href;
-            document.getElementById("result").style.display = "block";
-            document.getElementById("result").scrollIntoView({ behavior: "smooth" });
-        }
-
-        if (videoFile) {
-            var reader = new FileReader();
-            reader.onload = function(e) { proceedWithVideo(e.target.result); };
-            reader.readAsDataURL(videoFile);
+        if (isCouple) {
+            f.push({ name: "bride", type: "text", labelI18n: "formBride", required: true, col: "half", placeholder: "Aysel" });
+            f.push({ name: "groom", type: "text", labelI18n: "formGroom", required: (category !== "henna"), col: "half", placeholder: "Murad" });
+        } else if (category === "birthday") {
+            f.push({ name: "celebrant", type: "text", labelI18n: "formCelebrant", required: true, col: "half", placeholder: "Leyla" });
+            f.push({ name: "age", type: "number", labelKey: "formAge", col: "half", placeholder: "25" });
+        } else if (category === "graduation") {
+            f.push({ name: "graduate", type: "text", labelI18n: "formGraduate", required: true, col: "half", placeholder: "Ali" });
+            f.push({ name: "school", type: "text", labelI18n: "formSchool", col: "half", placeholder: "ADA Universiteti" });
+            f.push({ name: "degree", type: "text", labelI18n: "formDegree", col: "full", placeholder: "Komp\u00fcter elml\u00e9ri" });
+        } else if (category === "business") {
+            f.push({ name: "companyName", type: "text", labelI18n: "formCompanyName", required: true, col: "half", placeholder: "Tech Corp" });
+            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "\u0130llik konfrans" });
+            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES });
+            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "full", placeholder: "\u018eli H\u00e9s\u00e9nov" });
         } else {
-            proceedWithVideo(null);
+            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "X\u00fcsusi t\u00e9dbir" });
+            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov" });
+            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Konfrans, Ad g\u00fcnu..." });
         }
-    });
-});
 
-function copyLink() {
-    const link = document.getElementById("generatedLink").href;
-    navigator.clipboard.writeText(link).then(function () {
-        alert("Dəvətnamə linki kopyalandı.");
-    }).catch(function () {
-        alert("Link: " + link);
+        f.push({ name: "date", type: "date", labelI18n: "formDate", required: true, col: "half" });
+        f.push({ name: "time", type: "time", labelI18n: "formTime", required: true, col: "half", value: "19:00" });
+        f.push({ name: "venue", type: "text", labelI18n: "formVenue", required: true, col: "half", placeholder: "Crystal Hall" });
+        f.push({ name: "location", type: "text", labelI18n: "formLocation", required: true, col: "half", placeholder: "Bak\u0131, Az\u0259rbaycan" });
+
+        if (category === "business" || category === "other" || category === "baby-shower") {
+            f.push({ name: "address", type: "text", labelI18n: "formAddress", col: "full", placeholder: "\u00dcnvan" });
+        }
+
+        f.push({ name: "map", type: "url", labelI18n: "formMap", tier: "premium", col: "full", placeholder: "https://maps.google.com/..." });
+
+        f.push({ name: "message", type: "textarea", labelKey: "formMessage", col: "full", placeholder: getMessagePlaceholder(), rows: 3 });
+
+        if (isCouple) {
+            f.push({ name: "story", type: "textarea", labelI18n: "formStory", tier: "luxury", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5 });
+        }
+
+        if (category === "business" || category === "other" || category === "baby-shower") {
+            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4 });
+        }
+
+        if (category === "business") {
+            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", tier: "premium", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5 });
+        }
+
+        if (category === "other" || category === "baby-shower") {
+            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4 });
+        }
+
+        if (category === "business" || category === "other" || category === "baby-shower") {
+            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX" });
+        }
+
+        if (category === "business") {
+            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "full", placeholder: "https://company.com" });
+        }
+
+        if (category === "business") {
+            f.push({ name: "logo", type: "file", labelKey: "formCompanyLogo", tier: "premium", col: "full", accept: "image/*", feature: "gallery" });
+        }
+
+        f.push({ name: "images", type: "textarea", labelI18n: "formImages", tier: "premium", col: "full", hintI18n: "formImagesHint", placeholder: "https://... (h\u00e9r s\u00e9tird\u00e9 bir link)", feature: "gallery" });
+        f.push({ name: "photos", type: "file", labelI18n: "formPhotos", tier: "premium", col: "full", accept: "image/*", multiple: true, feature: "gallery" });
+        f.push({ name: "music", type: "url", labelI18n: "formMusic", tier: "luxury", col: "full", placeholder: "https://.../song.mp3", feature: "music" });
+        f.push({ name: "videoFile", type: "file", labelI18n: "formVideo", col: "full", accept: "video/*", hintI18n: "formVideoHint", feature: "video", hidden: true });
+
+        f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS });
+        f.push({ name: "template", type: "select", labelI18n: "formTemplate", col: "half", id: "templateSelect" });
+
+        return f;
+    }
+
+    function renderField(field, index) {
+        var delay = (index * 0.035).toFixed(2);
+        var colClass = field.col === "full" ? " full" : "";
+        var tierAttr = field.tier ? ' data-tier="' + field.tier + '"' : ' data-tier="default"';
+        var featureAttr = field.feature ? ' data-feature="' + field.feature + '"' : '';
+        var hiddenStyle = field.hidden ? ' style="display:none;animation-delay:' + delay + 's"' : ' style="animation-delay:' + delay + 's"';
+        var fieldId = field.id || field.name;
+
+        var html = '<div class="form-field' + colClass + '"' + tierAttr + featureAttr + hiddenStyle + ' data-field="' + field.name + '">';
+
+        if (field.labelI18n) {
+            html += '<label for="' + fieldId + '" data-i18n="' + field.labelI18n + '">' + lunaT(field.labelI18n) + '</label>';
+        } else if (field.labelKey) {
+            html += '<label for="' + fieldId + '">' + extraLbl(field.labelKey) + '</label>';
+        }
+
+        if (field.type === "select") {
+            html += '<select id="' + fieldId + '" name="' + field.name + '">';
+            if (field.options) {
+                field.options.forEach(function(opt) {
+                    html += '<option value="' + opt.value + '">' + opt.text + '</option>';
+                });
+            }
+            html += '</select>';
+        } else if (field.type === "textarea") {
+            var ph = "";
+            if (field.placeholderKey) {
+                ph = placeholderText(field.placeholderKey);
+                html += '<textarea id="' + fieldId + '" name="' + field.name + '" data-i18n-placeholder="' + field.placeholderKey + '"';
+            } else if (field.placeholder) {
+                ph = field.placeholder;
+                html += '<textarea id="' + fieldId + '" name="' + field.name + '"';
+            } else {
+                html += '<textarea id="' + fieldId + '" name="' + field.name + '"';
+            }
+            if (ph) html += ' placeholder="' + ph + '"';
+            if (field.rows) html += ' rows="' + field.rows + '"';
+            if (field.required) html += ' required';
+            html += '></textarea>';
+        } else if (field.type === "file") {
+            html += '<input id="' + fieldId + '" name="' + field.name + '" type="file"';
+            if (field.accept) html += ' accept="' + field.accept + '"';
+            if (field.multiple) html += ' multiple';
+            html += '>';
+        } else {
+            html += '<input id="' + fieldId + '" name="' + field.name + '" type="' + field.type + '"';
+            if (field.required) html += ' required';
+            if (field.placeholder) html += ' placeholder="' + field.placeholder + '"';
+            if (field.value) html += ' value="' + field.value + '"';
+            html += '>';
+        }
+
+        if (field.hintI18n) {
+            html += '<span class="form-field-hint" data-i18n="' + field.hintI18n + '">' + lunaT(field.hintI18n) + '</span>';
+        }
+
+        html += '</div>';
+        return html;
+    }
+
+    function renderForm() {
+        var fields = getCategoryFields();
+        var html = "";
+        fields.forEach(function(field, i) {
+            html += renderField(field, i);
+        });
+        document.getElementById("formGrid").innerHTML = html;
+    }
+
+    function applyVisibility() {
+        var isVideo = (packageName === "video");
+        var tierRank = { default: 0, premium: 2, luxury: 3 };
+        var pkgRank = { video: 0, basic: 0, premium: 2, luxury: 3 };
+        var currentRank = isVideo ? 0 : (pkgRank[packageName] || 0);
+
+        document.querySelectorAll(".form-field").forEach(function(el) {
+            var tier = el.getAttribute("data-tier") || "default";
+            var feature = el.getAttribute("data-feature");
+
+            if (isVideo) {
+                if (feature === "gallery" || feature === "maps" || feature === "music") {
+                    el.style.display = "none";
+                    return;
+                }
+                if (feature === "video") {
+                    el.style.display = "";
+                    return;
+                }
+                if (feature === "story") {
+                    el.style.display = "none";
+                    return;
+                }
+            }
+
+            var fieldRank = tierRank[tier] || 0;
+            el.style.display = (currentRank < fieldRank) ? "none" : "";
+        });
+    }
+
+    function populateTemplateSelect() {
+        var select = document.getElementById("templateSelect");
+        if (!select) return;
+        var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : [];
+        var filtered = templates.filter(function(t) {
+            return t.category === category && t.packages.indexOf(packageName) !== -1;
+        });
+        var html = '<option value="">\u2014</option>';
+        filtered.forEach(function(t) {
+            html += '<option value="' + t.id + '">' + t.name + ' \u2014 ' + t.style + '</option>';
+        });
+        select.innerHTML = html;
+    }
+
+    renderForm();
+    applyVisibility();
+    populateTemplateSelect();
+
+    // Override lunaSetLanguage to also re-apply extra labels
+    var origSetLang = lunaSetLanguage;
+    lunaSetLanguage = function(lang) {
+        origSetLang(lang);
+        document.querySelectorAll("[data-i18n^='_x_']").forEach(function(el) {
+            var key = el.getAttribute("data-i18n").replace("_x_", "");
+            var text = extraLabel(key);
+            if (text) el.innerHTML = text;
+        });
+    };
+    lunaInitLanguage();
+
+    // ===== FORM SUBMISSION =====
+    var defaultImages = [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90"
+    ];
+
+    function filesToDataUrls(files) {
+        var list = Array.from(files || []).slice(0, 8);
+        return Promise.all(list.map(function(file) {
+            return new Promise(function(resolve) {
+                var reader = new FileReader();
+                reader.onload = function() { resolve(reader.result); };
+                reader.onerror = function() { resolve(null); };
+                reader.readAsDataURL(file);
+            });
+        })).then(function(urls) {
+            return urls.filter(Boolean);
+        });
+    }
+
+    function collectValues() {
+        var values = {};
+        var form = document.getElementById("invitationForm");
+        var els = form.elements;
+        for (var i = 0; i < els.length; i++) {
+            var el = els[i];
+            if (!el.name) continue;
+            if (el.type === "file") {
+                values[el.name] = el.files;
+            } else {
+                values[el.name] = el.value.trim();
+            }
+        }
+        return values;
+    }
+
+    document.getElementById("invitationForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        var v = collectValues();
+
+        if (category === "wedding" || category === "engagement") {
+            if (!v.groom) {
+                alert(category === "wedding" ? "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n." : "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n.");
+                return;
+            }
+        }
+
+        if (v.date && new Date(v.date + "T00:00:00") < new Date(new Date().toDateString())) {
+            alert("Tarix ke\u00e7mi\u015fd\u00e9 ola bilm\u00e9z. Z\u00e9hm\u00e9t olmasa d\u00fczg\u00fcn tarix se\u00e7in.");
+            return;
+        }
+
+        var primaryName = "";
+        var invitationId = "";
+
+        switch (category) {
+            case "wedding":
+            case "engagement":
+            case "henna":
+                primaryName = v.bride;
+                invitationId = lunaCreateSlug(v.bride) + (v.groom ? "-" + lunaCreateSlug(v.groom) : "");
+                break;
+            case "birthday":
+                primaryName = v.celebrant;
+                invitationId = lunaCreateSlug(v.celebrant);
+                break;
+            case "graduation":
+                primaryName = v.graduate;
+                invitationId = lunaCreateSlug(v.graduate);
+                break;
+            case "business":
+                primaryName = v.companyName;
+                invitationId = lunaCreateSlug(v.companyName) + "-" + lunaCreateSlug(v.eventName);
+                break;
+            default:
+                primaryName = v.eventName;
+                invitationId = lunaCreateSlug(v.eventName);
+                break;
+        }
+
+        var imageText = v.images || "";
+        var fromText = imageText
+            ? imageText.split(/\s+/).filter(function(url) { return /^https?:\/\//i.test(url); })
+            : [];
+
+        filesToDataUrls(v.photos).then(function(fromFiles) {
+            var videoFile = v.videoFile && v.videoFile[0] ? v.videoFile[0] : null;
+            var logoFile = v.logo && v.logo[0] ? v.logo[0] : null;
+
+            function readLogo(callback) {
+                if (!logoFile) { callback(null); return; }
+                var reader = new FileReader();
+                reader.onload = function(e) { callback(e.target.result); };
+                reader.onerror = function() { callback(null); };
+                reader.readAsDataURL(logoFile);
+            }
+
+            readLogo(function(logoDataUrl) {
+                function proceedWithVideo(videoDataUrl) {
+                    var images = fromText.concat(fromFiles);
+
+                    var data = {
+                        id: invitationId,
+                        package: packageName,
+                        category: category,
+                        design: design,
+                        bride: primaryName,
+                        date: v.date,
+                        dateShort: lunaDateShort(v.date),
+                        time: v.time,
+                        venue: v.venue,
+                        location: v.location,
+                        map: v.map || "https://www.google.com/maps",
+                        message: v.message || "",
+                        countdown: v.date + "T" + v.time + ":00",
+                        images: images.length ? images : defaultImages,
+                        invitationLanguage: v.invitationLanguage || "az",
+                        template: v.template || ""
+                    };
+
+                    if (videoDataUrl) data.videoUrl = videoDataUrl;
+                    if (logoDataUrl) data.logoUrl = logoDataUrl;
+
+                    switch (category) {
+                        case "wedding":
+                        case "engagement":
+                        case "henna":
+                            data.groom = v.groom || "";
+                            data.story = lunaFormatStory(v.story || "");
+                            break;
+                        case "birthday":
+                            data.celebrant = v.celebrant;
+                            data.age = v.age || "";
+                            break;
+                        case "graduation":
+                            data.graduate = v.graduate;
+                            data.school = v.school || "";
+                            data.degree = v.degree || "";
+                            break;
+                        case "business":
+                            data.companyName = v.companyName;
+                            data.eventName = v.eventName;
+                            data.eventType = v.eventType || "";
+                            data.hostName = v.hostName || "";
+                            data.address = v.address || "";
+                            data.description = v.description || "";
+                            data.agenda = v.agenda || "";
+                            data.contact = v.contact || "";
+                            data.website = v.website || "";
+                            break;
+                        default:
+                            data.eventName = v.eventName;
+                            data.hostName = v.hostName || "";
+                            data.eventType = v.eventType || "";
+                            data.address = v.address || "";
+                            data.description = v.description || "";
+                            data.schedule = v.schedule || "";
+                            data.contact = v.contact || "";
+                            break;
+                    }
+
+                    try {
+                        lunaSaveInvitation(data);
+                    } catch (err) {
+                        data.images = fromText.length ? fromText : defaultImages;
+                        lunaSaveInvitation(data);
+                        alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
+                    }
+
+                    var url = new URL("data/invitation.html", window.location.href);
+                    url.searchParams.set("id", invitationId);
+                    var link = document.getElementById("generatedLink");
+                    link.href = url.href;
+                    link.textContent = url.href;
+                    document.getElementById("openLink").href = url.href;
+                    document.getElementById("resultCard").style.display = "block";
+                    document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+
+                if (videoFile) {
+                    var reader = new FileReader();
+                    reader.onload = function(ev) { proceedWithVideo(ev.target.result); };
+                    reader.readAsDataURL(videoFile);
+                } else {
+                    proceedWithVideo(null);
+                }
+            });
+        });
     });
-}
+
+    // ===== COPY LINK =====
+    window.copyLink = function() {
+        var link = document.getElementById("generatedLink").href;
+        navigator.clipboard.writeText(link).then(function() {
+            alert(lunaT("formCopied"));
+        }).catch(function() {
+            alert("Link: " + link);
+        });
+    };
+
+    // ===== NAVBAR SCROLL =====
+    window.addEventListener("scroll", function() {
+        document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 40);
+    });
+
+    // ===== MOBILE MENU =====
+    var toggle = document.getElementById("menuToggle");
+    var mobileMenu = document.getElementById("mobileMenu");
+
+    toggle.addEventListener("click", function() {
+        toggle.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
+        document.body.classList.toggle("menu-open");
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(function(a) {
+        a.addEventListener("click", function() {
+            toggle.classList.remove("open");
+            mobileMenu.classList.remove("open");
+            document.body.classList.remove("menu-open");
+        });
+    });
+
+})();
 </script>
 </body>
 </html>

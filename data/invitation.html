@@ -386,6 +386,12 @@ a { text-decoration: none; color: inherit; }
     animation: heroPulse 8s ease-in-out infinite;
 }
 
+[data-design="noir"] .hero::before {
+    background:
+        radial-gradient(ellipse at 50% 40%, rgba(26,26,26,.40) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.50));
+}
+
 @keyframes heroPulse {
     0%,100% { transform: scale(.96); opacity: .4; }
     50% { transform: scale(1.02); opacity: .8; }
@@ -481,6 +487,23 @@ a { text-decoration: none; color: inherit; }
 @keyframes scrollPulse {
     0%,100% { transform: scaleY(.4); opacity: .3; transform-origin: top; }
     50% { transform: scaleY(1); opacity: .8; transform-origin: top; }
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(62,37,24,.30), rgba(62,37,24,.60));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
 
@@ -702,6 +725,7 @@ a { text-decoration: none; color: inherit; }
     object-fit: cover;
     filter: saturate(.9);
     transition: transform 1.4s cubic-bezier(.19,1,.22,1), filter .6s ease;
+    cursor: pointer;
 }
 
 .gallery img:hover {
@@ -715,6 +739,101 @@ a { text-decoration: none; color: inherit; }
 .gallery img:nth-child(4) { grid-column: 1/5; grid-row: 6/9; }
 .gallery img:nth-child(5) { grid-column: 5/9; grid-row: 6/9; }
 .gallery img:nth-child(6) { grid-column: 9/13; grid-row: 6/9; }
+
+
+/* =====================================================
+   LIGHTBOX
+===================================================== */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease, visibility .4s;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 2px;
+    box-shadow: 0 8px 60px rgba(0,0,0,.5);
+    transform: scale(.92);
+    transition: transform .5s cubic-bezier(.19,1,.22,1);
+}
+
+.lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.lightbox-close:hover {
+    background: rgba(255,255,255,.15);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.lightbox-nav:hover {
+    background: rgba(255,255,255,.1);
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.5);
+}
 
 
 /* =====================================================
@@ -996,6 +1115,79 @@ footer p {
 
 
 /* =====================================================
+   404 PAGE
+===================================================== */
+
+.not-found {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.not-found::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 30% 30%, var(--accent-light), transparent 50%),
+        radial-gradient(ellipse at 70% 70%, var(--accent-light), transparent 50%);
+}
+
+.not-found-content {
+    position: relative;
+    z-index: 1;
+}
+
+.not-found-icon {
+    font-size: 48px;
+    margin-bottom: 32px;
+    opacity: .25;
+}
+
+.not-found h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(42px,8vw,72px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--fg-heading);
+    margin-bottom: 16px;
+    line-height: 1.1;
+}
+
+.not-found p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.not-found-brand {
+    font-family: "DM Sans", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: .5;
+    margin-top: 60px;
+}
+
+
+/* =====================================================
+   HIDDEN UTILITY
+===================================================== */
+
+[hidden] { display: none !important; }
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -1011,6 +1203,7 @@ footer p {
     .envelope-scene { width: 88vw; }
     .hero-scroll { display: none; }
     footer { padding: 60px 24px; }
+    .lightbox-nav { display: none; }
 }
 
 </style>
@@ -1033,6 +1226,19 @@ footer p {
 
 
 <!-- =====================================================
+     LIGHTBOX
+===================================================== -->
+
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" type="button">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button">&#8249;</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button">&#8250;</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+
+<!-- =====================================================
      OPENING
 ===================================================== -->
 
@@ -1052,9 +1258,9 @@ footer p {
 
             <div class="letter">
                 <div class="letter-content">
-                    <small>SİZİ DƏVƏT EDİRİK</small>
-                    <h1 id="letterNames">Aysel & Murad</h1>
-                    <p id="letterDate">12 · 09 · 2026</p>
+                    <small id="letterEyebrow"></small>
+                    <h1 id="letterNames"></h1>
+                    <p id="letterDate"></p>
                 </div>
             </div>
 
@@ -1072,7 +1278,6 @@ footer p {
             id="openButton"
             type="button"
         >
-            Dəvətnaməni aç
         </button>
 
     </div>
@@ -1094,51 +1299,38 @@ footer p {
      HERO
 ===================================================== -->
 
-<section class="hero">
+<section class="hero" id="hero">
 
-    <div class="hero-content">
+    <div class="hero-content" id="heroContent">
 
-        <p class="hero-eyebrow">
-            SİZİ SEVGİ İLƏ DƏVƏT EDİRİK
-        </p>
+        <p class="hero-eyebrow" id="heroEyebrow"></p>
 
-        <div class="hero-names">
-            <span class="name" id="bride">Aysel</span>
-            <span class="hero-amp" id="amp">&</span>
-            <span class="name" id="groom">Murad</span>
-        </div>
+        <div class="hero-names" id="heroNames"></div>
 
-        <p class="hero-date" id="date">12 · 09 · 2026</p>
+        <p class="hero-date" id="date"></p>
 
     </div>
 
-    <div class="hero-scroll">Aşağı</div>
+    <div class="hero-scroll" id="heroScroll"></div>
 
 </section>
 
 
 <!-- =====================================================
-     STORY
+     STORY (Luxury only)
 ===================================================== -->
 
-<section class="section">
+<section class="section" id="storySection">
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>✦</span></div>
+        <div class="section-divider"><span>&#10022;</span></div>
 
-        <p class="section-eyebrow">HEKAYƏMİZ</p>
+        <p class="section-eyebrow" id="storyEyebrow"></p>
 
-        <h2>Bir hekayə,<br>bir ömür.</h2>
+        <h2 id="storyHeading"></h2>
 
-        <div class="story-quote section-text" id="story">
-            <p>
-                Bəzi hekayələr kitablarda yazılır.
-                Bizimki isə kiçik anlarda,
-                paylaşılan gülüşlərdə və
-                unudulmaz xatirələrdə yazıldı.
-            </p>
-        </div>
+        <div class="story-quote section-text" id="story"></div>
 
     </div>
 
@@ -1149,41 +1341,41 @@ footer p {
      DETAILS
 ===================================================== -->
 
-<section class="section details-section">
+<section class="section details-section" id="detailsSection">
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>✦</span></div>
+        <div class="section-divider"><span>&#10022;</span></div>
 
-        <p class="section-eyebrow">XÜSUSİ GÜNÜMÜZ</p>
+        <p class="section-eyebrow" id="detailsEyebrow"></p>
 
-        <h2>Bu gün bizimdir.</h2>
+        <h2 id="detailsHeading"></h2>
 
         <div class="details-grid">
 
             <div class="detail">
-                <small>TARİX</small>
-                <strong id="detailDate">12 · 09 · 2026</strong>
-                <p id="dayName">Şənbə</p>
+                <small id="dateLabel"></small>
+                <strong id="detailDate"></strong>
+                <p id="dayName"></p>
             </div>
 
             <div class="detail">
-                <small>SAAT</small>
-                <strong id="time">19:00</strong>
-                <p>Qonaqların qarşılanması</p>
+                <small id="timeLabel"></small>
+                <strong id="time"></strong>
+                <p id="timeSubtext"></p>
             </div>
 
             <div class="detail">
-                <small>MƏKAN</small>
-                <strong id="venue">Wedding Hall</strong>
-                <p id="location">Bakı, Azərbaycan</p>
+                <small id="venueLabel"></small>
+                <strong id="venue"></strong>
+                <p id="location"></p>
                 <a
                     id="mapButton"
                     class="map-button"
                     href="#"
                     target="_blank"
                     rel="noopener"
-                >Xəritədə bax</a>
+                ></a>
             </div>
 
         </div>
@@ -1194,18 +1386,18 @@ footer p {
 
 
 <!-- =====================================================
-     GALLERY
+     GALLERY (Premium / Luxury)
 ===================================================== -->
 
-<section class="section gallery-section">
+<section class="section gallery-section" id="gallerySection">
 
     <div class="reveal-scale">
 
-        <div class="section-divider"><span>✦</span></div>
+        <div class="section-divider"><span>&#10022;</span></div>
 
-        <p class="section-eyebrow">XATİRƏLƏRİMİZ</p>
+        <p class="section-eyebrow" id="galleryEyebrow"></p>
 
-        <h2>Bizdən sizə.</h2>
+        <h2 id="galleryHeading"></h2>
 
     </div>
 
@@ -1213,59 +1405,22 @@ footer p {
         class="gallery reveal-scale"
         id="gallery"
     >
-
-        <img
-            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
-        <img
-            src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
-        <img
-            src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
-        <img
-            src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
-        <img
-            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
-        <img
-            src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1200&q=90"
-            alt="Wedding"
-            loading="lazy"
-        >
-
     </div>
 
 </section>
 
 
 <!-- =====================================================
-     COUNTDOWN
+     COUNTDOWN (Premium / Luxury)
 ===================================================== -->
 
-<section class="section countdown-section">
+<section class="section countdown-section" id="countdownSection">
 
     <div class="reveal-up">
 
-        <p class="section-eyebrow">GÖRÜŞƏNƏDƏK</p>
+        <p class="section-eyebrow" id="countdownEyebrow"></p>
 
-        <h2>Birlikdə sayağ.</h2>
+        <h2 id="countdownHeading"></h2>
 
     </div>
 
@@ -1273,22 +1428,22 @@ footer p {
 
         <div>
             <strong id="days">00</strong>
-            <span>GÜN</span>
+            <span id="daysLabel"></span>
         </div>
 
         <div>
             <strong id="hours">00</strong>
-            <span>SAAT</span>
+            <span id="hoursLabel"></span>
         </div>
 
         <div>
             <strong id="minutes">00</strong>
-            <span>DƏQİQƏ</span>
+            <span id="minutesLabel"></span>
         </div>
 
         <div>
             <strong id="seconds">00</strong>
-            <span>SANİYƏ</span>
+            <span id="secondsLabel"></span>
         </div>
 
     </div>
@@ -1297,23 +1452,20 @@ footer p {
 
 
 <!-- =====================================================
-     RSVP
+     RSVP (Premium / Luxury)
 ===================================================== -->
 
-<section class="section rsvp-section">
+<section class="section rsvp-section" id="rsvpSection">
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>✦</span></div>
+        <div class="section-divider"><span>&#10022;</span></div>
 
         <p class="section-eyebrow">RSVP</p>
 
-        <h2>Sizi gözləyirik.</h2>
+        <h2 id="rsvpHeading"></h2>
 
-        <p class="section-text">
-            Bu xüsusi gündə bizimlə olmağınızı
-            səbirsizliklə gözləyirik.
-        </p>
+        <p class="section-text" id="rsvpText"></p>
 
         <div id="rsvpCounts" class="rsvp-counts" hidden>
             <span id="rsvpYesCount"></span>
@@ -1325,25 +1477,32 @@ footer p {
             class="rsvp-button"
             id="rsvpButton"
             type="button"
-        >İştirakımı təsdiqləyirəm</button>
+        ></button>
 
         <form id="rsvpForm" class="rsvp-form" hidden>
-            <input id="rsvpName" type="text" required placeholder="Adınız">
+            <input id="rsvpName" type="text" required>
             <select id="rsvpStatus">
-                <option value="yes">Gələcəyəm</option>
-                <option value="maybe">Bəlkə</option>
-                <option value="no">Gələ bilməyəcəyəm</option>
+                <option value="yes" id="rsvpOptYes"></option>
+                <option value="maybe" id="rsvpOptMaybe"></option>
+                <option value="no" id="rsvpOptNo"></option>
             </select>
-            <button class="rsvp-button" type="submit">Göndər</button>
+            <input id="rsvpGuests" type="number" min="1" max="20" value="1" required>
+            <input id="rsvpMessage" type="text" placeholder="">
+            <button class="rsvp-button" type="submit" id="rsvpSubmitBtn"></button>
         </form>
 
-        <p id="rsvpThanks" hidden>Təşəkkür edirik. Cavabınız qeydə alındı.</p>
+        <p id="rsvpThanks" hidden></p>
 
     </div>
 
 </section>
 
-<button type="button" id="musicButton" class="music-button" hidden>♪ Musiqi</button>
+
+<!-- =====================================================
+     MUSIC BUTTON (Luxury only)
+===================================================== -->
+
+<button type="button" id="musicButton" class="music-button" hidden></button>
 <audio id="musicPlayer" loop></audio>
 
 
@@ -1353,9 +1512,9 @@ footer p {
 
 <footer>
 
-    <strong id="footerNames">Aysel & Murad</strong>
+    <strong id="footerNames"></strong>
 
-    <p>WITH LOVE · LUNA</p>
+    <p id="footerTagline"></p>
 
 </footer>
 
@@ -1367,6 +1526,7 @@ footer p {
      SCRIPTS
 ===================================================== -->
 
+<script src="../js/i18n.js"></script>
 <script src="invitations.js"></script>
 <script src="luna.js"></script>
 
@@ -1377,72 +1537,50 @@ footer p {
    GET INVITATION ID
 ===================================================== */
 
-const params =
+var params =
     new URLSearchParams(
         window.location.search
     );
 
 
-const invitationId =
+var invitationId =
     (
         params.get("id") ||
         localStorage.getItem("luna_last_invitation") ||
-        "aysel-murad"
+        ""
     ).toLowerCase().trim();
 
 
 /* =====================================================
-   CHECK DATA
+   CHECK DATA — SHOW 404 IF MISSING
 ===================================================== */
 
-let invitation = lunaGetInvitation(invitationId);
+var invitation = invitationId
+    ? lunaGetInvitation(invitationId)
+    : null;
 
 
 if (!invitation) {
 
-    console.error(
-        "Invitation not found:",
-        invitationId
-    );
+    document.title = lunaT("invErrorTitle") + " | Luna";
 
-    document.body.innerHTML = `
+    document.body.innerHTML =
 
-        <div style="
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-            padding:30px;
-            font-family:DM Sans,sans-serif;
-            background:#F5EDE3;
-            color:#5C3D2E;
-        ">
+        '<div class="not-found">' +
 
-            <div>
+            '<div class="not-found-content">' +
 
-                <h1 style="
-                    font-family:Cormorant Garamond,serif;
-                    font-size:55px;
-                    font-weight:300;
-                    font-style:italic;
-                    margin-bottom:20px;
-                ">
-                    Invitation not found
-                </h1>
+                '<div class="not-found-icon">&#9825;</div>' +
 
-                <p style="
-                    font-size:13px;
-                    color:rgba(92,61,46,.5);
-                ">
-                    Bu dəvətnamə mövcud deyil.
-                </p>
+                '<h1>' + lunaT("invErrorTitle") + '</h1>' +
 
-            </div>
+                '<p>' + lunaT("invErrorText") + '</p>' +
 
-        </div>
+                '<div class="not-found-brand">LUNA</div>' +
 
-    `;
+            '</div>' +
+
+        '</div>';
 
     throw new Error(
         "Invitation not found: " +
@@ -1453,10 +1591,17 @@ if (!invitation) {
 
 
 /* =====================================================
+   INIT i18n LANGUAGE
+===================================================== */
+
+lunaInitLanguage();
+
+
+/* =====================================================
    PAGE TITLE
 ===================================================== */
 
-document.title = lunaDisplayNames(invitation) + " | Luna";
+document.title = lunaDisplayNames(invitation) + " | Luna Invitation";
 
 
 /* =====================================================
@@ -1470,43 +1615,510 @@ if (invitation.design) {
     );
 }
 
-/* Video package: show video in hero */
-if (invitation.videoUrl) {
-    var hero = document.querySelector(".hero");
-    hero.innerHTML = '<video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0" src="' + invitation.videoUrl + '"></video><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(62,37,24,.3),rgba(62,37,24,.6));z-index:1"></div>';
-    hero.style.background = "#1a1410";
-}
 
-/* Package-based section visibility */
+/* =====================================================
+   HELPERS
+===================================================== */
+
 var pkg = (invitation.package || "basic").toLowerCase();
+var cat = (invitation.category || "wedding").toLowerCase();
+var isCouple = (
+    cat === "wedding" ||
+    cat === "engagement" ||
+    cat === "anniversary" ||
+    cat === "henna"
+);
+var displayDate = invitation.dateShort || lunaDateShort(invitation.date) || invitation.date || "";
 
-if (pkg === "basic" || pkg === "video") {
-    var gallerySection = document.querySelector(".gallery-section");
-    var rsvpSection = document.querySelector(".rsvp-section");
-    var musicBtn = document.getElementById("musicButton");
-    var countdownSection = document.querySelector(".countdown-section");
-    var storySection = document.querySelectorAll(".section")[0];
-    if (gallerySection) gallerySection.style.display = "none";
-    if (rsvpSection) rsvpSection.style.display = "none";
-    if (musicBtn) musicBtn.style.display = "none";
-    if (countdownSection) countdownSection.style.display = "none";
-    if (storySection) storySection.style.display = "none";
+
+/* =====================================================
+   OPENING — LETTER CONTENT
+===================================================== */
+
+document.getElementById("letterEyebrow").textContent =
+    lunaT("invOpen");
+
+document.getElementById("letterNames").textContent =
+    lunaDisplayNames(invitation);
+
+document.getElementById("letterDate").textContent =
+    displayDate;
+
+document.getElementById("openButton").textContent =
+    lunaT("invOpen");
+
+
+/* =====================================================
+   HERO — CATEGORY-AWARE NAMES
+===================================================== */
+
+document.getElementById("heroEyebrow").textContent =
+    lunaInvitationHeading(invitation);
+
+document.getElementById("date").textContent =
+    displayDate;
+
+(function buildHeroNames() {
+
+    var container = document.getElementById("heroNames");
+
+    if (isCouple) {
+
+        var bride = invitation.bride || "";
+        var groom = invitation.groom || "";
+
+        var html = '<span class="name">' + lunaEscapeHtml(bride) + '</span>';
+
+        if (groom) {
+            html += '<span class="hero-amp">&amp;</span>';
+            html += '<span class="name">' + lunaEscapeHtml(groom) + '</span>';
+        }
+
+        container.innerHTML = html;
+
+    } else if (cat === "birthday") {
+
+        var name = invitation.bride || invitation.celebrant || "";
+        container.innerHTML =
+            '<span class="name" style="font-size:clamp(48px,10vw,110px)">' +
+            lunaEscapeHtml(name) +
+            '</span>';
+
+    } else if (cat === "graduation") {
+
+        var name2 = invitation.bride || invitation.graduate || "";
+        container.innerHTML =
+            '<span class="name" style="font-size:clamp(48px,10vw,110px)">' +
+            lunaEscapeHtml(name2) +
+            '</span>';
+
+    } else if (cat === "business") {
+
+        var eventName = invitation.eventName || invitation.companyName || invitation.bride || "";
+        container.innerHTML =
+            '<span class="name" style="font-size:clamp(36px,7vw,80px)">' +
+            lunaEscapeHtml(eventName) +
+            '</span>';
+
+    } else {
+
+        container.innerHTML =
+            '<span class="name" style="font-size:clamp(48px,10vw,110px)">' +
+            lunaT("invRsvpHeading") +
+            '</span>';
+
+    }
+
+})();
+
+
+/* =====================================================
+   HERO — VIDEO BACKGROUND
+===================================================== */
+
+if (invitation.videoUrl) {
+
+    var hero = document.getElementById("hero");
+
+    var video = document.createElement("video");
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.className = "hero-video-bg";
+    video.src = invitation.videoUrl;
+    hero.insertBefore(video, hero.firstChild);
+
+    var overlay = document.createElement("div");
+    overlay.className = "hero-video-overlay";
+    hero.insertBefore(overlay, document.getElementById("heroContent"));
+
+    hero.style.background = "#1a1410";
+
 }
 
-/* Story section: only for luxury */
+
+/* =====================================================
+   STORY SECTION (Luxury only)
+===================================================== */
+
 if (pkg !== "luxury") {
-    var allSections = document.querySelectorAll(".section");
-    if (allSections[0]) allSections[0].style.display = "none";
+    document.getElementById("storySection").hidden = true;
 }
 
-/* Non-couple categories: hide ampersand and groom */
-var coupleCategories = ["wedding", "engagement", "anniversary"];
-if (coupleCategories.indexOf(invitation.category) === -1) {
-    var amp = document.getElementById("amp");
-    var groom = document.getElementById("groom");
-    if (amp) amp.style.display = "none";
-    if (groom) groom.style.display = "none";
+document.getElementById("storyEyebrow").textContent =
+    lunaT("invStoryTitle");
+
+document.getElementById("storyHeading").innerHTML =
+    lunaT("invStoryHeading");
+
+if (invitation.story) {
+    document.getElementById("story").innerHTML =
+        lunaFormatStory(invitation.story);
 }
+
+
+/* =====================================================
+   DETAILS SECTION
+===================================================== */
+
+document.getElementById("detailsEyebrow").textContent =
+    lunaT("invDetailsTitle");
+
+document.getElementById("detailsHeading").innerHTML =
+    lunaT("invDetailsHeading");
+
+document.getElementById("dateLabel").textContent =
+    lunaT("invDateLabel");
+
+document.getElementById("detailDate").textContent =
+    displayDate;
+
+document.getElementById("timeLabel").textContent =
+    lunaT("invTimeLabel");
+
+document.getElementById("time").textContent =
+    invitation.time || "";
+
+document.getElementById("venueLabel").textContent =
+    lunaT("invVenueLabel");
+
+document.getElementById("venue").textContent =
+    invitation.venue || "";
+
+document.getElementById("location").textContent =
+    invitation.location || "";
+
+var mapButton = document.getElementById("mapButton");
+mapButton.textContent = lunaT("invMapBtn");
+
+if (invitation.map) {
+    mapButton.href = invitation.map;
+} else {
+    mapButton.hidden = true;
+}
+
+/* Time subtext based on category */
+(function() {
+    var sub = document.getElementById("timeSubtext");
+    if (cat === "wedding" || cat === "engagement" || cat === "anniversary" || cat === "henna") {
+        /* Qonaqların qarşılanması — keep generic */
+    }
+})();
+
+/* Day name */
+(function() {
+    var dayEl = document.getElementById("dayName");
+    if (invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+        var d = new Date(invitation.date + "T12:00:00");
+        var dayNames = {
+            az: ["Bazar","Bazar ertəsi","Çərşənbə axşamı","Çərşənbə","Cümə axşamı","Cümə","Şənbə"],
+            en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+            ru: ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"],
+            tr: ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"]
+        };
+        var lang = LUNA_LANG || "az";
+        var arr = dayNames[lang] || dayNames.az;
+        dayEl.textContent = arr[d.getDay()];
+    } else {
+        dayEl.textContent = "";
+    }
+})();
+
+
+/* =====================================================
+   GALLERY (Premium / Luxury)
+===================================================== */
+
+if (pkg !== "premium" && pkg !== "luxury") {
+    document.getElementById("gallerySection").hidden = true;
+}
+
+document.getElementById("galleryEyebrow").textContent =
+    lunaT("invGalleryTitle");
+
+document.getElementById("galleryHeading").textContent =
+    lunaT("invGalleryHeading");
+
+var galleryEl = document.getElementById("gallery");
+var galleryImages = [];
+
+if (invitation.images && invitation.images.length) {
+
+    galleryImages = invitation.images.slice(0, 6);
+
+    galleryImages.forEach(function(src, i) {
+        var img = document.createElement("img");
+        img.src = src;
+        img.alt = lunaDisplayNames(invitation);
+        img.loading = "lazy";
+        img.dataset.index = i;
+        galleryEl.appendChild(img);
+    });
+
+}
+
+
+/* =====================================================
+   LIGHTBOX
+===================================================== */
+
+var lightbox = document.getElementById("lightbox");
+var lightboxImg = document.getElementById("lightboxImg");
+var lightboxCounter = document.getElementById("lightboxCounter");
+var lightboxIndex = 0;
+
+function lightboxOpen(index) {
+    if (!galleryImages.length) return;
+    lightboxIndex = index;
+    lightboxImg.src = galleryImages[lightboxIndex];
+    lightboxCounter.textContent =
+        (lightboxIndex + 1) + " / " + galleryImages.length;
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function lightboxClose() {
+    lightbox.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function lightboxPrev() {
+    lightboxIndex =
+        (lightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+    lightboxImg.src = galleryImages[lightboxIndex];
+    lightboxCounter.textContent =
+        (lightboxIndex + 1) + " / " + galleryImages.length;
+}
+
+function lightboxNext() {
+    lightboxIndex =
+        (lightboxIndex + 1) % galleryImages.length;
+    lightboxImg.src = galleryImages[lightboxIndex];
+    lightboxCounter.textContent =
+        (lightboxIndex + 1) + " / " + galleryImages.length;
+}
+
+galleryEl.addEventListener("click", function(e) {
+    if (e.target.tagName === "IMG") {
+        var idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx)) lightboxOpen(idx);
+    }
+});
+
+document.getElementById("lightboxClose").addEventListener("click", lightboxClose);
+document.getElementById("lightboxPrev").addEventListener("click", lightboxPrev);
+document.getElementById("lightboxNext").addEventListener("click", lightboxNext);
+
+lightbox.addEventListener("click", function(e) {
+    if (e.target === lightbox) lightboxClose();
+});
+
+document.addEventListener("keydown", function(e) {
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "Escape") lightboxClose();
+    if (e.key === "ArrowLeft") lightboxPrev();
+    if (e.key === "ArrowRight") lightboxNext();
+});
+
+
+/* =====================================================
+   COUNTDOWN (Premium / Luxury)
+===================================================== */
+
+if (pkg !== "premium" && pkg !== "luxury") {
+    document.getElementById("countdownSection").hidden = true;
+}
+
+document.getElementById("countdownEyebrow").textContent =
+    lunaT("invCountdownTitle");
+
+document.getElementById("countdownHeading").textContent =
+    lunaT("invCountdownHeading");
+
+document.getElementById("daysLabel").textContent = lunaT("invDays");
+document.getElementById("hoursLabel").textContent = lunaT("invHours");
+document.getElementById("minutesLabel").textContent = lunaT("invMinutes");
+document.getElementById("secondsLabel").textContent = lunaT("invSeconds");
+
+function updateCountdown() {
+
+    var daysEl = document.getElementById("days");
+    var hoursEl = document.getElementById("hours");
+    var minutesEl = document.getElementById("minutes");
+    var secondsEl = document.getElementById("seconds");
+
+    var targetString = lunaCountdownTarget(invitation);
+
+    if (!targetString) {
+        daysEl.textContent = "00";
+        hoursEl.textContent = "00";
+        minutesEl.textContent = "00";
+        secondsEl.textContent = "00";
+        return;
+    }
+
+    var target = new Date(targetString);
+    var now = new Date();
+    var difference = target.getTime() - now.getTime();
+
+    if (difference <= 0) {
+        daysEl.textContent = "00";
+        hoursEl.textContent = "00";
+        minutesEl.textContent = "00";
+        secondsEl.textContent = "00";
+        return;
+    }
+
+    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+/* =====================================================
+   RSVP (Premium / Luxury)
+===================================================== */
+
+if (pkg !== "premium" && pkg !== "luxury") {
+    document.getElementById("rsvpSection").hidden = true;
+}
+
+document.getElementById("rsvpHeading").textContent =
+    lunaT("invRsvpHeading");
+
+var rsvpCatText = lunaRsvpText(invitation);
+document.getElementById("rsvpText").textContent =
+    rsvpCatText || lunaT("invRsvpText");
+
+document.getElementById("rsvpButton").textContent =
+    lunaT("invRsvpBtn");
+
+document.getElementById("rsvpOptYes").textContent =
+    lunaT("invRsvpYes");
+document.getElementById("rsvpOptMaybe").textContent =
+    lunaT("invRsvpMaybe");
+document.getElementById("rsvpOptNo").textContent =
+    lunaT("invRsvpNo");
+
+document.getElementById("rsvpSubmitBtn").textContent =
+    lunaT("invRsvpSubmit");
+
+document.getElementById("rsvpGuests").placeholder =
+    lunaT("invRsvpGuests");
+
+document.getElementById("rsvpMessage").placeholder =
+    LUNA_LANG === "en" ? "Message (optional)" :
+    LUNA_LANG === "ru" ? "Сообщение (необязательно)" :
+    LUNA_LANG === "tr" ? "Mesaj (isteğe bağlı)" :
+    "Mesaj (ixtiyari)";
+
+document.getElementById("rsvpThanks").textContent =
+    lunaT("invRsvpThanks");
+
+
+var rsvpButton = document.getElementById("rsvpButton");
+var rsvpForm = document.getElementById("rsvpForm");
+var rsvpThanks = document.getElementById("rsvpThanks");
+var rsvpCounts = document.getElementById("rsvpCounts");
+
+function renderRsvpCounts() {
+    var rsvps = lunaGetRsvps(invitationId);
+    if (rsvps.length === 0) {
+        rsvpCounts.hidden = true;
+        return;
+    }
+    var yes = rsvps.filter(function(r) { return r.status === "yes"; }).length;
+    var maybe = rsvps.filter(function(r) { return r.status === "maybe"; }).length;
+    var no = rsvps.filter(function(r) { return r.status === "no"; }).length;
+
+    document.getElementById("rsvpYesCount").innerHTML =
+        "<strong>" + yes + "</strong>" + lunaT("invYesCount");
+    document.getElementById("rsvpMaybeCount").innerHTML =
+        "<strong>" + maybe + "</strong>" + lunaT("invMaybeCount");
+    document.getElementById("rsvpNoCount").innerHTML =
+        "<strong>" + no + "</strong>" + lunaT("invNoCount");
+
+    rsvpCounts.hidden = false;
+}
+
+renderRsvpCounts();
+
+rsvpButton.addEventListener("click", function() {
+    rsvpForm.hidden = false;
+    rsvpButton.hidden = true;
+});
+
+rsvpForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var guestCount = parseInt(
+        document.getElementById("rsvpGuests").value, 10
+    ) || 1;
+
+    var message = document.getElementById("rsvpMessage").value.trim();
+
+    lunaSaveRsvp(invitationId, {
+        name: document.getElementById("rsvpName").value.trim(),
+        status: document.getElementById("rsvpStatus").value,
+        guests: guestCount,
+        message: message,
+        at: new Date().toISOString()
+    });
+
+    rsvpForm.hidden = true;
+    rsvpThanks.hidden = false;
+    document.getElementById("rsvpName").value = "";
+    document.getElementById("rsvpGuests").value = "1";
+    document.getElementById("rsvpMessage").value = "";
+    renderRsvpCounts();
+});
+
+
+/* =====================================================
+   MUSIC (Luxury only)
+===================================================== */
+
+var musicButton = document.getElementById("musicButton");
+var musicPlayer = document.getElementById("musicPlayer");
+
+if (pkg !== "luxury" || !invitation.music) {
+    musicButton.hidden = true;
+} else {
+    musicPlayer.src = invitation.music;
+    musicButton.hidden = false;
+    musicButton.textContent = lunaT("invMusicBtn");
+
+    musicButton.addEventListener("click", function() {
+        if (musicPlayer.paused) {
+            musicPlayer.play();
+            musicButton.textContent = lunaT("invMusicMute");
+        } else {
+            musicPlayer.pause();
+            musicButton.textContent = lunaT("invMusicBtn");
+        }
+    });
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+document.getElementById("footerNames").textContent =
+    lunaDisplayNames(invitation);
+
+document.getElementById("footerTagline").textContent =
+    lunaT("invLunaFooter");
 
 
 /* =====================================================
@@ -1539,194 +2151,19 @@ if (coupleCategories.indexOf(invitation.category) === -1) {
 
 
 /* =====================================================
-   BASIC INFORMATION
-===================================================== */
-
-document.getElementById(
-    "bride"
-).textContent =
-    invitation.bride;
-
-
-document.getElementById(
-    "groom"
-).textContent =
-    invitation.groom || "";
-
-
-if (!invitation.groom) {
-    const amp = document.getElementById("amp");
-    const groom = document.getElementById("groom");
-    if (amp) amp.style.display = "none";
-    if (groom) groom.style.display = "none";
-}
-
-
-document.getElementById(
-    "letterNames"
-).textContent =
-    lunaDisplayNames(invitation);
-
-
-document.getElementById(
-    "footerNames"
-).textContent =
-    lunaDisplayNames(invitation);
-
-
-const displayDate = invitation.dateShort || invitation.date || "";
-
-document.getElementById(
-    "date"
-).textContent =
-    displayDate;
-
-
-document.getElementById(
-    "letterDate"
-).textContent =
-    displayDate;
-
-
-document.getElementById(
-    "detailDate"
-).textContent =
-    displayDate;
-
-
-document.getElementById(
-    "time"
-).textContent =
-    invitation.time;
-
-
-document.getElementById(
-    "venue"
-).textContent =
-    invitation.venue;
-
-
-document.getElementById(
-    "location"
-).textContent =
-    invitation.location;
-
-
-/* =====================================================
-   STORY
-===================================================== */
-
-if (invitation.story) {
-    document.getElementById(
-        "story"
-    ).innerHTML =
-        lunaFormatStory(invitation.story);
-}
-
-
-/* =====================================================
-   MAP
-===================================================== */
-
-const mapButton =
-    document.getElementById(
-        "mapButton"
-    );
-
-
-if (invitation.map) {
-    mapButton.href = invitation.map;
-} else {
-    mapButton.style.display = "none";
-}
-
-
-/* =====================================================
-   DAY NAME
-===================================================== */
-
-function getDayName(dateString) {
-
-    const days = [
-        "Bazar",
-        "Bazar ertəsi",
-        "Çərşənbə axşamı",
-        "Çərşənbə",
-        "Cümə axşamı",
-        "Cümə",
-        "Şənbə"
-    ];
-
-    const date =
-        new Date(
-            dateString + "T12:00:00"
-        );
-
-    return days[date.getDay()];
-}
-
-
-if (
-    invitation.countdown
-) {
-    var dateForDay = invitation.date || "";
-    if (dateForDay) {
-        document.getElementById(
-            "dayName"
-        ).textContent =
-            getDayName(dateForDay);
-    }
-}
-
-
-/* =====================================================
-   GALLERY
-===================================================== */
-
-const gallery =
-    document.getElementById(
-        "gallery"
-    );
-
-
-if (
-    invitation.images &&
-    invitation.images.length
-) {
-
-    gallery.innerHTML = "";
-
-    invitation.images
-        .slice(0,6)
-        .forEach(function(image) {
-
-            const img =
-                document.createElement("img");
-
-            img.src = image;
-            img.alt = lunaDisplayNames(invitation);
-            img.loading = "lazy";
-
-            gallery.appendChild(img);
-        });
-
-}
-
-
-/* =====================================================
    OPEN ENVELOPE
 ===================================================== */
 
-const openButton =
+var openButton =
     document.getElementById("openButton");
 
-const envelope =
+var envelope =
     document.getElementById("envelope");
 
-const opening =
+var opening =
     document.getElementById("opening");
 
-const invitationPage =
+var invitationPage =
     document.getElementById("invitation");
 
 
@@ -1736,7 +2173,7 @@ openButton.addEventListener(
 
         envelope.classList.add("open");
 
-        openButton.textContent = "Açılır...";
+        openButton.textContent = lunaT("invOpening");
         openButton.disabled = true;
 
         setTimeout(
@@ -1744,6 +2181,12 @@ openButton.addEventListener(
                 opening.classList.add("hidden");
                 invitationPage.classList.add("visible");
                 window.scrollTo(0, 0);
+
+                /* Auto-play music if available */
+                if (pkg === "luxury" && invitation.music) {
+                    musicPlayer.play().catch(function() {});
+                    musicButton.textContent = lunaT("invMusicMute");
+                }
             },
             1600
         );
@@ -1751,122 +2194,6 @@ openButton.addEventListener(
     }
 );
 
-
-/* =====================================================
-   COUNTDOWN — BAKU TIME UTC+4
-===================================================== */
-
-function updateCountdown() {
-
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-
-    const targetString = lunaCountdownTarget(invitation);
-
-    if (!targetString) {
-        daysEl.textContent = "00";
-        hoursEl.textContent = "00";
-        minutesEl.textContent = "00";
-        secondsEl.textContent = "00";
-        return;
-    }
-
-    const target = new Date(targetString);
-    const now = new Date();
-    let difference = target.getTime() - now.getTime();
-
-    if (difference <= 0) {
-        daysEl.textContent = "00";
-        hoursEl.textContent = "00";
-        minutesEl.textContent = "00";
-        secondsEl.textContent = "00";
-        return;
-    }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-    daysEl.textContent = String(days).padStart(2, "0");
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minutesEl.textContent = String(minutes).padStart(2, "0");
-    secondsEl.textContent = String(seconds).padStart(2, "0");
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-
-/* =====================================================
-   RSVP
-===================================================== */
-
-const rsvpButton = document.getElementById("rsvpButton");
-const rsvpForm = document.getElementById("rsvpForm");
-const rsvpThanks = document.getElementById("rsvpThanks");
-const rsvpCounts = document.getElementById("rsvpCounts");
-
-function renderRsvpCounts() {
-    const rsvps = lunaGetRsvps(invitationId);
-    if (rsvps.length === 0) {
-        rsvpCounts.hidden = true;
-        return;
-    }
-    const yes = rsvps.filter(function(r) { return r.status === "yes"; }).length;
-    const maybe = rsvps.filter(function(r) { return r.status === "maybe"; }).length;
-    const no = rsvps.filter(function(r) { return r.status === "no"; }).length;
-    document.getElementById("rsvpYesCount").innerHTML = "<strong>" + yes + "</strong>Gəlir";
-    document.getElementById("rsvpMaybeCount").innerHTML = "<strong>" + maybe + "</strong>Bəlkə";
-    document.getElementById("rsvpNoCount").innerHTML = "<strong>" + no + "</strong>Gəlmir";
-    rsvpCounts.hidden = false;
-}
-
-renderRsvpCounts();
-
-rsvpButton.addEventListener("click", function () {
-    rsvpForm.hidden = false;
-    rsvpButton.hidden = true;
-});
-
-rsvpForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    lunaSaveRsvp(invitationId, {
-        name: document.getElementById("rsvpName").value.trim(),
-        status: document.getElementById("rsvpStatus").value,
-        at: new Date().toISOString()
-    });
-
-    rsvpForm.hidden = true;
-    rsvpThanks.hidden = false;
-    document.getElementById("rsvpName").value = "";
-    renderRsvpCounts();
-});
-
-
-/* =====================================================
-   MUSIC
-===================================================== */
-
-const musicButton = document.getElementById("musicButton");
-const musicPlayer = document.getElementById("musicPlayer");
-
-if (invitation.music) {
-    musicPlayer.src = invitation.music;
-    musicButton.hidden = false;
-    musicButton.addEventListener("click", function () {
-        if (musicPlayer.paused) {
-            musicPlayer.play();
-            musicButton.textContent = "♪ Səssiz";
-        } else {
-            musicPlayer.pause();
-            musicButton.textContent = "♪ Musiqi";
-        }
-    });
-}
 
 </script>
 

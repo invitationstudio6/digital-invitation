@@ -2,1689 +2,1115 @@
 <html lang="az">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Luna — Design Manager</title>
-
+<title>Luna — Admin Panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap"
-rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-
     min-height:100vh;
-
-    background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(155,105,80,.22),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(117,77,58,.25),
-            transparent 30%
-        ),
-        #17120f;
-
+    background:radial-gradient(circle at 15% 15%,rgba(155,105,80,.22),transparent 28%),radial-gradient(circle at 85% 80%,rgba(117,77,58,.25),transparent 30%),#17120f;
     color:#f5eee8;
-
     font-family:"DM Sans",sans-serif;
-
-    padding:40px;
-
-}
-
-.container{
-
-    max-width:1200px;
-
-    margin:auto;
-
-}
-
-.header{
-
     display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:45px;
-
 }
-
-.logo{
-
-    font-family:"Italiana",serif;
-
-    font-size:38px;
-
-}
-
-.back{
-
-    color:#c8a391;
-
-    text-decoration:none;
-
-    font-size:10px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-}
-
-.title{
-
-    margin-bottom:35px;
-
-}
-
-.title small{
-
-    color:#b98d78;
-
-    font-size:8px;
-
-    letter-spacing:5px;
-
-    text-transform:uppercase;
-
-}
-
-.title h1{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:64px;
-
-    font-weight:300;
-
-    margin-top:10px;
-
-}
-
-.panel{
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid
-        rgba(255,255,255,.09);
-
-    padding:35px;
-
-    margin-bottom:35px;
-
-    backdrop-filter:blur(15px);
-
-}
-
-.panel h2{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:32px;
-
-    font-weight:400;
-
-    margin-bottom:25px;
-
-}
-
-.form-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:20px;
-
-}
-
-.field{
-
+.sidebar{
+    width:240px;
+    min-height:100vh;
+    background:rgba(0,0,0,.3);
+    border-right:1px solid rgba(255,255,255,.08);
+    padding:30px 0;
     display:flex;
-
     flex-direction:column;
-
-    gap:8px;
-
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
 }
-
-.field.full{
-
-    grid-column:1/-1;
-
-}
-
-label{
-
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    color:#b99583;
-
-}
-
-input,
-select,
-textarea{
-
-    width:100%;
-
-    padding:14px 15px;
-
-    background:
-        rgba(0,0,0,.25);
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    color:white;
-
-    outline:none;
-
-    font-family:inherit;
-
-}
-
-select option{
-
-    background:#211914;
-
-}
-
-textarea{
-
-    min-height:100px;
-
-    resize:vertical;
-
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-
-    border-color:#b88c76;
-
-}
-
-.file-box{
-
-    border:
-        1px dashed
-        rgba(255,255,255,.2);
-
-    padding:25px;
-
+.sidebar-logo{
+    font-family:"Italiana",serif;
+    font-size:32px;
     text-align:center;
-
+    margin-bottom:10px;
+    color:#b88c76;
 }
-
-.file-box input{
-
-    border:none;
-
-    padding:10px;
-
+.sidebar-tagline{
+    text-align:center;
+    font-size:8px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.35);
+    margin-bottom:35px;
 }
-
-.preview-image{
-
-    margin-top:15px;
-
-    width:150px;
-
-    height:190px;
-
-    object-fit:cover;
-
-    display:none;
-
-    border:
-        1px solid
-        rgba(255,255,255,.2);
-
-}
-
-.button-row{
-
+.sidebar-nav{flex:1;}
+.sidebar-link{
     display:flex;
-
+    align-items:center;
     gap:12px;
-
-    margin-top:30px;
-
-}
-
-button{
-
-    border:none;
-
-    padding:15px 25px;
-
-    cursor:pointer;
-
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-}
-
-.save{
-
-    background:#f0e3da;
-
-    color:#211914;
-
-}
-
-.clear{
-
-    background:transparent;
-
-    color:#fff;
-
-    border:
-        1px solid
-        rgba(255,255,255,.2);
-
-}
-
-.designs{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:20px;
-
-}
-
-.design-card{
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    padding:15px;
-
-}
-
-.design-card img{
-
-    width:100%;
-
-    height:280px;
-
-    object-fit:cover;
-
-    display:block;
-
-    margin-bottom:15px;
-
-}
-
-.design-card h3{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:27px;
-
-    font-weight:400;
-
-}
-
-.design-card p{
-
-    color:#ad8c7d;
-
-    font-size:8px;
-
+    padding:14px 28px;
+    color:rgba(255,255,255,.5);
+    text-decoration:none;
+    font-size:12px;
     letter-spacing:1px;
-
-    margin-top:7px;
-
+    transition:all .2s;
+    cursor:pointer;
+    border-left:3px solid transparent;
 }
-
-.card-actions{
-
-    display:flex;
-
-    gap:8px;
-
-    margin-top:15px;
-
+.sidebar-link:hover{color:#f5eee8;background:rgba(255,255,255,.04);}
+.sidebar-link.active{color:#b88c76;background:rgba(184,140,118,.08);border-left-color:#b88c76;}
+.sidebar-link svg{width:16px;height:16px;opacity:.6;}
+.sidebar-link.active svg{opacity:1;}
+.sidebar-bottom{
+    padding:20px 28px;
+    border-top:1px solid rgba(255,255,255,.08);
 }
-
-.card-actions button{
-
-    flex:1;
-
-    padding:10px;
-
+.sidebar-link.back-link{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:12px 0;justify-content:center;}
+.main{margin-left:240px;flex:1;padding:40px;min-height:100vh;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px;}
+.page-title h1{font-family:"Cormorant Garamond",serif;font-size:42px;font-weight:300;}
+.page-title small{color:#b88c76;font-size:8px;letter-spacing:5px;text-transform:uppercase;display:block;margin-bottom:8px;}
+.header-actions{display:flex;gap:10px;align-items:center;}
+.panel{
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.09);
+    padding:30px;
+    margin-bottom:30px;
+    backdrop-filter:blur(15px);
 }
-
-.delete{
-
-    background:
-        rgba(150,60,50,.2);
-
-    color:#e5aaa0;
-
-}
-
-.empty{
-
-    grid-column:1/-1;
-
+.panel h2{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;margin-bottom:20px;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:30px;}
+.stat-card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    padding:25px;
     text-align:center;
-
-    padding:60px;
-
+}
+.stat-card .stat-number{font-family:"Cormorant Garamond",serif;font-size:48px;font-weight:300;color:#b88c76;}
+.stat-card .stat-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:8px;}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field.full{grid-column:1/-1;}
+label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#b99583;}
+input,select,textarea{
+    width:100%;
+    padding:12px 14px;
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.12);
+    color:white;
+    outline:none;
+    font-family:inherit;
+    font-size:13px;
+}
+select option{background:#211914;}
+textarea{min-height:80px;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:#b88c76;}
+.file-box{border:1px dashed rgba(255,255,255,.2);padding:25px;text-align:center;}
+.file-box input{border:none;padding:10px;}
+.preview-image{margin-top:15px;width:120px;height:160px;object-fit:cover;display:none;border:1px solid rgba(255,255,255,.2);}
+.button-row{display:flex;gap:12px;margin-top:25px;}
+button{
+    border:none;
+    padding:12px 22px;
+    cursor:pointer;
+    font-size:8px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-family:"DM Sans",sans-serif;
+}
+.save{background:#b88c76;color:#17120f;}
+.save:hover{background:#c99d88;}
+.clear{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2);}
+.clear:hover{background:rgba(255,255,255,.05);}
+.delete{background:rgba(150,60,50,.2);color:#e5aaa0;}
+.delete:hover{background:rgba(150,60,50,.35);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.card{
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.08);
+    padding:15px;
+}
+.card img{width:100%;height:240px;object-fit:cover;display:block;margin-bottom:12px;}
+.card h3{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:400;}
+.card p{color:#ad8c7d;font-size:9px;letter-spacing:1px;margin-top:5px;}
+.card-meta{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.badge{
+    display:inline-block;
+    padding:3px 8px;
+    font-size:7px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.15);
+    color:rgba(255,255,255,.6);
+}
+.badge.active{border-color:rgba(100,180,100,.4);color:#8dd88d;}
+.badge.inactive{border-color:rgba(200,100,100,.4);color:#e5aaa0;}
+.badge.featured{border-color:rgba(184,140,118,.5);color:#b88c76;}
+.card-actions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap;}
+.card-actions button,.card-actions a{
+    flex:1;
+    padding:10px;
+    text-decoration:none;
+    text-align:center;
+    font-size:8px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border:none;
+    cursor:pointer;
+    font-family:"DM Sans",sans-serif;
+}
+.card-actions .preview-btn{background:#b88c76;color:#17120f;}
+.card-actions .copy-btn{background:rgba(255,255,255,.08);color:#f5eee8;}
+.card-actions .edit-btn{background:rgba(184,140,118,.15);color:#b88c76;}
+.card-actions .toggle-btn{background:rgba(100,180,100,.12);color:#8dd88d;}
+.empty{grid-column:1/-1;text-align:center;padding:60px;color:rgba(255,255,255,.35);font-size:13px;}
+.search-bar{
+    padding:10px 14px;
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.12);
+    color:white;
+    outline:none;
+    font-family:"DM Sans",sans-serif;
+    font-size:12px;
+    width:250px;
+}
+.search-bar:focus{border-color:#b88c76;}
+.customer-list{display:flex;flex-direction:column;gap:12px;}
+.customer-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.07);
+    gap:15px;
+}
+.customer-info{flex:1;min-width:0;}
+.customer-info h4{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;}
+.customer-info p{color:rgba(255,255,255,.4);font-size:10px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.customer-stats{display:flex;gap:12px;flex-shrink:0;}
+.customer-stats span{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;}
+.customer-actions{display:flex;gap:8px;flex-shrink:0;}
+.customer-actions button,.customer-actions a{padding:8px 14px;font-size:7px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;font-family:"DM Sans",sans-serif;}
+.recent-list{display:flex;flex-direction:column;gap:8px;}
+.recent-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+}
+.recent-item .name{font-size:13px;}
+.recent-item .meta{font-size:9px;color:rgba(255,255,255,.4);}
+.quick-actions{display:flex;gap:12px;margin-top:15px;}
+.quick-actions a,.quick-actions button{
+    flex:1;
+    text-align:center;
+    padding:14px;
+    background:rgba(184,140,118,.1);
+    border:1px solid rgba(184,140,118,.2);
+    color:#b88c76;
+    text-decoration:none;
+    font-size:9px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    font-family:"DM Sans",sans-serif;
+}
+.quick-actions a:hover,.quick-actions button:hover{background:rgba(184,140,118,.2);}
+.section{display:none;}
+.section.active{display:block;}
+.filter-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+.filter-row select{
+    padding:10px 14px;
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.12);
+    color:white;
+    font-family:"DM Sans",sans-serif;
+    font-size:11px;
+}
+.filter-row select:focus{border-color:#b88c76;}
+.modal-overlay{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.7);z-index:200;
+    display:none;justify-content:center;align-items:center;
+    padding:40px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+    background:#1e1815;
+    border:1px solid rgba(255,255,255,.1);
+    padding:35px;
+    max-width:700px;width:100%;
+    max-height:80vh;overflow-y:auto;
+}
+.modal h2{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;margin-bottom:20px;}
+.modal-close{
+    float:right;
+    background:none;
+    border:none;
     color:rgba(255,255,255,.4);
-
+    font-size:18px;
+    cursor:pointer;
 }
-
-@media(max-width:800px){
-
-    body{
-        padding:20px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-        grid-column:auto;
-    }
-
-    .designs{
-        grid-template-columns:1fr;
-    }
-
-    .header{
-        align-items:flex-start;
-    }
-
-    .title h1{
-        font-size:50px;
-    }
-
+.modal-close:hover{color:white;}
+.toast{
+    position:fixed;bottom:30px;right:30px;
+    background:#b88c76;color:#17120f;
+    padding:14px 24px;font-size:11px;
+    letter-spacing:1px;z-index:300;
+    transform:translateY(100px);opacity:0;
+    transition:all .3s;
 }
-
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:1024px){
+    .sidebar{width:60px;}
+    .sidebar-logo{font-size:20px;margin-bottom:25px;}
+    .sidebar-tagline,.sidebar-link span,.sidebar-link.back-link span{display:none;}
+    .sidebar-link{padding:14px 0;justify-content:center;}
+    .main{margin-left:60px;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-3{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+    .sidebar{display:none;}
+    .main{margin-left:0;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .grid-3,.grid-2{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .field.full{grid-column:auto;}
+    .page-title h1{font-size:32px;}
+    .customer-row{flex-direction:column;align-items:flex-start;}
+}
 </style>
-
 </head>
-
 
 <body>
 
+<aside class="sidebar">
+    <div class="sidebar-logo">Luna</div>
+    <div class="sidebar-tagline">Admin Panel</div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-link active" data-section="dashboard" onclick="switchSection('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span>Dashboard</span>
+        </a>
+        <a class="sidebar-link" data-section="customers" onclick="switchSection('customers')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Müştərilər</span>
+        </a>
+        <a class="sidebar-link" data-section="designs" onclick="switchSection('designs')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <span>Dizaynlar</span>
+        </a>
+        <a class="sidebar-link" data-section="videos" onclick="switchSection('videos')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Video Dəvətnamələr</span>
+        </a>
+        <a class="sidebar-link" data-section="settings" onclick="switchSection('settings')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Tənzimləmələr</span>
+        </a>
+    </nav>
+    <div class="sidebar-bottom">
+        <a href="index.html" class="sidebar-link back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Back to Luna</span>
+        </a>
+    </div>
+</aside>
 
-<div class="container">
+<main class="main">
 
+<!-- ========== DASHBOARD ========== -->
+<div id="section-dashboard" class="section active">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Dashboard</h1>
+        </div>
+    </div>
 
-<header class="header">
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-number" id="statCustomers">0</div><div class="stat-label">Müştərilər</div></div>
+        <div class="stat-card"><div class="stat-number" id="statVideos">0</div><div class="stat-label">Video Dəvətnamələr</div></div>
+        <div class="stat-card"><div class="stat-number" id="statDesigns">0</div><div class="stat-label">Dizaynlar</div></div>
+        <div class="stat-card"><div class="stat-number" id="statRsvps">0</div><div class="stat-label">RSVP-lər</div></div>
+    </div>
 
-<div class="logo">
-Luna
+    <div class="grid-2">
+        <div class="panel">
+            <h2>Son Müştərilər</h2>
+            <div id="recentCustomers" class="recent-list"></div>
+        </div>
+        <div class="panel">
+            <h2>Tez Əməliyyatlar</h2>
+            <div class="quick-actions">
+                <a href="client-form.html">+ Müştəri</a>
+                <button onclick="switchSection('designs')">+ Dizayn</button>
+                <button onclick="switchSection('videos')">+ Video</button>
+            </div>
+            <div style="margin-top:25px;">
+                <h2 style="margin-bottom:15px;">Kateqoriyalar</h2>
+                <div id="categoryStats" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<a
-href="index.html"
-class="back">
-
-← Back to Luna
-
-</a>
-
-</header>
-
-
-
-<div class="title">
-
-<small>
-Luna Studio
-</small>
-
-<h1>
-Design Manager
-</h1>
-
+<!-- ========== CUSTOMERS ========== -->
+<div id="section-customers" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Müştərilər</h1>
+        </div>
+        <div class="header-actions">
+            <input type="text" class="search-bar" id="customerSearch" placeholder="Axtarış..." oninput="renderCustomers()">
+            <a href="client-form.html" class="save" style="padding:12px 22px;font-size:8px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;">+ Yeni Müştəri</a>
+        </div>
+    </div>
+    <div class="panel">
+        <div id="customerList" class="customer-list"></div>
+    </div>
 </div>
 
+<!-- ========== DESIGNS ========== -->
+<div id="section-designs" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Dizaynlar</h1>
+        </div>
+    </div>
 
+    <div class="panel">
+        <h2>Yeni Dizayn Əlavə Et</h2>
+        <form id="designForm">
+            <div class="form-grid">
+                <div class="field"><label>Dizayn Adı</label><input id="designName" type="text" placeholder="Amelia" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="designCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Paket</label><select id="designPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+                <div class="field"><label>Stil</label><input id="designStyle" type="text" placeholder="Romantik"></div>
+                <div class="field full"><label>Qısa Təsvir</label><textarea id="designDesc" placeholder="Elegant wedding invitation..."></textarea></div>
+                <div class="field full"><label>Örtük Şəkli</label><div class="file-box"><input id="designCover" type="file" accept="image/*" required><img id="designCoverPreview" class="preview-image"></div></div>
+                <div class="field full"><label>Dəvətnamə URL</label><input id="designUrl" type="text" placeholder="templates/wedding/amelia.html"></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Saxla</button>
+                <button type="button" class="clear" onclick="document.getElementById('designForm').reset();document.getElementById('designCoverPreview').style.display='none';">Təmizlə</button>
+            </div>
+        </form>
+    </div>
 
-<section class="panel">
+    <div class="panel">
+        <h2>Mövcud Dizaynlar</h2>
+        <div id="designList" class="grid-3"></div>
+    </div>
 
-<h2>
-Add New Design
-</h2>
-
-
-<form id="designForm">
-
-
-<div class="form-grid">
-
-
-<div class="field">
-
-<label>
-Design Name
-</label>
-
-<input
-id="name"
-type="text"
-placeholder="Amelia"
-required>
-
+    <div class="panel">
+        <h2>Toplu Yükləmə (Canva)</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin.</p>
+        <div class="form-grid">
+            <div class="field full"><label>Şəkilləri seçin</label><div class="file-box"><input id="bulkCover" type="file" accept="image/*" multiple></div></div>
+            <div class="field"><label>Kateqoriya</label><select id="bulkCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+            <div class="field"><label>Paket</label><select id="bulkPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+        </div>
+        <div id="bulkPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:20px;"></div>
+        <div class="button-row">
+            <button type="button" class="save" id="bulkUploadBtn">Hamısını Yüklə</button>
+            <button type="button" class="clear" id="bulkClearBtn">Təmizlə</button>
+        </div>
+    </div>
 </div>
 
+<!-- ========== VIDEOS ========== -->
+<div id="section-videos" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Video Dəvətnamələr</h1>
+        </div>
+    </div>
 
+    <div class="panel">
+        <h2>Yeni Video Əlavə Et</h2>
+        <form id="videoForm">
+            <div class="form-grid">
+                <div class="field"><label>Başlıq</label><input id="videoTitle" type="text" placeholder="Toy Videosu" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="videoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Təsvir</label><input id="videoDescription" type="text" placeholder="Animasiyalı toy videosu"></div>
+                <div class="field"><label>Qiymət (AZN)</label><input id="videoPrice" type="number" value="20"></div>
+                <div class="field"><label>Video URL</label><input id="videoUrl" type="text" placeholder="https://..."></div>
+                <div class="field"><label>Thumbnail URL</label><input id="videoThumb" type="text" placeholder="https://..."></div>
+                <div class="field"><label>Dil</label><select id="videoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
+                <div class="field"><label>Status</label><select id="videoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
+                <div class="field"><label>Seçilmiş (Featured)</label><select id="videoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
+                <div class="field"><label>Göstərmə sırası</label><input id="videoOrder" type="number" value="0"></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Saxla</button>
+                <button type="button" class="clear" onclick="document.getElementById('videoForm').reset();editingVideoId=null;document.querySelector('#videoForm .save').textContent='Saxla';">Təmizlə</button>
+            </div>
+        </form>
+    </div>
 
-<div class="field">
-
-<label>
-Category
-</label>
-
-<select id="category">
-
-<option value="wedding">
-Wedding
-</option>
-
-<option value="engagement">
-Engagement
-</option>
-
-<option value="henna">
-Henna / Kına
-</option>
-
-<option value="birthday">
-Birthday
-</option>
-
-<option value="baby-shower">
-Baby Shower
-</option>
-
-<option value="graduation">
-Graduation
-</option>
-
-<option value="anniversary">
-Anniversary
-</option>
-
-<option value="events">
-Events
-</option>
-
-</select>
-
+    <div class="panel">
+        <h2>Mövcud Videolar</h2>
+        <div class="filter-row">
+            <select id="videoFilter" onchange="renderVideos()">
+                <option value="all">Hamısı</option>
+                <option value="active">Aktiv</option>
+                <option value="inactive">Deaktiv</option>
+                <option value="featured">Seçilmiş</option>
+            </select>
+        </div>
+        <div id="videoList" class="grid-3"></div>
+    </div>
 </div>
 
-
-
-<div class="field">
-
-<label>
-Package
-</label>
-
-<select id="package">
-
-<option value="basic">
-Basic
-</option>
-
-<option value="premium">
-Premium
-</option>
-
-<option value="luxury">
-Luxury
-</option>
-
-</select>
-
+<!-- ========== SETTINGS ========== -->
+<div id="section-settings" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Tənzimləmələr</h1>
+        </div>
+    </div>
+    <div class="panel">
+        <h2>Dil Seçimi</h2>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+            <button data-lang="az" class="save" onclick="lunaSetLanguage('az');location.reload();">Azərbaycanca</button>
+            <button data-lang="en" class="clear" onclick="lunaSetLanguage('en');location.reload();">English</button>
+            <button data-lang="ru" class="clear" onclick="lunaSetLanguage('ru');location.reload();">Русский</button>
+            <button data-lang="tr" class="clear" onclick="lunaSetLanguage('tr');location.reload();">Türkçe</button>
+        </div>
+    </div>
+    <div class="panel">
+        <h2>Bütün Məlumatları Sil</h2>
+        <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:20px;">Bu əməliyyat bütün localStorage məlumatlarını siləcək. Bu geri alınamaz.</p>
+        <button class="delete" onclick="clearAllData()" style="padding:12px 22px;">Bütün Məlumatları Sil</button>
+    </div>
 </div>
 
+</main>
 
-
-<div class="field">
-
-<label>
-Style
-</label>
-
-<input
-id="style"
-type="text"
-placeholder="Romantic">
-
+<div class="modal-overlay" id="editDesignModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('editDesignModal')">&times;</button>
+        <h2>Dizaynı Redaktə Et</h2>
+        <form id="editDesignForm">
+            <input type="hidden" id="editDesignId">
+            <div class="form-grid">
+                <div class="field"><label>Ad</label><input id="editDesignName" type="text" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="editDesignCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Paket</label><select id="editDesignPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+                <div class="field"><label>Stil</label><input id="editDesignStyle" type="text"></div>
+                <div class="field full"><label>Təsvir</label><textarea id="editDesignDesc"></textarea></div>
+                <div class="field full"><label>URL</label><input id="editDesignUrl" type="text"></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Yadda Saxla</button>
+                <button type="button" class="clear" onclick="closeModal('editDesignModal')">Ləğv Et</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-
-
-<div class="field full">
-
-<label>
-Short Description
-</label>
-
-<textarea
-id="description"
-placeholder="Elegant wedding invitation..."></textarea>
-
+<div class="modal-overlay" id="editVideoModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('editVideoModal')">&times;</button>
+        <h2>Video Redaktə Et</h2>
+        <form id="editVideoForm">
+            <input type="hidden" id="editVideoId">
+            <div class="form-grid">
+                <div class="field"><label>Başlıq</label><input id="editVideoTitle" type="text" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="editVideoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Təsvir</label><input id="editVideoDescription" type="text"></div>
+                <div class="field"><label>Qiymət</label><input id="editVideoPrice" type="number"></div>
+                <div class="field"><label>Video URL</label><input id="editVideoUrl" type="text"></div>
+                <div class="field"><label>Thumbnail URL</label><input id="editVideoThumb" type="text"></div>
+                <div class="field"><label>Dil</label><select id="editVideoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
+                <div class="field"><label>Status</label><select id="editVideoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
+                <div class="field"><label>Seçilmiş</label><select id="editVideoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
+                <div class="field"><label>Sıra</label><input id="editVideoOrder" type="number"></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Yadda Saxla</button>
+                <button type="button" class="clear" onclick="closeModal('editVideoModal')">Ləğv Et</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-
-
-<div class="field full">
-
-<label>
-Preview / Cover Image</label>
-
-<div class="file-box">
-
-<input
-id="cover"
-type="file"
-accept="image/*"
-required>
-
-<img
-id="coverPreview"
-class="preview-image">
-
-</div>
-
-</div>
-
-
-
-<div class="field full">
-
-<label>
-Invitation URL</label>
-
-<input
-id="url"
-type="text"
-placeholder="templates/wedding/amelia.html">
-
-</div>
-
-
-</div>
-
-
-
-<div class="button-row">
-
-<button
-type="submit"
-class="save">
-
-Save Design
-
-</button>
-
-<button
-type="button"
-class="clear"
-id="clearBtn">
-
-Clear
-
-</button>
-
-</div>
-
-
-</form>
-
-</section>
-
-
-
-<section class="panel">
-
-<h2>
-Your Designs
-</h2>
-
-<div
-id="designList"
-class="designs">
-
-</div>
-
-</section>
-
-
-
-<section class="panel">
-
-<h2>
-Müştəri Dəvətnamələri
-</h2>
-
-<div
-id="invitationList"
-class="designs">
-
-</div>
-
-</section>
-
-
-
-<section class="panel">
-
-<h2>
-Canva Dəvətnamə Yüklə (Toplu)
-</h2>
-
-<p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">
-Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin. Hər şəkil avtomatik olaraq Luna dizaynları arasına əlavə olunacaq.
-</p>
-
-
-<div class="form-grid">
-
-
-<div class="field full">
-
-<label>
-Canva şəkillərini seçin (çoxlu seçim)
-</label>
-
-<div class="file-box">
-
-<input
-id="bulkCover"
-type="file"
-accept="image/*"
-multiple>
-
-</div>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Kateqoriya (hamısı üçün)
-</label>
-
-<select id="bulkCategory">
-
-<option value="wedding">Wedding</option>
-<option value="engagement">Engagement</option>
-<option value="henna">Henna / Kına</option>
-<option value="birthday">Birthday</option>
-<option value="baby-shower">Baby Shower</option>
-<option value="graduation">Graduation</option>
-<option value="anniversary">Anniversary</option>
-<option value="events">Events</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Paket (hamısı üçün)
-</label>
-
-<select id="bulkPackage">
-
-<option value="basic">Basic</option>
-<option value="premium">Premium</option>
-<option value="luxury">Luxury</option>
-
-</select>
-
-</div>
-
-
-</div>
-
-
-<div id="bulkPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:20px;"></div>
-
-
-<div class="button-row">
-
-<button
-type="button"
-class="save"
-id="bulkUploadBtn">
-
-Hamısını yüklə
-
-</button>
-
-<button
-type="button"
-class="clear"
-id="bulkClearBtn">
-
-Təmizlə
-
-</button>
-
-</div>
-
-
-</section>
-
-
-</div>
-
-
-
+<div class="toast" id="toast"></div>
+
+<script src="data/luna.js"></script>
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
 <script>
 
 /* =====================================================
-   STORAGE
+   SECTION SWITCHING
 ===================================================== */
 
-const STORAGE_KEY =
-    "luna_designs";
-
-
-let designs =
-    JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
-    ) || [];
-
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const form =
-    document.getElementById("designForm");
-
-const cover =
-    document.getElementById("cover");
-
-const coverPreview =
-    document.getElementById("coverPreview");
-
-const designList =
-    document.getElementById("designList");
-
-
-
-/* =====================================================
-   IMAGE PREVIEW
-===================================================== */
-
-cover.addEventListener(
-    "change",
-    function(){
-
-        const file =
-            this.files[0];
-
-        if(!file) return;
-
-        const reader =
-            new FileReader();
-
-        reader.onload =
-            function(e){
-
-                coverPreview.src =
-                    e.target.result;
-
-                coverPreview.style.display =
-                    "block";
-
-            };
-
-        reader.readAsDataURL(file);
-
-    }
-);
-
-
-
-/* =====================================================
-   ADD DESIGN
-===================================================== */
-
-form.addEventListener(
-    "submit",
-    function(e){
-
-        e.preventDefault();
-
-
-        const file =
-            cover.files[0];
-
-        if(!file){
-
-            alert(
-                "Please choose a cover image."
-            );
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(e){
-
-                const design = {
-
-                    id:
-                        Date.now(),
-
-                    name:
-                        document
-                        .getElementById("name")
-                        .value
-                        .trim(),
-
-                    category:
-                        document
-                        .getElementById("category")
-                        .value,
-
-                    package:
-                        document
-                        .getElementById("package")
-                        .value,
-
-                    style:
-                        document
-                        .getElementById("style")
-                        .value
-                        .trim(),
-
-                    description:
-                        document
-                        .getElementById("description")
-                        .value
-                        .trim(),
-
-                    image:
-                        e.target.result,
-
-                    url:
-                        document
-                        .getElementById("url")
-                        .value
-                        .trim()
-
-                };
-
-
-                designs.push(design);
-
-
-                save();
-
-
-                form.reset();
-
-                coverPreview.style.display =
-                    "none";
-
-                alert(
-                    "Design successfully added to Luna."
-                );
-
-            };
-
-
-        reader.readAsDataURL(file);
-
-    }
-);
-
-
-
-/* =====================================================
-   SAVE
-===================================================== */
-
-function save(){
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(designs)
-    );
-
-    render();
-
+function switchSection(name){
+    document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-link[data-section]').forEach(function(link){
+        link.classList.toggle('active', link.getAttribute('data-section') === name);
+    });
+    if(name === 'dashboard') renderDashboard();
+    if(name === 'customers') renderCustomers();
+    if(name === 'designs') renderDesigns();
+    if(name === 'videos') renderVideos();
 }
 
 
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
 
 /* =====================================================
-   DELETE
+   MODALS
 ===================================================== */
+
+function closeModal(id){
+    document.getElementById(id).classList.remove('open');
+}
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function getCustomers(){
+    var customers = [];
+    for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(!key.startsWith('luna_')) continue;
+        if(key === 'luna_last_invitation' || key === 'lunaLanguage' || key === 'luna_designs' || key === 'luna_video_invitations' || key.startsWith('luna_rsvp_')) continue;
+        try {
+            var data = JSON.parse(localStorage.getItem(key));
+            if(data && data.id) customers.push(data);
+        } catch(e){}
+    }
+    return customers;
+}
+
+function getDesigns(){
+    return JSON.parse(localStorage.getItem('luna_designs') || '[]');
+}
+
+function saveDesigns(designs){
+    localStorage.setItem('luna_designs', JSON.stringify(designs));
+}
+
+function getVideos(){
+    return JSON.parse(localStorage.getItem('luna_video_invitations') || '[]');
+}
+
+function saveVideos(videos){
+    localStorage.setItem('luna_video_invitations', JSON.stringify(videos));
+}
+
+function totalCountRsvps(){
+    var total = 0;
+    for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(!key.startsWith('luna_rsvp_')) continue;
+        try {
+            var arr = JSON.parse(localStorage.getItem(key));
+            total += arr.length;
+        } catch(e){}
+    }
+    return total;
+}
+
+function getInvitationLink(id){
+    return window.location.origin + window.location.pathname.replace(/admin\.html$/, '') + 'invitation.html?id=' + id;
+}
+
+function copyToClipboard(text){
+    if(navigator.clipboard){
+        navigator.clipboard.writeText(text);
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+    }
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function renderDashboard(){
+    var customers = getCustomers();
+    var designs = getDesigns();
+    var videos = getVideos();
+    var rsvps = totalCountRsvps();
+
+    document.getElementById('statCustomers').textContent = customers.length;
+    document.getElementById('statVideos').textContent = videos.length;
+    document.getElementById('statDesigns').textContent = designs.length;
+    document.getElementById('statRsvps').textContent = rsvps;
+
+    var recent = document.getElementById('recentCustomers');
+    recent.innerHTML = '';
+    var sorted = customers.slice().sort(function(a,b){ return (b.createdAt || b.id || 0) - (a.createdAt || a.id || 0); }).slice(0, 8);
+    if(!sorted.length){
+        recent.innerHTML = '<div style="padding:30px;text-align:center;color:rgba(255,255,255,.3);font-size:12px;">Hələ müştəri yoxdur.</div>';
+    } else {
+        sorted.forEach(function(c){
+            var name = lunaDisplayNames(c);
+            var cat = lunaCategoryName(c.category || '');
+            var pkg = c.package || '';
+            var date = c.date || '';
+            var rsvpCount = lunaGetRsvps(c.id).length;
+            var div = document.createElement('div');
+            div.className = 'recent-item';
+            div.innerHTML = '<div><div class="name">' + lunaEscapeHtml(name) + '</div><div class="meta">' + lunaEscapeHtml(cat) + ' · ' + lunaEscapeHtml(pkg) + (date ? ' · ' + lunaEscapeHtml(date) : '') + '</div></div><div style="font-size:9px;color:rgba(255,255,255,.4);">' + rsvpCount + ' RSVP</div>';
+            recent.appendChild(div);
+        });
+    }
+
+    var catStats = document.getElementById('categoryStats');
+    catStats.innerHTML = '';
+    LUNA_CATEGORIES.forEach(function(cat){
+        var count = customers.filter(function(c){ return c.category === cat.id; }).length;
+        var div = document.createElement('div');
+        div.style.cssText = 'padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);font-size:11px;display:flex;justify-content:space-between;align-items:center;';
+        div.innerHTML = '<span>' + cat.icon + ' ' + lunaCategoryName(cat.id) + '</span><span style="color:#b88c76;font-family:Cormorant Garamond,serif;font-size:18px;">' + count + '</span>';
+        catStats.appendChild(div);
+    });
+}
+
+
+/* =====================================================
+   CUSTOMERS
+===================================================== */
+
+function renderCustomers(){
+    var list = document.getElementById('customerList');
+    var search = (document.getElementById('customerSearch').value || '').toLowerCase();
+    var customers = getCustomers().sort(function(a,b){ return (b.createdAt || b.id || 0) - (a.createdAt || a.id || 0); });
+
+    if(search){
+        customers = customers.filter(function(c){
+            var name = lunaDisplayNames(c).toLowerCase();
+            var cat = (c.category || '').toLowerCase();
+            var pkg = (c.package || '').toLowerCase();
+            return name.indexOf(search) !== -1 || cat.indexOf(search) !== -1 || pkg.indexOf(search) !== -1;
+        });
+    }
+
+    list.innerHTML = '';
+    if(!customers.length){
+        list.innerHTML = '<div class="empty">Hələ müştəri yoxdur. <a href="client-form.html" style="color:#b88c76;">İlk müştərini əlavə et</a></div>';
+        return;
+    }
+
+    customers.forEach(function(c){
+        var name = lunaDisplayNames(c);
+        var cat = lunaCategoryName(c.category || '');
+        var pkg = c.package || '';
+        var date = c.date || '';
+        var rsvps = lunaGetRsvps(c.id);
+        var rsvpYes = rsvps.filter(function(r){ return r.status === 'yes'; }).length;
+        var rsvpMaybe = rsvps.filter(function(r){ return r.status === 'maybe'; }).length;
+        var rsvpNo = rsvps.filter(function(r){ return r.status === 'no'; }).length;
+        var link = getInvitationLink(c.id);
+
+        var row = document.createElement('div');
+        row.className = 'customer-row';
+        row.innerHTML =
+            '<div class="customer-info">' +
+                '<h4>' + lunaEscapeHtml(name) + '</h4>' +
+                '<p>' + lunaEscapeHtml(cat) + ' · ' + lunaEscapeHtml(pkg) + (date ? ' · ' + lunaEscapeHtml(date) : '') + '</p>' +
+            '</div>' +
+            '<div class="customer-stats">' +
+                '<span>✓ ' + rsvpYes + '</span>' +
+                '<span>? ' + rsvpMaybe + '</span>' +
+                '<span>✗ ' + rsvpNo + '</span>' +
+            '</div>' +
+            '<div class="customer-actions">' +
+                '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
+                '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button class="delete" onclick="deleteCustomer(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+            '</div>';
+        list.appendChild(row);
+    });
+}
+
+function deleteCustomer(id){
+    if(!confirm('Bu müştərini silmək istədiyinizə əminsiniz?')) return;
+    lunaDeleteInvitation(id);
+    renderCustomers();
+    showToast('Müştəri silindi');
+}
+
+
+/* =====================================================
+   DESIGNS
+===================================================== */
+
+function renderDesigns(){
+    var designs = getDesigns();
+    var list = document.getElementById('designList');
+    list.innerHTML = '';
+    if(!designs.length){
+        list.innerHTML = '<div class="empty">Hələ dizayn yoxdur. Yuxarıdakı formadan ilk dizaynı əlavə edin.</div>';
+        return;
+    }
+    designs.forEach(function(d){
+        var card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+            (d.image ? '<img src="' + d.image + '" alt="' + lunaEscapeHtml(d.name) + '">' : '') +
+            '<h3>' + lunaEscapeHtml(d.name) + '</h3>' +
+            '<div class="card-meta">' +
+                '<span class="badge">' + lunaEscapeHtml(d.category || '') + '</span>' +
+                '<span class="badge">' + lunaEscapeHtml(d.package || '') + '</span>' +
+                (d.style ? '<span class="badge">' + lunaEscapeHtml(d.style) + '</span>' : '') +
+            '</div>' +
+            (d.description ? '<p>' + lunaEscapeHtml(d.description) + '</p>' : '') +
+            '<div class="card-actions">' +
+                '<button class="edit-btn" onclick="openEditDesign(' + d.id + ')">Redaktə Et</button>' +
+                '<button class="delete" onclick="deleteDesign(' + d.id + ')">Sil</button>' +
+            '</div>';
+        list.appendChild(card);
+    });
+}
+
+document.getElementById('designForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var file = document.getElementById('designCover').files[0];
+    if(!file){ alert('Örtük şəkli seçin.'); return; }
+    var reader = new FileReader();
+    reader.onload = function(ev){
+        var design = {
+            id: Date.now(),
+            name: document.getElementById('designName').value.trim(),
+            category: document.getElementById('designCategory').value,
+            package: document.getElementById('designPackage').value,
+            style: document.getElementById('designStyle').value.trim(),
+            description: document.getElementById('designDesc').value.trim(),
+            image: ev.target.result,
+            url: document.getElementById('designUrl').value.trim()
+        };
+        var designs = getDesigns();
+        designs.push(design);
+        saveDesigns(designs);
+        document.getElementById('designForm').reset();
+        document.getElementById('designCoverPreview').style.display = 'none';
+        renderDesigns();
+        showToast('Dizayn əlavə edildi');
+    };
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('designCover').addEventListener('change', function(){
+    var file = this.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+        var img = document.getElementById('designCoverPreview');
+        img.src = e.target.result;
+        img.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
 
 function deleteDesign(id){
-
-    if(
-        !confirm(
-            "Delete this design?"
-        )
-    ) return;
-
-
-    designs =
-        designs.filter(
-            design =>
-                design.id !== id
-        );
-
-
-    save();
-
+    if(!confirm('Bu dizaynı silmək istədiyinizə əminsiniz?')) return;
+    var designs = getDesigns().filter(function(d){ return d.id !== id; });
+    saveDesigns(designs);
+    renderDesigns();
+    showToast('Dizayn silindi');
 }
 
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render(){
-
-    designList.innerHTML = "";
-
-
-    if(!designs.length){
-
-        designList.innerHTML = `
-
-            <div class="empty">
-
-                No designs yet.<br><br>
-
-                Add your first Luna design above.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    designs.forEach(
-        design => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "design-card";
-
-
-            card.innerHTML = `
-
-                <img
-                    src="${design.image}"
-                    alt="${escapeHTML(design.name)}"
-                >
-
-                <h3>
-                    ${escapeHTML(design.name)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        design.category
-                    )}
-                    ·
-                    ${escapeHTML(
-                        design.package
-                    )}
-                </p>
-
-                <p>
-                    ${escapeHTML(
-                        design.style || ""
-                    )}
-                </p>
-
-                <div class="card-actions">
-
-                    <button
-                        class="delete"
-                        onclick="
-                            deleteDesign(${design.id})
-                        ">
-
-                        Delete
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            designList.appendChild(card);
-
-        }
-    );
-
+function openEditDesign(id){
+    var design = getDesigns().find(function(d){ return d.id === id; });
+    if(!design) return;
+    document.getElementById('editDesignId').value = design.id;
+    document.getElementById('editDesignName').value = design.name || '';
+    document.getElementById('editDesignCategory').value = design.category || 'wedding';
+    document.getElementById('editDesignPackage').value = design.package || 'basic';
+    document.getElementById('editDesignStyle').value = design.style || '';
+    document.getElementById('editDesignDesc').value = design.description || '';
+    document.getElementById('editDesignUrl').value = design.url || '';
+    document.getElementById('editDesignModal').classList.add('open');
 }
 
+document.getElementById('editDesignForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var id = parseInt(document.getElementById('editDesignId').value);
+    var designs = getDesigns();
+    var idx = designs.findIndex(function(d){ return d.id === id; });
+    if(idx === -1) return;
+    designs[idx].name = document.getElementById('editDesignName').value.trim();
+    designs[idx].category = document.getElementById('editDesignCategory').value;
+    designs[idx].package = document.getElementById('editDesignPackage').value;
+    designs[idx].style = document.getElementById('editDesignStyle').value.trim();
+    designs[idx].description = document.getElementById('editDesignDesc').value.trim();
+    designs[idx].url = document.getElementById('editDesignUrl').value.trim();
+    saveDesigns(designs);
+    closeModal('editDesignModal');
+    renderDesigns();
+    showToast('Dizayn yeniləndi');
+});
 
 
 /* =====================================================
-   SECURITY
+   BULK UPLOAD
 ===================================================== */
 
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   LUNA RSVP (admin üçün)
-===================================================== */
-
-function lunaGetRsvps(invitationId){
-
-    try{
-
-        const raw =
-            localStorage.getItem(
-                "luna_rsvp_" + invitationId
-            );
-
-        return raw
-            ? JSON.parse(raw)
-            : [];
-
-    }catch(error){
-
-        return [];
-
-    }
-
-}
-
-
-
-/* =====================================================
-   CLEAR
-===================================================== */
-
-document
-.getElementById("clearBtn")
-.addEventListener(
-    "click",
-    function(){
-
-        form.reset();
-
-        coverPreview.style.display =
-            "none";
-
-    }
-);
-
-
-
-/* =====================================================
-   INITIAL
-===================================================== */
-
-render();
-renderInvitations();
-
-
-/* =====================================================
-   INVITATIONS
-===================================================== */
-
-function renderInvitations(){
-
-    const list =
-        document.getElementById(
-            "invitationList"
-        );
-
-    list.innerHTML = "";
-
-
-    const invitations = [];
-
-
-    for(
-        let i = 0;
-        i < localStorage.length;
-        i++
-    ){
-
-        const key =
-            localStorage.key(i);
-
-
-        if(
-            !key.startsWith("luna_") ||
-            key === "luna_last_invitation" ||
-            key === "lunaLanguage" ||
-            key.startsWith("luna_rsvp_") ||
-            key === "luna_designs"
-        ){
-            continue;
-        }
-
-
-        try{
-
-            const data =
-                JSON.parse(
-                    localStorage.getItem(key)
-                );
-
-            if(data && data.id){
-
-                invitations.push(data);
-
-            }
-
-        }catch(e){}
-
-    }
-
-
-    if(!invitations.length){
-
-        list.innerHTML = `
-
-            <div class="empty">
-
-                Hələ dəvətnamə yoxdur.<br><br>
-
-                Müştəri formu vasitəsilə
-                ilk dəvətnaməni yaradın.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    invitations.forEach(function(inv){
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "design-card";
-
-
-        const rsvps =
-            lunaGetRsvps(inv.id);
-
-        const rsvpYes =
-            rsvps.filter(
-                function(r){
-                    return r.status === "yes";
-                }
-            ).length;
-
-        const rsvpMaybe =
-            rsvps.filter(
-                function(r){
-                    return r.status === "maybe";
-                }
-            ).length;
-
-        const rsvpNo =
-            rsvps.filter(
-                function(r){
-                    return r.status === "no";
-                }
-            ).length;
-
-
-        const link =
-            window.location.origin +
-            window.location.pathname
-                .replace(
-                    /admin\.html$/,
-                    ""
-                ) +
-            "data/invitation.html?id=" +
-            inv.id;
-
-
-        card.innerHTML = `
-
-            <div style="
-                padding:25px;
-                background:
-                    linear-gradient(
-                        135deg,
-                        rgba(255,255,255,.08),
-                        rgba(255,255,255,.03)
-                    );
-                min-height:280px;
-                display:flex;
-                flex-direction:column;
-                justify-content:center;
-            ">
-
-                <div style="
-                    font-size:8px;
-                    letter-spacing:3px;
-                    color:#b98d78;
-                    text-transform:uppercase;
-                    margin-bottom:15px;
-                ">
-                    ${escapeHTML(
-                        inv.category || "wedding"
-                    )}
-                    ·
-                    ${escapeHTML(
-                        inv.package || "basic"
-                    )}
-                    ·
-                    ${escapeHTML(
-                        inv.design || ""
-                    )}
-                </div>
-
-                <h3 style="
-                    font-family:'Cormorant Garamond',serif;
-                    font-size:36px;
-                    font-weight:400;
-                    margin-bottom:15px;
-                ">
-                    ${escapeHTML(
-                        inv.bride || ""
-                    )}
-                    ${inv.groom
-                        ? " & " + escapeHTML(inv.groom)
-                        : ""
-                    }
-                </h3>
-
-                <p style="
-                    color:#ad8c7d;
-                    font-size:10px;
-                    margin-bottom:8px;
-                ">
-                    ${escapeHTML(
-                        inv.dateShort ||
-                        inv.date ||
-                        ""
-                    )}
-                    ·
-                    ${escapeHTML(
-                        inv.time || ""
-                    )}
-                </p>
-
-                <p style="
-                    color:#ad8c7d;
-                    font-size:10px;
-                    margin-bottom:20px;
-                ">
-                    ${escapeHTML(
-                        inv.venue || ""
-                    )}
-                    ·
-                    ${escapeHTML(
-                        inv.location || ""
-                    )}
-                </p>
-
-                <div style="
-                    display:flex;
-                    gap:15px;
-                    font-size:9px;
-                    color:#8a7568;
-                    margin-bottom:20px;
-                ">
-                    <span>
-                        ✓ ${rsvpYes} gəlir
-                    </span>
-                    <span>
-                        ? ${rsvpMaybe} bəlkə
-                    </span>
-                    <span>
-                        ✗ ${rsvpNo} gəlmir
-                    </span>
-                </div>
-
-                <div class="card-actions">
-
-                    <a
-                        href="${link}"
-                        target="_blank"
-                        style="
-                            flex:1;
-                            display:block;
-                            text-align:center;
-                            padding:10px;
-                            background:#f0e3da;
-                            color:#211914;
-                            text-decoration:none;
-                            font-size:8px;
-                            letter-spacing:2px;
-                            text-transform:uppercase;
-                        "
-                    >
-                        Dəvətnaməni aç
-                    </a>
-
-                    <button
-                        class="delete"
-                        onclick="
-                            deleteInvitation('${escapeHTML(inv.id)}')
-                        "
-                    >
-                        Sil
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        list.appendChild(card);
-
+var bulkFiles = [];
+
+document.getElementById('bulkCover').addEventListener('change', function(){
+    bulkFiles = Array.from(this.files);
+    var preview = document.getElementById('bulkPreview');
+    preview.innerHTML = '';
+    bulkFiles.forEach(function(file){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            var div = document.createElement('div');
+            div.style.cssText = 'position:relative;border:1px solid rgba(255,255,255,.12);overflow:hidden;';
+            div.innerHTML =
+                '<img src="' + e.target.result + '" style="width:100%;height:180px;object-fit:cover;display:block;">' +
+                '<input type="text" value="' + file.name.replace(/\.[^.]+$/, '') + '" data-original="' + e.target.result + '" style="width:100%;padding:8px;background:rgba(0,0,0,.3);border:none;border-top:1px solid rgba(255,255,255,.1);color:white;font-size:9px;font-family:inherit;">';
+            preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
     });
+});
 
-}
+document.getElementById('bulkUploadBtn').addEventListener('click', function(){
+    var inputs = document.getElementById('bulkPreview').querySelectorAll('input');
+    if(!inputs.length){ alert('Şəkillər seçin.'); return; }
+    var category = document.getElementById('bulkCategory').value;
+    var pkg = document.getElementById('bulkPackage').value;
+    var designs = getDesigns();
+    var count = 0;
+    inputs.forEach(function(input){
+        var name = input.value.trim();
+        var image = input.dataset.original;
+        if(!name || !image) return;
+        designs.push({ id: Date.now() + count, name: name, category: category, package: pkg, style: 'Canva', description: '', image: image, url: '' });
+        count++;
+    });
+    saveDesigns(designs);
+    document.getElementById('bulkPreview').innerHTML = '';
+    document.getElementById('bulkCover').value = '';
+    bulkFiles = [];
+    renderDesigns();
+    showToast(count + ' dizayn yükləndi');
+});
 
+document.getElementById('bulkClearBtn').addEventListener('click', function(){
+    document.getElementById('bulkCover').value = '';
+    document.getElementById('bulkPreview').innerHTML = '';
+    bulkFiles = [];
+});
 
 
 /* =====================================================
-   DELETE INVITATION
+   VIDEOS
 ===================================================== */
 
-function deleteInvitation(id){
+var editingVideoId = null;
 
-    if(
-        !confirm(
-            "Bu dəvətnaməni silmək istədiyinizə əminsiniz?"
-        )
-    ){
+function renderVideos(){
+    var videos = getVideos();
+    var filter = document.getElementById('videoFilter').value;
+    var list = document.getElementById('videoList');
+
+    if(filter === 'active') videos = videos.filter(function(v){ return v.active; });
+    else if(filter === 'inactive') videos = videos.filter(function(v){ return !v.active; });
+    else if(filter === 'featured') videos = videos.filter(function(v){ return v.featured; });
+
+    videos.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
+
+    list.innerHTML = '';
+    if(!videos.length){
+        list.innerHTML = '<div class="empty">Hələ video yoxdur. Yuxarıdakı formadan əlavə edin.</div>';
         return;
     }
 
+    videos.forEach(function(v){
+        var card = document.createElement('div');
+        card.className = 'card';
+        var thumb = v.thumbnail ? '<img src="' + lunaEscapeHtml(v.thumbnail) + '" alt="' + lunaEscapeHtml(v.title) + '">' : '<div style="width:100%;height:240px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">VIDEO</div>';
+        var statusBadge = v.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
+        var featuredBadge = v.featured ? '<span class="badge featured">Featured</span>' : '';
+        card.innerHTML =
+            thumb +
+            '<h3>' + lunaEscapeHtml(v.title || '') + '</h3>' +
+            '<div class="card-meta">' +
+                '<span class="badge">' + lunaEscapeHtml(lunaCategoryName(v.category || '')) + '</span>' +
+                '<span class="badge">' + (v.price || 20) + ' AZN</span>' +
+                statusBadge + featuredBadge +
+            '</div>' +
+            (v.description ? '<p>' + lunaEscapeHtml(v.description) + '</p>' : '') +
+            '<div class="card-actions">' +
+                '<button class="edit-btn" onclick="openEditVideo(\'' + lunaEscapeHtml(v.id) + '\')">Redaktə</button>' +
+                '<button class="toggle-btn" onclick="toggleVideoActive(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                '<button class="toggle-btn" onclick="toggleVideoFeatured(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.featured ? 'Featured Sil' : 'Featured Et') + '</button>' +
+                '<button class="delete" onclick="deleteVideo(\'' + lunaEscapeHtml(v.id) + '\')">Sil</button>' +
+            '</div>';
+        list.appendChild(card);
+    });
+}
 
-    localStorage.removeItem(
-        "luna_" + id
-    );
+document.getElementById('videoForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var videos = getVideos();
+    if(editingVideoId){
+        var idx = videos.findIndex(function(v){ return v.id === editingVideoId; });
+        if(idx !== -1){
+            videos[idx].title = document.getElementById('videoTitle').value.trim();
+            videos[idx].category = document.getElementById('videoCategory').value;
+            videos[idx].description = document.getElementById('videoDescription').value.trim();
+            videos[idx].price = parseFloat(document.getElementById('videoPrice').value) || 20;
+            videos[idx].url = document.getElementById('videoUrl').value.trim();
+            videos[idx].thumbnail = document.getElementById('videoThumb').value.trim();
+            videos[idx].language = document.getElementById('videoLang').value;
+            videos[idx].active = document.getElementById('videoStatus').value === 'active';
+            videos[idx].featured = document.getElementById('videoFeatured').value === 'yes';
+            videos[idx].order = parseInt(document.getElementById('videoOrder').value) || 0;
+        }
+        editingVideoId = null;
+        document.querySelector('#videoForm .save').textContent = 'Saxla';
+    } else {
+        var video = {
+            id: 'vid_' + Date.now(),
+            title: document.getElementById('videoTitle').value.trim(),
+            category: document.getElementById('videoCategory').value,
+            description: document.getElementById('videoDescription').value.trim(),
+            price: parseFloat(document.getElementById('videoPrice').value) || 20,
+            url: document.getElementById('videoUrl').value.trim(),
+            thumbnail: document.getElementById('videoThumb').value.trim(),
+            language: document.getElementById('videoLang').value,
+            active: document.getElementById('videoStatus').value === 'active',
+            featured: document.getElementById('videoFeatured').value === 'yes',
+            order: parseInt(document.getElementById('videoOrder').value) || 0
+        };
+        videos.push(video);
+    }
+    saveVideos(videos);
+    document.getElementById('videoForm').reset();
+    renderVideos();
+    showToast(editingVideoId ? 'Video yeniləndi' : 'Video əlavə edildi');
+});
 
-    localStorage.removeItem(
-        "luna_rsvp_" + id
-    );
+function deleteVideo(id){
+    if(!confirm('Bu videonu silmək istədiyinizə əminsiniz?')) return;
+    var videos = getVideos().filter(function(v){ return v.id !== id; });
+    saveVideos(videos);
+    renderVideos();
+    showToast('Video silindi');
+}
 
+function toggleVideoActive(id){
+    var videos = getVideos();
+    var v = videos.find(function(x){ return x.id === id; });
+    if(v){ v.active = !v.active; saveVideos(videos); renderVideos(); showToast(v.active ? 'Video aktiv edildi' : 'Video deaktiv edildi'); }
+}
 
-renderInvitations();
+function toggleVideoFeatured(id){
+    var videos = getVideos();
+    var v = videos.find(function(x){ return x.id === id; });
+    if(v){ v.featured = !v.featured; saveVideos(videos); renderVideos(); showToast(v.featured ? 'Featured edildi' : 'Featured silindi'); }
+}
 
+function openEditVideo(id){
+    var videos = getVideos();
+    var v = videos.find(function(x){ return x.id === id; });
+    if(!v) return;
+    editingVideoId = v.id;
+    document.getElementById('editVideoId').value = v.id;
+    document.getElementById('editVideoTitle').value = v.title || '';
+    document.getElementById('editVideoCategory').value = v.category || 'wedding';
+    document.getElementById('editVideoDescription').value = v.description || '';
+    document.getElementById('editVideoPrice').value = v.price || 20;
+    document.getElementById('editVideoUrl').value = v.url || '';
+    document.getElementById('editVideoThumb').value = v.thumbnail || '';
+    document.getElementById('editVideoLang').value = v.language || 'az';
+    document.getElementById('editVideoStatus').value = v.active ? 'active' : 'inactive';
+    document.getElementById('editVideoFeatured').value = v.featured ? 'yes' : 'no';
+    document.getElementById('editVideoOrder').value = v.order || 0;
+    document.getElementById('editVideoModal').classList.add('open');
+}
+
+document.getElementById('editVideoForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var id = document.getElementById('editVideoId').value;
+    var videos = getVideos();
+    var idx = videos.findIndex(function(v){ return v.id === id; });
+    if(idx === -1) return;
+    videos[idx].title = document.getElementById('editVideoTitle').value.trim();
+    videos[idx].category = document.getElementById('editVideoCategory').value;
+    videos[idx].description = document.getElementById('editVideoDescription').value.trim();
+    videos[idx].price = parseFloat(document.getElementById('editVideoPrice').value) || 20;
+    videos[idx].url = document.getElementById('editVideoUrl').value.trim();
+    videos[idx].thumbnail = document.getElementById('editVideoThumb').value.trim();
+    videos[idx].language = document.getElementById('editVideoLang').value;
+    videos[idx].active = document.getElementById('editVideoStatus').value === 'active';
+    videos[idx].featured = document.getElementById('editVideoFeatured').value === 'yes';
+    videos[idx].order = parseInt(document.getElementById('editVideoOrder').value) || 0;
+    saveVideos(videos);
+    closeModal('editVideoModal');
+    renderVideos();
+    showToast('Video yeniləndi');
+});
 
 
 /* =====================================================
-   CANVA BULK UPLOAD
+   SETTINGS — CLEAR ALL
 ===================================================== */
 
-const bulkCover =
-    document.getElementById("bulkCover");
-
-const bulkPreview =
-    document.getElementById("bulkPreview");
-
-const bulkUploadBtn =
-    document.getElementById("bulkUploadBtn");
-
-const bulkClearBtn =
-    document.getElementById("bulkClearBtn");
-
-let bulkFiles = [];
-
-
-bulkCover.addEventListener(
-    "change",
-    function(){
-
-        bulkFiles =
-            Array.from(this.files);
-
-        bulkPreview.innerHTML = "";
-
-
-        bulkFiles.forEach(function(file){
-
-            const reader =
-                new FileReader();
-
-            reader.onload =
-                function(e){
-
-                    const div =
-                        document.createElement("div");
-
-                    div.style.cssText =
-
-                        "position:relative;" +
-                        "border:1px solid rgba(255,255,255,.12);" +
-                        "overflow:hidden;";
-
-                    div.innerHTML =
-
-                        '<img src="' + e.target.result + '" ' +
-                        'style="width:100%;height:180px;object-fit:cover;display:block;">' +
-
-                        '<input ' +
-                            'type="text" ' +
-                            'value="' + file.name.replace(/\.[^.]+$/, "") + '" ' +
-                            'data-original="' + e.target.result + '" ' +
-                            'style="' +
-                                'width:100%;padding:8px;background:rgba(0,0,0,.3);' +
-                                'border:none;border-top:1px solid rgba(255,255,255,.1);' +
-                                'color:white;font-size:9px;font-family:inherit;' +
-                            '" ' +
-                        '>';
-
-
-                    bulkPreview.appendChild(div);
-
-                };
-
-            reader.readAsDataURL(file);
-
-        });
-
+function clearAllData(){
+    if(!confirm('Bütün məlumatları silmək istədiyinizə əminsiniz? Bu geri alınamaz!')) return;
+    if(!confirm('DİQQƏT: Bütün müştərilər, dizaynlar, videolar və RSVP-lər silinəcək. Davam edilsin?')) return;
+    var keysToRemove = [];
+    for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(key.startsWith('luna_')) keysToRemove.push(key);
     }
-);
-
-
-bulkUploadBtn.addEventListener(
-    "click",
-    function(){
-
-        const inputs =
-            bulkPreview.querySelectorAll("input");
-
-        if(!inputs.length){
-
-            alert(
-                "Please select Canva images first."
-            );
-
-            return;
-
-        }
-
-
-        const category =
-            document.getElementById("bulkCategory").value;
-
-        const pkg =
-            document.getElementById("bulkPackage").value;
-
-
-        let count = 0;
-
-
-        inputs.forEach(function(input){
-
-            const name =
-                input.value.trim();
-
-            const image =
-                input.dataset.original;
-
-
-            if(!name || !image) return;
-
-
-            const design = {
-
-                id:
-                    Date.now() + count,
-
-                name:
-                    name,
-
-                category:
-                    category,
-
-                package:
-                    pkg,
-
-                style:
-                    "Canva",
-
-                description:
-                    "",
-
-                image:
-                    image,
-
-                url:
-                    ""
-
-            };
-
-
-            designs.push(design);
-
-            count++;
-
-        });
-
-
-        save();
-
-        bulkPreview.innerHTML = "";
-
-        bulkCover.value = "";
-
-        bulkFiles = [];
-
-
-        alert(
-            count + " Canva designs uploaded to Luna."
-        );
-
-    }
-);
-
-
-bulkClearBtn.addEventListener(
-    "click",
-    function(){
-
-        bulkCover.value = "";
-
-        bulkPreview.innerHTML = "";
-
-        bulkFiles = [];
-
-    }
-);
-
+    keysToRemove.forEach(function(k){ localStorage.removeItem(k); });
+    showToast('Bütün məlumatlar silindi');
+    renderDashboard();
+    renderCustomers();
+    renderDesigns();
+    renderVideos();
 }
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+lunaInitLanguage();
+renderDashboard();
 
 </script>
 
-
 </body>
-
 </html>
