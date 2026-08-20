@@ -2,71 +2,73 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna — Engagement</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Italiana&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#17120f;color:#f5eee9;font-family:Arial,sans-serif;text-align:center}
-header{padding:100px 20px}
-h1{font:100px Georgia;font-weight:300}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    background:
+        radial-gradient(circle at 15% 10%,rgba(157,105,79,.28),transparent 30%),
+        radial-gradient(circle at 85% 75%,rgba(106,69,52,.25),transparent 35%),
+        #17120f;
+    color:#f5eee9;
+    font-family:"DM Sans",sans-serif;
+    min-height:100vh;
+}
 a{color:inherit;text-decoration:none}
-.grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:25px;padding:20px}
-.card{height:520px;padding:20px;background:#251a16;border:1px solid #ffffff15}
-.paper{height:100%;display:flex;align-items:center;justify-content:center}
-.amour{background:linear-gradient(145deg,#eee1d8,#c8a99a);color:#49362e}
-.noir{background:linear-gradient(145deg,#111,#58443a)}
-.olive{background:linear-gradient(145deg,#586251,#202a23)}
-h2{font:60px Georgia;font-weight:300}
-@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:65px}}
+.nav{height:78px;padding:0 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(23,18,15,.8);backdrop-filter:blur(20px)}
+.logo{font-family:"Italiana",serif;font-size:35px}
+.back{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#b89b8e}
+.hero{text-align:center;padding:110px 20px 70px}
+.eyebrow{font-size:8px;letter-spacing:6px;text-transform:uppercase;color:#c09a86}
+h1{font-family:"Cormorant Garamond",serif;font-size:clamp(64px,12vw,120px);font-weight:300;line-height:.8;margin:30px 0}
+.hero p{max-width:500px;margin:auto;color:#a9958b;font-size:13px;line-height:2}
+.grid{max-width:1200px;margin:auto;padding:0 5% 120px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.design{transition:.4s}
+.design:hover{transform:translateY(-10px)}
+.preview{height:520px;padding:20px;border:1px solid rgba(255,255,255,.08);background:#211814}
+.paper{height:100%;display:flex;justify-content:center;align-items:center;text-align:center;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.paper-inner{width:80%;height:85%;border:1px solid rgba(255,255,255,.3);display:flex;flex-direction:column;justify-content:center;align-items:center}
+.paper-inner small{font-size:7px;letter-spacing:4px;text-transform:uppercase}
+.paper-inner h2{font-family:"Cormorant Garamond",serif;font-size:52px;font-weight:300;margin:30px 0}
+.paper-inner p{font-size:8px;letter-spacing:2px;text-transform:uppercase}
+.meta{display:flex;justify-content:space-between;padding:17px 3px}
+.meta strong{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:400}
+.meta span{color:#b89482;font-size:7px;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:550px){.grid{grid-template-columns:1fr}h1{font-size:72px}}
+
+.paper.amelia{background:linear-gradient(145deg,#754b3b,#241a16)}
+.paper.amour{background:linear-gradient(145deg,#eee1d8,#c8a99a);color:#49362e}
+.paper.noir{background:linear-gradient(145deg,#111,#58443a)}
+.paper.olive{background:linear-gradient(145deg,#586251,#202a23)}
+.paper.blush{background:linear-gradient(145deg,#e8c4c8,#7a4450)}
+.paper.gold{background:linear-gradient(145deg,#d8b36a,#3d2a12)}
+.paper.sky{background:linear-gradient(145deg,#cfe4ef,#2d4450)}
+.paper.mint{background:linear-gradient(145deg,#d7eadc,#2f4638)}
 </style>
 </head>
 <body>
-
-<header>
-<p>LUNA COLLECTION</p>
-<h1>Engagement</h1>
-<p>Engagement invitations for your beautiful beginning.</p>
-<a href="../index.html">← Luna</a>
-</header>
-
-<div class="grid">
-
-<a href="../client-form.html?design=amour&package=premium&category=engagement">
-<div class="card">
-<div class="paper amour">
-<div>
-<small>ENGAGEMENT</small>
-<h2>Amour</h2>
-<p>Soft Romance</p>
-</div>
-</div>
-</div>
+<nav class="nav"><a href="../index.html" class="logo">Luna</a><a href="../index.html#categories" class="back">← Collections</a></nav>
+<header class="hero"><div class="eyebrow">Luna Collection</div><h1>Engagement</h1><p>Nişan gününüz üçün zərif, romantik dəvətnamələr.</p></header>
+<main class="grid">
+<a class="design" href="../client-form.html?design=amour&package=premium&category=engagement">
+<div class="preview"><div class="paper amour"><div class="paper-inner">
+<small>Engagement</small><h2>Amour</h2><p>Soft Romance</p>
+</div></div></div>
+<div class="meta"><strong>Amour</strong><span>premium</span></div>
 </a>
-
-<a href="../client-form.html?design=noir&package=luxury&category=engagement">
-<div class="card">
-<div class="paper noir">
-<div>
-<small>ENGAGEMENT</small>
-<h2>Noir</h2>
-<p>Modern Love</p>
-</div>
-</div>
-</div>
+<a class="design" href="../client-form.html?design=noir&package=luxury&category=engagement">
+<div class="preview"><div class="paper noir"><div class="paper-inner">
+<small>Engagement</small><h2>Noir</h2><p>Modern Love</p>
+</div></div></div>
+<div class="meta"><strong>Noir</strong><span>luxury</span></div>
 </a>
-
-<a href="../client-form.html?design=olive&package=basic&category=engagement">
-<div class="card">
-<div class="paper olive">
-<div>
-<small>ENGAGEMENT</small>
-<h2>Olive</h2>
-<p>Natural Romance</p>
-</div>
-</div>
-</div>
-</a>
-
-</div>
-
-</body>
-</html>
+<a class="design" href="../client-form.html?design=olive&package=basic&category=engagement">
+<div class="preview"><div class="paper olive"><div class="paper-inner">
+<small>Engagement</small><h2>Olive</h2><p>Natural Romance</p>
+</div></div></div>
+<div class="meta"><strong>Olive</strong><span>basic</span></div>
+</a></main>
+</body></html>
