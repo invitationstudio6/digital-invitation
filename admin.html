@@ -703,6 +703,22 @@ class="designs">
 </section>
 
 
+
+<section class="panel">
+
+<h2>
+Müştəri Dəvətnamələri
+</h2>
+
+<div
+id="invitationList"
+class="designs">
+
+</div>
+
+</section>
+
+
 </div>
 
 
@@ -1030,6 +1046,32 @@ function escapeHTML(value){
 }
 
 
+/* =====================================================
+   LUNA RSVP (admin üçün)
+===================================================== */
+
+function lunaGetRsvps(invitationId){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                "luna_rsvp_" + invitationId
+            );
+
+        return raw
+            ? JSON.parse(raw)
+            : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
 
 /* =====================================================
    CLEAR
@@ -1056,6 +1098,301 @@ document
 ===================================================== */
 
 render();
+renderInvitations();
+
+
+/* =====================================================
+   INVITATIONS
+===================================================== */
+
+function renderInvitations(){
+
+    const list =
+        document.getElementById(
+            "invitationList"
+        );
+
+    list.innerHTML = "";
+
+
+    const invitations = [];
+
+
+    for(
+        let i = 0;
+        i < localStorage.length;
+        i++
+    ){
+
+        const key =
+            localStorage.key(i);
+
+
+        if(
+            !key.startsWith("luna_") ||
+            key === "luna_last_invitation" ||
+            key === "lunaLanguage" ||
+            key.startsWith("luna_rsvp_") ||
+            key === "luna_designs"
+        ){
+            continue;
+        }
+
+
+        try{
+
+            const data =
+                JSON.parse(
+                    localStorage.getItem(key)
+                );
+
+            if(data && data.id){
+
+                invitations.push(data);
+
+            }
+
+        }catch(e){}
+
+    }
+
+
+    if(!invitations.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                Hələ dəvətnamə yoxdur.<br><br>
+
+                Müştəri formu vasitəsilə
+                ilk dəvətnaməni yaradın.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    invitations.forEach(function(inv){
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "design-card";
+
+
+        const rsvps =
+            lunaGetRsvps(inv.id);
+
+        const rsvpYes =
+            rsvps.filter(
+                function(r){
+                    return r.status === "yes";
+                }
+            ).length;
+
+        const rsvpMaybe =
+            rsvps.filter(
+                function(r){
+                    return r.status === "maybe";
+                }
+            ).length;
+
+        const rsvpNo =
+            rsvps.filter(
+                function(r){
+                    return r.status === "no";
+                }
+            ).length;
+
+
+        const link =
+            window.location.origin +
+            window.location.pathname
+                .replace(
+                    /admin\.html$/,
+                    ""
+                ) +
+            "data/invitation.html?id=" +
+            inv.id;
+
+
+        card.innerHTML = `
+
+            <div style="
+                padding:25px;
+                background:
+                    linear-gradient(
+                        135deg,
+                        rgba(255,255,255,.08),
+                        rgba(255,255,255,.03)
+                    );
+                min-height:280px;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+            ">
+
+                <div style="
+                    font-size:8px;
+                    letter-spacing:3px;
+                    color:#b98d78;
+                    text-transform:uppercase;
+                    margin-bottom:15px;
+                ">
+                    ${escapeHTML(
+                        inv.category || "wedding"
+                    )}
+                    ·
+                    ${escapeHTML(
+                        inv.package || "basic"
+                    )}
+                    ·
+                    ${escapeHTML(
+                        inv.design || ""
+                    )}
+                </div>
+
+                <h3 style="
+                    font-family:'Cormorant Garamond',serif;
+                    font-size:36px;
+                    font-weight:400;
+                    margin-bottom:15px;
+                ">
+                    ${escapeHTML(
+                        inv.bride || ""
+                    )}
+                    ${inv.groom
+                        ? " & " + escapeHTML(inv.groom)
+                        : ""
+                    }
+                </h3>
+
+                <p style="
+                    color:#ad8c7d;
+                    font-size:10px;
+                    margin-bottom:8px;
+                ">
+                    ${escapeHTML(
+                        inv.dateShort ||
+                        inv.date ||
+                        ""
+                    )}
+                    ·
+                    ${escapeHTML(
+                        inv.time || ""
+                    )}
+                </p>
+
+                <p style="
+                    color:#ad8c7d;
+                    font-size:10px;
+                    margin-bottom:20px;
+                ">
+                    ${escapeHTML(
+                        inv.venue || ""
+                    )}
+                    ·
+                    ${escapeHTML(
+                        inv.location || ""
+                    )}
+                </p>
+
+                <div style="
+                    display:flex;
+                    gap:15px;
+                    font-size:9px;
+                    color:#8a7568;
+                    margin-bottom:20px;
+                ">
+                    <span>
+                        ✓ ${rsvpYes} gəlir
+                    </span>
+                    <span>
+                        ? ${rsvpMaybe} bəlkə
+                    </span>
+                    <span>
+                        ✗ ${rsvpNo} gəlmir
+                    </span>
+                </div>
+
+                <div class="card-actions">
+
+                    <a
+                        href="${link}"
+                        target="_blank"
+                        style="
+                            flex:1;
+                            display:block;
+                            text-align:center;
+                            padding:10px;
+                            background:#f0e3da;
+                            color:#211914;
+                            text-decoration:none;
+                            font-size:8px;
+                            letter-spacing:2px;
+                            text-transform:uppercase;
+                        "
+                    >
+                        Dəvətnaməni aç
+                    </a>
+
+                    <button
+                        class="delete"
+                        onclick="
+                            deleteInvitation('${escapeHTML(inv.id)}')
+                        "
+                    >
+                        Sil
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   DELETE INVITATION
+===================================================== */
+
+function deleteInvitation(id){
+
+    if(
+        !confirm(
+            "Bu dəvətnaməni silmək istədiyinizə əminsiniz?"
+        )
+    ){
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "luna_" + id
+    );
+
+    localStorage.removeItem(
+        "luna_rsvp_" + id
+    );
+
+
+    renderInvitations();
+
+}
 
 </script>
 
