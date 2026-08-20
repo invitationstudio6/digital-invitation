@@ -361,14 +361,11 @@ button,input,textarea,select{font-family:inherit}
 
     var BUSINESS_EVENT_TYPES = [
         { value: "konfrans", text: "Konfrans" },
-        { value: "korporativ", text: "Korporativ tədbir" },
-        { value: "mehsul", text: "Məhsul təqdimatı" },
-        { value: "sam-yemeyi", text: "Biznes şam yeməyi" },
-        { value: "sebekelesme", text: "Şəbəkələşmə" },
         { value: "seminar", text: "Seminar" },
         { value: "workshop", text: "Workshop" },
-        { value: "ildonum", text: "Şirkət ildönümü" },
-        { value: "acilis", text: "Açılış mərasimi" }
+        { value: "sirket-terbi", text: "Şirkət tədbiri" },
+        { value: "lansman", text: "Lansman" },
+        { value: "qala-gecesi", text: "Qala gecəsi" }
     ];
 
     var LANGUAGE_OPTIONS = [
@@ -379,10 +376,10 @@ button,input,textarea,select{font-family:inherit}
     ];
 
     var EXTRA_LABELS = {
-        az: { formMessage: "D\u00e9v\u00e9tnam\u00e9 m\u00e9tni", formAge: "Ya\u015f", formEventType: "T\u00e9dbir n\u00f6v\u00fc", formCompanyLogo: "\u015eirk\u00e9t loqosu", formSchedule: "C\u00e9dv\u00e9l" },
-        en: { formMessage: "Invitation text", formAge: "Age", formEventType: "Event type", formCompanyLogo: "Company logo", formSchedule: "Schedule" },
-        ru: { formMessage: "\u0422\u0435\u043a\u0441\u0442 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u044f", formAge: "\u0412\u043e\u0437\u0440\u0430\u0441\u0442", formEventType: "\u0422\u0438\u043f \u043c\u0435\u0440\u043e\u043f\u0440\u0438\u044f\u0442\u0438\u044f", formCompanyLogo: "\u041b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438", formSchedule: "\u0420\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u0435" },
-        tr: { formMessage: "Davetiye metni", formAge: "Ya\u015f", formEventType: "Etkinlik t\u00fcr\u00fc", formCompanyLogo: "\u015eirket logosu", formSchedule: "Program" }
+        az: { formMessage: "D\u00e9v\u00e9tnam\u00e9 m\u00e9tni", formAge: "Ya\u015f", formEventType: "T\u00e9dbir n\u00f6v\u00fc", formCompanyLogo: "\u015eirk\u00e9t loqosu", formSchedule: "C\u00e9dv\u00e9l", formSpeakerName: "Spiker / T\u00e9qdimat\u00e7\u0131", formDresscode: "Dress Code", formParentName: "Valideyn ad\u0131", formBabyName: "K\u00f6rp\u00e9 ad\u0131", formDueDate: "G\u00f6zl\u00e9nil\u00e9n do\u011fum tarixi" },
+        en: { formMessage: "Invitation text", formAge: "Age", formEventType: "Event type", formCompanyLogo: "Company logo", formSchedule: "Schedule", formSpeakerName: "Speaker / Presenter", formDresscode: "Dress Code", formParentName: "Parent name", formBabyName: "Baby name", formDueDate: "Expected due date" },
+        ru: { formMessage: "\u0422\u0435\u043a\u0441\u0442 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u044f", formAge: "\u0412\u043e\u0437\u0440\u0430\u0441\u0442", formEventType: "\u0422\u0438\u043f \u043c\u0435\u0440\u043e\u043f\u0440\u0438\u044f\u0442\u0438\u044f", formCompanyLogo: "\u041b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438", formSchedule: "\u0420\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u0435", formSpeakerName: "\u0421\u043f\u0438\u043a\u0435\u0440", formDresscode: "\u0414\u0440\u0435\u0441\u0441-\u043a\u043e\u0434", formParentName: "\u0418\u043c\u044f \u0440\u043e\u0434\u0438\u0442\u0435\u043b\u044f", formBabyName: "\u0418\u043c\u044f \u0440\u0435\u0431\u0435\u043d\u043a\u0430", formDueDate: "\u041f\u0440\u0438\u0431\u043b\u0438\u0437\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0434\u0430\u0442\u0430 \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f" },
+        tr: { formMessage: "Davetiye metni", formAge: "Ya\u015f", formEventType: "Etkinlik t\u00fcr\u00fc", formCompanyLogo: "\u015eirket logosu", formSchedule: "Program", formSpeakerName: "Konu\u015fmac\u0131 / Sunucu", formDresscode: "K\u00f6y\u00fcn Kodu", formParentName: "Ebeveyn ad\u0131", formBabyName: "Bebek ad\u0131", formDueDate: "Beklenen do\u011fum tarihi" }
     };
 
     function extraLabel(key) {
@@ -409,13 +406,14 @@ button,input,textarea,select{font-family:inherit}
 
     function getMessagePlaceholder() {
         var map = {
-            wedding: "Sizi toyumuzda g\u00f6rm\u00e9yi s\u00e9birsizlikl\u00e9 g\u00f6zl\u00e9yirik...",
-            engagement: "Ni\u015fan m\u00e9rasimimizd\u00e9 i\u015ftirak\u0131n\u0131z\u0131 g\u00f6zl\u00e9yirik...",
-            henna: "X\u0131na gec\u00e9mizd\u00e9 sizinl\u00e9 birlikd\u00e9 r\u00e9qs etm\u00e9k ist\u00e9yirik...",
-            birthday: "Do\u011fum g\u00fcn\u00fcm\u00fc sizinl\u00e9 birlikd\u00e9 qeyd etm\u00e9k ist\u00e9yirik...",
-            graduation: "M\u00e9zuniyy\u00e9t sevincimi sizinl\u00e9 b\u00f6l\u00fc\u015fm\u00e9k ist\u00e9yir\u00e9m...",
-            business: "Bu vacib t\u00e9dbird\u00e9 i\u015ftirak\u0131n\u0131z\u0131 g\u00f6zl\u00e9yirik...",
-            other: "Sizi d\u00e9v\u00e9t edirik..."
+            wedding: "Qonaqlar\u0131m\u0131z\u0131 toyumuza d\u00e9v\u00e9t etm\u00e9k ist\u00e9yirik...",
+            engagement: "Ni\u015fan m\u00e9rasimimiz\u00e9 xo\u015f g\u00e9lmisiniz...",
+            henna: "X\u0131na gec\u00e9mizd\u00e9 i\u015ftirak etm\u00e9yinizi arzu edirik...",
+            birthday: "Ad g\u00fcn\u00fcm\u00fczd\u00e9 yan\u0131m\u0131zda olma\u011f\u0131n\u0131z\u0131 ist\u00e9yirik...",
+            graduation: "M\u00e9zuniyy\u00e9timizi sizinl\u00e9 birlikd\u00e9 qeyd etm\u00e9k ist\u00e9yirik...",
+            business: "Sizi \u015eirk\u00e9timizin t\u00e9dbirin\u00e9 d\u00e9v\u00e9t edirik...",
+            "baby-shower": "K\u00f6rp\u00e9mizin g\u00e9li\u015fini birlikd\u00e9 qeyd ed\u00e9k...",
+            other: "Sizi x\u00fcsusi t\u00e9dbirimiz\u00e9 d\u00e9v\u00e9t edirik..."
         };
         return map[category] || map.other;
     }
@@ -437,12 +435,24 @@ button,input,textarea,select{font-family:inherit}
         } else if (category === "business") {
             f.push({ name: "companyName", type: "text", labelI18n: "formCompanyName", required: true, col: "half", placeholder: "Tech Corp", forPackages: ["video", "basic", "premium", "luxury"] });
             f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "\u0130llik konfrans", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES, forPackages: ["premium", "luxury"] });
-            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "full", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["premium", "luxury"] });
-        } else {
+            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES, forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["premium", "luxury"] });
+            f.push({ name: "speakerName", type: "text", labelKey: "formSpeakerName", col: "half", placeholder: "Ad Soyad", forPackages: ["premium", "luxury"] });
+            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5, forPackages: ["premium", "luxury"] });
+            f.push({ name: "dresscode", type: "text", labelKey: "formDresscode", col: "half", placeholder: "Formal, Business Casual", forPackages: ["premium", "luxury"] });
+            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "half", placeholder: "https://company.com", forPackages: ["luxury"] });
+            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
+        } else if (category === "other") {
             f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "X\u00fcsusi t\u00e9dbir", forPackages: ["video", "basic", "premium", "luxury"] });
             f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["basic", "premium", "luxury"] });
-            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Konfrans, Ad g\u00fcnu...", forPackages: ["premium", "luxury"] });
+            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Y\u00f6lge\u00e7m\u00e9, Ad g\u00fcnu...", forPackages: ["premium", "luxury"] });
+            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4, forPackages: ["premium", "luxury"] });
+            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4, forPackages: ["premium", "luxury"] });
+            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
+        } else if (category === "baby-shower") {
+            f.push({ name: "parentName", type: "text", labelKey: "formParentName", required: true, col: "half", placeholder: "Valideyn ad\u0131", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "babyName", type: "text", labelKey: "formBabyName", col: "half", placeholder: "K\u00f6rp\u00e9 ad\u0131 (opsional)", forPackages: ["video", "basic", "premium", "luxury"] });
+            f.push({ name: "dueDate", type: "date", labelKey: "formDueDate", col: "half", forPackages: ["premium", "luxury"] });
         }
 
         f.push({ name: "date", type: "date", labelI18n: "formDate", required: true, col: "half", forPackages: ["video", "basic", "premium", "luxury"] });
@@ -460,26 +470,6 @@ button,input,textarea,select{font-family:inherit}
 
         if (isCouple) {
             f.push({ name: "story", type: "textarea", labelI18n: "formStory", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5, forPackages: ["luxury"] });
-        }
-
-        if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4, forPackages: ["premium", "luxury"] });
-        }
-
-        if (category === "business") {
-            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5, forPackages: ["premium", "luxury"] });
-        }
-
-        if (category === "other" || category === "baby-shower") {
-            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4, forPackages: ["premium", "luxury"] });
-        }
-
-        if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
-        }
-
-        if (category === "business") {
-            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "full", placeholder: "https://company.com", forPackages: ["luxury"] });
         }
 
         f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS, forPackages: ["video", "basic", "premium", "luxury"] });

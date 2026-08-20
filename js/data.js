@@ -22,7 +22,7 @@ const LUNA_CATEGORIES = [
     {
         id: "henna",
         icon: "🎶",
-        image: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=800&q=85",
+        image: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=800&q=85",
         description: { az: "Xına gecəniz üçün ənənəvi və müasir dizaynlar", en: "Traditional and modern designs for your henna night", ru: "Традиционные и современные дизайны для хны", tr: "Kına geceniz için geleneksel ve modern tasarımlar" },
         count: 0
     },
@@ -414,15 +414,15 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "oriental", name: "Oriental Henna", category: "henna", style: "Şərqi · Lüks", galleryStyle: "masonry", openingStyle: "luxury-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "XINA GECƏSİ", names: ["Aysel"], date: "11 · 09 · 2026", message: "Xınamızda sizinlə birlikdə rəqs etmək istəyirik.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
         id: "traditional-henna", name: "Traditional Henna", category: "henna", style: "Ənənəvi · Klassik", galleryStyle: "collage", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1611028224278-005e2a0b8ba3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1611028224278-005e2a0b8ba3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ƏNƏNƏVİ XINA GECƏSİ", names: ["Günay"], date: "20 · 08 · 2026", message: "Ənənəvi xına gecəmizdə sizinlə birlikdə rəqs edib, əylənəcəyik.", venue: "İçərişəhər Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },

@@ -49,7 +49,7 @@
 [data-design="serena"] { --bg: #F0EBF2; --bg-alt: #E5DDE9; --accent: #A896BC; --accent-light: rgba(168,150,188,.15); --gold: #A896BC; --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="florence"] { --cover: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="aurora"] { --bg: #ECF2F4; --bg-alt: #DDE8EC; --accent: #7AACB8; --accent-light: rgba(122,172,184,.15); --gold: #7AACB8; --cover: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=90'); }
-[data-design="henna"] { --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="henna"] { --bg: #F5EDE0; --bg-alt: #EDE4D5; --accent: #C89860; --accent-light: rgba(200,152,96,.12); --gold: #C89860; --cover: url('https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="classic"] { --cover: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="luxe-gold"] { --bg: #1C1410; --bg-alt: #231A14; --fg: #E8DFD4; --fg-heading: #D4B896; --fg-muted: rgba(232,223,212,.45); --accent: #D4B896; --accent-light: rgba(212,184,150,.12); --border: rgba(212,184,150,.10); --border-strong: rgba(212,184,150,.22); --gold: #D4B896; --cover: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="velvet-rose"] { --bg: #F8EFF2; --bg-alt: #F0E4E9; --accent: #C4879A; --accent-light: rgba(196,135,154,.12); --gold: #C4879A; --cover: url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1800&q=90'); }
@@ -602,7 +602,7 @@ a { text-decoration: none; color: inherit; }
 .reveal-up {
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 1s cubic-bezier(.19,1,.22,1), transform 1s cubic-bezier(.19,1,.22,1);
+    transition: opacity 1.2s cubic-bezier(.19,1,.22,1), transform 1.2s cubic-bezier(.19,1,.22,1);
 }
 
 .reveal-up.visible {
@@ -613,12 +613,101 @@ a { text-decoration: none; color: inherit; }
 .reveal-scale {
     opacity: 0;
     transform: scale(.96);
-    transition: opacity 1s ease, transform 1s cubic-bezier(.19,1,.22,1);
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.19,1,.22,1);
 }
 
 .reveal-scale.visible {
     opacity: 1;
     transform: scale(1);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 1.2s cubic-bezier(.19,1,.22,1), transform 1.2s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 1.2s cubic-bezier(.19,1,.22,1), transform 1.2s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Staggered children reveal */
+.stagger-reveal > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(.19,1,.22,1), transform 0.8s cubic-bezier(.19,1,.22,1);
+}
+.stagger-reveal.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+
+/* Parallax hero */
+.hero.parallax-active .hero-content {
+    transition: transform 0.1s linear;
+}
+
+/* Cinematic divider line */
+.section-divider.cinematic {
+    position: relative;
+    overflow: visible;
+}
+.section-divider.cinematic::before {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+}
+.section-divider.cinematic::after {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--accent), transparent);
+}
+
+/* Dramatic name reveal */
+.hero-names .name {
+    animation: dramaticNameReveal 1.5s .3s cubic-bezier(.19,1,.22,1) both;
+}
+.hero-names .hero-amp {
+    animation: dramaticAmpReveal 1.2s .6s cubic-bezier(.19,1,.22,1) both;
+}
+.hero-names .name:nth-child(3) {
+    animation-delay: .7s;
+}
+
+@keyframes dramaticNameReveal {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes dramaticAmpReveal {
+    from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+    to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Smooth section entrance */
+.section {
+    transition: opacity 0.8s ease;
+}
+
+/* Details grid cinematic hover */
+.detail {
+    transition: background .6s ease, transform .4s ease;
+}
+.detail:hover {
+    transform: translateY(-2px);
 }
 
 
@@ -1670,7 +1759,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="storyEyebrow"></p>
 
@@ -1691,7 +1780,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="detailsEyebrow"></p>
 
@@ -1739,7 +1828,7 @@ footer p {
 
     <div class="reveal-scale">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="galleryEyebrow"></p>
 
@@ -1805,7 +1894,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow">RSVP</p>
 
@@ -2408,9 +2497,23 @@ function updateCountdown() {
     var minutesEl = document.getElementById("minutes");
     var secondsEl = document.getElementById("seconds");
 
-    var targetString = lunaCountdownTarget(invitation);
+    /* Build target date explicitly — avoid parsing issues */
+    var target = null;
 
-    if (!targetString) {
+    if (invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+        var parts = invitation.date.split("-");
+        var timeParts = (invitation.time || "19:00").split(":");
+        target = new Date(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10) - 1,
+            parseInt(parts[2], 10),
+            parseInt(timeParts[0], 10) || 19,
+            parseInt(timeParts[1], 10) || 0,
+            0, 0
+        );
+    }
+
+    if (!target || isNaN(target.getTime())) {
         daysEl.textContent = "00";
         hoursEl.textContent = "00";
         minutesEl.textContent = "00";
@@ -2418,7 +2521,6 @@ function updateCountdown() {
         return;
     }
 
-    var target = new Date(targetString);
     var now = new Date();
     var difference = target.getTime() - now.getTime();
 
@@ -2427,6 +2529,7 @@ function updateCountdown() {
         hoursEl.textContent = "00";
         minutesEl.textContent = "00";
         secondsEl.textContent = "00";
+        document.getElementById("countdownHeading").textContent = lunaT("invToday");
         return;
     }
 
@@ -2587,7 +2690,7 @@ document.getElementById("footerTagline").textContent =
 
 (function() {
     var reveals = document.querySelectorAll(
-        ".reveal-up, .reveal-scale"
+        ".reveal-up, .reveal-scale, .reveal-left, .reveal-right, .stagger-reveal"
     );
 
     if (!reveals.length) return;
@@ -2607,6 +2710,58 @@ document.getElementById("footerTagline").textContent =
     reveals.forEach(function(el) {
         observer.observe(el);
     });
+})();
+
+
+/* =====================================================
+   PARALLAX HERO EFFECT
+===================================================== */
+
+(function() {
+    var hero = document.getElementById("hero");
+    var heroContent = document.getElementById("heroContent");
+    if (!hero || !heroContent) return;
+
+    var ticking = false;
+    window.addEventListener("scroll", function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                var scrollY = window.scrollY;
+                var heroH = hero.offsetHeight;
+                if (scrollY < heroH) {
+                    var progress = scrollY / heroH;
+                    heroContent.style.transform = "translateY(" + (scrollY * 0.3) + "px)";
+                    heroContent.style.opacity = 1 - (progress * 1.2);
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+})();
+
+
+/* =====================================================
+   SMOOTH SECTION TRANSITIONS
+===================================================== */
+
+(function() {
+    var sections = document.querySelectorAll(".section");
+    sections.forEach(function(section) {
+        section.style.opacity = "0";
+        section.style.transition = "opacity 1s ease";
+    });
+
+    var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    sections.forEach(function(s) { sectionObserver.observe(s); });
 })();
 
 

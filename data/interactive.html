@@ -43,7 +43,7 @@
 [data-design="serena"] { --bg: #F0EBF2; --bg-alt: #E5DDE9; --accent: #A896BC; --accent-light: rgba(168,150,188,.15); --gold: #A896BC; --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="florence"] { --cover: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="aurora"] { --bg: #ECF2F4; --bg-alt: #DDE8EC; --accent: #7AACB8; --accent-light: rgba(122,172,184,.15); --gold: #7AACB8; --cover: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=90'); }
-[data-design="henna"] { --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="henna"] { --bg: #F5EDE0; --bg-alt: #EDE4D5; --accent: #C89860; --accent-light: rgba(200,152,96,.12); --gold: #C89860; --cover: url('https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="classic"] { --cover: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="luxe-gold"] { --bg: #1C1410; --bg-alt: #231A14; --fg: #E8DFD4; --fg-heading: #D4B896; --fg-muted: rgba(232,223,212,.45); --accent: #D4B896; --accent-light: rgba(212,184,150,.12); --border: rgba(212,184,150,.10); --border-strong: rgba(212,184,150,.22); --gold: #D4B896; --cover: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="velvet-rose"] { --bg: #F8EFF2; --bg-alt: #F0E4E9; --accent: #C4879A; --accent-light: rgba(196,135,154,.12); --gold: #C4879A; --cover: url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1800&q=90'); }
@@ -1638,7 +1638,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="storyEyebrow"></p>
 
@@ -1659,7 +1659,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="detailsEyebrow"></p>
 
@@ -1707,7 +1707,7 @@ footer p {
 
     <div class="reveal-scale">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow" id="galleryEyebrow"></p>
 
@@ -1773,7 +1773,7 @@ footer p {
 
     <div class="reveal-up">
 
-        <div class="section-divider"><span>&#10022;</span></div>
+        <div class="section-divider cinematic"><span>&#10022;</span></div>
 
         <p class="section-eyebrow">RSVP</p>
 
@@ -2186,6 +2186,7 @@ function openLightbox(src) {
 
 function startCountdown() {
     if (!invitation.date || !invitation.time) return;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) return;
 
     /* Build target date explicitly — avoid parsing issues */
     var parts = invitation.date.split("-");
@@ -2194,20 +2195,22 @@ function startCountdown() {
         parseInt(parts[0], 10),
         parseInt(parts[1], 10) - 1,
         parseInt(parts[2], 10),
-        parseInt(timeParts[0], 10),
-        parseInt(timeParts[1], 10),
+        parseInt(timeParts[0], 10) || 19,
+        parseInt(timeParts[1], 10) || 0,
         0, 0
     );
+
+    if (isNaN(target.getTime())) return;
 
     function update() {
         var now = new Date();
         var diff = target - now;
 
         if (diff <= 0) {
-            document.getElementById("days").textContent = "0";
-            document.getElementById("hours").textContent = "0";
-            document.getElementById("minutes").textContent = "0";
-            document.getElementById("seconds").textContent = "0";
+            document.getElementById("days").textContent = "00";
+            document.getElementById("hours").textContent = "00";
+            document.getElementById("minutes").textContent = "00";
+            document.getElementById("seconds").textContent = "00";
             document.getElementById("countdownHeading").innerHTML = lunaT("invToday");
             return;
         }
