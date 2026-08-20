@@ -1569,8 +1569,6 @@ footer p {
 
 <div id="sceneEngine" class="scene-engine" style="display:none;"></div>
 
-<div id="sceneProgress" class="scene-progress" style="display:none;"></div>
-
 <div id="revealCurtain" class="reveal-curtain" style="display:none;">
     <div class="reveal-curtain-left"></div>
     <div class="reveal-curtain-right"></div>
@@ -1841,6 +1839,7 @@ footer p {
 ===================================================== -->
 
 <script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
 <script src="invitations.js"></script>
 <script src="luna.js"></script>
 <script src="../js/scene-engine.js"></script>
@@ -2013,17 +2012,6 @@ function showStaticInvitation() {
         document.documentElement.setAttribute("data-design", invitation.design.toLowerCase());
     }
 
-    /* Apply opening style */
-    (function() {
-        var theme = (invitation.theme || "default").toLowerCase();
-        var openingClass = "opening-elegant";
-        if (theme === "editorial" || theme === "editorial-love") openingClass = "opening-editorial";
-        else if (theme === "floral" || theme === "botanical" || theme === "garden") openingClass = "opening-floral";
-        else if (theme === "noir" || theme === "black-gold" || theme === "luxe-gold" || theme === "dark") openingClass = "opening-luxury";
-        else if (theme === "minimal" || theme === "minimal-white" || theme === "modern-classic") openingClass = "opening-minimal";
-        document.querySelector(".envelope-scene").classList.add(openingClass);
-    })();
-
     /* Populate all invitation fields */
     populateInvitation();
 
@@ -2038,12 +2026,6 @@ function populateInvitation() {
     var cat = (invitation.category || "wedding").toLowerCase();
     var isCouple = (cat === "wedding" || cat === "engagement" || cat === "anniversary" || cat === "henna");
     var displayDate = invitation.dateShort || lunaDateShort(invitation.date) || invitation.date || "";
-
-    /* Opening */
-    document.getElementById("letterEyebrow").textContent = lunaT("invOpen");
-    document.getElementById("letterNames").textContent = lunaDisplayNames(invitation);
-    document.getElementById("letterDate").textContent = displayDate;
-    document.getElementById("openButton").textContent = lunaT("invOpen");
 
     /* Hero */
     document.getElementById("heroEyebrow").textContent = lunaInvitationHeading(invitation);
@@ -2087,10 +2069,22 @@ function populateInvitation() {
     /* Day name */
     (function() {
         var dayEl = document.getElementById("dayName");
-        if (invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
-            var d = new Date(invitation.date + "T12:00:00");
+        var d = null;
+
+        var countdownStr = typeof lunaCountdownTarget === "function" ? lunaCountdownTarget(invitation) : null;
+        if (countdownStr) {
+            d = new Date(countdownStr);
+        }
+
+        if ((!d || isNaN(d.getTime())) && invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+            d = new Date(invitation.date + "T12:00:00");
+        }
+
+        if (d && !isNaN(d.getTime())) {
             var dayNames = { az: ["Bazar","Bazar ertəsi","Çərşənbə axşamı","Çərşənbə","Cümə axşamı","Cümə","Şənbə"], en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], ru: ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"], tr: ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"] };
             dayEl.textContent = (dayNames[LUNA_LANG] || dayNames.az)[d.getDay()];
+        } else {
+            dayEl.textContent = "";
         }
     })();
 
@@ -2129,9 +2123,6 @@ function populateInvitation() {
     /* Footer */
     document.getElementById("footerNames").textContent = lunaDisplayNames(invitation);
     document.getElementById("footerTagline").textContent = lunaT("invFooterTagline");
-
-    /* Setup opening interaction */
-    setupOpening();
 
     /* Setup scroll reveals */
     setupScrollReveals();
@@ -2185,22 +2176,28 @@ function openLightbox(src) {
 ===================================================== */
 
 function startCountdown() {
-    if (!invitation.date || !invitation.time) return;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) return;
+    /* Build target date — try lunaCountdownTarget first, then YYYY-MM-DD fallback */
+    var target = null;
 
-    /* Build target date explicitly — avoid parsing issues */
-    var parts = invitation.date.split("-");
-    var timeParts = (invitation.time || "19:00").split(":");
-    var target = new Date(
-        parseInt(parts[0], 10),
-        parseInt(parts[1], 10) - 1,
-        parseInt(parts[2], 10),
-        parseInt(timeParts[0], 10) || 19,
-        parseInt(timeParts[1], 10) || 0,
-        0, 0
-    );
+    var countdownStr = typeof lunaCountdownTarget === "function" ? lunaCountdownTarget(invitation) : null;
+    if (countdownStr) {
+        target = new Date(countdownStr);
+    }
 
-    if (isNaN(target.getTime())) return;
+    if ((!target || isNaN(target.getTime())) && invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+        var parts = invitation.date.split("-");
+        var timeParts = (invitation.time || "19:00").split(":");
+        target = new Date(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10) - 1,
+            parseInt(parts[2], 10),
+            parseInt(timeParts[0], 10) || 19,
+            parseInt(timeParts[1], 10) || 0,
+            0, 0
+        );
+    }
+
+    if (!target || isNaN(target.getTime())) return;
 
     function update() {
         var now = new Date();
@@ -2260,45 +2257,6 @@ function setupRSVP() {
         document.getElementById("rsvpThanks").textContent = lunaT("invRsvpThanks");
         document.getElementById("rsvpThanks").hidden = false;
     });
-}
-
-/* =====================================================
-   OPENING ENVELOPE
-===================================================== */
-
-function setupOpening() {
-    var opening = document.getElementById("opening");
-    var envelope = document.getElementById("envelope");
-    var button = document.getElementById("openButton");
-    var invitationEl = document.getElementById("invitation");
-
-    /* Check if non-envelope opening */
-    var envelopeScene = opening.querySelector(".envelope-scene");
-    var isOpeningNonEnvelope = envelopeScene && !envelopeScene.classList.contains("opening-elegant");
-
-    if (isOpeningNonEnvelope) {
-        button.addEventListener("click", function() {
-            opening.classList.add("opened");
-            setTimeout(function() {
-                opening.style.display = "none";
-                invitationEl.style.display = "";
-                invitationEl.classList.add("visible");
-            }, 800);
-        });
-    } else {
-        button.addEventListener("click", function() {
-            button.style.display = "none";
-            envelope.classList.add("open");
-            setTimeout(function() {
-                opening.classList.add("opened");
-                setTimeout(function() {
-                    opening.style.display = "none";
-                    invitationEl.style.display = "";
-                    invitationEl.classList.add("visible");
-                }, 800);
-            }, 1500);
-        });
-    }
 }
 
 /* =====================================================

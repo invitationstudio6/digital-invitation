@@ -15,126 +15,44 @@ var LunaSceneEngine = (function () {
         "school", "degree", "story", "invitationLanguage"
     ];
 
-    /* ----- TRANSITION TYPES ----- */
+    /* ----- TRANSITION TYPES (must match interactive.css class names) ----- */
     var TRANSITIONS = {
-        fade: { enter: "luna-scene-fade-in", exit: "luna-scene-fade-out" },
-        slideUp: { enter: "luna-scene-slide-up-enter", exit: "luna-scene-slide-up-exit" },
-        zoomIn: { enter: "luna-scene-zoom-in-enter", exit: "luna-scene-zoom-out-exit" },
-        parallaxShift: { enter: "luna-scene-parallax-enter", exit: "luna-scene-parallax-exit" }
+        fade: { enter: "scene-enter-fade", exit: "scene-exit-fade" },
+        fadeIn: { enter: "scene-enter-fade", exit: "scene-exit-fade" },
+        slideUp: { enter: "scene-enter-slide-up", exit: "scene-exit-slide-up" },
+        "slide-up": { enter: "scene-enter-slide-up", exit: "scene-exit-slide-up" },
+        zoomIn: { enter: "scene-enter-zoom", exit: "scene-exit-zoom" },
+        zoom: { enter: "scene-enter-zoom", exit: "scene-exit-zoom" },
+        slideLeft: { enter: "scene-enter-slide-left", exit: "scene-exit-fade" },
+        "slide-left": { enter: "scene-enter-slide-left", exit: "scene-exit-fade" },
+        reveal: { enter: "scene-enter-reveal", exit: "scene-exit-fade" },
+        parallaxShift: { enter: "scene-enter-slide-left", exit: "scene-exit-fade" }
     };
 
-    /* ----- PARTICLE PRESETS ----- */
+    /* ----- PARTICLE PRESETS (must match interactive.css class names) ----- */
     var PARTICLE_PRESETS = {
         dust: {
             count: 30,
-            className: "luna-particle-dust",
-            styles: {
-                position: "absolute",
-                borderRadius: "50%",
-                background: "rgba(255,252,247,0.3)",
-                pointerEvents: "none"
-            },
+            className: "particle particle-dust",
             sizeRange: [2, 5],
             durationRange: [6, 14],
             delayRange: [0, 6]
         },
         petals: {
             count: 18,
-            className: "luna-particle-petal",
-            styles: {
-                position: "absolute",
-                width: "12px",
-                height: "8px",
-                borderRadius: "50% 0 50% 0",
-                background: "rgba(212,160,176,0.35)",
-                pointerEvents: "none"
-            },
+            className: "particle particle-petals",
             sizeRange: [8, 16],
             durationRange: [8, 16],
             delayRange: [0, 8]
         },
         candles: {
             count: 20,
-            className: "luna-particle-candle",
-            styles: {
-                position: "absolute",
-                borderRadius: "50%",
-                background: "rgba(232,192,64,0.5)",
-                pointerEvents: "none"
-            },
+            className: "particle particle-candles",
             sizeRange: [3, 6],
             durationRange: [4, 10],
             delayRange: [0, 5]
         }
     };
-
-    /* ----- INJECT STYLES (once) ----- */
-    var stylesInjected = false;
-
-    function injectStyles() {
-        if (stylesInjected) return;
-        stylesInjected = true;
-
-        var css = ""
-            + ".luna-scene-engine{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden}"
-            + ".luna-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(.19,1,.22,1);z-index:1}"
-            + ".luna-scene.active{opacity:1;z-index:2}"
-            + ".luna-scene.exiting{z-index:1}"
-
-            + ".luna-scene-bg{position:absolute;inset:0;background-size:cover;background-position:center}"
-            + ".luna-scene-overlay{position:absolute;inset:0}"
-
-            + ".luna-scene-content{position:relative;z-index:3;padding:24px;max-width:600px;width:100%}"
-            + ".luna-scene-eyebrow{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(255,252,247,.6);margin-bottom:16px}"
-            + ".luna-scene-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(36px,8vw,72px);font-weight:300;font-style:italic;line-height:1.1;color:#fff;margin-bottom:16px}"
-            + ".luna-scene-subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(16px,3vw,22px);font-weight:300;line-height:1.6;color:rgba(255,252,247,.75);margin-bottom:24px}"
-            + ".luna-scene-text{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;line-height:1.8;color:rgba(255,252,247,.55)}"
-            + ".luna-scene-hint{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(255,252,247,.4);z-index:5}"
-
-            + ".luna-deco-line-h{position:absolute;height:1px;background:rgba(255,252,247,.12);pointer-events:none}"
-            + ".luna-deco-circle{position:absolute;border-radius:50%;border:1px solid rgba(255,252,247,.08);pointer-events:none}"
-
-            + ".luna-progress{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:100;align-items:center}"
-            + ".luna-progress-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,252,247,.2);transition:all .4s ease;cursor:pointer;border:none;padding:0}"
-            + ".luna-progress-dot.active{background:rgba(255,252,247,.85);width:20px;border-radius:3px}"
-
-            + ".luna-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}"
-
-            + "@keyframes luna-float-up{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}"
-            + "@keyframes luna-drift{0%{transform:translateY(100vh) translateX(0) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) translateX(40px) rotate(180deg);opacity:0}}"
-            + "@keyframes luna-glow-pulse{0%{transform:translateY(100vh) scale(1);opacity:0}10%{opacity:.8}50%{transform:translateY(50vh) scale(1.3);opacity:.6}90%{opacity:.8}100%{transform:translateY(-10vh) scale(.8);opacity:0}}"
-
-            + ".luna-particle-dust{animation:luna-float-up linear infinite;opacity:0}"
-            + ".luna-particle-petal{animation:luna-drift linear infinite;opacity:0}"
-            + ".luna-particle-candle{animation:luna-glow-pulse ease-in-out infinite;opacity:0}"
-
-            + ".luna-scene-fade-in{animation:luna-fade-in .8s cubic-bezier(.19,1,.22,1) forwards}"
-            + ".luna-scene-fade-out{animation:luna-fade-out .5s cubic-bezier(.4,0,1,1) forwards}"
-            + ".luna-scene-slide-up-enter{animation:luna-slide-up-enter .8s cubic-bezier(.19,1,.22,1) forwards}"
-            + ".luna-scene-slide-up-exit{animation:luna-slide-up-exit .5s cubic-bezier(.4,0,1,1) forwards}"
-            + ".luna-scene-zoom-in-enter{animation:luna-zoom-in-enter .8s cubic-bezier(.19,1,.22,1) forwards}"
-            + ".luna-scene-zoom-out-exit{animation:luna-zoom-out-exit .5s cubic-bezier(.4,0,1,1) forwards}"
-            + ".luna-scene-parallax-enter{animation:luna-parallax-enter .8s cubic-bezier(.19,1,.22,1) forwards}"
-            + ".luna-scene-parallax-exit{animation:luna-parallax-exit .5s cubic-bezier(.4,0,1,1) forwards}"
-
-            + "@keyframes luna-fade-in{from{opacity:0}to{opacity:1}}"
-            + "@keyframes luna-fade-out{from{opacity:1}to{opacity:0}}"
-            + "@keyframes luna-slide-up-enter{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}"
-            + "@keyframes luna-slide-up-exit{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-60px)}}"
-            + "@keyframes luna-zoom-in-enter{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}"
-            + "@keyframes luna-zoom-out-exit{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.15)}}"
-            + "@keyframes luna-parallax-enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}"
-            + "@keyframes luna-parallax-exit{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-40px)}}"
-
-            + ".luna-click-overlay{position:absolute;inset:0;z-index:10;cursor:pointer}"
-
-            + "@media(max-width:768px){.luna-scene-content{padding:20px 16px}.luna-progress{bottom:20px;gap:8px}}";
-
-        var style = document.createElement("style");
-        style.setAttribute("data-luna-scene-engine", "true");
-        style.textContent = css;
-        document.head.appendChild(style);
-    }
 
 
     /* =====================================================
@@ -157,7 +75,6 @@ var LunaSceneEngine = (function () {
         this.currentSceneEl = null;
         this.prevSceneEl = null;
         this.progressEl = null;
-        this.particlesEl = null;
 
         this._scrollHandler = null;
         this._clickHandler = null;
@@ -172,10 +89,9 @@ var LunaSceneEngine = (function () {
        ===================================================== */
 
     Engine.prototype.init = function () {
-        injectStyles();
         this.container.style.position = "relative";
         this.container.style.overflow = "hidden";
-        this.container.classList.add("luna-scene-engine");
+        this.container.classList.add("scene-engine");
 
         this._createProgressBar();
         this.renderScene(this.scenes[0], 0);
@@ -214,7 +130,7 @@ var LunaSceneEngine = (function () {
 
         var self = this;
         var scene = document.createElement("div");
-        scene.className = "luna-scene";
+        scene.className = "scene";
         if (sceneConfig.className) {
             scene.className += " " + sceneConfig.className;
         }
@@ -224,7 +140,7 @@ var LunaSceneEngine = (function () {
         /* --- Background --- */
         if (sceneConfig.background) {
             var bg = document.createElement("div");
-            bg.className = "luna-scene-bg";
+            bg.className = "scene-bg";
             bg.style.backgroundImage = sceneConfig.background.startsWith("url") || sceneConfig.background.startsWith("linear") || sceneConfig.background.startsWith("radial")
                 ? sceneConfig.background
                 : "url('" + sceneConfig.background + "')";
@@ -234,7 +150,7 @@ var LunaSceneEngine = (function () {
         /* --- Overlay --- */
         if (sceneConfig.overlay) {
             var overlay = document.createElement("div");
-            overlay.className = "luna-scene-overlay";
+            overlay.className = "scene-overlay";
             overlay.style.background = sceneConfig.overlay;
             scene.appendChild(overlay);
         }
@@ -242,7 +158,7 @@ var LunaSceneEngine = (function () {
         /* --- Particles --- */
         if (sceneConfig.particles && PARTICLE_PRESETS[sceneConfig.particles]) {
             var particlesContainer = document.createElement("div");
-            particlesContainer.className = "luna-particles";
+            particlesContainer.className = "particles";
             scene.appendChild(particlesContainer);
             this._createParticles(particlesContainer, PARTICLE_PRESETS[sceneConfig.particles]);
         }
@@ -252,7 +168,7 @@ var LunaSceneEngine = (function () {
             for (var e = 0; e < sceneConfig.elements.length; e++) {
                 var el = sceneConfig.elements[e];
                 var deco = document.createElement("div");
-                deco.className = "luna-deco-" + (el.type || "line-h");
+                deco.className = "deco deco-" + (el.type || "line-h");
                 if (el.class) deco.className += " " + el.class;
                 if (el.style) {
                     var styleParts = el.style.split(";");
@@ -272,37 +188,40 @@ var LunaSceneEngine = (function () {
             }
         }
 
+        /* --- Specialized scene elements --- */
+        this._renderSpecialElements(scene, sceneConfig);
+
         /* --- Content --- */
         var content = document.createElement("div");
-        content.className = "luna-scene-content";
+        content.className = "scene-content";
 
         if (sceneConfig.content) {
             var c = sceneConfig.content;
 
             if (c.eyebrow) {
                 var eyebrow = document.createElement("div");
-                eyebrow.className = "luna-scene-eyebrow";
+                eyebrow.className = "scene-eyebrow";
                 eyebrow.textContent = this.interpolate(c.eyebrow);
                 content.appendChild(eyebrow);
             }
 
             if (c.title) {
                 var title = document.createElement("h2");
-                title.className = "luna-scene-title";
+                title.className = "scene-title";
                 title.innerHTML = this.interpolate(c.title);
                 content.appendChild(title);
             }
 
             if (c.subtitle) {
                 var subtitle = document.createElement("p");
-                subtitle.className = "luna-scene-subtitle";
+                subtitle.className = "scene-subtitle";
                 subtitle.textContent = this.interpolate(c.subtitle);
                 content.appendChild(subtitle);
             }
 
             if (c.text) {
                 var text = document.createElement("p");
-                text.className = "luna-scene-text";
+                text.className = "scene-text";
                 text.textContent = this.interpolate(c.text);
                 content.appendChild(text);
             }
@@ -313,7 +232,7 @@ var LunaSceneEngine = (function () {
         /* --- Hint --- */
         if (sceneConfig.content && sceneConfig.content.hint) {
             var hint = document.createElement("div");
-            hint.className = "luna-scene-hint";
+            hint.className = "scene-hint";
             hint.textContent = this.interpolate(sceneConfig.content.hint);
             scene.appendChild(hint);
         }
@@ -339,6 +258,130 @@ var LunaSceneEngine = (function () {
         }
 
         return scene;
+    };
+
+
+    /* ----- Render specialized scene elements (hall curtains, envelope, screen, balloons, cake) ----- */
+    Engine.prototype._renderSpecialElements = function (scene, sceneConfig) {
+        var className = sceneConfig.className || "";
+
+        /* Hall curtains for wedding-hall scene */
+        if (className.indexOf("scene-hall") !== -1) {
+            var curtainLeft = document.createElement("div");
+            curtainLeft.className = "hall-curtain-left";
+            scene.appendChild(curtainLeft);
+
+            var curtainRight = document.createElement("div");
+            curtainRight.className = "hall-curtain-right";
+            scene.appendChild(curtainRight);
+
+            /* Auto-open curtains after a delay */
+            var self = this;
+            setTimeout(function () {
+                scene.classList.add("opened");
+            }, 800);
+        }
+
+        /* Envelope for envelope scene */
+        if (sceneConfig.envelope) {
+            var container = document.createElement("div");
+            container.className = "envelope-container";
+
+            var body = document.createElement("div");
+            body.className = "envelope-body";
+            container.appendChild(body);
+
+            var flap = document.createElement("div");
+            flap.className = "envelope-flap";
+            container.appendChild(flap);
+
+            var seal = document.createElement("div");
+            seal.className = "envelope-seal";
+            seal.textContent = "L";
+            container.appendChild(seal);
+
+            var card = document.createElement("div");
+            card.className = "envelope-card";
+            var cardContent = document.createElement("div");
+            cardContent.className = "envelope-card-content";
+            if (sceneConfig.envelope.names) {
+                var names = document.createElement("div");
+                names.className = "names";
+                names.textContent = this.interpolate(sceneConfig.envelope.names);
+                cardContent.appendChild(names);
+            }
+            if (sceneConfig.envelope.date) {
+                var date = document.createElement("div");
+                date.className = "date";
+                date.textContent = this.interpolate(sceneConfig.envelope.date);
+                cardContent.appendChild(date);
+            }
+            card.appendChild(cardContent);
+            container.appendChild(card);
+
+            scene.appendChild(container);
+
+            /* Auto-open envelope after delay */
+            setTimeout(function () {
+                flap.classList.add("opened");
+                setTimeout(function () {
+                    card.classList.add("revealed");
+                }, 600);
+            }, 1000);
+        }
+
+        /* Conference screen */
+        if (sceneConfig.screen) {
+            var screen = document.createElement("div");
+            screen.className = "scene-screen";
+            var screenInner = document.createElement("div");
+            screenInner.className = "screen-content";
+
+            if (sceneConfig.screen.title) {
+                var screenTitle = document.createElement("div");
+                screenTitle.className = "screen-title";
+                screenTitle.textContent = this.interpolate(sceneConfig.screen.title);
+                screenInner.appendChild(screenTitle);
+            }
+
+            var screenLine = document.createElement("div");
+            screenLine.className = "screen-line";
+            screenInner.appendChild(screenLine);
+
+            if (sceneConfig.screen.detail) {
+                var screenDetail = document.createElement("div");
+                screenDetail.className = "screen-detail";
+                screenDetail.textContent = this.interpolate(sceneConfig.screen.detail);
+                screenInner.appendChild(screenDetail);
+            }
+
+            screen.appendChild(screenInner);
+            scene.appendChild(screen);
+        }
+
+        /* Birthday balloons */
+        if (className.indexOf("scene-party") !== -1) {
+            var colors = ["#e88ca5", "#a8d8ea", "#ffd3b6", "#d4a5ff", "#ff9aa2"];
+            for (var b = 0; b < 8; b++) {
+                var balloon = document.createElement("div");
+                balloon.className = "balloon";
+                balloon.style.left = (10 + Math.random() * 80) + "%";
+                balloon.style.background = colors[b % colors.length];
+                balloon.style.animationDelay = (b * 0.3) + "s";
+                scene.appendChild(balloon);
+            }
+        }
+
+        /* Birthday cake glow */
+        if (className.indexOf("scene-cake") !== -1) {
+            var glow = document.createElement("div");
+            glow.className = "cake-glow";
+            glow.style.position = "absolute";
+            glow.style.left = "50%";
+            glow.style.top = "50%";
+            glow.style.transform = "translate(-50%, -50%)";
+            scene.appendChild(glow);
+        }
     };
 
 
@@ -372,7 +415,7 @@ var LunaSceneEngine = (function () {
 
             if (oldScene) {
                 oldScene.classList.add(transEnter.exit);
-                oldScene.classList.add("exiting");
+                oldScene.classList.add("exit");
             }
 
             self._updateProgress(index);
@@ -383,7 +426,7 @@ var LunaSceneEngine = (function () {
                     oldScene.parentNode.removeChild(oldScene);
                 }
                 if (oldScene) {
-                    oldScene.classList.remove(transEnter.exit, "exiting");
+                    oldScene.classList.remove(transEnter.exit, "exit");
                 }
                 newScene.classList.remove(transEnter.enter);
                 self.currentSceneEl = newScene;
@@ -466,7 +509,7 @@ var LunaSceneEngine = (function () {
         }
         this.progressEl = null;
 
-        this.container.classList.remove("luna-scene-engine");
+        this.container.classList.remove("scene-engine");
     };
 
 
@@ -477,6 +520,17 @@ var LunaSceneEngine = (function () {
     Engine.prototype._setupScrollInteraction = function () {
         var self = this;
         var ticking = false;
+
+        /* Create a scroll spacer so the page is scrollable */
+        var spacer = document.createElement("div");
+        spacer.className = "scene-scroll-spacer";
+        spacer.style.height = (this.scenes.length * 100) + "vh";
+        spacer.style.pointerEvents = "none";
+        spacer.style.position = "absolute";
+        spacer.style.top = "100vh";
+        spacer.style.left = "0";
+        spacer.style.width = "1px";
+        this.container.appendChild(spacer);
 
         this._scrollHandler = function () {
             if (self.transitioning || self.destroyed) return;
@@ -499,7 +553,7 @@ var LunaSceneEngine = (function () {
 
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         var windowHeight = window.innerHeight;
-        var scrollTrigger = windowHeight * 0.35;
+        var scrollTrigger = windowHeight * 0.6;
 
         if (scrollTop > this._scrollThreshold + scrollTrigger) {
             this._scrollThreshold = scrollTop;
@@ -517,6 +571,11 @@ var LunaSceneEngine = (function () {
             cancelAnimationFrame(this._rafId);
             this._rafId = null;
         }
+        /* Remove scroll spacer */
+        var spacer = this.container.querySelector(".scene-scroll-spacer");
+        if (spacer && spacer.parentNode) {
+            spacer.parentNode.removeChild(spacer);
+        }
     };
 
 
@@ -530,11 +589,11 @@ var LunaSceneEngine = (function () {
         if (total <= 1) return;
 
         this.progressEl = document.createElement("div");
-        this.progressEl.className = "luna-progress";
+        this.progressEl.className = "scene-progress";
 
         for (var i = 0; i < total; i++) {
             var dot = document.createElement("button");
-            dot.className = "luna-progress-dot";
+            dot.className = "scene-progress-dot";
             dot.setAttribute("aria-label", "Scene " + (i + 1));
             dot.setAttribute("data-index", i);
             if (i === 0) dot.classList.add("active");
@@ -561,9 +620,12 @@ var LunaSceneEngine = (function () {
 
     Engine.prototype._updateProgress = function (index) {
         if (!this.progressEl) return;
-        var dots = this.progressEl.querySelectorAll(".luna-progress-dot");
+        var dots = this.progressEl.querySelectorAll(".scene-progress-dot");
         for (var i = 0; i < dots.length; i++) {
             dots[i].classList.toggle("active", i === index);
+            if (i < index) {
+                dots[i].classList.add("completed");
+            }
         }
     };
 
@@ -578,12 +640,6 @@ var LunaSceneEngine = (function () {
         for (var i = 0; i < preset.count; i++) {
             var particle = document.createElement("div");
             particle.className = preset.className;
-
-            /* Apply base styles */
-            var keys = Object.keys(preset.styles);
-            for (var k = 0; k < keys.length; k++) {
-                particle.style[keys[k]] = preset.styles[keys[k]];
-            }
 
             /* Randomize size */
             var size = preset.sizeRange[0] + Math.random() * (preset.sizeRange[1] - preset.sizeRange[0]);
@@ -609,7 +665,7 @@ var LunaSceneEngine = (function () {
        ===================================================== */
 
     Engine.prototype._cleanupDOM = function () {
-        var scenes = this.container.querySelectorAll(".luna-scene");
+        var scenes = this.container.querySelectorAll(".scene");
         for (var i = 0; i < scenes.length; i++) {
             if (scenes[i].parentNode) {
                 scenes[i].parentNode.removeChild(scenes[i]);

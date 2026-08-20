@@ -1962,6 +1962,7 @@ footer p {
 ===================================================== -->
 
 <script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
 <script src="invitations.js"></script>
 <script src="luna.js"></script>
 
@@ -2322,8 +2323,20 @@ if (invitation.map) {
 /* Day name */
 (function() {
     var dayEl = document.getElementById("dayName");
-    if (invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
-        var d = new Date(invitation.date + "T12:00:00");
+    var d = null;
+
+    /* First try lunaCountdownTarget (handles countdown ISO field) */
+    var countdownStr = typeof lunaCountdownTarget === "function" ? lunaCountdownTarget(invitation) : null;
+    if (countdownStr) {
+        d = new Date(countdownStr);
+    }
+
+    /* Fallback: YYYY-MM-DD date format */
+    if ((!d || isNaN(d.getTime())) && invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+        d = new Date(invitation.date + "T12:00:00");
+    }
+
+    if (d && !isNaN(d.getTime())) {
         var dayNames = {
             az: ["Bazar","Bazar ertəsi","Çərşənbə axşamı","Çərşənbə","Cümə axşamı","Cümə","Şənbə"],
             en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
@@ -2500,7 +2513,14 @@ function updateCountdown() {
     /* Build target date explicitly — avoid parsing issues */
     var target = null;
 
-    if (invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
+    /* First try lunaCountdownTarget (handles countdown ISO field + date fallback) */
+    var countdownStr = typeof lunaCountdownTarget === "function" ? lunaCountdownTarget(invitation) : null;
+    if (countdownStr) {
+        target = new Date(countdownStr);
+    }
+
+    /* Fallback: YYYY-MM-DD date format */
+    if ((!target || isNaN(target.getTime())) && invitation.date && /^\d{4}-\d{2}-\d{2}$/.test(invitation.date)) {
         var parts = invitation.date.split("-");
         var timeParts = (invitation.time || "19:00").split(":");
         target = new Date(
