@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="az" data-design="amelia">
 
 <head>
 
@@ -24,6 +24,104 @@
 <style>
 
 /* =====================================================
+   DESIGN THEMES (CSS Custom Properties)
+===================================================== */
+
+:root {
+    --bg: #eee4d8;
+    --bg-soft: #f7f0e8;
+    --bg-card: rgba(255,253,249,.72);
+    --accent: #765443;
+    --accent-soft: #b98d78;
+    --accent-dark: #3b3028;
+    --text: #3d322a;
+    --text-soft: #766a60;
+    --text-muted: #927762;
+    --border: rgba(118,91,70,.15);
+    --border-strong: #cbb8a5;
+    --card-shadow: 0 30px 70px rgba(57,38,24,.12), 0 8px 24px rgba(57,38,24,.08);
+    --card-shadow-hover: 0 45px 90px rgba(57,38,24,.18), 0 12px 32px rgba(57,38,24,.12);
+    --card-radius: 24px;
+    --cover: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #4b3c31, #29221e);
+    --countdown-accent: #d6bda7;
+}
+
+[data-design="amelia"] {
+    --bg: #f5ece2;
+    --accent: #8b6f5e;
+    --accent-soft: #c9a88e;
+    --accent-dark: #4a3428;
+    --cover: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #5c4839, #2e221a);
+}
+
+[data-design="amour"] {
+    --bg: #f7ede8;
+    --accent: #a16b6b;
+    --accent-soft: #d4a5a5;
+    --accent-dark: #5c3030;
+    --cover: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #6b3a3a, #2e1a1a);
+}
+
+[data-design="noir"] {
+    --bg: #e8e4e0;
+    --accent: #3a3a3a;
+    --accent-soft: #8a8580;
+    --accent-dark: #1a1a1a;
+    --cover: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #2a2a2a, #0e0e0e);
+    --card-shadow: 0 30px 70px rgba(0,0,0,.15), 0 8px 24px rgba(0,0,0,.10);
+}
+
+[data-design="serena"] {
+    --bg: #ede8f0;
+    --accent: #7a6490;
+    --accent-soft: #b8a5cc;
+    --accent-dark: #3e2d52;
+    --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #4a3860, #1e1530);
+}
+
+[data-design="florence"] {
+    --bg: #f2ede4;
+    --accent: #9a7b4f;
+    --accent-soft: #d4bf8e;
+    --accent-dark: #5a4220;
+    --cover: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #6b5530, #2e2210);
+}
+
+[data-design="aurora"] {
+    --bg: #e6eef2;
+    --accent: #4a7a8a;
+    --accent-soft: #8ab8c8;
+    --accent-dark: #1e3a44;
+    --cover: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #1e3a44, #0a1a20);
+}
+
+[data-design="henna"] {
+    --bg: #f5ece0;
+    --accent: #b8763a;
+    --accent-soft: #daa865;
+    --accent-dark: #6b3e15;
+    --cover: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #6b4015, #2e1a08);
+}
+
+[data-design="classic"] {
+    --bg: #f0ebe4;
+    --accent: #6b5a48;
+    --accent-soft: #a89580;
+    --accent-dark: #3a2e20;
+    --cover: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90');
+    --countdown-bg: linear-gradient(160deg, #4a3e30, #1e1810);
+}
+
+
+/* =====================================================
    RESET
 ===================================================== */
 
@@ -41,9 +139,9 @@ body {
 
     font-family: "DM Sans", sans-serif;
 
-    color: #3d322a;
+    color: var(--text);
 
-    background: #eee4d8;
+    background: var(--bg);
 
     overflow-x: hidden;
 }
@@ -80,21 +178,21 @@ button {
 
         radial-gradient(
             circle at 90% 25%,
-            rgba(213,184,156,.55),
+            var(--accent-soft),
             transparent 30%
         ),
 
         radial-gradient(
             circle at 50% 100%,
-            rgba(182,151,121,.45),
+            var(--accent-soft),
             transparent 38%
         ),
 
         linear-gradient(
             135deg,
-            #f7f0e8,
-            #e5d4c2 52%,
-            #d1b89e
+            var(--bg-soft),
+            var(--bg) 52%,
+            var(--accent-soft)
         );
 }
 
@@ -177,8 +275,8 @@ button {
         radial-gradient(
             circle at center,
             #fffaf4 0%,
-            #ead9c6 44%,
-            #bd9b7c 100%
+            var(--accent-soft) 44%,
+            var(--accent) 100%
         );
 
     transition:
@@ -215,7 +313,7 @@ button {
     border-radius: 50%;
 
     border: 1px solid
-        rgba(107,78,58,.16);
+        rgba(255,255,255,.3);
 
     animation:
         openingPulse 5s ease-in-out infinite;
@@ -234,7 +332,7 @@ button {
     border-radius: 50%;
 
     border: 1px solid
-        rgba(107,78,58,.1);
+        rgba(255,255,255,.15);
 }
 
 @keyframes openingPulse {
@@ -301,8 +399,8 @@ button {
 
         linear-gradient(
             145deg,
-            #dcc0a2,
-            #b38b69
+            var(--accent-soft),
+            var(--accent)
         );
 
     box-shadow:
@@ -393,7 +491,7 @@ button {
     inset: 14px;
 
     border: 1px solid
-        rgba(130,98,74,.28);
+        var(--border);
 }
 
 .letter-content {
@@ -411,7 +509,7 @@ button {
 
     letter-spacing: 5px;
 
-    color: #927762;
+    color: var(--text-muted);
 }
 
 .letter h1 {
@@ -425,7 +523,7 @@ button {
 
     line-height: 1;
 
-    color: #704e3d;
+    color: var(--accent);
 
     margin: 18px 0;
 }
@@ -440,7 +538,7 @@ button {
 
     letter-spacing: 3px;
 
-    color: #806b5b;
+    color: var(--text-soft);
 }
 
 
@@ -460,8 +558,8 @@ button {
 
         linear-gradient(
             145deg,
-            #e4c7a7,
-            #c29870
+            var(--accent-soft),
+            var(--accent)
         );
 
     clip-path:
@@ -522,8 +620,8 @@ button {
 
         radial-gradient(
             circle at 30% 25%,
-            #aa725e,
-            #60372d
+            var(--accent),
+            var(--accent-dark)
         );
 
     box-shadow:
@@ -608,7 +706,7 @@ button {
 
 .open-button:hover {
 
-    background: #6c5040;
+    background: var(--accent);
 
     transform:
         translateX(-50%)
@@ -656,16 +754,35 @@ button {
 
     overflow: hidden;
 
+    background: var(--cover) center/cover no-repeat;
+}
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
     background:
 
         radial-gradient(
             ellipse at center,
-            rgba(255,255,255,.7),
+            rgba(255,255,255,.55),
             transparent 60%
+        ),
+
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.08),
+            rgba(0,0,0,.25)
         );
+
+    z-index: 1;
 }
 
-.hero::before {
+.hero::after {
 
     content: "";
 
@@ -678,7 +795,9 @@ button {
     border-radius: 50%;
 
     border: 1px solid
-        rgba(116,86,65,.15);
+        rgba(255,255,255,.2);
+
+    z-index: 1;
 }
 
 .hero-content {
@@ -696,7 +815,7 @@ button {
 
     text-transform: uppercase;
 
-    color: #927762;
+    color: rgba(255,255,255,.7);
 }
 
 .hero h1 {
@@ -714,7 +833,9 @@ button {
 
     font-weight: 400;
 
-    color: #765443;
+    color: #fff;
+
+    text-shadow: 0 4px 30px rgba(0,0,0,.25);
 }
 
 .amp {
@@ -728,6 +849,8 @@ button {
     line-height: 1;
 
     margin: 24px;
+
+    color: rgba(255,255,255,.6);
 }
 
 .hero-date {
@@ -738,7 +861,7 @@ button {
 
     letter-spacing: 6px;
 
-    color: #66574c;
+    color: rgba(255,255,255,.8);
 }
 
 
@@ -754,6 +877,30 @@ button {
     text-align: center;
 }
 
+.section-card {
+    max-width: 960px;
+    margin: -60px auto;
+    padding: 90px 50px;
+    background: var(--bg-card);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    position: relative;
+    z-index: 2;
+    transition: transform .6s cubic-bezier(.19,1,.22,1), box-shadow .6s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.section-card + .section-card {
+    margin-top: 40px;
+}
+
 .section h2 {
 
     font-family:
@@ -767,7 +914,7 @@ button {
 
     font-weight: 400;
 
-    color: #4b3c31;
+    color: var(--accent);
 
     margin:
         20px 0 35px;
@@ -783,7 +930,80 @@ button {
 
     line-height: 2;
 
-    color: #766a60;
+    color: var(--text-soft);
+}
+
+
+/* =====================================================
+   ORNAMENTAL DIVIDERS
+===================================================== */
+
+.ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 60px auto 0;
+    max-width: 200px;
+    color: var(--accent-soft);
+    opacity: .6;
+}
+
+.ornament::before,
+.ornament::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--accent-soft);
+}
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+.reveal-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity .9s cubic-bezier(.19,1,.22,1), transform .9s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(.92);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 
@@ -798,14 +1018,14 @@ button {
         linear-gradient(
             135deg,
             rgba(255,255,255,.3),
-            rgba(207,181,155,.35)
+            var(--accent-soft)
         );
 
     border-top:
-        1px solid rgba(118,91,70,.15);
+        1px solid var(--border);
 
     border-bottom:
-        1px solid rgba(118,91,70,.15);
+        1px solid var(--border);
 }
 
 .details-grid {
@@ -820,10 +1040,10 @@ button {
         repeat(3,1fr);
 
     border-top:
-        1px solid #cbb8a5;
+        1px solid var(--border-strong);
 
     border-bottom:
-        1px solid #cbb8a5;
+        1px solid var(--border-strong);
 }
 
 .detail {
@@ -831,7 +1051,7 @@ button {
     padding: 50px 25px;
 
     border-right:
-        1px solid #cbb8a5;
+        1px solid var(--border-strong);
 }
 
 .detail:last-child {
@@ -845,7 +1065,7 @@ button {
 
     letter-spacing: 4px;
 
-    color: #927763;
+    color: var(--text-muted);
 }
 
 .detail strong {
@@ -862,14 +1082,14 @@ button {
 
     font-weight: 400;
 
-    color: #514237;
+    color: var(--accent-dark);
 }
 
 .detail p {
 
     font-size: 11px;
 
-    color: #81756b;
+    color: var(--text-soft);
 }
 
 
@@ -885,9 +1105,9 @@ button {
 
     padding: 13px 23px;
 
-    border: 1px solid #b8a18e;
+    border: 1px solid var(--accent-soft);
 
-    color: #5c493b;
+    color: var(--accent-dark);
 
     text-decoration: none;
 
@@ -902,11 +1122,11 @@ button {
 
 .map-button:hover {
 
-    background: #4a3a30;
+    background: var(--accent-dark);
 
     color: white;
 
-    border-color: #4a3a30;
+    border-color: var(--accent-dark);
 }
 
 
@@ -1027,13 +1247,7 @@ button {
 
     position: relative;
 
-    background:
-        radial-gradient(
-            circle at center,
-            #655143 0%,
-            #40342c 45%,
-            #29221e 100%
-        );
+    background: var(--countdown-bg);
 
     color: #f5eee7;
 
@@ -1054,7 +1268,7 @@ button {
 
     border:
         1px solid
-        rgba(225,204,185,.12);
+        rgba(255,255,255,.1);
 
     left: 50%;
 
@@ -1070,7 +1284,7 @@ button {
 
     position: relative;
 
-    color: #d6bda7;
+    color: var(--countdown-accent);
 
     font-size: 9px;
 
@@ -1103,11 +1317,11 @@ button {
 
     border-top:
         1px solid
-        rgba(224,202,183,.22);
+        rgba(255,255,255,.15);
 
     border-bottom:
         1px solid
-        rgba(224,202,183,.22);
+        rgba(255,255,255,.15);
 }
 
 .timer div {
@@ -1135,7 +1349,7 @@ button {
     height: 50%;
 
     background:
-        rgba(224,202,183,.22);
+        rgba(255,255,255,.15);
 }
 
 .timer strong {
@@ -1173,7 +1387,7 @@ button {
 
     letter-spacing: 4px;
 
-    color: #cdb8a5;
+    color: var(--countdown-accent);
 }
 
 
@@ -1195,7 +1409,7 @@ button {
 
     border: none;
 
-    background: #3b3028;
+    background: var(--accent-dark);
 
     color: white;
 
@@ -1223,9 +1437,17 @@ button {
 .rsvp-form select {
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid rgba(107,78,58,.22);
+    border: 1px solid var(--border);
     background: #fff;
     font-family: inherit;
+    border-radius: 8px;
+    transition: border-color .3s;
+}
+
+.rsvp-form input:focus,
+.rsvp-form select:focus {
+    outline: none;
+    border-color: var(--accent-soft);
 }
 
 .rsvp-form[hidden],
@@ -1242,17 +1464,24 @@ button {
     border: 0;
     border-radius: 999px;
     padding: 14px 18px;
-    background: #3b3028;
+    background: var(--accent-dark);
     color: #fff;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-size: 9px;
     cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    transition: transform .3s, background .3s;
+}
+
+.music-button:hover {
+    transform: translateY(-2px);
+    background: var(--accent);
 }
 
 .rsvp-button:hover {
 
-    background: #6c5040;
+    background: var(--accent);
 
     transform:
         translateY(-2px);
@@ -1284,7 +1513,7 @@ button {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
     font-weight: 400;
-    color: #3b3028;
+    color: var(--accent-dark);
 }
 
 
@@ -1300,7 +1529,7 @@ footer {
     text-align: center;
 
     background:
-        #2b231e;
+        var(--accent-dark);
 
     color: #eee1d2;
 }
@@ -1653,31 +1882,37 @@ footer p {
 
 <section class="section">
 
-    <p class="eyebrow">
-        HEKAYƏMİZ
-    </p>
+    <div class="section-card reveal-up">
 
-
-    <h2>
-
-        Bir hekayə,
-        <br>
-        bir ömür.
-
-    </h2>
-
-
-    <div
-        class="section-text"
-        id="story"
-    >
-
-        <p>
-            Bəzi hekayələr kitablarda yazılır.
-            Bizimki isə kiçik anlarda,
-            paylaşılan gülüşlərdə və
-            unudulmaz xatirələrdə yazıldı.
+        <p class="eyebrow">
+            HEKAYƏMİZ
         </p>
+
+
+        <h2>
+
+            Bir hekayə,
+            <br>
+            bir ömür.
+
+        </h2>
+
+
+        <div
+            class="section-text"
+            id="story"
+        >
+
+            <p>
+                Bəzi hekayələr kitablarda yazılır.
+                Bizimki isə kiçik anlarda,
+                paylaşılan gülüşlərdə və
+                unudulmaz xatirələrdə yazıldı.
+            </p>
+
+        </div>
+
+        <div class="ornament">✦</div>
 
     </div>
 
@@ -1692,88 +1927,92 @@ footer p {
     class="section details-section"
 >
 
-    <p class="eyebrow">
-        XÜSUSİ GÜNÜMÜZ
-    </p>
+    <div class="section-card reveal-up">
+
+        <p class="eyebrow">
+            XÜSUSİ GÜNÜMÜZ
+        </p>
 
 
-    <h2>
-        Bu gün bizimdir.
-    </h2>
+        <h2>
+            Bu gün bizimdir.
+        </h2>
 
 
-    <div class="details-grid">
+        <div class="details-grid">
 
 
-        <div class="detail">
+            <div class="detail">
 
-            <small>
-                TARİX
-            </small>
-
-
-            <strong
-                id="detailDate"
-            >
-                12 · 09 · 2026
-            </strong>
+                <small>
+                    TARİX
+                </small>
 
 
-            <p id="dayName">
-                Şənbə
-            </p>
+                <strong
+                    id="detailDate"
+                >
+                    12 · 09 · 2026
+                </strong>
+
+
+                <p id="dayName">
+                    Şənbə
+                </p>
+
+            </div>
+
+
+            <div class="detail">
+
+                <small>
+                    SAAT
+                </small>
+
+
+                <strong id="time">
+                    19:00
+                </strong>
+
+
+                <p>
+                    Qonaqların qarşılanması
+                </p>
+
+            </div>
+
+
+            <div class="detail">
+
+                <small>
+                    MƏKAN
+                </small>
+
+
+                <strong id="venue">
+                    Wedding Hall
+                </strong>
+
+
+                <p id="location">
+                    Bakı, Azərbaycan
+                </p>
+
+
+                <a
+                    id="mapButton"
+                    class="map-button"
+                    href="#"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Xəritədə bax
+                </a>
+
+            </div>
+
 
         </div>
-
-
-        <div class="detail">
-
-            <small>
-                SAAT
-            </small>
-
-
-            <strong id="time">
-                19:00
-            </strong>
-
-
-            <p>
-                Qonaqların qarşılanması
-            </p>
-
-        </div>
-
-
-        <div class="detail">
-
-            <small>
-                MƏKAN
-            </small>
-
-
-            <strong id="venue">
-                Wedding Hall
-            </strong>
-
-
-            <p id="location">
-                Bakı, Azərbaycan
-            </p>
-
-
-            <a
-                id="mapButton"
-                class="map-button"
-                href="#"
-                target="_blank"
-                rel="noopener"
-            >
-                Xəritədə bax
-            </a>
-
-        </div>
-
 
     </div>
 
@@ -1788,18 +2027,22 @@ footer p {
     class="section gallery-section"
 >
 
-    <p class="eyebrow">
-        XATİRƏLƏRİMİZ
-    </p>
+    <div class="reveal-scale">
+
+        <p class="eyebrow">
+            XATİRƏLƏRİMİZ
+        </p>
 
 
-    <h2>
-        Bizdən sizə.
-    </h2>
+        <h2>
+            Bizdən sizə.
+        </h2>
+
+    </div>
 
 
     <div
-        class="gallery"
+        class="gallery reveal-scale"
         id="gallery"
     >
 
@@ -1846,17 +2089,21 @@ footer p {
     class="section countdown-section"
 >
 
-    <p class="eyebrow">
-        GÖRÜŞƏNƏDƏK
-    </p>
+    <div class="reveal-up">
+
+        <p class="eyebrow">
+            GÖRÜŞƏNƏDƏK
+        </p>
 
 
-    <h2>
-        Birlikdə sayağ.
-    </h2>
+        <h2>
+            Birlikdə sayağ.
+        </h2>
+
+    </div>
 
 
-    <div class="timer">
+    <div class="timer reveal-scale">
 
 
         <div>
@@ -1922,49 +2169,53 @@ footer p {
 
 <section class="section rsvp">
 
-    <p class="eyebrow">
-        RSVP
-    </p>
+    <div class="section-card reveal-up">
+
+        <p class="eyebrow">
+            RSVP
+        </p>
 
 
-    <h2>
-        Sizi gözləyirik.
-    </h2>
+        <h2>
+            Sizi gözləyirik.
+        </h2>
 
 
-    <p class="section-text">
+        <p class="section-text">
 
-        Bu xüsusi gündə bizimlə olmağınızı
-        səbirsizliklə gözləyirik.
+            Bu xüsusi gündə bizimlə olmağınızı
+            səbirsizliklə gözləyirik.
 
-    </p>
+        </p>
 
 
-    <div id="rsvpCounts" class="rsvp-counts" hidden>
-        <span id="rsvpYesCount"></span>
-        <span id="rsvpMaybeCount"></span>
-        <span id="rsvpNoCount"></span>
+        <div id="rsvpCounts" class="rsvp-counts" hidden>
+            <span id="rsvpYesCount"></span>
+            <span id="rsvpMaybeCount"></span>
+            <span id="rsvpNoCount"></span>
+        </div>
+
+
+        <button
+            class="rsvp-button"
+            id="rsvpButton"
+            type="button"
+        >
+            İştirakımı təsdiqləyirəm
+        </button>
+
+        <form id="rsvpForm" class="rsvp-form" hidden>
+            <input id="rsvpName" type="text" required placeholder="Adınız">
+            <select id="rsvpStatus">
+                <option value="yes">Gələcəyəm</option>
+                <option value="maybe">Bəlkə</option>
+                <option value="no">Gələ bilməyəcəyəm</option>
+            </select>
+            <button class="rsvp-button" type="submit">Göndər</button>
+        </form>
+        <p id="rsvpThanks" hidden>Təşəkkür edirik. Cavabınız qeydə alındı.</p>
+
     </div>
-
-
-    <button
-        class="rsvp-button"
-        id="rsvpButton"
-        type="button"
-    >
-        İştirakımı təsdiqləyirəm
-    </button>
-
-    <form id="rsvpForm" class="rsvp-form" hidden>
-        <input id="rsvpName" type="text" required placeholder="Adınız">
-        <select id="rsvpStatus">
-            <option value="yes">Gələcəyəm</option>
-            <option value="maybe">Bəlkə</option>
-            <option value="no">Gələ bilməyəcəyəm</option>
-        </select>
-        <button class="rsvp-button" type="submit">Göndər</button>
-    </form>
-    <p id="rsvpThanks" hidden>Təşəkkür edirik. Cavabınız qeydə alındı.</p>
 
 </section>
 
@@ -2086,6 +2337,47 @@ if (!invitation) {
 ===================================================== */
 
 document.title = lunaDisplayNames(invitation) + " | Luna";
+
+
+/* =====================================================
+   DESIGN THEME
+===================================================== */
+
+if (invitation.design) {
+    document.documentElement.setAttribute(
+        "data-design",
+        invitation.design.toLowerCase()
+    );
+}
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+(function() {
+    var reveals = document.querySelectorAll(
+        ".reveal-up, .reveal-scale, .reveal-left, .reveal-right"
+    );
+
+    if (!reveals.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    reveals.forEach(function(el) {
+        observer.observe(el);
+    });
+})();
 
 
 /* =====================================================
