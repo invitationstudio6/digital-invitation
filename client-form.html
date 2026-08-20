@@ -962,7 +962,10 @@ button,input,textarea,select{font-family:inherit}
                         alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
                     }
 
-                    var url = new URL("data/invitation.html", window.location.href);
+                    /* Route to interactive or static viewer */
+                    var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;
+                    var viewerFile = (tplData && tplData.experienceType === "interactive") ? "data/interactive.html" : "data/invitation.html";
+                    var url = new URL(viewerFile, window.location.href);
                     url.searchParams.set("id", invitationId);
                     var link = document.getElementById("generatedLink");
                     link.href = url.href;

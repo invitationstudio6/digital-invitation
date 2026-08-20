@@ -1,0 +1,831 @@
+/* ==========================================================================
+   Interactive Scene Engine — Luna Digital Invitation Platform
+   Fonts: "Cormorant Garamond" (serif headings), "DM Sans" (sans-serif UI)
+   Colors: cream #F5EDE3, dark brown #3E2518, gold #C4A882
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Scene Engine Styles
+   ========================================================================== */
+
+.scene-engine {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #1a1410;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.19, 1, .22, 1);
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.scene.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.scene.exit {
+  opacity: 0;
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.scene-bg {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 8s ease-out;
+  filter: blur(0);
+}
+
+.scene.active .scene-bg {
+  transform: scale(1.05);
+}
+
+.scene-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.scene-content {
+  position: relative;
+  z-index: 3;
+  padding: 24px;
+  max-width: 600px;
+}
+
+/* ==========================================================================
+   2. Scene Content Typography
+   ========================================================================== */
+
+.scene-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255, 252, 247, .5);
+  margin-bottom: 16px;
+}
+
+.scene-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(48px, 10vw, 96px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: #FFFCF7;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, .2);
+}
+
+.scene-subtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255, 252, 247, .65);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.scene-text {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 252, 247, .45);
+}
+
+.scene-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 252, 247, .35);
+  animation: hintPulse 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    opacity: .35;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: .7;
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+/* ==========================================================================
+   3. Scene Transitions
+   ========================================================================== */
+
+/* Enter animations */
+.scene-enter-fade {
+  animation: sceneFadeIn 0.8s ease both;
+}
+
+@keyframes sceneFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.scene-enter-slide-up {
+  animation: sceneSlideUp 0.8s cubic-bezier(.19, 1, .22, 1) both;
+}
+
+@keyframes sceneSlideUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scene-enter-zoom {
+  animation: sceneZoomIn 1s cubic-bezier(.19, 1, .22, 1) both;
+}
+
+@keyframes sceneZoomIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.scene-enter-slide-left {
+  animation: sceneSlideLeft 0.8s cubic-bezier(.19, 1, .22, 1) both;
+}
+
+@keyframes sceneSlideLeft {
+  from { opacity: 0; transform: translateX(80px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.scene-enter-reveal {
+  animation: sceneReveal 1.2s cubic-bezier(.19, 1, .22, 1) both;
+}
+
+@keyframes sceneReveal {
+  from { clip-path: inset(50% 0); opacity: 0; }
+  to { clip-path: inset(0 0); opacity: 1; }
+}
+
+/* Exit animations */
+.scene-exit-fade {
+  animation: sceneFadeOut 0.6s ease both;
+}
+
+@keyframes sceneFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.scene-exit-slide-up {
+  animation: sceneSlideUpOut 0.6s ease both;
+}
+
+@keyframes sceneSlideUpOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-40px); }
+}
+
+.scene-exit-zoom {
+  animation: sceneZoomOut 0.6s ease both;
+}
+
+@keyframes sceneZoomOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.1); }
+}
+
+/* ==========================================================================
+   4. Particles
+   ========================================================================== */
+
+.particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat linear infinite;
+}
+
+.particle-dust {
+  background: rgba(196, 168, 130, .3);
+}
+
+.particle-petals {
+  background: rgba(220, 180, 180, .4);
+  width: 6px;
+  height: 8px;
+  border-radius: 50% 0 50% 0;
+}
+
+.particle-candles {
+  background: rgba(255, 200, 100, .6);
+  box-shadow: 0 0 6px rgba(255, 200, 100, .4);
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   5. Progress Indicator
+   ========================================================================== */
+
+.scene-progress {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, .3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+.scene-progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 252, 247, .3);
+  transition: all 0.4s ease;
+}
+
+.scene-progress-dot.active {
+  background: #C4A882;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.scene-progress-dot.completed {
+  background: rgba(196, 168, 130, .5);
+}
+
+/* ==========================================================================
+   6. Decorative Elements
+   ========================================================================== */
+
+.deco {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.deco-line-h {
+  height: 1px;
+  background: rgba(255, 252, 247, .1);
+}
+
+.deco-line-v {
+  width: 1px;
+  background: rgba(255, 252, 247, .1);
+}
+
+.deco-circle {
+  border: 1px solid rgba(255, 252, 247, .06);
+  border-radius: 50%;
+}
+
+.deco-diamond {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(196, 168, 130, .3);
+  transform: rotate(45deg);
+}
+
+/* ==========================================================================
+   7. Specific Experience Styles
+   ========================================================================== */
+
+/* --- Wedding Venue Journey --- */
+
+.scene-venue .scene-content {
+  animation: venueReveal 1.5s 0.3s ease both;
+}
+
+@keyframes venueReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Staircase scene — parallax layers */
+.scene-stairs .stairs-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.1s linear;
+}
+
+.scene-stairs .stairs-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+/* Hall reveal */
+.scene-hall .hall-curtain-left,
+.scene-hall .hall-curtain-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #3E2518;
+  z-index: 4;
+  transition: transform 1.5s cubic-bezier(.19, 1, .22, 1);
+}
+
+.scene-hall .hall-curtain-left {
+  left: 0;
+  transform-origin: left;
+}
+
+.scene-hall .hall-curtain-right {
+  right: 0;
+  transform-origin: right;
+}
+
+.scene-hall.opened .hall-curtain-left {
+  transform: translateX(-100%);
+}
+
+.scene-hall.opened .hall-curtain-right {
+  transform: translateX(100%);
+}
+
+/* --- Envelope Reveal --- */
+
+.envelope-container {
+  perspective: 1000px;
+  position: relative;
+  width: 300px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: #FFFCF7;
+  border: 1px solid rgba(196, 168, 130, .3);
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #FFFCF7;
+  border: 1px solid rgba(196, 168, 130, .3);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 1s cubic-bezier(.19, 1, .22, 1);
+  z-index: 3;
+}
+
+.envelope-flap.opened {
+  transform: rotateX(180deg);
+}
+
+.envelope-seal {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #C4A882;
+  border-radius: 50%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  color: #3E2518;
+}
+
+.envelope-card {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 10%;
+  height: 80%;
+  background: #fff;
+  border: 1px solid rgba(196, 168, 130, .2);
+  z-index: 1;
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(.19, 1, .22, 1) 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.envelope-card.revealed {
+  transform: translateY(-120%);
+}
+
+.envelope-card-content {
+  padding: 20px;
+}
+
+.envelope-card-content .names {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-style: italic;
+  color: #3E2518;
+}
+
+.envelope-card-content .date {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(62, 37, 24, .5);
+  margin-top: 8px;
+}
+
+/* --- Birthday Party Journey --- */
+
+.scene-party .balloon {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  border-radius: 50% 50% 50% 50%;
+  opacity: 0;
+  animation: balloonFloat 4s ease-in-out infinite;
+}
+
+.scene-party .balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, .3);
+}
+
+@keyframes balloonFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.8);
+  }
+}
+
+.scene-cake .cake-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 100, .3) 0%, transparent 70%);
+  animation: cakeGlow 2s ease-in-out infinite;
+}
+
+@keyframes cakeGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: .8;
+  }
+}
+
+/* --- Business Conference --- */
+
+.scene-corporate {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.scene-corporate .scene-title {
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: -1px;
+}
+
+.scene-corporate .scene-subtitle {
+  letter-spacing: 4px;
+}
+
+.scene-screen {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  aspect-ratio: 16/9;
+  background: #111;
+  border-radius: 4px;
+  margin: 0 auto;
+  border: 2px solid #333;
+  overflow: hidden;
+}
+
+.scene-screen .screen-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0a0a1a, #1a1a3e);
+}
+
+.scene-screen .screen-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(20px, 4vw, 36px);
+  font-weight: 300;
+  color: #FFFCF7;
+  text-align: center;
+}
+
+.scene-screen .screen-line {
+  width: 40px;
+  height: 1px;
+  background: #C4A882;
+  margin: 16px 0;
+}
+
+.scene-screen .screen-detail {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 252, 247, .5);
+}
+
+/* ==========================================================================
+   8. CTA Button
+   ========================================================================== */
+
+.scene-cta {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid rgba(255, 252, 247, .3);
+  background: transparent;
+  color: #FFFCF7;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  margin-top: 24px;
+}
+
+.scene-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #C4A882;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(.4, 0, .2, 1);
+  z-index: -1;
+}
+
+.scene-cta:hover {
+  border-color: #C4A882;
+  color: #3E2518;
+}
+
+.scene-cta:hover::before {
+  transform: scaleX(1);
+}
+
+.scene-cta:active {
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   9. Invitation Reveal Transition
+   ========================================================================== */
+
+.reveal-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+}
+
+.reveal-curtain-left,
+.reveal-curtain-right {
+  width: 50%;
+  height: 100%;
+  background: #3E2518;
+  transition: transform 1.2s cubic-bezier(.19, 1, .22, 1);
+}
+
+.reveal-curtain-left {
+  transform-origin: left;
+}
+
+.reveal-curtain-right {
+  transform-origin: right;
+}
+
+.reveal-curtain.opened .reveal-curtain-left {
+  transform: translateX(-100%);
+}
+
+.reveal-curtain.opened .reveal-curtain-right {
+  transform: translateX(100%);
+}
+
+.reveal-card {
+  position: fixed;
+  inset: 0;
+  z-index: 201;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg, #F5EDE3);
+  opacity: 0;
+  transition: opacity 0.8s ease 0.6s;
+  pointer-events: none;
+}
+
+.reveal-card.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reveal-card-inner {
+  text-align: center;
+  padding: 40px;
+}
+
+.reveal-card-inner h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(48px, 10vw, 80px);
+  font-weight: 300;
+  font-style: italic;
+  color: #3E2518;
+  line-height: 1;
+}
+
+.reveal-card-inner p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(62, 37, 24, .45);
+  margin-top: 16px;
+}
+
+.reveal-card-inner .reveal-cta {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 14px 40px;
+  border: 1px solid #C4A882;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #3E2518;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  background: transparent;
+}
+
+.reveal-card-inner .reveal-cta:hover {
+  background: #C4A882;
+  color: #FFFCF7;
+}
+
+/* ==========================================================================
+   10. Mobile Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .scene-title {
+    font-size: clamp(36px, 10vw, 64px);
+  }
+
+  .scene-subtitle {
+    font-size: 13px;
+  }
+
+  .scene-hint {
+    bottom: 30px;
+    font-size: 10px;
+  }
+
+  .scene-progress {
+    bottom: 16px;
+    padding: 6px 12px;
+    gap: 6px;
+  }
+
+  .scene-progress-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .scene-progress-dot.active {
+    width: 16px;
+  }
+
+  .envelope-container {
+    width: 250px;
+    height: 170px;
+  }
+
+  .scene-screen {
+    width: 90%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene {
+    transition-duration: 0.1s;
+  }
+
+  .scene-bg {
+    transition-duration: 0.1s;
+  }
+
+  .particle {
+    animation: none !important;
+  }
+
+  @keyframes hintPulse {
+    from, to {
+      opacity: .5;
+    }
+  }
+}

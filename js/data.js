@@ -439,6 +439,175 @@ const LUNA_TEMPLATES = [
         cover: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "XÜSUSİ QİYD EDİRİK", names: ["Ali və Aysəl"], date: "30 · 12 · 2026", message: "İlin sonunda birlikdə qeyd etmək üçün sizləri dəvət edirik!", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    /* ===== INTERACTIVE EXPERIENCES ===== */
+    {
+        id: "venue-journey", name: "Venue Journey", category: "wedding", style: "Kinematik · Interaktiv", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        experienceType: "interactive", interactionType: "scrollJourney",
+        preview: { eyebrow: "INTERACTIVE EXPERIENCE", names: ["Aysel", "Murad"], date: "12 · 09 · 2026", message: "Qonaqlarınızı elegant bir toy məkanı səyahətinə dəvət edin.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "noir" },
+        scenes: [
+            {
+                id: "venue-entrance", type: "scene", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(26,20,16,.5), rgba(26,20,16,.75))",
+                animation: { enter: "fadeIn", duration: 1000 },
+                particles: "dust",
+                content: { eyebrow: "", title: "{{bride}} & {{groom}}", subtitle: "A special day is waiting for you...", hint: "Scroll to enter ▼" },
+                elements: [{ type: "line", class: "deco-line-h", style: "width:60px;left:50%;top:20%;transform:translateX(-50%)" }]
+            },
+            {
+                id: "stairs", type: "scene", className: "scene-stairs",
+                background: "https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(26,20,16,.3), rgba(26,20,16,.6))",
+                animation: { enter: "slide-up", duration: 1200 },
+                content: { eyebrow: "", title: "Xoş gəlmisiniz", subtitle: "Qonaqlarımızı qarşılayırıq...", hint: "Scroll to continue ▼" },
+                elements: [{ type: "circle", class: "deco-circle", style: "width:120px;height:120px;right:10%;top:15%;border-color:rgba(196,168,130,.15)" }]
+            },
+            {
+                id: "wedding-hall", type: "scene", className: "scene-hall",
+                background: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(26,20,16,.4), rgba(26,20,16,.55))",
+                animation: { enter: "zoom", duration: 1500 },
+                particles: "petals",
+                content: { eyebrow: "", title: "Toy Zalı", subtitle: "Gözəl bəzədilmiş məkan...", hint: "Scroll to continue ▼" }
+            },
+            {
+                id: "couple-table", type: "scene", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(26,20,16,.45), rgba(26,20,16,.7))",
+                animation: { enter: "fade", duration: 1000 },
+                particles: "candles",
+                content: { eyebrow: "", title: "{{bride}} & {{groom}}", subtitle: "{{dateLong}}", hint: "Scroll to reveal ▼" }
+            },
+            {
+                id: "reveal", type: "invitation-reveal", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(26,20,16,.6), rgba(26,20,16,.85))",
+                animation: { enter: "reveal", duration: 1200 },
+                content: { eyebrow: "THE WEDDING OF", title: "{{bride}} & {{groom}}", subtitle: "{{dateLong}}", cta: "OPEN INVITATION" }
+            }
+        ]
+    },
+    {
+        id: "envelope-reveal", name: "Envelope Reveal", category: "wedding", style: "Zərif · Klassik", galleryStyle: "editorial", openingStyle: "elegant",
+        thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        experienceType: "interactive", interactionType: "clickJourney",
+        preview: { eyebrow: "INTERACTIVE EXPERIENCE", names: ["Leyla", "Kamran"], date: "20 · 10 · 2026", message: "Qonaqlarınıza zərif bir zərf təcrübəsi yaşatın.", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "amour" },
+        scenes: [
+            {
+                id: "bg", type: "scene", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(62,37,24,.6), rgba(62,37,24,.8))",
+                animation: { enter: "fadeIn", duration: 1000 },
+                particles: "dust",
+                content: { eyebrow: "YOU ARE INVITED", title: "{{bride}} & {{groom}}", hint: "Tap to continue ▼" }
+            },
+            {
+                id: "envelope", type: "scene", className: "scene-envelope",
+                background: "linear-gradient(135deg, #F5EDE3, #EDE3D5)",
+                overlay: "none",
+                animation: { enter: "zoom", duration: 1200 },
+                content: { eyebrow: "", title: "", hint: "Tap to open ▼" },
+                envelope: { seal: "L", names: "{{bride}} & {{groom}}", date: "{{dateLong}}" }
+            },
+            {
+                id: "card-reveal", type: "scene", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(62,37,24,.5), rgba(62,37,24,.8))",
+                animation: { enter: "slide-up", duration: 1000 },
+                content: { eyebrow: "TOY DƏVƏTNAMƏSİ", title: "{{bride}} & {{groom}}", subtitle: "{{dateLong}}", hint: "Tap to open ▼" }
+            },
+            {
+                id: "reveal", type: "invitation-reveal", className: "scene-venue",
+                background: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
+                overlay: "linear-gradient(to bottom, rgba(62,37,24,.6), rgba(62,37,24,.9))",
+                animation: { enter: "reveal", duration: 1200 },
+                content: { eyebrow: "THE WEDDING OF", title: "{{bride}} & {{groom}}", subtitle: "{{dateLong}}", cta: "OPEN INVITATION" }
+            }
+        ]
+    },
+    {
+        id: "party-journey", name: "Party Journey", category: "birthday", style: "Şən · İnteraktiv", galleryStyle: "collage", openingStyle: "fullscreen-photo",
+        thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        experienceType: "interactive", interactionType: "clickJourney",
+        preview: { eyebrow: "INTERACTIVE EXPERIENCE", names: ["Leyla"], date: "15 · 08 · 2026", message: "Doğum gününüzü interaktiv bir təcrübə ilə qeyd edin.", venue: "Park Venue", location: "Bakı, Azərbaycan", theme: "florence" },
+        scenes: [
+            {
+                id: "party-entrance", type: "scene", className: "scene-party",
+                background: "linear-gradient(135deg, #2a1a3e, #1a1a2e)",
+                overlay: "none",
+                animation: { enter: "fadeIn", duration: 800 },
+                particles: "dust",
+                content: { eyebrow: "", title: "{{celebrant}}", subtitle: "Şənliyə xoş gəldiniz!", hint: "Tap to enter ▼" }
+            },
+            {
+                id: "decorations", type: "scene", className: "scene-party",
+                background: "linear-gradient(135deg, #3e1a2a, #2e1a3e)",
+                overlay: "none",
+                animation: { enter: "slide-up", duration: 1000 },
+                content: { eyebrow: "", title: "Ad Günün Mübarək!", subtitle: "{{age}} yaşın qutlu olsun!", hint: "Tap to continue ▼" }
+            },
+            {
+                id: "cake", type: "scene", className: "scene-cake",
+                background: "linear-gradient(135deg, #1a2a1e, #1a1a2e)",
+                overlay: "none",
+                animation: { enter: "zoom", duration: 1200 },
+                content: { eyebrow: "", title: "{{celebrant}}", subtitle: "{{dateLong}}", hint: "Tap to continue ▼" }
+            },
+            {
+                id: "reveal", type: "invitation-reveal", className: "scene-party",
+                background: "linear-gradient(135deg, #2a1a3e, #1a1a2e)",
+                overlay: "none",
+                animation: { enter: "reveal", duration: 1200 },
+                content: { eyebrow: "HAPPY BIRTHDAY", title: "{{celebrant}}", subtitle: "{{dateLong}}", cta: "OPEN INVITATION" }
+            }
+        ]
+    },
+    {
+        id: "conference-journey", name: "Conference Journey", category: "business", style: "Korporativ · İnteraktiv", galleryStyle: "grid", openingStyle: "minimal",
+        thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        experienceType: "interactive", interactionType: "clickJourney",
+        preview: { eyebrow: "INTERACTIVE EXPERIENCE", names: ["Tech Corp"], date: "25 · 11 · 2026", message: "Korporativ tədbirinizi interaktiv təcrübə ilə təqdim edin.", venue: "Convention Center", location: "Bakı, Azərbaycan", theme: "minimal-white" },
+        scenes: [
+            {
+                id: "building", type: "scene", className: "scene-corporate",
+                background: "linear-gradient(135deg, #0a1628, #16213e)",
+                overlay: "none",
+                animation: { enter: "fadeIn", duration: 800 },
+                content: { eyebrow: "", title: "{{companyName}}", subtitle: "{{eventName}}", hint: "Tap to enter ▼" }
+            },
+            {
+                id: "conference-room", type: "scene", className: "scene-corporate",
+                background: "linear-gradient(135deg, #0a0a1a, #1a1a3e)",
+                overlay: "none",
+                animation: { enter: "slide-left", duration: 1000 },
+                content: { eyebrow: "", title: "{{eventName}}", subtitle: "{{dateLong}}", hint: "Tap to continue ▼" }
+            },
+            {
+                id: "screen", type: "scene", className: "scene-corporate",
+                background: "linear-gradient(135deg, #0a0a14, #141428)",
+                overlay: "none",
+                animation: { enter: "zoom", duration: 1200 },
+                content: { eyebrow: "", title: "{{companyName}}", subtitle: "{{eventName}} · {{dateLong}}", hint: "Tap to continue ▼" },
+                screen: { title: "{{eventName}}", detail: "{{dateLong}} · {{time}} · {{venue}}" }
+            },
+            {
+                id: "reveal", type: "invitation-reveal", className: "scene-corporate",
+                background: "linear-gradient(135deg, #0a1628, #16213e)",
+                overlay: "none",
+                animation: { enter: "reveal", duration: 1200 },
+                content: { eyebrow: "{{companyName}}", title: "{{eventName}}", subtitle: "{{dateLong}}", cta: "VIEW EVENT DETAILS" }
+            }
+        ]
     }
 ];
 
