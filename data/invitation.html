@@ -1258,6 +1258,35 @@ button {
         translateY(-2px);
 }
 
+.rsvp-counts {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8a7568;
+}
+
+.rsvp-counts[hidden] {
+    display: none !important;
+}
+
+.rsvp-counts span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.rsvp-counts strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #3b3028;
+}
+
 
 /* =====================================================
    FOOTER
@@ -1911,6 +1940,13 @@ footer p {
     </p>
 
 
+    <div id="rsvpCounts" class="rsvp-counts" hidden>
+        <span id="rsvpYesCount"></span>
+        <span id="rsvpMaybeCount"></span>
+        <span id="rsvpNoCount"></span>
+    </div>
+
+
     <button
         class="rsvp-button"
         id="rsvpButton"
@@ -1980,6 +2016,7 @@ const params =
 const invitationId =
     (
         params.get("id") ||
+        localStorage.getItem("luna_last_invitation") ||
         "aysel-murad"
     ).toLowerCase().trim();
 
@@ -2135,7 +2172,7 @@ if (invitation.story) {
     document.getElementById(
         "story"
     ).innerHTML =
-        invitation.story;
+        lunaFormatStory(invitation.story);
 
 }
 
@@ -2511,6 +2548,24 @@ setInterval(
 const rsvpButton = document.getElementById("rsvpButton");
 const rsvpForm = document.getElementById("rsvpForm");
 const rsvpThanks = document.getElementById("rsvpThanks");
+const rsvpCounts = document.getElementById("rsvpCounts");
+
+function renderRsvpCounts() {
+    const rsvps = lunaGetRsvps(invitationId);
+    if (rsvps.length === 0) {
+        rsvpCounts.hidden = true;
+        return;
+    }
+    const yes = rsvps.filter(function(r) { return r.status === "yes"; }).length;
+    const maybe = rsvps.filter(function(r) { return r.status === "maybe"; }).length;
+    const no = rsvps.filter(function(r) { return r.status === "no"; }).length;
+    document.getElementById("rsvpYesCount").innerHTML = "<strong>" + yes + "</strong>Gəlir";
+    document.getElementById("rsvpMaybeCount").innerHTML = "<strong>" + maybe + "</strong>Bəlkə";
+    document.getElementById("rsvpNoCount").innerHTML = "<strong>" + no + "</strong>Gəlmir";
+    rsvpCounts.hidden = false;
+}
+
+renderRsvpCounts();
 
 rsvpButton.addEventListener("click", function () {
     rsvpForm.hidden = false;
@@ -2528,6 +2583,8 @@ rsvpForm.addEventListener("submit", function (event) {
 
     rsvpForm.hidden = true;
     rsvpThanks.hidden = false;
+    document.getElementById("rsvpName").value = "";
+    renderRsvpCounts();
 });
 
 const musicButton = document.getElementById("musicButton");

@@ -196,9 +196,9 @@ const design = params.get("design") || "amelia";
 const packageName = (params.get("package") || "basic").toLowerCase();
 const category = (params.get("category") || "wedding").toLowerCase();
 
-document.getElementById("pillDesign").textContent = design;
-document.getElementById("pillPackage").textContent = packageName;
-document.getElementById("pillCategory").textContent = category;
+document.getElementById("pillDesign").textContent = design.charAt(0).toUpperCase() + design.slice(1);
+document.getElementById("pillPackage").textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1);
+document.getElementById("pillCategory").textContent = category.charAt(0).toUpperCase() + category.slice(1);
 
 const coupleCategories = ["wedding", "engagement", "anniversary"];
 const isCouple = coupleCategories.indexOf(category) !== -1;
@@ -257,6 +257,11 @@ document.getElementById("invitationForm").addEventListener("submit", function (e
 
     if (isCouple && !groom) {
         alert("Zəhmət olmasa bəyin adını da yazın.");
+        return;
+    }
+
+    if (date && new Date(date + "T00:00:00") < new Date(new Date().toDateString())) {
+        alert("Tarix keçmişdə ola bilməz. Zəhmət olmasa düzgün tarix seçin.");
         return;
     }
 
