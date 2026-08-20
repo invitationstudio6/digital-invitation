@@ -56,6 +56,60 @@ img{max-width:100%}
 
 
 /* =========================================================
+   SHIMMER TEXT EFFECT
+======================================================= */
+
+.hero h1{background:linear-gradient(90deg,#3E2518 0%,#3E2518 40%,#C4A882 50%,#3E2518 60%,#3E2518 100%);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:heroTitle 1.2s .15s ease both,shimmerText 4s 2s ease-in-out infinite}
+@keyframes shimmerText{0%,100%{background-position:200% center}50%{background-position:-200% center}}
+
+
+/* =========================================================
+   STAGGERED CATEGORY ENTRANCE
+======================================================= */
+
+.category-grid .category{opacity:0;transform:translateY(40px);animation:staggerIn .7s ease forwards}
+.category-grid .category:nth-child(1){animation-delay:.1s}
+.category-grid .category:nth-child(2){animation-delay:.2s}
+.category-grid .category:nth-child(3){animation-delay:.3s}
+.category-grid .category:nth-child(4){animation-delay:.4s}
+.category-grid .category:nth-child(5){animation-delay:.5s}
+.category-grid .category:nth-child(6){animation-delay:.6s}
+.category-grid .category:nth-child(7){animation-delay:.7s}
+.category-grid .category:nth-child(8){animation-delay:.8s}
+@keyframes staggerIn{to{opacity:1;transform:translateY(0)}}
+
+
+/* =========================================================
+   STAGGERED FEATURED CARDS ENTRANCE
+======================================================= */
+
+.featured-grid .invitation-card{opacity:0;transform:translateY(40px);animation:staggerIn .7s ease forwards}
+.featured-grid .invitation-card:nth-child(1){animation-delay:.15s}
+.featured-grid .invitation-card:nth-child(2){animation-delay:.3s}
+.featured-grid .invitation-card:nth-child(3){animation-delay:.45s}
+.featured-grid .invitation-card:nth-child(4){animation-delay:.6s}
+.featured-grid .invitation-card:nth-child(5){animation-delay:.75s}
+.featured-grid .invitation-card:nth-child(6){animation-delay:.9s}
+
+
+/* =========================================================
+   SERVICE HOVER GLOW
+======================================================= */
+
+.service::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(196,168,130,.12),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+.service{position:relative;overflow:hidden}
+.service:hover::after{opacity:1}
+
+
+/* =========================================================
+   PRICING CARD SHINE
+======================================================= */
+
+.price-card::before{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transition:left .6s;pointer-events:none}
+.price-card:hover::before{left:120%}
+
+
+/* =========================================================
    NAVBAR
 ======================================================== */
 
@@ -299,6 +353,27 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
 
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+
+/* =========================================================
+   DESIGN PREVIEW MODAL
+======================================================= */
+
+.design-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s}
+.design-modal.show{opacity:1;visibility:visible}
+.design-modal-bg{position:absolute;inset:0;background:rgba(62,37,24,.88);backdrop-filter:blur(14px)}
+.design-modal-box{position:relative;z-index:2;width:min(560px,90%);background:#F5EDE3;border:1px solid rgba(92,61,46,.08);overflow:hidden;transform:translateY(20px) scale(.96);transition:.45s cubic-bezier(.19,1,.22,1)}
+.design-modal.show .design-modal-box{transform:translateY(0) scale(1)}
+.design-modal-close{position:absolute;top:16px;right:18px;width:40px;height:40px;border:0;background:rgba(62,37,24,.08);color:#3E2518;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:.3s}
+.design-modal-close:hover{background:rgba(62,37,24,.15)}
+.design-modal-img{width:100%;height:420px;object-fit:cover;display:block}
+.design-modal-body{padding:32px 30px 28px}
+.design-modal-cat{font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#C4A882;margin-bottom:10px}
+.design-modal-body h3{font-family:"Cormorant Garamond",serif;font-size:42px;font-weight:300;font-style:italic;color:#3E2518}
+.design-modal-body p{margin-top:8px;color:#8A6E5E;font-size:10px;line-height:1.8}
+.design-modal-actions{display:flex;gap:10px;margin-top:22px}
+.design-modal-actions .btn{flex:1}
+@media(max-width:600px){.design-modal-img{height:300px}}
 
 
 /* =========================================================
@@ -867,7 +942,7 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
             <div class="category-image">
 
                 <img
-                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85"
+                    src="https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?auto=format&fit=crop&w=900&q=85"
                     alt="Graduation"
                     loading="lazy"
                 >
@@ -993,27 +1068,35 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
 <div class="section-inner">
 
 
-    <div class="section-heading">
+    <div class="section-heading" style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:20px">
 
-        <div
-            class="kicker"
-            data-i18n="featuredKicker"
-        >
-            Featured Designs
+        <div>
+
+            <div
+                class="kicker"
+                data-i18n="featuredKicker"
+            >
+                Featured Designs
+            </div>
+
+
+            <h2 data-i18n="featuredTitle">
+                Dəvətnaməniz<br>
+                belə görünə bilər.
+            </h2>
+
+
+            <p data-i18n="featuredText">
+                Luna kolleksiyasından seçilmiş nümunələrə baxın.
+                Bəyəndiyiniz dizaynı seçin və məlumatlarınızı
+                göndərin.
+            </p>
+
         </div>
 
-
-        <h2 data-i18n="featuredTitle">
-            Dəvətnaməniz<br>
-            belə görünə bilər.
-        </h2>
-
-
-        <p data-i18n="featuredText">
-            Luna kolleksiyasından seçilmiş nümunələrə baxın.
-            Bəyəndiyiniz dizaynı seçin və məlumatlarınızı
-            göndərin.
-        </p>
+        <a href="designs/index.html" class="btn btn-light" style="white-space:nowrap">
+            Hamısına bax →
+        </a>
 
     </div>
 
@@ -1355,7 +1438,7 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
             <div class="invitation-preview">
 
                 <img
-                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85"
+                    src="https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?auto=format&fit=crop&w=900&q=85"
                     alt="Aurora"
                     loading="lazy"
                 >
@@ -2069,6 +2152,47 @@ footer{padding:60px 5% 35px;border-top:1px solid rgba(92,61,46,.08);display:flex
 </div>
 
 </section>
+
+
+<!-- ======================================================
+     DESIGN PREVIEW MODAL
+====================================================== -->
+
+<div class="design-modal" id="designModal">
+
+    <div class="design-modal-bg" id="designModalBg"></div>
+
+    <div class="design-modal-box">
+
+        <button class="design-modal-close" id="designModalClose">×</button>
+
+        <img class="design-modal-img" id="designModalImg" src="" alt="">
+
+        <div class="design-modal-body">
+
+            <div class="design-modal-cat" id="designModalCat"></div>
+
+            <h3 id="designModalTitle"></h3>
+
+            <p id="designModalDesc"></p>
+
+            <div class="design-modal-actions">
+
+                <a class="btn btn-dark" id="designModalLink" href="#">
+                    Bu dizaynı seç
+                </a>
+
+                <button class="btn btn-light" id="designModalClose2">
+                    Bağla
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- ======================================================
@@ -3289,6 +3413,133 @@ document.querySelectorAll(".invitation-card").forEach(function(card) {
 
     card.addEventListener("mouseleave", function() {
         card.style.transform = "";
+    });
+
+});
+
+
+/* =========================================================
+   DESIGN PREVIEW MODAL
+======================================================== */
+
+var designModal =
+    document.getElementById("designModal");
+
+var designModalBg =
+    document.getElementById("designModalBg");
+
+var designModalClose =
+    document.getElementById("designModalClose");
+
+var designModalClose2 =
+    document.getElementById("designModalClose2");
+
+var designModalImg =
+    document.getElementById("designModalImg");
+
+var designModalCat =
+    document.getElementById("designModalCat");
+
+var designModalTitle =
+    document.getElementById("designModalTitle");
+
+var designModalDesc =
+    document.getElementById("designModalDesc");
+
+var designModalLink =
+    document.getElementById("designModalLink");
+
+
+function openDesignModal(data){
+
+    designModalImg.src = data.image;
+    designModalCat.textContent = data.category;
+    designModalTitle.textContent = data.name;
+    designModalDesc.textContent = data.description;
+    designModalLink.href = data.url;
+
+    designModal.classList.add("show");
+    document.body.style.overflow = "hidden";
+
+}
+
+
+function closeDesignModal(){
+
+    designModal.classList.remove("show");
+    document.body.style.overflow = "";
+
+}
+
+
+document.querySelectorAll(".invitation-card").forEach(function(card){
+
+    card.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        var img =
+            this.querySelector(".invitation-preview img");
+
+        var title =
+            this.querySelector(".card-bottom strong");
+
+        var catEl =
+            this.querySelector(".invitation-copy small");
+
+        var link =
+            this.getAttribute("href");
+
+        var pkgEl =
+            this.querySelector(".card-bottom span:last-child");
+
+
+        var designs = {
+
+            image: img ? img.src : "",
+            name: title ? title.textContent.trim() : "",
+            category: catEl ? catEl.textContent.trim() : "",
+            description: (pkgEl ? pkgEl.textContent.trim() : "") + " paketi ilə fərdiləşdirilə bilən dəvətnamə.",
+            url: link || "client-form.html"
+
+        };
+
+
+        openDesignModal(designs);
+
+    });
+
+});
+
+
+designModalBg.addEventListener("click", closeDesignModal);
+designModalClose.addEventListener("click", closeDesignModal);
+designModalClose2.addEventListener("click", closeDesignModal);
+
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Escape"){
+        closeDesignModal();
+    }
+
+});
+
+
+/* =========================================================
+   SERVICE CARD MOUSE GLOW
+======================================================== */
+
+document.querySelectorAll(".service").forEach(function(card){
+
+    card.addEventListener("mousemove", function(e){
+
+        var rect = card.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width * 100);
+        var y = ((e.clientY - rect.top) / rect.height * 100);
+
+        card.style.setProperty("--mx", x + "%");
+        card.style.setProperty("--my", y + "%");
+
     });
 
 });

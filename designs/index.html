@@ -541,6 +541,22 @@ nav{
     align-items:flex-end;
 }
 
+/* Admin-uploaded design with cover image */
+.design.uploaded .preview{
+    background:#1a1410;
+}
+.design.uploaded .preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:saturate(.85);
+    transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .6s;
+}
+.design.uploaded:hover .preview img{
+    transform:scale(1.04);
+    filter:saturate(1);
+}
+
 
 /* =====================================================
    ENVELOPE
@@ -2940,49 +2956,248 @@ footer p{
 <script>
 
 /* =====================================================
-   FILTERS
+   LOAD ADMIN-UPLOADED DESIGNS
 ===================================================== */
 
-const filters =
-    document.querySelectorAll(".filter");
+(function loadUploadedDesigns(){
 
-const designs =
-    document.querySelectorAll(".design");
+    const raw =
+        localStorage.getItem("luna_designs");
+
+    if(!raw) return;
+
+    let uploaded;
+
+    try{
+        uploaded = JSON.parse(raw);
+    }catch(e){
+        return;
+    }
+
+    if(!uploaded || !uploaded.length) return;
+
+    const collection =
+        document.querySelector(".collection");
+
+    const countEl =
+        document.querySelector(".collection-count");
+
+    const builtinCount =
+        collection.querySelectorAll(".design").length;
 
 
-filters.forEach(filter => {
+    uploaded.forEach(function(design){
 
-    filter.addEventListener("click", () => {
+        const article =
+            document.createElement("article");
 
-        const selected =
-            filter.dataset.filter;
+        article.className =
+            "design uploaded";
 
-        filters.forEach(item =>
-            item.classList.remove("active")
-        );
+        article.dataset.category =
+            design.category || "wedding";
 
-        filter.classList.add("active");
 
-        designs.forEach(design => {
+        const catLabel =
+            (design.category || "wedding").toUpperCase();
 
-            if(
-                selected === "all" ||
-                design.dataset.category === selected
-            ){
+        const pkgLabel =
+            (design.package || "basic").toUpperCase();
 
-                design.style.display = "";
+        const styleLabel =
+            (design.style || "").toUpperCase();
 
-            }else{
 
-                design.style.display = "none";
+        article.innerHTML =
 
-            }
+            '<div class="preview">' +
+                '<img src="' + design.image + '" alt="' + (design.name || "Design") + '" loading="lazy">' +
+            '</div>' +
+
+            '<div class="design-info">' +
+                '<div class="design-title">' +
+                    '<h3>' + (design.name || "Untitled") + '</h3>' +
+                    '<p>' + catLabel + ' · ' + pkgLabel +
+                    (styleLabel ? ' · ' + styleLabel : '') +
+                    '</p>' +
+                '</div>' +
+                '<div class="design-actions">' +
+                    '<button class="view-button" data-demo="uploaded" data-image="' + design.image + '">' +
+                        'Dəvətnaməyə bax' +
+                    '</button>' +
+                    '<a class="choose-button" href="../client-form.html?design=' +
+                        encodeURIComponent(design.name || "custom") +
+                        '&package=' + encodeURIComponent(design.package || "basic") +
+                        '&category=' + encodeURIComponent(design.category || "wedding") +
+                        '">' +
+                        'Bu dizaynı seç' +
+                    '</a>' +
+                '</div>' +
+            '</div>';
+
+
+        collection.appendChild(article);
+
+    });
+
+
+    if(countEl){
+        const total =
+            builtinCount + uploaded.length;
+
+        countEl.textContent =
+            (total < 10 ? "0" : "") +
+            total +
+            " Designs";
+    }
+
+
+    /* re-bind view buttons for uploaded designs */
+
+    document.querySelectorAll(
+        '.view-button[data-image]'
+    ).forEach(function(btn){
+
+        btn.addEventListener("click", function(){
+
+            const imgSrc =
+                this.dataset.image;
+
+            if(!imgSrc) return;
+
+            showUploadedImageModal(imgSrc);
 
         });
 
     });
 
-});
+
+    /* re-bind filter for new designs */
+
+    bindFilters();
+
+})();
+
+
+/* =====================================================
+   IMAGE MODAL FOR UPLOADED DESIGNS
+===================================================== */
+
+function showUploadedImageModal(src){
+
+    let overlay =
+        document.getElementById("imageModal");
+
+    if(!overlay){
+
+        overlay =
+            document.createElement("div");
+
+        overlay.id = "imageModal";
+
+        overlay.style.cssText =
+
+            "position:fixed;inset:0;z-index:10000;" +
+            "display:flex;align-items:center;justify-content:center;" +
+            "background:rgba(0,0,0,.85);backdrop-filter:blur(10px);" +
+            "opacity:0;visibility:hidden;transition:.4s;cursor:pointer;";
+
+        overlay.innerHTML =
+
+            '<img src="" alt="Preview" style="' +
+                'max-width:85vw;max-height:85vh;object-fit:contain;' +
+                'box-shadow:0 40px 100px rgba(0,0,0,.5);' +
+                'transform:scale(.92);transition:.4s;' +
+            '">';
+
+        document.body.appendChild(overlay);
+
+
+        overlay.addEventListener("click", function(){
+
+            this.style.opacity = "0";
+            this.style.visibility = "hidden";
+
+            this.querySelector("img")
+                .style.transform = "scale(.92)";
+
+            document.body.style.overflow = "";
+
+        });
+
+    }
+
+
+    const img =
+        overlay.querySelector("img");
+
+    img.src = src;
+
+    requestAnimationFrame(function(){
+
+        overlay.style.opacity = "1";
+        overlay.style.visibility = "visible";
+
+        img.style.transform = "scale(1)";
+
+        document.body.style.overflow = "hidden";
+
+    });
+
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+function bindFilters(){
+
+    const filters =
+        document.querySelectorAll(".filter");
+
+    const designs =
+        document.querySelectorAll(".design");
+
+
+    filters.forEach(filter => {
+
+        filter.addEventListener("click", () => {
+
+            const selected =
+                filter.dataset.filter;
+
+            filters.forEach(item =>
+                item.classList.remove("active")
+            );
+
+            filter.classList.add("active");
+
+            designs.forEach(design => {
+
+                if(
+                    selected === "all" ||
+                    design.dataset.category === selected
+                ){
+
+                    design.style.display = "";
+
+                }else{
+
+                    design.style.display = "none";
+
+                }
+
+            });
+
+        });
+
+    });
+
+}
+
+
+bindFilters();
 
 
 /* =====================================================

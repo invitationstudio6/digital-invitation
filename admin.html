@@ -719,6 +719,111 @@ class="designs">
 </section>
 
 
+
+<section class="panel">
+
+<h2>
+Canva Dəvətnamə Yüklə (Toplu)
+</h2>
+
+<p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">
+Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin. Hər şəkil avtomatik olaraq Luna dizaynları arasına əlavə olunacaq.
+</p>
+
+
+<div class="form-grid">
+
+
+<div class="field full">
+
+<label>
+Canva şəkillərini seçin (çoxlu seçim)
+</label>
+
+<div class="file-box">
+
+<input
+id="bulkCover"
+type="file"
+accept="image/*"
+multiple>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Kateqoriya (hamısı üçün)
+</label>
+
+<select id="bulkCategory">
+
+<option value="wedding">Wedding</option>
+<option value="engagement">Engagement</option>
+<option value="henna">Henna / Kına</option>
+<option value="birthday">Birthday</option>
+<option value="baby-shower">Baby Shower</option>
+<option value="graduation">Graduation</option>
+<option value="anniversary">Anniversary</option>
+<option value="events">Events</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Paket (hamısı üçün)
+</label>
+
+<select id="bulkPackage">
+
+<option value="basic">Basic</option>
+<option value="premium">Premium</option>
+<option value="luxury">Luxury</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<div id="bulkPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:20px;"></div>
+
+
+<div class="button-row">
+
+<button
+type="button"
+class="save"
+id="bulkUploadBtn">
+
+Hamısını yüklə
+
+</button>
+
+<button
+type="button"
+class="clear"
+id="bulkClearBtn">
+
+Təmizlə
+
+</button>
+
+</div>
+
+
+</section>
+
+
 </div>
 
 
@@ -1390,7 +1495,190 @@ function deleteInvitation(id){
     );
 
 
-    renderInvitations();
+renderInvitations();
+
+
+
+/* =====================================================
+   CANVA BULK UPLOAD
+===================================================== */
+
+const bulkCover =
+    document.getElementById("bulkCover");
+
+const bulkPreview =
+    document.getElementById("bulkPreview");
+
+const bulkUploadBtn =
+    document.getElementById("bulkUploadBtn");
+
+const bulkClearBtn =
+    document.getElementById("bulkClearBtn");
+
+let bulkFiles = [];
+
+
+bulkCover.addEventListener(
+    "change",
+    function(){
+
+        bulkFiles =
+            Array.from(this.files);
+
+        bulkPreview.innerHTML = "";
+
+
+        bulkFiles.forEach(function(file){
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(e){
+
+                    const div =
+                        document.createElement("div");
+
+                    div.style.cssText =
+
+                        "position:relative;" +
+                        "border:1px solid rgba(255,255,255,.12);" +
+                        "overflow:hidden;";
+
+                    div.innerHTML =
+
+                        '<img src="' + e.target.result + '" ' +
+                        'style="width:100%;height:180px;object-fit:cover;display:block;">' +
+
+                        '<input ' +
+                            'type="text" ' +
+                            'value="' + file.name.replace(/\.[^.]+$/, "") + '" ' +
+                            'data-original="' + e.target.result + '" ' +
+                            'style="' +
+                                'width:100%;padding:8px;background:rgba(0,0,0,.3);' +
+                                'border:none;border-top:1px solid rgba(255,255,255,.1);' +
+                                'color:white;font-size:9px;font-family:inherit;' +
+                            '" ' +
+                        '>';
+
+
+                    bulkPreview.appendChild(div);
+
+                };
+
+            reader.readAsDataURL(file);
+
+        });
+
+    }
+);
+
+
+bulkUploadBtn.addEventListener(
+    "click",
+    function(){
+
+        const inputs =
+            bulkPreview.querySelectorAll("input");
+
+        if(!inputs.length){
+
+            alert(
+                "Please select Canva images first."
+            );
+
+            return;
+
+        }
+
+
+        const category =
+            document.getElementById("bulkCategory").value;
+
+        const pkg =
+            document.getElementById("bulkPackage").value;
+
+
+        let count = 0;
+
+
+        inputs.forEach(function(input){
+
+            const name =
+                input.value.trim();
+
+            const image =
+                input.dataset.original;
+
+
+            if(!name || !image) return;
+
+
+            const design = {
+
+                id:
+                    Date.now() + count,
+
+                name:
+                    name,
+
+                category:
+                    category,
+
+                package:
+                    pkg,
+
+                style:
+                    "Canva",
+
+                description:
+                    "",
+
+                image:
+                    image,
+
+                url:
+                    ""
+
+            };
+
+
+            designs.push(design);
+
+            count++;
+
+        });
+
+
+        save();
+
+        bulkPreview.innerHTML = "";
+
+        bulkCover.value = "";
+
+        bulkFiles = [];
+
+
+        alert(
+            count + " Canva designs uploaded to Luna."
+        );
+
+    }
+);
+
+
+bulkClearBtn.addEventListener(
+    "click",
+    function(){
+
+        bulkCover.value = "";
+
+        bulkPreview.innerHTML = "";
+
+        bulkFiles = [];
+
+    }
+);
 
 }
 
