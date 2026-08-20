@@ -178,259 +178,259 @@ const LUNA_PACKAGES = [
 /* ----- TEMPLATES ----- */
 const LUNA_TEMPLATES = [
     {
-        id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik",
+        id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "SİZİ SEVGİ İLƏ DƏVƏT EDİRİK", names: ["Aysel", "Murad"], date: "12 · 09 · 2026", message: "Bəzi hekayələr kitablarda yazılır. Bizimki isə kiçik anlarda, paylaşılan gülüşlərdə və unudulmaz xatirələrdə yazıldı.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "amour", name: "Amour", category: "wedding", style: "Romantik · Klassik",
+        id: "amour", name: "Amour", category: "wedding", style: "Romantik · Klassik", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "THE WEDDING OF", names: ["Leyla", "Kamran"], date: "20 · 10 · 2026", message: "Hekayəmiz sadə bir salamla başladı və zaman keçdikcə gözəl bir hekayəyə çevrildi.", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
-        id: "noir", name: "Noir", category: "wedding", style: "Lüks · Kinematik",
+        id: "noir", name: "Noir", category: "wedding", style: "Lüks · Kinematik", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "WEDDING COLLECTION", names: ["Nigar", "Elvin"], date: "15 · 11 · 2026", message: "Sevgi zamanı doping edir. Bizim hekayəmiz məhz belə başladı.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
-        id: "serena", name: "Serena", category: "wedding", style: "Lavanda · Zərif",
+        id: "serena", name: "Serena", category: "wedding", style: "Lavanda · Zərif", galleryStyle: "polaroid", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Aytac", "Rəşad"], date: "05 · 12 · 2026", message: "Həyatımızın ən gözəl anlarını sizinlə paylaşmaq istəyirik.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
-        id: "garden", name: "Italian Garden", category: "wedding", style: "Baq · Təbiət",
+        id: "garden", name: "Italian Garden", category: "wedding", style: "Baq · Təbiət", galleryStyle: "collage", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Günel", "Samir"], date: "28 · 06 · 2026", message: "Təbiətin qoynunda, çiçəklərin ətrində birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Quba, Azərbaycan", theme: "default" }
     },
     {
-        id: "editorial", name: "Editorial Love", category: "wedding", style: "Foto · Redaksiya",
+        id: "editorial", name: "Editorial Love", category: "wedding", style: "Foto · Redaksiya", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "SAVE THE DATE", names: ["Laman", "Tural"], date: "10 · 09 · 2026", message: "Sevgi ilə dolu bir həyat bizə gözəl anlar bəxş edir.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "luxe-gold", name: "Luxe Gold", category: "wedding", style: "Lüks · Qızıl",
+        id: "luxe-gold", name: "Luxe Gold", category: "wedding", style: "Lüks · Qızıl", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Nərmin", "Tahir"], date: "18 · 07 · 2026", message: "Qızıl parıltıda başlanan sevgimiz, əbədi olaraq parlayacaq.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "velvet-rose", name: "Velvet Rose", category: "wedding", style: "Zərif · Çəhrayı",
+        id: "velvet-rose", name: "Velvet Rose", category: "wedding", style: "Zərif · Çəhrayı", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "SİZİ SEVGİ İLƏ DƏVƏT EDİRİK", names: ["Günay", "Elçin"], date: "25 · 08 · 2026", message: "Məxmər gül kimi zərif, sevgimiz isə əbədi olacaq.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "minimal-white", name: "Minimal White", category: "wedding", style: "Minimal · Ağ",
+        id: "minimal-white", name: "Minimal White", category: "wedding", style: "Minimal · Ağ", galleryStyle: "slider", openingStyle: "minimal-reveal",
         thumbnail: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "THE WEDDING OF", names: ["Səbinə", "Rəhim"], date: "03 · 10 · 2026", message: "Sadəlik gözəlliyin ən ali formasıdır. Bizim hekayəmiz də belə başladı.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "vintage-romance", name: "Vintage Romance", category: "wedding", style: "Vintage · Romantic",
+        id: "vintage-romance", name: "Vintage Romance", category: "wedding", style: "Vintage · Romantic", galleryStyle: "polaroid", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "DƏVƏTNAMƏ", names: ["Lamiyə", "Orxan"], date: "21 · 06 · 2026", message: "Keçmişin gözəlliyini bu günə daşıyırıq, gələcəyə isə birlikdə addım atırıq.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "black-gold", name: "Black & Gold", category: "wedding", style: "Qara · Qızıl",
+        id: "black-gold", name: "Black & Gold", category: "wedding", style: "Qara · Qızıl", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "WEDDING COLLECTION", names: ["Fidan", "Cavid"], date: "07 · 11 · 2026", message: "Zəriflik və gücü bir arada yaşayacağımız gecəyə dəvət edirik.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
-        id: "soft-blush", name: "Soft Blush", category: "wedding", style: "Zərif · Çəhrayı",
+        id: "soft-blush", name: "Soft Blush", category: "wedding", style: "Zərif · Çəhrayı", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Aynur", "Kənan"], date: "14 · 09 · 2026", message: "Çəhrayı buludların altında, sevgi ilə dolu bir gecə sizi gözləyir.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
-        id: "botanical", name: "Botanical", category: "wedding", style: "Botanik · Yaşıl",
+        id: "botanical", name: "Botanical", category: "wedding", style: "Botanik · Yaşıl", galleryStyle: "collage", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Ülviyyə", "Murad"], date: "19 · 05 · 2026", message: "Yaşıl yarpaqların arasında, təbiətin qucağında birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Şamaxı, Azərbaycan", theme: "default" }
     },
     {
-        id: "modern-classic", name: "Modern Classic", category: "wedding", style: "Müasir · Klassik",
+        id: "modern-classic", name: "Modern Classic", category: "wedding", style: "Müasir · Klassik", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "THE WEDDING OF", names: ["Leyla", "Anar"], date: "02 · 10 · 2026", message: "Klassik dəyərlər, müasir ruhla birləşir. Bizim hekayəmiz belə.", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
-        id: "enchanted", name: "Enchanted", category: "wedding", style: "Sehirli · Romantik",
+        id: "enchanted", name: "Enchanted", category: "wedding", style: "Sehirli · Romantik", galleryStyle: "masonry", openingStyle: "fullscreen-photo",
         thumbnail: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "SEHIRLİ DƏVƏT", names: ["Samirə", "Elvin"], date: "23 · 08 · 2026", message: "Sehirli bir gecədə, ulduzların altında əbədi sevgimizi qeyd edəcəyik.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "classic", name: "Classic", category: "engagement", style: "Klassik · Sadə",
+        id: "classic", name: "Classic", category: "engagement", style: "Klassik · Sadə", galleryStyle: "editorial", openingStyle: "envelope",
         thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "NİŞAN DƏVƏTNAMƏSİ", names: ["Aygun", "Fərid"], date: "22 · 08 · 2026", message: "Birlikdə addımlayacağımız yeni həyatımızın başlanğıcında sizinlə bölüşmək istəyirik.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "romantic-bloom", name: "Romantic Bloom", category: "engagement", style: "Romantik · Çiçəkli",
+        id: "romantic-bloom", name: "Romantic Bloom", category: "engagement", style: "Romantik · Çiçəkli", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "NİŞAN DƏVƏTNAMƏSİ", names: ["Nərmin", "Orxan"], date: "15 · 07 · 2026", message: "Çiçəklərin açdığı kimi, sevgimiz də hər gün daha da gözəlləşir.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "elegant-pearl", name: "Elegant Pearl", category: "engagement", style: "Zərif · Inci",
+        id: "elegant-pearl", name: "Elegant Pearl", category: "engagement", style: "Zərif · Inci", galleryStyle: "polaroid", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1545232979-8bf9822d6622?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1545232979-8bf9822d6622?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "DƏVƏTNAMƏ", names: ["Gülnar", "Tural"], date: "28 · 09 · 2026", message: "İnci kimi nadir və dəyərli olan sevgimizi sizinlə bölüşmək istəyirik.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "modern-chic", name: "Modern Chic", category: "engagement", style: "Müasir · Şik",
+        id: "modern-chic", name: "Modern Chic", category: "engagement", style: "Müasir · Şik", galleryStyle: "grid", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "NİŞAN MƏCLİSİ", names: ["Aytac", "Ceyhun"], date: "06 · 10 · 2026", message: "Müasir dünyada, klassik sevgi ilə bir yoldaşlıq başladırıq.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "soft-rose", name: "Soft Rose", category: "engagement", style: "Zərif · Gül",
+        id: "soft-rose", name: "Soft Rose", category: "engagement", style: "Zərif · Gül", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Leyla", "Samir"], date: "12 · 11 · 2026", message: "Gül iyində, zəriflik dolu bir nişan mərasimi sizi gözləyir.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
-        id: "florence", name: "Florence", category: "birthday", style: "Şən · Rəngli",
+        id: "florence", name: "Florence", category: "birthday", style: "Şən · Rəngli", galleryStyle: "collage", openingStyle: "fullscreen-photo",
         thumbnail: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "AD GÜNÜ MÜBARƏK", names: ["Sara"], date: "14 · 03 · 2026", message: "Həyatımdakı ən gözəl anları sizinlə bölüşmək istəyirəm!", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "blossom", name: "Blossom", category: "birthday", style: "Video · Animasiyalı",
+        id: "blossom", name: "Blossom", category: "birthday", style: "Video · Animasiyalı", galleryStyle: "grid", openingStyle: "fullscreen-photo",
         thumbnail: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=90",
         minPackage: "video", packages: ["video"],
         preview: { eyebrow: "AD GÜNÜN MÜBARƏK", names: ["Nigar"], date: "08 · 05 · 2026", message: "Bir yaş daha böyüdük! Gəlin birlikdə qeyd edək.", venue: "Fontanlar Bağı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "elegant-birthday", name: "Elegant Birthday", category: "birthday", style: "Zərif · Ad Günü",
+        id: "elegant-birthday", name: "Elegant Birthday", category: "birthday", style: "Zərif · Ad Günü", galleryStyle: "editorial", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "AD GÜNÜN MÜBARƏK", names: ["Aysel"], date: "19 · 04 · 2026", message: "Həyatımın ən gözəl gününü sizinlə birlikdə qeyd etmək istəyirəm.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "luxury-birthday", name: "Luxury Birthday", category: "birthday", style: "Lüks · Ziyafət",
+        id: "luxury-birthday", name: "Luxury Birthday", category: "birthday", style: "Lüks · Ziyafət", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "BÜTÜN ZİYAFƏTÇİLƏR DƏVƏT OLUNUR", names: ["Kəmalə"], date: "22 · 12 · 2026", message: "İlin ən lüks ad gününə hamınızı dəvət edirəm!", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
-        id: "kids-party", name: "Kids Party", category: "birthday", style: "Uşaq · Şən",
+        id: "kids-party", name: "Kids Party", category: "birthday", style: "Uşaq · Şən", galleryStyle: "collage", openingStyle: "fullscreen-photo",
         thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ŞƏN AD GÜNÜ", names: ["Zəhra"], date: "10 · 06 · 2026", message: "Bir il daha böyüdük! Gəlin birlikdə oynayıb əylənək!", venue: "Fun City", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "aurora", name: "Aurora", category: "graduation", style: "Akademik · Zərif",
+        id: "aurora", name: "Aurora", category: "graduation", style: "Akademik · Zərif", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "MƏZUNİYYƏT", names: ["Ali"], date: "30 · 06 · 2026", message: "Uzun bir yolculuğun sonuna gəldik. Sizi bu sevincimi bölüşməyə dəvət edirəm.", venue: "ADA Universiteti", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "modern-grad", name: "Modern Grad", category: "graduation", style: "Müasir · Məzuniyyət",
+        id: "modern-grad", name: "Modern Grad", category: "graduation", style: "Müasir · Məzuniyyət", galleryStyle: "grid", openingStyle: "minimal-reveal",
         thumbnail: "https://images.unsplash.com/photo-1627556704190-316a4b57b649?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1627556704190-316a4b57b649?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "MƏZUNİYYƏT MƏRASİMİ", names: ["Nigar"], date: "15 · 07 · 2026", message: "Yeni bir başlanğıcın ardından gələn nailiyyətimi sizinlə bölüşmək istəyirəm.", venue: "Bakı Dövlət Universiteti", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "luxury-grad", name: "Luxury Grad", category: "graduation", style: "Lüks · Akademik",
+        id: "luxury-grad", name: "Luxury Grad", category: "graduation", style: "Lüks · Akademik", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "MƏZUNİYYƏT ZİYAFƏTİ", names: ["Elçin"], date: "20 · 06 · 2026", message: "Uğurlu bir yolculuğun sonunda, ən gözəl nailiyyətimi qeyd edirəm.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "sweet-arrival", name: "Sweet Arrival", category: "baby-shower", style: "Şirin · Körpə",
+        id: "sweet-arrival", name: "Sweet Arrival", category: "baby-shower", style: "Şirin · Körpə", galleryStyle: "polaroid", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "KÖRPƏ MƏCLİSİ", names: ["Leyla"], date: "05 · 08 · 2026", message: "Balaca mələyimizi qarşılamağa hazırlaşırıq. Sizi də dəvət edirik!", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "little-prince", name: "Little Prince", category: "baby-shower", style: "Şahzadə · Zərif",
+        id: "little-prince", name: "Little Prince", category: "baby-shower", style: "Şahzadə · Zərif", galleryStyle: "editorial", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "BALACA ŞAHZADƏ", names: ["Elvin"], date: "18 · 09 · 2026", message: "Balaca şahzadəmizin gəlişini qeyd etməyə hazırlanırıq.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
-        id: "executive", name: "Executive", category: "business", style: "Korporativ · Peşəkar",
+        id: "executive", name: "Executive", category: "business", style: "Korporativ · Peşəkar", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "BİZNES TƏDBİRİ", names: ["Tech Corp"], date: "25 · 09 · 2026", message: "İlin ən böyük biznes tədbirinə dəvət edirik.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "conference", name: "Conference", category: "business", style: "Konfrans · Rəsmi",
+        id: "conference", name: "Conference", category: "business", style: "Konfrans · Rəsmi", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         thumbnail: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "İNNOVASİYA KONFRANSI", names: ["AZ Tech Summit"], date: "14 · 11 · 2026", message: "Texnologiya və innovasiya sahəsində ən son yenilikləri müzakirə edəcəyik.", venue: "Bakı Kongres Mərkəzi", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "networking", name: "Networking", category: "business", style: "Şəbəkə · Müasir",
+        id: "networking", name: "Networking", category: "business", style: "Şəbəkə · Müasir", galleryStyle: "grid", openingStyle: "minimal-reveal",
         thumbnail: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ŞƏBƏKƏ GECƏSİ", names: ["Baku Business Club"], date: "08 · 10 · 2026", message: "Yeni tanışlıqlar və iş imkanları üçün şəbəkə gecəsinə dəvət edirik.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "oriental", name: "Oriental Henna", category: "henna", style: "Şərqi · Lüks",
+        id: "oriental", name: "Oriental Henna", category: "henna", style: "Şərqi · Lüks", galleryStyle: "masonry", openingStyle: "luxury-reveal",
         thumbnail: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "XINA GECƏSİ", names: ["Aysel"], date: "11 · 09 · 2026", message: "Xınamızda sizinlə birlikdə rəqs etmək istəyirik.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "traditional-henna", name: "Traditional Henna", category: "henna", style: "Ənənəvi · Klassik",
+        id: "traditional-henna", name: "Traditional Henna", category: "henna", style: "Ənənəvi · Klassik", galleryStyle: "collage", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ƏNƏNƏVİ XINA GECƏSİ", names: ["Günay"], date: "20 · 08 · 2026", message: "Ənənəvi xına gecəmizdə sizinlə birlikdə rəqs edib, əylənəcəyik.", venue: "İçərişəhər Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "anniversary", name: "Anniversary", category: "other", style: "İldönüm · Zərif",
+        id: "anniversary", name: "Anniversary", category: "other", style: "İldönüm · Zərif", galleryStyle: "masonry", openingStyle: "envelope",
         thumbnail: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "İLDÖNÜMÜMÜZ MÜBARƏK", names: ["Aysel", "Murad"], date: "12 · 09 · 2026", message: "Birlikdə keçirdiyimiz hər il bizim üçün ən qiymətli hədiyyədir.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
-        id: "celebration", name: "Celebration", category: "other", style: "Celebration · Şən",
+        id: "celebration", name: "Celebration", category: "other", style: "Celebration · Şən", galleryStyle: "collage", openingStyle: "fullscreen-photo",
         thumbnail: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],

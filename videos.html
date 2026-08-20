@@ -320,7 +320,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
             <a href="pricing.html">Pricing</a>
             <a href="how-it-works.html">How It Works</a>
             <a href="videos.html">Videos</a>
-            <a href="admin.html">Admin</a>
+            <a href="admin.html" style="display:none">Admin</a>
         </div>
         <div>© 2026 Luna</div>
         <div data-i18n="footerTagline">Toy · Tədbir · An</div>
@@ -365,7 +365,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
             vidPageGridText: "Bəyəndiyiniz video dəvətnəməni seçin və ya yeni video yaratmaq üçün bizimlə əlaqə saxlayın.",
             vidPageEmpty: "Hələ video dəvətnəmə yoxdur",
             vidPageEmptyText: "Video dəvətnəmələr kolleksiyamız hazırlanır. Yeni videolar əlavə edildikdə burada görünəcək.",
-            vidPageEmptyCta: "Admin panelinə get",
+            vidPageEmptyCta: "Ana səhifə",
             vidPageOrderBtn: "Sifariş et",
             vidPageOrderVideoBtn: "Bu videonu sifariş et",
             vidHowKicker: "Necə işləyir",
@@ -395,7 +395,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
             vidPageGridText: "Choose a video invitation you love or contact us to create a new one.",
             vidPageEmpty: "No video invitations yet",
             vidPageEmptyText: "Our video invitation collection is being prepared. New videos will appear here once added.",
-            vidPageEmptyCta: "Go to admin panel",
+            vidPageEmptyCta: "Go to homepage",
             vidPageOrderBtn: "Order now",
             vidPageOrderVideoBtn: "Order this video",
             vidHowKicker: "How it works",
@@ -425,7 +425,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
             vidPageGridText: "Выберите понравившееся видео-приглашение или свяжитесь с нами для создания нового.",
             vidPageEmpty: "Видео-приглашений пока нет",
             vidPageEmptyText: "Наша коллекция видео-приглашений готовится. Новые видео появятся здесь после добавления.",
-            vidPageEmptyCta: "Перейти в админ-панель",
+            vidPageEmptyCta: "Ana səhifə",
             vidPageOrderBtn: "Заказать",
             vidPageOrderVideoBtn: "Заказать это видео",
             vidHowKicker: "Как это работает",
@@ -517,7 +517,7 @@ function renderVideoGrid() {
                 '<div class="empty-state-icon">🎬</div>' +
                 '<h3 data-i18n="vidPageEmpty">' + lunaT("vidPageEmpty") + '</h3>' +
                 '<p data-i18n="vidPageEmptyText">' + lunaT("vidPageEmptyText") + '</p>' +
-                '<a href="admin.html" class="btn btn-dark" data-i18n="vidPageEmptyCta">' + lunaT("vidPageEmptyCta") + '</a>' +
+                '<a href="index.html" class="btn btn-dark" data-i18n="vidPageEmptyCta">' + lunaT("vidPageEmptyCta") + '</a>' +
             '</div>';
         return;
     }

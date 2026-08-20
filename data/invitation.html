@@ -712,11 +712,6 @@ a { text-decoration: none; color: inherit; }
 .gallery {
     width: 100%;
     margin-top: 50px;
-    display: grid;
-    grid-template-columns: repeat(12,1fr);
-    grid-template-rows: repeat(8,90px);
-    gap: 4px;
-    overflow: hidden;
 }
 
 .gallery img {
@@ -726,6 +721,7 @@ a { text-decoration: none; color: inherit; }
     filter: saturate(.9);
     transition: transform 1.4s cubic-bezier(.19,1,.22,1), filter .6s ease;
     cursor: pointer;
+    display: block;
 }
 
 .gallery img:hover {
@@ -733,12 +729,138 @@ a { text-decoration: none; color: inherit; }
     filter: saturate(1.05);
 }
 
-.gallery img:nth-child(1) { grid-column: 1/8; grid-row: 1/6; }
-.gallery img:nth-child(2) { grid-column: 8/13; grid-row: 1/4; }
-.gallery img:nth-child(3) { grid-column: 8/13; grid-row: 4/6; }
-.gallery img:nth-child(4) { grid-column: 1/5; grid-row: 6/9; }
-.gallery img:nth-child(5) { grid-column: 5/9; grid-row: 6/9; }
-.gallery img:nth-child(6) { grid-column: 9/13; grid-row: 6/9; }
+.gallery img[onerror] {
+    display: none;
+}
+
+/* Gallery Style: Editorial — asymmetric 2-column with large hero */
+.gallery-style-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.gallery-style-editorial img:first-child {
+    grid-column: 1 / -1;
+    height: 400px;
+}
+.gallery-style-editorial img {
+    height: 260px;
+}
+
+/* Gallery Style: Masonry — Pinterest-style columns */
+.gallery-style-masonry {
+    column-count: 3;
+    column-gap: 6px;
+}
+.gallery-style-masonry img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 6px;
+    break-inside: avoid;
+}
+
+/* Gallery Style: Polaroid — centered with padding and slight rotation */
+.gallery-style-polaroid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
+}
+.gallery-style-polaroid img {
+    width: 220px;
+    height: 280px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    border-radius: 2px;
+    padding: 8px 8px 40px 8px;
+    background: var(--white, #FFFCF7);
+    transition: transform 0.6s cubic-bezier(.19,1,.22,1);
+}
+.gallery-style-polaroid img:nth-child(odd) { transform: rotate(-2deg); }
+.gallery-style-polaroid img:nth-child(even) { transform: rotate(2deg); }
+.gallery-style-polaroid img:hover { transform: rotate(0deg) scale(1.05); }
+
+/* Gallery Style: Fullscreen — single image at a time, stacked vertically */
+.gallery-style-fullscreen {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.gallery-style-fullscreen img {
+    width: 100%;
+    height: 80vh;
+    min-height: 400px;
+}
+
+/* Gallery Style: Collage — organic overlapping layout */
+.gallery-style-collage {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 200px);
+    gap: 8px;
+}
+.gallery-style-collage img:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; }
+.gallery-style-collage img:nth-child(2) { grid-column: 3 / 5; grid-row: 1 / 2; }
+.gallery-style-collage img:nth-child(3) { grid-column: 3 / 4; grid-row: 2 / 3; }
+.gallery-style-collage img:nth-child(4) { grid-column: 4 / 5; grid-row: 2 / 3; }
+.gallery-style-collage img:nth-child(5) { grid-column: 1 / 3; grid-row: 3 / 4; }
+.gallery-style-collage img:nth-child(6) { grid-column: 3 / 5; grid-row: 3 / 4; }
+
+/* Gallery Style: Slider — horizontal scroll */
+.gallery-style-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+}
+.gallery-style-slider::-webkit-scrollbar { height: 4px; }
+.gallery-style-slider::-webkit-scrollbar-thumb { background: var(--accent, #C4A882); border-radius: 2px; }
+.gallery-style-slider img {
+    flex: 0 0 80%;
+    max-width: 400px;
+    height: 320px;
+    scroll-snap-align: center;
+    border-radius: 4px;
+}
+
+/* Gallery Style: Grid — clean uniform grid (default fallback) */
+.gallery-style-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+.gallery-style-grid img {
+    height: 250px;
+}
+
+/* Single image layout — always beautiful */
+.gallery img:only-child {
+    width: 100%;
+    max-height: 500px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Two images — side by side */
+.gallery-style-grid img:nth-child(1):nth-last-child(1),
+.gallery-style-editorial img:nth-child(1):nth-last-child(1) {
+    grid-column: 1 / -1;
+}
+
+/* Single image for non-grid styles */
+.gallery-style-masonry img:only-child,
+.gallery-style-collage img:only-child {
+    column-span: all;
+    width: 100%;
+    max-height: 500px;
+}
+.gallery-style-collage img:only-child {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
 
 
 /* =====================================================
@@ -1244,8 +1366,17 @@ footer p {
     .detail:last-child { border-bottom: none; }
     .timer { grid-template-columns: repeat(2,1fr); }
     .timer div:nth-child(2)::after { display: none; }
-    .gallery { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
-    .gallery img:nth-child(n) { grid-column: auto; grid-row: auto; min-height: 200px; }
+    .gallery-style-editorial,
+    .gallery-style-grid,
+    .gallery-style-collage { grid-template-columns: repeat(2, 1fr); }
+    .gallery-style-editorial img:first-child { height: 250px; }
+    .gallery-style-editorial img { height: 180px; }
+    .gallery-style-masonry { column-count: 2; }
+    .gallery-style-polaroid img { width: 160px; height: 200px; padding-bottom: 30px; }
+    .gallery-style-fullscreen img { height: 50vh; min-height: 250px; }
+    .gallery-style-collage { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 150px); }
+    .gallery-style-slider img { flex: 0 0 85%; height: 240px; }
+    .gallery img:only-child { max-height: 350px; }
     .envelope-scene { width: 88vw; }
     .hero-scroll { display: none; }
     footer { padding: 60px 24px; }
@@ -1889,6 +2020,7 @@ if (invitation.map) {
 
 /* =====================================================
    GALLERY (Premium / Luxury)
+   Gallery style from template, images from customer data
 ===================================================== */
 
 if (pkg !== "premium" && pkg !== "luxury") {
@@ -1904,19 +2036,51 @@ document.getElementById("galleryHeading").textContent =
 var galleryEl = document.getElementById("gallery");
 var galleryImages = [];
 
-if (invitation.images && invitation.images.length) {
+/* Determine gallery style from template data */
+var currentTemplate = null;
+if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
+    currentTemplate = LUNA_TEMPLATES.find(function(t) {
+        return t.id === invitation.templateId;
+    }) || null;
+}
 
-    galleryImages = invitation.images.slice(0, 6);
+var galleryStyle = (currentTemplate && currentTemplate.galleryStyle) || "editorial";
+galleryEl.className = "gallery gallery-style-" + galleryStyle + " reveal-scale";
+
+/* Use customer images ONLY (separated from template demo images) */
+var customerImages = [];
+
+if (invitation.images && invitation.images.length) {
+    customerImages = invitation.images.filter(function(src) {
+        return src && typeof src === "string" && src.trim() !== "";
+    });
+}
+
+/* Hide gallery entirely if no valid customer images */
+if (customerImages.length === 0) {
+    document.getElementById("gallerySection").hidden = true;
+} else {
+    galleryImages = customerImages.slice(0, 20);
 
     galleryImages.forEach(function(src, i) {
         var img = document.createElement("img");
         img.src = src;
-        img.alt = lunaDisplayNames(invitation);
+        img.alt = lunaDisplayNames(invitation) + " — " + (i + 1);
         img.loading = "lazy";
         img.dataset.index = i;
+
+        /* Image error fallback: hide broken images gracefully */
+        img.onerror = function() {
+            this.style.display = "none";
+            /* If all images fail, hide the whole gallery section */
+            var visibleImgs = galleryEl.querySelectorAll("img:not([style*='display: none'])");
+            if (visibleImgs.length === 0) {
+                document.getElementById("gallerySection").hidden = true;
+            }
+        };
+
         galleryEl.appendChild(img);
     });
-
 }
 
 
@@ -1926,6 +2090,9 @@ if (invitation.images && invitation.images.length) {
 
 var lightbox = document.getElementById("lightbox");
 var lightboxImg = document.getElementById("lightboxImg");
+lightboxImg.onerror = function() {
+    this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23F5EDE3' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23C4A882' font-family='DM Sans' font-size='14'%3EImage unavailable%3C/text%3E%3C/svg%3E";
+};
 var lightboxCounter = document.getElementById("lightboxCounter");
 var lightboxIndex = 0;
 
@@ -2215,6 +2382,28 @@ document.getElementById("footerTagline").textContent =
    OPEN ENVELOPE
 ===================================================== */
 
+/* Apply opening style from template data */
+(function() {
+    var openingEl = document.getElementById("opening");
+    var templateData = null;
+    if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
+        templateData = LUNA_TEMPLATES.find(function(t) {
+            return t.id === invitation.templateId;
+        });
+    }
+    var openStyle = (templateData && templateData.openingStyle) || "envelope";
+    var classMap = {
+        "envelope": "opening-elegant",
+        "fullscreen-photo": "opening-editorial",
+        "editorial-reveal": "opening-editorial",
+        "floral-reveal": "opening-floral",
+        "luxury-reveal": "opening-luxury",
+        "minimal-reveal": "opening-minimal"
+    };
+    var cls = classMap[openStyle] || "opening-elegant";
+    openingEl.classList.add(cls);
+})();
+
 var openButton =
     document.getElementById("openButton");
 
@@ -2228,32 +2417,49 @@ var invitationPage =
     document.getElementById("invitation");
 
 
-openButton.addEventListener(
-    "click",
-    function() {
-
-        envelope.classList.add("open");
-
-        openButton.textContent = lunaT("invOpening");
-        openButton.disabled = true;
-
-        setTimeout(
-            function() {
-                opening.classList.add("hidden");
-                invitationPage.classList.add("visible");
-                window.scrollTo(0, 0);
-
-                /* Auto-play music if available */
-                if (pkg === "luxury" && invitation.music) {
-                    musicPlayer.play().catch(function() {});
-                    musicButton.textContent = lunaT("invMusicMute");
-                }
-            },
-            1600
-        );
-
+var _openingStyle = (function() {
+    var tData = null;
+    if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
+        tData = LUNA_TEMPLATES.find(function(t) {
+            return t.id === invitation.templateId;
+        });
     }
-);
+    return (tData && tData.openingStyle) || "envelope";
+})();
+
+function _openInvitation() {
+    if (openButton.disabled) return;
+
+    envelope.classList.add("open");
+
+    openButton.textContent = lunaT("invOpening");
+    openButton.disabled = true;
+
+    setTimeout(
+        function() {
+            opening.classList.add("hidden");
+            invitationPage.classList.add("visible");
+            window.scrollTo(0, 0);
+
+            /* Auto-play music if available */
+            if (pkg === "luxury" && invitation.music) {
+                musicPlayer.play().catch(function() {});
+                musicButton.textContent = lunaT("invMusicMute");
+            }
+        },
+        1600
+    );
+}
+
+openButton.addEventListener("click", _openInvitation);
+
+/* For non-envelope styles, allow tap anywhere on the opening screen */
+if (_openingStyle !== "envelope") {
+    opening.addEventListener("click", function(e) {
+        if (e.target === openButton || openButton.contains(e.target)) return;
+        _openInvitation();
+    });
+}
 
 
 </script>
