@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luna — Dəvətnaməni yarat</title>
+<title>Luna — Toy Dəvətnaməsi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
 <style>
 :root{
     --cream:#F5EDE3;
@@ -58,7 +58,7 @@ button,input,textarea,select{font-family:inherit}
 .hero{padding:160px 6% 20px;text-align:center}
 .hero-content{width:min(700px,100%);margin:0 auto}
 .hero-label{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border:1px solid rgba(196,168,130,.25);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
-.hero-label::before{content:"\2726";color:var(--gold)}
+.hero-label::before{content:"💒";color:var(--gold)}
 .hero h1{margin-top:32px;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(42px,8vw,80px);line-height:.88;letter-spacing:-2px;color:var(--dark);animation:heroIn 1s .1s ease both}
 .hero-desc{width:min(480px,100%);margin:22px auto 0;font-size:12px;line-height:2;color:var(--muted);animation:fadeUp .8s .3s ease both}
 @keyframes heroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -152,14 +152,6 @@ button,input,textarea,select{font-family:inherit}
 .step-title{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:6px}
 .step-desc{font-size:10px;color:var(--muted);margin-bottom:24px;line-height:1.8}
 
-/* ===== CATEGORY PICKER ===== */
-.category-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.cat-pick{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border:2px solid rgba(92,61,46,.08);border-radius:8px;cursor:pointer;transition:.35s;background:#fff}
-.cat-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,37,24,.08)}
-.cat-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.06)}
-.cat-pick-icon{font-size:28px}
-.cat-pick-name{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--text)}
-
 /* ===== PACKAGE PICKER ===== */
 .pkg-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .pkg-pick{position:relative;padding:24px 16px;border:2px solid rgba(92,61,46,.08);border-radius:8px;cursor:pointer;transition:.35s;background:#fff;text-align:center}
@@ -186,7 +178,6 @@ button,input,textarea,select{font-family:inherit}
 .preview-row-value{color:var(--dark);font-weight:500}
 
 @media(max-width:720px){
-    .category-picker{grid-template-columns:repeat(2,1fr)}
     .pkg-picker{grid-template-columns:1fr}
     .step-dot label{display:none}
 }
@@ -199,11 +190,11 @@ button,input,textarea,select{font-family:inherit}
 <div class="floating-orb orb-2"></div>
 
 <nav class="navbar" id="navbar">
-    <a class="logo" href="index.html">Luna</a>
+    <a class="logo" href="../index.html">Luna</a>
     <div class="nav-links">
-        <a href="index.html" data-i18n="navHome">Ana səhifə</a>
-        <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
-        <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+        <a href="../index.html" data-i18n="navHome">Ana səhifə</a>
+        <a href="../invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+        <a href="../pricing.html" data-i18n="navPricing">Qiymətlər</a>
         <div class="languages">
             <button data-lang="az" class="active">AZ</button>
             <button data-lang="en">EN</button>
@@ -217,9 +208,9 @@ button,input,textarea,select{font-family:inherit}
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" data-i18n="navHome">Ana səhifə</a>
-    <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
-    <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
+    <a href="../index.html" data-i18n="navHome">Ana səhifə</a>
+    <a href="../invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+    <a href="../pricing.html" data-i18n="navPricing">Qiymətlər</a>
     <div class="mobile-languages">
         <button data-lang="az" class="active">AZ</button>
         <button data-lang="en">EN</button>
@@ -231,88 +222,68 @@ button,input,textarea,select{font-family:inherit}
 <main>
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-label">Luna Studio</div>
-            <h1 data-i18n="formTitle">Dəvətnaməni<br>birlikdə yazaq.</h1>
-            <p class="hero-desc" data-i18n="formDesc">Adlar, tarix, məkan və hekayənizi əlavə edin.</p>
+            <div class="hero-label">Toy Dəvətnaməsi</div>
+            <h1>Gözəl toy<br>dəvətnaməsi.</h1>
+            <p class="hero-desc">Gəlin və bəyin adları, toy tarixi və hekayənizi əlavə edin.</p>
             <div class="meta-pills">
                 <span class="pill" id="pillDesign">—</span>
                 <span class="pill" id="pillPackage">—</span>
-                <span class="pill" id="pillCategory">—</span>
+                <span class="pill" id="pillCategory">Toy</span>
             </div>
         </div>
     </section>
 
     <section class="form-section">
         <div class="form-wrap">
-            <!-- STEP INDICATOR -->
             <div class="step-indicator" id="stepIndicator">
-                <div class="step-dot active" data-step="1"><span>1</span><label>Kateqoriya</label></div>
+                <div class="step-dot active" data-step="1"><span>1</span><label>Paket</label></div>
                 <div class="step-line"></div>
-                <div class="step-dot" data-step="2"><span>2</span><label>Paket</label></div>
+                <div class="step-dot" data-step="2"><span>2</span><label>Dizayn</label></div>
                 <div class="step-line"></div>
-                <div class="step-dot" data-step="3"><span>3</span><label>Dizayn</label></div>
+                <div class="step-dot" data-step="3"><span>3</span><label>Təfərrüatlar</label></div>
                 <div class="step-line"></div>
-                <div class="step-dot" data-step="4"><span>4</span><label>Təfərrüatlar</label></div>
+                <div class="step-dot" data-step="4"><span>4</span><label>Şəkillər</label></div>
                 <div class="step-line"></div>
-                <div class="step-dot" data-step="5"><span>5</span><label>Şəkillər</label></div>
-                <div class="step-line"></div>
-                <div class="step-dot" data-step="6"><span>6</span><label>Preview</label></div>
+                <div class="step-dot" data-step="5"><span>5</span><label>Preview</label></div>
             </div>
 
             <form id="invitationForm" class="form-card" novalidate>
-                <!-- Step 1: Category -->
+                <!-- Step 1: Package -->
                 <div class="form-step active" id="formStep1">
-                    <h3 class="step-title">Hadisə kateqoriyası</h3>
-                    <p class="step-desc">Dəvətnamənizin kateqoriyasını seçin</p>
-                    <div class="category-picker" id="categoryPicker">
-                        <div class="cat-pick" data-cat="wedding"><span class="cat-pick-icon">💒</span><span class="cat-pick-name">Toy</span></div>
-                        <div class="cat-pick" data-cat="engagement"><span class="cat-pick-icon">💍</span><span class="cat-pick-name">Nişan</span></div>
-                        <div class="cat-pick" data-cat="henna"><span class="cat-pick-icon">🎶</span><span class="cat-pick-name">Xına</span></div>
-                        <div class="cat-pick" data-cat="birthday"><span class="cat-pick-icon">🎂</span><span class="cat-pick-name">Ad Günü</span></div>
-                        <div class="cat-pick" data-cat="graduation"><span class="cat-pick-icon">🎓</span><span class="cat-pick-name">Məzuniyyət</span></div>
-                        <div class="cat-pick" data-cat="baby-shower"><span class="cat-pick-icon">👶</span><span class="cat-pick-name">Körpə Partisi</span></div>
-                        <div class="cat-pick" data-cat="business"><span class="cat-pick-icon">💼</span><span class="cat-pick-name">Biznes</span></div>
-                        <div class="cat-pick" data-cat="other"><span class="cat-pick-icon">✨</span><span class="cat-pick-name">Digər</span></div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Package -->
-                <div class="form-step" id="formStep2">
                     <h3 class="step-title">Paket seçin</h3>
-                    <p class="step-desc">Lazimi funksiyaları daxil edən paketi seçin</p>
+                    <p class="step-desc">Toy dəvətnaməsi üçün lazimi paketi seçin</p>
                     <div class="pkg-picker" id="pkgPicker"></div>
                 </div>
 
-                <!-- Step 3: Template -->
-                <div class="form-step" id="formStep3">
+                <!-- Step 2: Template -->
+                <div class="form-step" id="formStep2">
                     <h3 class="step-title">Dizayn seçin</h3>
-                    <p class="step-desc">Bəyəndiyiniz dəvətnamə dizaynını seçin</p>
+                    <p class="step-desc">Bəyəndiyiniz toy dəvətnamə dizaynını seçin</p>
                     <div class="template-grid" id="templateGrid"></div>
                     <input type="hidden" id="selectedTemplate" name="template" value="">
                 </div>
 
-                <!-- Step 4: Details -->
-                <div class="form-step" id="formStep4">
+                <!-- Step 3: Details -->
+                <div class="form-step" id="formStep3">
                     <h3 class="step-title">Təfərrüatlar</h3>
-                    <p class="step-desc">Dəvətnamənizin məlumatlarını doldurun</p>
+                    <p class="step-desc">Gəlin, bəy və toy məlumatlarını doldurun</p>
                     <div class="form-grid" id="formGrid"></div>
                 </div>
 
-                <!-- Step 5: Media -->
-                <div class="form-step" id="formStep5">
+                <!-- Step 4: Media -->
+                <div class="form-step" id="formStep4">
                     <h3 class="step-title">Şəkillər və musiqi</h3>
                     <p class="step-desc">Qalereya şəkilləri və fon musiqisi əlavə edin</p>
                     <div class="form-grid" id="mediaGrid"></div>
                 </div>
 
-                <!-- Step 6: Preview & Submit -->
-                <div class="form-step" id="formStep6">
+                <!-- Step 5: Preview & Submit -->
+                <div class="form-step" id="formStep5">
                     <h3 class="step-title">Önizləmə</h3>
                     <p class="step-desc">Dəvətnamənizi nəzərdən keçirin və yaradın</p>
                     <div class="preview-summary" id="previewSummary"></div>
                 </div>
 
-                <!-- Step navigation -->
                 <div class="step-nav">
                     <button class="btn btn-ghost" type="button" id="stepBack" style="display:none">← Geri</button>
                     <div style="flex:1"></div>
@@ -337,37 +308,21 @@ button,input,textarea,select{font-family:inherit}
     </section>
 </main>
 
-<script src="data/luna.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/data.js"></script>
+<script src="../data/luna.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
 <script>
 (function() {
     var params = new URLSearchParams(window.location.search);
     var design = (params.get("design") || "amelia").toLowerCase();
     var packageName = (params.get("package") || "basic").toLowerCase();
-    var category = (params.get("category") || "wedding").toLowerCase();
+    var category = "wedding";
     var designId = design;
 
     lunaInitLanguage();
 
     document.getElementById("pillDesign").textContent = design.charAt(0).toUpperCase() + design.slice(1);
     document.getElementById("pillPackage").textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1);
-    document.getElementById("pillCategory").textContent = lunaCategoryName(category);
-
-    if (packageName === "video") {
-        document.getElementById("pillDesign").textContent = "Video";
-        document.getElementById("pillDesign").style.background = "var(--gold)";
-        document.getElementById("pillDesign").style.color = "var(--dark)";
-    }
-
-    var BUSINESS_EVENT_TYPES = [
-        { value: "konfrans", text: "Konfrans" },
-        { value: "seminar", text: "Seminar" },
-        { value: "workshop", text: "Workshop" },
-        { value: "sirket-terbi", text: "Şirkət tədbiri" },
-        { value: "lansman", text: "Lansman" },
-        { value: "qala-gecesi", text: "Qala gecəsi" }
-    ];
 
     var LANGUAGE_OPTIONS = [
         { value: "az", text: "Azərbaycan" },
@@ -376,105 +331,18 @@ button,input,textarea,select{font-family:inherit}
         { value: "tr", text: "T\u00fcrk\u00e7e" }
     ];
 
-    var EXTRA_LABELS = {
-        az: { formMessage: "D\u00e9v\u00e9tnam\u00e9 m\u00e9tni", formAge: "Ya\u015f", formEventType: "T\u00e9dbir n\u00f6v\u00fc", formCompanyLogo: "\u015eirk\u00e9t loqosu", formSchedule: "C\u00e9dv\u00e9l", formSpeakerName: "Spiker / T\u00e9qdimat\u00e7\u0131", formDresscode: "Dress Code", formParentName: "Valideyn ad\u0131", formBabyName: "K\u00f6rp\u00e9 ad\u0131", formDueDate: "G\u00f6zl\u00e9nil\u00e9n do\u011fum tarixi" },
-        en: { formMessage: "Invitation text", formAge: "Age", formEventType: "Event type", formCompanyLogo: "Company logo", formSchedule: "Schedule", formSpeakerName: "Speaker / Presenter", formDresscode: "Dress Code", formParentName: "Parent name", formBabyName: "Baby name", formDueDate: "Expected due date" },
-        ru: { formMessage: "\u0422\u0435\u043a\u0441\u0442 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u044f", formAge: "\u0412\u043e\u0437\u0440\u0430\u0441\u0442", formEventType: "\u0422\u0438\u043f \u043c\u0435\u0440\u043e\u043f\u0440\u0438\u044f\u0442\u0438\u044f", formCompanyLogo: "\u041b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438", formSchedule: "\u0420\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u0435", formSpeakerName: "\u0421\u043f\u0438\u043a\u0435\u0440", formDresscode: "\u0414\u0440\u0435\u0441\u0441-\u043a\u043e\u0434", formParentName: "\u0418\u043c\u044f \u0440\u043e\u0434\u0438\u0442\u0435\u043b\u044f", formBabyName: "\u0418\u043c\u044f \u0440\u0435\u0431\u0435\u043d\u043a\u0430", formDueDate: "\u041f\u0440\u0438\u0431\u043b\u0438\u0437\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0434\u0430\u0442\u0430 \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f" },
-        tr: { formMessage: "Davetiye metni", formAge: "Ya\u015f", formEventType: "Etkinlik t\u00fcr\u00fc", formCompanyLogo: "\u015eirket logosu", formSchedule: "Program", formSpeakerName: "Konu\u015fmac\u0131 / Sunucu", formDresscode: "K\u00f6y\u00fcn Kodu", formParentName: "Ebeveyn ad\u0131", formBabyName: "Bebek ad\u0131", formDueDate: "Beklenen do\u011fum tarihi" }
-    };
-
-    function extraLabel(key) {
-        if (LUNA_I18N[LUNA_LANG] && LUNA_I18N[LUNA_LANG][key]) return LUNA_I18N[LUNA_LANG][key];
-        if (EXTRA_LABELS[LUNA_LANG] && EXTRA_LABELS[LUNA_LANG][key]) return EXTRA_LABELS[LUNA_LANG][key];
-        if (LUNA_I18N.en && LUNA_I18N.en[key]) return LUNA_I18N.en[key];
-        return key;
-    }
-
-    function lbl(i18nKey) {
-        if (i18nKey) return '<span data-i18n="' + i18nKey + '">' + lunaT(i18nKey) + '</span>';
-        return "";
-    }
-
-    function extraLbl(key) {
-        return '<span data-i18n="_x_' + key + '">' + extraLabel(key) + '</span>';
-    }
-
-    function placeholderText(val) {
-        if (!val) return "";
-        if (LUNA_I18N.en && LUNA_I18N.en[val]) return lunaT(val);
-        return val;
-    }
-
-    function getMessagePlaceholder() {
-        var map = {
-            wedding: "Qonaqlar\u0131m\u0131z\u0131 toyumuza d\u00e9v\u00e9t etm\u00e9k ist\u00e9yirik...",
-            engagement: "Ni\u015fan m\u00e9rasimimiz\u00e9 xo\u015f g\u00e9lmisiniz...",
-            henna: "X\u0131na gec\u00e9mizd\u00e9 i\u015ftirak etm\u00e9yinizi arzu edirik...",
-            birthday: "Ad g\u00fcn\u00fcm\u00fczd\u00e9 yan\u0131m\u0131zda olma\u011f\u0131n\u0131z\u0131 ist\u00e9yirik...",
-            graduation: "M\u00e9zuniyy\u00e9timizi sizinl\u00e9 birlikd\u00e9 qeyd etm\u00e9k ist\u00e9yirik...",
-            business: "Sizi \u015eirk\u00e9timizin t\u00e9dbirin\u00e9 d\u00e9v\u00e9t edirik...",
-            "baby-shower": "K\u00f6rp\u00e9mizin g\u00e9li\u015fini birlikd\u00e9 qeyd ed\u00e9k...",
-            other: "Sizi x\u00fcsusi t\u00e9dbirimiz\u00e9 d\u00e9v\u00e9t edirik..."
-        };
-        return map[category] || map.other;
-    }
-
     function getCategoryFields() {
         var f = [];
-        var isCouple = (category === "wedding" || category === "engagement" || category === "henna");
-
-        if (isCouple) {
-            f.push({ name: "bride", type: "text", labelI18n: "formBride", required: true, col: "half", placeholder: "Aysel", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "groom", type: "text", labelI18n: "formGroom", required: (category !== "henna"), col: "half", placeholder: "Murad", forPackages: ["video", "basic", "premium", "luxury"] });
-        } else if (category === "birthday") {
-            f.push({ name: "celebrant", type: "text", labelI18n: "formCelebrant", required: true, col: "half", placeholder: "Leyla", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "age", type: "number", labelKey: "formAge", col: "half", placeholder: "25", forPackages: ["premium", "luxury"] });
-        } else if (category === "graduation") {
-            f.push({ name: "graduate", type: "text", labelI18n: "formGraduate", required: true, col: "half", placeholder: "Ali", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "school", type: "text", labelI18n: "formSchool", col: "half", placeholder: "ADA Universiteti", forPackages: ["premium", "luxury"] });
-            f.push({ name: "degree", type: "text", labelI18n: "formDegree", col: "full", placeholder: "Komp\u00fcter elml\u00e9ri", forPackages: ["premium", "luxury"] });
-        } else if (category === "business") {
-            f.push({ name: "companyName", type: "text", labelI18n: "formCompanyName", required: true, col: "half", placeholder: "Tech Corp", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "\u0130llik konfrans", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "eventType", type: "select", labelKey: "formEventType", col: "full", options: BUSINESS_EVENT_TYPES, forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["premium", "luxury"] });
-            f.push({ name: "speakerName", type: "text", labelKey: "formSpeakerName", col: "half", placeholder: "Ad Soyad", forPackages: ["premium", "luxury"] });
-            f.push({ name: "agenda", type: "textarea", labelI18n: "formAgenda", col: "full", placeholder: "09:00 - Qeydiyyat\n10:00 - A\u00e7\u0131l\u0131\u015f nitqi...", rows: 5, forPackages: ["premium", "luxury"] });
-            f.push({ name: "dresscode", type: "text", labelKey: "formDresscode", col: "half", placeholder: "Formal, Business Casual", forPackages: ["premium", "luxury"] });
-            f.push({ name: "website", type: "url", labelI18n: "formWebsite", col: "half", placeholder: "https://company.com", forPackages: ["luxury"] });
-            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
-        } else if (category === "other") {
-            f.push({ name: "eventName", type: "text", labelI18n: "formEventName", required: true, col: "half", placeholder: "X\u00fcsusi t\u00e9dbir", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "hostName", type: "text", labelI18n: "formHost", col: "half", placeholder: "\u018eli H\u00e9s\u00e9nov", forPackages: ["basic", "premium", "luxury"] });
-            f.push({ name: "eventType", type: "text", labelKey: "formEventType", col: "full", placeholder: "M\u00e9s: Y\u00f6lge\u00e7m\u00e9, Ad g\u00fcnu...", forPackages: ["premium", "luxury"] });
-            f.push({ name: "description", type: "textarea", labelI18n: "formDescription", col: "full", placeholder: "T\u00e9dbir haqq\u0131nda \u00e9trafl\u0131...", rows: 4, forPackages: ["premium", "luxury"] });
-            f.push({ name: "schedule", type: "textarea", labelKey: "formSchedule", col: "full", placeholder: "T\u00e9dbirin c\u00e9dv\u00e9li...", rows: 4, forPackages: ["premium", "luxury"] });
-            f.push({ name: "contact", type: "text", labelI18n: "formContact", col: "full", placeholder: "+994 XX XXX XX XX", forPackages: ["premium", "luxury"] });
-        } else if (category === "baby-shower") {
-            f.push({ name: "parentName", type: "text", labelKey: "formParentName", required: true, col: "half", placeholder: "Valideyn ad\u0131", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "babyName", type: "text", labelKey: "formBabyName", col: "half", placeholder: "K\u00f6rp\u00e9 ad\u0131 (opsional)", forPackages: ["video", "basic", "premium", "luxury"] });
-            f.push({ name: "dueDate", type: "date", labelKey: "formDueDate", col: "half", forPackages: ["premium", "luxury"] });
-        }
-
+        f.push({ name: "bride", type: "text", labelI18n: "formBride", required: true, col: "half", placeholder: "Aysel", forPackages: ["video", "basic", "premium", "luxury"] });
+        f.push({ name: "groom", type: "text", labelI18n: "formGroom", required: true, col: "half", placeholder: "Murad", forPackages: ["video", "basic", "premium", "luxury"] });
         f.push({ name: "date", type: "date", labelI18n: "formDate", required: true, col: "half", forPackages: ["video", "basic", "premium", "luxury"] });
         f.push({ name: "time", type: "time", labelI18n: "formTime", required: true, col: "half", value: "19:00", forPackages: ["video", "basic", "premium", "luxury"] });
         f.push({ name: "venue", type: "text", labelI18n: "formVenue", required: true, col: "half", placeholder: "Crystal Hall", forPackages: ["video", "basic", "premium", "luxury"] });
         f.push({ name: "location", type: "text", labelI18n: "formLocation", required: true, col: "half", placeholder: "Bak\u0131, Az\u0259rbaycan", forPackages: ["video", "basic", "premium", "luxury"] });
-
-        if (category === "business" || category === "other" || category === "baby-shower") {
-            f.push({ name: "address", type: "text", labelI18n: "formAddress", col: "full", placeholder: "\u00dcnvan", forPackages: ["premium", "luxury"] });
-        }
-
         f.push({ name: "map", type: "url", labelI18n: "formMap", col: "full", placeholder: "https://maps.google.com/...", forPackages: ["premium", "luxury"] });
-
-        f.push({ name: "message", type: "textarea", labelKey: "formMessage", col: "full", placeholder: getMessagePlaceholder(), rows: 3, forPackages: ["video", "basic", "premium", "luxury"] });
-
-        if (isCouple) {
-            f.push({ name: "story", type: "textarea", labelI18n: "formStory", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5, forPackages: ["luxury"] });
-        }
-
+        f.push({ name: "message", type: "textarea", labelKey: "formMessage", col: "full", placeholder: "Qonaqlar\u0131m\u0131z\u0131 toyumuza d\u00e9v\u00e9t etm\u00e9k ist\u00e9yirik...", rows: 3, forPackages: ["video", "basic", "premium", "luxury"] });
+        f.push({ name: "story", type: "textarea", labelI18n: "formStory", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5, forPackages: ["luxury"] });
         f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS, forPackages: ["video", "basic", "premium", "luxury"] });
-
         return f;
     }
 
@@ -482,7 +350,7 @@ button,input,textarea,select{font-family:inherit}
         var delay = (index * 0.035).toFixed(2);
         var colClass = field.col === "full" ? " full" : "";
         var pkgAttr = field.forPackages ? ' data-packages="' + field.forPackages.join(",") + '"' : '';
-        var hiddenStyle = field.hidden ? ' style="display:none;animation-delay:' + delay + 's"' : ' style="animation-delay:' + delay + 's"';
+        var hiddenStyle = ' style="animation-delay:' + delay + 's"';
         var fieldId = field.id || field.name;
 
         var html = '<div class="form-field' + colClass + '"' + pkgAttr + hiddenStyle + ' data-field="' + field.name + '">';
@@ -490,7 +358,7 @@ button,input,textarea,select{font-family:inherit}
         if (field.labelI18n) {
             html += '<label for="' + fieldId + '" data-i18n="' + field.labelI18n + '">' + lunaT(field.labelI18n) + '</label>';
         } else if (field.labelKey) {
-            html += '<label for="' + fieldId + '">' + extraLbl(field.labelKey) + '</label>';
+            html += '<label for="' + fieldId + '">' + field.labelKey + '</label>';
         }
 
         if (field.type === "select") {
@@ -502,35 +370,18 @@ button,input,textarea,select{font-family:inherit}
             }
             html += '</select>';
         } else if (field.type === "textarea") {
-            var ph = "";
-            if (field.placeholderKey) {
-                ph = placeholderText(field.placeholderKey);
-                html += '<textarea id="' + fieldId + '" name="' + field.name + '" data-i18n-placeholder="' + field.placeholderKey + '"';
-            } else if (field.placeholder) {
-                ph = field.placeholder;
-                html += '<textarea id="' + fieldId + '" name="' + field.name + '"';
-            } else {
-                html += '<textarea id="' + fieldId + '" name="' + field.name + '"';
-            }
+            var ph = field.placeholder || "";
+            html += '<textarea id="' + fieldId + '" name="' + field.name + '"';
             if (ph) html += ' placeholder="' + ph + '"';
             if (field.rows) html += ' rows="' + field.rows + '"';
             if (field.required) html += ' required';
             html += '></textarea>';
-        } else if (field.type === "file") {
-            html += '<input id="' + fieldId + '" name="' + field.name + '" type="file"';
-            if (field.accept) html += ' accept="' + field.accept + '"';
-            if (field.multiple) html += ' multiple';
-            html += '>';
         } else {
             html += '<input id="' + fieldId + '" name="' + field.name + '" type="' + field.type + '"';
             if (field.required) html += ' required';
             if (field.placeholder) html += ' placeholder="' + field.placeholder + '"';
             if (field.value) html += ' value="' + field.value + '"';
             html += '>';
-        }
-
-        if (field.hintI18n) {
-            html += '<span class="form-field-hint" data-i18n="' + field.hintI18n + '">' + lunaT(field.hintI18n) + '</span>';
         }
 
         html += '</div>';
@@ -562,17 +413,11 @@ button,input,textarea,select{font-family:inherit}
     function populateTemplateSelect() {
         var grid = document.getElementById("templateGrid");
         var hidden = document.getElementById("selectedTemplate");
-        var selector = document.getElementById("templateSelector");
         if (!grid || !hidden) return;
         var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : [];
         var filtered = templates.filter(function(t) {
-            return t.category === category && t.packages.indexOf(packageName) !== -1;
+            return t.category === "wedding" && t.packages.indexOf(packageName) !== -1;
         });
-        if (filtered.length === 0) {
-            selector.style.display = "none";
-            return;
-        }
-        selector.style.display = "";
         grid.innerHTML = "";
         var currentDesign = design || (filtered[0] && filtered[0].id) || "";
         hidden.value = currentDesign;
@@ -601,9 +446,8 @@ button,input,textarea,select{font-family:inherit}
         });
     }
 
-    /* ===== MULTI-STEP WIZARD ===== */
     var currentStep = 1;
-    var totalSteps = 6;
+    var totalSteps = 5;
 
     function goToStep(step) {
         if (step < 1 || step > totalSteps) return;
@@ -624,15 +468,14 @@ button,input,textarea,select{font-family:inherit}
         });
 
         document.getElementById("stepBack").style.display = step > 1 ? "" : "none";
-
         var isLast = step === totalSteps;
         document.getElementById("stepNext").style.display = isLast ? "none" : "";
         document.getElementById("stepSubmit").style.display = isLast ? "" : "none";
 
-        if (step === 2) renderPkgPicker();
-        if (step === 3) populateTemplateSelect();
-        if (step === 5) renderMediaFields();
-        if (step === 6) renderPreviewSummary();
+        if (step === 1) renderPkgPicker();
+        if (step === 2) populateTemplateSelect();
+        if (step === 4) renderMediaFields();
+        if (step === 5) renderPreviewSummary();
 
         var formCard = document.querySelector(".form-card");
         if (formCard) formCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -646,11 +489,7 @@ button,input,textarea,select{font-family:inherit}
     });
 
     document.getElementById("stepNext").addEventListener("click", function() {
-        if (currentStep === 1 && !category) {
-            alert("Kateqoriya seçin");
-            return;
-        }
-        if (currentStep === 2 && !packageName) {
+        if (currentStep === 1 && !packageName) {
             alert("Paket seçin");
             return;
         }
@@ -659,22 +498,6 @@ button,input,textarea,select{font-family:inherit}
 
     document.getElementById("stepBack").addEventListener("click", function() {
         goToStep(currentStep - 1);
-    });
-
-    document.getElementById("categoryPicker").addEventListener("click", function(e) {
-        var pick = e.target.closest(".cat-pick");
-        if (!pick) return;
-        document.querySelectorAll(".cat-pick").forEach(function(p) { p.classList.remove("selected"); });
-        pick.classList.add("selected");
-        category = pick.getAttribute("data-cat");
-
-        var catObj = typeof LUNA_CATEGORIES !== "undefined" ? LUNA_CATEGORIES.find(function(c) { return c.id === category; }) : null;
-        if (catObj) {
-            var catName = lunaCategoryName(category);
-            document.getElementById("pillCategory").textContent = catName;
-        }
-
-        setTimeout(function() { goToStep(2); }, 300);
     });
 
     function renderPkgPicker() {
@@ -738,9 +561,6 @@ button,input,textarea,select{font-family:inherit}
         var fields = document.getElementById("formGrid");
         var rows = '';
 
-        var catName = lunaCategoryName(category);
-        rows += '<div class="preview-row"><span class="preview-row-label">Kateqoriya</span><span class="preview-row-value">' + catName + '</span></div>';
-
         var pkgObj = typeof LUNA_PACKAGES !== "undefined" ? LUNA_PACKAGES.find(function(p) { return p.id === packageName; }) : null;
         rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + (pkgObj ? pkgObj.price + ' AZN' : '') + '</span></div>';
 
@@ -770,19 +590,6 @@ button,input,textarea,select{font-family:inherit}
     populateTemplateSelect();
     goToStep(1);
 
-    // Override lunaSetLanguage to also re-apply extra labels
-    var origSetLang = lunaSetLanguage;
-    lunaSetLanguage = function(lang) {
-        origSetLang(lang);
-        document.querySelectorAll("[data-i18n^='_x_']").forEach(function(el) {
-            var key = el.getAttribute("data-i18n").replace("_x_", "");
-            var text = extraLabel(key);
-            if (text) el.innerHTML = text;
-        });
-    };
-    lunaInitLanguage();
-
-    // ===== FORM SUBMISSION =====
     var defaultImages = [
         "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
         "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
@@ -824,11 +631,9 @@ button,input,textarea,select{font-family:inherit}
         e.preventDefault();
         var v = collectValues();
 
-        if (category === "wedding" || category === "engagement") {
-            if (!v.groom) {
-                alert(category === "wedding" ? "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n." : "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n.");
-                return;
-            }
+        if (!v.groom) {
+            alert("Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n.");
+            return;
         }
 
         if (v.date && new Date(v.date + "T00:00:00") < new Date(new Date().toDateString())) {
@@ -836,33 +641,7 @@ button,input,textarea,select{font-family:inherit}
             return;
         }
 
-        var primaryName = "";
-        var invitationId = "";
-
-        switch (category) {
-            case "wedding":
-            case "engagement":
-            case "henna":
-                primaryName = v.bride;
-                invitationId = lunaCreateSlug(v.bride) + (v.groom ? "-" + lunaCreateSlug(v.groom) : "");
-                break;
-            case "birthday":
-                primaryName = v.celebrant;
-                invitationId = lunaCreateSlug(v.celebrant);
-                break;
-            case "graduation":
-                primaryName = v.graduate;
-                invitationId = lunaCreateSlug(v.graduate);
-                break;
-            case "business":
-                primaryName = v.companyName;
-                invitationId = lunaCreateSlug(v.companyName) + "-" + lunaCreateSlug(v.eventName);
-                break;
-            default:
-                primaryName = v.eventName;
-                invitationId = lunaCreateSlug(v.eventName);
-                break;
-        }
+        var invitationId = lunaCreateSlug(v.bride) + "-" + lunaCreateSlug(v.groom);
 
         var imageText = v.images || "";
         var fromText = imageText
@@ -871,113 +650,62 @@ button,input,textarea,select{font-family:inherit}
 
         filesToDataUrls(v.photos).then(function(fromFiles) {
             var videoFile = v.videoFile && v.videoFile[0] ? v.videoFile[0] : null;
-            var logoFile = v.logo && v.logo[0] ? v.logo[0] : null;
 
-            function readLogo(callback) {
-                if (!logoFile) { callback(null); return; }
-                var reader = new FileReader();
-                reader.onload = function(e) { callback(e.target.result); };
-                reader.onerror = function() { callback(null); };
-                reader.readAsDataURL(logoFile);
+            function proceedWithVideo(videoDataUrl) {
+                var images = fromText.concat(fromFiles);
+
+                var data = {
+                    id: invitationId,
+                    package: packageName,
+                    category: "wedding",
+                    design: design,
+                    bride: v.bride,
+                    groom: v.groom,
+                    date: v.date,
+                    dateShort: lunaDateShort(v.date),
+                    time: v.time,
+                    venue: v.venue,
+                    location: v.location,
+                    map: v.map || "https://www.google.com/maps",
+                    message: v.message || "",
+                    story: lunaFormatStory(v.story || ""),
+                    countdown: v.date + "T" + v.time + ":00",
+                    images: images.length ? images : defaultImages,
+                    invitationLanguage: v.invitationLanguage || "az",
+                    template: v.template || ""
+                };
+
+                if (videoDataUrl) data.videoUrl = videoDataUrl;
+
+                try {
+                    lunaSaveInvitation(data);
+                } catch (err) {
+                    data.images = fromText.length ? fromText : defaultImages;
+                    lunaSaveInvitation(data);
+                }
+
+                var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;
+                var viewerFile = (tplData && tplData.experienceType === "interactive") ? "../data/interactive.html" : "../data/invitation.html";
+                var url = new URL(viewerFile, window.location.href);
+                url.searchParams.set("id", invitationId);
+                var link = document.getElementById("generatedLink");
+                link.href = url.href;
+                link.textContent = url.href;
+                document.getElementById("openLink").href = url.href;
+                document.getElementById("resultCard").style.display = "block";
+                document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
             }
 
-            readLogo(function(logoDataUrl) {
-                function proceedWithVideo(videoDataUrl) {
-                    var images = fromText.concat(fromFiles);
-
-                    var data = {
-                        id: invitationId,
-                        package: packageName,
-                        category: category,
-                        design: design,
-                        bride: primaryName,
-                        date: v.date,
-                        dateShort: lunaDateShort(v.date),
-                        time: v.time,
-                        venue: v.venue,
-                        location: v.location,
-                        map: v.map || "https://www.google.com/maps",
-                        message: v.message || "",
-                        countdown: v.date + "T" + v.time + ":00",
-                        images: images.length ? images : defaultImages,
-                        invitationLanguage: v.invitationLanguage || "az",
-                        template: v.template || ""
-                    };
-
-                    if (videoDataUrl) data.videoUrl = videoDataUrl;
-                    if (logoDataUrl) data.logoUrl = logoDataUrl;
-
-                    switch (category) {
-                        case "wedding":
-                        case "engagement":
-                        case "henna":
-                            data.groom = v.groom || "";
-                            data.story = lunaFormatStory(v.story || "");
-                            break;
-                        case "birthday":
-                            data.celebrant = v.celebrant;
-                            data.age = v.age || "";
-                            break;
-                        case "graduation":
-                            data.graduate = v.graduate;
-                            data.school = v.school || "";
-                            data.degree = v.degree || "";
-                            break;
-                        case "business":
-                            data.companyName = v.companyName;
-                            data.eventName = v.eventName;
-                            data.eventType = v.eventType || "";
-                            data.hostName = v.hostName || "";
-                            data.address = v.address || "";
-                            data.description = v.description || "";
-                            data.agenda = v.agenda || "";
-                            data.contact = v.contact || "";
-                            data.website = v.website || "";
-                            break;
-                        default:
-                            data.eventName = v.eventName;
-                            data.hostName = v.hostName || "";
-                            data.eventType = v.eventType || "";
-                            data.address = v.address || "";
-                            data.description = v.description || "";
-                            data.schedule = v.schedule || "";
-                            data.contact = v.contact || "";
-                            break;
-                    }
-
-                    try {
-                        lunaSaveInvitation(data);
-                    } catch (err) {
-                        data.images = fromText.length ? fromText : defaultImages;
-                        lunaSaveInvitation(data);
-                        alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
-                    }
-
-                    /* Route to interactive or static viewer */
-                    var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;
-                    var viewerFile = (tplData && tplData.experienceType === "interactive") ? "data/interactive.html" : "data/invitation.html";
-                    var url = new URL(viewerFile, window.location.href);
-                    url.searchParams.set("id", invitationId);
-                    var link = document.getElementById("generatedLink");
-                    link.href = url.href;
-                    link.textContent = url.href;
-                    document.getElementById("openLink").href = url.href;
-                    document.getElementById("resultCard").style.display = "block";
-                    document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-
-                if (videoFile) {
-                    var reader = new FileReader();
-                    reader.onload = function(ev) { proceedWithVideo(ev.target.result); };
-                    reader.readAsDataURL(videoFile);
-                } else {
-                    proceedWithVideo(null);
-                }
-            });
+            if (videoFile) {
+                var reader = new FileReader();
+                reader.onload = function(ev) { proceedWithVideo(ev.target.result); };
+                reader.readAsDataURL(videoFile);
+            } else {
+                proceedWithVideo(null);
+            }
         });
     });
 
-    // ===== COPY LINK =====
     window.copyLink = function() {
         var link = document.getElementById("generatedLink").href;
         navigator.clipboard.writeText(link).then(function() {
@@ -987,12 +715,10 @@ button,input,textarea,select{font-family:inherit}
         });
     };
 
-    // ===== NAVBAR SCROLL =====
     window.addEventListener("scroll", function() {
         document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 40);
     });
 
-    // ===== MOBILE MENU =====
     var toggle = document.getElementById("menuToggle");
     var mobileMenu = document.getElementById("mobileMenu");
 

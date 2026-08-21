@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna — Körpə Partisi Dəvətnaməsi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+<style>
+:root{
+    --cream:#F5EDE3;--dark:#3E2518;--gold:#C4A882;--text:#5C3D2E;--muted:#8A6E5E;--border:rgba(92,61,46,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
+body.menu-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font-family:inherit}
+.site-bg{position:fixed;inset:0;z-index:-20;background:var(--cream);overflow:hidden}
+.site-bg::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(196,168,130,.08),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(196,168,130,.06),transparent 50%)}
+.floating-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-15;filter:blur(80px);opacity:.06;animation:orbFloat 30s ease-in-out infinite}
+.orb-1{width:600px;height:600px;background:var(--gold);top:-200px;left:-200px}
+.orb-2{width:500px;height:500px;background:#A896BC;bottom:-150px;right:-150px;animation-delay:-15s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.95)}}
+.navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(1100px,90%);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(245,237,227,.80);backdrop-filter:blur(20px);border:1px solid var(--border);z-index:5000;transition:.4s}
+.navbar.scrolled{top:10px;background:rgba(245,237,227,.92);border-color:rgba(92,61,46,.12)}
+.logo{font-family:"Italiana",serif;font-size:34px;letter-spacing:1px;color:var(--dark)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{position:relative;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:.3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-links a:hover::after{width:100%}
+.languages{display:flex;gap:3px}
+.languages button{border:0;background:transparent;color:var(--muted);font-size:8px;font-weight:500;padding:7px 10px;border-radius:20px;transition:.3s;cursor:pointer}
+.languages button:hover{background:rgba(196,168,130,.12)}
+.languages button.active{background:var(--dark);color:var(--cream)}
+.menu-toggle{display:none;width:42px;height:42px;border:0;border-radius:50%;background:var(--dark);color:var(--cream);cursor:pointer}
+.menu-toggle span{display:block;width:16px;height:1px;margin:4px auto;background:var(--cream);transition:.3s}
+.menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:0;right:-100%;width:min(360px,85%);height:100vh;z-index:4500;padding:120px 35px 40px;background:rgba(245,237,227,.96);backdrop-filter:blur(25px);transition:.5s ease}
+.mobile-menu.open{right:0}
+.mobile-menu a{display:block;padding:18px 0;border-bottom:1px solid var(--border);font-family:"Cormorant Garamond",serif;font-size:30px;font-style:italic;color:var(--dark)}
+.mobile-languages{display:flex;gap:8px;margin-top:30px}
+.mobile-languages button{padding:9px 13px;border:1px solid rgba(92,61,46,.10);border-radius:20px;background:rgba(255,252,247,.8);font-size:9px;font-weight:500;color:var(--text);cursor:pointer}
+.mobile-languages button.active{background:var(--dark);color:var(--cream)}
+.hero{padding:160px 6% 20px;text-align:center}
+.hero-content{width:min(700px,100%);margin:0 auto}
+.hero-label{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border:1px solid rgba(196,168,130,.25);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.hero-label::before{content:"👶";color:var(--gold)}
+.hero h1{margin-top:32px;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(42px,8vw,80px);line-height:.88;letter-spacing:-2px;color:var(--dark);animation:heroIn 1s .1s ease both}
+.hero-desc{width:min(480px,100%);margin:22px auto 0;font-size:12px;line-height:2;color:var(--muted);animation:fadeUp .8s .3s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.meta-pills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;animation:fadeUp .8s .5s ease both}
+.pill{border:1px solid rgba(92,61,46,.10);background:rgba(255,252,247,.65);padding:8px 18px;border-radius:999px;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.form-section{padding:10px 6% 100px}
+.form-wrap{width:min(880px,100%);margin:0 auto}
+.form-card{background:rgba(255,252,249,.82);border:1px solid rgba(92,61,46,.06);box-shadow:0 40px 100px rgba(80,50,30,.07);padding:44px;border-radius:28px;animation:fadeUp .6s .6s ease both}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form-field{display:flex;flex-direction:column;gap:7px;opacity:0;transform:translateY(10px);animation:fieldIn .4s ease forwards}
+.form-field.full{grid-column:1/-1}
+@keyframes fieldIn{to{opacity:1;transform:translateY(0)}}
+.form-field label{font-size:10px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.form-field input,.form-field textarea,.form-field select{width:100%;border:1px solid rgba(92,61,46,.12);background:#fff;padding:14px 18px;border-radius:14px;font-size:14px;color:var(--dark);outline:none;transition:.3s}
+.form-field textarea{min-height:110px;resize:vertical;line-height:1.7}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(196,168,130,.10)}
+.form-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A6E5E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
+.form-field input[type="file"]{padding:12px 14px;cursor:pointer}
+.btn{border:0;cursor:pointer;padding:16px 32px;border-radius:999px;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--dark);color:var(--cream)}
+.btn-primary:hover{background:#2a1a10;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(92,61,46,.15);color:var(--dark)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.result-card{display:none;background:rgba(255,252,249,.82);border:1px solid var(--border);box-shadow:0 40px 100px rgba(80,50,30,.07);padding:52px 44px;border-radius:28px;text-align:center;margin-top:28px;animation:fadeUp .5s ease both}
+.result-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#d4b896);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.result-card h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:40px;color:var(--dark);margin-bottom:8px}
+.result-card p{color:var(--muted);font-size:13px;margin-bottom:24px}
+.result-link{display:inline-block;word-break:break-all;padding:14px 28px;background:rgba(196,168,130,.08);border:1px solid rgba(196,168,130,.2);border-radius:14px;color:var(--dark);font-size:13px;margin-bottom:28px;transition:.3s;max-width:100%}
+.result-link:hover{background:rgba(196,168,130,.15);border-color:var(--gold)}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tpl-card{position:relative;border:2px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:.35s;background:#fff}
+.tpl-card:hover{border-color:rgba(196,168,130,.3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(62,37,24,.1)}
+.tpl-card.selected{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,168,130,.2)}
+.tpl-card.selected::after{content:"✓";position:absolute;top:8px;right:8px;width:24px;height:24px;background:var(--gold);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;z-index:2}
+.tpl-card-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85);transition:transform .6s,filter .4s}
+.tpl-card:hover .tpl-card-img{transform:scale(1.04);filter:saturate(1)}
+.tpl-card-info{padding:10px;text-align:center}
+.tpl-card-info h4{font-family:"Cormorant Garamond",serif;font-size:14px;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2}
+.tpl-card-info p{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+.tpl-card-info .pkg{display:inline-block;margin-top:5px;padding:2px 8px;font-size:7px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.3);color:var(--gold);border-radius:3px}
+.step-indicator{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;margin-bottom:24px;overflow-x:auto}
+.step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:60px;cursor:pointer;transition:.3s}
+.step-dot span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);transition:.3s;background:#fff}
+.step-dot label{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);transition:.3s;white-space:nowrap}
+.step-dot.active span{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.step-dot.active label{color:var(--dark);font-weight:600}
+.step-dot.done span{background:var(--gold);color:#fff;border-color:var(--gold)}
+.step-dot.done label{color:var(--gold)}
+.step-line{width:24px;height:1px;background:var(--border);flex-shrink:0;margin-bottom:18px}
+.step-line.done{background:var(--gold)}
+.step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:60px;cursor:pointer;transition:.3s}
+.step-dot span{width:32px;height:32px}
+.form-step{display:none;animation:stepFadeIn .4s ease both}
+.form-step.active{display:block}
+@keyframes stepFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-title{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:6px}
+.step-desc{font-size:10px;color:var(--muted);margin-bottom:24px;line-height:1.8}
+.pkg-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pkg-pick{position:relative;padding:24px 16px;border:2px solid var(--border);border-radius:8px;cursor:pointer;transition:.35s;background:#fff;text-align:center}
+.pkg-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px)}
+.pkg-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.06)}
+.pkg-pick.featured::before{content:"ƏN POPULYAR";position:absolute;top:-1px;left:0;right:0;padding:5px;font-size:7px;font-weight:700;letter-spacing:2px;text-align:center;background:var(--gold);color:var(--dark);border-radius:6px 6px 0 0}
+.pkg-pick.featured{padding-top:36px}
+.pkg-pick-name{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:var(--dark)}
+.pkg-pick-price{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;color:var(--gold);margin-top:4px}
+.pkg-pick-price small{font-size:11px;font-family:"DM Sans",sans-serif;color:var(--muted)}
+.pkg-pick-tagline{font-size:9px;color:var(--muted);margin-top:6px}
+.pkg-pick-features{margin-top:12px;text-align:left}
+.pkg-pick-feat{font-size:9px;color:var(--text);padding:3px 0;display:flex;align-items:center;gap:6px}
+.pkg-pick-feat::before{content:"✓";color:var(--gold);font-size:8px;font-weight:700}
+.step-nav{display:flex;align-items:center;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.preview-summary{background:rgba(245,237,227,.4);border:1px solid var(--border);border-radius:8px;padding:24px}
+.preview-summary h4{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:16px}
+.preview-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:10px}
+.preview-row-label{color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.preview-row-value{color:var(--dark);font-weight:500}
+@media(max-width:720px){
+    .navbar{width:min(1100px,94%);padding:0 18px}
+    .nav-links{display:none}
+    .menu-toggle{display:flex;align-items:center;justify-content:center}
+    .hero{padding:130px 6% 16px}
+    .hero h1{font-size:clamp(36px,10vw,56px)}
+    .form-card{padding:24px;border-radius:20px}
+    .form-grid{grid-template-columns:1fr;gap:16px}
+    .form-actions{flex-direction:column}
+    .pkg-picker{grid-template-columns:1fr}
+    .step-dot label{display:none}
+    .template-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+    .tpl-card-info h4{font-size:12px}
+    .result-card{padding:36px 24px}
+    .result-actions{flex-direction:column}
+    .result-actions .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="site-bg"></div>
+<div class="floating-orb orb-1"></div>
+<div class="floating-orb orb-2"></div>
+
+<nav class="navbar" id="navbar">
+  <a class="logo" href="../index.html">Luna</a>
+  <div class="nav-links">
+    <a href="../index.html" data-i18n="navHome">Ana səhifə</a>
+    <a href="../invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+    <a href="../pricing.html" data-i18n="navPricing">Qiymətlər</a>
+  </div>
+  <div class="languages">
+    <button data-lang="az" class="active">AZ</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="ru">RU</button>
+    <button data-lang="tr">TR</button>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html" data-i18n="navHome">Ana səhifə</a>
+  <a href="../invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
+  <a href="../pricing.html" data-i18n="navPricing">Qiymətlər</a>
+  <div class="mobile-languages">
+    <button data-lang="az" class="active">AZ</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="ru">RU</button>
+    <button data-lang="tr">TR</button>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Körpə Partisi Dəvətnaməsi</div>
+      <h1>Balaca mələyimizi<br>qarşılayırıq!</h1>
+      <p class="hero-desc">Valideyn adları və körpə partisi məlumatlarını əlavə edin.</p>
+      <div class="meta-pills">
+        <span class="pill" id="pillDesign">—</span>
+        <span class="pill" id="pillPackage">—</span>
+        <span class="pill" id="pillCategory">Körpə Partisi</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-wrap">
+      <div class="step-indicator" id="stepIndicator">
+        <div class="step-dot active" data-step="1"><span>1</span><label>Paket</label></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="2"><span>2</span><label>Dizayn</label></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="3"><span>3</span><label>Təfərrüatlar</label></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="4"><span>4</span><label>Şəkillər</label></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="5"><span>5</span><label>Preview</label></div>
+      </div>
+
+      <form id="invitationForm" class="form-card" novalidate>
+        <div class="form-step active" id="formStep1">
+          <h3 class="step-title">Paket seçin</h3>
+          <p class="step-desc">Lazimi funksiyaları daxil edən paketi seçin</p>
+          <div class="pkg-picker" id="pkgPicker"></div>
+        </div>
+        <div class="form-step" id="formStep2">
+          <h3 class="step-title">Dizayn seçin</h3>
+          <p class="step-desc">Bəyəndiyiniz dəvətnamə dizaynını seçin</p>
+          <div class="template-grid" id="templateGrid"></div>
+          <input type="hidden" id="selectedTemplate" name="template" value="">
+        </div>
+        <div class="form-step" id="formStep3">
+          <h3 class="step-title">Təfərrüatlar</h3>
+          <p class="step-desc">Dəvətnamənizin məlumatlarını doldurun</p>
+          <div class="form-grid" id="formGrid"></div>
+        </div>
+        <div class="form-step" id="formStep4">
+          <h3 class="step-title">Şəkillər və musiqi</h3>
+          <p class="step-desc">Qalereya şəkilləri və fon musiqisi əlavə edin</p>
+          <div class="form-grid" id="mediaGrid"></div>
+        </div>
+        <div class="form-step" id="formStep5">
+          <h3 class="step-title">Önizləmə</h3>
+          <p class="step-desc">Dəvətnamənizi nəzərdən keçirin və yaradın</p>
+          <div class="preview-summary" id="previewSummary"></div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-ghost" type="button" id="stepBack" style="display:none">← Geri</button>
+          <div style="flex:1"></div>
+          <button class="btn btn-primary" type="button" id="stepNext">Davam et →</button>
+          <button class="btn btn-primary" type="submit" id="stepSubmit" style="display:none" data-i18n="formSubmit">Dəvətnaməni yarat</button>
+        </div>
+      </form>
+
+      <div class="result-card" id="resultCard">
+        <div class="result-icon">&#10003;</div>
+        <h2 data-i18n="formReady">Hazırdır.</h2>
+        <p data-i18n="formReadyDesc">Bu linki qonaqlarınızla paylaşın.</p>
+        <a class="result-link" id="generatedLink" href="#" target="_blank"></a>
+        <div class="result-actions">
+          <button class="btn btn-primary" type="button" onclick="copyLink()">
+            <span data-i18n="formCopyLink">Linki kopyala</span>
+          </button>
+          <a class="btn btn-ghost" id="openLink" href="#" target="_blank" data-i18n="formOpenLink">Dəvətnaməni aç</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="../data/luna.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/form-engine.js"></script>
+<script>
+lunaFormEngine({category:'baby-shower',defaultDesign:'sweet-arrival',fields:[{name:'parentName',type:'text',label:'Valideyn adı',required:true,col:'half',placeholder:'Valideyn adı',forPackages:['video','basic','premium','luxury']},{name:'babyName',type:'text',label:'Körpə adı (opsional)',col:'half',placeholder:'Körpə adı',forPackages:['video','basic','premium','luxury']},{name:'dueDate',type:'date',label:'Gözlənilən doğum tarixi',col:'half',forPackages:['premium','luxury']}],messagePlaceholder:'Körpəmizin gəlişini birlikdə qeyd edək...',buildId:function(v){return{primaryName:v.parentName||v.babyName,invitationId:lunaCreateSlug(v.parentName||v.babyName)}},buildData:function(d,v){d.parentName=v.parentName;d.babyName=v.babyName||'';d.dueDate=v.dueDate||''}});
+</script>
+</body>
+</html>

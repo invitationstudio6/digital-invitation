@@ -464,16 +464,16 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
 <section class="hero" id="home">
     <div class="particles" id="particles"></div>
     <div class="hero-floats">
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="Invitation"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Invitation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="Invitation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80" alt="Invitation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=400&q=80" alt="Invitation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="Invitation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=400&q=80'"></div>
     </div>
     <div class="hero-content">
         <div class="hero-label" data-i18n="heroLabel">Digital dəvətnamələr</div>
         <h1><span class="hero-gradient" data-i18n="heroTitle">gözəl anlar,<br>gözəl dəvətlərlə</span><span data-i18n="heroSubtitle">hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
-        <p class="hero-text" data-i18n="heroText">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın.</p>
+        <p class="hero-text" data-i18n="heroText">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın. Hər dəvətnamə bir hekayə danışır — sizin hekayəniz.</p>
         <div class="hero-buttons">
             <a href="invitations.html" class="btn btn-dark" data-i18n="heroCTA1">Dəvətnamələrə bax</a>
             <a href="#categories" class="btn btn-light" data-i18n="heroCTA2">Dəvətnaməni yarat</a>
@@ -906,13 +906,58 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
 })();
 
+/* ===== GET ALL TEMPLATES (data.js + localStorage admin designs + custom templates) ===== */
+function _getAllTemplates() {
+    var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.slice() : [];
+    try {
+        var adminDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
+        if (Array.isArray(adminDesigns)) {
+            adminDesigns.forEach(function(d) {
+                if (d && d.id && d.name) {
+                    templates.push({
+                        id: d.id,
+                        name: d.name,
+                        category: d.category || "other",
+                        style: d.style || "",
+                        thumbnail: d.thumbnail || d.image || "",
+                        cover: d.cover || d.thumbnail || d.image || "",
+                        minPackage: d.minPackage || d.package || "basic",
+                        packages: d.packages || [d.minPackage || d.package || "basic"],
+                        preview: d.preview || null
+                    });
+                }
+            });
+        }
+        var customTemplates = JSON.parse(localStorage.getItem("luna_custom_templates") || "[]");
+        if (Array.isArray(customTemplates)) {
+            customTemplates.forEach(function(t) {
+                if (t && t.id && t.name && t.active !== false) {
+                    templates.push({
+                        id: t.id,
+                        name: t.name,
+                        category: t.category || "other",
+                        style: t.style || "",
+                        thumbnail: t.thumbnail || t.cover || "",
+                        cover: t.cover || t.thumbnail || "",
+                        minPackage: (t.packages && t.packages[0]) || "basic",
+                        packages: t.packages || ["basic"],
+                        preview: t.preview || null
+                    });
+                }
+            });
+        }
+    } catch(e) {}
+    return templates;
+}
+
 /* ===== RENDER TEMPLATES ===== */
 function renderTemplates(filter) {
     var grid = document.getElementById("designsGrid");
     if (!grid || typeof LUNA_TEMPLATES === "undefined") return;
     grid.innerHTML = "";
     filter = filter || "all";
-    var filtered = filter === "all" ? LUNA_TEMPLATES : LUNA_TEMPLATES.filter(function(t) { return t.category === filter; });
+    var allTemplates = _getAllTemplates();
+    var filtered = filter === "all" ? allTemplates : allTemplates.filter(function(t) { return t.category === filter; });
 
     filtered.forEach(function(tpl, idx) {
         var card = document.createElement("div");
@@ -935,7 +980,7 @@ function renderTemplates(filter) {
             '</div>' +
             '<div class="design-thumb-actions">' +
                 '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
-                '<a href="client-form.html?design=' + tpl.id + '&package=' + tpl.minPackage + '&category=' + tpl.category + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
+                '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
             '</div>';
 
         grid.appendChild(card);
@@ -1098,7 +1143,7 @@ function renderModalPreview() {
     }
 
     // CTA link
-    var formLink = "client-form.html?design=" + tpl.id + "&package=" + _mCurrentPkg + "&category=" + tpl.category;
+    var formLink = "form/" + tpl.category + ".html?design=" + tpl.id + "&package=" + _mCurrentPkg;
     document.getElementById("modalFormLink").href = formLink;
 }
 
@@ -1180,7 +1225,7 @@ document.addEventListener("keydown", function(e) {
 function renderCatCollection(catId, gridId, limit) {
     var grid = document.getElementById(gridId);
     if (!grid || typeof LUNA_TEMPLATES === "undefined") return;
-    var templates = LUNA_TEMPLATES.filter(function(t) { return t.category === catId; }).slice(0, limit || 4);
+    var templates = _getAllTemplates().filter(function(t) { return t.category === catId; }).slice(0, limit || 4);
     grid.innerHTML = "";
     templates.forEach(function(tpl) {
         var card = document.createElement("div");
@@ -1197,7 +1242,7 @@ function renderCatCollection(catId, gridId, limit) {
             '</div>' +
             '<div class="cat-col-card-actions">' +
                 '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
-                '<a href="client-form.html?design=' + tpl.id + '&package=' + tpl.minPackage + '&category=' + tpl.category + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
+                '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
             '</div>';
         grid.appendChild(card);
     });

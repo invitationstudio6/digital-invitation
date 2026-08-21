@@ -15,7 +15,7 @@ const LUNA_CATEGORIES = [
     {
         id: "engagement",
         icon: "💍",
-        image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=85",
+        image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=85",
         description: { az: "Birlikdə yolculuğunuzun başlanğıcı", en: "The beginning of your journey together", ru: "Начало вашего совместного пути", tr: "Birlikte yolculuğunuzun başlangıcı" },
         count: 0
     },
@@ -183,6 +183,7 @@ const LUNA_PACKAGES = [
 const LUNA_TEMPLATES = [
     {
         id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik", galleryStyle: "masonry", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -190,6 +191,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "amour", name: "Amour", category: "wedding", style: "Romantik · Klassik", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -197,6 +199,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "noir", name: "Noir", category: "wedding", style: "Lüks · Kinematik", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -204,6 +207,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "serena", name: "Serena", category: "wedding", style: "Lavanda · Zərif", galleryStyle: "polaroid", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -211,13 +215,15 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "garden", name: "Italian Garden", category: "wedding", style: "Baq · Təbiət", galleryStyle: "collage", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Günel", "Samir"], date: "28 · 06 · 2026", message: "Təbiətin qoynunda, çiçəklərin ətrində birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Quba, Azərbaycan", theme: "default" }
     },
     {
         id: "editorial", name: "Editorial Love", category: "wedding", style: "Foto · Redaksiya", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -225,6 +231,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "luxe-gold", name: "Luxe Gold", category: "wedding", style: "Lüks · Qızıl", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -232,6 +239,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "velvet-rose", name: "Velvet Rose", category: "wedding", style: "Zərif · Çəhrayı", galleryStyle: "masonry", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -239,6 +247,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "minimal-white", name: "Minimal White", category: "wedding", style: "Minimal · Ağ", galleryStyle: "slider", openingStyle: "minimal-reveal",
+        animationStyle: "minimal",
         thumbnail: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -246,6 +255,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "vintage-romance", name: "Vintage Romance", category: "wedding", style: "Vintage · Romantic", galleryStyle: "polaroid", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -253,6 +263,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "black-gold", name: "Black & Gold", category: "wedding", style: "Qara · Qızıl", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -260,6 +271,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "soft-blush", name: "Soft Blush", category: "wedding", style: "Zərif · Çəhrayı", galleryStyle: "masonry", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -267,13 +279,15 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "botanical", name: "Botanical", category: "wedding", style: "Botanik · Yaşıl", galleryStyle: "collage", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1470723710355-95304d8aece4?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Ülviyyə", "Murad"], date: "19 · 05 · 2026", message: "Yaşıl yarpaqların arasında, təbiətin qucağında birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Şamaxı, Azərbaycan", theme: "default" }
     },
     {
         id: "modern-classic", name: "Modern Classic", category: "wedding", style: "Müasir · Klassik", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -281,6 +295,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "enchanted", name: "Enchanted", category: "wedding", style: "Sehirli · Romantik", galleryStyle: "masonry", openingStyle: "fullscreen-photo",
+        animationStyle: "romantic",
         thumbnail: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -288,13 +303,15 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "classic", name: "Classic", category: "engagement", style: "Klassik · Sadə", galleryStyle: "editorial", openingStyle: "envelope",
-        thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "minimal",
+        thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "NİŞAN DƏVƏTNAMƏSİ", names: ["Aygun", "Fərid"], date: "22 · 08 · 2026", message: "Birlikdə addımlayacağımız yeni həyatımızın başlanğıcında sizinlə bölüşmək istəyirik.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
         id: "romantic-bloom", name: "Romantic Bloom", category: "engagement", style: "Romantik · Çiçəkli", galleryStyle: "masonry", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -302,6 +319,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "elegant-pearl", name: "Elegant Pearl", category: "engagement", style: "Zərif · Inci", galleryStyle: "polaroid", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1545232979-8bf9822d6622?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1545232979-8bf9822d6622?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -309,6 +327,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "modern-chic", name: "Modern Chic", category: "engagement", style: "Müasir · Şik", galleryStyle: "grid", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -316,6 +335,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "soft-rose", name: "Soft Rose", category: "engagement", style: "Zərif · Gül", galleryStyle: "masonry", openingStyle: "floral-reveal",
+        animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -323,6 +343,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "florence", name: "Florence", category: "birthday", style: "Şən · Rəngli", galleryStyle: "collage", openingStyle: "fullscreen-photo",
+        animationStyle: "modern",
         thumbnail: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -330,6 +351,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "blossom", name: "Blossom", category: "birthday", style: "Video · Animasiyalı", galleryStyle: "grid", openingStyle: "fullscreen-photo",
+        animationStyle: "modern",
         thumbnail: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=90",
         minPackage: "video", packages: ["video"],
@@ -337,6 +359,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "elegant-birthday", name: "Elegant Birthday", category: "birthday", style: "Zərif · Ad Günü", galleryStyle: "editorial", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -344,6 +367,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "luxury-birthday", name: "Luxury Birthday", category: "birthday", style: "Lüks · Ziyafət", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -351,6 +375,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "kids-party", name: "Kids Party", category: "birthday", style: "Uşaq · Şən", galleryStyle: "collage", openingStyle: "fullscreen-photo",
+        animationStyle: "modern",
         thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -358,6 +383,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "aurora", name: "Aurora", category: "graduation", style: "Akademik · Zərif", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -365,6 +391,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "modern-grad", name: "Modern Grad", category: "graduation", style: "Müasir · Məzuniyyət", galleryStyle: "grid", openingStyle: "minimal-reveal",
+        animationStyle: "minimal",
         thumbnail: "https://images.unsplash.com/photo-1627556704190-316a4b57b649?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1627556704190-316a4b57b649?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -372,27 +399,31 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "luxury-grad", name: "Luxury Grad", category: "graduation", style: "Lüks · Akademik", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "luxury",
+        thumbnail: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "MƏZUNİYYƏT ZİYAFƏTİ", names: ["Elçin"], date: "20 · 06 · 2026", message: "Uğurlu bir yolculuğun sonunda, ən gözəl nailiyyətimi qeyd edirəm.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
         id: "sweet-arrival", name: "Sweet Arrival", category: "baby-shower", style: "Şirin · Körpə", galleryStyle: "polaroid", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "KÖRPƏ MƏCLİSİ", names: ["Leyla"], date: "05 · 08 · 2026", message: "Balaca mələyimizi qarşılamağa hazırlaşırıq. Sizi də dəvət edirik!", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
         id: "little-prince", name: "Little Prince", category: "baby-shower", style: "Şahzadə · Zərif", galleryStyle: "editorial", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "BALACA ŞAHZADƏ", names: ["Elvin"], date: "18 · 09 · 2026", message: "Balaca şahzadəmizin gəlişini qeyd etməyə hazırlanırıq.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
         id: "executive", name: "Executive", category: "business", style: "Korporativ · Peşəkar", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "business",
         thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -400,6 +431,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "conference", name: "Conference", category: "business", style: "Konfrans · Rəsmi", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "business",
         thumbnail: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -407,13 +439,40 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "networking", name: "Networking", category: "business", style: "Şəbəkə · Müasir", galleryStyle: "grid", openingStyle: "minimal-reveal",
+        animationStyle: "business",
         thumbnail: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ŞƏBƏKƏ GECƏSİ", names: ["Baku Business Club"], date: "08 · 10 · 2026", message: "Yeni tanışlıqlar və iş imkanları üçün şəbəkə gecəsinə dəvət edirik.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
+    /* ===== DIGITAL BUSINESS CARDS ===== */
+    {
+        id: "digital-card", name: "Digital Business Card", category: "business", style: "Digital · Vizit Kart", galleryStyle: "grid", openingStyle: "minimal-reveal",
+        animationStyle: "business",
+        thumbnail: "https://images.unsplash.com/photo-1563986768609-322da13575f2?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1563986768609-322da13575f2?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        preview: { eyebrow: "DIGITAL VİZİT KART", names: ["Əli Həsənov"], date: "", message: "Mənimlə əlaqə saxlayın. Bütün məlumatlarım bir toxunuşda.", venue: "Tech Corp", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    {
+        id: "qr-contact", name: "QR Contact Card", category: "business", style: "QR · Əlaqə Kartı", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
+        thumbnail: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        preview: { eyebrow: "QR ƏLAQƏ KARTI", names: ["Luna Studio"], date: "", message: "QR kodu skan edin və bütün məlumatlarımı telefonunuza saxlayın.", venue: "Digital", location: "Azərbaycan", theme: "default" }
+    },
+    {
+        id: "corporate-profile", name: "Corporate Profile", category: "business", style: "Korporativ · Profil", galleryStyle: "editorial", openingStyle: "editorial-reveal",
+        animationStyle: "editorial",
+        thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        preview: { eyebrow: "KORPORATİV PROFİL", names: ["AzTech Holdinqs"], date: "", message: "Şirkətimiz haqqında ətraflı məlumat. Xidmətlərimiz, əlaqə və daha çoxu.", venue: "Bakı, Azərbaycan", location: "Bakı", theme: "default" }
+    },
     {
         id: "oriental", name: "Oriental Henna", category: "henna", style: "Şərqi · Lüks", galleryStyle: "masonry", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -421,13 +480,15 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "traditional-henna", name: "Traditional Henna", category: "henna", style: "Ənənəvi · Klassik", galleryStyle: "collage", openingStyle: "floral-reveal",
-        thumbnail: "https://images.unsplash.com/photo-1611028224278-005e2a0b8ba3?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1611028224278-005e2a0b8ba3?auto=format&fit=crop&w=1800&q=90",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
         preview: { eyebrow: "ƏNƏNƏVİ XINA GECƏSİ", names: ["Günay"], date: "20 · 08 · 2026", message: "Ənənəvi xına gecəmizdə sizinlə birlikdə rəqs edib, əylənəcəyik.", venue: "İçərişəhər Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
         id: "anniversary", name: "Anniversary", category: "other", style: "İldönüm · Zərif", galleryStyle: "masonry", openingStyle: "envelope",
+        animationStyle: "romantic",
         thumbnail: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -435,6 +496,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "celebration", name: "Celebration", category: "other", style: "Celebration · Şən", galleryStyle: "collage", openingStyle: "fullscreen-photo",
+        animationStyle: "modern",
         thumbnail: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
@@ -443,6 +505,7 @@ const LUNA_TEMPLATES = [
     /* ===== INTERACTIVE EXPERIENCES ===== */
     {
         id: "venue-journey", name: "Venue Journey", category: "wedding", style: "Kinematik · Interaktiv", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
         thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
@@ -493,6 +556,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "envelope-reveal", name: "Envelope Reveal", category: "wedding", style: "Zərif · Klassik", galleryStyle: "editorial", openingStyle: "elegant",
+        animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -533,6 +597,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "party-journey", name: "Party Journey", category: "birthday", style: "Şən · İnteraktiv", galleryStyle: "collage", openingStyle: "fullscreen-photo",
+        animationStyle: "modern",
         thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
@@ -572,6 +637,7 @@ const LUNA_TEMPLATES = [
     },
     {
         id: "conference-journey", name: "Conference Journey", category: "business", style: "Korporativ · İnteraktiv", galleryStyle: "grid", openingStyle: "minimal",
+        animationStyle: "business",
         thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],

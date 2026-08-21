@@ -432,7 +432,7 @@ button{
 
     <div class="panel">
         <h2>Toplu Yükləmə (Canva)</h2>
-        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin.</p>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin. Yüklənən dizaynlar ana səhifədə və dəvətnamələr bölməsində görünəcək.</p>
         <div class="form-grid">
             <div class="field full"><label>Şəkilləri seçin</label><div class="file-box"><input id="bulkCover" type="file" accept="image/*" multiple></div></div>
             <div class="field"><label>Kateqoriya</label><select id="bulkCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
@@ -706,7 +706,7 @@ function getCustomers(){
     for(var i = 0; i < localStorage.length; i++){
         var key = localStorage.key(i);
         if(!key.startsWith('luna_')) continue;
-        if(key === 'luna_last_invitation' || key === 'lunaLanguage' || key === 'luna_designs' || key === 'luna_video_invitations' || key.startsWith('luna_rsvp_')) continue;
+        if(key === 'luna_last_invitation' || key === 'lunaLanguage' || key === 'luna_designs' || key === 'luna_video_invitations' || key === 'luna_seeded_v1' || key.startsWith('luna_rsvp_')) continue;
         try {
             var data = JSON.parse(localStorage.getItem(key));
             if(data && data.id) customers.push(data);
@@ -1420,11 +1420,109 @@ function deleteTemplate(id){
 
 
 /* =====================================================
-   INIT
+   SAMPLE DATA SEEDING
+===================================================== */
+
+function renderRsvps() {
+    document.getElementById("statRsvps").textContent = totalCountRsvps();
+}
+
+function seedSampleData() {
+    var seeded = localStorage.getItem("luna_seeded_v1");
+    if (seeded) return;
+
+    var samples = [
+        {
+            id: "aysel-murad", package: "luxury", category: "wedding", design: "amelia",
+            bride: "Aysel", groom: "Murad",
+            date: "2026-09-12", dateShort: "12 · 09 · 2026", time: "19:00",
+            venue: "Crystal Hall", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-09-12T19:00:00",
+            message: "Bəzi hekayələr kitablarda yazılır. Bizimki isə kiçik anlarda yazıldı.",
+            images: ["https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"],
+            createdAt: Date.now()
+        },
+        {
+            id: "aygun-farid", package: "premium", category: "engagement", design: "classic",
+            bride: "Aygun", groom: "Fərid",
+            date: "2026-08-22", dateShort: "22 · 08 · 2026", time: "18:00",
+            venue: "Park Hyatt", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-08-22T18:00:00",
+            message: "Nişan mərasimimizə dəvət edirik.",
+            createdAt: Date.now() - 1000
+        },
+        {
+            id: "nihat-birthday", package: "premium", category: "birthday", design: "florence",
+            celebrant: "Nicat", age: "30",
+            date: "2026-12-25", dateShort: "25 · 12 · 2026", time: "20:00",
+            venue: "Boulevard Hotel", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-12-25T20:00:00",
+            message: "30 yaşın qeydini sizinlə bölüşmək istəyirəm!",
+            createdAt: Date.now() - 2000
+        },
+        {
+            id: "ali-graduation", package: "premium", category: "graduation", design: "aurora",
+            graduate: "Ali", school: "ADA Universiteti", degree: "Magistr",
+            date: "2026-06-30", dateShort: "30 · 06 · 2026", time: "15:00",
+            venue: "ADA Universiteti", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-06-30T15:00:00",
+            message: "Məzuniyyət sevincini sizinlə bölüşmək istəyirəm.",
+            createdAt: Date.now() - 3000
+        },
+        {
+            id: "aztech-conference", package: "luxury", category: "business", design: "conference",
+            companyName: "AzTech Holdinqs", eventName: "İllik Konfrans",
+            eventType: "konfrans", hostName: "Əli Həsənov",
+            agenda: "10:00 — Qeydiyyat | 10:30 — Açılış | 11:00 — Prezentasiya",
+            date: "2026-11-28", dateShort: "28 · 11 · 2026", time: "10:00",
+            venue: "Bakı Kongres Mərkəzi", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-11-28T10:00:00",
+            message: "Sizi Şirkətimizin 2026-cı il yekun konfransına dəvət edirik.",
+            createdAt: Date.now() - 4000
+        },
+        {
+            id: "aysel-henna", package: "premium", category: "henna", design: "oriental",
+            bride: "Aysel", groom: "Rəşad",
+            date: "2026-10-18", dateShort: "18 · 10 · 2026", time: "19:00",
+            venue: "Şərq Sarayı", location: "Bakı, Azərbaycan",
+            map: "https://www.google.com/maps",
+            countdown: "2026-10-18T19:00:00",
+            message: "Xınasında birlikdə rəqs edək.",
+            createdAt: Date.now() - 5000
+        }
+    ];
+
+    samples.forEach(function(s) {
+        localStorage.setItem("luna_" + s.id, JSON.stringify(s));
+    });
+
+    /* Also seed sample designs into luna_designs so they appear in admin */
+    var sampleDesigns = [
+        { id: 1001, name: "Amelia (Nümunə)", category: "wedding", package: "luxury", style: "Floral · Romantik", description: "Toy dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85", url: "templates/wedding/amelia.html" },
+        { id: 1002, name: "Classic (Nümunə)", category: "engagement", package: "premium", style: "Klassik · Sadə", description: "Nişan dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85", url: "templates/classic.html" },
+        { id: 1003, name: "Florence (Nümunə)", category: "birthday", package: "premium", style: "Şən · Rəngli", description: "Ad günü dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85", url: "templates/birthday/classic.html" },
+        { id: 1004, name: "Aurora (Nümunə)", category: "graduation", package: "premium", style: "Akademik · Zərif", description: "Məzuniyyət dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=85", url: "templates/classic.html" },
+        { id: 1005, name: "Conference (Nümunə)", category: "business", package: "luxury", style: "Konfrans · Rəsmi", description: "Biznes konfrans dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85", url: "templates/classic.html" },
+        { id: 1006, name: "Oriental Henna (Nümunə)", category: "henna", package: "premium", style: "Şərqi · Lüks", description: "Xına gecəsi dəvətnaməsi nümunəsi", image: "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=600&q=85", url: "templates/henna/henna.html" }
+    ];
+    localStorage.setItem("luna_designs", JSON.stringify(sampleDesigns));
+    localStorage.setItem("luna_seeded_v1", "1");
+}
+
+/* =====================================================
+    INIT
 ===================================================== */
 
 lunaInitLanguage();
+seedSampleData();
 renderDashboard();
+renderCustomers();
+renderRsvps();
 
 </script>
 
