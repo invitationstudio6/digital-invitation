@@ -858,29 +858,51 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
 });
 
-/* ===== RENDER CATEGORIES ===== */
+/* ===== RENDER CATEGORIES — Editorial Collection Cards ===== */
 (function renderCategories() {
     var grid = document.getElementById("categoriesGrid");
     if (!grid || typeof LUNA_CATEGORIES === "undefined") return;
     grid.innerHTML = "";
-    LUNA_CATEGORIES.forEach(function(cat) {
+    LUNA_CATEGORIES.forEach(function(cat, idx) {
         var card = document.createElement("a");
         card.href = "invitations.html?category=" + cat.id;
         card.className = "category-card";
+        card.setAttribute("data-cat", cat.id);
+        card.style.animationDelay = (idx * 0.08) + "s";
+
         var desc = (cat.description && cat.description[LUNA_LANG]) || (cat.description && cat.description.az) || "";
+        var tagline = (cat.tagline && cat.tagline[LUNA_LANG]) || (cat.tagline && cat.tagline.az) || "";
         var catName = lunaCategoryName(cat.id);
+        var pal = cat.palette || {};
+        var typo = cat.typography || {};
+
+        /* Inject per-category CSS custom properties */
+        card.style.setProperty("--cat-bg", pal.bg || "#F5EDE3");
+        card.style.setProperty("--cat-accent", pal.accent || "#C4A882");
+        card.style.setProperty("--cat-text", pal.text || "#3E2518");
+        card.style.setProperty("--cat-muted", pal.muted || "#8A6E5E");
+        card.style.setProperty("--cat-gradient", pal.gradient || "linear-gradient(135deg, #F5EDE3, #EDE3D5)");
+        card.style.setProperty("--cat-heading-font", typo.heading || "'Cormorant Garamond', serif");
+        card.style.setProperty("--cat-body-font", typo.body || "'DM Sans', sans-serif");
+        card.style.setProperty("--cat-accent-font", typo.accent || "'Italiana', serif");
+
         card.innerHTML =
-            '<img class="category-card-img" src="' + cat.image + '" alt="' + catName + '" loading="lazy">' +
+            '<div class="cat-card-img-wrap">' +
+                '<img class="category-card-img" src="' + cat.image + '" alt="' + catName + '" loading="lazy">' +
+                '<div class="cat-card-gradient"></div>' +
+            '</div>' +
             '<div class="category-card-overlay"></div>' +
+            '<div class="cat-card-deco"></div>' +
             '<div class="category-card-body">' +
                 '<div class="category-card-icon">' + cat.icon + '</div>' +
-                '<h3>' + catName + '</h3>' +
-                '<p>' + desc + '</p>' +
+                '<h3 style="font-family:' + (typo.heading || "'Cormorant Garamond', serif") + '">' + catName + '</h3>' +
+                '<p class="cat-tagline" style="font-family:' + (typo.accent || "'Italiana', serif") + '">' + tagline + '</p>' +
+                '<p class="cat-desc">' + desc + '</p>' +
                 '<span class="category-card-count">' + cat.count + ' ' + lunaT("navInvitations") + '</span>' +
             '</div>' +
             '<div class="category-card-bottom">' +
-                '<h4>' + catName + '</h4>' +
-                '<p>' + desc + '</p>' +
+                '<h4 style="font-family:' + (typo.heading || "'Cormorant Garamond', serif") + '">' + catName + '</h4>' +
+                '<p>' + tagline + '</p>' +
                 '<span class="explore-link">' + lunaT("catExplore") + '</span>' +
             '</div>';
         grid.appendChild(card);
