@@ -219,9 +219,10 @@ function lunaFormEngine(config) {
                     featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
                 }
             });
+            var catPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, pkg.id) : pkg.price;
             card.innerHTML =
                 '<div class="pkg-pick-name">' + pkg.name + '</div>' +
-                '<div class="pkg-pick-price">' + pkg.price + ' <small>' + pkg.currency + '</small></div>' +
+                '<div class="pkg-pick-price">' + catPrice + ' <small>' + pkg.currency + '</small></div>' +
                 '<div class="pkg-pick-tagline">' + tagline + '</div>' +
                 '<div class="pkg-pick-features">' + featsHtml + '</div>';
             card.addEventListener("click", function() {
@@ -265,7 +266,8 @@ function lunaFormEngine(config) {
         var rows = '';
 
         var pkgObj = typeof LUNA_PACKAGES !== "undefined" ? LUNA_PACKAGES.find(function(p) { return p.id === packageName; }) : null;
-        rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + (pkgObj ? pkgObj.price + ' AZN' : '') + '</span></div>';
+        var summaryPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, packageName) : (pkgObj ? pkgObj.price : "");
+        rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + summaryPrice + ' AZN</span></div>';
 
         var tplId = document.getElementById("selectedTemplate") ? document.getElementById("selectedTemplate").value : "";
         var tplObj = typeof LUNA_TEMPLATES !== "undefined" ? LUNA_TEMPLATES.find(function(t) { return t.id === tplId; }) : null;
@@ -391,6 +393,31 @@ function lunaFormEngine(config) {
                 } catch (err) {
                     data.images = fromText.length ? fromText : defaultImages;
                     lunaSaveInvitation(data);
+                }
+
+                /* Notify Luna admin via Formspree (non-blocking) */
+                if (typeof lunaNotifyOrder === "function") {
+                    var order = {
+                        category: category,
+                        package: packageName,
+                        design: design,
+                        id: data.id,
+                        bride: data.bride || "",
+                        groom: data.groom || "",
+                        celebrant: data.celebrant || "",
+                        graduate: data.graduate || "",
+                        companyName: data.companyName || "",
+                        eventName: data.eventName || "",
+                        parentName: data.parentName || "",
+                        date: data.date || "",
+                        time: data.time || "",
+                        venue: data.venue || "",
+                        location: data.location || "",
+                        message: data.message || "",
+                        contact: data.contact || "",
+                        website: data.website || ""
+                    };
+                    lunaNotifyOrder(order);
                 }
 
                 var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;

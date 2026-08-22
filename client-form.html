@@ -562,17 +562,16 @@ button,input,textarea,select{font-family:inherit}
     function populateTemplateSelect() {
         var grid = document.getElementById("templateGrid");
         var hidden = document.getElementById("selectedTemplate");
-        var selector = document.getElementById("templateSelector");
         if (!grid || !hidden) return;
         var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : [];
         var filtered = templates.filter(function(t) {
-            return t.category === category && t.packages.indexOf(packageName) !== -1;
+            return t.category === category && (t.packages ? t.packages.indexOf(packageName) !== -1 : true);
         });
         if (filtered.length === 0) {
-            selector.style.display = "none";
+            grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:11px">Bu paket və kateqoriya üçün dizayn yoxdur.</div>';
+            hidden.value = "";
             return;
         }
-        selector.style.display = "";
         grid.innerHTML = "";
         var currentDesign = design || (filtered[0] && filtered[0].id) || "";
         hidden.value = currentDesign;
@@ -594,6 +593,7 @@ button,input,textarea,select{font-family:inherit}
                 this.classList.add("selected");
                 hidden.value = this.getAttribute("data-tpl");
                 design = this.getAttribute("data-tpl");
+                designId = this.getAttribute("data-tpl");
                 var pillEl = document.getElementById("pillDesign");
                 if (pillEl) pillEl.textContent = t.name;
             });
@@ -674,6 +674,20 @@ button,input,textarea,select{font-family:inherit}
             document.getElementById("pillCategory").textContent = catName;
         }
 
+        // Reset design to first matching template for the newly selected category
+        var tpls = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.filter(function(t) { return t.category === category; }) : [];
+        if (tpls.length) {
+            design = tpls[0].id;
+            designId = tpls[0].id;
+            var pillEl = document.getElementById("pillDesign");
+            if (pillEl) pillEl.textContent = tpls[0].name;
+        }
+
+        // Re-render category-specific form fields and template list
+        renderForm();
+        applyVisibility();
+        populateTemplateSelect();
+
         setTimeout(function() { goToStep(2); }, 300);
     });
 
@@ -693,9 +707,10 @@ button,input,textarea,select{font-family:inherit}
                     featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
                 }
             });
+            var catPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, pkg.id) : pkg.price;
             card.innerHTML =
                 '<div class="pkg-pick-name">' + pkg.name + '</div>' +
-                '<div class="pkg-pick-price">' + pkg.price + ' <small>' + pkg.currency + '</small></div>' +
+                '<div class="pkg-pick-price">' + catPrice + ' <small>' + pkg.currency + '</small></div>' +
                 '<div class="pkg-pick-tagline">' + tagline + '</div>' +
                 '<div class="pkg-pick-features">' + featsHtml + '</div>';
             card.addEventListener("click", function() {
@@ -768,6 +783,13 @@ button,input,textarea,select{font-family:inherit}
     renderForm();
     applyVisibility();
     populateTemplateSelect();
+
+    // Mark the pre-selected category visually on load
+    (function markInitialCategory() {
+        var pick = document.querySelector('.cat-pick[data-cat="' + category + '"]');
+        if (pick) pick.classList.add("selected");
+    })();
+
     goToStep(1);
 
     // Override lunaSetLanguage to also re-apply extra labels
@@ -951,6 +973,30 @@ button,input,textarea,select{font-family:inherit}
                         data.images = fromText.length ? fromText : defaultImages;
                         lunaSaveInvitation(data);
                         alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
+                    }
+
+                    /* Notify Luna admin via Formspree (non-blocking) */
+                    if (typeof lunaNotifyOrder === "function") {
+                        lunaNotifyOrder({
+                            category: data.category,
+                            package: data.package,
+                            design: data.design,
+                            id: data.id,
+                            bride: data.bride || "",
+                            groom: data.groom || "",
+                            celebrant: data.celebrant || "",
+                            graduate: data.graduate || "",
+                            companyName: data.companyName || "",
+                            eventName: data.eventName || "",
+                            parentName: data.parentName || "",
+                            date: data.date || "",
+                            time: data.time || "",
+                            venue: data.venue || "",
+                            location: data.location || "",
+                            message: data.message || "",
+                            contact: data.contact || "",
+                            website: data.website || ""
+                        });
                     }
 
                     /* Route to interactive or static viewer */

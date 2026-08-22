@@ -155,6 +155,30 @@ function lunaDeleteInvitation(id) {
     localStorage.removeItem("luna_rsvp_" + id);
 }
 
+/* =====================================================
+   FORMSPREE — SEND ORDER NOTIFICATION TO OWNER EMAIL
+   Accepts a Formspree endpoint (https://formspree.io/f/<id>)
+===================================================== */
+function lunaNotifyOrder(payload, endpoint) {
+    var url = endpoint ||
+        (typeof LUNA_FORMSPREE_ENDPOINT !== "undefined" ? LUNA_FORMSPREE_ENDPOINT : null) ||
+        "https://formspree.io/f/mqpzyklb";
+
+    var body = payload || {};
+    if (!body._subject) {
+        body._subject = "Luna — Yeni sifariş (" + (body.category || body.package || "dəvətnamə") + ")";
+    }
+
+    return fetch(url, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    }).catch(function(err) {
+        /* Never block the customer's flow if email notification fails. */
+        console.warn("Luna Formspree notify failed", err);
+    });
+}
+
 /* Compute date short display: DD · MM · YYYY */
 function lunaDateShort(dateStr) {
     if (!dateStr) return "";

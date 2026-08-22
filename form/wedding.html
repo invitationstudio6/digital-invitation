@@ -684,6 +684,23 @@ button,input,textarea,select{font-family:inherit}
                     lunaSaveInvitation(data);
                 }
 
+                /* Notify Luna admin via Formspree (non-blocking) */
+                if (typeof lunaNotifyOrder === "function") {
+                    lunaNotifyOrder({
+                        category: "wedding",
+                        package: data.package,
+                        design: data.design,
+                        id: data.id,
+                        bride: data.bride || "",
+                        groom: data.groom || "",
+                        date: data.date || "",
+                        time: data.time || "",
+                        venue: data.venue || "",
+                        location: data.location || "",
+                        message: data.message || ""
+                    });
+                }
+
                 var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;
                 var viewerFile = (tplData && tplData.experienceType === "interactive") ? "../data/interactive.html" : "../data/invitation.html";
                 var url = new URL(viewerFile, window.location.href);

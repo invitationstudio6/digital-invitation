@@ -50,7 +50,7 @@ const invitations = {
             "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90"
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90"
         ],
 
         /*
@@ -110,7 +110,7 @@ const invitations = {
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
@@ -169,7 +169,7 @@ const invitations = {
             "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
@@ -224,7 +224,7 @@ const invitations = {
             "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90",
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=90"
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90"
         ],
 
         countdown: "2026-11-05T18:00:00"
@@ -268,8 +268,8 @@ const invitations = {
         `,
 
         images: [
-            "https://images.unsplash.com/photo-1596394723269-e2c2e8a3df3e?auto=format&fit=crop&w=1500&q=90",
-            "https://images.unsplash.com/photo-1611028224278-005e2a0b8ba3?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1500&q=90",
             "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1500&q=90"
         ],
 
