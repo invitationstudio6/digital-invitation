@@ -22,7 +22,7 @@ const LUNA_CATEGORIES = [
     {
         id: "henna",
         icon: "🎶",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=85",
+        image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85",
         description: { az: "Xına gecəniz üçün ənənəvi və müasir dizaynlar", en: "Traditional and modern designs for your henna night", ru: "Традиционные и современные дизайны для хны", tr: "Kına geceniz için geleneksel ve modern tasarımlar" },
         count: 0
     },
@@ -50,7 +50,7 @@ const LUNA_CATEGORIES = [
     {
         id: "business",
         icon: "💼",
-        image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=85",
+        image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=85",
         description: { az: "Korporativ tədbirlər və biznes görüşləri", en: "Corporate events and business gatherings", ru: "Корпоративные мероприятия и деловые встречи", tr: "Kurumsal etkinlikler ve iş toplantıları" },
         count: 0
     },
@@ -424,8 +424,8 @@ const LUNA_TEMPLATES = [
     {
         id: "executive", name: "Executive", category: "business", style: "Korporativ · Peşəkar", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
         animationStyle: "business",
-        thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "BİZNES TƏDBİRİ", names: ["Tech Corp"], date: "25 · 09 · 2026", message: "İlin ən böyük biznes tədbirinə dəvət edirik.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
@@ -473,8 +473,8 @@ const LUNA_TEMPLATES = [
     {
         id: "oriental", name: "Oriental Henna", category: "henna", style: "Şərqi · Lüks", galleryStyle: "masonry", openingStyle: "luxury-reveal",
         animationStyle: "luxury",
-        thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         preview: { eyebrow: "XINA GECƏSİ", names: ["Aysel"], date: "11 · 09 · 2026", message: "Xınamızda sizinlə birlikdə rəqs etmək istəyirik.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
@@ -638,8 +638,8 @@ const LUNA_TEMPLATES = [
     {
         id: "conference-journey", name: "Conference Journey", category: "business", style: "Korporativ · İnteraktiv", galleryStyle: "grid", openingStyle: "minimal",
         animationStyle: "business",
-        thumbnail: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         experienceType: "interactive", interactionType: "clickJourney",
         preview: { eyebrow: "INTERACTIVE EXPERIENCE", names: ["Tech Corp"], date: "25 · 11 · 2026", message: "Korporativ tədbirinizi interaktiv təcrübə ilə təqdim edin.", venue: "Convention Center", location: "Bakı, Azərbaycan", theme: "minimal-white" },
