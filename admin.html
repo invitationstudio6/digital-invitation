@@ -333,6 +333,10 @@ button{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
             <span>Dəvət Yarat</span>
         </a>
+        <a class="sidebar-link" data-section="packages" onclick="switchSection('packages')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Paketlər & Qiymətlər</span>
+        </a>
         <a class="sidebar-link" data-section="clientform" onclick="switchSection('clientform')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             <span>Form Edit</span>
@@ -426,7 +430,10 @@ button{
                 <div class="field"><label>Kateqoriya</label><select id="designCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Paket</label><select id="designPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
                 <div class="field"><label>Stil</label><input id="designStyle" type="text" placeholder="Romantik"></div>
+                <div class="field"><label>Animasiya Növü</label><select id="designAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Video URL (opsional)</label><input id="designVideo" type="url" placeholder="https://.../video.mp4"></div>
                 <div class="field full"><label>Qısa Təsvir</label><textarea id="designDesc" placeholder="Elegant wedding invitation..."></textarea></div>
+                <div class="field full"><label>İllustrasiyalar (şəkil linkləri — hər sətirdə bir)</label><textarea id="designIllustrations" rows="3" placeholder="https://..."></textarea></div>
                 <div class="field full"><label>Örtük Şəkli</label><div class="file-box"><input id="designCover" type="file" accept="image/*" required><img id="designCoverPreview" class="preview-image"></div></div>
                 <div class="field full"><label>Dəvətnamə URL</label><input id="designUrl" type="text" placeholder="templates/wedding/amelia.html"></div>
             </div>
@@ -548,6 +555,13 @@ button{
 
     <div class="panel">
         <h2>Dəvətnamə Məlumatları</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+            <button type="button" class="clear" style="border-color:#b88c76;color:#d4a88f;" onclick="fillInvitePreset('wedding')">💍 Toy nümunəsi</button>
+            <button type="button" class="clear" style="border-color:#b88c76;color:#d4a88f;" onclick="fillInvitePreset('birthday')">🎂 Ad günü nümunəsi</button>
+            <button type="button" class="clear" style="border-color:#b88c76;color:#d4a88f;" onclick="fillInvitePreset('business')">💼 Biznes nümunəsi</button>
+            <button type="button" class="clear" style="border-color:#b88c76;color:#d4a88f;" onclick="fillInvitePreset('henna')">🎶 Xına nümunəsi</button>
+            <span style="font-size:9px;color:rgba(255,255,255,.35);align-self:center;">Nümunə məlumatları bir kliklə doldur, dəyiş və saxla.</span>
+        </div>
         <form id="createInvForm">
             <div class="form-grid">
                 <div class="field"><label>Kateqoriya</label><select id="ciCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
@@ -573,6 +587,62 @@ button{
     <div class="panel">
         <h2>Yaradılmış Dəvətnamələr</h2>
         <div id="createdInvitationsList" class="customer-list"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Digital Kart Yarat (Business / QR)</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Müştəri üçün rəqəmsal vizit kartı və ya QR əlaqə kartı sifarişi yaradın.</p>
+        <form id="cardForm">
+            <div class="form-grid">
+                <div class="field"><label>Kart Növü</label><select id="cardType"><option value="business">💳 Digital Business Card</option><option value="qr">📱 QR Contact Card</option></select></div>
+                <div class="field"><label>Ad / Soyad</label><input id="cardName" type="text" placeholder="Aysel Əliyeva" required></div>
+                <div class="field"><label>Şirkət</label><input id="cardCompany" type="text" placeholder="AzTech Holdinqs"></div>
+                <div class="field"><label>Vəzifə</label><input id="cardTitle" type="text" placeholder="Marketinq Direktoru"></div>
+                <div class="field"><label>Telefon</label><input id="cardPhone" type="tel" placeholder="+994 50 123 45 67"></div>
+                <div class="field"><label>Email</label><input id="cardEmail" type="email" placeholder="aysel@aztech.az"></div>
+                <div class="field"><label>Website</label><input id="cardWebsite" type="url" placeholder="https://..."></div>
+                <div class="field"><label>Ünvan</label><input id="cardAddress" type="text" placeholder="Bakı, Azərbaycan"></div>
+                <div class="field full"><label>Məlumat / Qeyd</label><textarea id="cardNote" rows="2" placeholder="Əlavə məlumat..."></textarea></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Kartı Yarat</button>
+                <button type="button" class="clear" onclick="document.getElementById('cardForm').reset()">Təmizlə</button>
+            </div>
+        </form>
+        <div style="margin-top:24px;">
+            <h2>Yaradılmış Kartlar</h2>
+            <div id="cardsList" class="customer-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PACKAGES & PRICING ========== -->
+<div id="section-packages" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Paketlər & Qiymətlər</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="savePackagesConfig()">Yadda Saxla</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Baza Paket Qiymətləri</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Bu qiymətlər bütün saytda — ana səhifə, client form və qiymətlər bölməsində avtomatik tətbiq olunur.</p>
+        <div class="form-grid" id="basePkgPrices"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Kateqoriya Üzrə Qiymətlər</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər kateqoriya üçün fərqli paket qiyməti təyin edin.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;" id="pkgCategoryPricing"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Əlavə Məhsullar</h2>
+        <div class="form-grid" id="extraProductPrices"></div>
     </div>
 </div>
 
@@ -602,6 +672,22 @@ button{
         <h2>Formspree Endpoint</h2>
         <div class="form-grid">
             <div class="field full"><label>Endpoint URL</label><input id="formspreeEndpoint" type="text" value="https://formspree.io/f/mqpzyklb"></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Addım Başlıqları</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Formun hər addımının başlıq və izahını dəyişin (AZ / EN).</p>
+        <div id="stepTitlesEditor" style="display:grid;gap:16px;"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Göndər Düyməsi & Uğur Mesajı</h2>
+        <div class="form-grid">
+            <div class="field"><label>Göndər düyməsi (AZ)</label><input id="submitBtnAz" type="text" placeholder="Göndər"></div>
+            <div class="field"><label>Göndər düyməsi (EN)</label><input id="submitBtnEn" type="text" placeholder="Send"></div>
+            <div class="field full"><label>Uğur mesajı (AZ)</label><textarea id="successMsgAz" rows="2" placeholder="Təşəkkürlər! Dəvətnaməniz hazırlanır."></textarea></div>
+            <div class="field full"><label>Uğur mesajı (EN)</label><textarea id="successMsgEn" rows="2" placeholder="Thank you! Your invitation is being prepared."></textarea></div>
         </div>
     </div>
 
@@ -718,6 +804,9 @@ button{
                 <div class="field"><label>Stil</label><input id="editDesignStyle" type="text"></div>
                 <div class="field full"><label>Təsvir</label><textarea id="editDesignDesc"></textarea></div>
                 <div class="field full"><label>URL</label><input id="editDesignUrl" type="text"></div>
+                <div class="field"><label>Animasiya Növü</label><select id="editDesignAnimation"><option value="">— Yoxdur —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Video URL</label><input id="editDesignVideo" type="url" placeholder="https://..."></div>
+                <div class="field full"><label>İllustrasiyalar (hər sətirdə bir link)</label><textarea id="editDesignIllustrations" rows="3"></textarea></div>
             </div>
             <div class="button-row">
                 <button type="submit" class="save">Yadda Saxla</button>
@@ -766,10 +855,12 @@ button{
                 <div class="field"><label>Şablon Adı</label><input id="tplName" type="text" placeholder="Amelia" required></div>
                 <div class="field"><label>Kateqoriya</label><select id="tplCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Stil</label><input id="tplStyle" type="text" placeholder="Romantik, Minimalist..."></div>
-                <div class="field"><label>Animasiya Növü</label><select id="tplOpeningType"><option value="envelope">Zərf Açılışı</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Animasiya Növü</label><select id="tplOpeningType"><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
                 <div class="field"><label>Göstərmə Sırası</label><input id="tplOrder" type="number" value="0"></div>
                 <div class="field"><label>Thumbnail URL</label><input id="tplThumb" type="text" placeholder="https://..."></div>
                 <div class="field"><label>Cover URL</label><input id="tplCover" type="text" placeholder="https://..."></div>
+                <div class="field full"><label>Video URL (dizayn üçün tanıtım/açılış videosu)</label><input id="tplVideoUrl" type="url" placeholder="https://.../video.mp4 və ya YouTube linki"></div>
+                <div class="field full"><label>İllustrasiyalar (şəkil linkləri — hər sətirdə bir)</label><textarea id="tplIllustrations" rows="3" placeholder="https://..."></textarea></div>
                 <div class="field full">
                     <label>Mövcud Paketlər</label>
                     <div class="checkbox-group">
@@ -833,6 +924,7 @@ function switchSection(name){
     if(name === 'templates') renderTemplates();
     if(name === 'clientform') loadFormConfig();
     if(name === 'homepage') loadHomepageConfig();
+    if(name === 'packages') buildPackagesEditor();
 }
 
 
@@ -1054,6 +1146,9 @@ function renderDesigns(){
                 '<span class="badge">' + lunaEscapeHtml(d.category || '') + '</span>' +
                 '<span class="badge">' + lunaEscapeHtml(d.package || '') + '</span>' +
                 (d.style ? '<span class="badge">' + lunaEscapeHtml(d.style) + '</span>' : '') +
+                (d.openingType ? '<span class="badge">✨ ' + lunaEscapeHtml(d.openingType) + '</span>' : '') +
+                (d.video ? '<span class="badge">🎬 Video</span>' : '') +
+                ((d.illustrations || []).length ? '<span class="badge">🖼️ ' + d.illustrations.length + '</span>' : '') +
             '</div>' +
             (d.description ? '<p>' + lunaEscapeHtml(d.description) + '</p>' : '') +
             '<div class="card-actions">' +
@@ -1078,7 +1173,10 @@ document.getElementById('designForm').addEventListener('submit', function(e){
             style: document.getElementById('designStyle').value.trim(),
             description: document.getElementById('designDesc').value.trim(),
             image: ev.target.result,
-            url: document.getElementById('designUrl').value.trim()
+            url: document.getElementById('designUrl').value.trim(),
+            openingType: document.getElementById('designAnimation').value || undefined,
+            video: document.getElementById('designVideo').value.trim() || undefined,
+            illustrations: document.getElementById('designIllustrations').value.trim().split('\n').map(function(s){ return s.trim(); }).filter(Boolean)
         };
         var designs = getDesigns();
         designs.push(design);
@@ -1121,6 +1219,9 @@ function openEditDesign(id){
     document.getElementById('editDesignStyle').value = design.style || '';
     document.getElementById('editDesignDesc').value = design.description || '';
     document.getElementById('editDesignUrl').value = design.url || '';
+    document.getElementById('editDesignAnimation').value = design.openingType || '';
+    document.getElementById('editDesignVideo').value = design.video || '';
+    document.getElementById('editDesignIllustrations').value = (design.illustrations || []).join('\n');
     document.getElementById('editDesignModal').classList.add('open');
 }
 
@@ -1136,6 +1237,9 @@ document.getElementById('editDesignForm').addEventListener('submit', function(e)
     designs[idx].style = document.getElementById('editDesignStyle').value.trim();
     designs[idx].description = document.getElementById('editDesignDesc').value.trim();
     designs[idx].url = document.getElementById('editDesignUrl').value.trim();
+    designs[idx].openingType = document.getElementById('editDesignAnimation').value || undefined;
+    designs[idx].video = document.getElementById('editDesignVideo').value.trim() || undefined;
+    designs[idx].illustrations = document.getElementById('editDesignIllustrations').value.trim().split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
     saveDesigns(designs);
     closeModal('editDesignModal');
     renderDesigns();
@@ -1470,6 +1574,9 @@ function openAddTemplate(){
     document.getElementById('tplStyle').value = '';
     document.getElementById('tplThumb').value = '';
     document.getElementById('tplCover').value = '';
+    document.getElementById('tplOpeningType').value = 'envelope';
+    document.getElementById('tplVideoUrl').value = '';
+    document.getElementById('tplIllustrations').value = '';
     document.getElementById('tplOrder').value = '0';
     document.getElementById('tplPkgBasic').checked = true;
     document.getElementById('tplPkgPremium').checked = false;
@@ -1495,6 +1602,9 @@ function openEditTemplate(id){
     document.getElementById('tplStyle').value = t.style || '';
     document.getElementById('tplThumb').value = t.thumbnail || '';
     document.getElementById('tplCover').value = t.cover || '';
+    document.getElementById('tplOpeningType').value = t.openingType || 'envelope';
+    document.getElementById('tplVideoUrl').value = t.video || '';
+    document.getElementById('tplIllustrations').value = (t.illustrations || []).join('\n');
     document.getElementById('tplOrder').value = t.order || 0;
     var pkgs = t.packages || [];
     document.getElementById('tplPkgBasic').checked = pkgs.indexOf('basic') !== -1;
@@ -1534,6 +1644,9 @@ document.getElementById('templateForm').addEventListener('submit', function(e){
         style: document.getElementById('tplStyle').value.trim(),
         thumbnail: document.getElementById('tplThumb').value.trim(),
         cover: document.getElementById('tplCover').value.trim(),
+        openingType: document.getElementById('tplOpeningType').value,
+        video: document.getElementById('tplVideoUrl').value.trim(),
+        illustrations: document.getElementById('tplIllustrations').value.trim().split('\n').map(function(s){ return s.trim(); }).filter(Boolean),
         packages: pkgs,
         languages: langs,
         featured: document.getElementById('tplFeatured').checked,
@@ -1686,6 +1799,15 @@ function loadFormConfig() {
     document.getElementById('formDescEn').value = cfg.formDescEn || 'Add names, date, venue and your story.';
     document.getElementById('formspreeEndpoint').value = cfg.formspreeEndpoint || 'https://formspree.io/f/mqpzyklb';
 
+    /* Step titles */
+    buildStepTitlesEditor(cfg);
+
+    /* Submit button & success message */
+    document.getElementById('submitBtnAz').value = cfg.submitBtnAz || 'Göndər';
+    document.getElementById('submitBtnEn').value = cfg.submitBtnEn || 'Send';
+    document.getElementById('successMsgAz').value = cfg.successMsgAz || 'Təşəkkürlər! Dəvətnaməniz hazırlanır.';
+    document.getElementById('successMsgEn').value = cfg.successMsgEn || 'Thank you! Your invitation is being prepared.';
+
     /* Category visibility */
     var vis = document.getElementById('formCategoryVisibility');
     vis.innerHTML = '';
@@ -1741,12 +1863,56 @@ function saveFormConfig() {
         formDescAz: document.getElementById('formDescAz').value,
         formDescEn: document.getElementById('formDescEn').value,
         formspreeEndpoint: document.getElementById('formspreeEndpoint').value,
+        stepTitles: readStepTitlesEditor(),
+        submitBtnAz: document.getElementById('submitBtnAz').value,
+        submitBtnEn: document.getElementById('submitBtnEn').value,
+        successMsgAz: document.getElementById('successMsgAz').value,
+        successMsgEn: document.getElementById('successMsgEn').value,
         visibleCategories: visibleCats,
         categoryPricing: categoryPricing
     };
 
     localStorage.setItem('luna_form_config', JSON.stringify(cfg));
     showToast('Form konfiqurasiyası yadda saxlandı');
+}
+
+/* Step titles editor */
+var LUNA_FORM_STEPS = [
+    { id: 1, defAz: 'Kateqoriya seçin',   defEn: 'Choose a category' },
+    { id: 2, defAz: 'Dizaynınızı seçin',  defEn: 'Choose your design' },
+    { id: 3, defAz: 'Paket seçimi',       defEn: 'Select a package' },
+    { id: 4, defAz: 'Əlaqə məlumatları',  defEn: 'Contact details' },
+    { id: 5, defAz: 'Tədbir məlumatları', defEn: 'Event details' },
+    { id: 6, defAz: 'Yoxla və təsdiqlə',  defEn: 'Review & confirm' }
+];
+
+function buildStepTitlesEditor(cfg){
+    var wrap = document.getElementById('stepTitlesEditor');
+    if(!wrap) return;
+    var saved = cfg.stepTitles || {};
+    wrap.innerHTML = '';
+    LUNA_FORM_STEPS.forEach(function(st){
+        var s = saved[st.id] || {};
+        var div = document.createElement('div');
+        div.style.cssText = 'padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+        div.innerHTML =
+            '<div style="font-size:11px;margin-bottom:10px;color:#b88c76;">Addım ' + st.id + '</div>' +
+            '<div class="form-grid">' +
+                '<div class="field"><label>Başlıq (AZ)</label><input type="text" data-step="' + st.id + '" data-lang="az" value="' + lunaEscapeHtml(s.az || st.defAz) + '"></div>' +
+                '<div class="field"><label>Başlıq (EN)</label><input type="text" data-step="' + st.id + '" data-lang="en" value="' + lunaEscapeHtml(s.en || st.defEn) + '"></div>' +
+            '</div>';
+        wrap.appendChild(div);
+    });
+}
+
+function readStepTitlesEditor(){
+    var out = {};
+    document.querySelectorAll('#stepTitlesEditor input[data-step]').forEach(function(inp){
+        var step = inp.getAttribute('data-step');
+        if(!out[step]) out[step] = {};
+        out[step][inp.getAttribute('data-lang')] = inp.value.trim();
+    });
+    return out;
 }
 
 /* =====================================================
@@ -1934,6 +2100,10 @@ function saveCreatedInvitation(){
 
     if(music) inv.music = music;
 
+    /* Inherit design/template video as hero background when available */
+    if(tpl && tpl.video && !inv.videoUrl) inv.videoUrl = tpl.video;
+    if(tpl && Array.isArray(tpl.illustrations) && tpl.illustrations.length && !inv.images) inv.images = tpl.illustrations;
+
     lunaSaveInvitation(inv);
     renderCreatedInvitations();
     renderDashboard();
@@ -1978,6 +2148,7 @@ function renderCreatedInvitations(){
             '<div class="customer-actions">' +
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
                 '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button class="copy-btn" onclick="duplicateCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Kopyala</button>' +
                 '<button class="delete" onclick="deleteCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
         list.appendChild(row);
@@ -2032,6 +2203,228 @@ function deleteCreatedInvitation(id){
     };
     form.appendChild(previewBtn);
 })();
+
+/* Quick-fill presets for fast invitation creation */
+function fillInvitePreset(kind){
+    var d = new Date();
+    d.setDate(d.getDate() + 45);
+    var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    var presets = {
+        wedding: { cat:'wedding', pkg:'luxury', bride:'Aysel', groom:'Murad', time:'19:00', venue:'Crystal Hall', msg:'Sizi sevgi ilə dəvət edirik.', story:'Hekayəmiz kiçik bir salamla başladı və bu gözəl günə çatdı.' },
+        birthday:{ cat:'birthday', pkg:'premium', bride:'Nicat', groom:'', time:'20:00', venue:'Park Boulevard Restaurant', msg:'Yeni yaşımı sizinlə qeyd etmək istəyirəm.', story:'' },
+        business:{ cat:'business', pkg:'luxury', bride:'AzTech Holdinqs', groom:'', time:'10:00', venue:'Bakı Kongres Mərkəzi', msg:'İlin yekun konfransına dəvət edirik.', story:'' },
+        henna:   { cat:'henna', pkg:'premium', bride:'Günel', groom:'', time:'19:00', venue:'Xına Sarayı', msg:'Qız toyumuzdan əvvəl bu xüsusi axşamı sizinlə bölüşürük.', story:'' }
+    };
+    var p = presets[kind];
+    if(!p) return;
+    document.getElementById('ciCategory').value = p.cat;
+    document.getElementById('ciPackage').value = p.pkg;
+    document.getElementById('ciBride').value = p.bride;
+    document.getElementById('ciGroom').value = p.groom;
+    document.getElementById('ciDate').value = iso;
+    document.getElementById('ciTime').value = p.time;
+    document.getElementById('ciVenue').value = p.venue;
+    document.getElementById('ciLocation').value = 'Bakı, Azərbaycan';
+    document.getElementById('ciMessage').value = p.msg;
+    document.getElementById('ciStory').value = p.story;
+    showToast('Nümunə məlumatları dolduruldu — redaktə edib saxla');
+}
+
+function duplicateCreatedInvitation(id){
+    var src = lunaGetInvitation(id);
+    if(!src){ showToast('Mənbə tapılmadı'); return; }
+    var copy = JSON.parse(JSON.stringify(src));
+    delete copy.createdViaAdmin;
+    copy.createdAt = Date.now();
+    var base = src.id + '-nusxe', finalId = base, n = 2;
+    while(lunaGetInvitation(finalId)){ finalId = base + '-' + n; n++; }
+    copy.id = finalId;
+    copy.createdViaAdmin = true;
+    if(copy.bride) copy.bride = copy.bride;
+    lunaSaveInvitation(copy);
+    renderCreatedInvitations();
+    renderDashboard();
+    showToast('Kopya yaradıldı: ' + finalId);
+}
+
+/* =====================================================
+   DIGITAL CARDS CREATOR
+===================================================== */
+
+function getCards(){
+    var cards = [];
+    for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(!key || key.indexOf('lunacard_') !== 0) continue;
+        try { var c = JSON.parse(localStorage.getItem(key)); if(c && c.id) cards.push(c); } catch(e){}
+    }
+    return cards.sort(function(a,b){ return (b.createdAt||0)-(a.createdAt||0); });
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    var cardForm = document.getElementById('cardForm');
+    if(cardForm){
+        cardForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            var id = 'card-' + Date.now();
+            var card = {
+                id: id,
+                createdAt: Date.now(),
+                cardType: document.getElementById('cardType').value,
+                name: document.getElementById('cardName').value.trim(),
+                company: document.getElementById('cardCompany').value.trim(),
+                jobTitle: document.getElementById('cardTitle').value.trim(),
+                phone: document.getElementById('cardPhone').value.trim(),
+                email: document.getElementById('cardEmail').value.trim(),
+                website: document.getElementById('cardWebsite').value.trim(),
+                address: document.getElementById('cardAddress').value.trim(),
+                note: document.getElementById('cardNote').value.trim()
+            };
+            if(!card.name){ showToast('Ad mütləqdir'); return; }
+            localStorage.setItem('lunacard_' + id, JSON.stringify(card));
+            cardForm.reset();
+            renderCardsList();
+            showToast('Kart yaradıldı: ' + card.name);
+        });
+    }
+});
+
+function renderCardsList(){
+    var list = document.getElementById('cardsList');
+    if(!list) return;
+    var cards = getCards();
+    list.innerHTML = '';
+    if(!cards.length){
+        list.innerHTML = '<div class="empty">Hələ kart yoxdur.</div>';
+        return;
+    }
+    cards.forEach(function(c){
+        var row = document.createElement('div');
+        row.className = 'customer-row';
+        var info = [c.company, c.jobTitle, c.phone].filter(Boolean).map(lunaEscapeHtml).join(' · ');
+        row.innerHTML =
+            '<div class="customer-info">' +
+                '<h4>' + (c.cardType === 'qr' ? '📱 ' : '💳 ') + lunaEscapeHtml(c.name) + '</h4>' +
+                '<p>' + info + '</p>' +
+            '</div>' +
+            '<div class="customer-actions">' +
+                '<button class="copy-btn" onclick="copyCardText(\'' + c.id + '\')">Məlumatı Kopyala</button>' +
+                '<button class="delete" onclick="deleteCard(\'' + c.id + '\')">Sil</button>' +
+            '</div>';
+        list.appendChild(row);
+    });
+}
+
+function copyCardText(id){
+    var cards = getCards();
+    var c = cards.find(function(x){ return x.id === id; });
+    if(!c) return;
+    var lines = [c.name, c.jobTitle, c.company, c.phone, c.email, c.website, c.address].filter(Boolean);
+    copyToClipboard(lines.join('\n'));
+    showToast('Kart məlumatı kopyalandı');
+}
+
+function deleteCard(id){
+    if(!confirm('Bu kartı silmək istədiyinizə əminsiniz?')) return;
+    localStorage.removeItem('lunacard_' + id);
+    renderCardsList();
+    showToast('Kart silindi');
+}
+renderCardsList();
+
+/* =====================================================
+   PACKAGES & PRICING MANAGER
+===================================================== */
+
+var LUNA_PKG_LABELS = { video: 'Video', basic: 'Basic', premium: 'Premium', luxury: 'Luxury' };
+
+function getPackagesConfig(){
+    try { return JSON.parse(localStorage.getItem('luna_package_config') || '{}'); } catch(e){ return {}; }
+}
+
+function buildPackagesEditor(){
+    /* Base package prices */
+    var baseWrap = document.getElementById('basePkgPrices');
+    if(baseWrap){
+        var savedPkgs = getPackagesConfig().packages || {};
+        baseWrap.innerHTML = '';
+        LUNA_PACKAGES.forEach(function(p){
+            var val = (savedPkgs[p.id] != null) ? savedPkgs[p.id] : p.price;
+            var div = document.createElement('div');
+            div.className = 'field';
+            div.innerHTML = '<label>' + (LUNA_PKG_LABELS[p.id] || p.name || p.id) + ' (AZN)</label><input type="number" data-basepkg="' + p.id + '" value="' + val + '">';
+            baseWrap.appendChild(div);
+        });
+    }
+
+    /* Category × package matrix */
+    var catWrap = document.getElementById('pkgCategoryPricing');
+    if(catWrap){
+        var cfg = getPackagesConfig();
+        catWrap.innerHTML = '';
+        LUNA_CATEGORIES.forEach(function(cat){
+            var defaults = LUNA_CATEGORY_PRICING[cat.id] || { video:20, basic:25, premium:40, luxury:65 };
+            var savedCat = (cfg.categoryPricing && cfg.categoryPricing[cat.id]) || {};
+            var div = document.createElement('div');
+            div.style.cssText = 'padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+            var html = '<div style="font-size:11px;margin-bottom:10px;color:#b88c76;">' + cat.icon + ' ' + lunaCategoryName(cat.id) + '</div>';
+            html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">';
+            ['video','basic','premium','luxury'].forEach(function(pkgId){
+                var val = (savedCat[pkgId] != null) ? savedCat[pkgId] : defaults[pkgId];
+                html += '<div><label style="font-size:7px;display:block;margin-bottom:3px;color:rgba(255,255,255,.4);">' + LUNA_PKG_LABELS[pkgId] + '</label>' +
+                        '<input type="number" data-cat="' + cat.id + '" data-pkg="' + pkgId + '" value="' + val + '" style="width:100%;padding:6px;font-size:11px;background:#111;border:1px solid rgba(255,255,255,.1);color:#fff;"></div>';
+            });
+            html += '</div>';
+            div.innerHTML = html;
+            catWrap.appendChild(div);
+        });
+    }
+
+    /* Extra products */
+    var extraWrap = document.getElementById('extraProductPrices');
+    if(extraWrap){
+        var savedExtras = getPackagesConfig().extras || {};
+        extraWrap.innerHTML = '';
+        LUNA_EXTRA_PRODUCTS.forEach(function(x){
+            var val = (savedExtras[x.id] != null) ? savedExtras[x.id] : x.price;
+            var div = document.createElement('div');
+            div.className = 'field';
+            div.innerHTML = '<label>' + x.icon + ' ' + lunaEscapeHtml(x.name) + ' (AZN)</label><input type="number" data-extra="' + x.id + '" value="' + val + '">';
+            extraWrap.appendChild(div);
+        });
+    }
+}
+
+function savePackagesConfig(){
+    var packagesCfg = {};
+    document.querySelectorAll('#basePkgPrices input[data-basepkg]').forEach(function(inp){
+        packagesCfg[inp.getAttribute('data-basepkg')] = parseInt(inp.value) || 0;
+    });
+
+    var categoryPricing = {};
+    document.querySelectorAll('#pkgCategoryPricing input[data-cat]').forEach(function(inp){
+        var cat = inp.getAttribute('data-cat');
+        var pkg = inp.getAttribute('data-pkg');
+        if(!categoryPricing[cat]) categoryPricing[cat] = {};
+        categoryPricing[cat][pkg] = parseInt(inp.value) || 0;
+    });
+
+    var extras = {};
+    document.querySelectorAll('#extraProductPrices input[data-extra]').forEach(function(inp){
+        extras[inp.getAttribute('data-extra')] = parseInt(inp.value) || 0;
+    });
+
+    localStorage.setItem('luna_package_config', JSON.stringify({ packages: packagesCfg, categoryPricing: categoryPricing, extras: extras }));
+
+    /* Keep client-form config pricing in sync */
+    try {
+        var formCfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
+        formCfg.categoryPricing = categoryPricing;
+        localStorage.setItem('luna_form_config', JSON.stringify(formCfg));
+    } catch(e){}
+
+    showToast('Qiymətlər yadda saxlandı — bütün sayta tətbiq olundu');
+}
 
 /* =====================================================
     INIT

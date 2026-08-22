@@ -367,6 +367,7 @@ button,input,textarea,select{font-family:inherit}
                 <div class="result-icon">&#10003;</div>
                 <h2 data-i18n="formReady">Hazırdır.</h2>
                 <p data-i18n="formReadyDesc">Bu linki qonaqlarınızla paylaşın.</p>
+                <p id="customSuccessMsg" style="display:none;font-size:11px;color:var(--gold);margin-top:10px;line-height:1.8;"></p>
                 <a class="result-link" id="generatedLink" href="#" target="_blank"></a>
                 <div class="result-actions">
                     <button class="btn btn-primary" type="button" onclick="copyLink()">
@@ -422,7 +423,36 @@ button,input,textarea,select{font-family:inherit}
             setIf("formTitleAz", '[data-i18n="formTitle"]');
             setIf("formDescAz", '[data-i18n="formDesc"]', true);
         }
+
+        /* Step titles from admin */
+        applyFormStepConfig(lang);
     });
+
+    function applyFormStepConfig(lang) {
+        var en = (lang === "en" || lang === "ru" || lang === "tr");
+        /* Step headers (.step-title / .step-desc inside #formStep1..6) */
+        if (_formCfg.stepTitles) {
+            for (var i = 1; i <= 6; i++) {
+                var st = _formCfg.stepTitles[String(i)] || _formCfg.stepTitles[i];
+                if (!st) continue;
+                var panel = document.getElementById("formStep" + i);
+                if (!panel) continue;
+                var titleEl = panel.querySelector(".step-title");
+                var val = en ? (st.en || st.az) : (st.az || st.en);
+                if (titleEl && val) titleEl.textContent = val;
+            }
+        }
+        /* Submit button text */
+        var btn = document.getElementById("stepSubmit");
+        if (btn) {
+            var btnVal = en ? (_formCfg.submitBtnEn || _formCfg.submitBtnAz) : (_formCfg.submitBtnAz || _formCfg.submitBtnEn);
+            if (btnVal) btn.textContent = btnVal;
+        }
+        /* Success messages stored for submit handler */
+        window.__lunaFormSuccessMsg = en
+            ? (_formCfg.successMsgEn || _formCfg.successMsgAz || "")
+            : (_formCfg.successMsgAz || _formCfg.successMsgEn || "");
+    }
 
     /* Visible categories filter (sync — before initial rendering) */
     if (Array.isArray(_formCfg.visibleCategories) && _formCfg.visibleCategories.length) {
@@ -955,6 +985,10 @@ button,input,textarea,select{font-family:inherit}
                 if (dp) dp.textContent = cfg2[dKey];
             }
         } catch(e) {}
+        /* Re-apply step titles / submit button / success msg */
+        if (typeof applyFormStepConfig === "function") {
+            try { applyFormStepConfig(lang); } catch(e) {}
+        }
     };
     lunaInitLanguage();
 
@@ -1162,6 +1196,12 @@ button,input,textarea,select{font-family:inherit}
                     link.href = url.href;
                     link.textContent = url.href;
                     document.getElementById("openLink").href = url.href;
+                    /* Admin-configured success message */
+                    if (window.__lunaFormSuccessMsg) {
+                        var sm = document.getElementById("customSuccessMsg");
+                        sm.textContent = window.__lunaFormSuccessMsg;
+                        sm.style.display = "";
+                    }
                     document.getElementById("resultCard").style.display = "block";
                     document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
                 }

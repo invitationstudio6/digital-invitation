@@ -3170,7 +3170,10 @@ document.getElementById("openButton").textContent =
     var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];
     var heroType = cfg.heroType || "hero-centered";
     var bgStyle = cfg.backgroundStyle || "default";
-    var openingType = cfg.openingType || "envelope";
+    /* Admin-created templates may carry opening/animation type directly */
+    var openingType = cfg.openingType
+        || (tplData && (tplData.openingType || tplData.animationType))
+        || "envelope";
 
     /* Apply opening type to root element */
     document.documentElement.setAttribute("data-opening", openingType);

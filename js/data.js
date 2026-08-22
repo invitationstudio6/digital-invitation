@@ -897,6 +897,36 @@ function lunaGetExtraProductById(productId) {
 }
 
 /* =====================================================
+   ADMIN PACKAGE CONFIG OVERRIDE
+   Applies admin-managed prices (luna_package_config)
+   on top of the built-in defaults, site-wide.
+===================================================== */
+(function lunaApplyPackageConfig() {
+    var cfg;
+    try { cfg = JSON.parse(localStorage.getItem("luna_package_config") || "{}"); } catch(e) { return; }
+
+    if (cfg.packages && typeof LUNA_PACKAGES !== "undefined") {
+        LUNA_PACKAGES.forEach(function(p) {
+            if (cfg.packages[p.id] != null && !isNaN(cfg.packages[p.id])) p.price = cfg.packages[p.id];
+        });
+    }
+    if (cfg.categoryPricing) {
+        Object.keys(cfg.categoryPricing).forEach(function(catId) {
+            if (!LUNA_CATEGORY_PRICING[catId]) LUNA_CATEGORY_PRICING[catId] = {};
+            Object.keys(cfg.categoryPricing[catId]).forEach(function(pkgId) {
+                var val = cfg.categoryPricing[catId][pkgId];
+                if (val != null && !isNaN(val)) LUNA_CATEGORY_PRICING[catId][pkgId] = val;
+            });
+        });
+    }
+    if (cfg.extras) {
+        LUNA_EXTRA_PRODUCTS.forEach(function(x) {
+            if (cfg.extras[x.id] != null && !isNaN(cfg.extras[x.id])) x.price = cfg.extras[x.id];
+        });
+    }
+})();
+
+/* =====================================================
    FORMSPREE — CLIENT FORM ORDER NOTIFICATIONS
    Change this endpoint to your dedicated "order" form.
 ===================================================== */
@@ -914,7 +944,7 @@ function lunaGetAllTemplates() {
             adminDesigns.forEach(function(d) {
                 if (d && d.id && d.name) {
                     templates.push({
-                        id: d.id,
+                        id: String(d.id),
                         name: d.name,
                         category: d.category || "other",
                         style: d.style || "",
@@ -922,7 +952,12 @@ function lunaGetAllTemplates() {
                         cover: d.cover || d.thumbnail || d.image || "",
                         minPackage: d.minPackage || d.package || "basic",
                         packages: d.packages || [d.minPackage || d.package || "basic"],
-                        preview: d.preview || null
+                        preview: d.preview || null,
+                        layoutConfig: d.layoutConfig || null,
+                        openingType: d.openingType || null,
+                        animationType: d.animationType || null,
+                        video: d.video || "",
+                        illustrations: d.illustrations || []
                     });
                 }
             });
@@ -940,7 +975,12 @@ function lunaGetAllTemplates() {
                         cover: t.cover || t.thumbnail || "",
                         minPackage: (t.packages && t.packages[0]) || "basic",
                         packages: t.packages || ["basic"],
-                        preview: t.preview || null
+                        preview: t.preview || null,
+                        layoutConfig: t.layoutConfig || null,
+                        openingType: t.openingType || null,
+                        animationType: t.animationType || null,
+                        video: t.video || "",
+                        illustrations: t.illustrations || []
                     });
                 }
             });
