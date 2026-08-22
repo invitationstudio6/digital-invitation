@@ -728,7 +728,14 @@ button,input,textarea,select{font-family:inherit}
     }
 
     function applyVisibility() {
-        document.querySelectorAll(".form-field").forEach(function(el) {
+        var hiddenFields = Array.isArray(_formCfg.hiddenFields) ? _formCfg.hiddenFields : [];
+        document.querySelectorAll("#invitationForm .form-field").forEach(function(el) {
+            var fieldName = el.getAttribute("data-field");
+            /* Admin-hidden fields always win */
+            if (fieldName && hiddenFields.indexOf(fieldName) !== -1) {
+                el.style.display = "none";
+                return;
+            }
             var allowedPkgs = el.getAttribute("data-packages");
             if (!allowedPkgs) {
                 el.style.display = "";
@@ -743,7 +750,7 @@ button,input,textarea,select{font-family:inherit}
         var grid = document.getElementById("templateGrid");
         var hidden = document.getElementById("selectedTemplate");
         if (!grid || !hidden) return;
-        var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : [];
+        var templates = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
         var filtered = templates.filter(function(t) {
             return t.category === category && (t.packages ? t.packages.indexOf(packageName) !== -1 : true);
         });
@@ -855,7 +862,7 @@ button,input,textarea,select{font-family:inherit}
         }
 
         // Reset design to first matching template for the newly selected category
-        var tpls = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.filter(function(t) { return t.category === category; }) : [];
+        var tpls = ((typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : LUNA_TEMPLATES).filter(function(t) { return t.category === category; });
         if (tpls.length) {
             design = tpls[0].id;
             designId = tpls[0].id;
@@ -962,19 +969,20 @@ button,input,textarea,select{font-family:inherit}
         var currentRank = tierRank[packageName] || 0;
 
         if (currentRank >= 2) {
-            html += '<div class="form-field full" style="animation-delay:.05s"><label>Şəkil linkləri</label><textarea name="images" placeholder="https://... (hər sətirdə bir link)" rows="3"></textarea></div>';
-            html += '<div class="form-field full" style="animation-delay:.1s"><label>Şəkillər yüklə</label><input type="file" name="photos" accept="image/*" multiple></div>';
+            html += '<div class="form-field full" style="animation-delay:.05s" data-field="images"><label>Şəkil linkləri</label><textarea name="images" placeholder="https://... (hər sətirdə bir link)" rows="3"></textarea></div>';
+            html += '<div class="form-field full" style="animation-delay:.1s" data-field="photos"><label>Şəkillər yüklə</label><input type="file" name="photos" accept="image/*" multiple></div>';
         }
         if (currentRank >= 3) {
-            html += '<div class="form-field full" style="animation-delay:.15s"><label>Musiqi linki</label><input type="url" name="music" placeholder="https://.../song.mp3"></div>';
+            html += '<div class="form-field full" style="animation-delay:.15s" data-field="music"><label>Musiqi linki</label><input type="url" name="music" placeholder="https://.../song.mp3"></div>';
         }
         if (packageName === "video") {
-            html += '<div class="form-field full" style="animation-delay:.05s"><label>Video yüklə</label><input type="file" name="videoFile" accept="video/*"></div>';
+            html += '<div class="form-field full" style="animation-delay:.05s" data-field="videoFile"><label>Video yüklə</label><input type="file" name="videoFile" accept="video/*"></div>';
         }
         if (!html) {
             html = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Bu paketdə əlavə media sahəsi yoxdur.</div>';
         }
         grid.innerHTML = html;
+        applyVisibility();
     }
 
     function renderPreviewSummary() {

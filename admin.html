@@ -776,6 +776,12 @@ button{
     </div>
 
     <div class="panel">
+        <h2>Sahə Görünürlüyü</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Formda görünməyəcək sahələri seçin (gizlədilən sahələr müştəriyə göstərilmir).</p>
+        <div class="checkbox-group" id="formFieldVisibility"></div>
+    </div>
+
+    <div class="panel">
         <h2>Əlavə Məlumat Sahələri</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Forma öz suallarınızı əlavə edin (məs: "Necə tanış oldunuz?"). Cavablar sifariş məlumatlarına avtomatik əlavə olunur.</p>
         <div id="customFieldsEditor" style="display:grid;gap:10px;margin-bottom:14px;"></div>
@@ -860,6 +866,37 @@ button{
             <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeDarkMode" type="checkbox" style="width:auto;"> Tünd ana səhifə rejimi</label></div>
             <div class="field full"><label>Özel CSS (təcrübəli istifadə üçün)</label><textarea id="homeCustomCss" rows="4" placeholder=".hero h1 { letter-spacing: 0; }"></textarea></div>
         </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:22px 0;">
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin-bottom:10px;">Lüks Palitralar</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;" id="palettePresets">
+            <button type="button" onclick="applyPalette('#C4A882','#F5EDE3',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#C4A882;display:inline-block;"></span>Gold Cream</button>
+            <button type="button" onclick="applyPalette('#B76E79','#F9EFED',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#B76E79;display:inline-block;"></span>Rose Gold</button>
+            <button type="button" onclick="applyPalette('#3F7A5D','#EEF4F0',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#3F7A5D;display:inline-block;"></span>Emerald</button>
+            <button type="button" onclick="applyPalette('#2C4A6E','#EDF1F6',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#2C4A6E;display:inline-block;"></span>Sapphire</button>
+            <button type="button" onclick="applyPalette('#D4AF37','#161311',true)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#D4AF37,#161311);display:inline-block;"></span>Noir & Gold</button>
+            <button type="button" onclick="applyPalette('#9C6B9E','#F6EFF7',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#9C6B9E;display:inline-block;"></span>Lavender Luxe</button>
+        </div>
+        <p style="color:rgba(255,255,255,.35);font-size:9px;">Palitra seçimi rəng sahələrini avtomatik doldurur — sonra "Yadda Saxla" basın.</p>
+
+        <div class="form-grid" style="margin-top:20px;">
+            <div class="field"><label>Düymə Stili</label><select id="homeBtnStyle">
+                <option value="">Standart</option>
+                <option value="pill">Pill (yumru)</option>
+                <option value="sharp">Sharp (küncsüz)</option>
+            </select></div>
+            <div class="field"><label>Kart Künc RADIUS: <span id="radiusVal">8</span>px</label><input id="homeCardRadius" type="range" min="0" max="24" value="8" style="width:100%;accent-color:#b88c76;"></div>
+            <div class="field"><label>Mətn Ölçüsü</label><select id="homeTextScale">
+                <option value="">Normal</option>
+                <option value="large">Böyük başlıqlar</option>
+                <option value="grand">Grand (ən böyük)</option>
+            </select></div>
+        </div>
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Bölmə Görünürlüyü</h3>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:12px;">Ana səhifədə gizlətmək istədiyiniz bölmələri seçin.</p>
+        <div class="checkbox-group" id="homeSectionVisibility"></div>
     </div>
 
     <div class="panel">
@@ -1693,9 +1730,19 @@ function saveCustomTemplates(tpls){
     localStorage.setItem('luna_custom_templates', JSON.stringify(tpls));
 }
 
+/* Overrides for built-in templates — lets admin edit every şablon */
+function getTemplateOverrides(){
+    try { return JSON.parse(localStorage.getItem('luna_template_overrides') || '{}'); } catch(e){ return {}; }
+}
+
+function saveTemplateOverrides(ov){
+    localStorage.setItem('luna_template_overrides', JSON.stringify(ov));
+}
+
 function getAllTemplates(){
+    var overrides = getTemplateOverrides();
     var builtIn = (typeof LUNA_TEMPLATES !== 'undefined') ? LUNA_TEMPLATES.map(function(t){
-        return {
+        var merged = {
             id: t.id,
             name: t.name || '',
             category: t.category || '',
@@ -1707,8 +1754,13 @@ function getAllTemplates(){
             featured: t.featured || false,
             active: t.active !== undefined ? t.active : true,
             order: t.order || 0,
+            openingType: t.openingType || '',
+            video: t.video || '',
+            illustrations: t.illustrations || [],
             isCustom: false
         };
+        if(overrides[t.id]) Object.assign(merged, overrides[t.id], { id: t.id, isCustom: false });
+        return merged;
     }) : [];
     var custom = getCustomTemplates().map(function(t){
         t.isCustom = true;
@@ -1759,15 +1811,19 @@ function renderTemplates(){
             '<div class="card-meta">' +
                 '<span class="badge">' + lunaEscapeHtml(catLabel) + '</span>' +
                 (t.style ? '<span class="badge">' + lunaEscapeHtml(t.style) + '</span>' : '') +
+                (t.openingType ? '<span class="badge">✨ ' + lunaEscapeHtml(t.openingType) + '</span>' : '') +
+                (t.video ? '<span class="badge">🎬</span>' : '') +
                 statusBadge + featuredBadge + customBadge +
             '</div>' +
             (pkgTags ? '<div class="pkg-tags">' + pkgTags + '</div>' : '') +
             (langTags ? '<div class="lang-tags">' + langTags + '</div>' : '') +
             '<div class="template-card card-footer">' +
                 '<div class="card-actions" style="width:100%;">' +
-                    (t.isCustom ? '<button class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' : '') +
+                    '<button class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' +
                     '<button class="toggle-btn" onclick="toggleTemplateActive(\'' + lunaEscapeHtml(t.id) + '\')">' + (t.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
-                    (t.isCustom ? '<button class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>' : '') +
+                    (t.isCustom
+                        ? '<button class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>'
+                        : (getTemplateOverrides()[t.id] ? '<button class="delete" onclick="resetTemplateOverride(\'' + lunaEscapeHtml(t.id) + '\')">Sıfırla</button>' : '')) +
                 '</div>' +
             '</div>';
         list.appendChild(card);
@@ -1800,8 +1856,7 @@ function openAddTemplate(){
 }
 
 function openEditTemplate(id){
-    var custom = getCustomTemplates();
-    var t = custom.find(function(x){ return x.id === id; });
+    var t = getAllTemplates().find(function(x){ return x.id === id; });
     if(!t) return;
     document.getElementById('templateModalTitle').textContent = 'Şablonu Redaktə Et';
     document.getElementById('templateEditId').value = t.id;
@@ -1863,12 +1918,22 @@ document.getElementById('templateForm').addEventListener('submit', function(e){
     };
 
     if(editId){
-        var idx = custom.findIndex(function(x){ return x.id === editId; });
-        if(idx !== -1){
+        var isBuiltin = (typeof LUNA_TEMPLATES !== 'undefined') && LUNA_TEMPLATES.some(function(t){ return t.id === editId; });
+        if(isBuiltin){
+            /* Built-in template: persist edits as an override, applied site-wide */
+            var ov = getTemplateOverrides();
             data.id = editId;
-            custom[idx] = data;
+            ov[editId] = data;
+            saveTemplateOverrides(ov);
+            showToast('Şablon yeniləndi — bütün sayta tətbiq olundu');
+        } else {
+            var idx = custom.findIndex(function(x){ return x.id === editId; });
+            if(idx !== -1){
+                data.id = editId;
+                custom[idx] = data;
+            }
+            showToast('Şablon yeniləndi');
         }
-        showToast('Şablon yeniləndi');
     } else {
         data.id = 'tpl_' + Date.now();
         custom.push(data);
@@ -1880,6 +1945,15 @@ document.getElementById('templateForm').addEventListener('submit', function(e){
     renderTemplates();
 });
 
+function resetTemplateOverride(id){
+    if(!confirm('Bu şablonun standart hala qaytarılmasını istəyirsiniz?')) return;
+    var ov = getTemplateOverrides();
+    delete ov[id];
+    saveTemplateOverrides(ov);
+    renderTemplates();
+    showToast('Şablon standart halına qaytarıldı');
+}
+
 function toggleTemplateActive(id){
     var custom = getCustomTemplates();
     var t = custom.find(function(x){ return x.id === id; });
@@ -1888,7 +1962,17 @@ function toggleTemplateActive(id){
         saveCustomTemplates(custom);
         renderTemplates();
         showToast(t.active ? 'Şablon aktiv edildi' : 'Şablon deaktiv edildi');
+        return;
     }
+    /* Built-in: store active flag as override */
+    var all = getAllTemplates();
+    var bt = all.find(function(x){ return x.id === id; });
+    if(!bt) return;
+    var ov = getTemplateOverrides();
+    ov[id] = Object.assign({}, ov[id] || {}, { active: !(bt.active !== false) });
+    saveTemplateOverrides(ov);
+    renderTemplates();
+    showToast(ov[id].active ? 'Şablon aktiv edildi' : 'Şablon deaktiv edildi');
 }
 
 function deleteTemplate(id){
@@ -1999,6 +2083,47 @@ function seedSampleData() {
    CLIENT FORM EDITOR
 ===================================================== */
 
+/* Hideable client-form fields */
+var LUNA_HIDEABLE_FIELDS = [
+    { id: 'story', label: 'Hekayəmiz (story)' },
+    { id: 'message', label: 'Xüsusi mesaj' },
+    { id: 'images', label: 'Şəkil linkləri' },
+    { id: 'photos', label: 'Şəkil yükləmə' },
+    { id: 'music', label: 'Musiqi linki' },
+    { id: 'videoFile', label: 'Video yükləmə' },
+    { id: 'map', label: 'Google Maps linki' },
+    { id: 'website', label: 'Website' },
+    { id: 'agenda', label: 'Proqram / Agenda' },
+    { id: 'contact', label: 'Əlaqə məlumatı' },
+    { id: 'dresscode', label: 'Geyim kodu' },
+    { id: 'invitationLanguage', label: 'Dil seçimi' }
+];
+
+function buildFormFieldVisibility(cfg){
+    var wrap = document.getElementById('formFieldVisibility');
+    if(!wrap) return;
+    var hidden = cfg.hiddenFields || [];
+    wrap.innerHTML = '';
+    LUNA_HIDEABLE_FIELDS.forEach(function(f){
+        var label = document.createElement('label');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.value = f.id;
+        cb.checked = hidden.indexOf(f.id) !== -1;
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(' ' + f.label));
+        wrap.appendChild(label);
+    });
+}
+
+function readFormFieldVisibility(){
+    var out = [];
+    document.querySelectorAll('#formFieldVisibility input:checked').forEach(function(cb){
+        out.push(cb.value);
+    });
+    return out;
+}
+
 function loadFormConfig() {
     var cfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
     document.getElementById('formTitleAz').value = cfg.formTitleAz || 'Dəvətnaməni birlikdə yazaq.';
@@ -2010,6 +2135,7 @@ function loadFormConfig() {
     /* Step titles */
     buildStepTitlesEditor(cfg);
     buildCustomFieldsEditor(cfg);
+    buildFormFieldVisibility(cfg);
 
     /* Submit button & success message */
     document.getElementById('submitBtnAz').value = cfg.submitBtnAz || 'Göndər';
@@ -2078,6 +2204,7 @@ function saveFormConfig() {
         formspreeEndpoint: document.getElementById('formspreeEndpoint').value,
         stepTitles: readStepTitlesEditor(),
         customFields: readCustomFieldsEditor(),
+        hiddenFields: readFormFieldVisibility(),
         submitBtnAz: document.getElementById('submitBtnAz').value,
         submitBtnEn: document.getElementById('submitBtnEn').value,
         submitBtnRu: document.getElementById('submitBtnRu').value,
@@ -2225,6 +2352,36 @@ function loadHomepageConfig() {
     document.getElementById('homeHeadingFont').value = cfg.headingFont || '';
     document.getElementById('homeHeroLayout').value = cfg.heroLayout || '';
     document.getElementById('homeCustomCss').value = cfg.customCss || '';
+    document.getElementById('homeBtnStyle').value = cfg.btnStyle || '';
+    document.getElementById('homeCardRadius').value = cfg.cardRadius != null ? cfg.cardRadius : 8;
+    document.getElementById('radiusVal').textContent = document.getElementById('homeCardRadius').value;
+    document.getElementById('homeTextScale').value = cfg.textScale || '';
+
+    /* Section visibility */
+    var secWrap = document.getElementById('homeSectionVisibility');
+    if(secWrap){
+        var hiddenSecs = cfg.hiddenSections || [];
+        var sections = [
+            { id: 'categories', label: 'Kateqoriyalar' },
+            { id: 'collections', label: 'Kolleksiyalar' },
+            { id: 'videoSection', label: 'Video dəvətnamələr' },
+            { id: 'features', label: 'Xüsusiyyətlər' },
+            { id: 'how', label: 'Necə işləyir' },
+            { id: 'packages', label: 'Paketlər' },
+            { id: 'contact', label: 'CTA / Əlaqə' }
+        ];
+        secWrap.innerHTML = '';
+        sections.forEach(function(s){
+            var label = document.createElement('label');
+            var cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.value = s.id;
+            cb.checked = hiddenSecs.indexOf(s.id) !== -1;
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(' ' + s.label + ' (gizlət)'));
+            secWrap.appendChild(label);
+        });
+    }
 
     /* Category order */
     var order = document.getElementById('homeCategoryOrder');
@@ -2288,6 +2445,10 @@ function saveHomepageConfig() {
         headingFont: document.getElementById('homeHeadingFont').value,
         heroLayout: document.getElementById('homeHeroLayout').value,
         customCss: document.getElementById('homeCustomCss').value,
+        btnStyle: document.getElementById('homeBtnStyle').value,
+        cardRadius: parseInt(document.getElementById('homeCardRadius').value),
+        textScale: document.getElementById('homeTextScale').value,
+        hiddenSections: Array.prototype.map.call(document.querySelectorAll('#homeSectionVisibility input:checked'), function(cb){ return cb.value; }),
         categoryOrder: categoryOrder
     };
 
@@ -2787,6 +2948,22 @@ function renderCustomCategoriesList(){
         wrap.appendChild(chip);
     });
 }
+
+/* Luxury palette quick-fill */
+function applyPalette(accent, bg, dark){
+    document.getElementById('homeAccentColor').value = accent;
+    document.getElementById('homeBgColor').value = bg;
+    document.getElementById('homeDarkMode').checked = !!dark;
+    showToast('Palitra seçildi — yadda saxlamağı unutmayın');
+}
+
+/* Live radius label */
+document.addEventListener('input', function(e){
+    if(e.target && e.target.id === 'homeCardRadius'){
+        var v = document.getElementById('radiusVal');
+        if(v) v.textContent = e.target.value;
+    }
+});
 
 /* =====================================================
    CATEGORY PREVIEWS EDITOR

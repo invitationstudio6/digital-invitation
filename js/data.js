@@ -975,6 +975,20 @@ const LUNA_FORMSPREE_ENDPOINT = "https://formspree.io/f/mqpzyklb";
 ===================================================== */
 function lunaGetAllTemplates() {
     var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.slice() : [];
+
+    /* Admin overrides for built-in templates (name/category/thumbnail/packages/active/…) */
+    var tplOv = {};
+    try { tplOv = JSON.parse(localStorage.getItem("luna_template_overrides") || "{}"); } catch(e) {}
+    if (tplOv && Object.keys(tplOv).length) {
+        templates = templates.map(function(t) {
+            var ov = tplOv[t.id];
+            if (!ov) return t;
+            var merged = Object.assign({}, t, ov);
+            merged.id = t.id;
+            return merged;
+        });
+    }
+
     try {
         var adminDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
         if (Array.isArray(adminDesigns)) {
@@ -1023,7 +1037,7 @@ function lunaGetAllTemplates() {
             });
         }
     } catch(e) {}
-    return templates;
+    return templates.filter(function(t) { return t.active !== false; });
 }
 
 /* Count templates per category */
