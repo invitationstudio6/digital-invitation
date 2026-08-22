@@ -568,10 +568,6 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
     </div>
     <div id="videoFeaturedContainer">
         <!-- Dynamic video cards rendered by JS -->
-        <div class="video-featured">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Video Invitation">
-            <div class="video-price-badge" data-i18n="vidPrice">20 AZN</div>
-        </div>
     </div>
 </div>
 </section>
@@ -1279,6 +1275,60 @@ function renderCatCollection(catId, gridId, limit) {
 renderCatCollection("wedding", "colWeddingGrid", 4);
 renderCatCollection("birthday", "colBirthdayGrid", 4);
 renderCatCollection("business", "colBusinessGrid", 4);
+
+/* ===== RENDER VIDEO INVITATIONS FROM LOCALSTORAGE ===== */
+(function renderVideoSection() {
+    var container = document.getElementById("videoFeaturedContainer");
+    if (!container) return;
+    container.innerHTML = "";
+
+    var videos = [];
+    try {
+        videos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+    } catch(e) { videos = []; }
+
+    /* Filter to active + featured videos, sorted by order */
+    var featured = videos.filter(function(v) { return v.active && v.featured; });
+    featured.sort(function(a,b) { return (a.order || 0) - (b.order || 0); });
+
+    /* If no featured videos, show all active ones */
+    if (featured.length === 0) {
+        featured = videos.filter(function(v) { return v.active; });
+        featured.sort(function(a,b) { return (a.order || 0) - (b.order || 0); });
+    }
+
+    /* Limit to 3 */
+    featured = featured.slice(0, 3);
+
+    if (featured.length === 0) {
+        /* Fallback: show a static placeholder */
+        container.innerHTML = '<div class="video-featured"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Video Invitation"><div class="video-price-badge">20 AZN</div></div>';
+        return;
+    }
+
+    featured.forEach(function(v) {
+        var card = document.createElement("div");
+        card.className = "video-featured";
+        card.style.marginBottom = "16px";
+        var thumb = v.thumbnail || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85";
+        card.innerHTML =
+            '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85\'">' +
+            '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>' +
+            (v.title ? '<div class="video-info"><p>' + (v.description || v.title) + '</p></div>' : '');
+        container.appendChild(card);
+    });
+})();
+
+/* ===== UPDATE CATEGORY COUNTS TO INCLUDE ADMIN DESIGNS ===== */
+(function updateCategoryCounts() {
+    if (typeof LUNA_CATEGORIES === "undefined") return;
+    var allTemplates = _getAllTemplates();
+    LUNA_CATEGORIES.forEach(function(cat) {
+        cat.count = allTemplates.filter(function(t) { return t.category === cat.id; }).length;
+    });
+    /* Re-render categories with updated counts */
+    renderCategories();
+})();
 
 /* ===== RE-RENDER ON LANGUAGE CHANGE ===== */
 var _origSetLang = lunaSetLanguage;
