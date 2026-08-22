@@ -321,6 +321,10 @@ button{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             <span>Dizaynlar</span>
         </a>
+        <a class="sidebar-link" data-section="catpreviews" onclick="switchSection('catpreviews')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Kateqoriya Örtükləri</span>
+        </a>
         <a class="sidebar-link" data-section="videos" onclick="switchSection('videos')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             <span>Video Dəvətnamələr</span>
@@ -351,6 +355,10 @@ button{
         </a>
     </nav>
     <div class="sidebar-bottom">
+        <a href="client-form.html" target="_blank" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <span>Client Form Aç ↗</span>
+        </a>
         <a href="index.html" class="sidebar-link back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             <span>Back to Luna</span>
@@ -387,6 +395,15 @@ button{
                 <a href="client-form.html">+ Müştəri</a>
                 <button onclick="switchSection('designs')">+ Dizayn</button>
                 <button onclick="switchSection('videos')">+ Video</button>
+            </div>
+            <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">
+                <div style="font-size:11px;margin-bottom:10px;color:#b88c76;">Sifariş Formunu Doldurulmuş Aç</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                    <select id="qfCategory" onchange="populateQuickForm()" style="padding:8px;font-size:11px;"></select>
+                    <select id="qfPackage" style="padding:8px;font-size:11px;"><option value="video">Video</option><option value="basic">Basic</option><option value="premium" selected>Premium</option><option value="luxury">Luxury</option></select>
+                </div>
+                <select id="qfDesign" style="width:100%;padding:8px;font-size:11px;margin-bottom:10px;"></select>
+                <button class="save" style="width:100%;" onclick="openPrefilledForm()">Formu Aç →</button>
             </div>
             <div style="margin-top:25px;">
                 <h2 style="margin-bottom:15px;">Kateqoriyalar</h2>
@@ -451,17 +468,66 @@ button{
 
     <div class="panel">
         <h2>Toplu Yükləmə (Canva)</h2>
-        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin. Yüklənən dizaynlar ana səhifədə və dəvətnamələr bölməsində görünəcək.</p>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Canvasdan hazırladığınız dəvətnamə şəkillərini buradan toplu olaraq yükləyin. Video və link əlavə edə bilərsiniz — yüklənən dizaynlar ana səhifədə və dəvətnamələr bölməsində görünəcək.</p>
         <div class="form-grid">
             <div class="field full"><label>Şəkilləri seçin</label><div class="file-box"><input id="bulkCover" type="file" accept="image/*" multiple></div></div>
             <div class="field"><label>Kateqoriya</label><select id="bulkCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
             <div class="field"><label>Paket</label><select id="bulkPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+            <div class="field"><label>Video URL (bütün partiyaya)</label><input id="bulkVideoUrl" type="url" placeholder="https://youtube.com/... və ya .mp4"></div>
+            <div class="field"><label>Dizayn Linki (bütün partiyaya)</label><input id="bulkLinkUrl" type="url" placeholder="https://canva.com/design/..."></div>
         </div>
         <div id="bulkPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:20px;"></div>
         <div class="button-row">
             <button type="button" class="save" id="bulkUploadBtn">Hamısını Yüklə</button>
             <button type="button" class="clear" id="bulkClearBtn">Təmizlə</button>
         </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:26px 0;">
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;margin-bottom:8px;">Canva Linki ilə Sürətli Əlavə</h3>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Canva dizayn linklərini yapışdırın (hər sətirdə bir). Link avtomatik baxış rejiminə çevrilir — fayl yükləmək lazım deyil.</p>
+        <div class="form-grid">
+            <div class="field full"><label>Canva / Veb Linkləri</label><textarea id="bulkCanvaLinks" rows="3" placeholder="https://www.canva.com/design/DAF...&#10;https://www.canva.com/design/DAE..."></textarea></div>
+            <div class="field"><label>Ad prefiksi</label><input id="bulkLinkPrefix" type="text" placeholder="Dizayn"></div>
+            <div class="field"><label>Başlanğıc nömrə</label><input id="bulkLinkStartNum" type="number" value="1" min="1"></div>
+            <div class="field"><label>Kateqoriya</label><select id="bulkLinkCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+            <div class="field"><label>Paket</label><select id="bulkLinkPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+        </div>
+        <div class="button-row">
+            <button type="button" class="save" id="bulkLinksAddBtn">Linkləri Əlavə Et</button>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:26px 0;">
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;margin-bottom:8px;">Tək Dizayn — Şəkil + Video + Link</h3>
+        <div class="form-grid">
+            <div class="field"><label>Ad</label><input id="singleName" type="text" placeholder="Amelia"></div>
+            <div class="field"><label>Kateqoriya</label><select id="singleCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+            <div class="field"><label>Örtük şəkli URL</label><input id="singleImage" type="url" placeholder="https://...jpg"></div>
+            <div class="field"><label>Video URL</label><input id="singleVideoUrl" type="url" placeholder="https://...mp4"></div>
+            <div class="field full"><label>Dizayn / Canva linki</label><input id="singleDesignUrl" type="url" placeholder="https://www.canva.com/design/..."></div>
+        </div>
+        <div class="button-row">
+            <button type="button" class="save" id="singleAddBtn">Əlavə Et</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== CATEGORY PREVIEWS EDITOR ========== -->
+<div id="section-catpreviews" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Kateqoriya Örtükləri</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="saveCatPreviews()">Yadda Saxla</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Ana səhifə və dəvətnamələr səhifəsindəki kateqoriya kartlarının örtük şəkli, başlıq və təsvirlərini redaktə edin. Boş qoyulan sahələr standart dəyərdə qalır.</p>
+        <div id="catPreviewsList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;"></div>
     </div>
 </div>
 
@@ -638,6 +704,20 @@ button{
         <h2>Kateqoriya Üzrə Qiymətlər</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər kateqoriya üçün fərqli paket qiyməti təyin edin.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;" id="pkgCategoryPricing"></div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:26px 0;">
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;margin-bottom:8px;">Əlavə Kateqoriya Yarat</h3>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Bazada olmayan xüsusi kateqoriya əlavə edin (məs: Korporativ, Süniyyət). Qiymətini yuxarıdakı matrisdə təyin edib saxlayın — bütün saytda görünür.</p>
+        <div class="form-grid">
+            <div class="field"><label>Ad (AZ)</label><input id="ccNameAz" type="text" placeholder="Korporativ"></div>
+            <div class="field"><label>Ad (EN)</label><input id="ccNameEn" type="text" placeholder="Corporate"></div>
+            <div class="field"><label>İkonka (emoji)</label><input id="ccIcon" type="text" placeholder="🏢" maxlength="4"></div>
+        </div>
+        <div class="button-row">
+            <button type="button" class="save" onclick="addCustomCategory()">Kateqoriya Əlavə Et</button>
+        </div>
+        <div id="customCategoriesList" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;"></div>
     </div>
 
     <div class="panel">
@@ -692,6 +772,13 @@ button{
     </div>
 
     <div class="panel">
+        <h2>Əlavə Məlumat Sahələri</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Forma öz suallarınızı əlavə edin (məs: "Necə tanış oldunuz?"). Cavablar sifariş məlumatlarına avtomatik əlavə olunur.</p>
+        <div id="customFieldsEditor" style="display:grid;gap:10px;margin-bottom:14px;"></div>
+        <button type="button" class="save" onclick="addCustomFieldRow()">+ Sahə Əlavə Et</button>
+    </div>
+
+    <div class="panel">
         <h2>Kateqoriya Görünürlüyü</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hansı kateqoriyaların formda görünəcəyini seçin.</p>
         <div class="checkbox-group" id="formCategoryVisibility"></div>
@@ -740,11 +827,24 @@ button{
 
     <div class="panel">
         <h2>Ana Səhifə Dizaynı</h2>
-        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Rəngləri dəyişərək ana səhifənin görünüşünü dəyişin.</p>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Rəngləri, şriftləri və hero düzülüşünü dəyişərək ana səhifənin görünüşünü dəyişin.</p>
         <div class="form-grid">
             <div class="field"><label>Vurğu Rəngi (Accent)</label><input id="homeAccentColor" type="color" value="#C4A882"></div>
             <div class="field"><label>Fon Rəngi</label><input id="homeBgColor" type="color" value="#F5EDE3"></div>
+            <div class="field"><label>Başlıq Şrifti</label><select id="homeHeadingFont">
+                <option value="">Standart (Cormorant Garamond)</option>
+                <option value="Italiana">Italiana</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Marcellus">Marcellus</option>
+                <option value="Allura">Allura (Əl yazısı)</option>
+            </select></div>
+            <div class="field"><label>Hero Düzülüşü</label><select id="homeHeroLayout">
+                <option value="">Standart</option>
+                <option value="split">Split — mətn solda</option>
+                <option value="minimal">Minimal — kiçik başlıq</option>
+            </select></div>
             <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeDarkMode" type="checkbox" style="width:auto;"> Tünd ana səhifə rejimi</label></div>
+            <div class="field full"><label>Özel CSS (təcrübəli istifadə üçün)</label><textarea id="homeCustomCss" rows="4" placeholder=".hero h1 { letter-spacing: 0; }"></textarea></div>
         </div>
     </div>
 
@@ -780,6 +880,14 @@ button{
             <button data-lang="en" class="clear" onclick="lunaSetLanguage('en');location.reload();">English</button>
             <button data-lang="ru" class="clear" onclick="lunaSetLanguage('ru');location.reload();">Русский</button>
             <button data-lang="tr" class="clear" onclick="lunaSetLanguage('tr');location.reload();">Türkçe</button>
+        </div>
+    </div>
+    <div class="panel">
+        <h2>Yedekləmə & Bərpa</h2>
+        <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:20px;">Bütün məlumatları (dizaynlar, şablonlar, müştərilər, qiymətlər, konfiqurasiyalar) JSON faylı kimi endirin və ya əvvəlki yedekdən bərpa edin.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="save" onclick="exportLunaBackup()">Yedek Endir</button>
+            <label class="clear" style="padding:10px 20px;border:1px solid rgba(255,255,255,.15);cursor:pointer;">Bərpa Et<input type="file" accept=".json" onchange="importLunaBackup(this)" style="display:none;"></label>
         </div>
     </div>
     <div class="panel">
@@ -925,6 +1033,7 @@ function switchSection(name){
     if(name === 'clientform') loadFormConfig();
     if(name === 'homepage') loadHomepageConfig();
     if(name === 'packages') buildPackagesEditor();
+    if(name === 'catpreviews') buildCatPreviewsEditor();
 }
 
 
@@ -1140,7 +1249,9 @@ function renderDesigns(){
         var card = document.createElement('div');
         card.className = 'card';
         card.innerHTML =
-            (d.image ? '<img src="' + d.image + '" alt="' + lunaEscapeHtml(d.name) + '">' : '') +
+            (d.image
+                ? '<img src="' + d.image + '" alt="' + lunaEscapeHtml(d.name) + '">'
+                : '<div style="height:120px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);font-size:26px;">' + (d.video ? '🎬' : '🔗') + '</div>') +
             '<h3>' + lunaEscapeHtml(d.name) + '</h3>' +
             '<div class="card-meta">' +
                 '<span class="badge">' + lunaEscapeHtml(d.category || '') + '</span>' +
@@ -1152,6 +1263,7 @@ function renderDesigns(){
             '</div>' +
             (d.description ? '<p>' + lunaEscapeHtml(d.description) + '</p>' : '') +
             '<div class="card-actions">' +
+                (d.url ? '<a href="' + lunaEscapeHtml(d.url) + '" target="_blank" class="preview-btn">Aç</a>' : '') +
                 '<button class="edit-btn" onclick="openEditDesign(' + d.id + ')">Redaktə Et</button>' +
                 '<button class="delete" onclick="deleteDesign(' + d.id + ')">Sil</button>' +
             '</div>';
@@ -1276,18 +1388,22 @@ document.getElementById('bulkUploadBtn').addEventListener('click', function(){
     if(!inputs.length){ alert('Şəkillər seçin.'); return; }
     var category = document.getElementById('bulkCategory').value;
     var pkg = document.getElementById('bulkPackage').value;
+    var batchVideo = document.getElementById('bulkVideoUrl').value.trim();
+    var batchUrl = normalizeCanvaLink(document.getElementById('bulkLinkUrl').value);
     var designs = getDesigns();
     var count = 0;
     inputs.forEach(function(input){
         var name = input.value.trim();
         var image = input.dataset.original;
         if(!name || !image) return;
-        designs.push({ id: Date.now() + count, name: name, category: category, package: pkg, style: 'Canva', description: '', image: image, url: '' });
+        designs.push({ id: Date.now() + count, name: name, category: category, package: pkg, style: 'Canva', description: '', image: image, url: batchUrl, video: batchVideo || undefined });
         count++;
     });
     saveDesigns(designs);
     document.getElementById('bulkPreview').innerHTML = '';
     document.getElementById('bulkCover').value = '';
+    document.getElementById('bulkVideoUrl').value = '';
+    document.getElementById('bulkLinkUrl').value = '';
     bulkFiles = [];
     renderDesigns();
     showToast(count + ' dizayn yükləndi');
@@ -1296,7 +1412,81 @@ document.getElementById('bulkUploadBtn').addEventListener('click', function(){
 document.getElementById('bulkClearBtn').addEventListener('click', function(){
     document.getElementById('bulkCover').value = '';
     document.getElementById('bulkPreview').innerHTML = '';
+    document.getElementById('bulkVideoUrl').value = '';
+    document.getElementById('bulkLinkUrl').value = '';
     bulkFiles = [];
+});
+
+/* Canva link normalization: converts any canva.com design URL into embeddable view mode */
+function normalizeCanvaLink(url){
+    url = (url || '').trim();
+    if(!url) return '';
+    var m = url.match(/^https?:\/\/(?:www\.)?canva\.com\/design\/([A-Za-z0-9_-]+)/i);
+    if(m) return 'https://www.canva.com/design/' + m[1] + '/view?embed';
+    return url;
+}
+
+/* Quick add from Canva links (one per line) */
+document.getElementById('bulkLinksAddBtn').addEventListener('click', function(){
+    var raw = document.getElementById('bulkCanvaLinks').value.trim();
+    if(!raw){ showToast('Əvvəlcə link yapışdırın'); return; }
+    var lines = raw.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    var prefix = document.getElementById('bulkLinkPrefix').value.trim() || 'Dizayn';
+    var startNum = parseInt(document.getElementById('bulkLinkStartNum').value) || 1;
+    var category = document.getElementById('bulkLinkCategory').value;
+    var pkg = document.getElementById('bulkLinkPackage').value;
+    var designs = getDesigns();
+    var count = 0;
+    lines.forEach(function(line, i){
+        var url = normalizeCanvaLink(line);
+        if(!url) return;
+        designs.push({
+            id: Date.now() + i,
+            name: prefix + ' ' + (startNum + i),
+            category: category,
+            package: pkg,
+            style: 'Canva',
+            description: '',
+            image: '',
+            thumbnail: '',
+            url: url
+        });
+        count++;
+    });
+    saveDesigns(designs);
+    document.getElementById('bulkCanvaLinks').value = '';
+    document.getElementById('bulkLinkStartNum').value = startNum + count;
+    renderDesigns();
+    showToast(count + ' dizayn linklə əlavə olundu');
+});
+
+/* Single design: cover image URL + video + design/Canva link */
+document.getElementById('singleAddBtn').addEventListener('click', function(){
+    var name = document.getElementById('singleName').value.trim();
+    var image = document.getElementById('singleImage').value.trim();
+    var url = normalizeCanvaLink(document.getElementById('singleDesignUrl').value);
+    var video = document.getElementById('singleVideoUrl').value.trim();
+    if(!name){ showToast('Ad daxil edin'); return; }
+    if(!image && !url){ showToast('Şəkil URL və ya dizayn linki daxil edin'); return; }
+    var designs = getDesigns();
+    designs.push({
+        id: Date.now(),
+        name: name,
+        category: document.getElementById('singleCategory').value,
+        package: 'basic',
+        style: 'Canva',
+        description: '',
+        image: image,
+        thumbnail: image,
+        url: url,
+        video: video || undefined
+    });
+    saveDesigns(designs);
+    ['singleName','singleImage','singleVideoUrl','singleDesignUrl'].forEach(function(fid){
+        document.getElementById(fid).value = '';
+    });
+    renderDesigns();
+    showToast('Dizayn əlavə olundu: ' + name);
 });
 
 
@@ -1801,6 +1991,7 @@ function loadFormConfig() {
 
     /* Step titles */
     buildStepTitlesEditor(cfg);
+    buildCustomFieldsEditor(cfg);
 
     /* Submit button & success message */
     document.getElementById('submitBtnAz').value = cfg.submitBtnAz || 'Göndər';
@@ -1864,6 +2055,7 @@ function saveFormConfig() {
         formDescEn: document.getElementById('formDescEn').value,
         formspreeEndpoint: document.getElementById('formspreeEndpoint').value,
         stepTitles: readStepTitlesEditor(),
+        customFields: readCustomFieldsEditor(),
         submitBtnAz: document.getElementById('submitBtnAz').value,
         submitBtnEn: document.getElementById('submitBtnEn').value,
         successMsgAz: document.getElementById('successMsgAz').value,
@@ -1915,6 +2107,52 @@ function readStepTitlesEditor(){
     return out;
 }
 
+/* Custom extra-info fields builder */
+function buildCustomFieldsEditor(cfg){
+    var wrap = document.getElementById('customFieldsEditor');
+    if(!wrap) return;
+    var saved = cfg.customFields || [];
+    wrap.innerHTML = '';
+    saved.forEach(function(f){
+        wrap.appendChild(makeCustomFieldRow(f));
+    });
+}
+
+function makeCustomFieldRow(f){
+    f = f || {};
+    var div = document.createElement('div');
+    div.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 110px 90px 40px;gap:8px;align-items:end;padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+    div.innerHTML =
+        '<div class="field" style="margin:0;"><label>Etiket (AZ)</label><input type="text" data-cf="labelAz" value="' + lunaEscapeHtml(f.labelAz || '') + '" placeholder="Necə tanış oldunuz?"></div>' +
+        '<div class="field" style="margin:0;"><label>Etiket (EN)</label><input type="text" data-cf="labelEn" value="' + lunaEscapeHtml(f.labelEn || '') + '" placeholder="How did you meet?"></div>' +
+        '<div class="field" style="margin:0;"><label>Tip</label><select data-cf="type"><option value="text"' + (f.type === 'text' || !f.type ? ' selected' : '') + '>Mətn</option><option value="textarea"' + (f.type === 'textarea' ? ' selected' : '') + '>Uzun mətn</option><option value="date"' + (f.type === 'date' ? ' selected' : '') + '>Tarix</option><option value="tel"' + (f.type === 'tel' ? ' selected' : '') + '>Telefon</option></select></div>' +
+        '<label style="font-size:9px;display:flex;align-items:center;gap:5px;cursor:pointer;padding-bottom:8px;"><input type="checkbox" data-cf="required"' + (f.required ? ' checked' : '') + '> Məcburi</label>' +
+        '<button type="button" class="delete" onclick="this.closest(\'div[style]\').remove()">×</button>';
+    return div;
+}
+
+function addCustomFieldRow(){
+    var wrap = document.getElementById('customFieldsEditor');
+    if(!wrap) return;
+    wrap.appendChild(makeCustomFieldRow({}));
+}
+
+function readCustomFieldsEditor(){
+    var out = [];
+    document.querySelectorAll('#customFieldsEditor > div').forEach(function(row, i){
+        var labelAz = row.querySelector('[data-cf="labelAz"]').value.trim();
+        if(!labelAz) return;
+        out.push({
+            id: 'cf' + (i + 1) + '_' + Date.now(),
+            labelAz: labelAz,
+            labelEn: row.querySelector('[data-cf="labelEn"]').value.trim() || labelAz,
+            type: row.querySelector('[data-cf="type"]').value,
+            required: row.querySelector('[data-cf="required"]').checked
+        });
+    });
+    return out;
+}
+
 /* =====================================================
    HOMEPAGE EDITOR
 ===================================================== */
@@ -1938,6 +2176,9 @@ function loadHomepageConfig() {
     document.getElementById('homeAccentColor').value = cfg.accentColor || '#C4A882';
     document.getElementById('homeBgColor').value = cfg.bgColor || '#F5EDE3';
     document.getElementById('homeDarkMode').checked = cfg.darkHome === true;
+    document.getElementById('homeHeadingFont').value = cfg.headingFont || '';
+    document.getElementById('homeHeroLayout').value = cfg.heroLayout || '';
+    document.getElementById('homeCustomCss').value = cfg.customCss || '';
 
     /* Category order */
     var order = document.getElementById('homeCategoryOrder');
@@ -1984,6 +2225,9 @@ function saveHomepageConfig() {
         accentColor: document.getElementById('homeAccentColor').value,
         bgColor: document.getElementById('homeBgColor').value,
         darkHome: document.getElementById('homeDarkMode').checked,
+        headingFont: document.getElementById('homeHeadingFont').value,
+        heroLayout: document.getElementById('homeHeroLayout').value,
+        customCss: document.getElementById('homeCustomCss').value,
         categoryOrder: categoryOrder
     };
 
@@ -2393,6 +2637,8 @@ function buildPackagesEditor(){
             extraWrap.appendChild(div);
         });
     }
+
+    renderCustomCategoriesList();
 }
 
 function savePackagesConfig(){
@@ -2414,7 +2660,13 @@ function savePackagesConfig(){
         extras[inp.getAttribute('data-extra')] = parseInt(inp.value) || 0;
     });
 
-    localStorage.setItem('luna_package_config', JSON.stringify({ packages: packagesCfg, categoryPricing: categoryPricing, extras: extras }));
+    var existingCfg = getPackagesConfig();
+    localStorage.setItem('luna_package_config', JSON.stringify({
+        packages: packagesCfg,
+        categoryPricing: categoryPricing,
+        extras: extras,
+        customCategories: existingCfg.customCategories || []
+    }));
 
     /* Keep client-form config pricing in sync */
     try {
@@ -2424,6 +2676,183 @@ function savePackagesConfig(){
     } catch(e){}
 
     showToast('Qiymətlər yadda saxlandı — bütün sayta tətbiq olundu');
+}
+
+/* Extra (admin-created) categories */
+function getCustomCats(){
+    return getPackagesConfig().customCategories || [];
+}
+
+function addCustomCategory(){
+    var nameAz = document.getElementById('ccNameAz').value.trim();
+    if(!nameAz){ showToast('Kateqoriya adı (AZ) daxil edin'); return; }
+    var cfg = getPackagesConfig();
+    if(!Array.isArray(cfg.customCategories)) cfg.customCategories = [];
+    var id = 'cat-' + Date.now();
+    cfg.customCategories.push({
+        id: id,
+        nameAz: nameAz,
+        nameEn: document.getElementById('ccNameEn').value.trim() || nameAz,
+        icon: document.getElementById('ccIcon').value.trim() || '✦'
+    });
+    localStorage.setItem('luna_package_config', JSON.stringify(cfg));
+    ['ccNameAz','ccNameEn','ccIcon'].forEach(function(fid){ document.getElementById(fid).value = ''; });
+    buildPackagesEditor();
+    showToast('Kateqoriya əlavə olundu — qiymətini matrisdə təyin edib saxla');
+}
+
+function deleteCustomCategory(catId){
+    if(!confirm('Bu kateqoriyanı silmək istədiyinizə əminsiniz?')) return;
+    var cfg = getPackagesConfig();
+    cfg.customCategories = (cfg.customCategories || []).filter(function(c){ return c.id !== catId; });
+    if(cfg.categoryPricing && cfg.categoryPricing[catId]) delete cfg.categoryPricing[catId];
+    localStorage.setItem('luna_package_config', JSON.stringify(cfg));
+    try {
+        var formCfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
+        if(formCfg.categoryPricing && formCfg.categoryPricing[catId]){ delete formCfg.categoryPricing[catId]; localStorage.setItem('luna_form_config', JSON.stringify(formCfg)); }
+    } catch(e){}
+    buildPackagesEditor();
+    showToast('Kateqoriya silindi');
+}
+
+function renderCustomCategoriesList(){
+    var wrap = document.getElementById('customCategoriesList');
+    if(!wrap) return;
+    var cats = getCustomCats();
+    wrap.innerHTML = '';
+    cats.forEach(function(c){
+        var chip = document.createElement('span');
+        chip.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);font-size:11px;';
+        chip.innerHTML = '<span>' + lunaEscapeHtml(c.icon || '✦') + ' ' + lunaEscapeHtml(c.nameAz) + '</span><button class="delete" style="padding:2px 8px;font-size:9px;" onclick="deleteCustomCategory(\'' + c.id + '\')">×</button>';
+        wrap.appendChild(chip);
+    });
+}
+
+/* =====================================================
+   CATEGORY PREVIEWS EDITOR
+===================================================== */
+
+function getCatPreviews(){
+    try { return JSON.parse(localStorage.getItem('luna_category_previews') || '{}'); } catch(e){ return {}; }
+}
+
+function buildCatPreviewsEditor(){
+    var wrap = document.getElementById('catPreviewsList');
+    if(!wrap || typeof LUNA_CATEGORIES === 'undefined') return;
+    var saved = getCatPreviews();
+    wrap.innerHTML = '';
+    LUNA_CATEGORIES.forEach(function(cat){
+        var ov = saved[cat.id] || {};
+        var curImg = ov.image || cat.image || '';
+        var div = document.createElement('div');
+        div.style.cssText = 'padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+        div.innerHTML =
+            '<div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;">' +
+                (curImg ? '<img src="' + lunaEscapeHtml(curImg) + '" style="width:74px;height:74px;object-fit:cover;">' : '<div style="width:74px;height:74px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);font-size:24px;">' + (cat.icon || '✦') + '</div>') +
+                '<div style="font-size:13px;color:#b88c76;font-family:Cormorant Garamond,serif;font-style:italic;padding-top:6px;">' + (cat.icon || '') + ' ' + lunaEscapeHtml(lunaCategoryName(cat.id)) + '</div>' +
+            '</div>' +
+            '<div class="form-grid">' +
+                '<div class="field full"><label>Örtük şəkli URL</label><input type="url" data-cp="' + cat.id + '" data-k="image" value="' + lunaEscapeHtml(ov.image || '') + '" placeholder="' + lunaEscapeHtml((cat.image || '').slice(0, 60)) + '..."></div>' +
+                '<div class="field full"><label>Hero şəkli URL</label><input type="url" data-cp="' + cat.id + '" data-k="heroImage" value="' + lunaEscapeHtml(ov.heroImage || '') + '" placeholder="' + lunaEscapeHtml((cat.heroImage || '').slice(0, 60)) + '..."></div>' +
+                '<div class="field"><label>Başlıq / Slogan (AZ)</label><input type="text" data-cp="' + cat.id + '" data-k="taglineAz" value="' + lunaEscapeHtml(ov.taglineAz || '') + '" placeholder="' + lunaEscapeHtml((cat.tagline && cat.tagline.az) || '') + '"></div>' +
+                '<div class="field"><label>Başlıq / Slogan (EN)</label><input type="text" data-cp="' + cat.id + '" data-k="taglineEn" value="' + lunaEscapeHtml(ov.taglineEn || '') + '" placeholder="' + lunaEscapeHtml((cat.tagline && cat.tagline.en) || '') + '"></div>' +
+                '<div class="field full"><label>Təsvir (AZ)</label><textarea rows="2" data-cp="' + cat.id + '" data-k="descAz">' + lunaEscapeHtml(ov.descAz || '') + '</textarea></div>' +
+                '<div class="field full"><label>Təsvir (EN)</label><textarea rows="2" data-cp="' + cat.id + '" data-k="descEn">' + lunaEscapeHtml(ov.descEn || '') + '</textarea></div>' +
+            '</div>';
+        wrap.appendChild(div);
+    });
+}
+
+function saveCatPreviews(){
+    var out = {};
+    document.querySelectorAll('#catPreviewsList [data-cp]').forEach(function(inp){
+        var catId = inp.getAttribute('data-cp');
+        var key = inp.getAttribute('data-k');
+        if(!out[catId]) out[catId] = {};
+        var val = inp.value.trim();
+        if(val) out[catId][key] = val;
+    });
+    localStorage.setItem('luna_category_previews', JSON.stringify(out));
+    showToast('Kateqoriya örtükləri yadda saxlandı — sayt yenilənəndə görünəcək');
+    buildCatPreviewsEditor();
+}
+
+/* Prefilled client-form opener (dashboard) */
+function populateQuickForm(){
+    var catSel = document.getElementById('qfCategory');
+    var dsnSel = document.getElementById('qfDesign');
+    if(!catSel || !dsnSel) return;
+    var curCat = catSel.value;
+    catSel.innerHTML = LUNA_CATEGORIES.map(function(c){ return '<option value="' + c.id + '">' + (c.icon || '') + ' ' + lunaEscapeHtml(lunaCategoryName(c.id)) + '</option>'; }).join('');
+    if(curCat && LUNA_CATEGORIES.some(function(c){ return c.id === curCat; })) catSel.value = curCat;
+    var curDsn = dsnSel.value;
+    var templates = [];
+    if(typeof lunaGetAllTemplates === 'function') templates = lunaGetAllTemplates();
+    else if(typeof LUNA_TEMPLATES !== 'undefined') templates = LUNA_TEMPLATES;
+    dsnSel.innerHTML = '<option value="">— Dizayn seç (opsional) —</option>' + templates.map(function(t){
+        return '<option value="' + t.id + '">' + lunaEscapeHtml(t.name) + '</option>';
+    }).join('');
+    if(curDsn) dsnSel.value = curDsn;
+}
+
+function openPrefilledForm(){
+    var cat = document.getElementById('qfCategory').value;
+    var pkg = document.getElementById('qfPackage').value;
+    var dsn = document.getElementById('qfDesign').value;
+    var url = 'client-form.html?category=' + encodeURIComponent(cat) + '&package=' + encodeURIComponent(pkg);
+    var tpl = (typeof LUNA_TEMPLATES !== 'undefined') ? LUNA_TEMPLATES.find(function(t){ return t.id === dsn; }) : null;
+    if(dsn && tpl){
+        url += '&design=' + encodeURIComponent(tpl.design || tpl.name.toLowerCase().replace(/\s+/g, '-'));
+        window.open(url, '_blank');
+    } else {
+        window.open(url, '_blank');
+    }
+}
+populateQuickForm();
+
+/* =====================================================
+   BACKUP & RESTORE
+===================================================== */
+
+function exportLunaBackup(){
+    var dump = {};
+    for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(key && (key.indexOf('luna_') === 0 || key.indexOf('lunacard_') === 0)){
+            dump[key] = localStorage.getItem(key);
+        }
+    }
+    var blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), data: dump }, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'luna-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('Yedek endirildi');
+}
+
+function importLunaBackup(input){
+    var file = input.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+        try {
+            var parsed = JSON.parse(e.target.result);
+            var data = parsed.data || parsed;
+            var count = 0;
+            Object.keys(data).forEach(function(key){
+                if(key.indexOf('luna_') === 0 || key.indexOf('lunacard_') === 0){
+                    localStorage.setItem(key, data[key]);
+                    count++;
+                }
+            });
+            showToast(count + ' açar bərpa olundu — səhifə yenilənir');
+            setTimeout(function(){ location.reload(); }, 1200);
+        } catch(err){
+            showToast('Fayl oxunmadı — düzgün yedek faylı seçin');
+        }
+    };
+    reader.readAsText(file);
 }
 
 /* =====================================================

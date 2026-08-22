@@ -1488,8 +1488,51 @@ function applyHomepageConfig() {
             el.style.color = "#F5EDE3";
         });
     }
+
+    /* Heading font override */
+    var oldFontLink = document.getElementById("lunaAdminFont");
+    if (oldFontLink) oldFontLink.remove();
+    var oldFontStyle = document.getElementById("lunaAdminFontStyle");
+    if (oldFontStyle) oldFontStyle.remove();
+    if (cfg.headingFont && cfg.headingFont !== "Cormorant Garamond") {
+        var fl = document.createElement("link");
+        fl.id = "lunaAdminFont";
+        fl.rel = "stylesheet";
+        fl.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(cfg.headingFont).replace(/%20/g, "+") + ":wght@300;400;500;700&display=swap";
+        document.head.appendChild(fl);
+        var fst = document.createElement("style");
+        fst.id = "lunaAdminFontStyle";
+        fst.textContent = '.hero h1,.section-heading h2,.pkg-compare h3{font-family:"' + cfg.headingFont + '",serif!important}';
+        document.head.appendChild(fst);
+    }
+    /* Hero layout variant */
+    var heroEl = document.querySelector(".hero");
+    if (heroEl) heroEl.classList.remove("hero-split", "hero-minimal");
+    if (cfg.heroLayout === "split" && heroEl) heroEl.classList.add("hero-split");
+    if (cfg.heroLayout === "minimal" && heroEl) heroEl.classList.add("hero-minimal");
+    /* Custom CSS injection */
+    var oldCss = document.getElementById("lunaCustomCss");
+    if (oldCss) oldCss.remove();
+    if (cfg.customCss && cfg.customCss.trim()) {
+        var st = document.createElement("style");
+        st.id = "lunaCustomCss";
+        st.textContent = cfg.customCss;
+        document.head.appendChild(st);
+    }
 }
 applyHomepageConfig();
+
+/* Inject admin-chosen heading font + layout styles */
+(function injectHomepageDesignStyles() {
+    var style = document.createElement("style");
+    style.textContent =
+        ".hero.hero-split{min-height:auto;padding:180px 6vw 120px;text-align:left}" +
+        ".hero.hero-split .hero-inner{max-width:100%;margin:0}" +
+        ".hero.hero-split h1{font-size:clamp(50px,9vw,110px);letter-spacing:-2px}" +
+        ".hero.hero-minimal h1{font-size:clamp(40px,7vw,90px);letter-spacing:-1px;margin-top:24px}" +
+        ".hero.hero-minimal{padding-top:160px}";
+    document.head.appendChild(style);
+})();
 
 /* ===== UPDATE CATEGORY COUNTS TO INCLUDE ADMIN DESIGNS ===== */
 (function updateCategoryCounts() {

@@ -924,6 +924,43 @@ function lunaGetExtraProductById(productId) {
             if (cfg.extras[x.id] != null && !isNaN(cfg.extras[x.id])) x.price = cfg.extras[x.id];
         });
     }
+
+    /* Admin-created extra categories appear site-wide */
+    if (Array.isArray(cfg.customCategories)) {
+        cfg.customCategories.forEach(function(cc) {
+            if (!cc || !cc.id || !cc.nameAz) return;
+            if (!LUNA_CATEGORIES.some(function(c) { return c.id === cc.id; })) {
+                LUNA_CATEGORIES.push({
+                    id: cc.id,
+                    icon: cc.icon || "✦",
+                    image: cc.image || "",
+                    heroImage: cc.heroImage || cc.image || "",
+                    description: { az: cc.descAz || cc.nameAz, en: cc.descEn || cc.nameEn || cc.nameAz },
+                    tagline: { az: cc.taglineAz || "", en: cc.taglineEn || "" }
+                });
+                if (cfg.categoryPricing[cc.id]) {
+                    LUNA_CATEGORY_PRICING[cc.id] = Object.assign({}, LUNA_CATEGORY_PRICING[cc.id] || {}, cfg.categoryPricing[cc.id]);
+                }
+            }
+        });
+    }
+
+    /* Admin-edited category previews (image/hero/tagline/description) */
+    var cp;
+    try { cp = JSON.parse(localStorage.getItem("luna_category_previews") || "{}"); } catch(e) { cp = {}; }
+    Object.keys(cp).forEach(function(catId) {
+        var cat = LUNA_CATEGORIES.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        var ov = cp[catId];
+        if (ov.image) cat.image = ov.image;
+        if (ov.heroImage) cat.heroImage = ov.heroImage;
+        cat.description = cat.description || {};
+        cat.tagline = cat.tagline || {};
+        if (ov.descAz) cat.description.az = ov.descAz;
+        if (ov.descEn) cat.description.en = ov.descEn;
+        if (ov.taglineAz) cat.tagline.az = ov.taglineAz;
+        if (ov.taglineEn) cat.tagline.en = ov.taglineEn;
+    });
 })();
 
 /* =====================================================

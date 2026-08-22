@@ -338,6 +338,7 @@ button,input,textarea,select{font-family:inherit}
                     <h3 class="step-title">Təfərrüatlar</h3>
                     <p class="step-desc">Dəvətnamənizin məlumatlarını doldurun</p>
                     <div class="form-grid" id="formGrid"></div>
+                    <div class="form-grid" id="customFieldsWrap" style="margin-top:14px;"></div>
                 </div>
 
                 <!-- Step 5: Media -->
@@ -426,7 +427,47 @@ button,input,textarea,select{font-family:inherit}
 
         /* Step titles from admin */
         applyFormStepConfig(lang);
+
+        /* Admin-defined extra info fields */
+        renderAdminCustomFields();
     });
+
+    function renderAdminCustomFields() {
+        var wrap = document.getElementById("customFieldsWrap");
+        if (!wrap) return;
+        var fields = Array.isArray(_formCfg.customFields) ? _formCfg.customFields : [];
+        var en = (localStorage.getItem("lunaLanguage") || "az") !== "az";
+        wrap.innerHTML = "";
+        fields.forEach(function(f, i) {
+            var id = "acf_" + i;
+            var div = document.createElement("div");
+            div.className = "field full";
+            var labelHtml = "<label>" + (en ? (f.labelEn || f.labelAz) : (f.labelAz || f.labelEn)) + (f.required ? " *" : "") + "</label>";
+            if (f.type === "textarea") {
+                div.innerHTML = labelHtml + '<textarea id="' + id + '" data-acf="' + i + '" rows="3" style="width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(92,61,46,.15);color:var(--text);font-family:inherit;font-size:13px;"></textarea>';
+            } else {
+                var type = (f.type === "date" || f.type === "tel") ? f.type : "text";
+                div.innerHTML = labelHtml + '<input type="' + type + '" id="' + id + '" data-acf="' + i + '" style="width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(92,61,46,.15);color:var(--text);font-family:inherit;font-size:13px;">';
+            }
+            wrap.appendChild(div);
+        });
+    }
+
+    function collectAdminCustomFields() {
+        var out = {};
+        var fields = Array.isArray(_formCfg.customFields) ? _formCfg.customFields : [];
+        var en = (localStorage.getItem("lunaLanguage") || "az") !== "az";
+        var missing = false;
+        fields.forEach(function(f, i) {
+            var el = document.getElementById("acf_" + i);
+            if (!el) return;
+            var val = el.value.trim();
+            if (f.required && !val) { missing = true; el.style.borderColor = "#c0392b"; }
+            else if (el.style) el.style.borderColor = "";
+            out[en ? (f.labelEn || f.labelAz) : (f.labelAz || f.labelEn)] = val;
+        });
+        return missing === true ? null : out;
+    }
 
     function applyFormStepConfig(lang) {
         var en = (lang === "en" || lang === "ru" || lang === "tr");
@@ -452,6 +493,21 @@ button,input,textarea,select{font-family:inherit}
         window.__lunaFormSuccessMsg = en
             ? (_formCfg.successMsgEn || _formCfg.successMsgAz || "")
             : (_formCfg.successMsgAz || _formCfg.successMsgEn || "");
+    }
+
+    /* Inject admin-created extra categories into picker */
+    if (typeof LUNA_CATEGORIES !== "undefined") {
+        var _pickGrid = document.querySelector("#categoryPicker");
+        if (_pickGrid) {
+            LUNA_CATEGORIES.forEach(function(cat) {
+                if (_pickGrid.querySelector('[data-cat="' + cat.id + '"]')) return;
+                var div = document.createElement("div");
+                div.className = "cat-pick";
+                div.setAttribute("data-cat", cat.id);
+                div.innerHTML = '<span class="cat-pick-icon">' + (cat.icon || "✦") + '</span><span class="cat-pick-name">' + lunaCategoryName(cat.id) + '</span>';
+                _pickGrid.appendChild(div);
+            });
+        }
     }
 
     /* Visible categories filter (sync — before initial rendering) */
@@ -1034,6 +1090,15 @@ button,input,textarea,select{font-family:inherit}
         e.preventDefault();
         var v = collectValues();
 
+        /* Admin-defined extra fields (required check + values) */
+        var extraFields = collectAdminCustomFields();
+        if (extraFields === null) {
+            alert("Zəhmət olmasa məcburi sahələri doldurun.");
+            return;
+        }
+        var extraText = Object.keys(extraFields).filter(function(k){ return extraFields[k]; })
+            .map(function(k){ return k + ": " + extraFields[k]; }).join("\n");
+
         if (category === "wedding" || category === "engagement") {
             if (!v.groom) {
                 alert(category === "wedding" ? "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n." : "Z\u00e9hm\u00e9t olmasa b\u00e9yin ad\u0131n\u0131 da yaz\u0131n.");
@@ -1116,6 +1181,10 @@ button,input,textarea,select{font-family:inherit}
 
                     if (videoDataUrl) data.videoUrl = videoDataUrl;
                     if (logoDataUrl) data.logoUrl = logoDataUrl;
+                    if (Object.keys(extraFields).length) {
+                        data.extraFields = extraFields;
+                        data.extraInfo = extraText;
+                    }
 
                     switch (category) {
                         case "wedding":
@@ -1183,7 +1252,8 @@ button,input,textarea,select{font-family:inherit}
                             location: data.location || "",
                             message: data.message || "",
                             contact: data.contact || "",
-                            website: data.website || ""
+                            website: data.website || "",
+                            extraInfo: extraText || ""
                         });
                     }
 
