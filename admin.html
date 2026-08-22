@@ -329,6 +329,14 @@ button{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
             <span>Şablonlar</span>
         </a>
+        <a class="sidebar-link" data-section="clientform" onclick="switchSection('clientform')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>Form Edit</span>
+        </a>
+        <a class="sidebar-link" data-section="homepage" onclick="switchSection('homepage')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Home Edit</span>
+        </a>
         <a class="sidebar-link" data-section="settings" onclick="switchSection('settings')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             <span>Tənzimləmələr</span>
@@ -522,6 +530,92 @@ button{
     </div>
 </div>
 
+<!-- ========== CLIENT FORM EDITOR ========== -->
+<div id="section-clientform" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Form Redaktə</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="saveFormConfig()">Yadda Saxla</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Form Başlığı</h2>
+        <div class="form-grid">
+            <div class="field"><label>Başlıq (AZ)</label><input id="formTitleAz" type="text" value="Dəvətnaməni birlikdə yazaq."></div>
+            <div class="field"><label>Başlıq (EN)</label><input id="formTitleEn" type="text" value="Let's write your invitation together."></div>
+            <div class="field full"><label>Təsvir (AZ)</label><textarea id="formDescAz">Adlar, tarix, məkan və hekayənizi əlavə edin.</textarea></div>
+            <div class="field full"><label>Təsvir (EN)</label><textarea id="formDescEn">Add names, date, venue and your story.</textarea></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Formspree Endpoint</h2>
+        <div class="form-grid">
+            <div class="field full"><label>Endpoint URL</label><input id="formspreeEndpoint" type="text" value="https://formspree.io/f/mqpzyklb"></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Kateqoriya Görünürlüyü</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hansı kateqoriyaların formda görünəcəyini seçin.</p>
+        <div class="checkbox-group" id="formCategoryVisibility"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Paket Qiymətləri</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər kateqoriya üçün paket qiymətlərini tənzimləyin.</p>
+        <div id="formPricingEditor" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
+    </div>
+</div>
+
+<!-- ========== HOMEPAGE EDITOR ========== -->
+<div id="section-homepage" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Ana Səhifə Redaktə</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="saveHomepageConfig()">Yadda Saxla</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Hero Bölməsi</h2>
+        <div class="form-grid">
+            <div class="field"><label>Hero Başlıq (AZ)</label><input id="homeHeroTitleAz" type="text" value="gözəl anlar, gözəl dəvətlərlə"></div>
+            <div class="field"><label>Hero Alt Başlıq (AZ)</label><input id="homeHeroSubAz" type="text" value="hərəkət edən, açılan və hekayənizi danışan dəvətnamələr"></div>
+            <div class="field full"><label>Hero Təsvir (AZ)</label><textarea id="homeHeroTextAz">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.</textarea></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Kolleksiya Bölməsi</h2>
+        <div class="form-grid">
+            <div class="field"><label>Kolleksiya Başlıq (AZ)</label><input id="homeCatTitleAz" type="text" value="Hər an, hər hadisə üçün."></div>
+            <div class="field full"><label>Kolleksiya Təsvir (AZ)</label><textarea id="homeCatTextAz">Toy, nişan, xına, ad günü, məzuniyyət, biznes və ya başqa tədbir — hər hadisə üçün xüsusi kolleksiya.</textarea></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Kateqoriya Sıralaması</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Kateqoriyaları sürükləyərək sıralayın (sıra nömrəsi ilə).</p>
+        <div id="homeCategoryOrder" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+
+    <div class="panel">
+        <h2>CTA Bölməsi</h2>
+        <div class="form-grid">
+            <div class="field"><label>CTA Başlıq (AZ)</label><input id="homeCtaTitleAz" type="text" value="Sənin hekayən burada başlayır."></div>
+            <div class="field full"><label>CTA Təsvir (AZ)</label><textarea id="homeCtaTextAz">Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.</textarea></div>
+        </div>
+    </div>
+</div>
+
 <!-- ========== SETTINGS ========== -->
 <div id="section-settings" class="section">
     <div class="header">
@@ -673,6 +767,8 @@ function switchSection(name){
     if(name === 'designs') renderDesigns();
     if(name === 'videos') renderVideos();
     if(name === 'templates') renderTemplates();
+    if(name === 'clientform') loadFormConfig();
+    if(name === 'homepage') loadHomepageConfig();
 }
 
 
@@ -1512,6 +1608,137 @@ function seedSampleData() {
     ];
     localStorage.setItem("luna_designs", JSON.stringify(sampleDesigns));
     localStorage.setItem("luna_seeded_v1", "1");
+}
+
+/* =====================================================
+   CLIENT FORM EDITOR
+===================================================== */
+
+function loadFormConfig() {
+    var cfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
+    document.getElementById('formTitleAz').value = cfg.formTitleAz || 'Dəvətnaməni birlikdə yazaq.';
+    document.getElementById('formTitleEn').value = cfg.formTitleEn || "Let's write your invitation together.";
+    document.getElementById('formDescAz').value = cfg.formDescAz || 'Adlar, tarix, məkan və hekayənizi əlavə edin.';
+    document.getElementById('formDescEn').value = cfg.formDescEn || 'Add names, date, venue and your story.';
+    document.getElementById('formspreeEndpoint').value = cfg.formspreeEndpoint || 'https://formspree.io/f/mqpzyklb';
+
+    /* Category visibility */
+    var vis = document.getElementById('formCategoryVisibility');
+    vis.innerHTML = '';
+    var visibleCats = cfg.visibleCategories || ['wedding','engagement','henna','birthday','graduation','baby-shower','business','other'];
+    LUNA_CATEGORIES.forEach(function(cat) {
+        var label = document.createElement('label');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.value = cat.id;
+        cb.checked = visibleCats.indexOf(cat.id) !== -1;
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(' ' + lunaCategoryName(cat.id)));
+        vis.appendChild(label);
+    });
+
+    /* Pricing editor */
+    var pricing = document.getElementById('formPricingEditor');
+    pricing.innerHTML = '';
+    var savedPricing = cfg.categoryPricing || LUNA_CATEGORY_PRICING || {};
+    LUNA_CATEGORIES.forEach(function(cat) {
+        var div = document.createElement('div');
+        div.style.cssText = 'padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+        var prices = savedPricing[cat.id] || { video: 20, basic: 25, premium: 40, luxury: 65 };
+        div.innerHTML =
+            '<div style="font-size:11px;margin-bottom:8px;color:#b88c76;">' + cat.icon + ' ' + lunaCategoryName(cat.id) + '</div>' +
+            '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">' +
+                '<div><label style="font-size:7px;">Video</label><input type="number" data-cat="' + cat.id + '" data-pkg="video" value="' + (prices.video || 20) + '" style="padding:6px;font-size:11px;"></div>' +
+                '<div><label style="font-size:7px;">Basic</label><input type="number" data-cat="' + cat.id + '" data-pkg="basic" value="' + (prices.basic || 25) + '" style="padding:6px;font-size:11px;"></div>' +
+                '<div><label style="font-size:7px;">Premium</label><input type="number" data-cat="' + cat.id + '" data-pkg="premium" value="' + (prices.premium || 40) + '" style="padding:6px;font-size:11px;"></div>' +
+                '<div><label style="font-size:7px;">Luxury</label><input type="number" data-cat="' + cat.id + '" data-pkg="luxury" value="' + (prices.luxury || 65) + '" style="padding:6px;font-size:11px;"></div>' +
+            '</div>';
+        pricing.appendChild(div);
+    });
+}
+
+function saveFormConfig() {
+    var visibleCats = [];
+    document.querySelectorAll('#formCategoryVisibility input[type="checkbox"]:checked').forEach(function(cb) {
+        visibleCats.push(cb.value);
+    });
+
+    var categoryPricing = {};
+    document.querySelectorAll('#formPricingEditor input[type="number"]').forEach(function(inp) {
+        var cat = inp.getAttribute('data-cat');
+        var pkg = inp.getAttribute('data-pkg');
+        if (!categoryPricing[cat]) categoryPricing[cat] = {};
+        categoryPricing[cat][pkg] = parseInt(inp.value) || 0;
+    });
+
+    var cfg = {
+        formTitleAz: document.getElementById('formTitleAz').value,
+        formTitleEn: document.getElementById('formTitleEn').value,
+        formDescAz: document.getElementById('formDescAz').value,
+        formDescEn: document.getElementById('formDescEn').value,
+        formspreeEndpoint: document.getElementById('formspreeEndpoint').value,
+        visibleCategories: visibleCats,
+        categoryPricing: categoryPricing
+    };
+
+    localStorage.setItem('luna_form_config', JSON.stringify(cfg));
+    showToast('Form konfiqurasiyası yadda saxlandı');
+}
+
+/* =====================================================
+   HOMEPAGE EDITOR
+===================================================== */
+
+function loadHomepageConfig() {
+    var cfg = JSON.parse(localStorage.getItem('luna_homepage_config') || '{}');
+    document.getElementById('homeHeroTitleAz').value = cfg.heroTitleAz || 'gözəl anlar, gözəl dəvətlərlə';
+    document.getElementById('homeHeroSubAz').value = cfg.heroSubAz || 'hərəkət edən, açılan və hekayənizi danışan dəvətnamələr';
+    document.getElementById('homeHeroTextAz').value = cfg.heroTextAz || 'Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.';
+    document.getElementById('homeCatTitleAz').value = cfg.catTitleAz || 'Hər an, hər hadisə üçün.';
+    document.getElementById('homeCatTextAz').value = cfg.catTextAz || 'Toy, nişan, xına, ad günü, məzuniyyət, biznes və ya başqa tədbir — hər hadisə üçün xüsusi kolleksiya.';
+    document.getElementById('homeCtaTitleAz').value = cfg.ctaTitleAz || 'Sənin hekayən burada başlayır.';
+    document.getElementById('homeCtaTextAz').value = cfg.ctaTextAz || 'Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.';
+
+    /* Category order */
+    var order = document.getElementById('homeCategoryOrder');
+    order.innerHTML = '';
+    var savedOrder = cfg.categoryOrder || ['wedding','engagement','henna','birthday','graduation','baby-shower','business','other'];
+    savedOrder.forEach(function(catId, idx) {
+        var cat = LUNA_CATEGORIES.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+        row.innerHTML =
+            '<span style="font-size:18px;">' + cat.icon + '</span>' +
+            '<span style="flex:1;font-size:12px;">' + lunaCategoryName(cat.id) + '</span>' +
+            '<input type="number" value="' + (idx + 1) + '" data-cat="' + cat.id + '" style="width:60px;padding:6px;font-size:11px;text-align:center;">';
+        order.appendChild(row);
+    });
+}
+
+function saveHomepageConfig() {
+    var categoryOrder = [];
+    var rows = document.querySelectorAll('#homeCategoryOrder input[type="number"]');
+    var pairs = [];
+    rows.forEach(function(inp) {
+        pairs.push({ cat: inp.getAttribute('data-cat'), order: parseInt(inp.value) || 99 });
+    });
+    pairs.sort(function(a,b) { return a.order - b.order; });
+    pairs.forEach(function(p) { categoryOrder.push(p.cat); });
+
+    var cfg = {
+        heroTitleAz: document.getElementById('homeHeroTitleAz').value,
+        heroSubAz: document.getElementById('homeHeroSubAz').value,
+        heroTextAz: document.getElementById('homeHeroTextAz').value,
+        catTitleAz: document.getElementById('homeCatTitleAz').value,
+        catTextAz: document.getElementById('homeCatTextAz').value,
+        ctaTitleAz: document.getElementById('homeCtaTitleAz').value,
+        ctaTextAz: document.getElementById('homeCtaTextAz').value,
+        categoryOrder: categoryOrder
+    };
+
+    localStorage.setItem('luna_homepage_config', JSON.stringify(cfg));
+    showToast('Ana səhifə konfiqurasiyası yadda saxlandı');
 }
 
 /* =====================================================
