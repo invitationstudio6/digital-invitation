@@ -244,6 +244,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-style-luxury", backgroundStyle: "dark", openingType: "editorial-card" },
         preview: { eyebrow: "WEDDING COLLECTION", names: ["Nigar", "Elvin"], date: "15 · 11 · 2026", message: "Sevgi zamanı doping edir. Bizim hekayəmiz məhz belə başladı.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
@@ -268,6 +269,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "default", openingType: "fullscreen-photo" },
         preview: { eyebrow: "SAVE THE DATE", names: ["Laman", "Tural"], date: "10 · 09 · 2026", message: "Sevgi ilə dolu bir həyat bizə gözəl anlar bəxş edir.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -292,6 +294,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "minimal", openingType: "minimal" },
         preview: { eyebrow: "THE WEDDING OF", names: ["Səbinə", "Rəhim"], date: "03 · 10 · 2026", message: "Sadəlik gözəlliyin ən ali formasıdır. Bizim hekayəmiz də belə başladı.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -324,6 +327,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1487700160041-babef9c3cb55?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1487700160041-babef9c3cb55?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","rsvp","countdown"], heroType: "hero-style-botanical", backgroundStyle: "default", openingType: "envelope" },
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Ülviyyə", "Murad"], date: "19 · 05 · 2026", message: "Yaşıl yarpaqların arasında, təbiətin qucağında birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Şamaxı, Azərbaycan", theme: "default" }
     },
     {
@@ -332,6 +336,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","rsvp","countdown","story"], heroType: "hero-style-minimal", backgroundStyle: "minimal", openingType: "minimal" },
         preview: { eyebrow: "THE WEDDING OF", names: ["Leyla", "Anar"], date: "02 · 10 · 2026", message: "Klassik dəyərlər, müasir ruhla birləşir. Bizim hekayəmiz belə.", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
@@ -388,6 +393,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-centered", backgroundStyle: "default", openingType: "fullscreen-photo" },
         preview: { eyebrow: "AD GÜNÜ MÜBARƏK", names: ["Sara"], date: "14 · 03 · 2026", message: "Həyatımdakı ən gözəl anları sizinlə bölüşmək istəyirəm!", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
