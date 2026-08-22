@@ -80,6 +80,14 @@
 [data-design="anniversary"] { --bg: #F5F0EA; --bg-alt: #EDE6DC; --accent: #B8A080; --accent-light: rgba(184,160,128,.10); --gold: #B8A080; --cover: url('https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="celebration"] { --bg: #FFF8F0; --bg-alt: #FFF0E2; --accent: #E8A040; --accent-light: rgba(232,160,64,.10); --gold: #E8A040; --cover: url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90'); }
 
+/* Signature Collection — six distinct opening stories */
+[data-design="royal-seal"] { --bg:#F7F1E6; --bg-alt:#EFE4D0; --fg:#5C4433; --fg-heading:#40291A; --fg-muted:rgba(92,68,51,.50); --accent:#B04A3A; --accent-light:rgba(176,74,58,.12); --border:rgba(92,68,51,.10); --border-strong:rgba(92,68,51,.22); --gold:#C9A96A; --cover:url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="grand-curtain"] { --bg:#140B08; --bg-alt:#1E110C; --fg:#F0E4D8; --fg-heading:#F7EDDF; --fg-muted:rgba(240,228,216,.45); --accent:#A8322E; --accent-light:rgba(168,50,46,.14); --border:rgba(240,228,216,.08); --border-strong:rgba(240,228,216,.18); --gold:#D4AF37; --cover:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="garden-bloom"] { --bg:#F7F3EA; --bg-alt:#EFF0E2; --fg:#4A5540; --fg-heading:#33402A; --fg-muted:rgba(74,85,64,.50); --accent:#8FAE7E; --accent-light:rgba(143,174,126,.12); --border:rgba(74,85,64,.10); --border-strong:rgba(74,85,64,.20); --gold:#C89860; --cover:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="velvet-luxe"] { --bg:#1C0F14; --bg-alt:#26161C; --fg:#F0DFE4; --fg-heading:#FBEFF2; --fg-muted:rgba(240,223,228,.45); --accent:#C46A82; --accent-light:rgba(196,106,130,.13); --border:rgba(240,223,228,.08); --border-strong:rgba(240,223,228,.18); --gold:#D9AE6A; --cover:url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="fiesta-pop"] { --bg:#FFF6EC; --bg-alt:#FFEFD9; --fg:#4A3A52; --fg-heading:#33253D; --fg-muted:rgba(74,58,82,.50); --accent:#FF6B6B; --accent-light:rgba(255,107,107,.10); --border:rgba(74,58,82,.08); --border-strong:rgba(74,58,82,.18); --gold:#FF9F43; --cover:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="starry-dream"] { --bg:#0E1226; --bg-alt:#171C36; --fg:#DCE2F5; --fg-heading:#EEF1FC; --fg-muted:rgba(220,226,245,.45); --accent:#8EA8E8; --accent-light:rgba(142,168,232,.12); --border:rgba(220,226,245,.08); --border-strong:rgba(220,226,245,.18); --gold:#E8C97A; --cover:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1800&q=90'); }
+
 
 /* =====================================================
    RESET
@@ -443,6 +451,470 @@ a { text-decoration: none; color: inherit; }
     z-index: 3;
     margin-top: 20px;
 }
+
+/* =====================================================
+   OPENING SCENE SHARED LAYOUT
+   All signature scenes share .sig-scene scaffolding
+===================================================== */
+
+.sig-scene {
+    position: relative;
+    width: min(520px, 88vw);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+[data-opening] .sig-scene.active { display: flex; }
+
+.sig-card {
+    position: relative;
+    width: min(420px, 82vw);
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 44px 30px;
+    background: var(--white);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 30px 80px rgba(0,0,0,.18);
+}
+
+.sig-card small {
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.sig-card h1 {
+    font-family: "Italiana", serif;
+    font-weight: 400;
+    font-size: clamp(26px, 6vw, 40px);
+    color: var(--fg-heading);
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.sig-card p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--fg-muted);
+}
+
+/* Reveal state — card animates in when scene opens */
+[data-opening].scene-opened .sig-scene.active .sig-card {
+    animation: sigCardIn .9s cubic-bezier(.22,.9,.32,1.1) both;
+}
+@keyframes sigCardIn {
+    from { opacity: 0; transform: translateY(24px) scale(.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* =====================================================
+   TYPE: WAX SEAL (royal-seal)
+===================================================== */
+
+[data-opening="wax-seal"] .envelope-scene { display: none; }
+[data-opening="wax-seal"] .opening {
+    background:
+        radial-gradient(circle at 50% 38%, rgba(201,169,106,.16), transparent 46%),
+        linear-gradient(160deg, #F7F1E6, #EFE4D0);
+    overflow: hidden;
+}
+
+.wax-wrap { position: relative; margin-bottom: -58px; z-index: 3; }
+
+.wax-seal-big {
+    position: relative;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    color: #F7E9D8;
+    cursor: pointer;
+    background:
+        radial-gradient(circle at 34% 30%, rgba(255,255,255,.28), transparent 42%),
+        radial-gradient(circle at 68% 74%, rgba(0,0,0,.28), transparent 48%),
+        radial-gradient(circle at 50% 50%, #B04A3A, #8A3327 72%);
+    box-shadow:
+        inset 0 -6px 14px rgba(60,10,5,.55),
+        inset 0 6px 10px rgba(255,220,180,.25),
+        0 14px 30px rgba(90,30,20,.35);
+    transition: transform .45s ease;
+}
+.wax-seal-big::before,
+.wax-seal-big::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255,235,205,.22);
+}
+.wax-seal-big::before { inset: 9px; }
+.wax-seal-big::after { inset: 15px; }
+
+.wax-seal-big:hover { transform: scale(1.05); }
+
+/* Cracked state */
+.scene-opened[data-opening="wax-seal"] .wax-seal-big {
+    animation: waxCrack .8s cubic-bezier(.5,0,.75,.4) forwards;
+    pointer-events: none;
+}
+@keyframes waxCrack {
+    0%   { transform: scale(1); opacity: 1; }
+    18%  { transform: scale(1.12) rotate(-4deg); }
+    36%  { transform: scale(.94) rotate(3deg); }
+    100% { transform: scale(1.5) rotate(-14deg); opacity: 0; filter: blur(2px); }
+}
+
+.scene-opened[data-opening="wax-seal"] .wax-half-l,
+.scene-opened[data-opening="wax-seal"] .wax-half-r { opacity: 1; }
+.wax-half-l, .wax-half-r {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 54px;
+    height: 108px;
+    border-radius: 54px 0 0 54px;
+    background: linear-gradient(135deg, #A0432F, #7C2E22);
+    opacity: 0;
+    pointer-events: none;
+}
+.wax-half-r { border-radius: 0 54px 54px 0; }
+.scene-opened[data-opening="wax-seal"] .wax-half-l { animation: waxFlyL .9s ease-out forwards; animation-delay: .28s; }
+.scene-opened[data-opening="wax-seal"] .wax-half-r { animation: waxFlyR .9s ease-out forwards; animation-delay: .28s; }
+@keyframes waxFlyL { to { transform: translate(-120px,140px) rotate(-70deg); opacity: 0; } }
+@keyframes waxFlyR { to { transform: translate(130px,-120px) rotate(65deg); opacity: 0; } }
+
+[data-opening="wax-seal"] .sig-card {
+    background: linear-gradient(170deg, #FFFDF8, #F6EDDD);
+    border-color: rgba(201,169,106,.5);
+}
+[data-opening="wax-seal"] .sig-card h1 { color: #40291A; }
+
+
+/* =====================================================
+   TYPE: GRAND CURTAIN (grand-curtain)
+===================================================== */
+
+[data-opening="curtain"] .envelope-scene { display: none; }
+[data-opening="curtain"] .opening {
+    background: #0B0605;
+    overflow: hidden;
+    perspective: 900px;
+}
+
+.curtain-stage { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+
+.curtain-left,
+.curtain-right {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    z-index: 4;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(0,0,0,.32) 0 10px,
+            transparent 10px 26px),
+        linear-gradient(90deg, #571512, #7A1F1B 30%, #8E2723 50%, #7A1F1B 70%, #571512);
+    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55);
+    transition: transform 1.5s cubic-bezier(.65,0,.25,1);
+}
+.curtain-left  { left: 0;  transform-origin: left; }
+.curtain-right { right: 0; transform-origin: right; }
+
+.curtain-rail {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 16px;
+    z-index: 5;
+    background: linear-gradient(#E9CE7E, #A98B3E);
+    box-shadow: 0 4px 18px rgba(0,0,0,.5);
+}
+
+.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg); }
+.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg); }
+.scene-opened[data-opening="curtain"] .curtain-rail  { opacity: 0; transition: opacity .8s ease .6s; }
+
+[data-opening="curtain"] .sig-scene { z-index: 2; }
+[data-opening="curtain"] .sig-card {
+    background: linear-gradient(165deg, #1E110C, #140B08);
+    border-color: rgba(212,175,55,.4);
+    box-shadow: 0 0 90px rgba(212,175,55,.14), 0 30px 80px rgba(0,0,0,.6);
+}
+[data-opening="curtain"] .sig-card h1 { color: #F7EDDF; }
+[data-opening="curtain"] .open-button { border-color: rgba(212,175,55,.5); color: #E9CE7E; }
+
+
+/* =====================================================
+   TYPE: FLORAL PAPER (garden-bloom)
+===================================================== */
+
+[data-opening="floral-paper"] .envelope-scene { display: none; }
+[data-opening="floral-paper"] .opening {
+    background:
+        radial-gradient(circle at 22% 18%, rgba(143,174,126,.18), transparent 42%),
+        radial-gradient(circle at 78% 82%, rgba(200,152,96,.16), transparent 44%),
+        linear-gradient(150deg, #F7F3EA, #EFF0E2);
+    overflow: hidden;
+}
+
+.falling-petal {
+    position: fixed;
+    top: -6vh;
+    width: 16px;
+    height: 22px;
+    border-radius: 60% 40% 55% 45% / 62% 55% 45% 38%;
+    background: linear-gradient(135deg, #D8A7B1, #EFDCD3 60%, #C98A96);
+    opacity: .85;
+    pointer-events: none;
+    animation: petalFall linear infinite;
+    z-index: 1;
+}
+@keyframes petalFall {
+    0%   { transform: translate(0,-6vh) rotate(0deg); }
+    50%  { transform: translate(4vw,52vh) rotate(190deg); }
+    100% { transform: translate(-2vw,110vh) rotate(380deg); }
+}
+
+[data-opening="floral-paper"] .sig-card {
+    transform-origin: top center;
+    background: repeating-linear-gradient(-45deg, rgba(143,174,126,.05) 0 8px, transparent 8px 16px), var(--white);
+    border-color: rgba(143,174,126,.45);
+}
+
+.scene-opened[data-opening="floral-paper"] .sig-scene.active .sig-card {
+    animation-name: paperUnfold;
+}
+@keyframes paperUnfold {
+    0%   { opacity: 0; transform: rotateX(-72deg) scale(.86); }
+    60%  { opacity: 1; transform: rotateX(8deg) scale(1.02); }
+    100% { opacity: 1; transform: rotateX(0) scale(1); }
+}
+
+.scene-opened[data-opening="floral-paper"] .falling-petal { animation-duration: 2.2s !important; opacity: .95; }
+
+
+/* =====================================================
+   TYPE: LUXURY ROMANCE / SILK (velvet-luxe)
+===================================================== */
+
+[data-opening="luxury-romance"] .envelope-scene { display: none; }
+[data-opening="luxury-romance"] .opening {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(217,174,106,.13), transparent 55%),
+        linear-gradient(170deg, #1C0F14, #26161C 60%, #140A0E);
+    overflow: hidden;
+}
+
+.silk-band {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 50%;
+    height: 120px;
+    transform: translateY(-50%) rotate(-6deg);
+    background:
+        linear-gradient(105deg,
+            transparent 0%, rgba(196,106,130,.16) 12%,
+            rgba(217,174,106,.30) 50%, rgba(196,106,130,.16) 88%, transparent 100%);
+    filter: blur(1px);
+    z-index: 2;
+    transition: transform 1.4s cubic-bezier(.7,0,.3,1), opacity 1s ease .5s;
+}
+.silk-band::before, .silk-band::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(#E9CE7E, transparent);
+}
+.silk-band::before { left: 22%; }
+.silk-band::after  { right: 22%; }
+
+.scene-opened[data-opening="luxury-romance"] .silk-band {
+    transform: translateY(-320%) rotate(-10deg);
+    opacity: 0;
+}
+
+.lux-monogram {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(64px, 14vw, 120px);
+    color: rgba(233,206,126,.9);
+    text-shadow: 0 0 40px rgba(217,174,106,.5);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease .4s;
+}
+[data-opening="luxury-romance"] .lux-monogram { opacity: 1; }
+.scene-opened[data-opening="luxury-romance"] .lux-monogram { opacity: 0; }
+
+[data-opening="luxury-romance"] .sig-scene { z-index: 4; }
+[data-opening="luxury-romance"] .sig-card {
+    background: linear-gradient(170deg, rgba(38,22,28,.92), rgba(20,10,14,.94));
+    border-color: rgba(217,174,106,.45);
+    backdrop-filter: blur(4px);
+}
+[data-opening="luxury-romance"] .sig-card h1 { color: #FBEFF2; }
+[data-opening="luxury-romance"] .open-button { border-color: rgba(233,206,126,.5); color: #E9CE7E; }
+
+
+/* =====================================================
+   TYPE: CELEBRATION POP / CONFETTI (fiesta-pop)
+===================================================== */
+
+[data-opening="celebration-pop"] .envelope-scene { display: none; }
+[data-opening="celebration-pop"] .opening {
+    background:
+        radial-gradient(circle at 18% 22%, rgba(255,159,67,.16), transparent 40%),
+        radial-gradient(circle at 84% 76%, rgba(46,196,182,.14), transparent 42%),
+        radial-gradient(circle at 76% 20%, rgba(255,107,107,.14), transparent 38%),
+        linear-gradient(150deg, #FFF6EC, #FFEFD9);
+    overflow: hidden;
+}
+
+.pop-bubble {
+    position: fixed;
+    border-radius: 50%;
+    opacity: .5;
+    pointer-events: none;
+    animation: bubbleFloat 9s ease-in-out infinite alternate;
+    z-index: 1;
+}
+@keyframes bubbleFloat {
+    from { transform: translateY(0) scale(1); }
+    to   { transform: translateY(-34px) scale(1.08); }
+}
+
+.confetti-piece {
+    position: fixed;
+    width: 9px;
+    height: 14px;
+    top: 42%;
+    left: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 6;
+}
+.scene-opened[data-opening="celebration-pop"] .confetti-piece {
+    animation: confettiBurst 1.5s cubic-bezier(.2,.6,.4,1) forwards;
+}
+@keyframes confettiBurst {
+    0%   { opacity: 1; transform: translate(0,0) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--cx), var(--cy)) rotate(var(--cr)); }
+}
+
+[data-opening="celebration-pop"] .sig-card {
+    border: 3px dashed rgba(255,159,67,.55);
+    background: var(--white);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(255,107,107,.18);
+}
+[data-opening="celebration-pop"] .sig-card h1 { color: #33253D; }
+
+.scene-opened[data-opening="celebration-pop"] .pop-gift { animation: giftPop .7s cubic-bezier(.3,1.6,.5,1) both; }
+.pop-gift { position: relative; z-index: 2; font-size: 54px; margin-bottom: -30px; filter: drop-shadow(0 12px 24px rgba(255,107,107,.3)); }
+@keyframes giftPop {
+    0%   { transform: scale(.4) rotate(-12deg); }
+    70%  { transform: scale(1.18) rotate(6deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+
+/* =====================================================
+   TYPE: STARRY NIGHT (starry-dream)
+===================================================== */
+
+[data-opening="starry-night"] .envelope-scene { display: none; }
+[data-opening="starry-night"] .opening {
+    background:
+        radial-gradient(ellipse at 50% 115%, rgba(142,168,232,.22), transparent 60%),
+        linear-gradient(185deg, #070A18 0%, #0E1226 55%, #171C36);
+    overflow: hidden;
+}
+
+.twinkle-star {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #EEF1FC;
+    opacity: .7;
+    animation: twinkle 3.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+.twinkle-star.big { width: 5px; height: 5px; box-shadow: 0 0 12px rgba(238,241,252,.9); }
+@keyframes twinkle {
+    0%, 100% { opacity: .25; transform: scale(.85); }
+    50%      { opacity: .95; transform: scale(1.15); }
+}
+
+.shooting-star {
+    position: fixed;
+    top: 16%;
+    left: -14%;
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #EEF1FC);
+    border-radius: 2px;
+    transform: rotate(18deg);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+[data-opening="starry-night"] .shooting-star { animation: shootBy 5.5s ease-in infinite; animation-delay: 1s; }
+@keyframes shootBy {
+    0%, 66%  { opacity: 0; transform: translate(0,0) rotate(18deg); }
+    72%      { opacity: 1; }
+    92%      { opacity: 0; transform: translate(125vw,44vh) rotate(18deg); }
+    100%     { opacity: 0; }
+}
+.scene-opened[data-opening="starry-night"] .shooting-star { animation: shootOnce 1s ease-out forwards; }
+@keyframes shootOnce {
+    0%  { opacity: 0; transform: translate(0,0) rotate(18deg); }
+    15% { opacity: 1; }
+    100%{ opacity: 0; transform: translate(125vw,44vh) rotate(18deg); }
+}
+
+.starry-moon {
+    position: fixed;
+    top: 12%;
+    right: 14%;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 34%, #FBF6E4, #E8C97A 68%);
+    box-shadow: 0 0 60px rgba(232,201,122,.4);
+    z-index: 1;
+}
+
+[data-opening="starry-night"] .sig-scene { z-index: 3; }
+[data-opening="starry-night"] .sig-card {
+    background: linear-gradient(168deg, rgba(23,28,54,.88), rgba(10,13,30,.94));
+    border-color: rgba(142,168,232,.4);
+    backdrop-filter: blur(3px);
+}
+[data-opening="starry-night"] .sig-card h1 { color: #EEF1FC; }
+[data-opening="starry-night"] .sig-card small { color: rgba(220,226,245,.55); }
+[data-opening="starry-night"] .sig-card p { color: rgba(220,226,245,.55); }
+[data-opening="starry-night"] .open-button { border-color: rgba(232,201,122,.5); color: #E8C97A; }
 
 
 /* =====================================================
@@ -2146,6 +2618,80 @@ footer p {
         <button class="open-button" id="stairsOpenButton" type="button"></button>
     </div>
 
+    <!-- Signature Scene 1 · WAX SEAL -->
+    <div class="sig-scene" id="waxSealScene" data-scene-for="wax-seal">
+        <div class="wax-wrap">
+            <div class="wax-half-l"></div>
+            <div class="wax-half-r"></div>
+            <div class="wax-seal-big" id="waxSealBig">L</div>
+        </div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 2 · GRAND CURTAIN -->
+    <div class="sig-scene" id="curtainScene" data-scene-for="curtain">
+        <div class="curtain-rail"></div>
+        <div class="curtain-left"></div>
+        <div class="curtain-right"></div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 3 · FLORAL PAPER -->
+    <div class="sig-scene" id="floralScene" data-scene-for="floral-paper">
+        <div class="pop-gift">&#10047;</div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 4 · LUXURY SILK -->
+    <div class="sig-scene" id="silkScene" data-scene-for="luxury-romance">
+        <div class="silk-band"></div>
+        <div class="lux-monogram" id="luxMonogram">L</div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 5 · CELEBRATION POP -->
+    <div class="sig-scene" id="fiestaScene" data-scene-for="celebration-pop">
+        <div class="pop-gift">&#127873;</div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 6 · STARRY NIGHT -->
+    <div class="sig-scene" id="starryScene" data-scene-for="starry-night">
+        <div class="starry-moon"></div>
+        <div class="shooting-star" id="shootingStar"></div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
 </div>
 
 
@@ -2561,7 +3107,17 @@ if (invitation.design) {
     else if (theme === "floral" || theme === "botanical" || theme === "garden") openingClass = "opening-floral";
     else if (theme === "noir" || theme === "black-gold" || theme === "luxe-gold" || theme === "dark") openingClass = "opening-luxury";
     else if (theme === "minimal" || theme === "minimal-white" || theme === "modern-classic") openingClass = "opening-minimal";
-    document.querySelector(".envelope-scene").classList.add(openingClass);
+
+    var envScene = document.querySelector(".envelope-scene");
+    var openingType = document.documentElement.getAttribute("data-opening") || "";
+
+    /* Signature scenes take over — skip envelope styling entirely */
+    if (!envScene) return;
+    if (["wax-seal","curtain","floral-paper","luxury-romance","celebration-pop","starry-night","door","stairs"].indexOf(openingType) !== -1) {
+        envScene.style.display = "none";
+        return;
+    }
+    envScene.classList.add(openingClass);
 })();
 
 
@@ -3318,19 +3874,184 @@ var _openingStyle = (function() {
     return (tData && tData.openingStyle) || "envelope";
 })();
 
-function _openInvitation() {
-    if (openButton.disabled) return;
 
-    envelope.classList.add("open");
+/* =====================================================
+   SIGNATURE SCENE ENGINE
+   Activates the correct opening scene, fills its
+   content and wires every scene's open button.
+   Also fixes legacy door / stairs scenes.
+===================================================== */
+
+(function signatureSceneEngine() {
+
+    var SCENES = {
+        "wax-seal":       { id: "waxSealScene", delay: 1700 },
+        "curtain":        { id: "curtainScene", delay: 2100 },
+        "floral-paper":   { id: "floralScene",  delay: 1800 },
+        "luxury-romance": { id: "silkScene",    delay: 2000 },
+        "celebration-pop":{ id: "fiestaScene",  delay: 1900 },
+        "starry-night":   { id: "starryScene",  delay: 1900 },
+        "door":           { id: "doorScene",    delay: 1900 },
+        "stairs":         { id: "stairsScene",  delay: 1900 }
+    };
+
+    var type = document.documentElement.getAttribute("data-opening") || "";
+    var sceneCfg = SCENES[type];
+    window.__lunaOpenDelay = 1600;
+
+    /* Fill every scene card + legacy door/stairs fields */
+    function fillAll() {
+        document.querySelectorAll(".scene-fill").forEach(function(el) {
+            var s = el.querySelector("small");
+            var h = el.querySelector("h1");
+            var p = el.querySelector("p");
+            if (s) s.textContent = lunaT("invOpen");
+            if (h) h.textContent = lunaDisplayNames(invitation);
+            if (p) p.textContent = displayDate;
+        });
+        ["doorEyebrow","stairsEyebrow"].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = lunaT("invOpen");
+        });
+        ["doorNames","stairsNames"].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = lunaDisplayNames(invitation);
+        });
+        ["doorDate","stairsDate"].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = displayDate;
+        });
+        ["doorOpenButton","stairsOpenButton"].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = lunaT("invOpen");
+        });
+
+        /* Monograms */
+        var mono = document.getElementById("luxMonogram");
+        if (mono) {
+            var b = (invitation.bride || "").charAt(0);
+            var g = (invitation.groom || "").charAt(0);
+            mono.textContent = (b + g).toUpperCase() || "L";
+        }
+        var wax = document.getElementById("waxSealBig");
+        if (wax) {
+            var wb = (invitation.bride || "").charAt(0);
+            wax.textContent = wb.toUpperCase() || "L";
+        }
+
+        /* Scene buttons text */
+        document.querySelectorAll(".scene-open-btn").forEach(function(btn) {
+            btn.textContent = lunaT("invOpen");
+        });
+    }
+    fillAll();
+
+    if (!sceneCfg) return;
+
+    /* Activate the right scene, keep others hidden */
+    var sceneEl = document.getElementById(sceneCfg.id);
+    if (!sceneEl) return;
+    sceneEl.style.display = "";
+    sceneEl.classList.add("active");
+
+    /* Hide the default envelope + all unused scenes */
+    var envScene = document.querySelector(".envelope-scene");
+    if (envScene) envScene.style.display = "none";
+    Object.keys(SCENES).forEach(function(key) {
+        if (key === type) return;
+        var other = document.getElementById(SCENES[key].id);
+        if (other) { other.style.display = "none"; }
+    });
+
+    window.__lunaOpenDelay = sceneCfg.delay;
+
+    /* Ambient decorations per scene type */
+    function spawn(className, count, styleFn) {
+        for (var i = 0; i < count; i++) {
+            var el = document.createElement("div");
+            el.className = className;
+            styleFn(el, i);
+            opening.appendChild(el);
+        }
+    }
+
+    function rnd(min, max) { return min + Math.random() * (max - min); }
+
+    if (type === "floral-paper") {
+        spawn("falling-petal", 14, function(el) {
+            el.style.left = rnd(2, 98) + "vw";
+            el.style.animationDuration = rnd(7, 13) + "s";
+            el.style.animationDelay = "-" + rnd(0, 10) + "s";
+            el.style.transform = "scale(" + rnd(.6, 1.3) + ")";
+        });
+    } else if (type === "celebration-pop") {
+        var palette = ["#FF6B6B","#FF9F43","#2EC4B6","#8EA8E8","#E8C97A","#C46A82"];
+        spawn("pop-bubble", 10, function(el, i) {
+            var size = rnd(26, 90);
+            el.style.width = size + "px";
+            el.style.height = size + "px";
+            el.style.left = rnd(4, 92) + "vw";
+            el.style.top = rnd(6, 86) + "vh";
+            el.style.background = palette[i % palette.length];
+            el.style.filter = "blur(2px)";
+            el.style.animationDelay = "-" + rnd(0, 6) + "s";
+        });
+        spawn("confetti-piece", 36, function(el, i) {
+            el.style.background = palette[i % palette.length];
+            el.style.setProperty("--cx", rnd(-320, 320) + "px");
+            el.style.setProperty("--cy", rnd(-260, 340) + "px");
+            el.style.setProperty("--cr", rnd(-540, 540) + "deg");
+            el.style.animationDelay = (Math.random() * .12) + "s";
+        });
+    } else if (type === "starry-night") {
+        spawn("twinkle-star", 42, function(el, i) {
+            el.style.left = rnd(1, 99) + "vw";
+            el.style.top = rnd(1, 92) + "vh";
+            el.style.animationDelay = "-" + rnd(0, 3) + "s";
+            if (i % 6 === 0) el.classList.add("big");
+        });
+    }
+
+    /* Wax seal is itself a trigger */
+    var waxBig = document.getElementById("waxSealBig");
+    if (waxBig && type === "wax-seal") {
+        waxBig.addEventListener("click", _openInvitation);
+    }
+
+    /* Every scene button triggers the same flow */
+    document.querySelectorAll(".scene-open-btn").forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            _openInvitation();
+        });
+    });
+
+    /* Legacy scenes' buttons */
+    ["doorOpenButton","stairsOpenButton"].forEach(function(id) {
+        var btn = document.getElementById(id);
+        if (btn) btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            _openInvitation();
+        });
+    });
+
+})();
+
+function _openInvitation() {
+    if (_openInvitation._done) return;
+    _openTriggers();
 
     openButton.textContent = lunaT("invOpening");
     openButton.disabled = true;
+
+    var delay = window.__lunaOpenDelay || 1600;
 
     setTimeout(
         function() {
             opening.classList.add("hidden");
             invitationPage.classList.add("visible");
             window.scrollTo(0, 0);
+            _openInvitation._done = true;
 
             /* Auto-play music if available */
             if (pkg === "luxury" && invitation.music) {
@@ -3338,8 +4059,14 @@ function _openInvitation() {
                 musicButton.textContent = lunaT("invMusicMute");
             }
         },
-        1600
+        delay
     );
+}
+
+/* Trigger type-specific pre-reveal animations */
+function _openTriggers() {
+    document.documentElement.classList.add("scene-opened");
+    try { envelope.classList.add("open"); } catch(e) {}
 }
 
 openButton.addEventListener("click", _openInvitation);
@@ -3348,6 +4075,7 @@ openButton.addEventListener("click", _openInvitation);
 if (_openingStyle !== "envelope") {
     opening.addEventListener("click", function(e) {
         if (e.target === openButton || openButton.contains(e.target)) return;
+        if (e.target.closest && e.target.closest(".scene-open-btn")) return;
         _openInvitation();
     });
 }

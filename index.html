@@ -171,16 +171,39 @@ img{display:block;max-width:100%}
 .video-section{background:rgba(255,252,247,.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .video-section .section-inner{width:min(1000px,100%);margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
 .video-section .section-heading{margin-bottom:0}
-.video-featured{position:relative;border-radius:4px;overflow:hidden;box-shadow:0 20px 60px rgba(62,37,24,.12);background:#1a1410}
-.video-featured img,.video-featured video,.video-featured iframe{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.video-featured{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(62,37,24,.12);background:#1a1410;width:100%;min-height:320px}
+.video-featured img,.video-featured video,.video-featured iframe{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
 .video-featured video::-webkit-media-controls{display:none !important}
 .video-featured .video-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;cursor:pointer}
-.video-featured .video-play-circle{width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;transition:.3s}
-.video-featured .video-play-circle::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
+.video-featured .video-play-circle{width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;transition:.3s}
+.video-featured .video-play-circle::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff;margin-left:4px}
 .video-featured:hover .video-play-circle{border-color:#fff;transform:scale(1.08)}
-.video-price-badge{position:absolute;top:16px;right:16px;padding:8px 16px;background:var(--gold);color:var(--dark);font-size:11px;font-weight:600;letter-spacing:1px;border-radius:20px}
+.video-price-badge{position:absolute;top:16px;right:16px;padding:8px 16px;background:var(--gold);color:var(--dark);font-size:11px;font-weight:600;letter-spacing:1px;border-radius:20px;z-index:3}
 .video-info{margin-top:20px}
 .video-info p{color:var(--muted);font-size:10px;line-height:2;margin-top:16px}
+.video-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.video-grid .video-featured{min-height:280px}
+.video-grid .video-featured img,.video-grid .video-featured video,.video-grid .video-featured iframe{min-height:280px}
+#videoFeaturedContainer{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:stretch;width:100%}
+#videoFeaturedContainer .video-featured{margin-bottom:0 !important;cursor:pointer;transition:transform .45s ease,box-shadow .45s ease}
+#videoFeaturedContainer .video-featured:hover{transform:translateY(-6px);box-shadow:0 30px 70px rgba(62,37,24,.2)}
+.video-stack{display:grid;grid-template-rows:1fr 1fr;gap:18px;height:100%}
+.video-stack .video-featured{min-height:150px}
+.video-stack .video-featured img,.video-stack .video-featured video,.video-stack .video-featured iframe{min-height:150px}
+.video-title-overlay{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 14px;background:linear-gradient(to top,rgba(15,9,5,.78),transparent);z-index:2;color:#FFFCF7;font-family:"Cormorant Garamond",serif;font-size:17px;font-style:italic;letter-spacing:.4px;text-align:left;pointer-events:none}
+.video-cat-tag{position:absolute;top:16px;left:16px;padding:6px 12px;font-size:8px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,252,247,.45);color:#FFFCF7;border-radius:20px;z-index:3;background:rgba(15,9,5,.25);backdrop-filter:blur(3px)}
+.video-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(12,7,4,.93);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.35s ease}
+.video-lightbox.open{opacity:1;visibility:visible}
+.video-lightbox-inner{position:relative;width:min(900px,94vw)}
+.video-lightbox-close{position:absolute;top:-46px;right:-6px;background:none;border:none;color:rgba(255,252,247,.75);font-size:30px;line-height:1;cursor:pointer;transition:.25s}
+.video-lightbox-close:hover{color:#fff;transform:rotate(90deg)}
+.video-lightbox-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.5)}
+.video-lightbox-frame iframe,.video-lightbox-frame video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-lightbox-caption{margin-top:14px;text-align:center;color:rgba(255,252,247,.65);font-size:10px;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:900px){
+    #videoFeaturedContainer{grid-template-columns:1fr}
+    .video-stack{grid-template-rows:none;grid-template-columns:1fr 1fr}
+}
 
 /* ===== FEATURES ===== */
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -1282,6 +1305,16 @@ renderCatCollection("birthday", "colBirthdayGrid", 4);
 renderCatCollection("business", "colBusinessGrid", 4);
 
 /* ===== RENDER VIDEO INVITATIONS FROM LOCALSTORAGE ===== */
+function lunaVideoEmbedUrl(url) {
+    if (!url) return "";
+    url = url.trim();
+    var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
+    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1&rel=0";
+    var vm = url.match(/vimeo\.com\/(\d+)/);
+    if (vm) return "https://player.vimeo.com/video/" + vm[1] + "?autoplay=1";
+    return url;
+}
+var _lunaCatNames = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthday:"Ad Günü", graduation:"Məzuniyyət", "baby-shower":"Körpə", business:"Biznes", video:"Video", other:"Xüsusi" };
 (function renderVideoSection() {
     var container = document.getElementById("videoFeaturedContainer");
     if (!container) return;
@@ -1306,23 +1339,157 @@ renderCatCollection("business", "colBusinessGrid", 4);
     featured = featured.slice(0, 3);
 
     if (featured.length === 0) {
-        /* Fallback: show a static placeholder */
-        container.innerHTML = '<div class="video-featured"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Video Invitation"><div class="video-price-badge">20 AZN</div></div>';
+        container.innerHTML =
+            '<div class="video-featured">' +
+                '<img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85" alt="Video Invitation" onclick="window.location.href=\'videos.html\'">' +
+                '<div class="video-cat-tag">Video</div>' +
+                '<div class="video-play-overlay" onclick="window.location.href=\'videos.html\'"><div class="video-play-circle"></div></div>' +
+                '<div class="video-title-overlay">Animasiyalı video dəvətnamə</div>' +
+                '<div class="video-price-badge">20 AZN</div>' +
+            '</div>';
         return;
     }
 
-    featured.forEach(function(v) {
+    function makeCard(v, small) {
         var card = document.createElement("div");
         card.className = "video-featured";
-        card.style.marginBottom = "16px";
         var thumb = v.thumbnail || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85";
         card.innerHTML =
             '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85\'">' +
-            '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>' +
-            (v.title ? '<div class="video-info"><p>' + (v.description || v.title) + '</p></div>' : '');
-        container.appendChild(card);
-    });
+            '<div class="video-cat-tag">' + (_lunaCatNames[v.category] || "Video") + '</div>' +
+            '<div class="video-play-overlay"><div class="video-play-circle"></div></div>' +
+            '<div class="video-title-overlay">' + (v.title || "Video dəvətnamə") + '</div>' +
+            '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>';
+        card.addEventListener("click", function() { openVideoLightbox(v); });
+        return card;
+    }
+
+    if (featured.length === 1) {
+        container.appendChild(makeCard(featured[0]));
+    } else {
+        container.appendChild(makeCard(featured[0]));
+        var stack = document.createElement("div");
+        stack.className = "video-stack";
+        featured.slice(1).forEach(function(v) { stack.appendChild(makeCard(v)); });
+        container.appendChild(stack);
+    }
 })();
+
+/* ===== VIDEO LIGHTBOX PLAYER ===== */
+function openVideoLightbox(video) {
+    var lb = document.getElementById("videoLightbox");
+    if (!lb) return;
+    var frame = document.getElementById("videoLightboxFrame");
+    var caption = document.getElementById("videoLightboxCaption");
+    frame.innerHTML = "";
+    var embed = lunaVideoEmbedUrl(video.url);
+    if (!embed) {
+        frame.innerHTML = '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,252,247,.5);font-size:11px;letter-spacing:2px;">VIDEO TEZLİKLƏ ƏLAVƏ OLUNACAQ</div>';
+    } else if (embed.indexOf("<iframe") === -1 && (embed.indexOf("youtube") !== -1 || embed.indexOf("vimeo") !== -1)) {
+        frame.innerHTML = '<iframe src="' + embed + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    } else {
+        var vid = document.createElement("video");
+        vid.src = embed;
+        vid.controls = true;
+        vid.autoplay = true;
+        vid.playsInline = true;
+        frame.appendChild(vid);
+    }
+    caption.textContent = video.title || "";
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+function closeVideoLightbox() {
+    var lb = document.getElementById("videoLightbox");
+    if (!lb) return;
+    lb.classList.remove("open");
+    document.getElementById("videoLightboxFrame").innerHTML = "";
+    document.body.style.overflow = "";
+}
+
+/* ===== VIDEO LIGHTBOX MODAL ===== */
+document.body.insertAdjacentHTML("beforeend",
+    '<div class="video-lightbox" id="videoLightbox" onclick="if(event.target===this)closeVideoLightbox()">' +
+        '<div class="video-lightbox-inner">' +
+            '<button class="video-lightbox-close" onclick="closeVideoLightbox()" aria-label="Bağla">&#10005;</button>' +
+            '<div class="video-lightbox-frame" id="videoLightboxFrame"></div>' +
+            '<div class="video-lightbox-caption" id="videoLightboxCaption"></div>' +
+        '</div>' +
+    '</div>'
+);
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeVideoLightbox();
+});
+
+/* ===== APPLY HOMEPAGE CONFIG FROM ADMIN PANEL ===== */
+function applyHomepageConfig() {
+    var cfg = {};
+    try { cfg = JSON.parse(localStorage.getItem("luna_homepage_config") || "{}"); } catch(e) {}
+
+    /* Text overrides */
+    var map = {
+        heroTitleAz:  '[data-i18n="heroTitle"]',
+        heroSubAz:    '[data-i18n="heroSubtitle"]',
+        heroTextAz:   '[data-i18n="heroText"]',
+        catTitleAz:   '[data-i18n="catTitle"]',
+        catTextAz:    '[data-i18n="catText"]',
+        ctaTitleAz:   '[data-i18n="ctaTitle"]',
+        ctaTextAz:    '[data-i18n="ctaText"]'
+    };
+    Object.keys(map).forEach(function(key) {
+        if (!cfg[key]) return;
+        var el = document.querySelector(map[key]);
+        if (!el) return;
+        if (key === "heroSubAz") { el.textContent = cfg[key]; }
+        else { el.innerHTML = cfg[key].replace(/\n/g, "<br>"); }
+    });
+
+    /* English variants when active language is en */
+    if ((localStorage.getItem("lunaLanguage") || "az") === "en") {
+        var mapEn = {
+            heroTitleEn: '[data-i18n="heroTitle"]',
+            heroSubEn:   '[data-i18n="heroSubtitle"]',
+            heroTextEn:  '[data-i18n="heroText"]',
+            catTitleEn:  '[data-i18n="catTitle"]',
+            catTextEn:   '[data-i18n="catText"]',
+            ctaTitleEn:  '[data-i18n="ctaTitle"]',
+            ctaTextEn:   '[data-i18n="ctaText"]'
+        };
+        Object.keys(mapEn).forEach(function(key) {
+            if (!cfg[key]) return;
+            var el = document.querySelector(mapEn[key]);
+            if (!el) return;
+            if (key === "heroSubEn") { el.textContent = cfg[key]; }
+            else { el.innerHTML = cfg[key].replace(/\n/g, "<br>"); }
+        });
+    }
+
+    /* Category order */
+    if (Array.isArray(cfg.categoryOrder) && cfg.categoryOrder.length && typeof LUNA_CATEGORIES !== "undefined") {
+        var known = cfg.categoryOrder.filter(function(id) {
+            return LUNA_CATEGORIES.some(function(c) { return c.id === id; });
+        });
+        var restIds = LUNA_CATEGORIES.filter(function(c) { return known.indexOf(c.id) === -1; }).map(function(c) { return c.id; });
+        var full = known.concat(restIds);
+        LUNA_CATEGORIES.sort(function(a, b) { return full.indexOf(a.id) - full.indexOf(b.id); });
+        if (typeof renderCategories === "function") renderCategories();
+    }
+
+    /* Design overrides — colors */
+    if (cfg.accentColor) document.documentElement.style.setProperty("--gold", cfg.accentColor);
+    if (cfg.bgColor) {
+        document.documentElement.style.setProperty("--cream", cfg.bgColor);
+        document.body.style.background = cfg.bgColor;
+    }
+    /* Optional dark home mode */
+    if (cfg.darkHome === true) {
+        document.body.style.background = "#171310";
+        document.querySelectorAll(".hero, .feature-card, .step").forEach(function(el) {
+            el.style.color = "#F5EDE3";
+        });
+    }
+}
+applyHomepageConfig();
 
 /* ===== UPDATE CATEGORY COUNTS TO INCLUDE ADMIN DESIGNS ===== */
 (function updateCategoryCounts() {
@@ -1339,6 +1506,7 @@ renderCatCollection("business", "colBusinessGrid", 4);
 var _origSetLang = lunaSetLanguage;
 lunaSetLanguage = function(lang) {
     _origSetLang(lang);
+    applyHomepageConfig();
     renderCategories();
     renderTabs();
     renderTemplates(getCurrentFilter());

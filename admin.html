@@ -329,6 +329,10 @@ button{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
             <span>Şablonlar</span>
         </a>
+        <a class="sidebar-link" data-section="createinv" onclick="switchSection('createinv')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <span>Dəvət Yarat</span>
+        </a>
         <a class="sidebar-link" data-section="clientform" onclick="switchSection('clientform')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             <span>Form Edit</span>
@@ -530,6 +534,48 @@ button{
     </div>
 </div>
 
+<!-- ========== CREATE INVITATION ========== -->
+<div id="section-createinv" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Dəvətnamə Yarat</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="saveCreatedInvitation()">Yadda Saxla</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Dəvətnamə Məlumatları</h2>
+        <form id="createInvForm">
+            <div class="form-grid">
+                <div class="field"><label>Kateqoriya</label><select id="ciCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Paket</label><select id="ciPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+                <div class="field"><label>Dizayn</label><select id="ciDesign"><option value="amelia">Amelia</option><option value="amour">Amour</option><option value="noir">Noir</option><option value="editorial">Editorial Love</option><option value="minimal-white">Minimal White</option><option value="botanical">Botanical</option><option value="florence">Florence</option><option value="classic">Classic</option></select></div>
+                <div class="field"><label>Dil</label><select id="ciLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
+                <div class="field"><label>Gəlin / Ad</label><input id="ciBride" type="text" placeholder="Aysel" required></div>
+                <div class="field"><label>Bəy (opsional)</label><input id="ciGroom" type="text" placeholder="Murad"></div>
+                <div class="field"><label>Tarix</label><input id="ciDate" type="date" required></div>
+                <div class="field"><label>Saat</label><input id="ciTime" type="time" value="19:00" required></div>
+                <div class="field"><label>Məkan</label><input id="ciVenue" type="text" placeholder="Crystal Hall" required></div>
+                <div class="field"><label>Şəhər</label><input id="ciLocation" type="text" placeholder="Bakı, Azərbaycan" required></div>
+                <div class="field"><label>Google Maps Link</label><input id="ciMap" type="url" placeholder="https://maps.google.com/..."></div>
+                <div class="field full"><label>Dəvətnamə Mətni</label><textarea id="ciMessage" placeholder="Sizi dəvət edirik..." rows="3"></textarea></div>
+                <div class="field full"><label>Hekayə (Luxury üçün)</label><textarea id="ciStory" placeholder="Hekayəniz..." rows="4"></textarea></div>
+                <div class="field full"><label>Şəkil Linkləri (hər sətirdə bir link)</label><textarea id="ciImages" placeholder="https://..." rows="3"></textarea></div>
+                <div class="field"><label>Countdown Tarixi</label><input id="ciCountdown" type="datetime-local"></div>
+                <div class="field"><label>Musiqi Linki (mp3)</label><input id="ciMusic" type="url" placeholder="https://.../song.mp3"></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Yaradılmış Dəvətnamələr</h2>
+        <div id="createdInvitationsList" class="customer-list"></div>
+    </div>
+</div>
+
 <!-- ========== CLIENT FORM EDITOR ========== -->
 <div id="section-clientform" class="section">
     <div class="header">
@@ -588,8 +634,11 @@ button{
         <h2>Hero Bölməsi</h2>
         <div class="form-grid">
             <div class="field"><label>Hero Başlıq (AZ)</label><input id="homeHeroTitleAz" type="text" value="gözəl anlar, gözəl dəvətlərlə"></div>
+            <div class="field"><label>Hero Başlıq (EN)</label><input id="homeHeroTitleEn" type="text" placeholder="beautiful moments, beautiful invitations"></div>
             <div class="field"><label>Hero Alt Başlıq (AZ)</label><input id="homeHeroSubAz" type="text" value="hərəkət edən, açılan və hekayənizi danışan dəvətnamələr"></div>
+            <div class="field"><label>Hero Alt Başlıq (EN)</label><input id="homeHeroSubEn" type="text" placeholder="moving, opening invitations that tell your story"></div>
             <div class="field full"><label>Hero Təsvir (AZ)</label><textarea id="homeHeroTextAz">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.</textarea></div>
+            <div class="field full"><label>Hero Təsvir (EN)</label><textarea id="homeHeroTextEn" placeholder="Elegant, modern and personalizable digital invitations..."></textarea></div>
         </div>
     </div>
 
@@ -597,7 +646,19 @@ button{
         <h2>Kolleksiya Bölməsi</h2>
         <div class="form-grid">
             <div class="field"><label>Kolleksiya Başlıq (AZ)</label><input id="homeCatTitleAz" type="text" value="Hər an, hər hadisə üçün."></div>
+            <div class="field"><label>Kolleksiya Başlıq (EN)</label><input id="homeCatTitleEn" type="text" placeholder="For every moment, every event."></div>
             <div class="field full"><label>Kolleksiya Təsvir (AZ)</label><textarea id="homeCatTextAz">Toy, nişan, xına, ad günü, məzuniyyət, biznes və ya başqa tədbir — hər hadisə üçün xüsusi kolleksiya.</textarea></div>
+            <div class="field full"><label>Kolleksiya Təsvir (EN)</label><textarea id="homeCatTextEn" placeholder="A special collection for every event..."></textarea></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Ana Səhifə Dizaynı</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Rəngləri dəyişərək ana səhifənin görünüşünü dəyişin.</p>
+        <div class="form-grid">
+            <div class="field"><label>Vurğu Rəngi (Accent)</label><input id="homeAccentColor" type="color" value="#C4A882"></div>
+            <div class="field"><label>Fon Rəngi</label><input id="homeBgColor" type="color" value="#F5EDE3"></div>
+            <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeDarkMode" type="checkbox" style="width:auto;"> Tünd ana səhifə rejimi</label></div>
         </div>
     </div>
 
@@ -611,7 +672,9 @@ button{
         <h2>CTA Bölməsi</h2>
         <div class="form-grid">
             <div class="field"><label>CTA Başlıq (AZ)</label><input id="homeCtaTitleAz" type="text" value="Sənin hekayən burada başlayır."></div>
+            <div class="field"><label>CTA Başlıq (EN)</label><input id="homeCtaTitleEn" type="text" placeholder="Your story starts here."></div>
             <div class="field full"><label>CTA Təsvir (AZ)</label><textarea id="homeCtaTextAz">Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.</textarea></div>
+            <div class="field full"><label>CTA Təsvir (EN)</label><textarea id="homeCtaTextEn" placeholder="Pick a design, send your details..."></textarea></div>
         </div>
     </div>
 </div>
@@ -1693,12 +1756,22 @@ function saveFormConfig() {
 function loadHomepageConfig() {
     var cfg = JSON.parse(localStorage.getItem('luna_homepage_config') || '{}');
     document.getElementById('homeHeroTitleAz').value = cfg.heroTitleAz || 'gözəl anlar, gözəl dəvətlərlə';
+    document.getElementById('homeHeroTitleEn').value = cfg.heroTitleEn || '';
     document.getElementById('homeHeroSubAz').value = cfg.heroSubAz || 'hərəkət edən, açılan və hekayənizi danışan dəvətnamələr';
+    document.getElementById('homeHeroSubEn').value = cfg.heroSubEn || '';
     document.getElementById('homeHeroTextAz').value = cfg.heroTextAz || 'Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr.';
+    document.getElementById('homeHeroTextEn').value = cfg.heroTextEn || '';
     document.getElementById('homeCatTitleAz').value = cfg.catTitleAz || 'Hər an, hər hadisə üçün.';
+    document.getElementById('homeCatTitleEn').value = cfg.catTitleEn || '';
     document.getElementById('homeCatTextAz').value = cfg.catTextAz || 'Toy, nişan, xına, ad günü, məzuniyyət, biznes və ya başqa tədbir — hər hadisə üçün xüsusi kolleksiya.';
+    document.getElementById('homeCatTextEn').value = cfg.catTextEn || '';
     document.getElementById('homeCtaTitleAz').value = cfg.ctaTitleAz || 'Sənin hekayən burada başlayır.';
+    document.getElementById('homeCtaTitleEn').value = cfg.ctaTitleEn || '';
     document.getElementById('homeCtaTextAz').value = cfg.ctaTextAz || 'Dizaynını seç, məlumatlarını göndər və xüsusi günün üçün öz Luna dəvətnaməni yarat.';
+    document.getElementById('homeCtaTextEn').value = cfg.ctaTextEn || '';
+    document.getElementById('homeAccentColor').value = cfg.accentColor || '#C4A882';
+    document.getElementById('homeBgColor').value = cfg.bgColor || '#F5EDE3';
+    document.getElementById('homeDarkMode').checked = cfg.darkHome === true;
 
     /* Category order */
     var order = document.getElementById('homeCategoryOrder');
@@ -1729,18 +1802,236 @@ function saveHomepageConfig() {
 
     var cfg = {
         heroTitleAz: document.getElementById('homeHeroTitleAz').value,
+        heroTitleEn: document.getElementById('homeHeroTitleEn').value,
         heroSubAz: document.getElementById('homeHeroSubAz').value,
+        heroSubEn: document.getElementById('homeHeroSubEn').value,
         heroTextAz: document.getElementById('homeHeroTextAz').value,
+        heroTextEn: document.getElementById('homeHeroTextEn').value,
         catTitleAz: document.getElementById('homeCatTitleAz').value,
+        catTitleEn: document.getElementById('homeCatTitleEn').value,
         catTextAz: document.getElementById('homeCatTextAz').value,
+        catTextEn: document.getElementById('homeCatTextEn').value,
         ctaTitleAz: document.getElementById('homeCtaTitleAz').value,
+        ctaTitleEn: document.getElementById('homeCtaTitleEn').value,
         ctaTextAz: document.getElementById('homeCtaTextAz').value,
+        ctaTextEn: document.getElementById('homeCtaTextEn').value,
+        accentColor: document.getElementById('homeAccentColor').value,
+        bgColor: document.getElementById('homeBgColor').value,
+        darkHome: document.getElementById('homeDarkMode').checked,
         categoryOrder: categoryOrder
     };
 
     localStorage.setItem('luna_homepage_config', JSON.stringify(cfg));
     showToast('Ana səhifə konfiqurasiyası yadda saxlandı');
 }
+
+/* =====================================================
+   CREATE INVITATION
+===================================================== */
+
+var LUNA_MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function lunaFormatDate(iso){
+    if(!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || '';
+    var parts = iso.split('-');
+    return parseInt(parts[2], 10) + ' ' + LUNA_MONTHS[parseInt(parts[1],10)-1] + ' ' + parts[0];
+}
+
+function lunaDateShort(iso){
+    if(!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || '';
+    var p = iso.split('-');
+    return p[2] + ' · ' + p[1] + ' · ' + p[0];
+}
+
+/* Populate design dropdown with ALL templates (built-in + custom) */
+(function populateDesignDropdown(){
+    var sel = document.getElementById('ciDesign');
+    if(!sel) return;
+    sel.innerHTML = '';
+    var all = [];
+    if(typeof LUNA_TEMPLATES !== 'undefined') all = LUNA_TEMPLATES.slice();
+    try {
+        var custom = JSON.parse(localStorage.getItem('luna_custom_templates') || '[]');
+        (custom||[]).forEach(function(t){ if(t && t.id && t.name) all.push(t); });
+    } catch(e){}
+    var seen = {};
+    all.forEach(function(t){
+        if(!t || !t.id || seen[t.id]) return;
+        seen[t.id] = true;
+        var opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.name || t.id;
+        sel.appendChild(opt);
+    });
+})();
+
+function saveCreatedInvitation(){
+    var category = document.getElementById('ciCategory').value;
+    var pkg = document.getElementById('ciPackage').value;
+    var design = document.getElementById('ciDesign').value;
+    var lang = document.getElementById('ciLang').value;
+    var bride = document.getElementById('ciBride').value.trim();
+    var groom = document.getElementById('ciGroom').value.trim();
+    var dateISO = document.getElementById('ciDate').value;
+    var time = document.getElementById('ciTime').value;
+    var venue = document.getElementById('ciVenue').value.trim();
+    var location = document.getElementById('ciLocation').value.trim();
+    var map = document.getElementById('ciMap').value.trim() || 'https://www.google.com/maps';
+    var message = document.getElementById('ciMessage').value.trim();
+    var story = document.getElementById('ciStory').value.trim();
+    var imagesRaw = document.getElementById('ciImages').value.trim();
+    var countdown = document.getElementById('ciCountdown').value;
+    var music = document.getElementById('ciMusic').value.trim();
+
+    if(!bride || !dateISO || !time || !venue || !location){
+        showToast('Zəhmət olmasa məcburi sahələri doldurun');
+        return;
+    }
+
+    var baseName = groom ? bride + '-' + groom : bride;
+    var id = lunaCreateSlug(baseName);
+    var finalId = id, counter = 2;
+    while(lunaGetInvitation(finalId)){ finalId = id + '-' + counter; counter++; }
+
+    var tpl = null;
+    if(typeof LUNA_TEMPLATES !== 'undefined'){
+        tpl = LUNA_TEMPLATES.find(function(t){ return t.id === design; }) || null;
+    }
+
+    var images = imagesRaw ? imagesRaw.split('\n').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+
+    var inv = {
+        id: finalId,
+        createdViaAdmin: true,
+        createdAt: Date.now(),
+        package: pkg,
+        category: category,
+        design: design,
+        style: (tpl && tpl.style) || '',
+        templateId: design,
+        lang: lang,
+        bride: bride,
+        groom: groom,
+        date: lunaFormatDate(dateISO),
+        dateShort: lunaDateShort(dateISO),
+        time: time,
+        location: location,
+        venue: venue,
+        map: map
+    };
+
+    if(category === 'business' || category === 'graduation' || category === 'birthday' || category === 'baby-shower'){
+        delete inv.groom;
+    }
+    if(message) inv.message = message;
+    if(category === 'wedding' || category === 'engagement' || category === 'henna'){
+        if(story) inv.story = story; else if(message){ inv.story = '<p>' + message + '</p>'; }
+    }
+    if(images.length) inv.images = images;
+
+    /* Countdown: use explicit field, else fall back to date+time */
+    inv.countdown = countdown ? countdown.replace(' ', 'T') : dateISO + 'T' + time + ':00';
+
+    if(music) inv.music = music;
+
+    lunaSaveInvitation(inv);
+    renderCreatedInvitations();
+    renderDashboard();
+    renderCustomers();
+
+    var link = getInvitationLink(finalId);
+    copyToClipboard(link);
+    showToast('Dəvətnamə yaradıldı və link kopyalandı: ' + finalId);
+
+    /* Reset form for next entry */
+    ['ciBride','ciGroom','ciMessage','ciStory','ciImages','ciMusic'].forEach(function(fid){
+        document.getElementById(fid).value = '';
+    });
+}
+
+function getCreatedInvitations(){
+    return getCustomers().filter(function(c){ return c.createdViaAdmin === true; })
+        .sort(function(a,b){ return (b.createdAt || 0) - (a.createdAt || 0); });
+}
+
+function renderCreatedInvitations(){
+    var list = document.getElementById('createdInvitationsList');
+    if(!list) return;
+    var items = getCreatedInvitations();
+    list.innerHTML = '';
+
+    if(!items.length){
+        list.innerHTML = '<div class="empty">Hələ yaradılmış dəvətnamə yoxdur. Formu doldurub "Yadda Saxla" düyməsini basın.</div>';
+        return;
+    }
+
+    items.forEach(function(c){
+        var name = lunaDisplayNames(c);
+        var link = getInvitationLink(c.id);
+        var row = document.createElement('div');
+        row.className = 'customer-row';
+        row.innerHTML =
+            '<div class="customer-info">' +
+                '<h4>' + lunaEscapeHtml(name) + '</h4>' +
+                '<p>' + lunaEscapeHtml(lunaCategoryName(c.category || '')) + ' · ' + lunaEscapeHtml(c.design || '') + ' · ' + lunaEscapeHtml(c.date || '') + '</p>' +
+            '</div>' +
+            '<div class="customer-actions">' +
+                '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
+                '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button class="delete" onclick="deleteCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+            '</div>';
+        list.appendChild(row);
+    });
+}
+
+function deleteCreatedInvitation(id){
+    if(!confirm('Bu dəvətnaməni silmək istədiyinizə əminsiniz?')) return;
+    lunaDeleteInvitation(id);
+    renderCreatedInvitations();
+    renderDashboard();
+    renderCustomers();
+    showToast('Dəvətnamə silindi');
+}
+
+/* Live preview of selected design while typing names */
+(function initCreatePreviewButton(){
+    var form = document.getElementById('createInvForm');
+    if(!form) return;
+    var previewBtn = document.createElement('button');
+    previewBtn.type = 'button';
+    previewBtn.className = 'save';
+    previewBtn.style.marginTop = '12px';
+    previewBtn.textContent = 'Canlı Önizləmə';
+    previewBtn.onclick = function(){
+        var bride = document.getElementById('ciBride').value.trim() || 'Aysel';
+        var groom = document.getElementById('ciGroom').value.trim() || 'Murad';
+        var design = document.getElementById('ciDesign').value;
+        var cat = document.getElementById('ciCategory').value;
+        var demo = {
+            id: '_preview',
+            package: document.getElementById('ciPackage').value,
+            category: cat,
+            design: design,
+            templateId: design,
+            style: '',
+            lang: document.getElementById('ciLang').value,
+            bride: bride, groom: groom,
+            date: lunaFormatDate(document.getElementById('ciDate').value) || '1 January 2027',
+            dateShort: lunaDateShort(document.getElementById('ciDate').value) || '01 · 01 · 2027',
+            time: document.getElementById('ciTime').value || '19:00',
+            location: document.getElementById('ciLocation').value.trim() || 'Bakı, Azərbaycan',
+            venue: document.getElementById('ciVenue').value.trim() || 'Crystal Hall',
+            map: 'https://www.google.com/maps',
+            message: document.getElementById('ciMessage').value.trim(),
+            story: document.getElementById('ciStory').value.trim() ? '<p>' + document.getElementById('ciStory').value.trim() + '</p>' : undefined,
+            countdown: '2027-01-01T19:00:00'
+        };
+        if(cat !== 'wedding' && cat !== 'engagement' && cat !== 'henna') delete demo.groom;
+        lunaSaveInvitation(demo);
+        window.open(getInvitationLink('_preview'), '_blank');
+    };
+    form.appendChild(previewBtn);
+})();
 
 /* =====================================================
     INIT
@@ -1751,6 +2042,7 @@ seedSampleData();
 renderDashboard();
 renderCustomers();
 renderRsvps();
+renderCreatedInvitations();
 
 </script>
 

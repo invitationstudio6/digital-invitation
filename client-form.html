@@ -390,6 +390,54 @@ button,input,textarea,select{font-family:inherit}
     var category = (params.get("category") || "wedding").toLowerCase();
     var designId = design;
 
+    /* ===== APPLY ADMIN FORM CONFIG ===== */
+    var _formCfg = {};
+    try { _formCfg = JSON.parse(localStorage.getItem("luna_form_config") || "{}"); } catch(e) {}
+
+    /* Pricing overrides — patch category price lookup before any rendering */
+    if (_formCfg.categoryPricing && typeof lunaGetCategoryPrice === "function") {
+        var _baseGetCatPrice = lunaGetCategoryPrice;
+        lunaGetCategoryPrice = function(categoryId, packageId) {
+            var table = _formCfg.categoryPricing[categoryId];
+            if (table && typeof table[packageId] === "number") return table[packageId];
+            return _baseGetCatPrice(categoryId, packageId);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var lang = (localStorage.getItem("lunaLanguage") || "az");
+
+        /* Titles / descriptions */
+        function setIf(key, sel, isText) {
+            if (!_formCfg[key]) return;
+            var el = document.querySelector(sel);
+            if (!el) return;
+            if (isText) el.textContent = _formCfg[key];
+            else el.innerHTML = _formCfg[key].replace(/\n/g, "<br>");
+        }
+        if (lang === "en" || lang === "ru" || lang === "tr") {
+            setIf("formTitleEn", '[data-i18n="formTitle"]');
+            setIf("formDescEn", '[data-i18n="formDesc"]', true);
+        } else {
+            setIf("formTitleAz", '[data-i18n="formTitle"]');
+            setIf("formDescAz", '[data-i18n="formDesc"]', true);
+        }
+    });
+
+    /* Visible categories filter (sync — before initial rendering) */
+    if (Array.isArray(_formCfg.visibleCategories) && _formCfg.visibleCategories.length) {
+        document.querySelectorAll(".cat-pick").forEach(function(pick) {
+            var catId = pick.getAttribute("data-cat");
+            pick.style.display = _formCfg.visibleCategories.indexOf(catId) !== -1 ? "" : "none";
+        });
+        if (_formCfg.visibleCategories.indexOf(category) === -1) {
+            category = _formCfg.visibleCategories[0];
+            params.set("category", category);
+            var _newUrl = window.location.pathname + "?" + params.toString() + window.location.hash;
+            window.history.replaceState({}, "", _newUrl);
+        }
+    }
+
     lunaInitLanguage();
 
     document.getElementById("pillDesign").textContent = design.charAt(0).toUpperCase() + design.slice(1);
@@ -893,6 +941,20 @@ button,input,textarea,select{font-family:inherit}
             var text = extraLabel(key);
             if (text) el.innerHTML = text;
         });
+        /* Re-apply admin form config titles after language switch */
+        try {
+            var cfg2 = JSON.parse(localStorage.getItem("luna_form_config") || "{}");
+            var tKey = lang === "en" ? "formTitleEn" : "formTitleAz";
+            var dKey = lang === "en" ? "formDescEn" : "formDescAz";
+            if (cfg2[tKey]) {
+                var h1 = document.querySelector('[data-i18n="formTitle"]');
+                if (h1) h1.innerHTML = cfg2[tKey].replace(/\n/g, "<br>");
+            }
+            if (cfg2[dKey]) {
+                var dp = document.querySelector('[data-i18n="formDesc"]');
+                if (dp) dp.textContent = cfg2[dKey];
+            }
+        } catch(e) {}
     };
     lunaInitLanguage();
 

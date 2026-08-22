@@ -714,13 +714,74 @@ const LUNA_TEMPLATES = [
                 screen: { title: "{{eventName}}", detail: "{{dateLong}} · {{time}} · {{venue}}" }
             },
             {
-                id: "reveal", type: "invitation-reveal", className: "scene-corporate",
+                id: "reveal", type: "scene", className: "scene-corporate",
                 background: "linear-gradient(135deg, #0a1628, #16213e)",
                 overlay: "none",
                 animation: { enter: "reveal", duration: 1200 },
                 content: { eyebrow: "{{companyName}}", title: "{{eventName}}", subtitle: "{{dateLong}}", cta: "VIEW EVENT DETAILS" }
             }
         ]
+    },
+
+    /* =====================================================
+       SIGNATURE COLLECTION — SIX DISTINCT OPENING STORIES
+       royal-seal · grand-curtain · garden-bloom
+       velvet-luxe · fiesta-pop · starry-dream
+    ===================================================== */
+
+    {
+        id: "royal-seal", name: "Royal Seal", category: "wedding", style: "Zarf · Mum Mührü", galleryStyle: "masonry", openingStyle: "wax-seal",
+        animationStyle: "classic",
+        thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "default", openingType: "wax-seal" },
+        preview: { eyebrow: "MÖHRÜ QIRIN", names: ["Zöhrə", "Fərhad"], date: "06 · 06 · 2026", message: "Möhürlənmiş bir vəd — qırx illik sevgi hekayəsinin ilk səhifəsi.", venue: "Shah Palace", location: "Bakı, Azərbaycan", theme: "royal-wax" }
+    },
+    {
+        id: "grand-curtain", name: "Grand Curtain", category: "engagement", style: "Teatr · Perde", galleryStyle: "fullscreen", openingStyle: "curtain-reveal",
+        animationStyle: "editorial",
+        thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "curtain" },
+        preview: { eyebrow: "PƏRDƏ AÇILIR", names: ["Nərgiz", "Rauf"], date: "18 · 07 · 2026", message: "İki ürəyin səhnəsində əbədi duet başlayır.", venue: "Nizami Kino Mərkəzi", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "garden-bloom", name: "Garden Bloom", category: "henna", style: "Çiçək · Kağız", galleryStyle: "collage", openingStyle: "floral-paper",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","countdown","rsvp","story"], heroType: "hero-style-botanical", backgroundStyle: "floral", openingType: "floral-paper" },
+        preview: { eyebrow: "ÇİÇƏKLƏR AÇIR", names: ["Xanım"], date: "12 · 09 · 2026", message: "Xınanın qızıllığı çiçəklərin zərifliyi ilə birləşir.", venue: "Xına Sarayı", location: "Bakı, Azərbaycan", theme: "henna" }
+    },
+    {
+        id: "velvet-luxe", name: "Velvet Luxe", category: "wedding", style: "Məxmər · İpək", galleryStyle: "editorial", openingStyle: "luxury-silk",
+        animationStyle: "luxury",
+        thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","countdown","details","rsvp"], heroType: "hero-style-luxury", backgroundStyle: "dark", openingType: "luxury-romance" },
+        preview: { eyebrow: "SEVGİNİN İPEKİ", names: ["Lalə", "Seymur"], date: "03 · 10 · 2026", message: "Məxmər gecənin ortasında parlayan ən gözəl ulduz sensən.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "romantic-bloom" }
+    },
+    {
+        id: "fiesta-pop", name: "Fiesta Pop", category: "birthday", style: "Rəngarəng · Müasir", galleryStyle: "polaroid", openingStyle: "confetti-burst",
+        animationStyle: "playful",
+        thumbnail: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","countdown","details","rsvp","story"], heroType: "hero-centered", backgroundStyle: "default", openingType: "celebration-pop" },
+        preview: { eyebrow: "PARTIYA BAŞLAYIR", names: ["Kamran"], date: "14 · 11 · 2026", message: "Konfetilər hazır, musiqi səslənir — 30 yaş xoş gəlmisin!", venue: "Park Inn Roof", location: "Bakı, Azərbaycan", theme: "kids-party" }
+    },
+    {
+        id: "starry-dream", name: "Starry Dream", category: "engagement", style: "Ulduzlu Gecə · Nağıl", galleryStyle: "slider", openingStyle: "shooting-star",
+        animationStyle: "dreamy",
+        thumbnail: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","countdown","rsvp"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "starry-night" },
+        preview: { eyebrow: "ULDUZA TOXUN", names: ["Aysu", "Elgün"], date: "21 · 08 · 2026", message: "Bir kayan yıldız gördük ve o gece sonsuzluğa söz verdik.", venue: "Qız Qalası Terası", location: "Bakı, Azərbaycan", theme: "enchanted" }
     }
 ];
 
@@ -840,6 +901,53 @@ function lunaGetExtraProductById(productId) {
    Change this endpoint to your dedicated "order" form.
 ===================================================== */
 const LUNA_FORMSPREE_ENDPOINT = "https://formspree.io/f/mqpzyklb";
+
+/* =====================================================
+   GLOBAL TEMPLATE MERGER
+   Merges built-in + admin designs + custom templates
+===================================================== */
+function lunaGetAllTemplates() {
+    var templates = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.slice() : [];
+    try {
+        var adminDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
+        if (Array.isArray(adminDesigns)) {
+            adminDesigns.forEach(function(d) {
+                if (d && d.id && d.name) {
+                    templates.push({
+                        id: d.id,
+                        name: d.name,
+                        category: d.category || "other",
+                        style: d.style || "",
+                        thumbnail: d.thumbnail || d.image || "",
+                        cover: d.cover || d.thumbnail || d.image || "",
+                        minPackage: d.minPackage || d.package || "basic",
+                        packages: d.packages || [d.minPackage || d.package || "basic"],
+                        preview: d.preview || null
+                    });
+                }
+            });
+        }
+        var customTemplates = JSON.parse(localStorage.getItem("luna_custom_templates") || "[]");
+        if (Array.isArray(customTemplates)) {
+            customTemplates.forEach(function(t) {
+                if (t && t.id && t.name && t.active !== false) {
+                    templates.push({
+                        id: t.id,
+                        name: t.name,
+                        category: t.category || "other",
+                        style: t.style || "",
+                        thumbnail: t.thumbnail || t.cover || "",
+                        cover: t.cover || t.thumbnail || "",
+                        minPackage: (t.packages && t.packages[0]) || "basic",
+                        packages: t.packages || ["basic"],
+                        preview: t.preview || null
+                    });
+                }
+            });
+        }
+    } catch(e) {}
+    return templates;
+}
 
 /* Count templates per category */
 LUNA_CATEGORIES.forEach(function(cat) {
