@@ -159,6 +159,10 @@ button,input,textarea,select{font-family:inherit}
 .cat-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.06)}
 .cat-pick-icon{font-size:28px}
 .cat-pick-name{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--text)}
+.prod-pick{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 12px;border:2px solid rgba(92,61,46,.08);border-radius:8px;cursor:pointer;transition:.35s;background:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text)}
+.prod-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,37,24,.08)}
+.prod-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.08)}
+.prod-pick .prod-icon{font-size:20px}
 
 /* ===== PACKAGE PICKER — Premium Cards ===== */
 .pkg-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -306,6 +310,7 @@ button,input,textarea,select{font-family:inherit}
                 <div class="form-step active" id="formStep1">
                     <h3 class="step-title">Hadisə kateqoriyası</h3>
                     <p class="step-desc">Dəvətnamənizin kateqoriyasını seçin</p>
+                    <div class="pkg-picker" id="productTypePicker" style="margin-bottom:22px;"></div>
                     <div class="category-picker" id="categoryPicker">
                         <div class="cat-pick" data-cat="wedding"><span class="cat-pick-icon">💒</span><span class="cat-pick-name">Toy</span></div>
                         <div class="cat-pick" data-cat="engagement"><span class="cat-pick-icon">💍</span><span class="cat-pick-name">Nişan</span></div>
@@ -316,6 +321,8 @@ button,input,textarea,select{font-family:inherit}
                         <div class="cat-pick" data-cat="business"><span class="cat-pick-icon">💼</span><span class="cat-pick-name">Biznes</span></div>
                         <div class="cat-pick" data-cat="other"><span class="cat-pick-icon">✨</span><span class="cat-pick-name">Digər</span></div>
                     </div>
+                    <div class="form-grid" id="productWrap" style="display:none;margin-top:18px;"></div>
+                    <button class="btn btn-primary" type="button" id="productSubmit" onclick="finishProductOrder()" style="display:none;margin-top:20px;width:100%;">Sifarişi göndər ✓</button>
                 </div>
 
                 <!-- Step 2: Package -->
@@ -880,6 +887,207 @@ button,input,textarea,select{font-family:inherit}
 
     var videoAddonSelected = false;
 
+    /* ===== PRODUCT TYPES (invitation / business cards / other products) ===== */
+    var LUNA_DEFAULT_PRODUCT_TYPES = [
+        { id: "invitation", nameAz: "Dəvətnamə", nameEn: "Invitation", nameRu: "Приглашение", nameTr: "Davetiye", icon: "💌", active: true, fields: [] },
+        { id: "card", nameAz: "Vizitkart", nameEn: "Business Card", nameRu: "Визитка", nameTr: "Kartvizit", icon: "💼", active: true, fields: [
+            { id: "cardCompany", labelAz: "Şirkət adı *", labelEn: "Company name *", labelRu: "Название компании *", labelTr: "Şirket adı *", type: "text", required: true },
+            { id: "cardPerson", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+            { id: "cardPosition", labelAz: "Vəzifə", labelEn: "Position", labelRu: "Должность", labelTr: "Pozisyon", type: "text" },
+            { id: "cardPhone", labelAz: "Telefon *", labelEn: "Phone *", labelRu: "Телефон *", labelTr: "Telefon *", type: "tel", required: true },
+            { id: "cardEmail", labelAz: "E-poçt", labelEn: "Email", labelRu: "Эл. почта", labelTr: "E-posta", type: "email" },
+            { id: "cardWebsite", labelAz: "Vebsayt / Instagram", labelEn: "Website / Instagram", labelRu: "Сайт / Instagram", labelTr: "Web sitesi / Instagram", type: "text" },
+            { id: "cardAddress", labelAz: "Ünvan", labelEn: "Address", labelRu: "Адрес", labelTr: "Adres", type: "text" },
+            { id: "cardQty", labelAz: "Tiraj", labelEn: "Quantity", labelRu: "Тираж", labelTr: "Baskı adedi", type: "select", options: ["50", "100", "250", "500"] },
+            { id: "cardLogo", labelAz: "Loqo yüklə", labelEn: "Upload logo", labelRu: "Логотип", labelTr: "Logo yükle", type: "file" },
+            { id: "cardNotes", labelAz: "Qeydlər — dizayn istəkləriniz", labelEn: "Notes — design wishes", labelRu: "Заметки", labelTr: "Notlar", type: "textarea" }
+        ]},
+        { id: "other-product", nameAz: "Digər məhsul", nameEn: "Other product", nameRu: "Другой продукт", nameTr: "Diğer ürün", icon: "🎁", active: true, fields: [
+            { id: "opName", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+            { id: "opPhone", labelAz: "Telefon *", labelEn: "Phone *", labelRu: "Телефон *", labelTr: "Telefon *", type: "tel", required: true },
+            { id: "opProduct", labelAz: "Məhsul növü (menyu, stand, açıqca...)", labelEn: "Product type (menu, stand, card...)", labelRu: "Тип продукта", labelTr: "Ürün türü", type: "text" },
+            { id: "opQty", labelAz: "Tiraj / say", labelEn: "Quantity", labelRu: "Количество", labelTr: "Adet", type: "number" },
+            { id: "opDetails", labelAz: "Ətraflı məlumat", labelEn: "Details", labelRu: "Подробности", labelTr: "Ayrıntılar", type: "textarea" }
+        ]}
+    ];
+
+    function langSuffix() {
+        var l = (typeof LUNA_LANG !== "undefined" ? LUNA_LANG : "az").toLowerCase();
+        return l === "en" ? "En" : l === "ru" ? "Ru" : l === "tr" ? "Tr" : "Az";
+    }
+    function getProductTypes() {
+        var list = Array.isArray(_formCfg.productTypes) && _formCfg.productTypes.length ? _formCfg.productTypes : LUNA_DEFAULT_PRODUCT_TYPES;
+        return list.filter(function(p) { return p.active !== false; });
+    }
+    function prodLabel(p, suffix) {
+        return p["name" + suffix] || p.nameAz || p.nameEn || p.id;
+    }
+
+    var selectedProduct = (function() {
+        var pp = new URLSearchParams(window.location.search).get("product");
+        return pp || "invitation";
+    })();
+
+    function renderProductTypePicker() {
+        var wrap = document.getElementById("productTypePicker");
+        if (!wrap) return;
+        wrap.innerHTML = "";
+        getProductTypes().forEach(function(p) {
+            var el = document.createElement("div");
+            el.className = "prod-pick" + (p.id === selectedProduct ? " selected" : "");
+            el.setAttribute("data-prod", p.id);
+            el.innerHTML = '<span class="prod-icon">' + (p.icon || "✦") + '</span><span>' + prodLabel(p, langSuffix()) + '</span>';
+            el.addEventListener("click", function() { selectProductType(p.id); });
+            wrap.appendChild(el);
+        });
+    }
+
+    function selectProductType(id) {
+        selectedProduct = id;
+        document.querySelectorAll(".prod-pick").forEach(function(el) {
+            el.classList.toggle("selected", el.getAttribute("data-prod") === id);
+        });
+        var progress = document.getElementById("stepIndicator");
+        var nav = document.querySelector(".step-nav");
+        var picker = document.getElementById("categoryPicker");
+        var wrap = document.getElementById("productWrap");
+        var submitBtn = document.getElementById("productSubmit");
+
+        if (id === "invitation") {
+            if (progress) progress.style.display = "";
+            if (nav) nav.style.display = "";
+            if (picker) picker.style.display = "";
+            wrap.style.display = "none";
+            wrap.innerHTML = "";
+            submitBtn.style.display = "none";
+            return;
+        }
+
+        /* Custom product flow — single screen with all needed fields */
+        if (progress) progress.style.display = "none";
+        if (nav) nav.style.display = "none";
+        if (picker) picker.style.display = "none";
+
+        var ptype = getProductTypes().find(function(p) { return p.id === id; }) || { fields: [] };
+        var sfx = langSuffix();
+        var html = '<div class="form-field" style="grid-column:1/-1;padding:14px 16px;border:1px solid rgba(196,168,130,.25);border-radius:8px;background:rgba(196,168,130,.05);font-size:12px;color:#7a5c49;">' +
+            '✨ <b>' + prodLabel(ptype, sfx) + '</b> sifarişi üçün məlumatları doldurun.</div>';
+        (ptype.fields || []).forEach(function(fdef, i) {
+            var fid = "pf_" + fdef.id;
+            var lbl = fdef["label" + sfx] || fdef.labelAz || fdef.labelEn || fdef.id;
+            html += '<div class="form-field" style="animation-delay:' + (i * 0.04).toFixed(2) + 's">';
+            html += '<label for="' + fid + '">' + lbl + '</label>';
+            if (fdef.type === "select") {
+                html += '<select id="' + fid + '" data-pf="' + fdef.id + '">';
+                (fdef.options || []).forEach(function(o) { html += '<option>' + o + '</option>'; });
+                html += '</select>';
+            } else if (fdef.type === "textarea") {
+                html += '<textarea id="' + fid + '" data-pf="' + fdef.id + '" rows="4"></textarea>';
+            } else if (fdef.type === "file") {
+                html += '<input id="' + fid + '" data-pf="' + fdef.id + '" data-pffile="1" type="file"' + (fdef.accept ? ' accept="' + fdef.accept + '"' : '') + '>';
+            } else {
+                html += '<input id="' + fid + '" data-pf="' + fdef.id + '" type="' + (fdef.type || "text") + '"' + (fdef.required ? ' data-prequired="1"' : '') + '>';
+            }
+            html += '</div>';
+        });
+        /* Contact so admin can reach the client */
+        html += '<div class="form-field"><label for="pf_contact">WhatsApp / Telefon *</label><input id="pf_contact" data-pf="__contact" type="tel" data-prequired="1"></div>';
+        wrap.innerHTML = html;
+        wrap.style.display = "";
+        submitBtn.style.display = "";
+        wrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function fileToDataUrl(file) {
+        return new Promise(function(resolve) {
+            if (!file) { resolve(null); return; }
+            var reader = new FileReader();
+            reader.onload = function(e) { resolve(e.target.result); };
+            reader.onerror = function() { resolve(null); };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    /* Save any order locally so admin sees it in Sifarişlər panel */
+    function lunaSaveOrder(order) {
+        try {
+            var orders = JSON.parse(localStorage.getItem("luna_orders") || "[]");
+            orders.unshift(order);
+            localStorage.setItem("luna_orders", JSON.stringify(orders));
+        } catch(e) {}
+    }
+
+    function submitProductOrder() {
+        var wrap = document.getElementById("productWrap");
+        var values = {};
+        var missing = false;
+        wrap.querySelectorAll("[data-pf]").forEach(function(input) {
+            var key = input.getAttribute("data-pf");
+            if (input.getAttribute("data-pffile")) {
+                values[key] = input.files && input.files[0] ? input.files[0] : null;
+                return;
+            }
+            values[key] = input.value.trim();
+            if (input.getAttribute("data-prequired") && !values[key]) {
+                missing = true;
+                input.style.borderColor = "#c0392b";
+            } else {
+                input.style.borderColor = "";
+            }
+        });
+        if (missing) { alert("Zəhmət olmasa tələb olunan sahələri doldurun."); return null; }
+        return values;
+    }
+
+    async function finishProductOrder() {
+        var values = submitProductOrder();
+        if (!values) return;
+        var logoDataUrl = await fileToDataUrl(values.__logo || null);
+        delete values.__logo;
+
+        var order = {
+            id: "ord_" + Date.now(),
+            ts: new Date().toISOString(),
+            productType: selectedProduct,
+            productTypeName: prodLabel(getProductTypes().find(function(p) { return p.id === selectedProduct; }) || {}, langSuffix()),
+            lang: typeof LUNA_LANG !== "undefined" ? LUNA_LANG : "az",
+            status: "new",
+            contact: values.__contact || "",
+            data: values
+        };
+        delete order.data.__contact;
+        if (logoDataUrl) order.logoUrl = logoDataUrl;
+
+        lunaSaveOrder(order);
+
+        /* Notify admin via Formspree (non-blocking) */
+        if (typeof lunaNotifyOrder === "function") {
+            var flatText = Object.keys(order.data).map(function(k) { return k + ": " + order.data[k]; }).join(" | ");
+            lunaNotifyOrder({
+                category: "product-order",
+                package: "-",
+                design: order.productTypeName,
+                id: order.id,
+                bride: order.contact,
+                message: flatText.substring(0, 900)
+            });
+        }
+
+        /* Success screen without viewer link */
+        document.getElementById("invitationForm").style.display = "none";
+        var rc = document.getElementById("resultCard");
+        document.getElementById("generatedLink").style.display = "none";
+        var actions = rc.querySelector(".result-actions");
+        if (actions) actions.style.display = "none";
+        var msg = window.__lunaFormSuccessMsg || "Sifarişiniz qəbul edildi! Tezliklə sizinlə əlaqə saxlayacağıq.";
+        rc.insertAdjacentHTML("beforeend", '<p style="margin-top:14px;font-size:13px;color:#7a5c49;">' + msg + '</p>');
+        rc.style.display = "block";
+        rc.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    renderProductTypePicker();
+    if (selectedProduct !== "invitation") selectProductType(selectedProduct);
+
     function renderPkgPicker() {
         var container = document.getElementById("pkgPicker");
         if (!container || typeof LUNA_PACKAGES === "undefined") return;
@@ -1246,6 +1454,29 @@ button,input,textarea,select{font-family:inherit}
                         lunaSaveInvitation(data);
                         alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
                     }
+
+                    /* Register in admin orders list */
+                    lunaSaveOrder({
+                        id: "ord_" + Date.now(),
+                        ts: new Date().toISOString(),
+                        productType: "invitation",
+                        productTypeName: "Dəvətnamə",
+                        lang: typeof LUNA_LANG !== "undefined" ? LUNA_LANG : "az",
+                        status: "new",
+                        contact: v.contact || "",
+                        data: {
+                            category: data.category,
+                            package: data.package,
+                            design: data.design,
+                            names: [data.bride, data.groom, data.celebrant, data.graduate, data.eventName].filter(Boolean).join(" & ") || "-",
+                            date: data.date,
+                            time: data.time,
+                            venue: data.venue,
+                            location: data.location,
+                            contact: v.contact || ""
+                        },
+                        invitationId: invitationId
+                    });
 
                     /* Notify Luna admin via Formspree (non-blocking) */
                     if (typeof lunaNotifyOrder === "function") {

@@ -345,6 +345,11 @@ button{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             <span>Form Edit</span>
         </a>
+        <a class="sidebar-link" data-section="orders" onclick="switchSection('orders')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><polyline points="3 8 12 13 21 8"/><line x1="12" y1="13" x2="12" y2="21"/></svg>
+            <span>Sifarişlər</span>
+            <b id="ordersBadge" style="margin-left:auto;background:#c0392b;color:#fff;border-radius:10px;padding:2px 8px;font-size:9px;display:none;">0</b>
+        </a>
         <a class="sidebar-link" data-section="homepage" onclick="switchSection('homepage')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span>Home Edit</span>
@@ -789,6 +794,13 @@ button{
     </div>
 
     <div class="panel">
+        <h2>Məhsul Növləri — Vizitkart, Menyu və s.</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Formun ilk addımında müştəri məhsul növünü seçir. Hər növ üçün adları (4 dil) və sahələrini təyin edin. "Dəvətnamə" standart axındır.</p>
+        <div id="productTypesEditor" style="display:grid;gap:18px;margin-bottom:14px;"></div>
+        <button type="button" class="save" onclick="addProductType()">+ Məhsul Növü Əlavə Et</button>
+    </div>
+
+    <div class="panel">
         <h2>Kateqoriya Görünürlüyü</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hansı kateqoriyaların formda görünəcəyini seçin.</p>
         <div class="checkbox-group" id="formCategoryVisibility"></div>
@@ -799,6 +811,21 @@ button{
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər kateqoriya üçün paket qiymətlərini tənzimləyin.</p>
         <div id="formPricingEditor" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
     </div>
+</div>
+
+<!-- ========== ORDERS / DELIVERY MANAGER ========== -->
+<div id="section-orders" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Sifarişlər</h1>
+        </div>
+        <div class="header-actions">
+            <button onclick="renderOrders()">↻ Yenilə</button>
+        </div>
+    </div>
+    <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştəri formadan gələn bütün sifarişlər. Hazırladıqdan sonra görüntü (GR) əlavə edin, link yaradın və WhatsApp mesajı ilə göndərin.</p>
+    <div id="ordersList" style="display:grid;gap:16px;"></div>
 </div>
 
 <!-- ========== HOMEPAGE EDITOR ========== -->
@@ -897,6 +924,52 @@ button{
         <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Bölmə Görünürlüyü</h3>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:12px;">Ana səhifədə gizlətmək istədiyiniz bölmələri seçin.</p>
         <div class="checkbox-group" id="homeSectionVisibility"></div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:22px 0;">
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin-bottom:10px;">Elan Zolağı (üst banner)</h3>
+        <div class="form-grid">
+            <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeAnnounceOn" type="checkbox" style="width:auto;"> Elan zolağını göstər</label></div>
+            <div class="field"><label>Mətn (AZ)</label><input id="homeAnnounceAz" type="text" placeholder="✨ Yeni il dəvətnamələri — 20% endirim"></div>
+            <div class="field"><label>Mətn (EN)</label><input id="homeAnnounceEn" type="text" placeholder=""></div>
+            <div class="field"><label>Mətn (RU)</label><input id="homeAnnounceRu" type="text" placeholder=""></div>
+            <div class="field"><label>Mətn (TR)</label><input id="homeAnnounceTr" type="text" placeholder=""></div>
+        </div>
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Statistika Zolağı</h3>
+        <div class="form-grid">
+            <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeStatsOn" type="checkbox" style="width:auto;"> Statistika zolağını göstər</label></div>
+            <div id="statsEditor" style="grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
+        </div>
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Müştəri Rəyləri</h3>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:14px;">Ana səhifədə göstəriləcək rəylər əlavə edin.</p>
+        <div class="form-grid">
+            <div class="field full"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input id="homeTestimonialsOn" type="checkbox" style="width:auto;"> Rəylər bölməsini göstər</label></div>
+            <div class="field full"><label>Bölmə başlığı (AZ / EN)</label>
+                <div style="display:flex;gap:8px;">
+                    <input id="homeTestiTitleAz" type="text" placeholder="Müştərilərimiz yazır" style="flex:1;">
+                    <input id="homeTestiTitleEn" type="text" placeholder="What our clients say" style="flex:1;">
+                </div>
+            </div>
+            <div class="field full"><label>Rəylər</label><div id="testiEditor" style="display:grid;gap:10px;"></div>
+                <button type="button" onclick="addTestimonialRow()" style="margin-top:10px;background:none;border:1px dashed rgba(184,140,118,.4);color:#b88c76;padding:8px 14px;font-size:10px;cursor:pointer;">+ Rəy Əlavə Et</button>
+            </div>
+        </div>
+
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Effektlər & Toxunuşlar</h3>
+        <div class="form-grid">
+            <div class="field"><label>Fon naxışı</label><select id="homePattern">
+                <option value="">Yoxdur</option>
+                <option value="dots">Zərif nöqtələr</option>
+                <option value="arcs">Arka xəttləri</option>
+                <option value="grain">Qum toxuması</option>
+            </select></div>
+            <div class="field"><label>Scroll animasiyaları</label><select id="homeReveal">
+                <option value="">Açıq (standart)</option>
+                <option value="off">Sönülü</option>
+            </select></div>
+        </div>
     </div>
 
     <div class="panel">
@@ -1086,6 +1159,7 @@ function switchSection(name){
     if(name === 'videos') renderVideos();
     if(name === 'templates') renderTemplates();
     if(name === 'clientform') loadFormConfig();
+    if(name === 'orders') renderOrders();
     if(name === 'homepage') loadHomepageConfig();
     if(name === 'packages') buildPackagesEditor();
     if(name === 'catpreviews') buildCatPreviewsEditor();
@@ -2136,6 +2210,7 @@ function loadFormConfig() {
     buildStepTitlesEditor(cfg);
     buildCustomFieldsEditor(cfg);
     buildFormFieldVisibility(cfg);
+    buildProductTypesEditor(cfg);
 
     /* Submit button & success message */
     document.getElementById('submitBtnAz').value = cfg.submitBtnAz || 'Göndər';
@@ -2214,11 +2289,291 @@ function saveFormConfig() {
         successMsgRu: document.getElementById('successMsgRu').value,
         successMsgTr: document.getElementById('successMsgTr').value,
         visibleCategories: visibleCats,
-        categoryPricing: categoryPricing
+        categoryPricing: categoryPricing,
+        productTypes: readProductTypesEditor()
     };
 
     localStorage.setItem('luna_form_config', JSON.stringify(cfg));
     showToast('Form konfiqurasiyası yadda saxlandı');
+}
+
+/* =====================================================
+   ORDERS MANAGER (Sifarişlər)
+===================================================== */
+function getOrders() {
+    try { return JSON.parse(localStorage.getItem('luna_orders') || '[]'); } catch(e) { return []; }
+}
+function saveOrders(orders) {
+    localStorage.setItem('luna_orders', JSON.stringify(orders));
+    updateOrdersBadge();
+}
+
+function updateOrdersBadge() {
+    var badge = document.getElementById('ordersBadge');
+    if (!badge) return;
+    var fresh = getOrders().filter(function(o) { return o.status === 'new'; }).length;
+    badge.textContent = fresh;
+    badge.style.display = fresh > 0 ? 'inline-block' : 'none';
+}
+
+function renderOrders() {
+    var list = document.getElementById('ordersList');
+    if (!list) return;
+    var orders = getOrders();
+    updateOrdersBadge();
+    if (!orders.length) {
+        list.innerHTML = '<div style="padding:40px;text-align:center;color:#ad8c7d;font-size:12px;">Hələ sifariş yoxdur. Müştəri formanı dolduranda burada görünəcək.</div>';
+        return;
+    }
+    list.innerHTML = '';
+    orders.forEach(function(o, idx) {
+        var dataRows = '';
+        Object.keys(o.data || {}).forEach(function(k) {
+            if (!o.data[k]) return;
+            dataRows += '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.06);font-size:11px;"><b style="min-width:130px;color:#b88c76;">' + esc(k) + ':</b><span style="word-break:break-word;">' + esc(String(o.data[k])) + '</span></div>';
+        });
+        var grPreview = o.grImage ? '<img src="' + esc(o.grImage) + '" style="max-width:180px;border-radius:6px;margin-top:10px;display:block;" onerror="this.style.display=\'none\'">' : '';
+        var dateStr = o.ts ? new Date(o.ts).toLocaleString('az-AZ') : '';
+        var statusColor = o.status === 'sent' ? '#27ae60' : o.status === 'preparing' ? '#f39c12' : '#e74c3c';
+
+        var card = document.createElement('div');
+        card.style.cssText = 'background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px;';
+        card.innerHTML =
+            '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">' +
+                '<span style="background:' + statusColor + ';color:#fff;font-size:9px;padding:4px 10px;border-radius:10px;letter-spacing:1px;text-transform:uppercase;">' +
+                    (o.status === 'sent' ? 'Göndərilib' : o.status === 'preparing' ? 'Hazırlanır' : 'Yeni') + '</span>' +
+                '<b style="font-size:13px;color:#fff;">' + esc(o.productTypeName || o.productType) + '</b>' +
+                '<span style="color:#ad8c7d;font-size:10px;">' + dateStr + '</span>' +
+                (o.contact ? '<span style="color:#b88c76;font-size:11px;">📞 ' + esc(o.contact) + '</span>' : '') +
+                '<button onclick="deleteOrder(\'' + o.id + '\')" style="margin-left:auto;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:16px;" title="Sil">🗑</button>' +
+            '</div>' +
+            '<div>' + dataRows + '</div>' +
+            grPreview +
+            '<div class="form-grid" style="margin-top:16px;">' +
+                '<div class="field"><label>Status</label><select onchange="setOrderStatus(\'' + o.id + '\', this.value)">' +
+                    '<option value="new"' + (o.status === 'new' ? ' selected' : '') + '>Yeni</option>' +
+                    '<option value="preparing"' + (o.status === 'preparing' ? ' selected' : '') + '>Hazırlanır</option>' +
+                    '<option value="sent"' + (o.status === 'sent' ? ' selected' : '') + '>Göndərilib</option>' +
+                '</select></div>' +
+                '<div class="field"><label>Görüntü / GR URL (hazır dizayn)</label><input id="gr_' + o.id + '" type="url" placeholder="https://... final dizayn şəkli" value="' + esc(o.grImage || '') + '"></div>' +
+                '<div class="field"><label>Çatdırılma linki</label><input id="lnk_' + o.id + '" type="url" placeholder="https://... dəvətnamə linki" value="' + esc(o.deliveryLink || '') + '"></div>' +
+                '<div class="field"><label>&nbsp;</label>' +
+                    '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+                        (o.productType === 'invitation' && o.invitationId
+                            ? '<button type="button" onclick="genOrderLink(\'' + o.id + '\')">🔗 Link Yarat</button>' : '') +
+                        '<button type="button" onclick="saveOrderMeta(\'' + o.id + '\')">💾 Yadda Saxla</button>' +
+                        '<button type="button" onclick="copyOrderMessage(\'' + o.id + '\')" style="background:#25D366;">💬 WhatsApp Mesajı</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        list.appendChild(card);
+    });
+}
+
+function findOrder(id) {
+    var orders = getOrders();
+    for (var i = 0; i < orders.length; i++) if (orders[i].id === id) return { order: orders[i], index: i };
+    return null;
+}
+
+function setOrderStatus(id, status) {
+    var f = findOrder(id);
+    if (f) { f.order.status = status; saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; })); renderOrders(); }
+}
+
+function saveOrderMeta(id) {
+    var f = findOrder(id);
+    if (!f) return;
+    var gr = document.getElementById('gr_' + id);
+    var lnk = document.getElementById('lnk_' + id);
+    if (gr) f.order.grImage = gr.value.trim();
+    if (lnk) f.order.deliveryLink = lnk.value.trim();
+    saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; }));
+    showToast('Sifariş məlumatları saxlandı');
+}
+
+function genOrderLink(id) {
+    var f = findOrder(id);
+    if (!f) return;
+    var url = new URL('data/invitation.html', window.location.href);
+    url.searchParams.set('id', f.order.invitationId);
+    var inp = document.getElementById('lnk_' + id);
+    if (inp) inp.value = url.href;
+    f.order.deliveryLink = url.href;
+    saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; }));
+}
+
+function copyOrderMessage(id) {
+    var f = findOrder(id);
+    if (!f) return;
+    var o = f.order;
+    var msg = 'Salam' + (o.data && o.data.cardPerson ? ', ' + o.data.cardPerson : '') + '! ✨\n\nSifarişiniz hazırdır.\n';
+    if (o.deliveryLink) msg += '\n🔗 Link: ' + o.deliveryLink;
+    if (o.grImage) msg += '\n🖼 Görüntü: ' + o.grImage;
+    msg += '\n\nLuna Studio';
+    navigator.clipboard.writeText(msg).then(function() { showToast('WhatsApp mesajı kopyalandı'); }, function() { alert(msg); });
+}
+
+function deleteOrder(id) {
+    if (!confirm('Bu sifarişi silmək istəyirsiniz?')) return;
+    saveOrders(getOrders().filter(function(o) { return o.id !== id; }));
+    renderOrders();
+}
+
+/* =====================================================
+   PRODUCT TYPES EDITOR (business cards, menus, etc.)
+===================================================== */
+var LUNA_DEFAULT_PRODUCT_TYPES_ADMIN = [
+    { id: "invitation", nameAz: "Dəvətnamə", nameEn: "Invitation", nameRu: "Приглашение", nameTr: "Davetiye", icon: "💌", active: true, fields: [] },
+    { id: "card", nameAz: "Vizitkart", nameEn: "Business Card", nameRu: "Визитка", nameTr: "Kartvizit", icon: "💼", active: true, fields: [
+        { id: "cardCompany", labelAz: "Şirkət adı *", labelEn: "Company name *", labelRu: "Компания *", labelTr: "Şirket adı *", type: "text", required: true },
+        { id: "cardPerson", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+        { id: "cardPosition", labelAz: "Vəzifə", labelEn: "Position", labelRu: "Должность", labelTr: "Pozisyon", type: "text" },
+        { id: "cardPhone", labelAz: "Telefon *", labelEn: "Phone *", labelRu: "Телефон *", labelTr: "Telefon *", type: "tel", required: true },
+        { id: "cardEmail", labelAz: "E-poçt", labelEn: "Email", labelRu: "Эл. почта", labelTr: "E-posta", type: "email" },
+        { id: "cardWebsite", labelAz: "Vebsayt / Instagram", labelEn: "Website / Instagram", labelRu: "Сайт / Instagram", labelTr: "Web sitesi", type: "text" },
+        { id: "cardAddress", labelAz: "Ünvan", labelEn: "Address", labelRu: "Адрес", labelTr: "Adres", type: "text" },
+        { id: "cardQty", labelAz: "Tiraj", labelEn: "Quantity", labelRu: "Тираж", labelTr: "Baskı adedi", type: "select", options: ["50","100","250","500"] },
+        { id: "cardLogo", labelAz: "Loqo yüklə", labelEn: "Upload logo", labelRu: "Логотип", labelTr: "Logo yükle", type: "file" },
+        { id: "cardNotes", labelAz: "Qeydlər — dizayn istəkləriniz", labelEn: "Notes — design wishes", labelRu: "Заметки", labelTr: "Notlar", type: "textarea" }
+    ]},
+    { id: "other-product", nameAz: "Digər məhsul", nameEn: "Other product", nameRu: "Другой продукт", nameTr: "Diğer ürün", icon: "🎁", active: true, fields: [
+        { id: "opName", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+        { id: "opPhone", labelAz: "Telefon *", labelEn: "Phone *", labelRu: "Телефон *", labelTr: "Telefon *", type: "tel", required: true },
+        { id: "opProduct", labelAz: "Məhsul növü (menyu, stand, açıqca...)", labelEn: "Product type (menu, stand...)", labelRu: "Тип продукта", labelTr: "Ürün türü", type: "text" },
+        { id: "opQty", labelAz: "Tiraj / say", labelEn: "Quantity", labelRu: "Количество", labelTr: "Adet", type: "number" },
+        { id: "opDetails", labelAz: "Ətraflı məlumat", labelEn: "Details", labelRu: "Подробности", labelTr: "Ayrıntılar", type: "textarea" }
+    ]}
+];
+
+var PROD_FIELD_TYPES = ["text","textarea","tel","email","number","date","select","file"];
+
+function getProductTypesCfg(cfg) {
+    return Array.isArray(cfg.productTypes) && cfg.productTypes.length ? cfg.productTypes : LUNA_DEFAULT_PRODUCT_TYPES_ADMIN;
+}
+
+function buildProductTypesEditor(cfg) {
+    var wrap = document.getElementById('productTypesEditor');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    getProductTypesCfg(cfg).forEach(function(p, idx) {
+        wrap.insertAdjacentHTML('beforeend', renderOneProductType(p, idx));
+    });
+}
+
+function renderOneProductType(p, idx) {
+    var fieldsHtml = '';
+    (p.fields || []).forEach(function(f, fi) {
+        fieldsHtml +=
+            '<div class="prod-field-row" style="display:grid;grid-template-columns:1fr 1fr .6fr 70px auto;gap:8px;align-items:end;padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">' +
+                '<div><label style="font-size:8px;">Etiket AZ</label><input data-pf="labelAz" value="' + esc(f.labelAz || '') + '" style="width:100%;padding:7px;font-size:11px;"></div>' +
+                '<div><label style="font-size:8px;">Etiket EN</label><input data-pf="labelEn" value="' + esc(f.labelEn || '') + '" style="width:100%;padding:7px;font-size:11px;"></div>' +
+                '<div><label style="font-size:8px;">Tip</label><select data-pf="type" style="width:100%;padding:7px;font-size:11px;">' +
+                    PROD_FIELD_TYPES.map(function(t) { return '<option' + (f.type === t ? ' selected' : '') + '>' + t + '</option>'; }).join('') +
+                '</select></div>' +
+                '<div><label style="font-size:8px;">Məcburi</label><input type="checkbox" data-pf="required"' + (f.required ? ' checked' : '') + '></div>' +
+                '<button type="button" onclick="delProdField(' + idx + ',' + fi + ')" title="Sil" style="background:#c0392b;border:none;color:#fff;padding:8px 12px;cursor:pointer;">✕</button>' +
+            '</div>';
+    });
+    return '<div class="panel-inner" style="padding:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);" data-prod-idx="' + idx + '">' +
+        '<div class="form-grid" style="margin-bottom:12px;">' +
+            '<div class="field"><label>İkon</label><input data-pt="icon" value="' + esc(p.icon || '') + '" placeholder="💼"></div>' +
+            '<div class="field"><label>ID (dəyişməyin)</label><input data-pt="pid" value="' + esc(p.id) + '"' + (p.id === 'invitation' ? ' readonly' : '') + '></div>' +
+            '<div class="field"><label>Ad (AZ)</label><input data-pt="nameAz" value="' + esc(p.nameAz || '') + '"></div>' +
+            '<div class="field"><label>Ad (EN)</label><input data-pt="nameEn" value="' + esc(p.nameEn || '') + '"></div>' +
+            '<div class="field"><label>Ad (RU)</label><input data-pt="nameRu" value="' + esc(p.nameRu || '') + '"></div>' +
+            '<div class="field"><label>Ad (TR)</label><input data-pt="nameTr" value="' + esc(p.nameTr || '') + '"></div>' +
+            '<div class="field full"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" data-pt="active"' + (p.active !== false ? ' checked' : '') + '> Formda görünür</label></div>' +
+        '</div>' +
+        (p.id === 'invitation'
+            ? '<p style="color:#ad8c7d;font-size:10px;">Standart dəvətnamə axını — sahə əlavə etmək lazım deyil.</p>'
+            : '<div style="display:grid;gap:8px;margin-bottom:10px;" data-prod-fields>' + fieldsHtml + '</div>' +
+              '<button type="button" onclick="addProdField(' + idx + ')" style="background:none;border:1px dashed rgba(184,140,118,.4);color:#b88c76;padding:8px 14px;font-size:10px;cursor:pointer;">+ Sahə Əlavə Et</button>') +
+        (p.id !== 'invitation' ? '<button type="button" onclick="removeProductType(' + idx + ')" style="float:right;background:none;border:none;color:#e74c3c;font-size:10px;cursor:pointer;text-decoration:underline;">Bu məhsulu sil</button>' : '') +
+    '</div>';
+}
+
+function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+function addProductType() {
+    var cfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
+    var list = getProductTypesCfg(cfg);
+    list.push({
+        id: 'prod_' + Date.now(),
+        nameAz: '', nameEn: '', nameRu: '', nameTr: '',
+        icon: '🎁', active: true,
+        fields: [{ id: 'f_' + Date.now(), labelAz: 'Yeni sahə', labelEn: 'New field', type: 'text', required: false }]
+    });
+    buildProductTypesEditor({ productTypes: list });
+}
+
+function removeProductType(idx) {
+    if (!confirm('Bu məhsul növünü silmək istəyirsiniz?')) return;
+    var cfg = JSON.parse(localStorage.getItem('luna_form_config') || '{}');
+    var list = getProductTypesCfg(cfg);
+    list.splice(idx, 1);
+    buildProductTypesEditor({ productTypes: list });
+}
+
+function addProdField(idx) {
+    var list = readProductTypesEditor();
+    if (!list[idx]) return;
+    list[idx].fields = list[idx].fields || [];
+    list[idx].fields.push({ id: 'f_' + Date.now(), labelAz: '', labelEn: '', type: 'text', required: false });
+    buildProductTypesEditor({ productTypes: list });
+}
+
+function delProdField(idx, fi) {
+    var list = readProductTypesEditor();
+    if (!list[idx] || !list[idx].fields[fi]) return;
+    list[idx].fields.splice(fi, 1);
+    buildProductTypesEditor({ productTypes: list });
+}
+
+function readProductTypesEditor() {
+    var wrap = document.getElementById('productTypesEditor');
+    if (!wrap) return [];
+    var out = [];
+    wrap.querySelectorAll('[data-prod-idx]').forEach(function(panel) {
+        var get = function(sel) {
+            var el = panel.querySelector(sel);
+            return el ? el.value : '';
+        };
+        var p = {
+            id: get('[data-pt="pid"]') || ('prod_' + Date.now()),
+            icon: get('[data-pt="icon"]'),
+            nameAz: get('[data-pt="nameAz"]'),
+            nameEn: get('[data-pt="nameEn"]'),
+            nameRu: get('[data-pt="nameRu"]'),
+            nameTr: get('[data-pt="nameTr"]'),
+            active: !panel.querySelector('[data-pt="active"]') || panel.querySelector('[data-pt="active"]').checked,
+            fields: []
+        };
+        panel.querySelectorAll('[data-prod-fields] > .prod-field-row').forEach(function(row, fi) {
+            var g = function(sel) {
+                var el = row.querySelector(sel);
+                if (!el) return sel === '[data-pf="required"]' ? false : '';
+                return sel === '[data-pf="required"]' ? el.checked : el.value;
+            };
+            p.fields.push({
+                id: 'f' + fi + '_' + Math.abs(hashStr(g('[data-pf="labelAz"]') + g('[data-pf="type"]'))),
+                labelAz: g('[data-pf="labelAz"]'),
+                labelEn: g('[data-pf="labelEn"]'),
+                type: g('[data-pf="type"]'),
+                required: g('[data-pf="required"]')
+            });
+        });
+        out.push(p);
+    });
+    return out;
+}
+
+function hashStr(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
+    return h;
 }
 
 /* Step titles editor */
@@ -2356,6 +2711,18 @@ function loadHomepageConfig() {
     document.getElementById('homeCardRadius').value = cfg.cardRadius != null ? cfg.cardRadius : 8;
     document.getElementById('radiusVal').textContent = document.getElementById('homeCardRadius').value;
     document.getElementById('homeTextScale').value = cfg.textScale || '';
+    document.getElementById('homePattern').value = cfg.pattern || '';
+    document.getElementById('homeReveal').value = cfg.reveal || '';    document.getElementById('homeAnnounceOn').checked = cfg.announceOn === true;
+    document.getElementById('homeAnnounceAz').value = cfg.announceAz || '';
+    document.getElementById('homeAnnounceEn').value = cfg.announceEn || '';
+    document.getElementById('homeAnnounceRu').value = cfg.announceRu || '';
+    document.getElementById('homeAnnounceTr').value = cfg.announceTr || '';
+    document.getElementById('homeStatsOn').checked = cfg.statsOn === true;
+    document.getElementById('homeTestimonialsOn').checked = cfg.testimonialsOn === true;
+    document.getElementById('homeTestiTitleAz').value = cfg.testiTitleAz || 'Müştərilərimiz yazır';
+    document.getElementById('homeTestiTitleEn').value = cfg.testiTitleEn || 'What our clients say';
+    buildStatsEditor(cfg);
+    buildTestimonialsEditor(cfg);
 
     /* Section visibility */
     var secWrap = document.getElementById('homeSectionVisibility');
@@ -2449,11 +2816,94 @@ function saveHomepageConfig() {
         cardRadius: parseInt(document.getElementById('homeCardRadius').value),
         textScale: document.getElementById('homeTextScale').value,
         hiddenSections: Array.prototype.map.call(document.querySelectorAll('#homeSectionVisibility input:checked'), function(cb){ return cb.value; }),
+        pattern: document.getElementById('homePattern').value,
+        reveal: document.getElementById('homeReveal').value,
+        announceOn: document.getElementById('homeAnnounceOn').checked,
+        announceAz: document.getElementById('homeAnnounceAz').value,
+        announceEn: document.getElementById('homeAnnounceEn').value,
+        announceRu: document.getElementById('homeAnnounceRu').value,
+        announceTr: document.getElementById('homeAnnounceTr').value,
+        statsOn: document.getElementById('homeStatsOn').checked,
+        testimonialsOn: document.getElementById('homeTestimonialsOn').checked,
+        testiTitleAz: document.getElementById('homeTestiTitleAz').value,
+        testiTitleEn: document.getElementById('homeTestiTitleEn').value,
+        stats: readStatsEditor(),
+        testimonials: readTestimonialsEditor(),
         categoryOrder: categoryOrder
     };
 
     localStorage.setItem('luna_homepage_config', JSON.stringify(cfg));
     showToast('Ana səhifə konfiqurasiyası yadda saxlandı');
+}
+
+/* =====================================================
+   STATS & TESTIMONIALS EDITORS
+===================================================== */
+var LUNA_DEFAULT_STATS = [
+    { num: "500+", labelAz: "Xoşbəxt cüt", labelEn: "Happy couples" },
+    { num: "4.9★", labelAz: "Müştəri reytinqi", labelEn: "Client rating" },
+    { num: "24/7", labelAz: "Onlayn baxış", labelEn: "Online viewing" },
+    { num: "12", labelAz: "Unikal dizayn", labelEn: "Unique designs" }
+];
+
+function buildStatsEditor(cfg) {
+    var wrap = document.getElementById('statsEditor');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var stats = Array.isArray(cfg.stats) && cfg.stats.length ? cfg.stats : LUNA_DEFAULT_STATS;
+    stats.forEach(function(s, i) {
+        wrap.insertAdjacentHTML('beforeend',
+            '<div style="padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">' +
+                '<div style="display:flex;gap:8px;margin-bottom:8px;">' +
+                    '<input data-stat="num" value="' + esc(s.num || '') + '" placeholder="500+" style="flex:1;padding:7px;font-size:13px;font-weight:600;color:#D4AF37;">' +
+                    '<button type="button" onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:#e74c3c;cursor:pointer;">✕</button>' +
+                '</div>' +
+                '<input data-stat="labelAz" value="' + esc(s.labelAz || '') + '" placeholder="Etiket AZ" style="width:100%;padding:6px;font-size:10px;margin-bottom:5px;">' +
+                '<input data-stat="labelEn" value="' + esc(s.labelEn || '') + '" placeholder="Label EN" style="width:100%;padding:6px;font-size:10px;">' +
+            '</div>');
+    });
+}
+
+function readStatsEditor() {
+    var out = [];
+    document.querySelectorAll('#statsEditor > div').forEach(function(row) {
+        var g = function(k) { var el = row.querySelector('[data-stat="' + k + '"]'); return el ? el.value.trim() : ''; };
+        if (g('num')) out.push({ num: g('num'), labelAz: g('labelAz'), labelEn: g('labelEn') });
+    });
+    return out;
+}
+
+function buildTestimonialsEditor(cfg) {
+    var wrap = document.getElementById('testiEditor');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    (cfg.testimonials || []).forEach(function(t) { addTestimonialRow(t); });
+}
+
+function addTestimonialRow(t) {
+    t = t || {};
+    var wrap = document.getElementById('testiEditor');
+    if (!wrap) return;
+    var row = document.createElement('div');
+    row.style.cssText = 'padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);';
+    row.innerHTML =
+        '<div style="display:flex;gap:8px;margin-bottom:8px;">' +
+            '<input data-testi="name" value="' + esc(t.name || '') + '" placeholder="Ad (məs.: Leyla & Elvin)" style="flex:1;padding:7px;font-size:11px;font-weight:600;">' +
+            '<button type="button" onclick="this.closest(\'[data-testi-row]\').remove()" style="background:none;border:none;color:#e74c3c;cursor:pointer;">✕</button>' +
+        '</div>' +
+        '<textarea data-testi="textAz" rows="2" placeholder="Rəy (AZ)" style="width:100%;padding:6px;font-size:10px;margin-bottom:5px;">' + esc(t.textAz || '') + '</textarea>' +
+        '<textarea data-testi="textEn" rows="2" placeholder="Testimonial (EN)" style="width:100%;padding:6px;font-size:10px;">' + esc(t.textEn || '') + '</textarea>';
+    row.setAttribute('data-testi-row', '1');
+    wrap.appendChild(row);
+}
+
+function readTestimonialsEditor() {
+    var out = [];
+    document.querySelectorAll('#testiEditor [data-testi-row]').forEach(function(row) {
+        var g = function(k) { var el = row.querySelector('[data-testi="' + k + '"]'); return el ? el.value.trim() : ''; };
+        if (g('name') || g('textAz')) out.push({ name: g('name'), textAz: g('textAz'), textEn: g('textEn') });
+    });
+    return out;
 }
 
 /* =====================================================
