@@ -226,6 +226,224 @@ a { text-decoration: none; color: inherit; }
 [data-opening="minimal"] .seal { background: var(--fg-heading); width: 36px; height: 36px; }
 [data-opening="minimal"] .flap { background: var(--bg-alt); }
 
+/* Type: Door Opening */
+[data-opening="door"] .opening {
+    background: var(--bg);
+    overflow: hidden;
+}
+[data-opening="door"] .envelope-scene { display: none; }
+[data-opening="door"] .door-scene {
+    position: relative;
+    width: min(520px, 85vw);
+    height: min(680px, 80vh);
+    perspective: 1600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+[data-opening="door"] .door-left,
+[data-opening="door"] .door-right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--bg-alt);
+    border: 1px solid var(--border-strong);
+    transition: transform 1.6s cubic-bezier(.19,1,.22,1);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+[data-opening="door"] .door-left { left: 0; transform-origin: left center; border-right: none; }
+[data-opening="door"] .door-right { right: 0; transform-origin: right center; border-left: none; }
+[data-opening="door"] .door-left::before,
+[data-opening="door"] .door-right::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--border);
+}
+[data-opening="door"] .door-left::after,
+[data-opening="door"] .door-right::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    top: 50%;
+}
+[data-opening="door"] .door-left::after { right: 16px; }
+[data-opening="door"] .door-right::after { left: 16px; }
+[data-opening="door"] .door-open .door-left { transform: perspective(1600px) rotateY(-105deg); }
+[data-opening="door"] .door-open .door-right { transform: perspective(1600px) rotateY(105deg); }
+[data-opening="door"] .door-invitation {
+    position: absolute;
+    inset: 8%;
+    z-index: 1;
+    background: var(--white);
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transform: scale(.9);
+    transition: opacity .8s .6s ease, transform .8s .6s cubic-bezier(.19,1,.22,1);
+}
+[data-opening="door"] .door-open .door-invitation { opacity: 1; transform: scale(1); }
+[data-opening="door"] .door-invitation::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--border);
+}
+[data-opening="door"] .door-invitation-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+}
+[data-opening="door"] .door-invitation-content small {
+    font-family: "DM Sans", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+[data-opening="door"] .door-invitation-content h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(42px,7vw,68px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--fg-heading);
+    margin: 18px 0 14px;
+}
+[data-opening="door"] .door-invitation-content p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+}
+[data-opening="door"] #openButton {
+    position: relative;
+    z-index: 3;
+    margin-top: 0;
+}
+
+/* Type: Stairs Climbing */
+[data-opening="stairs"] .opening {
+    background: var(--bg);
+    overflow: hidden;
+}
+[data-opening="stairs"] .envelope-scene { display: none; }
+[data-opening="stairs"] .stairs-scene {
+    position: relative;
+    width: min(520px, 85vw);
+    height: min(600px, 75vh);
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+[data-opening="stairs"] .stairs-steps {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0;
+}
+[data-opening="stairs"] .stairs-step {
+    height: 60px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: stairRise .5s ease forwards;
+    position: relative;
+}
+[data-opening="stairs"] .stairs-step:nth-child(1) { width: 100%; animation-delay: .1s; }
+[data-opening="stairs"] .stairs-step:nth-child(2) { width: 85%; animation-delay: .25s; }
+[data-opening="stairs"] .stairs-step:nth-child(3) { width: 70%; animation-delay: .4s; }
+[data-opening="stairs"] .stairs-step:nth-child(4) { width: 55%; animation-delay: .55s; }
+[data-opening="stairs"] .stairs-step:nth-child(5) { width: 40%; animation-delay: .7s; }
+@keyframes stairRise {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+[data-opening="stairs"] .stairs-card {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    width: 70%;
+    aspect-ratio: 3/4;
+    background: var(--white);
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    animation: cardReveal .8s 1s cubic-bezier(.19,1,.22,1) forwards;
+    box-shadow: 0 20px 60px rgba(62,37,24,.15);
+}
+@keyframes cardReveal {
+    from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+[data-opening="stairs"] .stairs-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--border);
+}
+[data-opening="stairs"] .stairs-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+}
+[data-opening="stairs"] .stairs-card-content small {
+    font-family: "DM Sans", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+[data-opening="stairs"] .stairs-card-content h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(36px,6vw,56px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--fg-heading);
+    margin: 14px 0 10px;
+}
+[data-opening="stairs"] .stairs-card-content p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+}
+[data-opening="stairs"] #openButton {
+    position: relative;
+    z-index: 3;
+    margin-top: 20px;
+}
+
 
 /* =====================================================
    ENVELOPE

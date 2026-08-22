@@ -128,6 +128,21 @@ button,input,textarea,select{font-family:inherit}
 .preview-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:10px}
 .preview-row-label{color:var(--muted);text-transform:uppercase;letter-spacing:1px}
 .preview-row-value{color:var(--dark);font-weight:500}
+.biz-pricing-summary{margin-top:28px;padding:24px;border:1px solid rgba(92,61,46,.08);border-radius:12px;background:rgba(245,237,227,.4)}
+.biz-pricing-title{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:16px;text-align:center}
+.biz-pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.biz-price-item{text-align:center;padding:12px 8px;border:1px solid rgba(92,61,46,.06);border-radius:8px;background:rgba(255,252,249,.7);transition:.3s}
+.biz-price-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(62,37,24,.06)}
+.biz-price-item.featured{border-color:var(--gold);background:rgba(196,168,130,.08)}
+.biz-price-label{display:block;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.biz-price-val{display:block;font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;color:var(--gold)}
+.biz-extras{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.biz-extra-item{font-size:9px;color:var(--text);padding:6px 14px;background:rgba(196,168,130,.06);border-radius:20px;border:1px solid rgba(196,168,130,.12)}
+.biz-extra-item strong{color:var(--gold);font-weight:600}
+@media(max-width:720px){
+    .biz-pricing-grid{grid-template-columns:repeat(2,1fr)}
+    .biz-extras{flex-direction:column;align-items:center}
+}
 @media(max-width:720px){
     .navbar{width:min(1100px,94%);padding:0 18px}
     .nav-links{display:none}
@@ -214,6 +229,20 @@ button,input,textarea,select{font-family:inherit}
           <h3 class="step-title">Paket seçin</h3>
           <p class="step-desc">Lazimi funksiyaları daxil edən paketi seçin</p>
           <div class="pkg-picker" id="pkgPicker"></div>
+          <div class="biz-pricing-summary" id="bizPricingSummary">
+            <div class="biz-pricing-title">Biznes kateqoriyası qiymətləri</div>
+            <div class="biz-pricing-grid">
+              <div class="biz-price-item"><span class="biz-price-label">Video</span><span class="biz-price-val">20 AZN</span></div>
+              <div class="biz-price-item"><span class="biz-price-label">Basic</span><span class="biz-price-val">20 AZN</span></div>
+              <div class="biz-price-item featured"><span class="biz-price-label">Premium</span><span class="biz-price-val">40 AZN</span></div>
+              <div class="biz-price-item"><span class="biz-price-label">Luxury</span><span class="biz-price-val">65 AZN</span></div>
+            </div>
+            <div class="biz-extras">
+              <div class="biz-extra-item">💳 Digital Business Card — <strong>15 AZN</strong></div>
+              <div class="biz-extra-item">📱 QR Contact Card — <strong>15 AZN</strong></div>
+              <div class="biz-extra-item">🎬 Video Invitation — <strong>20 AZN</strong></div>
+            </div>
+          </div>
         </div>
         <div class="form-step" id="formStep2">
           <h3 class="step-title">Dizayn seçin</h3>
