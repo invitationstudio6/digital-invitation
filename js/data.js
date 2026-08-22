@@ -227,6 +227,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral" },
         preview: { eyebrow: "SİZİ SEVGİ İLƏ DƏVƏT EDİRİK", names: ["Aysel", "Murad"], date: "12 · 09 · 2026", message: "Bəzi hekayələr kitablarda yazılır. Bizimki isə kiçik anlarda, paylaşılan gülüşlərdə və unudulmaz xatirələrdə yazıldı.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {

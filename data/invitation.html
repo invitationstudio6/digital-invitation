@@ -2304,6 +2304,51 @@ document.getElementById("openButton").textContent =
    HERO — CATEGORY-AWARE NAMES
 ===================================================== */
 
+(function applyTemplateLayout() {
+    var tplData = null;
+    if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
+        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === invitation.templateId; });
+    }
+    /* Fallback: find template by design field */
+    if (!tplData && invitation.design && typeof LUNA_TEMPLATES !== "undefined") {
+        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === invitation.design; });
+    }
+    var cfg = (tplData && tplData.layoutConfig) || {};
+    var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];
+    var heroType = cfg.heroType || "hero-centered";
+    var bgStyle = cfg.backgroundStyle || "default";
+
+    /* Apply hero type class */
+    var heroEl = document.getElementById("hero");
+    if (heroEl) {
+        heroEl.className = "hero " + heroType;
+    }
+
+    /* Apply background style to main invitation wrapper */
+    var invEl = document.getElementById("invitation");
+    if (invEl) {
+        invEl.classList.add("bg-" + bgStyle);
+    }
+
+    /* Reorder sections */
+    var sectionsEl = invEl || document.querySelector("main.invitation");
+    if (sectionsEl) {
+        var allSections = sectionsEl.querySelectorAll("section[id$='Section']");
+        /* Build map of section elements */
+        var sectionMap = {};
+        allSections.forEach(function(sec) {
+            var id = sec.id.replace("Section","");
+            sectionMap[id] = sec;
+        });
+        /* Remove all and re-append in order */
+        allSections.forEach(function(sec) { sec.remove(); });
+        sectionOrder.forEach(function(key) {
+            var el = sectionMap[key];
+            if (el && !el.closest("main")) sectionsEl.appendChild(el);
+        });
+    }
+})();
+
 document.getElementById("heroEyebrow").textContent =
     lunaInvitationHeading(invitation);
 
