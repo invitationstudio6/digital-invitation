@@ -436,13 +436,15 @@ button,input,textarea,select{font-family:inherit}
         var wrap = document.getElementById("customFieldsWrap");
         if (!wrap) return;
         var fields = Array.isArray(_formCfg.customFields) ? _formCfg.customFields : [];
-        var en = (localStorage.getItem("lunaLanguage") || "az") !== "az";
+        var lang = localStorage.getItem("lunaLanguage") || "az";
+        var sfx = lang === "az" ? "Az" : lang === "en" ? "En" : lang === "ru" ? "Ru" : "Tr";
         wrap.innerHTML = "";
         fields.forEach(function(f, i) {
             var id = "acf_" + i;
             var div = document.createElement("div");
             div.className = "field full";
-            var labelHtml = "<label>" + (en ? (f.labelEn || f.labelAz) : (f.labelAz || f.labelEn)) + (f.required ? " *" : "") + "</label>";
+            var label = f["label" + sfx] || f.labelAz || f.labelEn;
+            var labelHtml = "<label>" + label + (f.required ? " *" : "") + "</label>";
             if (f.type === "textarea") {
                 div.innerHTML = labelHtml + '<textarea id="' + id + '" data-acf="' + i + '" rows="3" style="width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(92,61,46,.15);color:var(--text);font-family:inherit;font-size:13px;"></textarea>';
             } else {
@@ -456,7 +458,8 @@ button,input,textarea,select{font-family:inherit}
     function collectAdminCustomFields() {
         var out = {};
         var fields = Array.isArray(_formCfg.customFields) ? _formCfg.customFields : [];
-        var en = (localStorage.getItem("lunaLanguage") || "az") !== "az";
+        var lang = localStorage.getItem("lunaLanguage") || "az";
+        var sfx = lang === "az" ? "Az" : lang === "en" ? "En" : lang === "ru" ? "Ru" : "Tr";
         var missing = false;
         fields.forEach(function(f, i) {
             var el = document.getElementById("acf_" + i);
@@ -464,14 +467,14 @@ button,input,textarea,select{font-family:inherit}
             var val = el.value.trim();
             if (f.required && !val) { missing = true; el.style.borderColor = "#c0392b"; }
             else if (el.style) el.style.borderColor = "";
-            out[en ? (f.labelEn || f.labelAz) : (f.labelAz || f.labelEn)] = val;
+            out[f["label" + sfx] || f.labelAz || f.labelEn] = val;
         });
         return missing === true ? null : out;
     }
 
     function applyFormStepConfig(lang) {
-        var en = (lang === "en" || lang === "ru" || lang === "tr");
-        /* Step headers (.step-title / .step-desc inside #formStep1..6) */
+        var langKey = ["az", "en", "ru", "tr"].indexOf(lang) !== -1 ? lang : "az";
+        /* Step headers (.step-title inside #formStep1..6) */
         if (_formCfg.stepTitles) {
             for (var i = 1; i <= 6; i++) {
                 var st = _formCfg.stepTitles[String(i)] || _formCfg.stepTitles[i];
@@ -479,20 +482,21 @@ button,input,textarea,select{font-family:inherit}
                 var panel = document.getElementById("formStep" + i);
                 if (!panel) continue;
                 var titleEl = panel.querySelector(".step-title");
-                var val = en ? (st.en || st.az) : (st.az || st.en);
+                var val = st[langKey] || (langKey === "az" ? null : (st.az || st.en)) || st.en || st.az;
                 if (titleEl && val) titleEl.textContent = val;
             }
         }
         /* Submit button text */
         var btn = document.getElementById("stepSubmit");
         if (btn) {
-            var btnVal = en ? (_formCfg.submitBtnEn || _formCfg.submitBtnAz) : (_formCfg.submitBtnAz || _formCfg.submitBtnEn);
+            var btnVal = _formCfg["submitBtn" + (langKey === "az" ? "Az" : langKey === "en" ? "En" : langKey === "ru" ? "Ru" : "Tr")]
+                || _formCfg.submitBtnAz || _formCfg.submitBtnEn;
             if (btnVal) btn.textContent = btnVal;
         }
         /* Success messages stored for submit handler */
-        window.__lunaFormSuccessMsg = en
-            ? (_formCfg.successMsgEn || _formCfg.successMsgAz || "")
-            : (_formCfg.successMsgAz || _formCfg.successMsgEn || "");
+        var sfx = langKey === "az" ? "Az" : langKey === "en" ? "En" : langKey === "ru" ? "Ru" : "Tr";
+        window.__lunaFormSuccessMsg = _formCfg["successMsg" + sfx]
+            || _formCfg.successMsgAz || _formCfg.successMsgEn || "";
     }
 
     /* Inject admin-created extra categories into picker */
@@ -1041,9 +1045,12 @@ button,input,textarea,select{font-family:inherit}
                 if (dp) dp.textContent = cfg2[dKey];
             }
         } catch(e) {}
-        /* Re-apply step titles / submit button / success msg */
+        /* Re-apply step titles / submit button / success msg / custom fields */
         if (typeof applyFormStepConfig === "function") {
             try { applyFormStepConfig(lang); } catch(e) {}
+        }
+        if (typeof renderAdminCustomFields === "function") {
+            try { renderAdminCustomFields(); } catch(e) {}
         }
     };
     lunaInitLanguage();

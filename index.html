@@ -1308,14 +1308,30 @@ renderCatCollection("business", "colBusinessGrid", 4);
 function lunaVideoEmbedUrl(url) {
     if (!url) return "";
     url = url.trim();
-    var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
-    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1&rel=0";
-    var vm = url.match(/vimeo\.com\/(\d+)/);
+    var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1&rel=0&playsinline=1";
+    var vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
     if (vm) return "https://player.vimeo.com/video/" + vm[1] + "?autoplay=1";
     return url;
 }
-var _lunaCatNames = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthday:"Ad Günü", graduation:"Məzuniyyət", "baby-shower":"Körpə", business:"Biznes", video:"Video", other:"Xüsusi" };
-(function renderVideoSection() {
+
+/* Derive a poster/thumbnail image straight from the video URL when possible */
+function lunaVideoThumbUrl(url) {
+    if (!url) return "";
+    url = url.trim();
+    var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    if (yt) return "https://i.ytimg.com/vi/" + yt[1] + "/hqdefault.jpg";
+    /* Vimeo thumbnails need API — fall back to empty */
+    var vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (vm) return "";
+    return "";
+}
+
+function isDirectVideoUrl(url) {
+    return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(url || "");
+}
+
+function renderVideoSection() {
     var container = document.getElementById("videoFeaturedContainer");
     if (!container) return;
     container.innerHTML = "";
@@ -1353,13 +1369,32 @@ var _lunaCatNames = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthda
     function makeCard(v, small) {
         var card = document.createElement("div");
         card.className = "video-featured";
-        var thumb = v.thumbnail || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85";
-        card.innerHTML =
-            '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85\'">' +
-            '<div class="video-cat-tag">' + (_lunaCatNames[v.category] || "Video") + '</div>' +
-            '<div class="video-play-overlay"><div class="video-play-circle"></div></div>' +
-            '<div class="video-title-overlay">' + (v.title || "Video dəvətnamə") + '</div>' +
-            '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>';
+        var url = (v.url || "").trim();
+
+        /* Poster: explicit thumbnail > derived from URL > default photo */
+        var thumb = v.thumbnail && /^(https?:|data:)/i.test(v.thumbnail.trim())
+            ? v.thumbnail.trim()
+            : (lunaVideoThumbUrl(url) || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85");
+
+        /* Direct video files get an actual inline playing preview */
+        if (isDirectVideoUrl(url)) {
+            card.innerHTML =
+                '<video src="' + url + '" muted loop playsinline preload="metadata"></video>' +
+                '<div class="video-cat-tag">' + lunaCategoryName(v.category || "other") + '</div>' +
+                '<div class="video-play-overlay"><div class="video-play-circle"></div></div>' +
+                '<div class="video-title-overlay">' + (v.title || "Video dəvətnamə") + '</div>' +
+                '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>';
+            var pv = card.querySelector("video");
+            card.addEventListener("mouseenter", function() { pv.play().catch(function(){}); });
+            card.addEventListener("mouseleave", function() { pv.pause(); });
+        } else {
+            card.innerHTML =
+                '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85\'">' +
+                '<div class="video-cat-tag">' + lunaCategoryName(v.category || "other") + '</div>' +
+                '<div class="video-play-overlay"><div class="video-play-circle"></div></div>' +
+                '<div class="video-title-overlay">' + (v.title || "Video dəvətnamə") + '</div>' +
+                '<div class="video-price-badge">' + (v.price || 20) + ' AZN</div>';
+        }
         card.addEventListener("click", function() { openVideoLightbox(v); });
         return card;
     }
@@ -1373,7 +1408,8 @@ var _lunaCatNames = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthda
         featured.slice(1).forEach(function(v) { stack.appendChild(makeCard(v)); });
         container.appendChild(stack);
     }
-})();
+}
+renderVideoSection();
 
 /* ===== VIDEO LIGHTBOX PLAYER ===== */
 function openVideoLightbox(video) {
@@ -1444,22 +1480,24 @@ function applyHomepageConfig() {
         else { el.innerHTML = cfg[key].replace(/\n/g, "<br>"); }
     });
 
-    /* English variants when active language is en */
-    if ((localStorage.getItem("lunaLanguage") || "az") === "en") {
-        var mapEn = {
-            heroTitleEn: '[data-i18n="heroTitle"]',
-            heroSubEn:   '[data-i18n="heroSubtitle"]',
-            heroTextEn:  '[data-i18n="heroText"]',
-            catTitleEn:  '[data-i18n="catTitle"]',
-            catTextEn:   '[data-i18n="catText"]',
-            ctaTitleEn:  '[data-i18n="ctaTitle"]',
-            ctaTextEn:   '[data-i18n="ctaText"]'
+    /* Localized variants when active language is not AZ */
+    var activeLang = localStorage.getItem("lunaLanguage") || "az";
+    if (activeLang !== "az") {
+        var suffix = activeLang === "en" ? "En" : (activeLang === "ru" ? "Ru" : "Tr");
+        var mapL = {
+            ["heroTitle" + suffix]:  '[data-i18n="heroTitle"]',
+            ["heroSub" + suffix]:    '[data-i18n="heroSubtitle"]',
+            ["heroText" + suffix]:   '[data-i18n="heroText"]',
+            ["catTitle" + suffix]:   '[data-i18n="catTitle"]',
+            ["catText" + suffix]:    '[data-i18n="catText"]',
+            ["ctaTitle" + suffix]:   '[data-i18n="ctaTitle"]',
+            ["ctaText" + suffix]:    '[data-i18n="ctaText"]'
         };
-        Object.keys(mapEn).forEach(function(key) {
+        Object.keys(mapL).forEach(function(key) {
             if (!cfg[key]) return;
-            var el = document.querySelector(mapEn[key]);
+            var el = document.querySelector(mapL[key]);
             if (!el) return;
-            if (key === "heroSubEn") { el.textContent = cfg[key]; }
+            if (key.indexOf("Sub") !== -1) { el.textContent = cfg[key]; }
             else { el.innerHTML = cfg[key].replace(/\n/g, "<br>"); }
         });
     }
@@ -1553,6 +1591,7 @@ lunaSetLanguage = function(lang) {
     renderCategories();
     renderTabs();
     renderTemplates(getCurrentFilter());
+    renderVideoSection();
     renderCatCollection("wedding", "colWeddingGrid", 4);
     renderCatCollection("birthday", "colBirthdayGrid", 4);
     renderCatCollection("business", "colBusinessGrid", 4);

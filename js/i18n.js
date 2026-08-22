@@ -908,7 +908,24 @@ var LUNA_I18N = {
         adminCopyLink: "Linki kopyala",
         adminDelete: "Sil",
         adminSave: "Kaydet",
-        adminClear: "Temizle"
+        adminClear: "Temizle",
+
+        howStartBtn: "Başla",
+
+        howPageDesc: "Davetiyenizi birkaç basit adımda oluşturun — kategoriden paylaşıma kadar.",
+        howProcessTitle: "Tüm süreç",
+        howProcessDesc: "Davetiyenizin nasıl oluşturulduğunu adım adım izleyin.",
+        howFaqTitle: "Sıkça sorulan sorular",
+        howFaqQ1: "Davetiye hazırlanması ne kadar sürer?",
+        howFaqA1: "Davetiyeniz genellikle 1-2 iş günü içinde hazırlanır. Premium ve Luxury paketlerinde daha hızlı hazır olabilir.",
+        howFaqQ2: "Bağlantıyı nasıl paylaşabilirim?",
+        howFaqA2: "Hazır olduğunda kişisel bağlantınızı WhatsApp, Instagram, SMS veya herhangi bir platformda paylaşabilirsiniz.",
+        howFaqQ3: "Değişiklik yapabilir miyim?",
+        howFaqA3: "Evet, davetiye hazırlanmadan önce tüm bilgilerinizde değişiklik yapabilirsiniz.",
+        howFaqQ4: "Misafirler RSVP gönderebilir mi?",
+        howFaqA4: "Premium ve Luxury paketlerinde RSVP işlevi dahildir. Misafirler katılımlarını onaylayabilir.",
+        howFaqQ5: "Hangi dillerde mevcuttur?",
+        howFaqA5: "Davetiyeler Azerbaycan Türkçesi, Rusça, İngilizce ve Türkçe olarak hazırlanır."
     }
 };
 
