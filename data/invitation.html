@@ -2077,7 +2077,8 @@ footer p {
 
     <div class="opening-grain"></div>
 
-    <div class="envelope-scene">
+    <!-- Envelope Scene (default) -->
+    <div class="envelope-scene" id="envelopeScene">
 
         <div
             class="envelope"
@@ -2086,7 +2087,7 @@ footer p {
 
             <div class="envelope-body"></div>
 
-            <div class="letter">
+            <div class="letter" id="letter">
                 <div class="letter-content">
                     <small id="letterEyebrow"></small>
                     <h1 id="letterNames"></h1>
@@ -2094,7 +2095,7 @@ footer p {
                 </div>
             </div>
 
-            <div class="flap"></div>
+            <div class="flap" id="flap"></div>
 
             <div
                 class="seal"
@@ -2110,6 +2111,39 @@ footer p {
         >
         </button>
 
+    </div>
+
+    <!-- Door Scene (for door opening type) -->
+    <div class="door-scene" id="doorScene" style="display:none">
+        <div class="door-left"></div>
+        <div class="door-right"></div>
+        <div class="door-invitation">
+            <div class="door-invitation-content">
+                <small id="doorEyebrow"></small>
+                <h1 id="doorNames"></h1>
+                <p id="doorDate"></p>
+            </div>
+        </div>
+        <button class="open-button" id="doorOpenButton" type="button"></button>
+    </div>
+
+    <!-- Stairs Scene (for stairs opening type) -->
+    <div class="stairs-scene" id="stairsScene" style="display:none">
+        <div class="stairs-steps">
+            <div class="stairs-step"></div>
+            <div class="stairs-step"></div>
+            <div class="stairs-step"></div>
+            <div class="stairs-step"></div>
+            <div class="stairs-step"></div>
+        </div>
+        <div class="stairs-card">
+            <div class="stairs-card-content">
+                <small id="stairsEyebrow"></small>
+                <h1 id="stairsNames"></h1>
+                <p id="stairsDate"></p>
+            </div>
+        </div>
+        <button class="open-button" id="stairsOpenButton" type="button"></button>
     </div>
 
 </div>
