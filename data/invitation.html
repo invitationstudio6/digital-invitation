@@ -160,7 +160,7 @@ a { text-decoration: none; color: inherit; }
 
 
 /* =====================================================
-   OPENING SCREEN
+   OPENING SCREEN TYPES
 ===================================================== */
 
 .opening {
@@ -180,6 +180,51 @@ a { text-decoration: none; color: inherit; }
     visibility: hidden;
     pointer-events: none;
 }
+
+/* Type: Fullscreen Photo opening */
+[data-opening="fullscreen-photo"] .opening {
+    background: var(--cover) center/cover no-repeat;
+    justify-content: flex-end;
+    padding-bottom: 100px;
+}
+[data-opening="fullscreen-photo"] .opening::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.55));
+    z-index: 0;
+}
+[data-opening="fullscreen-photo"] .envelope-scene { display: none; }
+[data-opening="fullscreen-photo"] #openButton {
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+    border-color: rgba(255,255,255,.4);
+    color: #fff;
+}
+[data-opening="fullscreen-photo"] #openButton::before { background: rgba(255,255,255,.15); }
+
+/* Type: Editorial Card opening */
+[data-opening="editorial-card"] .opening {
+    background: linear-gradient(135deg, #1a1410, #2a1f16);
+}
+[data-opening="editorial-card"] .envelope-scene { background: none; }
+[data-opening="editorial-card"] .envelope-body { background: transparent; border: 2px solid rgba(196,168,130,.2); }
+[data-opening="editorial-card"] .letter { background: rgba(26,20,16,.9); color: #f5ede3; }
+[data-opening="editorial-card"] .seal { background: linear-gradient(135deg, #c4a882, #d4b892); }
+
+/* Type: Minimal Typographic opening */
+[data-opening="minimal"] .opening {
+    background: var(--bg, #FDFCFA);
+}
+[data-opening="minimal"] .envelope { border: none; box-shadow: none; }
+[data-opening="minimal"] .envelope-body { background: transparent; border: none; }
+[data-opening="minimal"] .envelope-body::before { display: none; }
+[data-opening="minimal"] .envelope-body::after { border: none; }
+[data-opening="minimal"] .envelope-scene { background: none; }
+[data-opening="minimal"] .letter { border: 1px solid var(--border); background: var(--white); }
+[data-opening="minimal"] .seal { background: var(--fg-heading); width: 36px; height: 36px; }
+[data-opening="minimal"] .flap { background: var(--bg-alt); }
 
 
 /* =====================================================
@@ -2317,6 +2362,10 @@ document.getElementById("openButton").textContent =
     var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];
     var heroType = cfg.heroType || "hero-centered";
     var bgStyle = cfg.backgroundStyle || "default";
+    var openingType = cfg.openingType || "envelope";
+
+    /* Apply opening type to root element */
+    document.documentElement.setAttribute("data-opening", openingType);
 
     /* Apply hero type class */
     var heroEl = document.getElementById("hero");
