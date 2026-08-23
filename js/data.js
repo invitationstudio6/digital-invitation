@@ -1189,3 +1189,139 @@ function lunaGetAllTemplates() {
 LUNA_CATEGORIES.forEach(function(cat) {
     cat.count = LUNA_TEMPLATES.filter(function(t) { return t.category === cat.id; }).length;
 });
+
+/* =====================================================
+   SEED SAMPLE DATA
+   Initializes localStorage with sample designs, templates, etc.
+   Only runs once (checks luna_seeded_v1 flag)
+===================================================== */
+function seedSampleData(){
+    if(localStorage.getItem("luna_seeded_v1")) return;
+    try {
+        /* Seed admin designs into luna_designs if empty */
+        var existingDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
+        if(!existingDesigns.length){
+            var sampleDesigns = LUNA_TEMPLATES.map(function(t){
+                return {
+                    id: t.id,
+                    name: t.name,
+                    category: t.category,
+                    style: t.style || "",
+                    animationType: t.animationStyle || t.animationType || t.openingType || "",
+                    openingType: t.openingType || t.animationType || "",
+                    thumbnail: t.thumbnail || "",
+                    cover: t.cover || "",
+                    minPackage: t.minPackage,
+                    packages: t.packages,
+                    description: t.preview ? t.preview.message : "",
+                    url: "",
+                    illustrations: t.illustrations || [],
+                    video: "",
+                    active: true,
+                    createdAt: new Date().toISOString()
+                };
+            });
+            localStorage.setItem("luna_designs", JSON.stringify(sampleDesigns));
+        }
+
+        /* Seed category previews if empty */
+        var existingPreviews = JSON.parse(localStorage.getItem("luna_category_previews") || "{}");
+        if(!Object.keys(existingPreviews).length){
+            var previews = {};
+            LUNA_CATEGORIES.forEach(function(cat){
+                previews[cat.id] = {
+                    image: cat.image,
+                    heroImage: cat.heroImage,
+                    descAz: (cat.description && cat.description.az) || "",
+                    descEn: (cat.description && cat.description.en) || "",
+                    taglineAz: (cat.tagline && cat.tagline.az) || "",
+                    taglineEn: (cat.tagline && cat.tagline.en) || ""
+                };
+            });
+            localStorage.setItem("luna_category_previews", JSON.stringify(previews));
+        }
+
+        /* Seed video invitations if empty */
+        var existingVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+        if(!existingVideos.length){
+            localStorage.setItem("luna_video_invitations", JSON.stringify(LUNA_VIDEO_SAMPLES.map(function(v){
+                return {
+                    id: v.id,
+                    category: v.category,
+                    title: v.title,
+                    description: v.description,
+                    videoUrl: v.url,
+                    thumbnailUrl: v.thumbnail || "",
+                    price: v.price,
+                    active: v.active,
+                    featured: v.featured || false,
+                    order: v.order || 0,
+                    language: "az"
+                };
+            }));
+        }
+
+        /* Seed form config if empty */
+        if(!localStorage.getItem("luna_form_config")){
+            var formConfig = {
+                titleAz: "Dəvətnaməni birlikdə yazaq.",
+                titleEn: "Let's write your invitation together.",
+                descAz: "Adlar, tarix, məkan və hekayənizi əlavə edin.",
+                descEn: "Add names, date, venue and your story.",
+                submitBtnAz: "Göndər",
+                submitBtnEn: "Send",
+                submitBtnRu: "Отправить",
+                submitBtnTr: "Gönder",
+                successMsgAz: "Təşəkkürlər! Dəvətnaməniz hazırlanır.",
+                successMsgEn: "Thank you! Your invitation is being prepared.",
+                successMsgRu: "Спасибо! Ваше приглашение готовится.",
+                successMsgTr: "Teşekkürler! Davetiyeniz hazırlanıyor.",
+                formspreeEndpoint: "https://formspree.io/f/mqpzyklb",
+                stepTitles: [],
+                fieldConfig: {},
+                pkgAddons: {},
+                customFields: [],
+                productTypes: [
+                    { id: "invitation", nameAz: "Dəvətnamə", nameEn: "Invitation", nameRu: "Приглашение", nameTr: "Davetiye", fields: ["names","date","time","venue","location","message","images"] },
+                    { id: "digital-card", nameAz: "Digital Vizitkart", nameEn: "Digital Business Card", nameRu: "Цифровая визитка", nameTr: "Dijital Kartvizit", fields: ["name","company","title","phone","email","website","address","note"] },
+                    { id: "qr-card", nameAz: "QR Əlaqə Kartı", nameEn: "QR Contact Card", nameRu: "QR Контактная карта", nameTr: "QR İletişim Kartı", fields: ["name","company","title","phone","email","website","address","note"] }
+                ],
+                categoryVisibility: LUNA_CATEGORIES.reduce(function(acc, cat){ acc[cat.id] = true; return acc; }, {}),
+                pricing: {}
+            };
+            localStorage.setItem("luna_form_config", JSON.stringify(formConfig));
+        }
+
+        /* Seed package config if empty */
+        if(!localStorage.getItem("luna_package_config")){
+            var pkgConfig = {
+                packages: { video: 20, basic: 25, premium: 40, luxury: 65 },
+                categoryPricing: LUNA_CATEGORY_PRICING,
+                extras: LUNA_EXTRA_PRODUCTS.reduce(function(acc, p){ acc[p.id] = p.price; return acc; }, {}),
+                customCategories: []
+            };
+            localStorage.setItem("luna_package_config", JSON.stringify(pkgConfig));
+        }
+
+        /* Seed invitation theme if empty */
+        if(!localStorage.getItem("luna_invitation_theme")){
+            var theme = {
+                accent: "#C4A882",
+                bgTint: "#F5EDE3",
+                font: "",
+                radius: 0,
+                btnStyle: "",
+                openingType: "envelope",
+                waxColor: "#B04A3A",
+                waxInitial: "",
+                effect: ""
+            };
+            localStorage.setItem("luna_invitation_theme", JSON.stringify(theme));
+        }
+
+        localStorage.setItem("luna_seeded_v1", "true");
+        console.log("Luna sample data seeded");
+    } catch(e) {
+        console.warn("Seed sample data failed", e);
+    }
+}
