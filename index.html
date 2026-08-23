@@ -196,7 +196,8 @@ img{display:block;max-width:100%}
 .video-stack .video-cat-tag{top:16%;left:50%;transform:translateX(-50%)}
 .video-stack .video-price-badge{top:8px;right:auto;left:50%;transform:translateX(-50%)}
 .video-title-overlay{position:absolute;left:0;right:0;bottom:0;padding:64px 24px 26px;background:linear-gradient(to top,rgba(15,9,5,.82),transparent);z-index:2;color:#FFFCF7;font-family:"Cormorant Garamond",serif;font-size:19px;font-style:italic;letter-spacing:.4px;text-align:left;pointer-events:none}
-.video-cat-tag{position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,252,247,.45);color:#FFFCF7;border-radius:20px;z-index:3;background:rgba(15,9,5,.3);backdrop-filter:blur(3px)}
+.video-cat-tag{position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,252,247,.45);color:#FFFCF7;border-radius:20px;z-index:3;background:rgba(15,9,5,.3);backdrop-filter:blur(3px);pointer-events:none}
+.video-price-badge,.video-play-overlay{pointer-events:none}
 .video-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(12,7,4,.93);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.35s ease}
 .video-lightbox.open{opacity:1;visibility:visible}
 .video-lightbox-inner{position:relative;width:min(900px,94vw)}
@@ -1467,7 +1468,9 @@ function renderVideoSection() {
             }
         }
         card.addEventListener("mouseenter", startPreview);
+        card.addEventListener("pointerenter", startPreview);
         card.addEventListener("mouseleave", stopPreview);
+        card.addEventListener("pointerleave", stopPreview);
 
         card.addEventListener("click", function() { openVideoLightbox(v); });
         return card;

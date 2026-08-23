@@ -278,6 +278,18 @@ button{
 .lang-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
 .lang-tag{font-size:7px;padding:2px 5px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);letter-spacing:.5px;}
 .checkbox-group{display:flex;gap:12px;flex-wrap:wrap;}
+.vid-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1100px){.vid-steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.vid-steps{grid-template-columns:1fr}}
+.vid-step{display:flex;flex-direction:column;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:16px}
+.vid-step h3{font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;color:#fff;margin:8px 0 12px}
+.vid-step-num{width:26px;height:26px;border-radius:50%;background:#D4AF37;color:#1A100A;display:grid;place-items:center;font-weight:700;font-size:12px}
+.vid-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:130px;border:2px dashed rgba(212,175,55,.45);border-radius:10px;padding:18px;text-align:center;color:#ad8c7d;font-size:11px;cursor:pointer;transition:.25s}
+.vid-drop:hover{border-color:#D4AF37;background:rgba(212,175,55,.07);color:#E9CE7E}
+.vid-drop-ico{font-size:30px}
+.pa-row{display:flex;align-items:center;gap:14px;padding:11px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;flex-wrap:wrap}
+.pa-row .ff-name{min-width:180px}
+.pa-cb{display:flex;align-items:center;gap:5px;color:#fff;font-size:11px;cursor:pointer}
 #formFieldsEditor .ff-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 52px 52px;gap:8px;align-items:center;padding:7px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px}
 #formFieldsEditor .ff-head{background:none;border:none;padding:0 10px;color:#ad8c7d;font-size:9px;text-transform:uppercase;letter-spacing:1.5px}
 #formFieldsEditor .ff-name{font-size:11px;color:#fff}
@@ -566,21 +578,53 @@ button{
     <div class="panel">
         <h2>Yeni Video Əlavə Et</h2>
         <form id="videoForm">
-            <div class="form-grid">
-                <div class="field"><label>Başlıq</label><input id="videoTitle" type="text" placeholder="Toy Videosu" required></div>
-                <div class="field"><label>Kateqoriya</label><select id="videoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
-                <div class="field"><label>Təsvir</label><input id="videoDescription" type="text" placeholder="Animasiyalı toy videosu"></div>
-                <div class="field"><label>Qiymət (AZN)</label><input id="videoPrice" type="number" value="20"></div>
-                <div class="field"><label>Video URL</label><input id="videoUrl" type="text" placeholder="https://..."></div>
-                <div class="field"><label>Thumbnail URL</label><input id="videoThumb" type="text" placeholder="https://..."></div>
-                <div class="field"><label>Dil</label><select id="videoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
-                <div class="field"><label>Status</label><select id="videoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
-                <div class="field"><label>Seçilmiş (Featured)</label><select id="videoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
-                <div class="field"><label>Göstərmə sırası</label><input id="videoOrder" type="number" value="0"></div>
-            </div>
-            <div class="button-row">
-                <button type="submit" class="save">Saxla</button>
-                <button type="button" class="clear" onclick="document.getElementById('videoForm').reset();editingVideoId=null;document.querySelector('#videoForm .save').textContent='Saxla';">Təmizlə</button>
+            <div class="vid-steps">
+                <!-- STEP 1 · VIDEO -->
+                <div class="vid-step">
+                    <div class="vid-step-num">1</div>
+                    <h3>Video</h3>
+                    <label class="vid-drop" for="videoFileInput">
+                        <input id="videoFileInput" type="file" accept="video/*" style="display:none" onchange="readUploadTo(this,'videoUrl','videoFilePreview','video')">
+                        <span class="vid-drop-ico">🎬</span>
+                        <span>Buraya klikləyib video seçin<br><small>və ya aşağıya link yazın</small></span>
+                    </label>
+                    <video id="videoFilePreview" controls muted playsinline style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:180px;background:#000"></video>
+                    <input id="videoUrl" type="text" placeholder="və ya YouTube / Vimeo / MP4 linki" style="margin-top:10px">
+                </div>
+                <!-- STEP 2 · COVER -->
+                <div class="vid-step">
+                    <div class="vid-step-num">2</div>
+                    <h3>Örtük şəkli (Cover)</h3>
+                    <label class="vid-drop" for="videoCoverInput">
+                        <input id="videoCoverInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'videoThumb','videoCoverPreview','image')">
+                        <span class="vid-drop-ico">🖼</span>
+                        <span>Örtük şəkli seçin<br><small>boş qoysanız videodan avtomatik alınır</small></span>
+                    </label>
+                    <img id="videoCoverPreview" alt="" style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:160px;object-fit:cover">
+                    <input id="videoThumb" type="text" placeholder="və ya şəkil linki" style="margin-top:10px">
+                </div>
+                <!-- STEP 3 · INFO -->
+                <div class="vid-step">
+                    <div class="vid-step-num">3</div>
+                    <h3>Məlumat</h3>
+                    <div class="field"><label>Başlıq</label><input id="videoTitle" type="text" placeholder="Toy Videosu" required></div>
+                    <div class="field"><label>Kateqoriya</label><select id="videoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                    <div class="field"><label>Təsvir</label><input id="videoDescription" type="text" placeholder="Animasiyalı toy videosu"></div>
+                    <div class="field"><label>Qiymət (AZN)</label><input id="videoPrice" type="number" value="20"></div>
+                    <div class="field"><label>Dil</label><select id="videoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
+                    <div class="field"><label>Göstərmə sırası</label><input id="videoOrder" type="number" value="0"></div>
+                </div>
+                <!-- STEP 4 · PUBLISH -->
+                <div class="vid-step">
+                    <div class="vid-step-num">4</div>
+                    <h3>Nəşr</h3>
+                    <div class="field"><label>Status</label><select id="videoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
+                    <div class="field"><label>Seçilmiş (Featured)</label><select id="videoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
+                    <div class="button-row" style="margin-top:auto">
+                        <button type="submit" class="save" style="width:100%">Saxla</button>
+                        <button type="button" class="clear" style="width:100%" onclick="resetVideoForm()">Təmizlə</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -892,6 +936,12 @@ button{
     </div>
 
     <div class="panel">
+        <h2>Paket üzrə Əlavələr</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Hansı paketdə hansı əlavə sahə görünəcəyini seçin. Məsələn: Basic paket üçün "Şəkil yükləmə"ni aktiv edin — müştəri o paketi seçəndə şəkil yükləmə sahəsi avtomatik formada peyda olar.</p>
+        <div id="pkgAddons" style="display:grid;gap:10px;"></div>
+    </div>
+
+    <div class="panel">
         <h2>Əlavə Məlumat Sahələri</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Forma öz suallarınızı əlavə edin (məs: "Necə tanış oldunuz?"). Cavablar sifariş məlumatlarına avtomatik əlavə olunur.</p>
         <div id="customFieldsEditor" style="display:grid;gap:10px;margin-bottom:14px;"></div>
@@ -1168,8 +1218,22 @@ button{
                 <div class="field"><label>Kateqoriya</label><select id="editVideoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Təsvir</label><input id="editVideoDescription" type="text"></div>
                 <div class="field"><label>Qiymət</label><input id="editVideoPrice" type="number"></div>
-                <div class="field"><label>Video URL</label><input id="editVideoUrl" type="text"></div>
-                <div class="field"><label>Thumbnail URL</label><input id="editVideoThumb" type="text"></div>
+                <div class="field full"><label>Video yüklə və ya link ver</label>
+                    <label class="vid-drop" for="editVideoFileInput" style="min-height:80px">
+                        <input id="editVideoFileInput" type="file" accept="video/*" style="display:none" onchange="readUploadTo(this,'editVideoUrl','editVideoFilePreview','video')">
+                        <span class="vid-drop-ico">🎬</span><span>Yeni video faylı seç</span>
+                    </label>
+                    <video id="editVideoFilePreview" controls muted playsinline style="display:none;width:100%;border-radius:8px;margin-top:8px;max-height:160px;background:#000"></video>
+                    <input id="editVideoUrl" type="text" style="margin-top:8px">
+                </div>
+                <div class="field full"><label>Örtük şəkli</label>
+                    <label class="vid-drop" for="editVideoCoverInput" style="min-height:70px">
+                        <input id="editVideoCoverInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'editVideoThumb','editVideoCoverPreview','image')">
+                        <span class="vid-drop-ico">🖼</span><span>Yeni örtük şəkli seç</span>
+                    </label>
+                    <img id="editVideoCoverPreview" alt="" style="display:none;width:100%;border-radius:8px;margin-top:8px;max-height:140px;object-fit:cover">
+                    <input id="editVideoThumb" type="text" style="margin-top:8px">
+                </div>
                 <div class="field"><label>Dil</label><select id="editVideoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
                 <div class="field"><label>Status</label><select id="editVideoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
                 <div class="field"><label>Seçilmiş</label><select id="editVideoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
@@ -2297,6 +2361,72 @@ var LUNA_FORM_FIELDS = [
     { id: 'invitationLanguage',label: 'Dil seçimi' }
 ];
 
+function readUploadTo(input, targetId, previewId, kind){
+    var f = input.files && input.files[0];
+    if (!f) return;
+    if (f.size > 10 * 1024 * 1024) {
+        if (!confirm('Fayl böyükdür (' + (f.size/1048576).toFixed(1) + ' MB). Böyük fayllar brauzerdə saxlanmaya bilər. Davam edilsin?')) { input.value = ''; return; }
+    }
+    var r = new FileReader();
+    r.onload = function(e){
+        var t = document.getElementById(targetId);
+        if (t) t.value = e.target.result;
+        var p = document.getElementById(previewId);
+        if (p) { p.src = e.target.result; p.style.display = 'block'; }
+    };
+    r.readAsDataURL(f);
+}
+
+function resetVideoForm(){
+    document.getElementById('videoForm').reset();
+    editingVideoId = null;
+    document.querySelector('#videoForm .save').textContent = 'Saxla';
+    ['videoFilePreview','videoCoverPreview'].forEach(function(id){
+        var p = document.getElementById(id);
+        if (p) { p.style.display = 'none'; p.removeAttribute('src'); }
+    });
+}
+
+/* =====================================================
+   PACKAGE ADDONS (client-form per-package fields)
+===================================================== */
+var LUNA_PKG_ADDONS = [
+    { id: 'photoUpload', label: '📸 Şəkil yükləmə' },
+    { id: 'videoUpload', label: '🎥 Video yükləmə' },
+    { id: 'musicLink',   label: '🎵 Musiqi linki' },
+    { id: 'mapLink',     label: '📍 Google Maps linki' }
+];
+var LUNA_PKG_ORDER = ['video','basic','premium','luxury'];
+
+function buildPkgAddons(cfg){
+    var wrap = document.getElementById('pkgAddons');
+    if (!wrap) return;
+    var pf = cfg.packageFields || {};
+    wrap.innerHTML = '';
+    LUNA_PKG_ADDONS.forEach(function(a){
+        var st = pf[a.id] || {};
+        var row = document.createElement('div');
+        row.className = 'pa-row';
+        row.setAttribute('data-addon', a.id);
+        var cells = '<span class="ff-name">' + a.label + '</span>';
+        LUNA_PKG_ORDER.forEach(function(p){
+            cells += '<label class="pa-cb"><input type="checkbox" data-pkg="' + p + '"' + (st[p] ? ' checked' : '') + '>' + p.charAt(0).toUpperCase() + p.slice(1) + '</label>';
+        });
+        row.innerHTML = cells;
+        wrap.appendChild(row);
+    });
+}
+
+function readPkgAddons(){
+    var out = {};
+    document.querySelectorAll('#pkgAddons .pa-row[data-addon]').forEach(function(r){
+        var o = {};
+        r.querySelectorAll('input:checked').forEach(function(cb){ o[cb.getAttribute('data-pkg')] = true; });
+        out[r.getAttribute('data-addon')] = o;
+    });
+    return out;
+}
+
 function buildFormFieldEditor(cfg){
     var wrap = document.getElementById('formFieldsEditor');
     if(!wrap) return;
@@ -2357,6 +2487,7 @@ function loadFormConfig() {
     buildStepTitlesEditor(cfg);
     buildCustomFieldsEditor(cfg);
     buildFormFieldEditor(cfg);
+    buildPkgAddons(cfg);
     buildProductTypesEditor(cfg);
 
     /* Submit button & success message */
@@ -2438,6 +2569,7 @@ function saveFormConfig() {
         successMsgTr: document.getElementById('successMsgTr').value,
         visibleCategories: visibleCats,
         categoryPricing: categoryPricing,
+        packageFields: readPkgAddons(),
         productTypes: readProductTypesEditor()
     };
 

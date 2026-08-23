@@ -731,17 +731,34 @@ button,input,textarea,select{font-family:inherit}
         return html;
     }
 
+    /* Admin-enabled per-package addon fields (photo/video upload, music, map) */
+    var LUNA_ADDON_FIELDS = [
+        { name: "photoUpload", type: "file", accept: "image/*", multiple: true, col: "full", _labelOv: { az: "Şəkillərinizi yükləyin", en: "Upload your photos" }, forPackages: [] },
+        { name: "videoUpload", type: "file", accept: "video/*", col: "full", _labelOv: { az: "Videonuzu yükləyin", en: "Upload your video" }, forPackages: [] },
+        { name: "musicLink", type: "url", col: "half", _labelOv: { az: "Musiqi linki (YouTube, SoundCloud)", en: "Music link (YouTube, SoundCloud)" }, placeholder: "https://", forPackages: [] },
+        { name: "mapLink", type: "url", col: "half", _labelOv: { az: "Google Maps linki", en: "Google Maps link" }, placeholder: "https://maps.google.com/...", forPackages: [] }
+    ];
+
     function renderForm() {
         var fields = getCategoryFields();
         /* Admin field editor overrides: labels, placeholder, required */
         var ov = _formCfg.fieldOverrides || {};
-        var lang = localStorage.getItem("lunaLanguage") || "az";
         fields.forEach(function(f) {
             var o = ov[f.name];
             if (!o) return;
             if (o.labelAz || o.labelEn) f._labelOv = { az: o.labelAz || o.labelEn, en: o.labelEn || o.labelAz };
             if (o.placeholder) f.placeholder = o.placeholder;
             if (o.required) f.required = true;
+        });
+        /* Package addons enabled in admin → auto-appear for the chosen package */
+        var pf = _formCfg.packageFields || {};
+        LUNA_ADDON_FIELDS.forEach(function(a) {
+            if (pf[a.name] && pf[a.name][packageName]) {
+                var copy = {};
+                for (var k in a) copy[k] = a[k];
+                copy.forPackages = [packageName];
+                fields.push(copy);
+            }
         });
         var html = "";
         fields.forEach(function(field, i) {
