@@ -2398,32 +2398,41 @@ function renderOrders() {
         });
         var grPreview = o.grImage ? '<img src="' + esc(o.grImage) + '" style="max-width:180px;border-radius:6px;margin-top:10px;display:block;" onerror="this.style.display=\'none\'">' : '';
         var dateStr = o.ts ? new Date(o.ts).toLocaleString('az-AZ') : '';
-        var statusColor = o.status === 'sent' ? '#27ae60' : o.status === 'preparing' ? '#f39c12' : '#e74c3c';
+        var statusColor = o.status === 'sent' ? '#27ae60' : o.status === 'approved' ? '#16a085' : o.status === 'preparing' ? '#f39c12' : '#e74c3c';
+        var statusLabel = o.status === 'sent' ? 'Göndərilib' : o.status === 'approved' ? 'Ödəniş təsdiqləndi ✓' : o.status === 'preparing' ? 'Hazırlanır' : 'Yeni';
+        /* Pending-approval hint for client-submitted invitations */
+        var needsApproval = o.productType === 'invitation' && o.invitationId && !isInvitationApproved(o.invitationId);
+        var approveHint = needsApproval
+            ? '<div style="margin-top:12px;padding:10px 14px;background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.25);border-radius:8px;font-size:11px;color:#e74c3c;">⏳ Ödəniş təsdiqi gözlənilir — müştəri linki hələ görmür. Təsdiqlədikdən sonra link aktivləşir.</div>'
+            : '';
 
         var card = document.createElement('div');
         card.style.cssText = 'background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px;';
         card.innerHTML =
             '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">' +
-                '<span style="background:' + statusColor + ';color:#fff;font-size:9px;padding:4px 10px;border-radius:10px;letter-spacing:1px;text-transform:uppercase;">' +
-                    (o.status === 'sent' ? 'Göndərilib' : o.status === 'preparing' ? 'Hazırlanır' : 'Yeni') + '</span>' +
+                '<span style="background:' + statusColor + ';color:#fff;font-size:9px;padding:4px 10px;border-radius:10px;letter-spacing:1px;text-transform:uppercase;">' + statusLabel + '</span>' +
                 '<b style="font-size:13px;color:#fff;">' + esc(o.productTypeName || o.productType) + '</b>' +
                 '<span style="color:#ad8c7d;font-size:10px;">' + dateStr + '</span>' +
                 (o.contact ? '<span style="color:#b88c76;font-size:11px;">📞 ' + esc(o.contact) + '</span>' : '') +
                 '<button onclick="deleteOrder(\'' + o.id + '\')" style="margin-left:auto;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:16px;" title="Sil">🗑</button>' +
             '</div>' +
-            '<div>' + dataRows + '</div>' +
+            approveHint +
+            '<div style="margin-top:12px;">' + dataRows + '</div>' +
             grPreview +
             '<div class="form-grid" style="margin-top:16px;">' +
                 '<div class="field"><label>Status</label><select onchange="setOrderStatus(\'' + o.id + '\', this.value)">' +
                     '<option value="new"' + (o.status === 'new' ? ' selected' : '') + '>Yeni</option>' +
                     '<option value="preparing"' + (o.status === 'preparing' ? ' selected' : '') + '>Hazırlanır</option>' +
+                    '<option value="approved"' + (o.status === 'approved' ? ' selected' : '') + '>Ödəniş təsdiqləndi</option>' +
                     '<option value="sent"' + (o.status === 'sent' ? ' selected' : '') + '>Göndərilib</option>' +
                 '</select></div>' +
                 '<div class="field"><label>Görüntü / GR URL (hazır dizayn)</label><input id="gr_' + o.id + '" type="url" placeholder="https://... final dizayn şəkli" value="' + esc(o.grImage || '') + '"></div>' +
-                '<div class="field"><label>Çatdırılma linki</label><input id="lnk_' + o.id + '" type="url" placeholder="https://... dəvətnamə linki" value="' + esc(o.deliveryLink || '') + '"></div>' +
+                '<div class="field"><label>Çatdırılma linki' + (needsApproval ? ' — təsdiqə qədər müştəriyə bağlıdır' : '') + '</label><input id="lnk_' + o.id + '" type="url" placeholder="https://... dəvətnamə linki" value="' + esc(o.deliveryLink || '') + '"></div>' +
                 '<div class="field"><label>&nbsp;</label>' +
                     '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                        (o.productType === 'invitation' && o.invitationId
+                        (needsApproval
+                            ? '<button type="button" onclick="approveOrder(\'' + o.id + '\')" style="background:#16a085;">✓ Ödənişi Təsdiqlə & Linki Aktivləşdir</button>' : '') +
+                        (o.productType === 'invitation' && o.invitationId && !needsApproval
                             ? '<button type="button" onclick="genOrderLink(\'' + o.id + '\')">🔗 Link Yarat</button>' : '') +
                         '<button type="button" onclick="saveOrderMeta(\'' + o.id + '\')">💾 Yadda Saxla</button>' +
                         '<button type="button" onclick="copyOrderMessage(\'' + o.id + '\')" style="background:#25D366;">💬 WhatsApp Mesajı</button>' +
@@ -2432,6 +2441,37 @@ function renderOrders() {
             '</div>';
         list.appendChild(card);
     });
+}
+
+function isInvitationApproved(invitationId) {
+    try {
+        var inv = JSON.parse(localStorage.getItem('luna_' + invitationId) || 'null');
+        return inv ? inv.approved !== false : true;
+    } catch(e) { return true; }
+}
+
+function approveOrder(id) {
+    var f = findOrder(id);
+    if (!f) return;
+    var o = f.order;
+    if (o.invitationId) {
+        try {
+            var inv = JSON.parse(localStorage.getItem('luna_' + o.invitationId) || 'null');
+            if (inv) {
+                inv.approved = true;
+                localStorage.setItem('luna_' + o.invitationId, JSON.stringify(inv));
+            }
+        } catch(e) {}
+        var url = new URL('data/invitation.html', window.location.href);
+        url.searchParams.set('id', o.invitationId);
+        o.deliveryLink = url.href;
+        var inp = document.getElementById('lnk_' + id);
+        if (inp) inp.value = url.href;
+    }
+    o.status = 'approved';
+    saveOrders(getOrders().map(function(x, i) { return i === f.index ? o : x; }));
+    renderOrders();
+    showToast('Ödəniş təsdiqləndi ✓ Link aktivdir — WhatsApp mesajı ilə göndərin');
 }
 
 function findOrder(id) {
@@ -2471,6 +2511,9 @@ function copyOrderMessage(id) {
     var f = findOrder(id);
     if (!f) return;
     var o = f.order;
+    if (o.productType === 'invitation' && o.invitationId && !isInvitationApproved(o.invitationId)) {
+        if (!confirm('Bu sifariş hələ təsdiqlənməyib — link müştəri üçün işləməyəcək.\nƏvvəlcə "Ödənişi Təsdiqlə" düyməsini basın.\n\nYenə də mesajı kopyalamaq istəyirsiniz?')) return;
+    }
     var msg = 'Salam' + (o.data && o.data.cardPerson ? ', ' + o.data.cardPerson : '') + '! ✨\n\nSifarişiniz hazırdır.\n';
     if (o.deliveryLink) msg += '\n🔗 Link: ' + o.deliveryLink;
     if (o.grImage) msg += '\n🖼 Görüntü: ' + o.grImage;
@@ -3090,6 +3133,7 @@ function saveCreatedInvitation(){
     var inv = {
         id: finalId,
         createdViaAdmin: true,
+        approved: true,
         createdAt: Date.now(),
         package: pkg,
         category: category,
@@ -3261,6 +3305,7 @@ function duplicateCreatedInvitation(id){
     while(lunaGetInvitation(finalId)){ finalId = base + '-' + n; n++; }
     copy.id = finalId;
     copy.createdViaAdmin = true;
+    copy.approved = true;
     if(copy.bride) copy.bride = copy.bride;
     lunaSaveInvitation(copy);
     renderCreatedInvitations();

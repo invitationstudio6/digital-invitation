@@ -376,6 +376,9 @@ button,input,textarea,select{font-family:inherit}
                 <h2 data-i18n="formReady">Hazırdır.</h2>
                 <p data-i18n="formReadyDesc">Bu linki qonaqlarınızla paylaşın.</p>
                 <p id="customSuccessMsg" style="display:none;font-size:11px;color:var(--gold);margin-top:10px;line-height:1.8;"></p>
+                <p id="pendingApprovalMsg" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(196,168,130,.1);border:1px solid rgba(196,168,130,.3);border-radius:8px;font-size:12px;line-height:1.9;color:#7a5c49;">
+                    ⏳ <b>Sifarişiniz alındı!</b> Ödəniş təsdiqləndikdən sonra dəvətnamə linki aktivləşəcək və WhatsApp vasitəsilə sizinlə paylaşılacaq.
+                </p>
                 <a class="result-link" id="generatedLink" href="#" target="_blank"></a>
                 <div class="result-actions">
                     <button class="btn btn-primary" type="button" onclick="copyLink()">
@@ -1388,6 +1391,7 @@ button,input,textarea,select{font-family:inherit}
                         package: packageName,
                         category: category,
                         design: design,
+                        approved: false,
                         bride: primaryName,
                         date: v.date,
                         dateShort: lunaDateShort(v.date),
@@ -1508,10 +1512,18 @@ button,input,textarea,select{font-family:inherit}
                     var viewerFile = (tplData && tplData.experienceType === "interactive") ? "data/interactive.html" : "data/invitation.html";
                     var url = new URL(viewerFile, window.location.href);
                     url.searchParams.set("id", invitationId);
+
+                    /* APPROVAL FLOW: link is prepared but NOT revealed.
+                       Admin activates it after payment confirmation. */
                     var link = document.getElementById("generatedLink");
                     link.href = url.href;
                     link.textContent = url.href;
                     document.getElementById("openLink").href = url.href;
+                    link.style.display = "none";
+                    var actionsEl = document.querySelector("#resultCard .result-actions");
+                    if (actionsEl) actionsEl.style.display = "none";
+                    var pendMsg = document.getElementById("pendingApprovalMsg");
+                    if (pendMsg) pendMsg.style.display = "block";
                     /* Admin-configured success message */
                     if (window.__lunaFormSuccessMsg) {
                         var sm = document.getElementById("customSuccessMsg");

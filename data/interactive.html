@@ -1861,6 +1861,15 @@ if (!invitation) {
     throw new Error("Invitation not found: " + invitationId);
 }
 
+/* Approval gate — admin must approve before client gains access */
+var _isLunaOwner = false;
+try { _isLunaOwner = !!localStorage.getItem("luna_form_config"); } catch (e) {}
+if (invitation.approved === false && !_isLunaOwner) {
+    document.title = "Luna";
+    document.body.innerHTML = '<div class="not-found"><div class="not-found-content"><div class="not-found-icon">&#8987;</div><h1>Sifarişiniz qəbul olundu</h1><p>Dəvətnaməniz hazırlanır. Ödəniş təsdiqləndikdən sonra link aktivləşəcək və sizinlə paylaşılacaq.</p><div class="not-found-brand">LUNA</div></div></div>';
+    throw new Error("Invitation pending approval: " + invitationId);
+}
+
 lunaInitLanguage();
 document.title = lunaDisplayNames(invitation) + " | Luna Invitation";
 
