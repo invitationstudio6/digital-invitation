@@ -1196,8 +1196,9 @@ LUNA_CATEGORIES.forEach(function(cat) {
    Only runs once (checks luna_seeded_v1 flag)
 ===================================================== */
 function seedSampleData(){
-    if(localStorage.getItem("luna_seeded_v1")) return;
+    /* Whole body guarded: blocked localStorage must never break page init */
     try {
+    if(localStorage.getItem("luna_seeded_v1")) return;
         /* Seed admin designs into luna_designs if empty */
         var existingDesigns = JSON.parse(localStorage.getItem("luna_designs") || "[]");
         if(!existingDesigns.length){

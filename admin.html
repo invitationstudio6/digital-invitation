@@ -1455,10 +1455,50 @@ button{
     </div>
 </div>
 
-<script src="data/luna.js"></script>
-<script src="js/data.js"></script>
-<script src="js/i18n.js"></script>
+<script src="data/luna.js?v=20260824"></script>
+<script src="js/data.js?v=20260824"></script>
+<script src="js/i18n.js?v=20260824"></script>
 <script>
+
+/* =====================================================
+   STORAGE GUARD — some privacy modes ("block all cookies",
+   private windows, disabled site data) make localStorage
+   throw. Without this guard the init chain dies and every
+   section renders blank. Fallback: in-memory storage for
+   the session + visible warning banner.
+===================================================== */
+(function(){
+    var works = false;
+    try {
+        localStorage.setItem('luna_storage_probe', '1');
+        localStorage.removeItem('luna_storage_probe');
+        works = true;
+    } catch(e) { works = false; }
+    if (works) return;
+    try {
+        var mem = {};
+        Object.defineProperty(window, 'localStorage', {
+            configurable: true,
+            value: {
+                _mem: mem,
+                getItem: function(k){ return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+                setItem: function(k, v){ mem[k] = String(v); },
+                removeItem: function(k){ delete mem[k]; },
+                key: function(i){ var ks = Object.keys(mem); return i < ks.length ? ks[i] : null; },
+                clear: function(){ Object.keys(mem).forEach(function(k){ delete mem[k]; }); }
+            }
+        });
+        Object.defineProperty(window.localStorage, 'length', { get: function(){ return Object.keys(this._mem).length; } });
+    } catch(e2) {}
+    function showBanner(){
+        var b = document.createElement('div');
+        b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#8c3b2e;color:#fff;padding:10px 16px;font:12px/1.5 -apple-system,BlinkMacSystemFont,sans-serif;text-align:center;';
+        b.textContent = '⚠️ Brauzer məlumat saxlaması bloklanıb — dəyişikliklər yalnız bu seans üçün saxlanılacaq. Davamlı üçün brauzer parametrlərində sayt datalarına icazə verin və səhifəni yeniləyin.';
+        (document.body || document.documentElement).appendChild(b);
+    }
+    if (document.body) showBanner();
+    else document.addEventListener('DOMContentLoaded', showBanner);
+})();
 
 /* =====================================================
    SECTION SWITCHING
@@ -1477,18 +1517,31 @@ function switchSection(name){
     document.querySelectorAll('.sidebar-link[data-section]').forEach(function(link){
         link.classList.toggle('active', link.getAttribute('data-section') === name);
     });
-    if(name === 'dashboard') renderDashboard();
-    if(name === 'customers') renderCustomers();
-    if(name === 'designs') renderDesigns();
-    if(name === 'videos') renderVideos();
-    if(name === 'templates') renderTemplates();
-    if(name === 'clientform') loadFormConfig();
-    if(name === 'orders') renderOrders();
-    if(name === 'invdesign') loadInvitationTheme();
-    if(name === 'homepage') loadHomepageConfig();
-    if(name === 'packages') buildPackagesEditor();
-    if(name === 'catpreviews') buildCatPreviewsEditor();
-    if(name === 'client-invitations') { renderClientInvitations(); populateQuickDesignAssignClientSelect(); }
+    /* Each renderer is guarded individually so one failing section
+       can never leave the others blank */
+    [['dashboard', renderDashboard],
+     ['customers', renderCustomers],
+     ['designs', renderDesigns],
+     ['videos', renderVideos],
+     ['templates', renderTemplates],
+     ['clientform', loadFormConfig],
+     ['orders', renderOrders],
+     ['invdesign', loadInvitationTheme],
+     ['homepage', loadHomepageConfig],
+     ['packages', buildPackagesEditor],
+     ['catpreviews', buildCatPreviewsEditor],
+     ['client-invitations', function(){ renderClientInvitations(); populateQuickDesignAssignClientSelect(); }]
+    ].forEach(function(pair){
+        if (name !== pair[0]) return;
+        try { pair[1](); }
+        catch(err) {
+            console.error('render "' + pair[0] + '" failed:', err);
+            var secEl = document.getElementById('section-' + name);
+            if (secEl && !secEl.innerText.replace(/\s+/g, '').length) {
+                showToast('Bölmə məlumatı göstərilə bilmədi — səhifəni yeniləyin');
+            }
+        }
+    });
     } catch(e) {
         console.error('switchSection error:', e);
         showToast('Bölmə açıla bilmədi: ' + name);
@@ -4574,13 +4627,22 @@ function importLunaBackup(input){
     INIT
 ===================================================== */
 
-lunaInitLanguage();
-seedSampleData();
-renderDashboard();
-renderCustomers();
-renderRsvps();
-renderCreatedInvitations();
-renderClientInvitations();
+/* INIT — each step guarded: one failure must never blank the panel */
+(function initAdminPanel(){
+    var steps = [
+        lunaInitLanguage,
+        seedSampleData,
+        renderDashboard,
+        renderCustomers,
+        renderRsvps,
+        renderCreatedInvitations,
+        renderClientInvitations
+    ];
+    steps.forEach(function(fn){
+        try { fn && fn(); }
+        catch(e) { console.error('init "' + (fn.name || 'step') + '" failed:', e); }
+    });
+})();
 
 /* =====================================================
    EASY TOOLS FUNCTIONS
