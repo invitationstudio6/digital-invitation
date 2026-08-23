@@ -174,7 +174,11 @@ img{display:block;max-width:100%}
 /* Featured card — luxury arch frame */
 .video-featured{position:relative;border-radius:999px 999px 22px 22px;overflow:hidden;background:#1a1410;width:100%;aspect-ratio:4/5;box-shadow:0 24px 70px rgba(62,37,24,.18);transition:transform .5s ease,box-shadow .5s ease}
 .video-featured::after{content:"";position:absolute;inset:14px;border:1px solid rgba(212,175,55,.55);border-radius:inherit;z-index:3;pointer-events:none}
-.video-media,.video-media img,.video-media video,.video-media iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border:0}
+.video-media,.video-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.video-media video,.video-media iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;border:0;background:#140B06}
+.video-featured{transition:transform .45s cubic-bezier(.19,1,.22,1)}
+.video-featured.previewing{transform:scale(1.015)}
+.video-featured.previewing::after{box-shadow:inset 0 0 0 2px rgba(212,175,55,.85),inset 0 0 34px rgba(212,175,55,.18)}
 .video-media iframe{pointer-events:none}
 .video-featured video::-webkit-media-controls{display:none !important}
 .video-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;cursor:pointer}
@@ -1428,7 +1432,7 @@ function renderVideoSection() {
 
         var mediaInner;
         if (kind === "file") {
-            mediaInner = '<video src="' + url + '" poster="' + thumb + '" muted loop playsinline preload="metadata"></video>';
+            mediaInner = '<video src="' + url + '" poster="' + thumb + '" muted loop playsinline preload="auto"></video>';
         } else {
             mediaInner = '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'' + _LUNA_DEFAULT_THUMB + '\'">';
         }
@@ -1445,6 +1449,7 @@ function renderVideoSection() {
         var originalMedia = mediaInner;
 
         function startPreview() {
+            card.classList.add("previewing");
             if (kind === "file") {
                 var vid = mediaEl.querySelector("video");
                 if (vid) {
@@ -1460,6 +1465,7 @@ function renderVideoSection() {
             }
         }
         function stopPreview() {
+            card.classList.remove("previewing");
             if (kind === "file") {
                 var vid = mediaEl.querySelector("video");
                 if (vid) { vid.pause(); try { vid.currentTime = 0; } catch(e){} }
