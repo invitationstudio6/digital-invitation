@@ -1183,13 +1183,19 @@ function _getAllTemplates() {
     return (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.slice() : [];
 }
 
+/* Homepage grid source: Active + Show on Homepage + Featured-first ordering */
+function _getHomepageTemplates() {
+    if (typeof lunaGetHomepageTemplates === "function") return lunaGetHomepageTemplates();
+    return _getAllTemplates();
+}
+
 /* ===== RENDER TEMPLATES ===== */
 function renderTemplates(filter) {
     var grid = document.getElementById("designsGrid");
     if (!grid || typeof LUNA_TEMPLATES === "undefined") return;
     grid.innerHTML = "";
     filter = filter || "all";
-    var allTemplates = _getAllTemplates();
+    var allTemplates = _getHomepageTemplates();
     var filtered = filter === "all" ? allTemplates : allTemplates.filter(function(t) { return t.category === filter; });
 
     filtered.forEach(function(tpl, idx) {
@@ -1201,15 +1207,17 @@ function renderTemplates(filter) {
 
         var catName = lunaCategoryName(tpl.category);
         var minPkg = tpl.minPackage ? tpl.minPackage.charAt(0).toUpperCase() + tpl.minPackage.slice(1) : "";
+        var priceVal = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(tpl.category || "other", tpl.minPackage || "basic") : null;
+        var featuredBadge = tpl.featured ? '<span class="cat-badge" style="background:var(--gold);color:var(--dark);">★</span>' : "";
 
         card.innerHTML =
             '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
             '<div class="design-thumb-overlay"></div>' +
             '<div class="design-thumb-info">' +
-                '<span class="cat-badge">' + catName + '</span>' +
+                '<span class="cat-badge">' + catName + '</span>' + featuredBadge +
                 '<h4>' + tpl.name + '</h4>' +
-                '<p>' + tpl.style + '</p>' +
-                '<span class="pkg-badge">' + minPkg + '</span>' +
+                '<p>' + (tpl.style || tpl.description || '') + '</p>' +
+                '<span class="pkg-badge">' + minPkg + (priceVal ? ' · ' + priceVal + ' AZN' : '') + '</span>' +
             '</div>' +
             '<div class="design-thumb-actions">' +
                 '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
@@ -1258,9 +1266,20 @@ var GALLERY_IMAGES = [
 ];
 
 function openPreviewModal(tplId) {
-    if (typeof LUNA_TEMPLATES === "undefined") return;
-    var tpl = LUNA_TEMPLATES.find(function(t) { return t.id === tplId; });
-    if (!tpl || !tpl.preview) return;
+    var tpl = _getAllTemplates().find(function(t) { return t.id === tplId; });
+    if (!tpl) return;
+    /* Admin-created designs may lack a preview config — build a default
+       so the real design (cover/opening/layout) still previews */
+    if (!tpl.preview) {
+        tpl.preview = {
+            eyebrow: "SİZİ SEVGİ İLƏ DƏVƏT EDİRİK",
+            names: ["Aysel", "Murad"],
+            date: "12 · 09 · 2026",
+            message: "",
+            venue: "",
+            location: ""
+        };
+    }
     _mCurrentTpl = tpl;
 
     // Determine available packages

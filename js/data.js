@@ -1144,6 +1144,7 @@ function lunaGetAllTemplates() {
                         name: d.name,
                         category: d.category || "other",
                         style: d.style || "",
+                        description: d.description || "",
                         thumbnail: d.thumbnail || d.image || "",
                         cover: d.cover || d.thumbnail || d.image || "",
                         minPackage: d.minPackage || d.package || "basic",
@@ -1153,7 +1154,12 @@ function lunaGetAllTemplates() {
                         openingType: d.openingType || null,
                         animationType: d.animationType || null,
                         video: d.video || "",
-                        illustrations: d.illustrations || []
+                        illustrations: d.illustrations || [],
+                        featured: !!d.featured,
+                        active: d.active !== false,
+                        showOnHomepage: d.showOnHomepage !== false,
+                        order: d.order || 0,
+                        design: d.design || null
                     });
                 }
             });
@@ -1167,6 +1173,7 @@ function lunaGetAllTemplates() {
                         name: t.name,
                         category: t.category || "other",
                         style: t.style || "",
+                        description: t.description || "",
                         thumbnail: t.thumbnail || t.cover || "",
                         cover: t.cover || t.thumbnail || "",
                         minPackage: (t.packages && t.packages[0]) || "basic",
@@ -1176,13 +1183,34 @@ function lunaGetAllTemplates() {
                         openingType: t.openingType || null,
                         animationType: t.animationType || null,
                         video: t.video || "",
-                        illustrations: t.illustrations || []
+                        illustrations: t.illustrations || [],
+                        featured: !!t.featured,
+                        active: t.active !== false,
+                        showOnHomepage: t.showOnHomepage !== false,
+                        order: t.order || 0,
+                        design: t.design || null
                     });
                 }
             });
         }
     } catch(e) {}
+    /* Sort Order controls display order site-wide */
+    templates.sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
     return templates.filter(function(t) { return t.active !== false; });
+}
+
+/* =====================================================
+   HOMEPAGE TEMPLATES
+   Active + Show on Homepage enabled, Featured first,
+   then by Sort Order. Used by index.html design grid.
+===================================================== */
+function lunaGetHomepageTemplates() {
+    return lunaGetAllTemplates()
+        .filter(function(t) { return t.showOnHomepage !== false; })
+        .sort(function(a, b) {
+            if (!!b.featured !== !!a.featured) return b.featured ? 1 : -1;
+            return (a.order || 0) - (b.order || 0);
+        });
 }
 
 /* Count templates per category */

@@ -3815,6 +3815,46 @@ var params =
         window.location.search
     );
 
+/* =====================================================
+   TEMPLATE DEMO PREVIEW — ?template=<id>
+   Renders the ACTUAL design (cover, opening animation,
+   layout, gallery style, illustrations) with sample data.
+   Nothing is written to stored invitations.
+===================================================== */
+
+(function lunaTemplatePreviewShim() {
+    var tplId = (params.get("template") || "").trim();
+    if (!tplId || params.get("id")) return;
+    var tpl = null;
+    if (typeof lunaGetAllTemplates === "function") {
+        tpl = lunaGetAllTemplates().find(function(t) { return t.id === tplId; });
+    } else if (typeof LUNA_TEMPLATES !== "undefined") {
+        tpl = LUNA_TEMPLATES.find(function(t) { return t.id === tplId; });
+    }
+    if (!tpl) return;
+    var pv = tpl.preview || {};
+    var imgs = (tpl.illustrations && tpl.illustrations.length) ? tpl.illustrations.slice(0, 6) : [];
+    if (!imgs.length && tpl.cover) imgs = [tpl.cover];
+    window.__lunaTemplatePreview = true;
+    window.lunaGetInvitationOverride = {
+        id: "__preview__",
+        package: (tpl.packages && tpl.packages[tpl.packages.length - 1]) || "premium",
+        category: tpl.category || "wedding",
+        design: tpl.id,
+        templateId: tpl.id,
+        bride: (pv.names && pv.names[0]) || "Aysel",
+        groom: (pv.names && pv.names[1]) || "Murad",
+        date: "2026-09-12",
+        dateShort: pv.date || "",
+        time: "19:00",
+        venue: pv.venue || "Crystal Hall",
+        location: pv.location || "Bakı, Azərbaycan",
+        message: pv.message || "",
+        images: imgs,
+        approved: true,
+        createdAt: Date.now()
+    };
+})();
 
 var invitationId =
     (
@@ -3831,6 +3871,12 @@ var invitationId =
 var invitation = invitationId
     ? lunaGetInvitation(invitationId)
     : null;
+
+/* Template demo mode bypasses storage lookup */
+if (!invitation && window.lunaGetInvitationOverride) {
+    invitation = window.lunaGetInvitationOverride;
+    invitationId = invitation.id;
+}
 
 
 if (!invitation) {
@@ -4070,12 +4116,13 @@ document.getElementById("openButton").textContent =
     var finalTemplateId = invitation.templateId || finalDesignId;
     
     var tplData = null;
-    if (typeof LUNA_TEMPLATES !== "undefined" && finalTemplateId) {
-        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === finalTemplateId; });
+    var _allTpl = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
+    if (finalTemplateId && _allTpl.length) {
+        tplData = _allTpl.find(function(t) { return t.id === finalTemplateId; });
     }
     /* Fallback: find template by design field */
-    if (!tplData && finalDesignId && typeof LUNA_TEMPLATES !== "undefined") {
-        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === finalDesignId; });
+    if (!tplData && finalDesignId && _allTpl.length) {
+        tplData = _allTpl.find(function(t) { return t.id === finalDesignId; });
     }
     var cfg = (tplData && tplData.layoutConfig) || {};
     var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];
@@ -4188,6 +4235,29 @@ document.getElementById("openButton").textContent =
             document.body.appendChild(sp);
         }
     }
+
+    /* Per-template design identity (colors/font from the invitation's own
+       template) — applied AFTER the global admin theme so it wins */
+    try {
+        var _tplId = (typeof clientDesignId !== "undefined" && clientDesignId) || invitation.design || invitation.templateId || "";
+        var _tplAll = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : [];
+        var _tpl = _tplAll.find(function(t) { return t.id === _tplId; });
+        var td = (_tpl && (_tpl.design || null)) || {};
+        if (td.primaryColor || td.secondaryColor) {
+            var acc = td.primaryColor || td.secondaryColor;
+            var acc2 = td.secondaryColor || td.primaryColor;
+            css += ":root{--gold:" + acc + "!important;--accent:" + acc + "!important;--accent-light:" + acc2 + "33!important}";
+        }
+        if (td.font && (!th.font || td.font !== th.font)) {
+            try {
+                var tfl = document.createElement("link");
+                tfl.rel = "stylesheet";
+                tfl.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(td.font).replace(/%20/g, "+") + ":wght@300;400;500;600;700&display=swap";
+                document.head.appendChild(tfl);
+            } catch (e2) {}
+            css += "#invitation h1,#invitation h2,#invitation h3,.hero-content h1{font-family:'" + td.font + "',serif!important}";
+        }
+    } catch (eTpl) {}
 
     if (css) {
         var st = document.createElement("style");
@@ -4401,10 +4471,11 @@ document.getElementById("galleryHeading").textContent =
 var galleryEl = document.getElementById("gallery");
 var galleryImages = [];
 
-/* Determine gallery style from template data */
+/* Determine gallery style from template data (built-in + admin-created) */
 var currentTemplate = null;
-if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
-    currentTemplate = LUNA_TEMPLATES.find(function(t) {
+var _allTplGallery = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
+if (invitation.templateId && _allTplGallery.length) {
+    currentTemplate = _allTplGallery.find(function(t) {
         return t.id === invitation.templateId;
     }) || null;
 }

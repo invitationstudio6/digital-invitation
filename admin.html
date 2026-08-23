@@ -1394,9 +1394,13 @@ input,select,textarea{max-width:100%;}
                 <div class="field"><label>Stil</label><input id="tplStyle" type="text" placeholder="Romantik, Minimalist..."></div>
                 <div class="field"><label>Animasiya Növü</label><select id="tplOpeningType"><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
                 <div class="field"><label>Göstərmə Sırası</label><input id="tplOrder" type="number" value="0"></div>
+                <div class="field"><label>Əsas Rəng</label><input id="tplPrimaryColor" type="color" value="#b88c76" style="width:100%;height:38px;background:transparent;border:1px solid rgba(255,255,255,.15);"></div>
+                <div class="field"><label>İkinci Rəng</label><input id="tplSecondaryColor" type="color" value="#3e2518" style="width:100%;height:38px;background:transparent;border:1px solid rgba(255,255,255,.15);"></div>
+                <div class="field full"><label>Şrift (Google Fonts adı)</label><input id="tplFont" type="text" placeholder="Cormorant Garamond, Playfair Display..."></div>
                 <div class="field"><label>Thumbnail URL</label><input id="tplThumb" type="text" placeholder="https://..."></div>
                 <div class="field"><label>Cover URL</label><input id="tplCover" type="text" placeholder="https://..."></div>
-                <div class="field full"><label>Video URL (dizayn üçün tanıtım/açılış videosu)</label><input id="tplVideoUrl" type="url" placeholder="https://.../video.mp4 və ya YouTube linki"></div>
+                <div class="field full"><label>Video/Demo URL (dizayn üçün tanıtım/açılış videosu)</label><input id="tplVideoUrl" type="url" placeholder="https://.../video.mp4 və ya YouTube linki"></div>
+                <div class="field full"><label>Təsvir (Description)</label><textarea id="tplDescription" rows="2" placeholder="Dizayn haqqında qısa təsvir..."></textarea></div>
                 <div class="field full"><label>İllustrasiyalar (şəkil linkləri — hər sətirdə bir)</label><textarea id="tplIllustrations" rows="3" placeholder="https://..."></textarea></div>
                 <div class="field full">
                     <label>Mövcud Paketlər</label>
@@ -1427,6 +1431,13 @@ input,select,textarea{max-width:100%;}
                     <label>Aktiv (Active)</label>
                     <label class="toggle-switch" style="margin-top:6px;">
                         <input type="checkbox" id="tplActive" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="field">
+                    <label>Ana Səhifədə Göstər</label>
+                    <label class="toggle-switch" style="margin-top:6px;">
+                        <input type="checkbox" id="tplShowHome" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
@@ -1537,7 +1548,8 @@ function switchSection(name){
      ['homepage', loadHomepageConfig],
      ['packages', buildPackagesEditor],
      ['catpreviews', buildCatPreviewsEditor],
-     ['client-invitations', function(){ renderClientInvitations(); populateQuickDesignAssignClientSelect(); }]
+     ['client-invitations', function(){ renderClientInvitations(); populateQuickDesignAssignClientSelect(); }],
+     ['createinv', populateDesignDropdown]
     ].forEach(function(pair){
         if (name !== pair[0]) return;
         try { pair[1](); }
@@ -2578,6 +2590,12 @@ function getAllTemplates(){
             openingType: t.openingType || '',
             video: t.video || '',
             illustrations: t.illustrations || [],
+            galleryStyle: t.galleryStyle || '',
+            layoutConfig: t.layoutConfig || null,
+            preview: t.preview || null,
+            animationStyle: t.animationStyle || '',
+            minPackage: t.minPackage || '',
+            design: t.design || null,
             isCustom: false
         };
         if(overrides[t.id]) Object.assign(merged, overrides[t.id], { id: t.id, isCustom: false });
@@ -2614,7 +2632,11 @@ function renderTemplates(){
         var card = document.createElement('div');
         card.className = 'card template-card';
         var thumb = t.thumbnail ? '<img src="' + lunaEscapeHtml(t.thumbnail) + '" alt="' + lunaEscapeHtml(t.name) + '">' : '<div style="width:100%;height:240px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">ŞABLON</div>';
-        var statusBadge = t.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
+        /* Status: Published = active+homepage, Draft = active but hidden from homepage, Hidden = inactive */
+        var statusBadge;
+        if (!t.active) statusBadge = '<span class="badge inactive">Gizli</span>';
+        else if (t.showOnHomepage === false) statusBadge = '<span class="badge" style="border-color:rgba(212,212,136,.4);color:#d4d488;">Draft</span>';
+        else statusBadge = '<span class="badge active">Publish</span>';
         var featuredBadge = t.featured ? '<span class="badge featured">Featured</span>' : '';
         var customBadge = t.isCustom ? '<span class="badge" style="border-color:rgba(180,180,100,.3);color:#d4d488;">Custom</span>' : '';
         var catLabel = '';
@@ -2623,6 +2645,8 @@ function renderTemplates(){
         } else {
             catLabel = t.category || '';
         }
+        var priceVal = (typeof lunaGetCategoryPrice === 'function') ? lunaGetCategoryPrice(t.category || 'other', t.minPackage || (t.packages && t.packages[0]) || 'basic') : null;
+        var priceBadge = priceVal ? '<span class="badge" style="border-color:rgba(184,140,118,.5);color:#b88c76;">' + priceVal + ' AZN</span>' : '';
         var pkgTags = (t.packages || []).map(function(p){ return '<span class="pkg-tag">' + lunaEscapeHtml(p) + '</span>'; }).join('');
         var langTags = (t.languages || []).map(function(l){ return '<span class="lang-tag">' + lunaEscapeHtml(l.toUpperCase()) + '</span>'; }).join('');
 
@@ -2634,13 +2658,16 @@ function renderTemplates(){
                 (t.style ? '<span class="badge">' + lunaEscapeHtml(t.style) + '</span>' : '') +
                 (t.openingType ? '<span class="badge">✨ ' + lunaEscapeHtml(t.openingType) + '</span>' : '') +
                 (t.video ? '<span class="badge">🎬</span>' : '') +
-                statusBadge + featuredBadge + customBadge +
+                priceBadge + statusBadge + featuredBadge + customBadge +
             '</div>' +
+            (t.description ? '<p style="font-size:11px;color:#ad8c7d;margin:8px 0 0;">' + lunaEscapeHtml(t.description) + '</p>' : '') +
             (pkgTags ? '<div class="pkg-tags">' + pkgTags + '</div>' : '') +
             (langTags ? '<div class="lang-tags">' + langTags + '</div>' : '') +
             '<div class="template-card card-footer">' +
                 '<div class="card-actions" style="width:100%;">' +
                     '<button class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' +
+                    '<button class="preview-btn" onclick="previewTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Preview</button>' +
+                    '<button class="toggle-btn" onclick="duplicateTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Dublikat</button>' +
                     '<button class="toggle-btn" onclick="toggleTemplateActive(\'' + lunaEscapeHtml(t.id) + '\')">' + (t.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
                     (t.isCustom
                         ? '<button class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>'
@@ -2661,8 +2688,12 @@ function openAddTemplate(){
     document.getElementById('tplCover').value = '';
     document.getElementById('tplOpeningType').value = 'envelope';
     document.getElementById('tplVideoUrl').value = '';
+    document.getElementById('tplDescription').value = '';
     document.getElementById('tplIllustrations').value = '';
     document.getElementById('tplOrder').value = '0';
+    document.getElementById('tplPrimaryColor').value = '#b88c76';
+    document.getElementById('tplSecondaryColor').value = '#3e2518';
+    document.getElementById('tplFont').value = '';
     document.getElementById('tplPkgBasic').checked = true;
     document.getElementById('tplPkgPremium').checked = false;
     document.getElementById('tplPkgLuxury').checked = false;
@@ -2673,6 +2704,7 @@ function openAddTemplate(){
     document.getElementById('tplLangRu').checked = false;
     document.getElementById('tplFeatured').checked = false;
     document.getElementById('tplActive').checked = true;
+    document.getElementById('tplShowHome').checked = true;
     document.getElementById('templateModal').classList.add('open');
 }
 
@@ -2688,8 +2720,13 @@ function openEditTemplate(id){
     document.getElementById('tplCover').value = t.cover || '';
     document.getElementById('tplOpeningType').value = t.openingType || 'envelope';
     document.getElementById('tplVideoUrl').value = t.video || '';
+    document.getElementById('tplDescription').value = t.description || '';
     document.getElementById('tplIllustrations').value = (t.illustrations || []).join('\n');
     document.getElementById('tplOrder').value = t.order || 0;
+    var _td = t.design || {};
+    document.getElementById('tplPrimaryColor').value = _td.primaryColor || '#b88c76';
+    document.getElementById('tplSecondaryColor').value = _td.secondaryColor || '#3e2518';
+    document.getElementById('tplFont').value = _td.font || '';
     var pkgs = t.packages || [];
     document.getElementById('tplPkgBasic').checked = pkgs.indexOf('basic') !== -1;
     document.getElementById('tplPkgPremium').checked = pkgs.indexOf('premium') !== -1;
@@ -2702,6 +2739,7 @@ function openEditTemplate(id){
     document.getElementById('tplLangRu').checked = langs.indexOf('ru') !== -1;
     document.getElementById('tplFeatured').checked = t.featured || false;
     document.getElementById('tplActive').checked = t.active !== undefined ? t.active : true;
+    document.getElementById('tplShowHome').checked = t.showOnHomepage !== false;
     document.getElementById('templateModal').classList.add('open');
 }
 
@@ -2730,12 +2768,19 @@ document.getElementById('templateForm').addEventListener('submit', function(e){
         cover: document.getElementById('tplCover').value.trim(),
         openingType: document.getElementById('tplOpeningType').value,
         video: document.getElementById('tplVideoUrl').value.trim(),
+        description: document.getElementById('tplDescription').value.trim(),
         illustrations: document.getElementById('tplIllustrations').value.trim().split('\n').map(function(s){ return s.trim(); }).filter(Boolean),
         packages: pkgs,
         languages: langs,
         featured: document.getElementById('tplFeatured').checked,
         active: document.getElementById('tplActive').checked,
-        order: parseInt(document.getElementById('tplOrder').value) || 0
+        showOnHomepage: document.getElementById('tplShowHome').checked,
+        order: parseInt(document.getElementById('tplOrder').value) || 0,
+        design: {
+            primaryColor: document.getElementById('tplPrimaryColor').value,
+            secondaryColor: document.getElementById('tplSecondaryColor').value,
+            font: document.getElementById('tplFont').value.trim()
+        }
     };
 
     if(editId){
@@ -2765,6 +2810,31 @@ document.getElementById('templateForm').addEventListener('submit', function(e){
     closeModal('templateModal');
     renderTemplates();
 });
+
+/* Preview opens the ACTUAL viewer with this template's own design
+   (cover, opening animation, layout, gallery style) using sample data */
+function previewTemplate(id){
+    window.open('data/invitation.html?template=' + encodeURIComponent(id), '_blank');
+}
+
+/* Duplicate: custom templates copy directly; built-ins become an
+   editable custom copy so admin can quickly create design variants */
+function duplicateTemplate(id){
+    var all = getAllTemplates();
+    var t = all.find(function(x){ return x.id === id; });
+    if(!t) return showToast('Şablon tapılmadı');
+    var custom = getCustomTemplates();
+    var copy = {};
+    for (var k in t) if (t.hasOwnProperty(k)) copy[k] = t[k];
+    delete copy.isCustom;
+    copy.id = 'tpl_' + Date.now();
+    copy.name = (t.name || 'Şablon') + ' II';
+    copy.createdAt = new Date().toISOString();
+    custom.push(copy);
+    saveCustomTemplates(custom);
+    renderTemplates();
+    showToast('Dublikat yaradıldı: ' + copy.name + ' — indi redaktə edin');
+}
 
 function resetTemplateOverride(id){
     if(!confirm('Bu şablonun standart hala qaytarılmasını istəyirsiniz?')) return;
@@ -3920,17 +3990,13 @@ function lunaDateShort(iso){
     return p[2] + ' · ' + p[1] + ' · ' + p[0];
 }
 
-/* Populate design dropdown with ALL templates (built-in + custom) */
-(function populateDesignDropdown(){
+/* Populate design dropdown with ALL templates (built-in + overrides + designs + custom) */
+function populateDesignDropdown(){
     var sel = document.getElementById('ciDesign');
     if(!sel) return;
     sel.innerHTML = '';
-    var all = [];
-    if(typeof LUNA_TEMPLATES !== 'undefined') all = LUNA_TEMPLATES.slice();
-    try {
-        var custom = JSON.parse(localStorage.getItem('luna_custom_templates') || '[]');
-        (custom||[]).forEach(function(t){ if(t && t.id && t.name) all.push(t); });
-    } catch(e){}
+    var all = (typeof getAllTemplates === 'function') ? getAllTemplates() : [];
+    if(!all.length && typeof LUNA_TEMPLATES !== 'undefined') all = LUNA_TEMPLATES.slice();
     var seen = {};
     all.forEach(function(t){
         if(!t || !t.id || seen[t.id]) return;
@@ -3940,7 +4006,8 @@ function lunaDateShort(iso){
         opt.textContent = t.name || t.id;
         sel.appendChild(opt);
     });
-})();
+}
+populateDesignDropdown();
 
 function saveCreatedInvitation(){
     var category = document.getElementById('ciCategory').value;
@@ -3972,7 +4039,7 @@ function saveCreatedInvitation(){
 
     var tpl = null;
     if(typeof LUNA_TEMPLATES !== 'undefined'){
-        tpl = LUNA_TEMPLATES.find(function(t){ return t.id === design; }) || null;
+        tpl = (typeof getAllTemplates === 'function' ? getAllTemplates() : LUNA_TEMPLATES).find(function(t){ return t.id === design; }) || null;
     }
 
     var images = imagesRaw ? imagesRaw.split('\n').map(function(s){ return s.trim(); }).filter(Boolean) : [];
