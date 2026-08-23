@@ -677,7 +677,11 @@ button,input,textarea,select{font-family:inherit}
 
         var html = '<div class="form-field' + colClass + '"' + pkgAttr + hiddenStyle + ' data-field="' + field.name + '">';
 
-        if (field.labelI18n) {
+        if (field._labelOv) {
+            var _lng = localStorage.getItem("lunaLanguage") || "az";
+            var _l = (_lng === "en") ? (field._labelOv.en || field._labelOv.az) : (field._labelOv.az || field._labelOv.en);
+            html += '<label for="' + fieldId + '">' + _l + '</label>';
+        } else if (field.labelI18n) {
             html += '<label for="' + fieldId + '" data-i18n="' + field.labelI18n + '">' + lunaT(field.labelI18n) + '</label>';
         } else if (field.labelKey) {
             html += '<label for="' + fieldId + '">' + extraLbl(field.labelKey) + '</label>';
@@ -729,6 +733,16 @@ button,input,textarea,select{font-family:inherit}
 
     function renderForm() {
         var fields = getCategoryFields();
+        /* Admin field editor overrides: labels, placeholder, required */
+        var ov = _formCfg.fieldOverrides || {};
+        var lang = localStorage.getItem("lunaLanguage") || "az";
+        fields.forEach(function(f) {
+            var o = ov[f.name];
+            if (!o) return;
+            if (o.labelAz || o.labelEn) f._labelOv = { az: o.labelAz || o.labelEn, en: o.labelEn || o.labelAz };
+            if (o.placeholder) f.placeholder = o.placeholder;
+            if (o.required) f.required = true;
+        });
         var html = "";
         fields.forEach(function(field, i) {
             html += renderField(field, i);

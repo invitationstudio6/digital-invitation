@@ -278,6 +278,13 @@ button{
 .lang-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
 .lang-tag{font-size:7px;padding:2px 5px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);letter-spacing:.5px;}
 .checkbox-group{display:flex;gap:12px;flex-wrap:wrap;}
+#formFieldsEditor .ff-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 52px 52px;gap:8px;align-items:center;padding:7px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px}
+#formFieldsEditor .ff-head{background:none;border:none;padding:0 10px;color:#ad8c7d;font-size:9px;text-transform:uppercase;letter-spacing:1.5px}
+#formFieldsEditor .ff-name{font-size:11px;color:#fff}
+#formFieldsEditor input[type=text]{width:100%;padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:11px;border-radius:6px;font-family:inherit}
+#formFieldsEditor input[type=text]:focus{outline:none;border-color:#b88c76}
+#formFieldsEditor .ff-cb{display:grid;place-items:center}
+#formFieldsEditor input[type=checkbox]{width:16px;height:16px;accent-color:#D4AF37;cursor:pointer}
 #invEffectPresets button{display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:11px;cursor:pointer;border-radius:8px;transition:.25s}
 #invEffectPresets button:hover{border-color:#b88c76;background:rgba(184,140,118,.12)}
 #invEffectPresets button.active{border-color:#b88c76;background:rgba(184,140,118,.22)}
@@ -354,7 +361,7 @@ button{
         </a>
         <a class="sidebar-link" data-section="clientform" onclick="switchSection('clientform')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <span>Form Edit</span>
+            <span>Form Redaktəsi</span>
         </a>
         <a class="sidebar-link" data-section="orders" onclick="switchSection('orders')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><polyline points="3 8 12 13 21 8"/><line x1="12" y1="13" x2="12" y2="21"/></svg>
@@ -877,9 +884,11 @@ button{
     </div>
 
     <div class="panel">
-        <h2>Sahə Görünürlüyü</h2>
-        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Formda görünməyəcək sahələri seçin (gizlədilən sahələr müştəriyə göstərilmir).</p>
-        <div class="checkbox-group" id="formFieldVisibility"></div>
+        <h2>Sahə Redaktoru</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Hər sahənin etiketini (AZ/EN), placeholderini və mütləqliyini dəyişin və ya tam gizlədin. Boş qoyulan etiketlər standart qalır.</p>
+        <div style="overflow-x:auto;">
+        <div id="formFieldsEditor" style="min-width:640px;display:grid;gap:8px;"></div>
+        </div>
     </div>
 
     <div class="panel">
@@ -2255,44 +2264,85 @@ function seedSampleData() {
 ===================================================== */
 
 /* Hideable client-form fields */
-var LUNA_HIDEABLE_FIELDS = [
-    { id: 'story', label: 'Hekayəmiz (story)' },
-    { id: 'message', label: 'Xüsusi mesaj' },
-    { id: 'images', label: 'Şəkil linkləri' },
-    { id: 'photos', label: 'Şəkil yükləmə' },
-    { id: 'music', label: 'Musiqi linki' },
-    { id: 'videoFile', label: 'Video yükləmə' },
-    { id: 'map', label: 'Google Maps linki' },
-    { id: 'website', label: 'Website' },
-    { id: 'agenda', label: 'Proqram / Agenda' },
-    { id: 'contact', label: 'Əlaqə məlumatı' },
-    { id: 'dresscode', label: 'Geyim kodu' },
-    { id: 'invitationLanguage', label: 'Dil seçimi' }
+var LUNA_FORM_FIELDS = [
+    { id: 'bride',             label: 'Gəlinin adı' },
+    { id: 'groom',             label: 'Bəyin adı' },
+    { id: 'celebrant',         label: 'Ad günü şəxsi' },
+    { id: 'age',               label: 'Yaş' },
+    { id: 'graduate',          label: 'Məzun' },
+    { id: 'school',            label: 'Məktəb / Universitet' },
+    { id: 'degree',            label: 'İxtisas' },
+    { id: 'companyName',       label: 'Şirkət adı' },
+    { id: 'eventName',         label: 'Tədbir adı' },
+    { id: 'eventType',         label: 'Tədbir növü' },
+    { id: 'hostName',          label: 'Ev sahibi' },
+    { id: 'speakerName',       label: 'Spiker' },
+    { id: 'agenda',            label: 'Proqram / Agenda' },
+    { id: 'dresscode',         label: 'Geyim kodu' },
+    { id: 'website',           label: 'Veb-sayt' },
+    { id: 'contact',           label: 'Əlaqə' },
+    { id: 'description',       label: 'Təsvir' },
+    { id: 'schedule',          label: 'Cədvəl' },
+    { id: 'parentName',        label: 'Valideyin adı' },
+    { id: 'babyName',          label: 'Körpənin adı' },
+    { id: 'dueDate',           label: 'Gözlənilən tarix' },
+    { id: 'date',              label: 'Tarix' },
+    { id: 'time',              label: 'Saat' },
+    { id: 'venue',             label: 'Məkan adı' },
+    { id: 'address',           label: 'Ünvan' },
+    { id: 'location',          label: 'Yer / Xəritə linki' },
+    { id: 'map',               label: 'Google Maps' },
+    { id: 'message',           label: 'Mesaj' },
+    { id: 'story',             label: 'Hekayə' },
+    { id: 'invitationLanguage',label: 'Dil seçimi' }
 ];
 
-function buildFormFieldVisibility(cfg){
-    var wrap = document.getElementById('formFieldVisibility');
+function buildFormFieldEditor(cfg){
+    var wrap = document.getElementById('formFieldsEditor');
     if(!wrap) return;
     var hidden = cfg.hiddenFields || [];
+    var ov = cfg.fieldOverrides || {};
     wrap.innerHTML = '';
-    LUNA_HIDEABLE_FIELDS.forEach(function(f){
-        var label = document.createElement('label');
-        var cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.value = f.id;
-        cb.checked = hidden.indexOf(f.id) !== -1;
-        label.appendChild(cb);
-        label.appendChild(document.createTextNode(' ' + f.label));
-        wrap.appendChild(label);
+
+    var head = document.createElement('div');
+    head.className = 'ff-row ff-head';
+    head.innerHTML = '<span>Sahə</span><span>Etiket (AZ)</span><span>Etiket (EN)</span><span>Placeholder</span><span>Mütləq</span><span>Gizlət</span>';
+    wrap.appendChild(head);
+
+    LUNA_FORM_FIELDS.forEach(function(f){
+        var o = ov[f.id] || {};
+        var row = document.createElement('div');
+        row.className = 'ff-row';
+        row.setAttribute('data-fname', f.id);
+        row.innerHTML =
+            '<span class="ff-name">' + f.label + '</span>' +
+            '<input type="text" class="ff-laz" placeholder="Standart" value="' + (o.labelAz || '') + '">' +
+            '<input type="text" class="ff-len" placeholder="Default" value="' + (o.labelEn || '') + '">' +
+            '<input type="text" class="ff-ph" placeholder="—" value="' + (o.placeholder || '') + '">' +
+            '<label class="ff-cb"><input type="checkbox" class="ff-req"' + (o.required ? ' checked' : '') + '></label>' +
+            '<label class="ff-cb"><input type="checkbox" class="ff-hide"' + (hidden.indexOf(f.id) !== -1 ? ' checked' : '') + '></label>';
+        wrap.appendChild(row);
     });
 }
 
-function readFormFieldVisibility(){
-    var out = [];
-    document.querySelectorAll('#formFieldVisibility input:checked').forEach(function(cb){
-        out.push(cb.value);
+function readFormFieldEditor(){
+    var hidden = [], overrides = {};
+    document.querySelectorAll('#formFieldsEditor .ff-row[data-fname]').forEach(function(r){
+        var n = r.getAttribute('data-fname');
+        if (r.querySelector('.ff-hide').checked) hidden.push(n);
+        var laz = r.querySelector('.ff-laz').value.trim();
+        var len = r.querySelector('.ff-len').value.trim();
+        var ph  = r.querySelector('.ff-ph').value.trim();
+        var req = r.querySelector('.ff-req').checked;
+        if (laz || len || ph || req) {
+            overrides[n] = {};
+            if (laz) overrides[n].labelAz = laz;
+            if (len) overrides[n].labelEn = len;
+            if (ph)  overrides[n].placeholder = ph;
+            if (req) overrides[n].required = true;
+        }
     });
-    return out;
+    return { hidden: hidden, overrides: overrides };
 }
 
 function loadFormConfig() {
@@ -2306,7 +2356,7 @@ function loadFormConfig() {
     /* Step titles */
     buildStepTitlesEditor(cfg);
     buildCustomFieldsEditor(cfg);
-    buildFormFieldVisibility(cfg);
+    buildFormFieldEditor(cfg);
     buildProductTypesEditor(cfg);
 
     /* Submit button & success message */
@@ -2376,7 +2426,8 @@ function saveFormConfig() {
         formspreeEndpoint: document.getElementById('formspreeEndpoint').value,
         stepTitles: readStepTitlesEditor(),
         customFields: readCustomFieldsEditor(),
-        hiddenFields: readFormFieldVisibility(),
+        hiddenFields: readFormFieldEditor().hidden,
+        fieldOverrides: readFormFieldEditor().overrides,
         submitBtnAz: document.getElementById('submitBtnAz').value,
         submitBtnEn: document.getElementById('submitBtnEn').value,
         submitBtnRu: document.getElementById('submitBtnRu').value,
