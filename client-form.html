@@ -1168,39 +1168,41 @@ button,input,textarea,select{font-family:inherit}
             container.appendChild(card);
         });
 
-        /* Add video invitation add-on section */
-        var videoSection = document.createElement("div");
-        videoSection.className = "video-addon-section";
-        videoSection.innerHTML =
-            '<div class="video-addon-label">Əlavə məhsullar</div>' +
-            '<div class="video-addon-card' + (videoAddonSelected ? ' selected' : '') + '" id="videoAddonCard">' +
-                '<div class="video-addon-visual">' +
-                    '<div class="video-addon-play"></div>' +
-                '</div>' +
-                '<div class="video-addon-info">' +
-                    '<div class="video-addon-name">Video Dəvətnamə</div>' +
-                    '<div class="video-addon-desc">Dəvətnamənizi canlandırın — animasiyalı video ilə qonaqlarınızı heyran edin.</div>' +
-                    '<div class="video-addon-features">' +
-                        '<span class="video-addon-feat">Animasiyalı səhnələr</span>' +
-                        '<span class="video-addon-feat">Fon musiqisi</span>' +
-                        '<span class="video-addon-feat">Zərif keçidlər</span>' +
-                        '<span class="video-addon-feat">Fərdi məlumatlar</span>' +
+        /* Video package → the video IS the invitation, no add-on upsell needed */
+        if (packageName !== "video") {
+            var videoSection = document.createElement("div");
+            videoSection.className = "video-addon-section";
+            videoSection.innerHTML =
+                '<div class="video-addon-label">Əlavə məhsullar</div>' +
+                '<div class="video-addon-card' + (videoAddonSelected ? ' selected' : '') + '" id="videoAddonCard">' +
+                    '<div class="video-addon-visual">' +
+                        '<div class="video-addon-play"></div>' +
                     '</div>' +
-                    '<div class="video-addon-price">20 <small>AZN</small></div>' +
-                '</div>' +
-                '<div class="video-addon-toggle">' +
-                    '<span class="btn-add">' + (videoAddonSelected ? 'Əlavə edildi' : 'Əlavə et') + '</span>' +
-                '</div>' +
-            '</div>';
-        container.appendChild(videoSection);
+                    '<div class="video-addon-info">' +
+                        '<div class="video-addon-name">Video Dəvətnamə</div>' +
+                        '<div class="video-addon-desc">Dəvətnamənizi canlandırın — animasiyalı video ilə qonaqlarınızı heyran edin.</div>' +
+                        '<div class="video-addon-features">' +
+                            '<span class="video-addon-feat">Animasiyalı səhnələr</span>' +
+                            '<span class="video-addon-feat">Fon musiqisi</span>' +
+                            '<span class="video-addon-feat">Zərif keçidlər</span>' +
+                            '<span class="video-addon-feat">Fərdi məlumatlar</span>' +
+                        '</div>' +
+                        '<div class="video-addon-price">20 <small>AZN</small></div>' +
+                    '</div>' +
+                    '<div class="video-addon-toggle">' +
+                        '<span class="btn-add">' + (videoAddonSelected ? 'Əlavə edildi' : 'Əlavə et') + '</span>' +
+                    '</div>' +
+                '</div>';
+            container.appendChild(videoSection);
 
-        var addonCard = videoSection.querySelector(".video-addon-card");
-        addonCard.addEventListener("click", function() {
-            videoAddonSelected = !videoAddonSelected;
-            this.classList.toggle("selected", videoAddonSelected);
-            var btn = this.querySelector(".btn-add");
-            btn.textContent = videoAddonSelected ? "Əlavə edildi" : "Əlavə et";
-        });
+            var addonCard = videoSection.querySelector(".video-addon-card");
+            addonCard.addEventListener("click", function() {
+                videoAddonSelected = !videoAddonSelected;
+                this.classList.toggle("selected", videoAddonSelected);
+                var btn = this.querySelector(".btn-add");
+                btn.textContent = videoAddonSelected ? "Əlavə edildi" : "Əlavə et";
+            });
+        }
     }
 
     function renderMediaFields() {
@@ -1237,7 +1239,8 @@ button,input,textarea,select{font-family:inherit}
         rows += '<div class="preview-row"><span class="preview-row-label">Kateqoriya</span><span class="preview-row-value">' + catName + '</span></div>';
 
         var pkgObj = typeof LUNA_PACKAGES !== "undefined" ? LUNA_PACKAGES.find(function(p) { return p.id === packageName; }) : null;
-        rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + (pkgObj ? pkgObj.price + ' AZN' : '') + '</span></div>';
+        var summaryPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, packageName) : (pkgObj ? pkgObj.price : "");
+        rows += '<div class="preview-row"><span class="preview-row-label">Paket</span><span class="preview-row-value">' + (pkgObj ? pkgObj.name : packageName) + ' — ' + (summaryPrice != null ? summaryPrice + ' AZN' : '') + '</span></div>';
 
         var tplId = document.getElementById("selectedTemplate") ? document.getElementById("selectedTemplate").value : "";
         var tplObj = typeof LUNA_TEMPLATES !== "undefined" ? LUNA_TEMPLATES.find(function(t) { return t.id === tplId; }) : null;
@@ -1442,6 +1445,9 @@ button,input,textarea,select{font-family:inherit}
                     if (Object.keys(extraFields).length) {
                         data.extraFields = extraFields;
                         data.extraInfo = extraText;
+                    }
+                    if (packageName !== "video" && videoAddonSelected) {
+                        data.addons = { videoInvitation: { price: 20 } };
                     }
 
                     switch (category) {

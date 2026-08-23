@@ -432,7 +432,188 @@ const invitations = {
         ],
 
         countdown: "2026-11-28T10:00:00"
-    }
+    },
 
+    /* =====================================================
+       TEST — TYPEWRITER ELEGANCE (Premium)
+    ===================================================== */
+
+    "test-typewriter": {
+
+        package: "premium",
+
+        bride: "Elvin",
+        groom: "Leyla",
+
+        date: "15 October 2026",
+        dateShort: "15 · 10 · 2026",
+        time: "18:00",
+
+        location: "Bakı, Azərbaycan",
+        venue: "Kitab Evi",
+
+        map: "https://www.google.com/maps",
+
+        story: `
+            <p>
+                Hər söz, hər sətir — sevgimizin dəqiq yazısı.
+            </p>
+
+            <br>
+
+            <p>
+                Daxilçeci maşını yaradib, hekayəmizi simvol bə simvol yazırıq.
+            </p>
+        `,
+
+        images: [
+            "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90"
+        ],
+
+        countdown: "2026-10-15T18:00:00",
+
+        design: "typewriter-elegance",
+        templateId: "typewriter-elegance"
+    },
+
+    /* =====================================================
+       TEST — CANDLELIGHT GOLD (Luxury)
+    ===================================================== */
+
+    "test-candlelight": {
+
+        package: "luxury",
+
+        bride: "Aysel",
+        groom: "Murad",
+
+        date: "20 December 2026",
+        dateShort: "20 · 12 · 2026",
+        time: "19:00",
+
+        location: "Bakı, Azərbaycan",
+        venue: "Şamdan Zalı",
+
+        map: "https://www.google.com/maps",
+
+        story: `
+            <p>
+                Qaranlıqdə parlayan tek bir şam — bizim sevgimiz.
+            </p>
+
+            <br>
+
+            <p>
+                İki ürək, bir işıq. Sonsuza qədər yanacaq.
+            </p>
+        `,
+
+        images: [
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
+        ],
+
+        countdown: "2026-12-20T19:00:00",
+
+        music:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+
+        design: "candlelight-gold",
+        templateId: "candlelight-gold"
+    },
+
+    /* =====================================================
+       TEST — WINTER DRIFT (Premium)
+    ===================================================== */
+
+    "test-winter": {
+
+        package: "premium",
+
+        bride: "Nigar",
+        groom: "Farid",
+
+        date: "25 January 2027",
+        dateShort: "25 · 01 · 2027",
+        time: "17:00",
+
+        location: "Şamaxı, Azərbaycan",
+        venue: "Buz Sarayı",
+
+        map: "https://www.google.com/maps",
+
+        story: `
+            <p>
+                Qarıncı qarın altında, istiliklə dolu iki ürək.
+            </p>
+
+            <br>
+
+            <p>
+                Buzlu gecə, qar ləçəkləri arasında sevgimiz qaynaq.
+            </p>
+        `,
+
+        images: [
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90"
+        ],
+
+        countdown: "2027-01-25T17:00:00",
+
+        design: "winter-drift",
+        templateId: "winter-drift"
+    },
+
+    /* =====================================================
+       TEST — ROYAL SCROLL (Luxury)
+    ===================================================== */
+
+    "test-royal": {
+
+        package: "luxury",
+
+        bride: "Şahzadə",
+        groom: "Şahzadə",
+
+        date: "1 March 2027",
+        dateShort: "01 · 03 · 2027",
+        time: "16:00",
+
+        location: "Bakı, Azərbaycan",
+        venue: "Şah Sarayı",
+
+        map: "https://www.google.com/maps",
+
+        story: `
+            <p>
+                Pergament üzərində yazılmış əbədi bir vəd.
+            </p>
+
+            <br>
+
+            <p>
+                Altın mührlə möhürlənib, tarixə qalsa da yoxsilənməyəcək.
+            </p>
+        `,
+
+        images: [
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
+        ],
+
+        countdown: "2027-03-01T16:00:00",
+
+        music:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+
+        design: "royal-scroll",
+        templateId: "royal-scroll"
+    }
 
 };

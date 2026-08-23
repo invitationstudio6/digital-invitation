@@ -782,11 +782,156 @@ const LUNA_TEMPLATES = [
         minPackage: "premium", packages: ["premium", "luxury"],
         layoutConfig: { sectionOrder: ["hero","gallery","story","details","countdown","rsvp"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "starry-night" },
         preview: { eyebrow: "ULDUZA TOXUN", names: ["Aysu", "Elgün"], date: "21 · 08 · 2026", message: "Bir kayan yıldız gördük ve o gece sonsuzluğa söz verdik.", venue: "Qız Qalası Terası", location: "Bakı, Azərbaycan", theme: "enchanted" }
+    },
+    {
+        id: "typewriter-elegance", name: "Typewriter Elegance", category: "wedding", style: "Vintage · Redaksiya", galleryStyle: "editorial", openingStyle: "typewriter",
+        animationStyle: "typewriter",
+        thumbnail: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "vintage", openingType: "typewriter" },
+        preview: { eyebrow: "REDaksIYA SEVGİ", names: ["Elvin", "Leyla"], date: "15 · 10 · 2026", message: "Hər söz, hər sətir — sevgimizin dəqiq yazısı.", venue: "Kitab Evi", location: "Bakı, Azərbaycan", theme: "vintage-romance" }
+    },
+    {
+        id: "candlelight-gold", name: "Candlelight Gold", category: "wedding", style: "Münaşir · Altın", galleryStyle: "masonry", openingStyle: "candlelight",
+        animationStyle: "candlelight",
+        thumbnail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-luxury", backgroundStyle: "dark", openingType: "candlelight" },
+        preview: { eyebrow: "ŞAMDAN IŞIĞI", names: ["Aysel", "Murad"], date: "20 · 12 · 2026", message: "Qaranlıqdə parlayan tek bir şam — bizim sevgimiz.", venue: "Şamdan Zalı", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "winter-drift", name: "Winter Drift", category: "wedding", style: "Qış · Buzlu Zəriflik", galleryStyle: "collage", openingStyle: "winter-drift",
+        animationStyle: "winter",
+        thumbnail: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","countdown","rsvp"], heroType: "hero-style-dark", backgroundStyle: "floral", openingType: "winter-drift" },
+        preview: { eyebrow: "QIŞ KARLAYIR", names: ["Nigar", "Farid"], date: "25 · 01 · 2027", message: "Qarıncı qarın altında, istiliklə dolu iki ürək.", venue: "Buz Sarayı", location: "Şamaxı, Azərbaycan", theme: "enchanted" }
+    },
+    {
+        id: "royal-scroll", name: "Royal Scroll", category: "engagement", style: "Şahi · Pergament", galleryStyle: "fullscreen", openingStyle: "royal-scroll",
+        animationStyle: "royal",
+        thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "royal-scroll" },
+        preview: { eyebrow: "ŞAHİ DÖVRƏ", names: ["Şahzadə", "Şahzadə"], date: "01 · 03 · 2027", message: "Pergament üzərində yazılmış əbədi bir vəd.", venue: "Şah Sarayı", location: "Bakı, Azərbaycan", theme: "royal-wax" }
     }
 ];
 
 /* ----- VIDEO INVITATIONS ----- */
+/* A video invitation is its own product type — the video IS the invitation.
+   No cover page, no envelope, no template system involved. */
 var LUNA_VIDEO_INVITATIONS = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+
+/* Normalize an admin/catalog video record into a clean, documented shape:
+   { id, type:"video", category, title, description, videoUrl, thumbnailUrl, price, active, featured, order } */
+function lunaNormalizeVideo(v) {
+    v = v || {};
+    var price = parseFloat(v.price);
+    return {
+        id: v.id || ("vid_" + Date.now() + "_" + Math.floor(Math.random() * 1e4)),
+        type: "video",
+        category: v.category || "other",
+        title: v.title || v.name || "Video Dəvətnamə",
+        description: v.description || "",
+        videoUrl: (v.url || v.videoUrl || "").trim(),
+        thumbnailUrl: (v.thumbnail || v.thumbnailUrl || "").trim(),
+        price: (isNaN(price) || price <= 0) ? 20 : price,
+        language: v.language || "az",
+        active: v.active !== false,
+        featured: !!v.featured,
+        order: parseInt(v.order, 10) || 0
+    };
+}
+
+/* Read the live admin catalog (fresh from localStorage on every call).
+   If the admin hasn't published any video yet, show curated samples so the
+   collection is never empty. */
+function lunaGetActiveVideos() {
+    var raw = [];
+    try { raw = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]"); } catch(e) {}
+    var list = raw.map(lunaNormalizeVideo)
+        .filter(function(v) { return v.active && v.videoUrl; })
+        .sort(function(a,b) { return a.order - b.order; });
+    if (list.length) return list;
+    return LUNA_VIDEO_SAMPLES.map(lunaNormalizeVideo);
+}
+
+/* Built-in demo videos — used only while there are no admin-published videos.
+   All URLs are public CDNs verified to serve video/mp4 with CORS-friendly
+   direct links (media.w3.org, test-videos.co.uk, MDN examples). */
+var LUNA_VIDEO_SAMPLES = [
+    {
+        id: "sample_flower",
+        category: "wedding",
+        title: "Toy — Zərif Açılış",
+        description: "İpək kimi keçidlər və qızılı işıqlı açılış səhnəsi.",
+        url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+        price: 20, active: true, order: 1
+    },
+    {
+        id: "sample_jellyfish",
+        category: "engagement",
+        title: "Nişan — Okean Həvəsi",
+        description: "Dərin mavi fonlarda yumaqvari hərəkətli animasiya.",
+        url: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
+        price: 20, active: true, order: 2
+    },
+    {
+        id: "sample_sintel",
+        category: "henna",
+        title: "Xına — Kino Keyfiyyəti",
+        description: "Kino tonlarında intro — hekayənizin ilk kadrı.",
+        url: "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_2MB.mp4",
+        price: 20, active: true, order: 3
+    },
+    {
+        id: "sample_trailer",
+        category: "graduation",
+        title: "Məzuniyyət — Epik Treiler",
+        description: "Grand treiler üslubunda epik açılış.",
+        url: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+        price: 20, active: true, order: 4
+    },
+    {
+        id: "sample_bunny",
+        category: "birthday",
+        title: "Ad Günü — Şən Klasik",
+        description: "Yüngül, şən və klassik animasiya nümunəsi.",
+        url: "https://media.w3.org/2010/05/bunny/movie.mp4",
+        price: 20, active: true, order: 5
+    }
+];
+
+/* Media helpers — single shared implementations (mp4/webm file, YouTube, Vimeo) */
+function lunaMediaKind(url) {
+    url = (url || "").trim();
+    if (!url) return "none";
+    if (/^data:video\//i.test(url) || /^blob:/i.test(url)) return "file";
+    if (/youtu\.?be/i.test(url)) return "yt";
+    if (/vimeo\.com/i.test(url)) return "vm";
+    if (/\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(url)) return "file";
+    return "none";
+}
+function lunaMediaYouTubeId(url) {
+    var m = (url || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    return m ? m[1] : "";
+}
+function lunaMediaVimeoId(url) {
+    var m = (url || "").match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    return m ? m[1] : "";
+}
+/* Poster image for a video record. thumbnailUrl is OPTIONAL — when missing we
+   fall back to the YouTube still (if any) and otherwise let the browser paint
+   the video's own first frame via preload="metadata". Never a fake cover page. */
+function lunaVideoPoster(v) {
+    if (v.thumbnailUrl) return v.thumbnailUrl;
+    var yt = lunaMediaYouTubeId(v.videoUrl);
+    return yt ? "https://i.ytimg.com/vi/" + yt + "/hqdefault.jpg" : "";
+}
 
 /* ----- HELPER FUNCTIONS ----- */
 function lunaGetTemplatesByCategory(categoryId) {
@@ -828,9 +973,9 @@ const LUNA_CATEGORY_PRICING = {
     wedding:       { video: 20, basic: 25, premium: 40, luxury: 65 },
     engagement:    { video: 20, basic: 25, premium: 40, luxury: 65 },
     henna:         { video: 20, basic: 25, premium: 40, luxury: 65 },
-    birthday:      { video: 15, basic: 20, premium: 35, luxury: 55 },
-    graduation:    { video: 15, basic: 20, premium: 35, luxury: 55 },
-    "baby-shower": { video: 15, basic: 20, premium: 35, luxury: 55 },
+    birthday:      { video: 20, basic: 20, premium: 35, luxury: 55 },
+    graduation:    { video: 20, basic: 20, premium: 35, luxury: 55 },
+    "baby-shower": { video: 20, basic: 20, premium: 35, luxury: 55 },
     business:      { video: 20, basic: 20, premium: 40, luxury: 65 },
     other:         { video: 20, basic: 25, premium: 40, luxury: 65 }
 };

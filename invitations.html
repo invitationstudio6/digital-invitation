@@ -182,35 +182,6 @@ img{display:block;max-width:100%}
 .design-thumb p{font-size:8px;letter-spacing:2px;color:rgba(255,252,247,.6);margin-top:4px;text-transform:uppercase}
 .design-thumb .pkg-badge{display:inline-block;margin-top:8px;padding:4px 10px;font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.5);color:var(--gold);background:rgba(62,37,24,.45);backdrop-filter:blur(6px)}
 
-/* Video invitation cards + inline player */
-.video-play-mini{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(62,37,24,.55);border:1px solid rgba(212,175,55,.75);display:grid;place-items:center;z-index:3;transition:.4s var(--ease);backdrop-filter:blur(4px)}
-.video-play-mini::before{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #F5EDE3;margin-left:4px}
-.design-thumb:hover .video-play-mini{transform:translate(-50%,-50%) scale(1.12);background:rgba(212,175,55,.88)}
-.design-thumb:hover .video-play-mini::before{border-left-color:#2B1A10}
-#lunaVidOverlay{position:fixed;inset:0;background:rgba(20,12,8,.93);z-index:3000;display:none;align-items:center;justify-content:center;padding:24px}
-#lunaVidOverlay.open{display:flex}
-#lunaVidBox{position:relative;width:min(900px,94vw)}
-#lunaVidBox video,#lunaVidBox iframe{width:100%;aspect-ratio:16/9;display:block;border:0;background:#000;border-radius:12px;box-shadow:0 40px 120px rgba(0,0,0,.6)}
-#lunaVidClose{position:absolute;top:-46px;right:0;background:none;border:1px solid rgba(245,237,227,.4);color:#F5EDE3;width:36px;height:36px;border-radius:50%;font-size:15px;cursor:pointer;transition:.25s}
-#lunaVidClose:hover{background:rgba(245,237,227,.15)}
-#lunaVidTitle{margin-top:14px;color:#F5EDE3;font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:.08em;text-align:center}
-
-/* ===== VIDEO MODE — clean luxe gallery, nothing else on page ===== */
-body.video-mode .showcase-wrap,
-body.video-mode .cta-section{display:none}
-body.video-mode .hero{min-height:auto;padding:160px 6% 20px}
-body.video-mode .designs-section{background:#1A100A;padding-top:90px;padding-bottom:110px}
-body.video-mode .designs-section .kicker{color:#D4AF37}
-body.video-mode .section-heading h2{color:#F5EDE3}
-body.video-mode .section-heading p{color:rgba(245,237,227,.55)}
-body.video-mode .filter-bar{justify-content:center}
-body.video-mode .designs-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:26px;max-width:1200px;margin:0 auto}
-body.video-mode .design-thumb{background:#241710;border:1px solid rgba(212,175,55,.22);border-radius:6px}
-body.video-mode .design-thumb:hover{box-shadow:0 30px 80px rgba(0,0,0,.5);border-color:rgba(212,175,55,.55)}
-body.video-mode .design-thumb-img-wrap{aspect-ratio:4/5;background:#241710}
-body.video-mode .design-thumb h4{font-size:24px;color:#F5EDE3}
-body.video-mode .design-thumb .cat-badge{background:rgba(212,175,55,.18);color:#E9CE7E}
-body.video-mode footer{background:#140C07;color:rgba(245,237,227,.6)}
 .design-thumb-actions{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;transition:.4s;z-index:3}
 .design-thumb:hover .design-thumb-actions{opacity:1}
 .design-thumb-actions .btn{font-size:8px;min-height:40px;padding:0 20px;z-index:1}
@@ -503,7 +474,6 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
             <a href="invitations.html">Invitations</a>
             <a href="pricing.html">Pricing</a>
             <a href="how-it-works.html">How It Works</a>
-            <a href="videos.html">Videos</a>
             <a href="admin.html" style="display:none">Admin</a>
         </div>
         <div>© 2026 Luna</div>
@@ -514,12 +484,6 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <a href="mailto:hello@luna-invites.com">Email</a>
     </div>
 </footer>
-
-<!-- VIDEO PLAYER OVERLAY -->
-<div id="lunaVidOverlay">
-    <div id="lunaVidBox"></div>
-    <div id="lunaVidTitle"></div>
-</div>
 
 <!-- FULL PREVIEW MODAL -->
 <div class="modal-overlay" id="previewModal">
@@ -766,6 +730,11 @@ var urlParams = new URLSearchParams(window.location.search);
 var urlCategory = urlParams.get("category") || "all";
 var currentStyle = "all";
 
+/* Video invitations are paused for now */
+if (urlCategory === "video") {
+    window.location.replace("index.html");
+}
+
 /* ===== ANIMATION STYLE RESOLVER ===== */
 function resolveAnim(tpl) {
     return tpl.animationStyle || (tpl.style ? tpl.style.toLowerCase() : "") || "modern";
@@ -811,47 +780,6 @@ function renderStyleFilter() {
     });
 }
 
-/* ===== VIDEO MODE page chrome ===== */
-var _vmDefaults = null;
-function setVideoMode(on) {
-    document.body.classList.toggle("video-mode", on);
-    var lab = document.querySelector(".hero-label");
-    var h1 = document.querySelector(".hero-content h1");
-    var desc = document.querySelector(".hero-desc");
-    var head = document.querySelector("#designs .section-heading");
-    if (on) {
-        if (!_vmDefaults) {
-            _vmDefaults = {
-                label: lab ? lab.textContent : "",
-                h1: h1 ? h1.innerHTML : "",
-                desc: desc ? desc.textContent : "",
-                kick: head && head.querySelector(".kicker") ? head.querySelector(".kicker").textContent : "",
-                h2: head && head.querySelector("h2") ? head.querySelector("h2").innerHTML : "",
-                p: head && head.querySelector("p") ? head.querySelector("p").textContent : ""
-            };
-        }
-        if (lab) lab.textContent = "Luna Video";
-        if (h1) h1.innerHTML = '<span class="hero-italic">Video Dəvətnamələr</span>';
-        if (desc) desc.textContent = "Bəyəndiyiniz video dəvətnaməni seçin və ya yeni video yaratmaq üçün bizimlə əlaqə saxlayın.";
-        if (head) {
-            var k = head.querySelector(".kicker"), h2e = head.querySelector("h2"), pe = head.querySelector("p");
-            if (k) k.textContent = "Video Kolleksiya";
-            if (h2e) h2e.innerHTML = "Videonuzu seçin.<br>Qonaqlarınızı heyrətləndirin.";
-            if (pe) pe.textContent = "Karta toxunaraq videonu izləyin. Bəyəndiyinizi seçin, biz sizin üçün fərdiləşdirək.";
-        }
-    } else if (_vmDefaults) {
-        if (lab) lab.textContent = _vmDefaults.label;
-        if (h1) h1.innerHTML = _vmDefaults.h1;
-        if (desc) desc.textContent = _vmDefaults.desc;
-        if (head) {
-            var k2 = head.querySelector(".kicker"), h2r = head.querySelector("h2"), pr = head.querySelector("p");
-            if (k2) k2.textContent = _vmDefaults.kick;
-            if (h2r) h2r.innerHTML = _vmDefaults.h2;
-            if (pr) pr.textContent = _vmDefaults.p;
-        }
-    }
-}
-
 /* ===== RENDER TEMPLATES — ALIVE CARDS ===== */
 function renderTemplates(catFilter, styleFilter) {
     var grid = document.getElementById("designsGrid");
@@ -861,16 +789,10 @@ function renderTemplates(catFilter, styleFilter) {
     catFilter = catFilter || "all";
     styleFilter = styleFilter || "all";
 
-    /* Video category → dedicated luxe video gallery */
-    var sfEl = document.getElementById("styleFilter");
     if (catFilter === "video") {
-        setVideoMode(true);
-        if (sfEl) sfEl.style.display = "none";
-        renderVideoCards(grid, noResults);
+        window.location.href = "index.html";
         return;
     }
-    setVideoMode(false);
-    if (sfEl) sfEl.style.display = "";
 
     var allTemplates = getAllTemplates();
 
@@ -942,136 +864,6 @@ function renderTemplates(catFilter, styleFilter) {
         });
     });
 }
-
-/* ===== VIDEO INVITATION CARDS (video category) ===== */
-function lunaVidKind(url) {
-    if (/^data:video\//i.test(url) || /^blob:/i.test(url)) return "file";
-    if (/youtube\.com|youtu\.be/.test(url)) return "yt";
-    if (/vimeo\.com/.test(url)) return "vm";
-    if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return "file";
-    return "none";
-}
-function lunaYTId(url) {
-    var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
-    return m ? m[1] : "";
-}
-
-function renderVideoCards(grid, noResults) {
-    var vids = [];
-    try { vids = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]"); } catch(e) {}
-    vids = vids.filter(function(v) { return v.active !== false; });
-    vids.sort(function(a,b) { return (a.order || 0) - (b.order || 0); });
-
-    if (!vids.length) {
-        noResults.querySelector("h3").textContent = "Video tapılmadı";
-        noResults.querySelector("p").textContent = "Hazırda aktiv video dəvətnamə yoxdur. Yeni video yaratmaq üçün bizimlə əlaqə saxlayın.";
-        noResults.style.display = "block";
-        return;
-    }
-    noResults.style.display = "none";
-
-    vids.forEach(function(v, idx) {
-        var card = document.createElement("div");
-        card.className = "design-thumb";
-        card.setAttribute("data-cat", "video");
-        card.style.animationDelay = (idx * 0.06) + "s";
-        requestAnimationFrame(function() {
-            setTimeout(function() { card.classList.add("entering"); }, idx * 60);
-        });
-
-        var url = (v.url || "").trim();
-        var kind = lunaVidKind(url);
-        var thumb = (v.thumbnail && /^https?:/i.test(v.thumbnail.trim())) ? v.thumbnail.trim()
-            : (kind === "yt" && lunaYTId(url) ? "https://img.youtube.com/vi/" + lunaYTId(url) + "/hqdefault.jpg"
-            : "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85");
-        var title = v.title || v.name || "Video Dəvətnamə";
-
-        card.innerHTML =
-            '<div class="design-thumb-img-wrap">' +
-                '<img class="design-thumb-img" src="' + thumb + '" alt="' + title + '" loading="lazy">' +
-                '<div class="video-play-mini"></div>' +
-            '</div>' +
-            '<div class="design-thumb-overlay"></div>' +
-            '<div class="design-thumb-info">' +
-                '<span class="cat-badge">🎬 Video</span>' +
-                '<h4>' + title + '</h4>' +
-                '<p>' + (v.description || "") + '</p>' +
-                '<span class="pkg-badge">' + (v.price || 20) + ' AZN</span>' +
-            '</div>' +
-            '<div class="design-thumb-actions">' +
-                '<button class="btn btn-preview" data-vid-idx="' + idx + '">▶ Baxış</button>' +
-                '<a href="client-form.html?package=video&category=' + (v.category || "video") + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
-            '</div>';
-
-        grid.appendChild(card);
-
-        /* Hover → play the video right on the card, leave → restore poster */
-        var wrapEl = card.querySelector(".design-thumb-img-wrap");
-        var playIco = card.querySelector(".video-play-mini");
-        function vidStart() {
-            var u = (v.url || "").trim();
-            var k = lunaVidKind(u);
-            if (!k || k === "none") return;
-            playIco.style.opacity = "0";
-            if (k === "file") {
-                wrapEl.insertAdjacentHTML("beforeend", '<video class="vid-hov" src="' + u + '" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#140B06;z-index:2"></video>');
-            } else if (k === "yt") {
-                wrapEl.insertAdjacentHTML("beforeend", '<iframe class="vid-hov" src="https://www.youtube.com/embed/' + lunaYTId(u) + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + lunaYTId(u) + '&playsinline=1&rel=0" style="position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2" allow="autoplay"></iframe>');
-            } else if (k === "vm") {
-                wrapEl.insertAdjacentHTML("beforeend", '<iframe class="vid-hov" src="https://player.vimeo.com/video/' + ((u.match(/vimeo\.com\/(\d+)/) || [,""])[1]) + '?autoplay=1&muted=1&background=1" style="position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2" allow="autoplay"></iframe>');
-            }
-        }
-        function vidStop() {
-            wrapEl.querySelectorAll(".vid-hov").forEach(function(x) { x.remove(); });
-            playIco.style.opacity = "";
-        }
-        card.addEventListener("mouseenter", vidStart);
-        card.addEventListener("pointerenter", vidStart);
-        card.addEventListener("mouseleave", vidStop);
-        card.addEventListener("pointerleave", vidStop);
-    });
-
-    grid.querySelectorAll(".btn-preview").forEach(function(btn) {
-        btn.addEventListener("click", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var i = parseInt(this.getAttribute("data-vid-idx"));
-            if (vids[i]) openLunaVidPlayer(vids[i]);
-        });
-    });
-}
-
-function openLunaVidPlayer(v) {
-    var overlay = document.getElementById("lunaVidOverlay");
-    var box = document.getElementById("lunaVidBox");
-    var titleEl = document.getElementById("lunaVidTitle");
-    var url = (v.url || "").trim();
-    var kind = lunaVidKind(url);
-
-    if (kind === "file") {
-        box.innerHTML = '<button id="lunaVidClose">×</button><video src="' + url + '" controls autoplay muted playsinline></video>';
-    } else if (kind === "yt") {
-        box.innerHTML = '<button id="lunaVidClose">×</button><iframe src="https://www.youtube.com/embed/' + lunaYTId(url) + '?autoplay=1&mute=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-    } else if (kind === "vm") {
-        box.innerHTML = '<button id="lunaVidClose">×</button><iframe src="https://player.vimeo.com/video/' + (url.match(/vimeo\.com\/(\d+)/) || [,""])[1] + '?autoplay=1&muted=1" allow="autoplay" allowfullscreen></iframe>';
-    } else {
-        box.innerHTML = '<button id="lunaVidClose">×</button><video src="' + url + '" controls muted playsinline></video>';
-    }
-    titleEl.textContent = v.title || v.name || "";
-
-    overlay.classList.add("open");
-    box.querySelector("#lunaVidClose").addEventListener("click", closeLunaVidPlayer);
-}
-function closeLunaVidPlayer() {
-    document.getElementById("lunaVidOverlay").classList.remove("open");
-    document.getElementById("lunaVidBox").innerHTML = "";
-}
-document.getElementById("lunaVidOverlay").addEventListener("click", function(e) {
-    if (e.target === this) closeLunaVidPlayer();
-});
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && document.getElementById("lunaVidOverlay").classList.contains("open")) closeLunaVidPlayer();
-});
 
 /* ===== FILTER HANDLER ===== */
 function applyFilters() {

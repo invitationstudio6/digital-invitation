@@ -482,7 +482,7 @@ button{
                 <div class="field"><label>Kateqoriya</label><select id="designCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Paket</label><select id="designPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
                 <div class="field"><label>Stil</label><input id="designStyle" type="text" placeholder="Romantik"></div>
-                <div class="field"><label>Animasiya Növü</label><select id="designAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Animasiya Növü</label><select id="designAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
                 <div class="field"><label>Video URL (opsional)</label><input id="designVideo" type="url" placeholder="https://.../video.mp4"></div>
                 <div class="field full"><label>Qısa Təsvir</label><textarea id="designDesc" placeholder="Elegant wedding invitation..."></textarea></div>
                 <div class="field full"><label>İllustrasiyalar (şəkil linkləri — hər sətirdə bir)</label><textarea id="designIllustrations" rows="3" placeholder="https://..."></textarea></div>
@@ -594,11 +594,11 @@ button{
                 <!-- STEP 2 · COVER -->
                 <div class="vid-step">
                     <div class="vid-step-num">2</div>
-                    <h3>Örtük şəkli (Cover)</h3>
+                    <h3>Örtük şəkli (Cover) — isteğe bağlı</h3>
                     <label class="vid-drop" for="videoCoverInput">
                         <input id="videoCoverInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'videoThumb','videoCoverPreview','image')">
                         <span class="vid-drop-ico">🖼</span>
-                        <span>Örtük şəkli seçin<br><small>boş qoysanız videodan avtomatik alınır</small></span>
+                        <span>Örtük şəkli seçin<br><small>boş qoysanız videonun ilk kadrı göstərilir</small></span>
                     </label>
                     <img id="videoCoverPreview" alt="" style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:160px;object-fit:cover">
                     <input id="videoThumb" type="text" placeholder="və ya şəkil linki" style="margin-top:10px">
@@ -1195,7 +1195,7 @@ button{
                 <div class="field"><label>Stil</label><input id="editDesignStyle" type="text"></div>
                 <div class="field full"><label>Təsvir</label><textarea id="editDesignDesc"></textarea></div>
                 <div class="field full"><label>URL</label><input id="editDesignUrl" type="text"></div>
-                <div class="field"><label>Animasiya Növü</label><select id="editDesignAnimation"><option value="">— Yoxdur —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Animasiya Növü</label><select id="editDesignAnimation"><option value="">— Yoxdur —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
                 <div class="field"><label>Video URL</label><input id="editDesignVideo" type="url" placeholder="https://..."></div>
                 <div class="field full"><label>İllustrasiyalar (hər sətirdə bir link)</label><textarea id="editDesignIllustrations" rows="3"></textarea></div>
             </div>
@@ -1260,7 +1260,7 @@ button{
                 <div class="field"><label>Şablon Adı</label><input id="tplName" type="text" placeholder="Amelia" required></div>
                 <div class="field"><label>Kateqoriya</label><select id="tplCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Stil</label><input id="tplStyle" type="text" placeholder="Romantik, Minimalist..."></div>
-                <div class="field"><label>Animasiya Növü</label><select id="tplOpeningType"><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Animasiya Növü</label><select id="tplOpeningType"><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
                 <div class="field"><label>Göstərmə Sırası</label><input id="tplOrder" type="number" value="0"></div>
                 <div class="field"><label>Thumbnail URL</label><input id="tplThumb" type="text" placeholder="https://..."></div>
                 <div class="field"><label>Cover URL</label><input id="tplCover" type="text" placeholder="https://..."></div>
@@ -1388,7 +1388,12 @@ function getVideos(){
 }
 
 function saveVideos(videos){
-    localStorage.setItem('luna_video_invitations', JSON.stringify(videos));
+    try {
+        localStorage.setItem('luna_video_invitations', JSON.stringify(videos));
+    } catch(e) {
+        showToast('Yaddaş doludur — video faylı çox böyükdür. URL istifadə edin.');
+        throw e;
+    }
 }
 
 function totalCountRsvps(){
@@ -1843,6 +1848,7 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
     if(editingVideoId){
         var idx = videos.findIndex(function(v){ return v.id === editingVideoId; });
         if(idx !== -1){
+            videos[idx].type = 'video';
             videos[idx].title = document.getElementById('videoTitle').value.trim();
             videos[idx].category = document.getElementById('videoCategory').value;
             videos[idx].description = document.getElementById('videoDescription').value.trim();
@@ -1859,6 +1865,7 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
     } else {
         var video = {
             id: 'vid_' + Date.now(),
+            type: 'video',
             title: document.getElementById('videoTitle').value.trim(),
             category: document.getElementById('videoCategory').value,
             description: document.getElementById('videoDescription').value.trim(),
@@ -2754,6 +2761,10 @@ var LUNA_OPENING_TYPES = [
     { id: 'luxury-romance',  icon: '💎', label: 'Lüks İpək' },
     { id: 'celebration-pop', icon: '🎉', label: 'Konfeti Partisi' },
     { id: 'starry-night',    icon: '✨', label: 'Ulduzlu Gecə' },
+    { id: 'typewriter',      icon: '📝', label: 'Daxilçeci Mashini' },
+    { id: 'candlelight',     icon: '🕯', label: 'Şamdan Işığı' },
+    { id: 'winter-drift',    icon: '❄', label: 'Qış Karlığı' },
+    { id: 'royal-scroll',    icon: '📜', label: 'Şahi Dövrə' },
     { id: 'door',            icon: '🚪', label: 'Qapı Açılışı' },
     { id: 'stairs',          icon: '🪜', label: 'Pilləkən' },
     { id: 'fullscreen-photo',icon: '🖼', label: 'Tam Ekran Foto' },
