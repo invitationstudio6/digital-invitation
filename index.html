@@ -41,6 +41,12 @@ img{display:block;max-width:100%}
 .orb-2{width:500px;height:500px;background:#A896BC;bottom:-150px;right:-150px;animation-delay:-15s}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.95)}}
 
+/* Mobile background enhancement - subtle pattern */
+@media(max-width:600px){
+    .site-bg::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4A882' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:0.5;pointer-events:none}
+    .hero{min-height:100dvh}
+}
+
 /* ===== NAVBAR ===== */
 .navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(1100px,90%);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(245,237,227,.80);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);z-index:5000;transition:.4s}
 .navbar.scrolled{top:10px;background:rgba(245,237,227,.92);border-color:rgba(92,61,46,.12)}
@@ -399,22 +405,25 @@ body.has-announce .mobile-menu{padding-top:150px}
     .steps{grid-template-columns:1fr 1fr}
     .step-connector{display:none}
     /* Hero mini-gallery strip instead of empty sides on tablets/phones */
-    .hero-floats{position:relative;inset:auto;height:auto;display:flex;gap:10px;justify-content:center;margin-top:36px;padding:0 16px}
-    .float-card{position:relative;top:auto;left:auto;right:auto;bottom:auto;width:30%;max-width:118px;aspect-ratio:3/4;animation:none;opacity:.95;border-radius:10px;box-shadow:0 12px 32px rgba(62,37,24,.18)}
+    .hero-floats{position:relative;inset:auto;height:auto;display:flex;gap:12px;justify-content:center;margin-top:36px;padding:0 16px;flex-wrap:wrap}
+    .float-card{position:relative;top:auto;left:auto;right:auto;bottom:auto;width:calc(50% - 6px);max-width:160px;aspect-ratio:3/4;animation:none;opacity:.95;border-radius:12px;box-shadow:0 12px 32px rgba(62,37,24,.18)}
     .float-card:nth-child(1){transform:rotate(-4deg)}
     .float-card:nth-child(2){transform:rotate(2.5deg);margin-top:16px}
     .float-card:nth-child(3){transform:rotate(-2deg)}
-    .float-card:nth-child(4),.float-card:nth-child(5){display:none}
+    .float-card:nth-child(4){transform:rotate(3deg);margin-top:16px}
+    .float-card:nth-child(5){display:none}
 }
 @media(max-width:600px){
     .navbar{width:94%;padding:0 16px}
     .languages button{padding:6px;font-size:7px}
-    .hero{padding:135px 20px 85px}
+    .hero{padding:120px 20px 80px}
     .hero h1{font-size:clamp(42px,13.5vw,60px);letter-spacing:-3px}
     .hero h1 span{font-size:12px;letter-spacing:2.5px}
     .hero-text{font-size:10px}
     .hero-buttons{flex-direction:column;align-items:center}
     .hero-buttons .btn{width:min(220px,78vw)}
+    .hero-floats{display:flex;gap:10px;justify-content:center;margin-top:28px;padding:0 12px}
+    .float-card{width:calc(50% - 5px);max-width:140px;border-radius:10px;box-shadow:0 10px 28px rgba(62,37,24,.15)}
     .designs-section{padding:85px 5%}
     .designs-grid,.categories-grid{grid-template-columns:1fr 1fr;gap:10px}
     .cat-collection-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -434,7 +443,13 @@ body.has-announce .mobile-menu{padding-top:150px}
 @media(max-width:420px){
     *{-webkit-tap-highlight-color:transparent}
     .logo{font-size:26px}
-    .hero{padding:120px 16px 75px}
+    .hero{padding:110px 16px 70px}
+    .hero h1{font-size:clamp(38px,14vw,52px);letter-spacing:-2px}
+    .hero h1 span{font-size:11px;letter-spacing:2px}
+    .hero-text{font-size:9px;line-height:1.9}
+    .hero-buttons .btn{padding:14px 20px;font-size:9px}
+    .hero-floats{gap:8px;margin-top:24px;padding:0 8px}
+    .float-card{width:calc(50% - 4px);max-width:130px;border-radius:8px;box-shadow:0 8px 24px rgba(62,37,24,.12)}
     .stat-num{font-size:28px}
     .stats-strip{padding:24px 12px;margin-top:0}
     .testi-card{padding:26px 16px}
