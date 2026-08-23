@@ -3917,10 +3917,19 @@ document.title = lunaDisplayNames(invitation) + " | Luna Invitation";
    DESIGN THEME + TEMPLATE-SPECIFIC STYLES
 ===================================================== */
 
-if (invitation.design) {
+// Check for client-specific design first
+var clientDesignId = null;
+try {
+    var clientInvs = JSON.parse(localStorage.getItem('luna_client_invitations') || '[]');
+    var clientInv = clientInvs.find(function(c) { return c.clientId === invitationId; });
+    if (clientInv && clientInv.designId) clientDesignId = clientInv.designId;
+} catch(e) {}
+
+var finalDesign = clientDesignId || invitation.design || "";
+if (finalDesign) {
     document.documentElement.setAttribute(
         "data-design",
-        invitation.design.toLowerCase()
+        finalDesign.toLowerCase()
     );
 }
 
@@ -4056,13 +4065,17 @@ document.getElementById("openButton").textContent =
 ===================================================== */
 
 (function applyTemplateLayout() {
+    // Use client-specific design if available
+    var finalDesignId = clientDesignId || invitation.design || "";
+    var finalTemplateId = invitation.templateId || finalDesignId;
+    
     var tplData = null;
-    if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
-        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === invitation.templateId; });
+    if (typeof LUNA_TEMPLATES !== "undefined" && finalTemplateId) {
+        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === finalTemplateId; });
     }
     /* Fallback: find template by design field */
-    if (!tplData && invitation.design && typeof LUNA_TEMPLATES !== "undefined") {
-        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === invitation.design; });
+    if (!tplData && finalDesignId && typeof LUNA_TEMPLATES !== "undefined") {
+        tplData = LUNA_TEMPLATES.find(function(t) { return t.id === finalDesignId; });
     }
     var cfg = (tplData && tplData.layoutConfig) || {};
     var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];

@@ -129,24 +129,153 @@ img{display:block;max-width:100%}
 .section-heading p{max-width:560px;margin-top:24px;color:var(--muted);font-size:10px;line-height:2}
 
 /* ===== CATEGORIES ===== */
-.categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.category-card{position:relative;overflow:hidden;border:1px solid var(--border);background:var(--light);cursor:pointer;transition:.5s cubic-bezier(.19,1,.22,1);text-decoration:none;display:block}
-.category-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(62,37,24,.12)}
-.category-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:saturate(.85);transition:transform 1.2s cubic-bezier(.19,1,.22,1),filter .5s}
-.category-card:hover .category-card-img{transform:scale(1.06);filter:saturate(1)}
-.category-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.75) 0%,transparent 50%);opacity:0;transition:.4s}
-.category-card:hover .category-card-overlay{opacity:1}
-.category-card-body{padding:20px;text-align:center}
-.category-card-icon{font-size:28px;margin-bottom:10px}
-.category-card-body h3{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:300;font-style:italic;color:var(--dark)}
-.category-card-body p{margin-top:6px;color:var(--muted);font-size:9px;line-height:1.8}
-.category-card-count{display:inline-block;margin-top:10px;padding:4px 12px;font-size:8px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--border);color:var(--muted)}
-.category-card-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px;transform:translateY(8px);transition:.4s;opacity:0}
-.category-card:hover .category-card-bottom{transform:translateY(0);opacity:1}
-.category-card-bottom h4{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:300;font-style:italic;color:#fff}
-.category-card-bottom p{font-size:8px;letter-spacing:2px;color:rgba(255,252,247,.6);margin-top:4px}
-.category-card-bottom .explore-link{display:inline-block;margin-top:10px;color:var(--gold);font-size:9px;font-weight:500;letter-spacing:1px;transition:.3s}
-.category-card-bottom .explore-link:hover{color:#fff}
+.categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.category-card{
+    position:relative;
+    overflow:hidden;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    transition:.6s cubic-bezier(.19,1,.22,1);
+    text-decoration:none;
+    display:block;
+    aspect-ratio:1/1;
+}
+.category-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    background:
+        radial-gradient(ellipse at 50% 0%, var(--cat-accent) 0%, transparent 60%),
+        linear-gradient(180deg, var(--cat-bg) 0%, var(--cat-bg-alt, var(--cat-bg)) 100%);
+    border:2px solid transparent;
+    background-clip:padding-box;
+    box-shadow:
+        0 0 0 1px rgba(196,168,130,.15) inset,
+        0 20px 60px -10px rgba(0,0,0,.15),
+        0 0 80px -20px var(--cat-accent);
+    transition:.6s cubic-bezier(.19,1,.22,1);
+    z-index:1;
+}
+.category-card::after{
+    content:"";
+    position:absolute;
+    bottom:-2px;
+    left:10%;
+    right:10%;
+    height:60px;
+    border-radius:50%;
+    background:radial-gradient(ellipse at center, var(--cat-accent) 0%, transparent 70%);
+    opacity:0;
+    filter:blur(20px);
+    transition:.6s cubic-bezier(.19,1,.22,1);
+    z-index:0;
+}
+.category-card:hover::before{
+    box-shadow:
+        0 0 0 1px rgba(196,168,130,.3) inset,
+        0 30px 80px -10px rgba(0,0,0,.25),
+        0 0 120px -10px var(--cat-accent);
+    transform:translateY(-8px);
+}
+.category-card:hover::after{
+    opacity:1;
+    transform:scaleX(1.2);
+}
+.category-card-img{
+    position:absolute;
+    inset:0;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    object-fit:cover;
+    filter:saturate(.85) brightness(1.1);
+    transition:transform 1.4s cubic-bezier(.19,1,.22,1), filter .6s, opacity .6s;
+    opacity:0.9;
+    z-index:2;
+    clip-path:polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+}
+.category-card:hover .category-card-img{
+    transform:scale(1.1);
+    filter:saturate(1.1) brightness(1.15);
+    opacity:1;
+}
+.category-card-overlay{
+    position:absolute;
+    inset:0;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    background:linear-gradient(to top, rgba(62,37,24,.85) 0%, rgba(62,37,24,.4) 40%, transparent 70%);
+    opacity:1;
+    z-index:3;
+    clip-path:polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+}
+.category-card-body{
+    position:relative;
+    z-index:10;
+    padding:40px 24px 24px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    height:100%;
+}
+.category-card-icon{
+    font-size:42px;
+    margin-bottom:16px;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));
+    transform:translateY(0);
+    transition:transform .6s cubic-bezier(.19,1,.22,1);
+}
+.category-card:hover .category-card-icon{
+    transform:translateY(-6px) scale(1.1);
+}
+.category-card-body h3{
+    font-family:var(--cat-heading-font, "Cormorant Garamond", serif);
+    font-size:clamp(20px, 3vw, 28px);
+    font-weight:300;
+    font-style:italic;
+    color:#fff;
+    text-shadow:0 2px 8px rgba(0,0,0,.4);
+    line-height:1.2;
+}
+.category-card-body .cat-tagline{
+    font-family:var(--cat-accent-font, "Italiana", serif);
+    font-size:13px;
+    color:var(--cat-accent);
+    margin-top:8px;
+    letter-spacing:1px;
+    text-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+.category-card-body .cat-desc{
+    font-size:9px;
+    color:rgba(255,252,247,.7);
+    margin-top:6px;
+    line-height:1.6;
+    max-width:85%;
+}
+.category-card-count{
+    display:inline-block;
+    margin-top:14px;
+    padding:6px 16px;
+    font-size:8px;
+    font-weight:500;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border:1px solid rgba(196,168,130,.4);
+    color:var(--cat-accent);
+    background:rgba(255,252,247,.1);
+    backdrop-filter:blur(8px);
+    border-radius:20px;
+    transition:all .3s;
+}
+.category-card:hover .category-card-count{
+    background:var(--cat-accent);
+    color:#1a1510;
+    border-color:var(--cat-accent);
+}
+.category-card-bottom{
+    display:none;
+}
 
 /* ===== DESIGN TEMPLATES GRID ===== */
 .designs-section{padding:115px 5%;position:relative}
@@ -176,7 +305,50 @@ img{display:block;max-width:100%}
 .design-thumb-actions .btn-choose{background:var(--gold);color:var(--dark)}
 .design-thumb-actions .btn-choose:hover{background:#d4b892}
 
-/* ===== VIDEO INVITATIONS — vertical product cards ===== */
+/* ===== VIDEO INVITATIONS ===== */
+.video-showcase{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:40px}
+.video-main{position:relative}
+.video-frame{position:relative;border-radius:16px;overflow:hidden;background:#1a1410;box-shadow:0 40px 100px rgba(62,37,24,.25),0 0 0 1px rgba(196,168,130,.15)}
+.video-player{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
+.video-fallback{position:absolute;inset:0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;z-index:2}
+.video-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;background:radial-gradient(ellipse at center,rgba(196,168,130,.08),transparent 70%);transition:opacity .4s,background .4s}
+.video-frame:hover .video-play-overlay{background:radial-gradient(ellipse at center,rgba(196,168,130,.15),transparent 70%)}
+.video-play-btn{width:80px;height:80px;border-radius:50%;background:rgba(255,252,247,.95);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,box-shadow .3s,background .3s;box-shadow:0 12px 40px rgba(62,37,24,.3)}
+.video-play-btn:hover{transform:scale(1.08);box-shadow:0 16px 50px rgba(62,37,24,.4);background:#fff}
+.video-play-btn:active{transform:scale(.95)}
+.video-play-btn svg{margin-left:3px}
+.video-badge{position:absolute;top:20px;right:20px;padding:8px 16px;border-radius:20px;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;background:rgba(196,168,130,.95);color:#1a1510;box-shadow:0 4px 20px rgba(196,168,130,.3);z-index:4}
+.video-info{padding:20px}
+.video-badge-text{display:inline-block;padding:6px 14px;border-radius:20px;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;background:rgba(196,168,130,.15);color:var(--gold);border:1px solid rgba(196,168,130,.3);margin-bottom:16px}
+.video-features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.video-feat{display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(245,237,227,.6);border:1px solid rgba(92,61,46,.08);border-radius:10px;transition:.3s}
+.video-feat:hover{background:rgba(196,168,130,.1);border-color:rgba(196,168,130,.3);transform:translateX(4px)}
+.video-feat-icon{font-size:16px}
+.video-feat span{font-size:10px;color:var(--text);font-weight:500}
+.video-samples{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.video-sample-card{position:relative;border-radius:12px;overflow:hidden;background:#1a1410;cursor:pointer;transition:.4s;aspect-ratio:16/9}
+.video-sample-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.video-sample-card video{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .4s}
+.video-sample-card:hover video{opacity:1}
+.video-sample-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.9) 0%,transparent 60%);display:flex;align-items:flex-end;padding:16px;z-index:2}
+.video-sample-title{font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:300;font-style:italic;color:#fff}
+.video-sample-cat{font-size:8px;letter-spacing:1px;color:var(--gold);margin-top:4px}
+
+@media(max-width:1100px){
+    .video-showcase{grid-template-columns:1fr;gap:32px}
+    .video-info{order:-1}
+    .video-features{grid-template-columns:1fr 1fr}
+}
+@media(max-width:850px){
+    .video-samples{grid-template-columns:repeat(2,1fr)}
+    .video-features{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+    .video-samples{grid-template-columns:1fr}
+    .video-play-btn{width:60px;height:60px}
+    .video-badge{font-size:7px;padding:6px 12px}
+}
+
 /* ===== FEATURES ===== */
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .feature-card{padding:38px;background:rgba(255,252,247,.50);border:1px solid var(--border);transition:.4s;text-align:center}
@@ -652,7 +824,48 @@ body.has-announce .mobile-menu{padding-top:150px}
 </section>
 
 
-<!-- HOW IT WORKS -->
+<!-- VIDEO INVITATIONS -->
+<section class="section reveal" id="video-invitations">
+<div class="section-inner">
+    <div class="section-heading" style="text-align:center">
+        <div class="kicker" data-i18n="videoKicker">Video Dəvətnamələr</h2>
+        <h2 data-i18n="videoTitle">Hərəkət edən hekayəniz.<br>Ekrandan keçən sevgi.</h2>
+        <p data-i18n="videoText" style="text-align:center;max-width:600px;margin:24px auto 0">Sinematik keyfiyyətdə, müziqi ilə, sizin hekayənizi danışan video dəvətnamələr. Yalnız bir linklə paylaşın.</p>
+    </div>
+    <div class="video-showcase">
+        <div class="video-main">
+            <div class="video-frame" id="videoMainFrame">
+                <video class="video-player" id="videoMainPlayer" playsinline muted loop poster="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                </video>
+                <div class="video-fallback" style="display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1410,#2a1f16);color:#fff;padding:40px;text-align:center;">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:300;font-style:italic;margin-bottom:12px;">Video Dəvətnamə</div>
+                    <div style="font-size:11px;color:rgba(255,252,247,.5);">Demo video yüklənir...</div>
+                </div>
+                <div class="video-play-overlay" id="videoPlayOverlay">
+                    <button class="video-play-btn" onclick="toggleMainVideo()" aria-label="Play video">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#fff" stroke-width="2"/><path d="M18 16v16l14-8-14-8z" fill="#fff"/></svg>
+                    </button>
+                </div>
+                <div class="video-badge">Premium Video</div>
+            </div>
+            <div class="video-info">
+                <div class="video-badge-text">🎬 Video Dəvətnamə</div>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:300;font-style:italic;color:var(--dark);line-height:1.2;margin:16px 0;">Sizin hekayəniz, sinematik dildə</h3>
+                <p style="color:var(--muted);font-size:11px;line-height:1.9;margin-bottom:24px;">Professional çəkim, məxsus müziqi, sinematik keçidlər. Qonaqlarınız video açanda hədəsiz qalacaqdır.</p>
+                <div class="video-features">
+                    <div class="video-feat"><span class="video-feat-icon">🎵</span><span>Məxsus müziqi</span></div>
+                    <div class="video-feat"><span class="video-feat-icon">🎞️</span><span>Sinematik keçidlər</span></div>
+                    <div class="video-feat"><span class="video-feat-icon">📱</span><span>Bütün cihazlarda oynar</span></div>
+                    <div class="video-feat"><span class="video-feat-icon">🔗</span><span>Bir linklə paylaşım</span></div>
+                </div>
+                <a href="videos.html" class="btn btn-gold" style="margin-top:24px;display:inline-flex;align-items:center;gap:8px;">Video nümunələrə bax <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+        </div>
+        <div class="video-samples" id="videoSamplesGrid"></div>
+    </div>
+</div>
+</section>
 <section class="section reveal" id="how">
 <div class="section-inner">
     <div class="section-heading" style="text-align:center">
@@ -900,7 +1113,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
 });
 
-/* ===== RENDER CATEGORIES — Editorial Collection Cards ===== */
+/* ===== RENDER CATEGORIES — Semicircle Glowing Cards ===== */
 (function renderCategories() {
     var grid = document.getElementById("categoriesGrid");
     if (!grid || typeof LUNA_CATEGORIES === "undefined") return;
@@ -920,6 +1133,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 
         /* Inject per-category CSS custom properties */
         card.style.setProperty("--cat-bg", pal.bg || "#F5EDE3");
+        card.style.setProperty("--cat-bg-alt", pal.bgAlt || pal.bg || "#F5EDE3");
         card.style.setProperty("--cat-accent", pal.accent || "#C4A882");
         card.style.setProperty("--cat-text", pal.text || "#3E2518");
         card.style.setProperty("--cat-muted", pal.muted || "#8A6E5E");
@@ -929,23 +1143,14 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
         card.style.setProperty("--cat-accent-font", typo.accent || "'Italiana', serif");
 
         card.innerHTML =
-            '<div class="cat-card-img-wrap">' +
-                '<img class="category-card-img" src="' + cat.image + '" alt="' + catName + '" loading="lazy">' +
-                '<div class="cat-card-gradient"></div>' +
-            '</div>' +
+            '<img class="category-card-img" src="' + cat.image + '" alt="' + catName + '" loading="lazy">' +
             '<div class="category-card-overlay"></div>' +
-            '<div class="cat-card-deco"></div>' +
             '<div class="category-card-body">' +
                 '<div class="category-card-icon">' + cat.icon + '</div>' +
                 '<h3 style="font-family:' + (typo.heading || "'Cormorant Garamond', serif") + '">' + catName + '</h3>' +
                 '<p class="cat-tagline" style="font-family:' + (typo.accent || "'Italiana', serif") + '">' + tagline + '</p>' +
                 '<p class="cat-desc">' + desc + '</p>' +
                 '<span class="category-card-count">' + cat.count + ' ' + lunaT("navInvitations") + '</span>' +
-            '</div>' +
-            '<div class="category-card-bottom">' +
-                '<h4 style="font-family:' + (typo.heading || "'Cormorant Garamond', serif") + '">' + catName + '</h4>' +
-                '<p>' + tagline + '</p>' +
-                '<span class="explore-link">' + lunaT("catExplore") + '</span>' +
             '</div>';
         grid.appendChild(card);
     });
@@ -1499,16 +1704,68 @@ applyHomepageConfig();
     document.head.appendChild(style);
 })();
 
-/* ===== UPDATE CATEGORY COUNTS TO INCLUDE ADMIN DESIGNS ===== */
-(function updateCategoryCounts() {
-    if (typeof LUNA_CATEGORIES === "undefined") return;
-    var allTemplates = _getAllTemplates();
-    LUNA_CATEGORIES.forEach(function(cat) {
-        cat.count = allTemplates.filter(function(t) { return t.category === cat.id; }).length;
+/* ===== VIDEO SAMPLES RENDER ===== */
+function renderVideoSamples() {
+    var grid = document.getElementById("videoSamplesGrid");
+    if (!grid) return;
+    var videos = [];
+    try { videos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]"); } catch(e) {}
+    var activeVideos = videos.filter(function(v) { return v.active && v.videoUrl; });
+    if (!activeVideos.length) {
+        activeVideos = [
+            { id: "sample_flower", category: "wedding", title: "Toy — Zərif Açılış", thumbnailUrl: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+            { id: "sample_jellyfish", category: "engagement", title: "Nişan — Okean Həvəsi", thumbnailUrl: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85", videoUrl: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" },
+            { id: "sample_sintel", category: "henna", title: "Xına — Kino Keyfiyyəti", thumbnailUrl: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=85", videoUrl: "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_2MB.mp4" }
+        ];
+    }
+    grid.innerHTML = "";
+    activeVideos.slice(0, 3).forEach(function(v, idx) {
+        var card = document.createElement("div");
+        card.className = "video-sample-card";
+        card.style.animationDelay = (idx * 0.08) + "s";
+        var thumb = v.thumbnailUrl || (v.videoUrl ? "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85" : "");
+        var catName = lunaCategoryName(v.category || "");
+        card.innerHTML =
+            '<video playsinline muted loop preload="metadata" src="' + v.videoUrl + '" onerror="this.style.display=\'none\'"></video>' +
+            '<div class="video-sample-overlay">' +
+                '<div class="video-sample-title">' + (v.title || "Video Dəvətnamə") + '</div>' +
+                '<div class="video-sample-cat">' + catName + '</div>' +
+            '</div>';
+        card.addEventListener("click", function() { openVideoModal(v); });
+        grid.appendChild(card);
     });
-    /* Re-render categories with updated counts */
-    renderCategories();
-})();
+}
+renderVideoSamples();
+
+/* ===== VIDEO MODAL ===== */
+function openVideoModal(video) {
+    var modal = document.createElement("div");
+    modal.className = "modal-overlay";
+    modal.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;padding:20px";
+    modal.innerHTML =
+        '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;">&times;</button>' +
+        '<video src="' + video.videoUrl + '" controls autoplay playsinline style="max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>';
+    document.body.appendChild(modal);
+    modal.querySelector("video").play().catch(function(){});
+    modal.addEventListener("click", function(e) { if (e.target === modal) modal.remove(); });
+    document.addEventListener("keydown", function esc(e) { if (e.key === "Escape") { modal.remove(); document.removeEventListener("keydown", esc); } });
+}
+
+/* ===== MAIN VIDEO TOGGLE ===== */
+function toggleMainVideo() {
+    var player = document.getElementById("videoMainPlayer");
+    var overlay = document.getElementById("videoPlayOverlay");
+    if (!player) return;
+    if (player.paused) {
+        player.play().catch(function(){});
+        overlay.style.opacity = "0";
+        overlay.style.pointerEvents = "none";
+    } else {
+        player.pause();
+        overlay.style.opacity = "1";
+        overlay.style.pointerEvents = "auto";
+    }
+}
 
 /* ===== RE-RENDER ON LANGUAGE CHANGE ===== */
 var _origSetLang = lunaSetLanguage;

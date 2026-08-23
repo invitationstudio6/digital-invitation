@@ -380,6 +380,10 @@ button{
             <span>Sifarişlər</span>
             <b id="ordersBadge" style="margin-left:auto;background:#c0392b;color:#fff;border-radius:10px;padding:2px 8px;font-size:9px;display:none;">0</b>
         </a>
+        <a class="sidebar-link" data-section="client-invitations" onclick="switchSection('client-invitations')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 21h-2"/><path d="M4 21h2"/></svg>
+            <span>Müştəri Dəvətnamələri</span>
+        </a>
         <a class="sidebar-link" data-section="homepage" onclick="switchSection('homepage')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span>Home Edit</span>
@@ -430,6 +434,7 @@ button{
                 <a href="client-form.html">+ Müştəri</a>
                 <button onclick="switchSection('designs')">+ Dizayn</button>
                 <button onclick="switchSection('videos')">+ Video</button>
+                <button onclick="switchSection('client-invitations')">+ Müştəri Dizaynı</button>
             </div>
             <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">
                 <div style="font-size:11px;margin-bottom:10px;color:#b88c76;">Sifariş Formunu Doldurulmuş Aç</div>
@@ -446,6 +451,48 @@ button{
             </div>
         </div>
     </div>
+
+    <!-- EASY TOOLS PANEL -->
+    <div class="panel" style="margin-top:30px;">
+        <h2>⚡ Asan İdarəetmə Alətləri</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px;">
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📦 Toplu Əməliyyatlar</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="bulkAssignDesigns()" style="padding:12px;font-size:11px;">Bütün müştərilərə eyni dizayn təyin et</button>
+                    <button class="save" onclick="bulkUpdatePackage()" style="padding:12px;font-size:11px;background:#6a9c89;">Paketləri toplu yenilə</button>
+                    <button class="clear" onclick="exportAllClientsCSV()" style="padding:12px;font-size:11px;">Müştəri siyahısını CSV endir</button>
+                    <button class="clear" onclick="exportAllDesignsCSV()" style="padding:12px;font-size:11px;">Dizayn siyahısını CSV endir</button>
+                </div>
+            </div>
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">🔗 Link Alətləri</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="generateAllLinks()" style="padding:12px;font-size:11px;">Bütün müştərilər üçün link yarad</button>
+                    <button class="save" onclick="openWhatsAppBulk()" style="padding:12px;font-size:11px;background:#25D366;">WhatsApp-da toplu paylaş</button>
+                    <button class="clear" onclick="copyAllLinks()" style="padding:12px;font-size:11px;">Bütün linkləri kopyala</button>
+                </div>
+            </div>
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">🎨 Dizayn Yönetimi</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="duplicateDesign()" style="padding:12px;font-size:11px;">Seçili dizaynı kopyala</button>
+                    <button class="save" onclick="createDesignFromTemplate()" style="padding:12px;font-size:11px;background:#8a6ec9;">Şablondan yeni dizayn yarat</button>
+                    <button class="clear" onclick="bulkDeleteUnusedDesigns()" style="padding:12px;font-size:11px;">İstifadə olunmayan dizaynları sil</button>
+                </div>
+            </div>
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📊 Təhlil & Hesabatlar</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="showRevenueReport()" style="padding:12px;font-size:11px;">Gəlir hesabatı</button>
+                    <button class="save" onclick="showConversionReport()" style="padding:12px;font-size:11px;background:#c97d6a;">Konversiya analizi</button>
+                    <button class="clear" onclick="showPopularDesigns()" style="padding:12px;font-size:11px;">Ən populyar dizaynlar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
 </div>
 
 <!-- ========== CUSTOMERS ========== -->
@@ -831,6 +878,50 @@ button{
             <h2>Yaradılmış Kartlar</h2>
             <div id="cardsList" class="customer-list"></div>
         </div>
+    </div>
+</div>
+
+<!-- ========== CLIENT INVITATIONS ========== -->
+<div id="section-client-invitations" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Müştəri Dəvətnamələri</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="openAssignDesignModal()">+ Dizayn Təyin Et</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Mövcud Müştərilərə Dizayn Təyin Et</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər müştəri üçün individual dəvətnamə dizaynı seçin. Bu dizayn müştərinin dəvətnaməsində, ana səhifədə və client form-da avtomatik istifadə olunacaq.</p>
+        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+            <input type="text" class="search-bar" id="clientInvSearch" placeholder="Müştəri axtar..." oninput="renderClientInvitations()" style="flex:1;min-width:200px;">
+            <select id="clientInvFilterDesign" onchange="renderClientInvitations()" style="padding:10px 14px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);color:white;font-family:inherit;font-size:11px;">
+                <option value="">Bütün dizaynlar</option>
+            </select>
+        </div>
+        <div id="clientInvitationsList" class="customer-list"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Dizayn Hazırla & Təyin Et (Sürətli)</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Yeni bir dizayn yaradın və eyni anda müştəriye təyin edin.</p>
+        <form id="quickDesignAssignForm">
+            <div class="form-grid">
+                <div class="field"><label>Dizayn Adı</label><input id="qdDesignName" type="text" placeholder="Məs: Elvin & Leyla — Özel" required></div>
+                <div class="field"><label>Kateqoriya</label><select id="qdCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Paket</label><select id="qdPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+                <div class="field"><label>Animasiya Növü</label><select id="qdAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field"><label>Örtük Şəkli</label><div class="file-box"><input id="qdCover" type="file" accept="image/*" required><img id="qdCoverPreview" class="preview-image"></div></div>
+                <div class="field full"><label>Müştəri Seç</label><select id="qdClientSelect" required><option value="">— Müştəri seçin —</option></select></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Dizaynı Yaradib Təyin Et</button>
+                <button type="button" class="clear" onclick="document.getElementById('quickDesignAssignForm').reset();document.getElementById('qdCoverPreview').style.display='none';">Təmizlə</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -1307,6 +1398,29 @@ button{
     </div>
 </div>
 
+<!-- Assign Design Modal -->
+<div class="modal-overlay" id="assignDesignModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('assignDesignModal')">&times;</button>
+        <h2>Müştəriyə Dizayn Təyin Et</h2>
+        <form id="assignDesignForm">
+            <div class="form-grid">
+                <div class="field full"><label>Müştəri Seç</label><select id="adClientSelect" required><option value="">— Müştəri seçin —</option></select></div>
+                <div class="field"><label>Dizayn Seç</label><select id="adDesignSelect" required><option value="">— Dizayn seçin —</option></select></div>
+                <div class="field"><label>Ya da Yeni Dizayn Yarat</label><input id="adNewDesignName" type="text" placeholder="Yeni dizayn adı (opsional)"></div>
+                <div class="field"><label>Kateqoriya (yeni üçün)</label><select id="adNewCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
+                <div class="field"><label>Paket (yeni üçün)</label><select id="adNewPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
+                <div class="field"><label>Animasiya (yeni üçün)</label><select id="adNewAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
+                <div class="field full"><label>Örtük Şəkli (yeni üçün)</label><div class="file-box"><input id="adNewCover" type="file" accept="image/*"><img id="adNewCoverPreview" class="preview-image"></div></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Təyin Et</button>
+                <button type="button" class="clear" onclick="closeModal('assignDesignModal');document.getElementById('assignDesignForm').reset();document.getElementById('adNewCoverPreview').style.display='none';">Ləğv Et</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="data/luna.js"></script>
 <script src="js/data.js"></script>
 <script src="js/i18n.js"></script>
@@ -1333,6 +1447,7 @@ function switchSection(name){
     if(name === 'homepage') loadHomepageConfig();
     if(name === 'packages') buildPackagesEditor();
     if(name === 'catpreviews') buildCatPreviewsEditor();
+    if(name === 'client-invitations') { renderClientInvitations(); populateQuickDesignAssignClientSelect(); }
 }
 
 
@@ -1395,6 +1510,345 @@ function saveVideos(videos){
         throw e;
     }
 }
+
+/* =====================================================
+   CLIENT INVITATIONS HELPERS
+===================================================== */
+
+function getClientInvitations(){
+    try { return JSON.parse(localStorage.getItem('luna_client_invitations') || '[]'); } catch(e){ return []; }
+}
+
+function saveClientInvitations(list){
+    localStorage.setItem('luna_client_invitations', JSON.stringify(list));
+}
+
+function getClientInvitation(clientId){
+    var list = getClientInvitations();
+    return list.find(function(c){ return c.clientId === clientId; });
+}
+
+function setClientInvitation(clientId, designId){
+    var list = getClientInvitations();
+    var idx = list.findIndex(function(c){ return c.clientId === clientId; });
+    var entry = {
+        clientId: clientId,
+        designId: designId,
+        assignedAt: new Date().toISOString()
+    };
+    if(idx >= 0) list[idx] = entry;
+    else list.push(entry);
+    saveClientInvitations(list);
+}
+
+function removeClientInvitation(clientId){
+    var list = getClientInvitations().filter(function(c){ return c.clientId !== clientId; });
+    saveClientInvitations(list);
+}
+
+function getDesignById(designId){
+    var designs = getDesigns();
+    return designs.find(function(d){ return d.id === designId; });
+}
+
+/* =====================================================
+   CLIENT INVITATIONS RENDER
+===================================================== */
+
+function renderClientInvitations(){
+    var search = document.getElementById('clientInvSearch');
+    var filterDesign = document.getElementById('clientInvFilterDesign');
+    var listEl = document.getElementById('clientInvitationsList');
+    if(!listEl) return;
+
+    var searchTerm = (search && search.value || '').toLowerCase().trim();
+    var designFilter = (filterDesign && filterDesign.value || '').trim();
+
+    var customers = getCustomers();
+    var designs = getDesigns();
+    var clientInvs = getClientInvitations();
+
+    // Populate design filter
+    if(filterDesign && filterDesign.options.length <= 1){
+        designs.forEach(function(d){
+            var opt = document.createElement('option');
+            opt.value = d.id;
+            opt.textContent = d.name + ' (' + d.category + ')';
+            filterDesign.appendChild(opt);
+        });
+    }
+
+    var filtered = customers.filter(function(c){
+        var name = lunaDisplayNames(c).toLowerCase();
+        var cat = (c.category || '').toLowerCase();
+        var matchesSearch = !searchTerm || name.indexOf(searchTerm) >= 0 || cat.indexOf(searchTerm) >= 0 || (c.id && c.id.toLowerCase().indexOf(searchTerm) >= 0);
+
+        var inv = clientInvs.find(function(ci){ return ci.clientId === c.id; });
+        var matchesDesign = !designFilter || (inv && inv.designId === designFilter);
+
+        return matchesSearch && matchesDesign;
+    });
+
+    if(!filtered.length){
+        listEl.innerHTML = '<div class="empty">Müştəri tapılmadı</div>';
+        return;
+    }
+
+    listEl.innerHTML = '';
+    filtered.forEach(function(c){
+        var inv = clientInvs.find(function(ci){ return ci.clientId === c.id; });
+        var design = inv ? getDesignById(inv.designId) : null;
+        var name = lunaDisplayNames(c);
+        var cat = lunaCategoryName(c.category || '');
+        var pkg = c.package || '';
+        var date = c.date || '';
+        var rsvpCount = lunaGetRsvps(c.id).length;
+
+        var div = document.createElement('div');
+        div.className = 'customer-row';
+        div.innerHTML =
+            '<div class="customer-info">' +
+                '<h4>' + lunaEscapeHtml(name) + '</h4>' +
+                '<p>' + lunaEscapeHtml(cat) + ' · ' + lunaEscapeHtml(pkg) + (date ? ' · ' + lunaEscapeHtml(date) : '') + '</p>' +
+            '</div>' +
+            '<div class="customer-stats">' +
+                '<span>' + (design ? '🎨 ' + lunaEscapeHtml(design.name) : '⚠️ Dizayn yoxdur') + '</span>' +
+                '<span>' + rsvpCount + ' RSVP</span>' +
+            '</div>' +
+            '<div class="customer-actions">' +
+                (inv
+                    ? '<button class="edit-btn" onclick="openChangeDesignModal(\'' + c.id + '\')">Dəyiş</button>'
+                    : '<button class="save" onclick="openAssignDesignModalFor(\'' + c.id + '\')">Təyin Et</button>'
+                ) +
+                '<button class="copy-btn" onclick="copyClientInvitationLink(\'' + c.id + '\')">Link</button>' +
+                (inv ? '<button class="delete" onclick="removeClientInvitationConfirm(\'' + c.id + '\')">Sil</button>' : '') +
+            '</div>';
+        listEl.appendChild(div);
+    });
+}
+
+function openAssignDesignModal(){
+    document.getElementById('assignDesignModal').classList.add('open');
+    populateAssignDesignModal();
+}
+
+function openAssignDesignModalFor(clientId){
+    document.getElementById('assignDesignModal').classList.add('open');
+    populateAssignDesignModal(clientId);
+}
+
+function openChangeDesignModal(clientId){
+    var inv = getClientInvitation(clientId);
+    if(!inv) return openAssignDesignModalFor(clientId);
+
+    document.getElementById('assignDesignModal').classList.add('open');
+    populateAssignDesignModal(clientId);
+
+    // Pre-select current design
+    setTimeout(function(){
+        document.getElementById('adDesignSelect').value = inv.designId;
+    }, 100);
+}
+
+function populateAssignDesignModal(preClientId){
+    var adClientSelect = document.getElementById('adClientSelect');
+    var adDesignSelect = document.getElementById('adDesignSelect');
+    var clients = getCustomers();
+    var designs = getDesigns();
+
+    // Populate clients
+    adClientSelect.innerHTML = '<option value="">— Müştəri seçin —</option>';
+    clients.forEach(function(c){
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = lunaDisplayNames(c) + ' (' + (c.category || '') + ')';
+        adClientSelect.appendChild(opt);
+    });
+
+    // Populate designs
+    adDesignSelect.innerHTML = '<option value="">— Dizayn seçin —</option>';
+    designs.forEach(function(d){
+        var opt = document.createElement('option');
+        opt.value = d.id;
+        opt.textContent = d.name + ' (' + d.category + ', ' + d.minPackage + ')';
+        adDesignSelect.appendChild(opt);
+    });
+
+    if(preClientId){
+        adClientSelect.value = preClientId;
+        adClientSelect.disabled = true;
+    } else {
+        adClientSelect.disabled = false;
+    }
+}
+
+document.getElementById('assignDesignForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var clientId = document.getElementById('adClientSelect').value;
+    var designId = document.getElementById('adDesignSelect').value;
+    var newName = document.getElementById('adNewDesignName').value.trim();
+    var newCat = document.getElementById('adNewCategory').value;
+    var newPkg = document.getElementById('adNewPackage').value;
+    var newAnim = document.getElementById('adNewAnimation').value;
+    var coverFile = document.getElementById('adNewCover').files[0];
+
+    if(!clientId){
+        showToast('Müştəri seçin');
+        return;
+    }
+
+    if(!designId && !newName){
+        showToast('Mövcud dizayn seçin və ya yeni dizayn adı daxil edin');
+        return;
+    }
+
+    var finalDesignId = designId;
+
+    if(newName){
+        // Create new design
+        var coverDataUrl = '';
+        if(coverFile){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                coverDataUrl = e.target.result;
+                createAndAssignDesign();
+            };
+            reader.readAsDataURL(coverFile);
+            return;
+        }
+        createAndAssignDesign();
+    } else {
+        assignExistingDesign();
+    }
+
+    function createAndAssignDesign(){
+        var designs = getDesigns();
+        var newId = 'custom_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+        var newDesign = {
+            id: newId,
+            name: newName,
+            category: newCat,
+            package: newPkg,
+            style: '',
+            animationType: newAnim,
+            openingType: newAnim,
+            thumbnail: coverDataUrl || '',
+            cover: coverDataUrl || '',
+            minPackage: newPkg,
+            packages: [newPkg],
+            preview: null,
+            layoutConfig: null,
+            illustrations: [],
+            video: '',
+            active: true,
+            createdAt: new Date().toISOString()
+        };
+        designs.push(newDesign);
+        saveDesigns(designs);
+        finalDesignId = newId;
+        assignExistingDesign();
+    }
+
+    function assignExistingDesign(){
+        setClientInvitation(clientId, finalDesignId);
+        showToast('Dizayn müştəriye təyin edildi');
+        closeModal('assignDesignModal');
+        document.getElementById('assignDesignForm').reset();
+        document.getElementById('adNewCoverPreview').style.display = 'none';
+        document.getElementById('adClientSelect').disabled = false;
+        renderClientInvitations();
+        renderDashboard();
+    }
+});
+
+function removeClientInvitationConfirm(clientId){
+    if(confirm('Bu müştərinin dizayn təyini silinsin?')){
+        removeClientInvitation(clientId);
+        showToast('Dizayn təyini silindi');
+        renderClientInvitations();
+        renderDashboard();
+    }
+}
+
+function copyClientInvitationLink(clientId){
+    var link = getInvitationLink(clientId);
+    copyToClipboard(link);
+    showToast('Link kopyalandı: ' + link);
+}
+
+function populateQuickDesignAssignClientSelect(){
+    var select = document.getElementById('qdClientSelect');
+    if(!select) return;
+    var clients = getCustomers();
+    select.innerHTML = '<option value="">— Müştəri seçin —</option>';
+    clients.forEach(function(c){
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = lunaDisplayNames(c) + ' (' + (c.category || '') + ')';
+        select.appendChild(opt);
+    });
+}
+
+document.getElementById('quickDesignAssignForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('qdDesignName').value.trim();
+    var category = document.getElementById('qdCategory').value;
+    var pkg = document.getElementById('qdPackage').value;
+    var anim = document.getElementById('qdAnimation').value;
+    var coverFile = document.getElementById('qdCover').files[0];
+    var clientId = document.getElementById('qdClientSelect').value;
+
+    if(!name || !clientId){
+        showToast('Dizayn adı və müştəri seçin');
+        return;
+    }
+
+    var coverDataUrl = '';
+    if(coverFile){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            coverDataUrl = e.target.result;
+            saveQuickDesign();
+        };
+        reader.readAsDataURL(coverFile);
+        return;
+    }
+    saveQuickDesign();
+
+    function saveQuickDesign(){
+        var designs = getDesigns();
+        var newId = 'custom_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+        var newDesign = {
+            id: newId,
+            name: name,
+            category: category,
+            package: pkg,
+            style: '',
+            animationType: anim,
+            openingType: anim,
+            thumbnail: coverDataUrl || '',
+            cover: coverDataUrl || '',
+            minPackage: pkg,
+            packages: [pkg],
+            preview: null,
+            layoutConfig: null,
+            illustrations: [],
+            video: '',
+            active: true,
+            createdAt: new Date().toISOString()
+        };
+        designs.push(newDesign);
+        saveDesigns(designs);
+
+        setClientInvitation(clientId, newId);
+        showToast('Dizayn yaradılıb müştəriye təyin edildi');
+        document.getElementById('quickDesignAssignForm').reset();
+        document.getElementById('qdCoverPreview').style.display = 'none';
+        populateQuickDesignAssignClientSelect();
+        renderClientInvitations();
+        renderDashboard();
+    }
+});
 
 function totalCountRsvps(){
     var total = 0;
@@ -3980,6 +4434,190 @@ renderDashboard();
 renderCustomers();
 renderRsvps();
 renderCreatedInvitations();
+renderClientInvitations();
+
+/* =====================================================
+   EASY TOOLS FUNCTIONS
+===================================================== */
+
+function bulkAssignDesigns(){
+    var designs = getDesigns();
+    if(!designs.length){
+        showToast('Heç bir dizayn yoxdur');
+        return;
+    }
+    var designId = prompt('Dizayn ID daxil edin (yuxarıdakı siyahıdan):');
+    if(!designId) return;
+    var design = designs.find(function(d){ return d.id === designId; });
+    if(!design){
+        showToast('Dizayn tapılmadı');
+        return;
+    }
+    var customers = getCustomers();
+    var count = 0;
+    customers.forEach(function(c){
+        setClientInvitation(c.id, designId);
+        count++;
+    });
+    showToast(count + ' müştəriye "' + design.name + '" dizaynı təyin edildi');
+    renderClientInvitations();
+    renderDashboard();
+}
+
+function bulkUpdatePackage(){
+    var pkg = prompt('Yeni paket (basic/premium/luxury):');
+    if(!pkg || !['basic','premium','luxury'].includes(pkg)) return;
+    var customers = getCustomers();
+    customers.forEach(function(c){
+        c.package = pkg;
+        localStorage.setItem('luna_' + c.id, JSON.stringify(c));
+    });
+    showToast(customers.length + ' müştərinin paketi ' + pkg + ' olaraq yeniləndi');
+    renderCustomers();
+    renderDashboard();
+}
+
+function exportAllClientsCSV(){
+    var customers = getCustomers();
+    if(!customers.length){
+        showToast('Müştəri yoxdur');
+        return;
+    }
+    var csv = 'ID,Ad,Soyad,Kateqoriya,Paket,Tarix,Məkan,Şəxsi Link\n';
+    customers.forEach(function(c){
+        var name = lunaDisplayNames(c);
+        var link = getInvitationLink(c.id);
+        csv += c.id + ',' + (c.bride||'') + ',' + (c.groom||'') + ',' + (c.category||'') + ',' + (c.package||'') + ',' + (c.date||'') + ',' + (c.venue||'') + ',' + link + '\n';
+    });
+    downloadCSV(csv, 'luna-clients-' + new Date().toISOString().slice(0,10) + '.csv');
+    showToast('CSV endirildi');
+}
+
+function exportAllDesignsCSV(){
+    var designs = getDesigns();
+    if(!designs.length){
+        showToast('Dizayn yoxdur');
+        return;
+    }
+    var csv = 'ID,Ad,Kateqoriya,Paket,Animasiya,Min Paket,URL,Status\n';
+    designs.forEach(function(d){
+        csv += d.id + ',' + d.name + ',' + d.category + ',' + (d.package||d.minPackage) + ',' + (d.animationType||d.openingType||'') + ',' + (d.minPackage||'') + ',' + (d.url||'') + ',' + (d.active !== false ? 'Aktiv' : 'Passiv') + '\n';
+    });
+    downloadCSV(csv, 'luna-designs-' + new Date().toISOString().slice(0,10) + '.csv');
+    showToast('CSV endirildi');
+}
+
+function downloadCSV(csv, filename){
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+function generateAllLinks(){
+    var customers = getCustomers();
+    var links = customers.map(function(c){ return getInvitationLink(c.id) + ' — ' + lunaDisplayNames(c); }).join('\n');
+    copyToClipboard(links);
+    showToast(customers.length + ' link panoya kopyalandı');
+}
+
+function openWhatsAppBulk(){
+    var customers = getCustomers();
+    var text = encodeURIComponent('Salam! Sizə Luna-dan dəvətnamə linkləri:\n\n' + customers.map(function(c){ return lunaDisplayNames(c) + ': ' + getInvitationLink(c.id); }).join('\n\n'));
+    window.open('https://wa.me/?text=' + text, '_blank');
+    showToast('WhatsApp açıldı');
+}
+
+function copyAllLinks(){
+    generateAllLinks();
+}
+
+function duplicateDesign(){
+    var designs = getDesigns();
+    if(!designs.length) return showToast('Dizayn yoxdur');
+    var id = prompt('Kopyalanacaq dizayn ID:');
+    if(!id) return;
+    var d = designs.find(function(x){ return x.id === id; });
+    if(!d) return showToast('Tapılmadı');
+    var newD = Object.assign({}, d);
+    newD.id = 'copy_' + Date.now();
+    newD.name = d.name + ' (Kopyası)';
+    newD.createdAt = new Date().toISOString();
+    var designs2 = getDesigns();
+    designs2.push(newD);
+    saveDesigns(designs2);
+    showToast('Dizayn kopyalandı: ' + newD.id);
+    renderDesigns();
+}
+
+function createDesignFromTemplate(){
+    var templates = _getAllTemplates();
+    if(!templates.length) return showToast('Şablon yoxdur');
+    var id = prompt('Şablon ID daxil edin:');
+    if(!id) return;
+    var t = templates.find(function(x){ return x.id === id; });
+    if(!t) return showToast('Şablon tapılmadı');
+    var d = Object.assign({}, t);
+    d.id = 'custom_' + Date.now();
+    d.name = t.name + ' (Custom)';
+    d.createdAt = new Date().toISOString();
+    d.active = true;
+    var designs = getDesigns();
+    designs.push(d);
+    saveDesigns(designs);
+    showToast('Şablondan dizayn yaradıldı: ' + d.id);
+    renderDesigns();
+}
+
+function bulkDeleteUnusedDesigns(){
+    var designs = getDesigns();
+    var clientInvs = getClientInvitations();
+    var usedIds = new Set(clientInvs.map(function(c){ return c.designId; }));
+    var unused = designs.filter(function(d){ return !usedIds.has(d.id); });
+    if(!unused.length) return showToast('İstifadə olunmayan dizayn yoxdur');
+    if(!confirm(unused.length + ' istifadə olunmayan dizayn silinsin?')) return;
+    var remaining = designs.filter(function(d){ return usedIds.has(d.id); });
+    saveDesigns(remaining);
+    showToast(unused.length + ' dizayn silindi');
+    renderDesigns();
+}
+
+function showRevenueReport(){
+    var customers = getCustomers();
+    var total = customers.reduce(function(sum,c){ return sum + (parseFloat(c.price) || 0); }, 0);
+    var byPkg = {};
+    customers.forEach(function(c){
+        var p = c.package || 'basic';
+        byPkg[p] = (byPkg[p] || 0) + 1;
+    });
+    alert('Gəlir Hesabatı\n\nÜmumi: ' + total + ' AZN\n\nPaketlər:\nBasic: ' + (byPkg.basic||0) + '\nPremium: ' + (byPkg.premium||0) + '\nLuxury: ' + (byPkg.luxury||0) + '\nVideo: ' + (byPkg.video||0));
+}
+
+function showConversionReport(){
+    var customers = getCustomers();
+    var total = customers.length;
+    var withDesign = getClientInvitations().length;
+    var withLink = customers.filter(function(c){ return c.approved !== false; }).length;
+    alert('Konversiya Analizi\n\nÜmumi müştəri: ' + total +
+        '\nDizayn təyin olunmuş: ' + withDesign + ' (%' + Math.round(withDesign/total*100) + ')' +
+        '\nLink aktiv: ' + withLink + ' (%' + Math.round(withLink/total*100) + ')');
+}
+
+function showPopularDesigns(){
+    var clientInvs = getClientInvitations();
+    var designs = getDesigns();
+    var count = {};
+    clientInvs.forEach(function(c){ count[c.designId] = (count[c.designId]||0)+1; });
+    var sorted = Object.entries(count).sort(function(a,b){ return b[1]-a[1]; }).slice(0,5);
+    var msg = 'Ən Populyar Dizaynlar:\n\n';
+    sorted.forEach(function(s,i){
+        var d = designs.find(function(x){ return x.id === s[0]; });
+        msg += (i+1) + '. ' + (d?d.name:s[0]) + ' — ' + s[1] + ' müştəri\n';
+    });
+    alert(msg || 'Məlumat yoxdur');
+}
 
 </script>
 
