@@ -1,4 +1,4 @@
-const invitations = {
+var invitations = {
 
     /* =====================================================
        AYSEL & MURAD

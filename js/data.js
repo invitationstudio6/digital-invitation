@@ -1258,7 +1258,7 @@ function seedSampleData(){
                     order: v.order || 0,
                     language: "az"
                 };
-            }));
+            })));
         }
 
         /* Seed form config if empty */
