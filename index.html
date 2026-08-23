@@ -438,9 +438,15 @@ body.has-announce .mobile-menu{padding-top:150px}
     .compare-grid{grid-template-columns:1fr}
     .features-grid{grid-template-columns:1fr}
     .steps{grid-template-columns:1fr 1fr}
-    .float-card{display:none}
     .video-section .section-inner{grid-template-columns:1fr;gap:30px}
     .step-connector{display:none}
+    /* Hero mini-gallery strip instead of empty sides on tablets/phones */
+    .hero-floats{position:relative;inset:auto;height:auto;display:flex;gap:10px;justify-content:center;margin-top:36px;padding:0 16px}
+    .float-card{position:relative;top:auto;left:auto;right:auto;bottom:auto;width:30%;max-width:118px;aspect-ratio:3/4;animation:none;opacity:.95;border-radius:10px;box-shadow:0 12px 32px rgba(62,37,24,.18)}
+    .float-card:nth-child(1){transform:rotate(-4deg)}
+    .float-card:nth-child(2){transform:rotate(2.5deg);margin-top:16px}
+    .float-card:nth-child(3){transform:rotate(-2deg)}
+    .float-card:nth-child(4),.float-card:nth-child(5){display:none}
 }
 @media(max-width:600px){
     .navbar{width:94%;padding:0 16px}
