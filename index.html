@@ -1347,6 +1347,7 @@ renderCatCollection("business", "colBusinessGrid", 4);
 function lunaVideoKind(url) {
     if (!url) return "none";
     url = url.trim();
+    if (/^data:video\//i.test(url) || /^blob:/i.test(url)) return "file";
     if (/\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(url)) return "file";
     if (/youtu\.?be/i.test(url)) return "yt";
     if (/vimeo\.com/i.test(url)) return "vm";
@@ -1426,7 +1427,7 @@ function renderVideoSection() {
 
         var mediaInner;
         if (kind === "file") {
-            mediaInner = '<video src="' + url + '" muted loop playsinline preload="metadata"></video>';
+            mediaInner = '<video src="' + url + '" poster="' + thumb + '" muted loop playsinline preload="metadata"></video>';
         } else {
             mediaInner = '<img src="' + thumb + '" alt="' + (v.title || "Video") + '" onerror="this.src=\'' + _LUNA_DEFAULT_THUMB + '\'">';
         }
@@ -1445,7 +1446,12 @@ function renderVideoSection() {
         function startPreview() {
             if (kind === "file") {
                 var vid = mediaEl.querySelector("video");
-                if (vid) vid.play().catch(function(){});
+                if (vid) {
+                    vid.muted = true;
+                    vid.loop = true;
+                    var pr = vid.play();
+                    if (pr && pr.catch) pr.catch(function() {});
+                }
             } else if (kind === "yt") {
                 mediaEl.innerHTML = '<iframe src="https://www.youtube.com/embed/' + lunaYouTubeId(url) + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + lunaYouTubeId(url) + '&playsinline=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
             } else if (kind === "vm") {

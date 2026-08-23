@@ -885,6 +885,7 @@ function renderTemplates(catFilter, styleFilter) {
 
 /* ===== VIDEO INVITATION CARDS (video category) ===== */
 function lunaVidKind(url) {
+    if (/^data:video\//i.test(url) || /^blob:/i.test(url)) return "file";
     if (/youtube\.com|youtu\.be/.test(url)) return "yt";
     if (/vimeo\.com/.test(url)) return "vm";
     if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return "file";
