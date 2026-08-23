@@ -3209,6 +3209,65 @@ document.getElementById("openButton").textContent =
     }
 })();
 
+/* ===== ADMIN DECORATOR: theme, styling & ambient animation ===== */
+(function applyInvitationTheme() {
+    var th = {};
+    try { th = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}"); } catch(e) {}
+
+    var css = "";
+    if (th.accent) css += ":root{--gold:" + th.accent + "!important;--accent:" + th.accent + "!important;--accent-light:" + th.accent + "22!important}";
+    if (th.bgTint) css += "body{background:" + th.bgTint + "!important}";
+    var r = parseInt(th.radius);
+    if (!isNaN(r)) css += ".detail,.sig-card,.stairs-card,#rsvpForm input,#rsvpForm select,#rsvpForm textarea,.gallery-grid img{border-radius:" + r + "px!important;overflow:hidden}";
+    if (th.btnStyle === "pill") css += "#invitation button{border-radius:100px!important}";
+    else if (th.btnStyle === "sharp") css += "#invitation button{border-radius:0!important}";
+
+    if (th.font) {
+        try {
+            var fl = document.createElement("link");
+            fl.rel = "stylesheet";
+            fl.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(th.font).replace(/%20/g, "+") + ":wght@300;400;500;600;700&display=swap";
+            document.head.appendChild(fl);
+        } catch(e) {}
+        css += "#invitation h1,#invitation h2,#invitation h3,.hero-content h1{font-family:'" + th.font + "',serif!important}";
+    }
+
+    var EFFECTS = {
+        petals:     ["🌸", "🌺"],
+        rosepetals: ["🌹", "🌸", "💮"],
+        sparkles:   ["✨", "⭐"],
+        hearts:     ["💗", "💞", "❤︎"],
+        snow:       ["❄", "❅", "❆"],
+        stars:      ["✦", "✧", "⋆"],
+        leaves:     ["🍃", "🍂"],
+        bubbles:    ["◌", "◯", "◍"]
+    };
+    if (th.effect && EFFECTS[th.effect]) {
+        css += "@keyframes lunaFall{0%{transform:translateY(-8vh) translateX(0) rotate(0deg);opacity:0}8%{opacity:1}90%{opacity:.85}100%{transform:translateY(106vh) translateX(7vw) rotate(320deg);opacity:0}}" +
+               ".luna-deco{position:fixed;top:-6vh;z-index:1500;pointer-events:none;-webkit-user-select:none;user-select:none;animation:lunaFall linear infinite;text-shadow:0 1px 6px rgba(0,0,0,.08)}" +
+               "@media(prefers-reduced-motion:reduce){.luna-deco{display:none!important}}";
+        var chars = EFFECTS[th.effect];
+        for (var i = 0; i < 16; i++) {
+            var sp = document.createElement("span");
+            sp.className = "luna-deco";
+            sp.textContent = chars[i % chars.length];
+            sp.style.left = (Math.random() * 98) + "vw";
+            sp.style.fontSize = (11 + Math.random() * 18) + "px";
+            sp.style.animationDuration = (7 + Math.random() * 9) + "s";
+            sp.style.animationDelay = (-Math.random() * 12) + "s";
+            sp.style.opacity = (0.45 + Math.random() * 0.5).toFixed(2);
+            document.body.appendChild(sp);
+        }
+    }
+
+    if (css) {
+        var st = document.createElement("style");
+        st.id = "lunaInvitationTheme";
+        st.textContent = css;
+        document.head.appendChild(st);
+    }
+})();
+
 document.getElementById("heroEyebrow").textContent =
     lunaInvitationHeading(invitation);
 

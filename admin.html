@@ -278,6 +278,9 @@ button{
 .lang-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
 .lang-tag{font-size:7px;padding:2px 5px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);letter-spacing:.5px;}
 .checkbox-group{display:flex;gap:12px;flex-wrap:wrap;}
+#invEffectPresets button{display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:11px;cursor:pointer;border-radius:8px;transition:.25s}
+#invEffectPresets button:hover{border-color:#b88c76;background:rgba(184,140,118,.12)}
+#invEffectPresets button.active{border-color:#b88c76;background:rgba(184,140,118,.22)}
 .checkbox-group label{display:flex;align-items:center;gap:5px;font-size:11px;text-transform:none;letter-spacing:0;color:rgba(255,255,255,.7);cursor:pointer;}
 .checkbox-group input[type="checkbox"]{width:auto;accent-color:#b88c76;}
 .template-card .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
@@ -330,8 +333,12 @@ button{
             <span>Video Dəvətnamələr</span>
         </a>
         <a class="sidebar-link" data-section="templates" onclick="switchSection('templates')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span>Şablonlar</span>
+        </a>
+        <a class="sidebar-link" data-section="invdesign" onclick="switchSection('invdesign')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+            <span>Dəvətnamə Dekoru</span>
         </a>
         <a class="sidebar-link" data-section="createinv" onclick="switchSection('createinv')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
@@ -578,6 +585,62 @@ button{
             </select>
         </div>
         <div id="videoList" class="grid-3"></div>
+    </div>
+</div>
+
+<!-- ========== INVITATION DECORATOR ========== -->
+<div id="section-invdesign" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Dəvətnamə Dekoru</h1>
+        </div>
+        <div class="header-actions">
+            <button class="save" onclick="saveInvitationTheme()">Yadda Saxla</button>
+        </div>
+    </div>
+    <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştərilərin alaçağı dəvətnamə səhifəsini dekorlaşdırın: rənglər, şrift, künclər və atmosfer animasiyaları. Bütün dəvətnamələrə avtomatik tətbiq olunur.</p>
+
+    <div class="panel">
+        <h2>Rəng & Stil</h2>
+        <div class="form-grid">
+            <div class="field"><label>Aksent rəngi (qızılı)</label><input id="invAccent" type="color" value="#C4A882" style="height:42px;padding:4px;"></div>
+            <div class="field"><label>Fon çaları</label><input id="invBgTint" type="color" value="#F5EDE3" style="height:42px;padding:4px;"></div>
+            <div class="field"><label>Başlıq şrifti</label><select id="invFont">
+                <option value="">Standart (Cormorant Garamond)</option>
+                <option value="Italiana">Italiana</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Marcellus">Marcellus</option>
+                <option value="Allura">Allura (Əl yazısı)</option>
+                <option value="Great Vibes">Great Vibes (Əl yazısı)</option>
+                <option value="Cinzel">Cinzel</option>
+                <option value="Jost">Jost (Müasir)</option>
+            </select></div>
+            <div class="field"><label>Kart künc radiusu: <span id="invRadiusVal">0</span>px (0 = dizayna uyğun)</label><input id="invRadius" type="range" min="0" max="30" value="0" style="width:100%;accent-color:#b88c76;"></div>
+            <div class="field"><label>Düymə stili</label><select id="invBtnStyle">
+                <option value="">Standart</option>
+                <option value="pill">Pill (yumru)</option>
+                <option value="sharp">Sharp (küncsüz)</option>
+            </select></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Atmosfer Animasiyası</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Dəvətnamə açılanda ekranda süzüləcək dekorativ elementlər.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;" id="invEffectPresets">
+            <button type="button" onclick="setInvEffect('')" style="padding:10px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:11px;cursor:pointer;">Yoxdur</button>
+            <button type="button" onclick="setInvEffect('petals')">🌸 Ləçəklər</button>
+            <button type="button" onclick="setInvEffect('rosepetals')">🌹 Qızılgül ləçəkləri</button>
+            <button type="button" onclick="setInvEffect('sparkles')">✨ Parıltılar</button>
+            <button type="button" onclick="setInvEffect('hearts')">💗 Ürəklər</button>
+            <button type="button" onclick="setInvEffect('snow')">❄ Qar</button>
+            <button type="button" onclick="setInvEffect('stars')">✦ Ulduzlar</button>
+            <button type="button" onclick="setInvEffect('leaves')">🍃 Yarpaqlar</button>
+            <button type="button" onclick="setInvEffect('bubbles')">◍ Qabarcıqlar</button>
+        </div>
+        <input type="hidden" id="invEffect" value="">
+        <p style="color:rgba(255,255,255,.35);font-size:9px;margin-top:12px;">Seçim "Yadda Saxla" ilə təsdiqlənir. Animasiya müştərinin cihazında avtomatik oynadılır.</p>
     </div>
 </div>
 
@@ -1160,6 +1223,7 @@ function switchSection(name){
     if(name === 'templates') renderTemplates();
     if(name === 'clientform') loadFormConfig();
     if(name === 'orders') renderOrders();
+    if(name === 'invdesign') loadInvitationTheme();
     if(name === 'homepage') loadHomepageConfig();
     if(name === 'packages') buildPackagesEditor();
     if(name === 'catpreviews') buildCatPreviewsEditor();
@@ -2418,6 +2482,48 @@ function deleteOrder(id) {
     if (!confirm('Bu sifarişi silmək istəyirsiniz?')) return;
     saveOrders(getOrders().filter(function(o) { return o.id !== id; }));
     renderOrders();
+}
+
+/* =====================================================
+   INVITATION DECORATOR
+===================================================== */
+function loadInvitationTheme() {
+    var th = {};
+    try { th = JSON.parse(localStorage.getItem('luna_invitation_theme') || '{}'); } catch(e) {}
+    document.getElementById('invAccent').value = th.accent || '#C4A882';
+    document.getElementById('invBgTint').value = th.bgTint || '#F5EDE3';
+    document.getElementById('invFont').value = th.font || '';
+    document.getElementById('invRadius').value = th.radius != null ? th.radius : 0;
+    document.getElementById('invRadiusVal').textContent = document.getElementById('invRadius').value;
+    document.getElementById('invBtnStyle').value = th.btnStyle || '';
+    setInvEffect(th.effect || '');
+}
+
+function setInvEffect(name) {
+    document.getElementById('invEffect').value = name;
+    var idx = ['', 'petals', 'rosepetals', 'sparkles', 'hearts', 'snow', 'stars', 'leaves', 'bubbles'];
+    var btns = document.querySelectorAll('#invEffectPresets button');
+    btns.forEach(function(b, i) { b.classList.toggle('active', idx[i] === name); });
+}
+
+document.addEventListener('input', function(e) {
+    if (e.target && e.target.id === 'invRadius') {
+        var v = document.getElementById('invRadiusVal');
+        if (v) v.textContent = e.target.value;
+    }
+});
+
+function saveInvitationTheme() {
+    var th = {
+        accent: document.getElementById('invAccent').value,
+        bgTint: document.getElementById('invBgTint').value,
+        font: document.getElementById('invFont').value,
+        radius: parseInt(document.getElementById('invRadius').value),
+        btnStyle: document.getElementById('invBtnStyle').value,
+        effect: document.getElementById('invEffect').value
+    };
+    localStorage.setItem('luna_invitation_theme', JSON.stringify(th));
+    showToast('Dəvətnamə dekoru yadda saxlandı — bütün dəvətnamələrə tətbiq olundu');
 }
 
 /* =====================================================
