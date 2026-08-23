@@ -1580,5 +1580,162 @@ button,input,textarea,select{font-family:inherit}
 
 })();
 </script>
+
+<!-- ===== ADMIN INLINE FORM EDITOR (sidebar drawer) ===== -->
+<style>
+#cfEditFab{position:fixed;right:18px;bottom:18px;z-index:2600;width:48px;height:48px;border-radius:50%;border:none;background:#5C3D2E;color:#F5EDE3;font-size:19px;cursor:pointer;box-shadow:0 8px 26px rgba(62,37,24,.4);display:none;place-items:center;transition:.25s}
+#cfEditFab:hover{transform:scale(1.08)}
+#cfBackdrop{position:fixed;inset:0;background:rgba(43,26,16,.35);z-index:2650;display:none}
+#cfBackdrop.open{display:block}
+#cfDrawer{position:fixed;top:0;right:-390px;width:min(370px,94vw);height:100vh;background:#FBF6EF;z-index:2700;transition:right .35s ease;box-shadow:-14px 0 44px rgba(62,37,24,.2);overflow-y:auto;padding:22px 20px 90px}
+#cfDrawer.open{right:0}
+#cfDrawer h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#3E2518;margin:0 0 4px}
+#cfDrawer .cf-sub{font-size:11px;color:#8A6E5E;margin-bottom:16px}
+#cfDrawer h4{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#B88C76;margin:18px 0 8px;border-top:1px solid rgba(92,61,46,.12);padding-top:14px}
+#cfDrawer label.cf-lbl{display:block;font-size:10px;color:#8A6E5E;margin:8px 0 3px}
+#cfDrawer input[type=text],#cfDrawer textarea{width:100%;padding:9px 11px;background:#fff;border:1px solid rgba(92,61,46,.2);color:#3E2518;font-family:inherit;font-size:12.5px;border-radius:6px}
+#cfDrawer textarea{resize:vertical;min-height:56px}
+#cfDrawer .cf-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#cfDrawer .cf-fields label{display:flex;align-items:center;gap:6px;font-size:11px;color:#3E2518;background:#fff;border:1px solid rgba(92,61,46,.14);padding:7px 9px;border-radius:6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cfDrawer .cf-save{margin-top:18px;width:100%;padding:13px;background:#5C3D2E;color:#F5EDE3;border:none;font-family:inherit;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:6px}
+#cfDrawer .cf-save:hover{background:#3E2518}
+#cfDrawer .cf-admin-link{display:block;text-align:center;margin-top:10px;font-size:11px;color:#B88C76;text-decoration:none}
+#cfClose{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(92,61,46,.25);background:none;color:#5C3D2E;cursor:pointer;font-size:14px}
+</style>
+<button id="cfEditFab" title="Form redaktəsi">⚙</button>
+<div id="cfBackdrop"></div>
+<aside id="cfDrawer">
+    <button id="cfClose">✕</button>
+    <h3>Form Redaktəsi</h3>
+    <div class="cf-sub">Dəyişikliklər dərhal bütün formaya tətbiq olunur.</div>
+
+    <h4>Başlıq & Təsvir</h4>
+    <label class="cf-lbl">Başlıq (AZ)</label><input type="text" id="cfTitleAz">
+    <label class="cf-lbl">Başlıq (EN)</label><input type="text" id="cfTitleEn">
+    <label class="cf-lbl">Təsvir (AZ)</label><textarea id="cfDescAz"></textarea>
+
+    <h4>Addım başlıqları (AZ)</h4>
+    <div id="cfSteps"></div>
+
+    <h4>Düymə & Mesajlar</h4>
+    <label class="cf-lbl">Göndər düyməsi (AZ)</label><input type="text" id="cfSubmitAz">
+    <label class="cf-lbl">Uğur mesajı (AZ)</label><textarea id="cfSuccessAz"></textarea>
+
+    <h4>Gizli sahələr</h4>
+    <div class="cf-sub">İşarələnmiş sahələr formada göstərilməyəcək.</div>
+    <div class="cf-fields" id="cfFields"></div>
+
+    <button class="cf-save" id="cfSaveBtn">Yadda saxla</button>
+    <a class="cf-admin-link" href="admin.html">Tam admin panelini aç →</a>
+</aside>
+<script>
+(function() {
+    var isOwner = false;
+    try { isOwner = !!localStorage.getItem("luna_form_config"); } catch(e) {}
+    if (!isOwner) return;
+
+    var fab = document.getElementById("cfEditFab");
+    var dr = document.getElementById("cfDrawer");
+    var bd = document.getElementById("cfBackdrop");
+
+    function getCfg() {
+        try { return JSON.parse(localStorage.getItem("luna_form_config") || "{}"); }
+        catch(e) { return {}; }
+    }
+
+    /* Build step title inputs */
+    var stepsWrap = document.getElementById("cfSteps");
+    for (var i = 1; i <= 6; i++) {
+        var l = document.createElement("label");
+        l.className = "cf-lbl";
+        l.textContent = "Addım " + i;
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.id = "cfStep" + i;
+        stepsWrap.appendChild(l);
+        stepsWrap.appendChild(inp);
+    }
+
+    /* Collect visible field names + labels from the live form */
+    function collectFields() {
+        var seen = {}, out = [];
+        document.querySelectorAll('[id^="formStep"] input[name], [id^="formStep"] select[name], [id^="formStep"] textarea[name]').forEach(function(el) {
+            var n = el.getAttribute("name");
+            if (!n || seen[n] || el.type === "hidden") return;
+            seen[n] = true;
+            var f = el.closest(".field");
+            var lbl = f && f.querySelector("label") ? f.querySelector("label").textContent.replace("*", "").trim() : n;
+            out.push({ name: n, label: lbl });
+        });
+        return out;
+    }
+
+    fab.style.display = "grid";
+
+    function openDrawer() {
+        var c = getCfg();
+        document.getElementById("cfTitleAz").value = c.formTitleAz || "";
+        document.getElementById("cfTitleEn").value = c.formTitleEn || "";
+        document.getElementById("cfDescAz").value = c.formDescAz || "";
+        for (var i = 1; i <= 6; i++) {
+            var st = c.stepTitles && c.stepTitles[String(i)];
+            document.getElementById("cfStep" + i).value = st ? (st.az || "") : "";
+        }
+        document.getElementById("cfSubmitAz").value = c.submitBtnAz || "";
+        document.getElementById("cfSuccessAz").value = c.successMsgAz || "";
+
+        var fw = document.getElementById("cfFields");
+        fw.innerHTML = "";
+        var hidden = Array.isArray(c.hiddenFields) ? c.hiddenFields : [];
+        collectFields().forEach(function(f) {
+            var lab = document.createElement("label");
+            var cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.checked = hidden.indexOf(f.name) !== -1;
+            cb.setAttribute("data-fname", f.name);
+            lab.appendChild(cb);
+            lab.appendChild(document.createTextNode(f.label));
+            fw.appendChild(lab);
+        });
+
+        dr.classList.add("open");
+        bd.classList.add("open");
+    }
+    function closeDrawer() {
+        dr.classList.remove("open");
+        bd.classList.remove("open");
+    }
+
+    fab.addEventListener("click", openDrawer);
+    document.getElementById("cfClose").addEventListener("click", closeDrawer);
+    bd.addEventListener("click", closeDrawer);
+
+    document.getElementById("cfSaveBtn").addEventListener("click", function() {
+        var c = getCfg();
+        c.formTitleAz = document.getElementById("cfTitleAz").value.trim();
+        c.formTitleEn = document.getElementById("cfTitleEn").value.trim();
+        c.formDescAz = document.getElementById("cfDescAz").value.trim();
+        c.stepTitles = c.stepTitles || {};
+        for (var i = 1; i <= 6; i++) {
+            var v = document.getElementById("cfStep" + i).value.trim();
+            if (v) {
+                c.stepTitles[String(i)] = c.stepTitles[String(i)] || {};
+                c.stepTitles[String(i)].az = v;
+            }
+        }
+        c.submitBtnAz = document.getElementById("cfSubmitAz").value.trim();
+        c.successMsgAz = document.getElementById("cfSuccessAz").value.trim();
+
+        var hidden = [];
+        document.querySelectorAll("#cfFields input[type=checkbox]:checked").forEach(function(cb) {
+            hidden.push(cb.getAttribute("data-fname"));
+        });
+        c.hiddenFields = hidden;
+
+        localStorage.setItem("luna_form_config", JSON.stringify(c));
+        location.reload();
+    });
+})();
+</script>
 </body>
 </html>
