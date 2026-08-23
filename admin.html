@@ -128,6 +128,7 @@ button{
 .delete:hover{background:rgba(150,60,50,.35);}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.grid-2>*,.grid-3>*,.stats-grid>*{min-width:0;}
 .card{
     background:rgba(255,255,255,.035);
     border:1px solid rgba(255,255,255,.08);
@@ -325,6 +326,12 @@ button{
     .field.full{grid-column:auto;}
     .page-title h1{font-size:32px;}
     .customer-row{flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:480px){
+    .main{padding:22px 14px;}
+    .stats-grid{grid-template-columns:1fr;}
+    .stat-card{padding:18px 12px;}
+    .quick-actions{flex-wrap:wrap;}
 }
 </style>
 </head>
@@ -1338,6 +1345,33 @@ button{
     </div>
 </div>
 
+<div class="modal-overlay" id="editInvitationModal">
+    <div class="modal" style="max-width:750px;">
+        <button class="modal-close" onclick="closeModal('editInvitationModal')">&times;</button>
+        <h2>Dəvətnaməni Redaktə Et</h2>
+        <form id="editInvitationForm">
+            <input type="hidden" id="editInvId">
+            <div class="form-grid">
+                <div class="field"><label>Gelin / Ad</label><input id="efBride" type="text"></div>
+                <div class="field"><label>Bəy / Soyad</label><input id="efGroom" type="text"></div>
+                <div class="field"><label>Tarix</label><input id="efDate" type="date"></div>
+                <div class="field"><label>Saat</label><input id="efTime" type="time"></div>
+                <div class="field"><label>Məkan (Venue)</label><input id="efVenue" type="text"></div>
+                <div class="field"><label>Ünvan / Şəhər</label><input id="efLocation" type="text"></div>
+                <div class="field full"><label>Google Maps linki</label><input id="efMap" type="url" placeholder="https://maps.google.com/?q=..."></div>
+                <div class="field full"><label>Mesaj</label><textarea id="efMessage" rows="2"></textarea></div>
+                <div class="field full"><label>Hekayə (Story)</label><textarea id="efStory" rows="3"></textarea></div>
+                <div class="field full"><label>Qalereya şəkilləri (hər sətirdə bir URL)</label><textarea id="efImages" rows="3" placeholder="https://..."></textarea></div>
+                <div class="field full"><label>Musiqi (URL)</label><input id="efMusic" type="url" placeholder="https://... mp3"></div>
+            </div>
+            <div class="button-row">
+                <button type="submit" class="save">Yadda Saxla</button>
+                <button type="button" class="clear" onclick="closeModal('editInvitationModal')">Ləğv Et</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <!-- Template Modal (Add/Edit) -->
@@ -1499,6 +1533,16 @@ function getCustomers(){
         } catch(e){}
     }
     return customers;
+}
+
+/* createdAt can be a Date.now() number (admin-created) or an ISO string
+   (seeded/imported) — normalize both to milliseconds for reliable sorting */
+function lunaCreatedMs(c){
+    if(!c) return 0;
+    var v = c.createdAt;
+    if(typeof v === 'number') return v;
+    var parsed = Date.parse(v);
+    return isNaN(parsed) ? 0 : parsed;
 }
 
 function getDesigns(){
@@ -1909,7 +1953,7 @@ function renderDashboard(){
 
     var recent = document.getElementById('recentCustomers');
     recent.innerHTML = '';
-    var sorted = customers.slice().sort(function(a,b){ return (b.createdAt || b.id || 0) - (a.createdAt || a.id || 0); }).slice(0, 8);
+    var sorted = customers.slice().sort(function(a,b){ return lunaCreatedMs(b) - lunaCreatedMs(a); }).slice(0, 8);
     if(!sorted.length){
         recent.innerHTML = '<div style="padding:30px;text-align:center;color:rgba(255,255,255,.3);font-size:12px;">Hələ müştəri yoxdur.</div>';
     } else {
@@ -1945,7 +1989,7 @@ function renderDashboard(){
 function renderCustomers(){
     var list = document.getElementById('customerList');
     var search = (document.getElementById('customerSearch').value || '').toLowerCase();
-    var customers = getCustomers().sort(function(a,b){ return (b.createdAt || b.id || 0) - (a.createdAt || a.id || 0); });
+    var customers = getCustomers().sort(function(a,b){ return lunaCreatedMs(b) - lunaCreatedMs(a); });
 
     if(search){
         customers = customers.filter(function(c){
@@ -1987,6 +2031,7 @@ function renderCustomers(){
             '</div>' +
             '<div class="customer-actions">' +
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
+                '<button class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
                 '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
                 '<button class="delete" onclick="deleteCustomer(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
@@ -3928,7 +3973,7 @@ function saveCreatedInvitation(){
 
 function getCreatedInvitations(){
     return getCustomers().filter(function(c){ return c.createdViaAdmin === true; })
-        .sort(function(a,b){ return (b.createdAt || 0) - (a.createdAt || 0); });
+        .sort(function(a,b){ return lunaCreatedMs(b) - lunaCreatedMs(a); });
 }
 
 function renderCreatedInvitations(){
@@ -3954,6 +3999,7 @@ function renderCreatedInvitations(){
             '</div>' +
             '<div class="customer-actions">' +
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
+                '<button class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
                 '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
                 '<button class="copy-btn" onclick="duplicateCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Kopyala</button>' +
                 '<button class="delete" onclick="deleteCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
@@ -3970,6 +4016,95 @@ function deleteCreatedInvitation(id){
     renderCustomers();
     showToast('Dəvətnamə silindi');
 }
+
+/* =====================================================
+   EDIT INVITATION — real data editing for customers
+   and admin-created invitations
+===================================================== */
+
+var editingInvitationId = null;
+
+function lunaParseFormattedDate(str){
+    if(!str) return '';
+    if(/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+    var m = String(str).trim().match(/^(\d{1,2})\s+([A-Za-zÀ-ÿ]+)\s+(\d{4})$/);
+    if(m){
+        var mi = LUNA_MONTHS.findIndex(function(mo){ return mo.toLowerCase() === m[2].toLowerCase(); });
+        if(mi >= 0){
+            return m[3] + '-' + ('0' + (mi + 1)).slice(-2) + '-' + ('0' + m[1]).slice(-2);
+        }
+    }
+    return '';
+}
+
+function openEditInvitation(id){
+    var inv = lunaGetInvitation(id);
+    if(!inv){ showToast('Dəvətnamə tapılmadı'); return; }
+    editingInvitationId = id;
+    document.getElementById('editInvId').value = id;
+    document.getElementById('efBride').value = inv.bride || '';
+    document.getElementById('efGroom').value = inv.groom || '';
+    document.getElementById('efDate').value = lunaParseFormattedDate(inv.date) || lunaParseFormattedDate((inv.countdown || '').split('T')[0]);
+    document.getElementById('efTime').value = inv.time || ((inv.countdown || '').split('T')[1] || '').slice(0,5);
+    document.getElementById('efVenue').value = inv.venue || '';
+    document.getElementById('efLocation').value = inv.location || '';
+    document.getElementById('efMap').value = inv.map || '';
+    document.getElementById('efMessage').value = inv.message || '';
+    document.getElementById('efStory').value = inv.story ? inv.story.replace(/<[^>]*>/g, '') : '';
+    document.getElementById('efImages').value = Array.isArray(inv.images) ? inv.images.join('\n') : '';
+    document.getElementById('efMusic').value = inv.music || '';
+    document.getElementById('editInvitationModal').classList.add('open');
+}
+
+document.getElementById('editInvitationForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!editingInvitationId) return;
+    var inv = lunaGetInvitation(editingInvitationId);
+    if(!inv){ showToast('Dəvətnamə tapılmadı'); return; }
+
+    var bride = document.getElementById('efBride').value.trim();
+    var dateISO = document.getElementById('efDate').value;
+    var time = document.getElementById('efTime').value;
+    var venue = document.getElementById('efVenue').value.trim();
+    var location = document.getElementById('efLocation').value.trim();
+
+    if(!bride || !dateISO || !time || !venue || !location){
+        showToast('Zəhmət olmasa məcburi sahələri doldurun');
+        return;
+    }
+
+    /* Merge into existing record — keeps id, category, package, design,
+       approval state, addons and every other stored field intact */
+    inv.bride = bride;
+    if(document.getElementById('efGroom').value.trim()) inv.groom = document.getElementById('efGroom').value.trim(); else delete inv.groom;
+    inv.date = lunaFormatDate(dateISO);
+    inv.dateShort = lunaDateShort(dateISO);
+    inv.time = time;
+    inv.countdown = dateISO + 'T' + time + ':00';
+    inv.venue = venue;
+    inv.location = location;
+    inv.map = document.getElementById('efMap').value.trim() || 'https://www.google.com/maps';
+    inv.message = document.getElementById('efMessage').value.trim();
+
+    var story = document.getElementById('efStory').value.trim();
+    if(story) inv.story = '<p>' + story + '</p>'; else delete inv.story;
+
+    var images = document.getElementById('efImages').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(images.length) inv.images = images;
+
+    var music = document.getElementById('efMusic').value.trim();
+    if(music) inv.music = music; else delete inv.music;
+
+    lunaSaveInvitation(inv);
+
+    editingInvitationId = null;
+    closeModal('editInvitationModal');
+    renderCustomers();
+    renderCreatedInvitations();
+    renderClientInvitations();
+    renderDashboard();
+    showToast('Dəvətnamə yeniləndi: ' + inv.id);
+});
 
 /* Live preview of selected design while typing names */
 (function initCreatePreviewButton(){
@@ -4066,7 +4201,7 @@ function getCards(){
         if(!key || key.indexOf('lunacard_') !== 0) continue;
         try { var c = JSON.parse(localStorage.getItem(key)); if(c && c.id) cards.push(c); } catch(e){}
     }
-    return cards.sort(function(a,b){ return (b.createdAt||0)-(a.createdAt||0); });
+    return cards.sort(function(a,b){ return lunaCreatedMs(b) - lunaCreatedMs(a); });
 }
 
 document.addEventListener('DOMContentLoaded', function(){

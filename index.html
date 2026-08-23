@@ -1708,9 +1708,10 @@ applyHomepageConfig();
 function renderVideoSamples() {
     var grid = document.getElementById("videoSamplesGrid");
     if (!grid) return;
-    var videos = [];
-    try { videos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]"); } catch(e) {}
-    var activeVideos = videos.filter(function(v) { return v.active && v.videoUrl; });
+    /* lunaGetActiveVideos() reads the live admin catalog (luna_video_invitations)
+       and normalizes url/videoUrl + thumbnail fields; falls back to curated
+       samples while the admin has not published any video. */
+    var activeVideos = (typeof lunaGetActiveVideos === "function") ? lunaGetActiveVideos() : [];
     if (!activeVideos.length) {
         activeVideos = [
             { id: "sample_flower", category: "wedding", title: "Toy — Zərif Açılış", thumbnailUrl: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
