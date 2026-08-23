@@ -1455,6 +1455,10 @@ function switchSection(name){
     if(name === 'packages') buildPackagesEditor();
     if(name === 'catpreviews') buildCatPreviewsEditor();
     if(name === 'client-invitations') { renderClientInvitations(); populateQuickDesignAssignClientSelect(); }
+    } catch(e) {
+        console.error('switchSection error:', e);
+        showToast('Bölmə açıla bilmədi: ' + name);
+    }
 }
 
 
