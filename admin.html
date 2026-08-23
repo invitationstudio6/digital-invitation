@@ -129,6 +129,10 @@ button{
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
 .grid-2>*,.grid-3>*,.stats-grid>*{min-width:0;}
+/* Overflow safety: no element may stretch its ancestors horizontally */
+input,select,textarea{max-width:100%;}
+.form-grid>*{min-width:0;}
+.panel,.section,.main,.header,.header-actions{min-width:0;max-width:100%;}
 .card{
     background:rgba(255,255,255,.035);
     border:1px solid rgba(255,255,255,.08);
@@ -326,6 +330,11 @@ button{
     .field.full{grid-column:auto;}
     .page-title h1{font-size:32px;}
     .customer-row{flex-direction:column;align-items:flex-start;}
+    /* Headers must wrap on narrow screens or buttons overflow horizontally */
+    .header{flex-wrap:wrap;gap:14px;align-items:flex-start;}
+    .header-actions{flex-wrap:wrap;width:100%;}
+    .header-actions>*{min-width:0;}
+    .panel,.panel>*,table{max-width:100%;overflow-x:auto;}
 }
 @media(max-width:480px){
     .main{padding:22px 14px;}
@@ -498,8 +507,6 @@ button{
             </div>
         </div>
     </div>
-
-    <div class="grid-2">
 </div>
 
 <!-- ========== CUSTOMERS ========== -->
@@ -1029,7 +1036,7 @@ button{
         <h2>Sahə Redaktoru</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:16px;">Hər sahənin etiketini (AZ/EN), placeholderini və mütləqliyini dəyişin və ya tam gizlədin. Boş qoyulan etiketlər standart qalır.</p>
         <div style="overflow-x:auto;">
-        <div id="formFieldsEditor" style="min-width:640px;display:grid;gap:8px;"></div>
+        <div id="formFieldsEditor" style="display:grid;gap:8px;"></div>
         </div>
     </div>
 
@@ -1256,7 +1263,7 @@ button{
     </div>
     <div class="panel">
         <h2>Dil Seçimi</h2>
-        <div style="display:flex;gap:10px;margin-top:10px;">
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
             <button data-lang="az" class="save" onclick="lunaSetLanguage('az');location.reload();">Azərbaycanca</button>
             <button data-lang="en" class="clear" onclick="lunaSetLanguage('en');location.reload();">English</button>
             <button data-lang="ru" class="clear" onclick="lunaSetLanguage('ru');location.reload();">Русский</button>
