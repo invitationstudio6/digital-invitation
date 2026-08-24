@@ -5061,6 +5061,7 @@ function doSyncLogin(){
 
 /* Sync başlat — pull bitəndə aktiv bölməni təzələ */
 if (window.LunaSync) {
+    console.log('[SYNC-BOOT] luna=' + typeof window.LUNA_SUPABASE + ' cfg=' + JSON.stringify(window.LUNA_SUPABASE || null));
     LunaSync.onChange(function(st, usr, refreshed){
         renderSyncChip(st);
         if (refreshed && st === 'online') {

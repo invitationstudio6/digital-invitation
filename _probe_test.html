@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head><body>
+<pre id="out">PENDING</pre>
+<iframe id="f" src="about:blank" style="width:1280px;height:900px;display:none"></iframe>
+<script>
+var out = document.getElementById('out');
+var frame = document.getElementById('f');
+setTimeout(function(){ if (out.textContent === 'PENDING') out.textContent = 'TIMEOUT'; }, 25000);
+frame.onload = function(){
+  var tries = 0;
+  var iv = setInterval(function(){
+    tries++;
+    try {
+      var w = frame.contentWindow;
+      var st = w.LunaSync ? w.LunaSync.status() : 'no-module';
+      var cfg = w.LUNA_SUPABASE ? w.LUNA_SUPABASE.url : 'NO-CFG';
+      var sdk = !!w.supabase;
+      out.textContent = 'TRY' + tries + '\nstatus=' + st + '\ncfg=' + cfg + '\nsdk-loaded=' + sdk;
+      if ((st !== 'connecting' && tries > 3) || tries > 8) clearInterval(iv);
+    } catch(e){ out.textContent = 'ERR:' + e.message; }
+  }, 1500);
+};
+frame.src = 'admin.html';
+</script></body></html>
