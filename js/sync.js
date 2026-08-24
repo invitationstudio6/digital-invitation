@@ -233,14 +233,17 @@
         onChangeCb = cb || onChangeCb;
         cfg = window.LUNA_SUPABASE || {};
         ENABLED = !!(cfg.url && cfg.anonKey);
+        console.log('[SYNC-I] enabled=' + ENABLED);
         if (!ENABLED) { setState("off"); installHooks(); return; }
         setState("connecting");
         installHooks();
         loadSdk(function () {
             try {
                 client = window.supabase.createClient(cfg.url, cfg.anonKey);
-            } catch (e) { setState("error"); return; }
+                console.log('[SYNC-II] client created');
+            } catch (e) { console.log('[SYNC-II-ERR] ' + e.message); setState("error"); return; }
             client.auth.getSession().then(function (res) {
+                console.log('[SYNC-III] session resolved, has=' + !!(res && res.data && res.data.session));
                 user = (res && res.data && res.data.session) ? res.data.session.user : null;
                 if (!user) { setState("locked"); return; }
                 client.auth.onAuthStateChange(function (evt, session) {
@@ -249,7 +252,7 @@
                 });
                 startLoops();
                 pull();
-            }).catch(function () { setState("error"); });
+            }).catch(function (e2) { console.log('[SYNC-III-ERR] ' + e2.message); setState("error"); });
         });
     }
 
