@@ -7,6 +7,6 @@
    anonKey: Project Settings → API → anon public (publishable) key
 ===================================================== */
 window.LUNA_SUPABASE = {
-    url: "",
-    anonKey: ""
+    url: "https://xywrqzyeghrieldcuoqi.supabase.co",
+    anonKey: "sb_publishable_ScDC6RbGlXnfBT3fzPcKeg_HCN4Em9b"
 };
