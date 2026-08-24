@@ -848,6 +848,96 @@ const LUNA_TEMPLATES = [
         design: { primaryColor: "#8f1d1d", secondaryColor: "#f2c14e", font: "Cormorant Garamond" },
         layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-center", backgroundStyle: "floral", openingType: "curtain" },
         preview: { eyebrow: "ŞOU BAŞLAYIR!", names: ["Zöhrə"], date: "03 · 10 · 2026", message: "Pərdə açılır, şənlik başlayır — ad günü şousuna sizi də görək!", venue: "Park Bulvar", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    {
+        id: "grand-premiere", name: "Grand Premiere", category: "wedding", style: "Teatr · Böyük Premyera", galleryStyle: "slider", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        design: { primaryColor: "#6e1423", secondaryColor: "#caa04c", font: "Playfair Display" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-luxury", backgroundStyle: "dark", openingType: "curtain" },
+        preview: { eyebrow: "PREMYERA GÜNÜ", names: ["Lalə", "Tural"], date: "11 · 12 · 2026", message: "Ən böyük premyeramız — ömürlük bir filmin ilk kadrları.", venue: "Heydar Aliyev Palace", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "backstage-henna", name: "Backstage Henna", category: "henna", style: "Teatr · Xına Səhnəsi", galleryStyle: "collage", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#7a1f3d", secondaryColor: "#e8a13d", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-center", backgroundStyle: "floral", openingType: "curtain" },
+        preview: { eyebrow: "XINA GECƏSİNƏ BÜTÜN SƏHNƏ", names: ["Günay"], date: "24 · 10 · 2026", message: "Qırmızı pərdə arxasında son subay gecəsi — şousa dəvətlisiniz!", venue: "Çınar Plaza", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    {
+        id: "launch-stage", name: "Launch Stage", category: "business", style: "Korporativ · Səhnə Açılışı", galleryStyle: "fullscreen", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#0f2b46", secondaryColor: "#39a0ed", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","details","gallery","countdown","rsvp","story"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "curtain" },
+        preview: { eyebrow: "BÖYÜK AÇILIŞ", names: ["NovaTech Summit"], date: "08 · 10 · 2026", message: "Yeni məhsulumuzun təqdimatında iştirakınızı gözləyirik.", venue: "Baku Expo Center", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "grand-staircase", name: "Grand Staircase", category: "wedding", style: "Saray · Mərmər Piləkən", galleryStyle: "editorial", openingStyle: "stairs",
+        animationStyle: "stairs",
+        thumbnail: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        design: { primaryColor: "#8d7249", secondaryColor: "#f3ead7", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral", openingType: "stairs" },
+        preview: { eyebrow: "PİLƏKƏNLƏ YUXARI", names: ["Nargiz", "Seymur"], date: "19 · 09 · 2026", message: "Hər piləkən bir xatirə — ən gözəlinə sizinlə addımlayacağıq.", venue: "Shah Palace Hotel", location: "Bakı, Azərbaycan", theme: "serena" }
+    },
+    {
+        id: "ascend", name: "Ascend", category: "engagement", style: "Nişan · Qızılgül Piləkləri", galleryStyle: "polaroid", openingStyle: "stairs",
+        animationStyle: "stairs",
+        thumbnail: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#9d5c4f", secondaryColor: "#ecd9c6", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "floral", openingType: "stairs" },
+        preview: { eyebrow: "BİRlikdə YUXARI", names: ["Aysu", "Rəvan"], date: "05 · 12 · 2026", message: "Nişan piləklərimizdə yerinizi ayırın — sevgi yuxarı qalxır.", venue: "Intourist Hotel", location: "Bakı, Azərbaycan", theme: "serena" }
+    },
+    {
+        id: "steps-to-success", name: "Steps to Success", category: "graduation", style: "Məzun · Akademik Piləkən", galleryStyle: "slider", openingStyle: "stairs",
+        animationStyle: "stairs",
+        thumbnail: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium"],
+        design: { primaryColor: "#1b2a49", secondaryColor: "#d4af37", font: "Playfair Display" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "stairs" },
+        preview: { eyebrow: "MƏZUNİYYET MƏRASİMİ", names: ["Elnur"], date: "20 · 06 · 2026", message: "Beş ilin zəhməti bu gün piləkənlə zirvəyə çatır — qoşulun!", venue: "ADA University", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    {
+        id: "sealed-with-love", name: "Sealed With Love", category: "wedding", style: "Klassik · Möhürlü Zərf", galleryStyle: "masonry", openingStyle: "wax-seal",
+        animationStyle: "wax-seal",
+        thumbnail: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#5c1a1a", secondaryColor: "#d8c29a", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral", openingType: "wax-seal" },
+        preview: { eyebrow: "MÖHÜRLÜ DƏVƏTNAMƏ", names: ["Xanım", "Orxan"], date: "02 · 10 · 2026", message: "Möhürü sındırın və hekayəmizin ilk səhifəsini açın.", venue: "JW Marriott Absheron", location: "Bakı, Azərbaycan", theme: "royal-wax" }
+    },
+    {
+        id: "starry-vow", name: "Starry Vow", category: "engagement", style: "Romantik · Ulduzlu Gecə", galleryStyle: "fullscreen", openingStyle: "starry-night",
+        animationStyle: "starry-night",
+        thumbnail: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#101b33", secondaryColor: "#b9c6e3", font: "Playfair Display" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","countdown","details","rsvp"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "starry-night" },
+        preview: { eyebrow: "ULDUZLAR ALTINDA", names: ["Zarifa", "Kamal"], date: "17 · 07 · 2026", message: "Ulduzların şahidi olduğu andı birlikdə yaşayaq.", venue: "Qala Altı Restoran", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "grand-door", name: "Grand Door", category: "wedding", style: "Baxış · Böyük Qapı", galleryStyle: "collage", openingStyle: "door",
+        animationStyle: "door",
+        thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#1e3d34", secondaryColor: "#c9a86a", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "dark", openingType: "door" },
+        preview: { eyebrow: "QAPINI AÇ", names: ["Aytən", "Fuad"], date: "28 · 11 · 2026", message: "Yeni həyatımızın qapısı sizin üçün açılır.", venue: "Four Seasons Baku", location: "Bakı, Azərbaycan", theme: "noir" }
     }
 ];
 
