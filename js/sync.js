@@ -18,6 +18,7 @@
     var client = null;
     var user = null;
     var onChangeCb = null;
+    var pullCb = null;
     var dirty = {};          /* key -> true */
     var localStamp = {};     /* key -> ms of last local write */
     var flushTimer = null;
@@ -49,7 +50,6 @@
 
     function setState(s) {
         if (state === s) return;
-        console.log('[SYNC-STATE] ' + state + ' -> ' + s);
         state = s;
         if (onChangeCb) { try { onChangeCb(state, user); } catch (e) {} }
     }
@@ -204,6 +204,7 @@
                     setState("online");
                     if (onChangeCb) { try { onChangeCb(state, user, true); } catch (e) {} }
                 }
+                if (pullCb) { try { pullCb(); } catch (e) {} }
             })
             .catch(function () {
                 syncing = false;
@@ -231,20 +232,17 @@
     }
 
     function init(cb) {
-        onChangeCb = cb || onChangeCb;
+        pullCb = cb || pullCb;
         cfg = window.LUNA_SUPABASE || {};
         ENABLED = !!(cfg.url && cfg.anonKey);
-        console.log('[SYNC-I] enabled=' + ENABLED);
         if (!ENABLED) { setState("off"); installHooks(); return; }
         setState("connecting");
         installHooks();
         loadSdk(function () {
             try {
                 client = window.supabase.createClient(cfg.url, cfg.anonKey);
-                console.log('[SYNC-II] client created');
-            } catch (e) { console.log('[SYNC-II-ERR] ' + e.message); setState("error"); return; }
+            } catch (e) { setState("error"); return; }
             client.auth.getSession().then(function (res) {
-                console.log('[SYNC-III] session resolved, has=' + !!(res && res.data && res.data.session));
                 user = (res && res.data && res.data.session) ? res.data.session.user : null;
                 if (!user) { setState("locked"); return; }
                 client.auth.onAuthStateChange(function (evt, session) {
@@ -253,7 +251,7 @@
                 });
                 startLoops();
                 pull();
-            }).catch(function (e2) { console.log('[SYNC-III-ERR] ' + e2.message); setState("error"); });
+            }).catch(function () { setState("error"); });
         });
     }
 
