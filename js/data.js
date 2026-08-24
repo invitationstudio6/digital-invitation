@@ -818,6 +818,36 @@ const LUNA_TEMPLATES = [
         minPackage: "luxury", packages: ["luxury"],
         layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "royal-scroll" },
         preview: { eyebrow: "ŞAHİ DÖVRƏ", names: ["Şahzadə", "Şahzadə"], date: "01 · 03 · 2027", message: "Pergament üzərində yazılmış əbədi bir vəd.", venue: "Şah Sarayı", location: "Bakı, Azərbaycan", theme: "royal-wax" }
+    },
+    {
+        id: "velvet-stage", name: "Velvet Stage", category: "wedding", style: "Teatr · Məxmər Pərdə", galleryStyle: "slider", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#7b2438", secondaryColor: "#d9a441", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "dark", openingType: "curtain" },
+        preview: { eyebrow: "PƏRDƏ AÇILIR", names: ["Nurlan", "Fidan"], date: "18 · 10 · 2026", message: "Həyat səhnəsində ən gözəl rol — yanınızda oynadığım rol oldu.", venue: "Nizami Kino Mərkəzi", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "spotlight", name: "Spotlight", category: "engagement", style: "Səhnə · Qızıl İşıq", galleryStyle: "collage", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#1c2541", secondaryColor: "#e0b354", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "curtain" },
+        preview: { eyebrow: "PROJEKTOR SİZƏ DOĞRU", names: ["Aysel", "Kamran"], date: "07 · 11 · 2026", message: "İki ürək bir səhnəyə çıxdı və qalan bütün səhnələr birlikdə oynanılacaq.", venue: "Buta Palace", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "showtime", name: "Showtime", category: "birthday", style: "Sirki · Qırmızı Pərdə", galleryStyle: "masonry", openingStyle: "curtain",
+        animationStyle: "curtain",
+        thumbnail: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        design: { primaryColor: "#8f1d1d", secondaryColor: "#f2c14e", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-center", backgroundStyle: "floral", openingType: "curtain" },
+        preview: { eyebrow: "ŞOU BAŞLAYIR!", names: ["Zöhrə"], date: "03 · 10 · 2026", message: "Pərdə açılır, şənlik başlayır — ad günü şousuna sizi də görək!", venue: "Park Bulvar", location: "Bakı, Azərbaycan", theme: "default" }
     }
 ];
 
