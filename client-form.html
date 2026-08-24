@@ -394,6 +394,9 @@ button,input,textarea,select{font-family:inherit}
 <script src="data/luna.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/data.js?v=20260824b"></script>
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/sync.js?v=1"></script>
 <script>
 (function() {
     var params = new URLSearchParams(window.location.search);
@@ -1773,6 +1776,9 @@ button,input,textarea,select{font-family:inherit}
         location.reload();
     });
 })();
+
+/* Bulud sinxronizasiya — admin paneldəki sessiyadan avtomatik istifadə */
+if (window.LunaSync) LunaSync.init(function(){});
 </script>
 </body>
 </html>

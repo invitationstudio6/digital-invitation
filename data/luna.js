@@ -47,11 +47,43 @@ function lunaGetInvitation(id) {
         console.warn("Luna localStorage read failed", error);
     }
 
+    /* Supabase fallback — link istənilən cihazda işləsin */
+    var fetched = _lunaFetchRemoteInvitation(invitationId);
+    if (fetched) return fetched;
+
     if (typeof invitations !== "undefined" && invitations[invitationId]) {
         return invitations[invitationId];
     }
 
     return null;
+}
+
+function _lunaFetchRemoteInvitation(invitationId) {
+    var cfg = window.LUNA_SUPABASE;
+    if (!cfg || !cfg.url || !cfg.anonKey) return null;
+    if (navigator.onLine === false) return null;
+    try {
+        /* Səhifə sinxron init olduğundan burada sync XHR işlədirik —
+           yalnız lokal tapılmadıqda, bir dəfəyə çağırılır */
+        var xhr = new XMLHttpRequest();
+        xhr.open(
+            "GET",
+            cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(invitationId) + "&select=value",
+            false
+        );
+        xhr.setRequestHeader("apikey", cfg.anonKey);
+        xhr.setRequestHeader("Authorization", "Bearer " + cfg.anonKey);
+        xhr.send(null);
+        if (xhr.status !== 200) return null;
+        var rows = JSON.parse(xhr.responseText);
+        if (!rows || !rows.length || !rows[0].value) return null;
+        var inv = rows[0].value;
+        try { localStorage.setItem("luna_" + invitationId, JSON.stringify(inv)); } catch (e) {}
+        return inv;
+    } catch (error) {
+        console.warn("Luna remote invitation fetch failed", error);
+        return null;
+    }
 }
 
 function lunaSaveInvitation(invitation) {
@@ -169,6 +201,9 @@ function lunaNotifyOrder(payload, endpoint) {
         body._subject = "Luna — Yeni sifariş (" + (body.category || body.package || "dəvətnamə") + ")";
     }
 
+    /* Supabase — sifarişi birbaşa admin bazasına yaz */
+    _lunaPushOrderToDb(body);
+
     return fetch(url, {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
@@ -177,6 +212,27 @@ function lunaNotifyOrder(payload, endpoint) {
         /* Never block the customer's flow if email notification fails. */
         console.warn("Luna Formspree notify failed", err);
     });
+}
+
+function _lunaPushOrderToDb(payload) {
+    var cfg = window.LUNA_SUPABASE;
+    if (!cfg || !cfg.url || !cfg.anonKey) return;
+    try {
+        fetch(cfg.url + "/rest/v1/luna_orders", {
+            method: "POST",
+            headers: {
+                "apikey": cfg.anonKey,
+                "Authorization": "Bearer " + cfg.anonKey,
+                "Content-Type": "application/json",
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({ payload: payload })
+        }).catch(function (err) {
+            console.warn("Luna order sync failed", err);
+        });
+    } catch (err) {
+        console.warn("Luna order sync failed", err);
+    }
 }
 
 /* Compute date short display: DD · MM · YYYY */
