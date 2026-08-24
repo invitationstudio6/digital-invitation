@@ -362,6 +362,80 @@ img{display:block;max-width:100%}
 .fd-item a:hover{background:#5a3a26}
 .fd-x{border:0;background:none;color:#c0392b;font-size:15px;cursor:pointer;padding:4px;flex-shrink:0}
 .fd-empty{text-align:center;color:#a08770;font-size:13.5px;padding:54px 24px;line-height:1.9}
+
+/* ===== COMPACT SPACING ===== */
+.section{padding:64px 5%}
+.designs-section{padding:64px 5%}
+@media(max-width:768px){.section{padding:46px 5%}.designs-section{padding:46px 5%}}
+
+/* ===== STRIP INSIDE TEMPLATES ===== */
+.tpl-strip-head{text-align:center;margin:6px auto 22px}
+.tpl-strip-head h3{font-family:"Cormorant Garamond",serif;font-size:clamp(24px,3vw,32px);font-weight:500;font-style:italic;color:#4a2e1c;margin:8px 0 0}
+
+/* ===== LIVE OPENING PREVIEWS ===== */
+.opv{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.opv i{position:absolute;display:block}
+
+/* pərdə */
+.opv-curtain i{top:0;bottom:0;width:52%;background:linear-gradient(100deg,#4a0d18,#7b2438 55%,#52101f);box-shadow:inset 0 0 40px rgba(0,0,0,.45)}
+.opv-curtain .c-l{left:0;border-right:3px solid #caa04c;animation:opvCurtL 6.5s ease-in-out infinite}
+.opv-curtain .c-r{right:0;border-left:3px solid #caa04c;animation:opvCurtR 6.5s ease-in-out infinite}
+@keyframes opvCurtL{0%,10%{transform:translateX(0)}38%,68%{transform:translateX(-102%)}92%,100%{transform:translateX(0)}}
+@keyframes opvCurtR{0%,10%{transform:translateX(0)}38%,68%{transform:translateX(102%)}92%,100%{transform:translateX(0)}}
+
+/* piləkən */
+.opv-stairs i{left:0;width:104%;height:17%;background:linear-gradient(90deg,#efe4cb,#c9a86a 70%,#b3925a);box-shadow:0 2px 6px rgba(62,37,24,.35)}
+.opv-stairs i:nth-child(1){top:0%;animation:opvStair 5.6s ease-in-out infinite}
+.opv-stairs i:nth-child(2){top:16.6%;animation:opvStair 5.6s .16s ease-in-out infinite}
+.opv-stairs i:nth-child(3){top:33.2%;animation:opvStair 5.6s .32s ease-in-out infinite}
+.opv-stairs i:nth-child(4){top:49.8%;animation:opvStair 5.6s .48s ease-in-out infinite}
+.opv-stairs i:nth-child(5){top:66.4%;animation:opvStair 5.6s .64s ease-in-out infinite}
+.opv-stairs i:nth-child(6){top:83%;height:17%;animation:opvStair 5.6s .8s ease-in-out infinite}
+@keyframes opvStair{0%,12%{transform:translateX(0)}34%,64%{transform:translateX(104%)}88%,100%{transform:translateX(0)}}
+
+/* qapı */
+.opv-door{perspective:700px}
+.opv-door i{top:0;bottom:0;width:51%;background:linear-gradient(160deg,#31584a,#1e3d34 60%,#16302a)}
+.opv-door .d-l{left:0;transform-origin:left center;border-right:3px solid #c9a86a;animation:opvDoorL 7.5s ease-in-out infinite}
+.opv-door .d-r{right:0;transform-origin:right center;border-left:3px solid #c9a86a;animation:opvDoorR 7.5s ease-in-out infinite}
+@keyframes opvDoorL{0%,12%{transform:rotateY(0)}45%,70%{transform:rotateY(-98deg)}95%,100%{transform:rotateY(0)}}
+@keyframes opvDoorR{0%,12%{transform:rotateY(0)}45%,70%{transform:rotateY(98deg)}95%,100%{transform:rotateY(0)}}
+
+/* möhür */
+.opv-wax{display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 44%,rgba(253,251,247,0) 38%,rgba(58,22,16,.4))}
+.opv-wax i{position:static;width:36%;max-width:74px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#a33b3b,#6e1423 62%,#430b13);color:#f3d9a4;font-size:clamp(16px,2.2vw,26px);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 -4px 9px rgba(0,0,0,.35),inset 0 3px 6px rgba(255,255,255,.18);animation:opvWax 6.5s ease-in-out infinite}
+@keyframes opvWax{0%,16%{transform:scale(1);opacity:1}28%{transform:scale(2.7);opacity:0}30%{transform:scale(.55);opacity:0}56%{transform:scale(.55);opacity:0}76%,100%{transform:scale(1);opacity:1}}
+
+/* ulduzlu gecə */
+.opv-stars{background:linear-gradient(180deg,rgba(12,19,44,.74),rgba(12,19,44,.22))}
+.opv-stars i{width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,.75);opacity:.15;animation:opvTwinkle 1.7s ease-in-out infinite alternate}
+.opv-stars i:nth-child(1){top:18%;left:22%}
+.opv-stars i:nth-child(2){top:30%;left:70%;animation-delay:.3s}
+.opv-stars i:nth-child(3){top:56%;left:41%;animation-delay:.6s}
+.opv-stars i:nth-child(4){top:23%;left:51%;animation-delay:.9s}
+.opv-stars i:nth-child(5){top:66%;left:81%;animation-delay:.45s}
+.opv-stars i:nth-child(6){top:47%;left:12%;animation-delay:1.2s}
+@keyframes opvTwinkle{from{opacity:.12;transform:scale(.6)}to{opacity:1;transform:scale(1.3)}}
+
+/* şənlik partlayışı */
+.opv-pop i{width:7px;height:11px;border-radius:2px;top:46%;left:48%;opacity:0;transform:translate(-50%,-50%);animation:opvPop 3.4s ease-out infinite}
+@keyframes opvPop{0%{opacity:0;transform:translate(-50%,-50%) rotate(0deg)}6%{opacity:1}55%{opacity:1;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(300deg)}72%,100%{opacity:0;transform:translate(calc(-50% + var(--tx)*1.2),calc(-50% + var(--ty)*1.2)) rotate(345deg)}}
+
+/* çiçək kəsmə */
+.opv-petals i{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#f7c6d0,#e58fa5);border-radius:62% 0 62% 0;top:-16px;opacity:0;animation:opvFall 4.8s linear infinite}
+.opv-petals i:nth-child(1){left:12%;animation-duration:4.4s}
+.opv-petals i:nth-child(2){left:31%;animation-delay:.8s;animation-duration:5.1s}
+.opv-petals i:nth-child(3){left:53%;animation-delay:1.5s;animation-duration:4.7s}
+.opv-petals i:nth-child(4){left:69%;animation-delay:2.2s;animation-duration:5.4s}
+.opv-petals i:nth-child(5){left:83%;animation-delay:2.8s;animation-duration:4.5s}
+.opv-petals i:nth-child(6){left:44%;animation-delay:3.4s;animation-duration:5s}
+@keyframes opvFall{0%{opacity:0;transform:translateY(0) rotate(0deg)}7%{opacity:.95}86%{opacity:.9}100%{opacity:0;transform:translateY(330px) rotate(320deg)}}
+
+/* lüks romantika */
+.opv-lux i{top:-20%;left:-80%;width:55%;height:140%;background:linear-gradient(100deg,rgba(255,240,214,0),rgba(255,240,214,.6),rgba(255,240,214,0));transform:skewX(-18deg);animation:opvShine 3.8s ease-in-out infinite}
+@keyframes opvShine{0%,50%{left:-80%}88%,100%{left:135%}}
+
+@media (prefers-reduced-motion: reduce){.opv{display:none}}
 .cat-tab{padding:10px 22px;border:1px solid rgba(92,61,46,.12);background:transparent;color:var(--muted);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.35s;border-radius:0}
 .cat-tab:hover{border-color:var(--gold);color:var(--gold)}
 .cat-tab.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
@@ -780,7 +854,7 @@ body.has-announce .mobile-menu{padding-top:150px}
         <p class="hero-text" data-i18n="heroText">Ən xüsusi günləriniz üçün zərif, müasir və fərdiləşdirilə bilən digital dəvətnamələr. Dizaynınızı seçin, məlumatlarınızı göndərin və xüsusi linkinizi paylaşın. Hər dəvətnamə bir hekayə danışır — sizin hekayəniz.</p>
         <div class="hero-buttons">
             <a href="invitations.html" class="btn btn-dark" data-i18n="heroCTA1">Dəvətnamələrə bax</a>
-            <a href="#categories" class="btn btn-light" data-i18n="heroCTA2">Dəvətnaməni yarat</a>
+            <a href="#templates" class="btn btn-light" data-i18n="heroCTA2">Dəvətnaməni yarat</a>
         </div>
     </div>
     <div class="scroll-indicator">
@@ -789,43 +863,23 @@ body.has-announce .mobile-menu{padding-top:150px}
     </div>
 </section>
 
-<!-- ANIMATED OPENINGS SHOWCASE -->
-<section id="animatedShowcase">
-<div class="section-inner">
-    <div class="section-heading" style="text-align:center;margin-bottom:30px">
-        <div class="kicker">✨ Animasiyalı açılışlar</div>
-        <h2>Açılışını izlə,<br>seçiminə vurğula.</h2>
-        <p style="max-width:620px;margin:20px auto 0;color:#7a5f4a;font-size:15px;line-height:1.7">Pərdə açılan səhnələr, saray piləkənləri, möhürlü zərflar — karta klikləyin və animasiyanı dərhal izləyin.</p>
-    </div>
-    <div class="anim-strip" id="animStrip"></div>
-</div>
-</section>
-
 <!-- STATS STRIP -->
 <section class="stats-strip" id="statsStrip" style="display:none"></section>
 
 
-<!-- CATEGORIES -->
-<section class="section reveal" id="categories">
-<div class="section-inner">
-    <div class="section-heading" style="text-align:center">
-        <div class="kicker" data-i18n="catKicker">Kolleksiyalar</div>
-        <h2 data-i18n="catTitle">Hər an,<br>hər hadisə üçün.</h2>
-        <p data-i18n="catText" style="max-width:600px;margin:24px auto 0">Toy, nişan, xına, ad günü, məzuniyyət, biznes və ya başqa tədbir — hər hadisə üçün xüsusi kolleksiya.</p>
-    </div>
-    <div class="categories-grid" id="categoriesGrid"></div>
-</div>
-</section>
-
-
-<!-- TEMPLATES -->
+<!-- TEMPLATES — MAIN HUB -->
 <section class="designs-section reveal" id="templates">
 <div class="section-inner">
-    <div class="section-heading" style="text-align:center">
+    <div class="section-heading" style="text-align:center;margin-bottom:30px">
         <div class="kicker" data-i18n="tplKicker">Dəvətnamə dizaynları</div>
         <h2 data-i18n="tplTitle">Dizaynınızı seçin.<br>Hekayənizi yaradın.</h2>
-        <p data-i18n="tplText" style="text-align:center;max-width:600px;margin:24px auto 0">Hər hadisə üçün xüsusi dizayn. Bəyəndiyinizi seçin və fərdiləşdirin.</p>
+        <p data-i18n="tplText" style="text-align:center;max-width:600px;margin:20px auto 0">Hər hadisə üçün xüsusi dizayn. Bəyəndiyinizi seçin və fərdiləşdirin.</p>
     </div>
+    <div class="tpl-strip-head">
+        <span class="kicker" style="color:#a0653f">🔥 Canlı animasiyalar</span>
+        <h3>Açılışını izlə, bəyəndiyini seç.</h3>
+    </div>
+    <div class="anim-strip" id="animStrip"></div>
     <div class="tpl-tools">
         <div class="tpl-search" id="tplSearchWrap">
             <span class="s-ico">🔍</span>
@@ -837,48 +891,6 @@ body.has-announce .mobile-menu{padding-top:150px}
     <div class="cat-tabs" id="catTabs"></div>
     <div class="designs-grid" id="designsGrid"></div>
     <div class="show-more-wrap"><button class="show-more-btn" id="showMoreBtn" style="display:none"></button></div>
-</div>
-</section>
-
-
-<!-- CATEGORY COLLECTIONS — Wedding, Birthday, Business -->
-<section class="section reveal" id="collections">
-<div class="section-inner">
-    <!-- Wedding Collection -->
-    <div class="cat-collection" id="colWedding">
-        <div class="cat-collection-header">
-            <div>
-                <div class="kicker">TOY DƏVƏTNAMƏLƏRİ</div>
-                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;font-style:italic;color:var(--dark)">Toy kolleksiyası.</h2>
-            </div>
-            <a href="invitations.html?category=wedding" class="btn btn-light">Hamısına bax →</a>
-        </div>
-        <div class="cat-collection-grid" id="colWeddingGrid"></div>
-    </div>
-
-    <!-- Birthday Collection -->
-    <div class="cat-collection" id="colBirthday" style="margin-top:80px">
-        <div class="cat-collection-header">
-            <div>
-                <div class="kicker">AD GÜNÜ DƏVƏTNAMƏLƏRİ</div>
-                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;font-style:italic;color:var(--dark)">Ad günü kolleksiyası.</h2>
-            </div>
-            <a href="invitations.html?category=birthday" class="btn btn-light">Hamısına bax →</a>
-        </div>
-        <div class="cat-collection-grid" id="colBirthdayGrid"></div>
-    </div>
-
-    <!-- Business Collection -->
-    <div class="cat-collection" id="colBusiness" style="margin-top:80px">
-        <div class="cat-collection-header">
-            <div>
-                <div class="kicker">BİZNES DƏVƏTNAMƏLƏRİ</div>
-                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;font-style:italic;color:var(--dark)">Biznes kolleksiyası.</h2>
-            </div>
-            <a href="invitations.html?category=business" class="btn btn-light">Hamısına bax →</a>
-        </div>
-        <div class="cat-collection-grid" id="colBusinessGrid"></div>
-    </div>
 </div>
 </section>
 
@@ -1172,6 +1184,41 @@ function _openingOf(tpl) {
 }
 function _isAnimated(tpl) { return !!_openingOf(tpl); }
 
+function _opvHTML(type) {
+    var s, k;
+    switch (type) {
+        case "curtain":
+            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i></div>';
+        case "stairs":
+            s = '<div class="opv opv-stairs">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "door":
+            return '<div class="opv opv-door"><i class="d-l"></i><i class="d-r"></i></div>';
+        case "wax-seal":
+            return '<div class="opv opv-wax"><i>♥</i></div>';
+        case "starry-night":
+            s = '<div class="opv opv-stars">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "celebration-pop": {
+            var dirs = [[-70,-90],[70,-90],[-100,-20],[100,-25],[-60,60],[65,70],[-15,-110],[20,95]];
+            var cols = ["#e74c3c","#f1c40f","#9b59b6","#2ecc71","#3498db","#e67e22","#fd79a8","#00cec9"];
+            s = '<div class="opv opv-pop">';
+            for (k = 0; k < 8; k++) s += '<i style="--tx:' + dirs[k][0] + 'px;--ty:' + dirs[k][1] + 'px;background:' + cols[k] + '"></i>';
+            return s + '</div>';
+        }
+        case "floral-paper":
+            s = '<div class="opv opv-petals">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "luxury-romance":
+            return '<div class="opv opv-lux"><i></i></div>';
+        default:
+            return "";
+    }
+}
+
 /* ===== INIT LANGUAGE ===== */
 lunaInitLanguage();
 
@@ -1385,6 +1432,7 @@ function renderTemplates(filter) {
         card.innerHTML =
             '<div class="dt-imgwrap">' +
                 '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
+                (opening ? _opvHTML(opening.type) : "") +
                 animBadge +
                 '<button class="fav-btn' + (isFav ? ' active' : '') + '" data-fav="' + tpl.id + '" aria-label="Seçilmişlərə əlavə et">♥</button>' +
             '</div>' +
@@ -1533,7 +1581,7 @@ renderTemplates("all");
     if (!strip) return;
     var list = _getHomepageTemplates().filter(_isAnimated);
     list.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
-    list.slice(0, 12).forEach(function(tpl) {
+    list.slice(0, 16).forEach(function(tpl) {
         var opening = _openingOf(tpl);
         var card = document.createElement("div");
         card.className = "anim-card";
@@ -1543,6 +1591,7 @@ renderTemplates("all");
         card.innerHTML =
             '<div class="dt-imgwrap">' +
                 '<img src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
+                _opvHTML(opening.type) +
                 '<div class="anim-play"><span>▶</span></div>' +
                 '<span class="anim-badge">' + opening.emoji + ' ' + opening.label + '</span>' +
             '</div>' +
