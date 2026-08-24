@@ -49,6 +49,7 @@
 
     function setState(s) {
         if (state === s) return;
+        console.log('[SYNC-STATE] ' + state + ' -> ' + s);
         state = s;
         if (onChangeCb) { try { onChangeCb(state, user); } catch (e) {} }
     }

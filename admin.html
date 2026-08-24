@@ -5013,6 +5013,7 @@ function showPopularDesigns(){
 function renderSyncChip(st, usr){
     var dot = document.getElementById('syncDot');
     var label = document.getElementById('syncLabel');
+    console.log('[SYNC-CHIP] render', st, !!dot, !!label);
     if(!dot || !label) return;
     if (st === 'off')        { dot.removeAttribute('data-state'); label.textContent = 'Lokal rejim'; }
     else if (st === 'connecting'){ dot.setAttribute('data-state','connecting'); label.textContent = 'Qoşulur…'; }
