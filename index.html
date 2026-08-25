@@ -119,29 +119,7 @@ img{display:block;max-width:100%}
 .hero-stat{text-align:center}
 .hero-stat-num{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:300;color:var(--gold);line-height:1}
 .hero-stat-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
-/* ===== KOLLEKSİYA MƏRTƏBƏSİ (design studio) ===== */
-.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
-.coll-card{position:relative;border-radius:50% 50% 18px 18px/34px 34px 18px 18px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;background:#1e140c;box-shadow:0 0 0 3px rgba(212,165,116,.15),0 0 30px rgba(212,165,116,.08),0 24px 60px -15px rgba(45,27,18,.35);transition:transform .6s cubic-bezier(.19,1,.22,1),box-shadow .6s;transform:perspective(1000px) rotateX(3deg);transform-origin:center bottom}
-.coll-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(180deg,rgba(212,165,116,.3),rgba(183,110,121,.2),rgba(91,140,111,.15));z-index:-1;opacity:0;transition:opacity .5s}
-.coll-card:hover{transform:perspective(900px) rotateX(0) rotateY(-3deg) translateY(-8px) scale(1.03);box-shadow:0 0 0 3px rgba(212,165,116,.3),0 0 50px rgba(212,165,116,.15),0 32px 60px -16px rgba(45,27,18,.45)}
-.coll-card:hover::before{opacity:1}
-.coll-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.19,1,.22,1)}
-.coll-card:hover img{transform:scale(1.08)}
-.coll-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,6,0) 30%,rgba(20,12,6,.82))}
-.coll-card::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(255,248,240,.12);z-index:3;pointer-events:none}
-.coll-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px 20px 20px;color:#fff}
-.coll-body h3{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:500;font-style:italic;margin:0 0 5px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
-.coll-body p{margin:0 0 11px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,248,240,.88)}
-.coll-body em{font-style:normal;font-size:8px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,248,240,.5);padding-bottom:3px;transition:.25s}
-.coll-card:hover em{border-color:#e8c574;color:var(--gold-light)}
-.coll-special{background:radial-gradient(circle at 30% 22%,#4a2e1c,#20100a 78%);display:flex;align-items:center;justify-content:center;text-align:center}
-.coll-special::after{display:none}
-.coll-special::before{display:none}
-.coll-sp-body{color:#f7efe4;padding:22px;z-index:2}
-.coll-sp-body span{display:block;font-size:46px;margin-bottom:12px;line-height:1;animation:spFloat 3.4s ease-in-out infinite}
-@keyframes spFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.coll-sp-body h3{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500;font-style:italic;margin:0 0 6px;color:var(--gold-light)}
-.coll-sp-body p{margin:0 0 12px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(247,239,228,.75)}
+/* ===== KOLLEKSİYA MƏRTƏBƏSİ (semicircle glow — see bottom of file) ===== */
 .browse-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 16px;margin-bottom:20px}
 .back-btn{border:1px solid rgba(62,37,24,.3);background:transparent;color:#4a2e1c;font-family:inherit;font-size:9.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:11px 20px;border-radius:30px;cursor:pointer;transition:.25s}
 .back-btn:hover{background:#3e2518;color:#f7efe4;border-color:#3e2518}
@@ -151,10 +129,6 @@ img{display:block;max-width:100%}
 @media(max-width:600px){
     .coll-grid{grid-template-columns:repeat(2,1fr);gap:11px}
     .coll-card{border-radius:14px}
-    .coll-body{padding:12px 13px}
-    .coll-body h3{font-size:19px}
-    .coll-sp-body span{font-size:34px}
-    .coll-sp-body h3{font-size:19px}
     #collTitle{order:-1;width:100%}
     .browse-head{gap:10px;margin-bottom:16px}
 }
@@ -194,14 +168,21 @@ img{display:block;max-width:100%}
 .pkg-card .btn{width:100%;justify-content:center;text-align:center}
 
 /* VİDEO DƏVƏTNAMƏ LATTİSİ */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:960px;margin:0 auto}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1080px;margin:0 auto}
 .video-card{position:relative;border-radius:50% 50% 22px 22px/30% 30% 22px 22px;overflow:hidden;aspect-ratio:9/16;background:#1a1410;cursor:pointer;box-shadow:0 0 0 3px rgba(212,165,116,.12),0 0 25px rgba(212,165,116,.06),0 20px 50px -10px rgba(45,27,18,.25);transition:transform .6s cubic-bezier(.19,1,.22,1),box-shadow .6s}
 .video-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(180deg,rgba(212,165,116,.25),rgba(183,110,121,.15));z-index:-1;opacity:0;transition:opacity .5s}
 .video-card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 0 3px rgba(212,165,116,.25),0 0 45px rgba(212,165,116,.12),0 40px 100px -20px rgba(45,27,18,.35)}
 .video-card:hover::before{opacity:1}
-.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
-.video-card:hover img{transform:scale(1.06)}
+.video-card video,.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.video-card:hover video,.video-card:hover img{transform:scale(1.06)}
 .video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.7))}
+.video-upload-card{background:linear-gradient(135deg,#2D2D44,#1A1A2E);border:2px dashed rgba(212,165,116,.3);display:flex;align-items:center;justify-content:center}
+.video-upload-card:hover{border-color:rgba(212,165,116,.6)}
+.video-upload-inner{text-align:center;color:#f7efe4;padding:24px}
+.video-upload-icon{width:56px;height:56px;border-radius:50%;background:rgba(212,165,116,.15);border:2px solid rgba(212,165,116,.3);display:grid;place-items:center;margin:0 auto 14px;font-size:28px;color:#D4A574;transition:.3s}
+.video-upload-card:hover .video-upload-icon{background:rgba(212,165,116,.25);transform:scale(1.08)}
+.video-upload-inner h4{font-family:"Cormorant Garamond",serif;font-size:18px;margin:0 0 6px}
+.video-upload-inner p{font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.5);margin:0}
 .video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(255,252,247,.95);display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 8px 30px rgba(0,0,0,.25),0 0 0 2px rgba(212,165,116,.2);transition:transform .4s,box-shadow .4s}
 .video-card:hover .video-play{transform:translate(-50%,-50%) scale(1.15);box-shadow:0 12px 40px rgba(0,0,0,.3),0 0 0 3px rgba(212,165,116,.3)}
 .video-play::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #3e2518;margin-left:3px}
@@ -556,6 +537,22 @@ img{display:block;max-width:100%}
 .opv-wdoor .w-panel{position:absolute;width:50px;height:60px;background:linear-gradient(135deg,#5C3D2E,#3E2518);border-radius:3px;border:2px solid rgba(196,168,130,.3);transition:transform .7s cubic-bezier(.4,0,.2,1);transform-origin:left}
 .opv-wdoor .w-knob{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);right:12px;top:50%;transform:translateY(-50%);z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .design-thumb:hover .opv-wdoor .w-panel{transform:perspective(500px) rotateY(-50deg)}
+
+/* ===== KOLLEKSİYA KARTLARI (semicircle + glow) ===== */
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:1100px;margin:0 auto}
+.coll-card{position:relative;border-radius:50% 50% 20px 20px/36% 36% 18px 18px;overflow:hidden;aspect-ratio:5/7;cursor:pointer;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;box-shadow:0 0 0 2px rgba(212,165,116,.15),0 8px 32px rgba(45,27,18,.12)}
+.coll-card::before{content:"";position:absolute;inset:-3px;border-radius:inherit;background:linear-gradient(135deg,rgba(212,165,116,.4),rgba(183,110,121,.3),rgba(91,140,111,.2),rgba(212,165,116,.4));z-index:-1;opacity:0;transition:opacity .5s}
+.coll-card:hover::before{opacity:1}
+.coll-card:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 0 0 3px rgba(212,165,116,.3),0 0 40px rgba(212,165,116,.15),0 30px 80px -15px rgba(45,27,18,.25)}
+.coll-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s}
+.coll-card:hover .coll-card-bg{transform:scale(1.08)}
+.coll-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.1) 0%,rgba(26,26,46,.6) 50%,rgba(26,26,46,.9) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px 16px;text-align:center}
+.coll-card-icon{font-size:36px;margin-bottom:8px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3))}
+.coll-card-name{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:500;color:#fff;margin:0 0 4px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.coll-card-count{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0}
+.coll-card-badge{position:absolute;top:14px;right:14px;background:rgba(212,165,116,.9);color:#1A1A2E;font-size:8px;font-weight:600;letter-spacing:1px;padding:4px 10px;border-radius:20px;text-transform:uppercase}
+.coll-card-sub{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.coll-card-sub span{font-size:7px;letter-spacing:.8px;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);text-transform:uppercase;backdrop-filter:blur(4px)}
 
 /* ===== REDESIGNED CARD INFO (always visible) ===== */
 .dt-meta{padding:14px 16px 8px;background:#fff;}
@@ -1218,6 +1215,18 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     </div>
 </section>
 
+<!-- ══════ KOLLEKSİYALAR ══════ -->
+<section class="section" id="collections" style="padding:80px 20px">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:44px">
+            <div class="kicker">Kolleksiyalar</div>
+            <h2>Münasibətinizə uyğun seçin</h2>
+            <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Hər bir kolleksiya xüsusi dizaynlar və animasiyalarla zəngindir</p>
+        </div>
+        <div class="coll-grid" id="collGrid"></div>
+    </div>
+</section>
+
 <!-- ══════ DİZAYNLAR ══════ -->
 <section class="section" id="designs" style="padding:60px 20px 80px">
     <div class="section-inner">
@@ -1257,23 +1266,34 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <div class="section-heading" style="text-align:center;margin-bottom:44px">
             <div class="kicker">Video dəvətnamələr</div>
             <h2>Hekayənizi canlandırın</h2>
-            <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Fotolarınızdan, musiqinizdən və animasiyalardan ibarət video dəvətnamələr. 20 AZN-dən başlayır.</p>
+            <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Canva-dan yükləyin və ya kompüterinizdən video əlavə edin. 20 AZN-dən başlayır.</p>
         </div>
         <div class="video-grid" id="videoGrid">
-            <div class="video-card" onclick="window.open('data/invitation.html?template=blossom&package=video','_blank')">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Toy dəvətnaməsi" loading="lazy">
+            <!-- Real playable video samples -->
+            <div class="video-card" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
+                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                 <div class="video-play"></div>
                 <div class="video-label"><h4>Toy Dəvətnaməsi</h4><p>Video · Animasiyalı</p></div>
             </div>
-            <div class="video-card" onclick="window.open('data/invitation.html?template=royal-scroll&package=video','_blank')">
-                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85" alt="Nişan dəvətnaməsi" loading="lazy">
+            <div class="video-card" data-video="https://www.w3schools.com/html/movie.mp4">
+                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" src="https://www.w3schools.com/html/movie.mp4"></video>
                 <div class="video-play"></div>
                 <div class="video-label"><h4>Nişan Dəvətnaməsi</h4><p>Video · Animasiyalı</p></div>
             </div>
-            <div class="video-card" onclick="window.open('data/invitation.html?template=garden-bloom&package=video','_blank')">
-                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85" alt="Xına gecəsi" loading="lazy">
+            <div class="video-card" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
+                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                 <div class="video-play"></div>
                 <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · Animasiyalı</p></div>
+            </div>
+            <!-- Upload from computer -->
+            <div class="video-card video-upload-card" id="videoUploadCard">
+                <div class="video-upload-inner">
+                    <div class="video-upload-icon">+</div>
+                    <h4>Video əlavə edin</h4>
+                    <p>Kompüterinizdən və ya Canva-dan yükləyin</p>
+                    <input type="file" id="videoFileInput" accept="video/*" hidden>
+                    <button class="btn btn-dark" style="margin-top:12px;font-size:9px;padding:10px 20px" onclick="document.getElementById('videoFileInput').click()">Video seç</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1629,34 +1649,45 @@ function renderCollections() {
     grid.innerHTML = "";
     var pool = _getHomepageTemplates();
 
-    var animN = pool.filter(_isAnimated).length;
-    if (animN) {
-        var sp = document.createElement("div");
-        sp.className = "coll-card coll-special";
-        sp.innerHTML =
-            '<div class="coll-sp-body">' +
-                '<span>✨</span>' +
-                '<h3>Animasiyalı açılışlar</h3>' +
-                '<p>' + animN + ' dizayn · canlı önizləmə</p>' +
-                '<em>Kolleksiyaya gir →</em>' +
-            '</div>';
-        sp.addEventListener("click", function() { openCollection("__animated"); });
-        grid.appendChild(sp);
-    }
+    var catCovers = {
+        wedding: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+        engagement: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+        henna: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80",
+        birthday: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80",
+        graduation: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80",
+        "baby-shower": "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80",
+        business: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
+        other: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80"
+    };
+
+    var catSubs = {
+        business: ["QR Kart", "Vizit Kart", "Korporativ", "Konfrans"]
+    };
 
     LUNA_CATEGORIES.forEach(function(cat) {
         var items = pool.filter(function(t) { return t.category === cat.id; });
         if (!items.length) return;
-        var animInCat = items.filter(_isAnimated).length;
+        var animCount = items.filter(_isAnimated).length;
         var card = document.createElement("div");
         card.className = "coll-card";
+        card.style.animation = "fadeUp 0.5s ease both";
+        card.style.animationDelay = (LUNA_CATEGORIES.indexOf(cat) * 0.08) + "s";
+        var subs = catSubs[cat.id];
+        var subHtml = "";
+        if (subs) {
+            subHtml = '<div class="coll-card-sub">';
+            subs.forEach(function(s) { subHtml += '<span>' + s + '</span>'; });
+            subHtml += '</div>';
+        }
         card.innerHTML =
-            '<img src="' + _catCover(cat.id) + '" alt="' + lunaCategoryName(cat.id) + '" loading="lazy">' +
-            '<div class="coll-body">' +
-                '<h3>' + lunaCategoryName(cat.id) + '</h3>' +
-                '<p>' + items.length + ' dizayn' + (animInCat ? ' · ✨ ' + animInCat : '') + '</p>' +
-                '<em>Kolleksiyaya gir →</em>' +
-            '</div>';
+            '<div class="coll-card-bg" style="background-image:url(\'' + (catCovers[cat.id] || catCovers.other) + '\')"></div>' +
+            '<div class="coll-card-overlay">' +
+                '<div class="coll-card-icon">' + cat.icon + '</div>' +
+                '<div class="coll-card-name">' + cat.name + '</div>' +
+                '<div class="coll-card-count">' + items.length + ' dizayn' + (animCount ? ' · ✨ ' + animCount + ' animasiyalı' : '') + '</div>' +
+                subHtml +
+            '</div>' +
+            (animCount ? '<div class="coll-card-badge">✨ Animasiyalı</div>' : '');
         card.addEventListener("click", function() { openCollection(cat.id); });
         grid.appendChild(card);
     });
@@ -2543,6 +2574,49 @@ applyHomepageConfig();
         ".hero.hero-minimal h1{font-size:clamp(40px,7vw,90px);letter-spacing:-1px;margin-top:24px}" +
         ".hero.hero-minimal{padding-top:160px}";
     document.head.appendChild(style);
+})();
+
+/* ===== VIDEO HOVER-TO-PLAY + UPLOAD ===== */
+(function() {
+    var grid = document.getElementById("videoGrid");
+    if (!grid) return;
+    grid.querySelectorAll(".video-card[data-video]").forEach(function(card) {
+        var vid = card.querySelector("video");
+        if (!vid) return;
+        card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
+        card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
+        card.addEventListener("click", function(e) {
+            if (e.target.closest(".video-upload-card")) return;
+            if (vid.requestFullscreen) vid.requestFullscreen();
+            else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+            vid.play().catch(function(){});
+        });
+    });
+    var fileInput = document.getElementById("videoFileInput");
+    if (fileInput) {
+        fileInput.addEventListener("change", function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            var url = URL.createObjectURL(file);
+            var uploadCard = document.getElementById("videoUploadCard");
+            var newCard = document.createElement("div");
+            newCard.className = "video-card";
+            newCard.setAttribute("data-video", url);
+            newCard.innerHTML =
+                '<video muted loop preload="metadata" src="' + url + '"></video>' +
+                '<div class="video-play"></div>' +
+                '<div class="video-label"><h4>' + file.name.replace(/\.[^.]+$/, '') + '</h4><p>Video · Yükləndi</p></div>';
+            var vid2 = newCard.querySelector("video");
+            newCard.addEventListener("mouseenter", function() { vid2.play().catch(function(){}); });
+            newCard.addEventListener("mouseleave", function() { vid2.pause(); vid2.currentTime = 0; });
+            newCard.addEventListener("click", function() {
+                if (vid2.requestFullscreen) vid2.requestFullscreen();
+                vid2.play().catch(function(){});
+            });
+            grid.insertBefore(newCard, uploadCard);
+            fileInput.value = "";
+        });
+    }
 })();
 
 /* ===== VIDEO MODAL ===== */
