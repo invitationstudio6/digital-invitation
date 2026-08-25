@@ -1115,10 +1115,12 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 <nav class="navbar" id="navbar">
     <a href="#home" class="logo">Luna</a>
     <div class="nav-links">
-        <a href="#home" data-i18n="navHome">Ana səhifə</a>
-        <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
-        <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
-        <a href="how-it-works.html" data-i18n="navHowItWorks">Necə işləyir</a>
+        <a href="#home">Ana səhifə</a>
+        <a href="#collections">Kolleksiya</a>
+        <a href="#designs">Dəvətnamə</a>
+        <a href="#video-section">Video dəvətnamə</a>
+        <a href="#pricing">Qiymətlər</a>
+        <a href="#how">Nə daxildir</a>
     </div>
     <div class="languages">
         <button class="active" data-lang="az">AZ</button>
@@ -1131,10 +1133,12 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="#home" data-i18n="navHome">Ana səhifə</a>
-    <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
-    <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
-    <a href="how-it-works.html" data-i18n="navHowItWorks">Necə işləyir</a>
+    <a href="#home">Ana səhifə</a>
+    <a href="#collections">Kolleksiya</a>
+    <a href="#designs">Dəvətnamə</a>
+    <a href="#video-section">Video dəvətnamə</a>
+    <a href="#pricing">Qiymətlər</a>
+    <a href="#how">Nə daxildir</a>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
@@ -1188,28 +1192,28 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     </div>
 </section>
 
-<!-- ══════ NECƏ İŞLƏYİR ══════ -->
+<!-- ══════ NƏ DAXİLİDIR ══════ -->
 <section class="section" id="how" style="padding:90px 20px 70px">
     <div class="section-inner">
         <div class="section-heading" style="text-align:center;margin-bottom:44px">
-            <div class="kicker">Necə işləyir?</div>
-            <h2>3 sadə addım</h2>
+            <div class="kicker">Nə daxildir?</div>
+            <h2>Hər paketə nə daxildir</h2>
         </div>
         <div class="how-steps">
             <div class="step-card">
                 <div class="step-num">1</div>
-                <h3>Kolleksiyanı seçin</h3>
-                <p>Toy, nişan, xına, ad günü — hansı münasibət üçün lazımdırsa, kolleksiyamızdan seçin.</p>
+                <h3>Dəvətnamə dizaynı</h3>
+                <p>69+ zərif dizayn, 11 fərqli açılış animasiyası, tam fərdiləşdirmə imkanı.</p>
             </div>
             <div class="step-card">
                 <div class="step-num">2</div>
-                <h3>Dizaynı bəyənin</h3>
-                <p>Canlı açılış animasiyalarını izləyin, bəyəndiyiniz dizaynı seçin və paketini müəyyənləşdirin.</p>
+                <h3>Şəxsi link</h3>
+                <p>Məlumatlarınızı daxil edin, şəxsi linkinizi qonaqlarınıza göndərin. Canlı açılış animasiyası ilə təəssürat yaradın.</p>
             </div>
             <div class="step-card">
                 <div class="step-num">3</div>
-                <h3>Linki paylaşın</h3>
-                <p>Məlumatlarınızı daxil edin, şəxsi linkinizi qonaqlarınıza göndərin. Hamısı bu qədər sadə.</p>
+                <h3>Admin panel</h3>
+                <p>Qonaq siyahısı, RSVP cavabları, sayğac, xəritə — hamısı bir yerdə idarə olunur.</p>
             </div>
         </div>
     </div>
@@ -1235,6 +1239,12 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <h2>Bəyəndiyinizi seçin</h2>
         </div>
         <div class="cat-tabs" id="catTabs" role="tablist" aria-label="Kateqoriya"></div>
+        <div class="coll-banner" id="collBanner" style="display:none;text-align:center;margin:0 auto 20px;padding:16px 28px;background:linear-gradient(135deg,rgba(212,165,116,.08),rgba(212,165,116,.03));border:1px solid rgba(212,165,116,.15);border-radius:14px;max-width:500px">
+            <div id="collBannerIcon" style="font-size:22px;margin-bottom:4px"></div>
+            <div id="collBannerName" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--dark)"></div>
+            <div id="collBannerCount" style="font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-top:4px"></div>
+            <button id="collBannerClose" style="margin-top:10px;background:none;border:1px solid rgba(212,165,116,.25);border-radius:20px;padding:6px 16px;font-size:9px;letter-spacing:1px;color:var(--gold-dark);cursor:pointer;transition:.25s">Hamısına qayıt</button>
+        </div>
         <div class="tpl-tools" style="justify-content:center">
             <div class="tpl-search" id="tplSearchWrap" style="max-width:380px">
                 <span class="s-ico" style="font-size:12px;opacity:.5">🔍</span>
@@ -1269,7 +1279,6 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Canva-dan yükləyin və ya kompüterinizdən video əlavə edin. 20 AZN-dən başlayır.</p>
         </div>
         <div class="video-grid" id="videoGrid">
-            <!-- Real playable video samples -->
             <div class="video-card" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
                 <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                 <div class="video-play"></div>
@@ -1284,16 +1293,6 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
                 <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                 <div class="video-play"></div>
                 <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · Animasiyalı</p></div>
-            </div>
-            <!-- Upload from computer -->
-            <div class="video-card video-upload-card" id="videoUploadCard">
-                <div class="video-upload-inner">
-                    <div class="video-upload-icon">+</div>
-                    <h4>Video əlavə edin</h4>
-                    <p>Kompüterinizdən və ya Canva-dan yükləyin</p>
-                    <input type="file" id="videoFileInput" accept="video/*" hidden>
-                    <button class="btn btn-dark" style="margin-top:12px;font-size:9px;padding:10px 20px" onclick="document.getElementById('videoFileInput').click()">Video seç</button>
-                </div>
             </div>
         </div>
     </div>
@@ -1683,7 +1682,7 @@ function renderCollections() {
             '<div class="coll-card-bg" style="background-image:url(\'' + (catCovers[cat.id] || catCovers.other) + '\')"></div>' +
             '<div class="coll-card-overlay">' +
                 '<div class="coll-card-icon">' + cat.icon + '</div>' +
-                '<div class="coll-card-name">' + cat.name + '</div>' +
+                '<div class="coll-card-name">' + lunaCategoryName(cat.id) + '</div>' +
                 '<div class="coll-card-count">' + items.length + ' dizayn' + (animCount ? ' · ✨ ' + animCount + ' animasiyalı' : '') + '</div>' +
                 subHtml +
             '</div>' +
@@ -1702,6 +1701,23 @@ function openCollection(catId) {
     if (sel) sel.value = "default";
     var inp = document.getElementById("tplSearch");
     if (inp) { inp.value = ""; document.getElementById("tplSearchWrap").classList.remove("has-val"); }
+
+    /* Show collection banner */
+    var banner = document.getElementById("collBanner");
+    if (banner && catId !== "all") {
+        var cat = (typeof LUNA_CATEGORIES !== "undefined") ? LUNA_CATEGORIES.find(function(c){ return c.id === catId; }) : null;
+        if (cat) {
+            document.getElementById("collBannerIcon").textContent = cat.icon;
+            document.getElementById("collBannerName").textContent = lunaCategoryName(catId);
+            var pool = _getHomepageTemplates();
+            var count = pool.filter(function(t){ return t.category === catId; }).length;
+            document.getElementById("collBannerCount").textContent = count + " dizayn mövcuddur";
+            banner.style.display = "";
+        }
+    } else if (banner) {
+        banner.style.display = "none";
+    }
+
     renderTemplates();
     var sec = document.getElementById("designs");
     if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1709,6 +1725,16 @@ function openCollection(catId) {
 
 renderCollections();
 renderTemplates();
+
+/* Collection banner close */
+document.getElementById("collBannerClose").addEventListener("click", function() {
+    _gridFilter = "all";
+    var banner = document.getElementById("collBanner");
+    if (banner) banner.style.display = "none";
+    var tabs = document.querySelectorAll(".cat-tab");
+    tabs.forEach(function(t) { t.classList.toggle("active", t.getAttribute("data-cat") === "all"); });
+    renderTemplates();
+});
 
 document.addEventListener("click", function(e) {
     var d = e.target.closest ? e.target.closest("[data-design]") : null;
@@ -2586,37 +2612,11 @@ applyHomepageConfig();
         card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
         card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
         card.addEventListener("click", function(e) {
-            if (e.target.closest(".video-upload-card")) return;
             if (vid.requestFullscreen) vid.requestFullscreen();
             else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
             vid.play().catch(function(){});
         });
     });
-    var fileInput = document.getElementById("videoFileInput");
-    if (fileInput) {
-        fileInput.addEventListener("change", function(e) {
-            var file = e.target.files[0];
-            if (!file) return;
-            var url = URL.createObjectURL(file);
-            var uploadCard = document.getElementById("videoUploadCard");
-            var newCard = document.createElement("div");
-            newCard.className = "video-card";
-            newCard.setAttribute("data-video", url);
-            newCard.innerHTML =
-                '<video muted loop preload="metadata" src="' + url + '"></video>' +
-                '<div class="video-play"></div>' +
-                '<div class="video-label"><h4>' + file.name.replace(/\.[^.]+$/, '') + '</h4><p>Video · Yükləndi</p></div>';
-            var vid2 = newCard.querySelector("video");
-            newCard.addEventListener("mouseenter", function() { vid2.play().catch(function(){}); });
-            newCard.addEventListener("mouseleave", function() { vid2.pause(); vid2.currentTime = 0; });
-            newCard.addEventListener("click", function() {
-                if (vid2.requestFullscreen) vid2.requestFullscreen();
-                vid2.play().catch(function(){});
-            });
-            grid.insertBefore(newCard, uploadCard);
-            fileInput.value = "";
-        });
-    }
 })();
 
 /* ===== VIDEO MODAL ===== */
@@ -2674,6 +2674,8 @@ function renderTabs() {
         _gridLimit = 24;
         var inp = document.getElementById("tplSearch");
         if (inp) inp.value = "";
+        var banner = document.getElementById("collBanner");
+        if (banner) banner.style.display = "none";
         renderTemplates(getCurrentFilter());
     });
     tabs.appendChild(allBtn);
@@ -2694,6 +2696,16 @@ function renderTabs() {
             _gridLimit = 24;
             var inp = document.getElementById("tplSearch");
             if (inp) inp.value = "";
+            /* Show collection banner */
+            var banner = document.getElementById("collBanner");
+            if (banner) {
+                document.getElementById("collBannerIcon").textContent = cat.icon;
+                document.getElementById("collBannerName").textContent = lunaCategoryName(cat.id);
+                var pool = _getHomepageTemplates();
+                var count = pool.filter(function(t){ return t.category === cat.id; }).length;
+                document.getElementById("collBannerCount").textContent = count + " dizayn mövcuddur";
+                banner.style.display = "";
+            }
             renderTemplates(getCurrentFilter());
         });
         tabs.appendChild(btn);

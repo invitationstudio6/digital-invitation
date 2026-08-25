@@ -180,13 +180,14 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     align-items: center;
     background: var(--bg);
-    transition: opacity 1.4s cubic-bezier(.4,0,.2,1), visibility 1.4s;
+    transition: opacity 1.6s cubic-bezier(.22,.9,.36,1), visibility 1.6s, filter .8s;
 }
 
 .opening.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    filter: blur(4px) brightness(1.2);
 }
 
 /* Type: Fullscreen Photo opening */
@@ -257,12 +258,13 @@ a { text-decoration: none; color: inherit; }
     height: 100%;
     background: var(--bg-alt);
     border: 1px solid var(--border-strong);
-    transition: transform 1.6s cubic-bezier(.19,1,.22,1);
+    transition: transform 1.8s cubic-bezier(.22,.9,.36,1), filter .8s, box-shadow .8s;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,.3);
 }
 [data-opening="door"] .door-left { left: 0; transform-origin: left center; border-right: none; }
 [data-opening="door"] .door-right { right: 0; transform-origin: right center; border-left: none; }
@@ -302,8 +304,8 @@ a { text-decoration: none; color: inherit; }
     50% { transform: rotate(-15deg); }
     75% { transform: rotate(10deg); }
 }
-[data-opening="door"] .door-open .door-left { transform: perspective(1600px) rotateY(-105deg); }
-[data-opening="door"] .door-open .door-right { transform: perspective(1600px) rotateY(105deg); }
+[data-opening="door"] .door-open .door-left { transform: perspective(1200px) rotateY(-110deg); filter: brightness(.6); box-shadow: inset 30px 0 80px rgba(0,0,0,.4); }
+[data-opening="door"] .door-open .door-right { transform: perspective(1200px) rotateY(110deg); filter: brightness(.6); box-shadow: inset -30px 0 80px rgba(0,0,0,.4); }
 [data-opening="door"] .door-invitation {
     position: absolute;
     inset: 8%;
@@ -363,7 +365,7 @@ a { text-decoration: none; color: inherit; }
 
 /* Type: Stairs Climbing */
 [data-opening="stairs"] .opening {
-    perspective: 1200px;
+    perspective: 1400px;
 
     background: var(--bg);
     overflow: hidden;
@@ -373,7 +375,7 @@ a { text-decoration: none; color: inherit; }
     position: relative;
     width: min(520px, 85vw);
     height: min(600px, 75vh);
-    perspective: 1000px;
+    perspective: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1089,13 +1091,15 @@ a { text-decoration: none; color: inherit; }
     gap: 0;
 }
 [data-opening="stairs"] .stairs-step {
-    height: 60px;
-    background: var(--bg-alt);
+    height: 64px;
+    background: linear-gradient(180deg, var(--bg-alt), rgba(0,0,0,.06));
     border: 1px solid var(--border);
+    border-bottom: 2px solid var(--border-strong);
     opacity: 0;
-    transform: translateY(40px);
-    animation: stairRise .5s ease forwards;
+    transform: translateY(50px) rotateX(8deg);
+    animation: stairRise .6s cubic-bezier(.22,.9,.36,1) forwards;
     position: relative;
+    box-shadow: 0 4px 16px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.5);
 }
 [data-opening="stairs"] .stairs-step:nth-child(1) { width: 100%; animation-delay: .1s; }
 [data-opening="stairs"] .stairs-step:nth-child(2) { width: 85%; animation-delay: .25s; }
@@ -1103,8 +1107,8 @@ a { text-decoration: none; color: inherit; }
 [data-opening="stairs"] .stairs-step:nth-child(4) { width: 55%; animation-delay: .55s; }
 [data-opening="stairs"] .stairs-step:nth-child(5) { width: 40%; animation-delay: .7s; }
 @keyframes stairRise {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(50px) rotateX(8deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(0); }
 }
 [data-opening="stairs"] .stairs-glow {
     position: absolute;
@@ -1337,11 +1341,11 @@ a { text-decoration: none; color: inherit; }
 }
 @keyframes waxRing { 0%,100% { transform: scale(1); opacity: .3; } 50% { transform: scale(1.12); opacity: .6; } }
 
-.scene-opened[data-opening="envelope-seal"] .es-wax { transform: translate(-50%,-58%) scale(2.5) rotate(20deg); opacity: 0; filter: blur(2px); }
-.scene-opened[data-opening="envelope-seal"] .es-flap { transform: rotateX(-185deg); filter: brightness(1.15); }
-.scene-opened[data-opening="envelope-seal"] .es-letter { transform: translateY(-52%) scale(1.04); }
-.scene-opened[data-opening="envelope-seal"] .es-wrap { animation: esAway .8s ease 1s forwards; }
-@keyframes esAway { to { opacity: 0; transform: translateY(-46px) scale(.95); } }
+.scene-opened[data-opening="envelope-seal"] .es-wax { transform: translate(-50%,-58%) scale(3) rotate(25deg); opacity: 0; filter: blur(4px); transition: transform .6s cubic-bezier(.22,.9,.36,1), opacity .5s ease .1s, filter .5s; }
+.scene-opened[data-opening="envelope-seal"] .es-flap { transform: perspective(800px) rotateX(-190deg); filter: brightness(1.15) drop-shadow(0 8px 20px rgba(0,0,0,.3)); }
+.scene-opened[data-opening="envelope-seal"] .es-letter { transform: translateY(-55%) scale(1.06); box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.scene-opened[data-opening="envelope-seal"] .es-wrap { animation: esAway 1s cubic-bezier(.22,.9,.36,1) .8s forwards; }
+@keyframes esAway { to { opacity: 0; transform: translateY(-60px) scale(.92); } }
 
 /* =====================================================
    TYPE: RIBBON UNWRAP (ribbon)
@@ -1357,11 +1361,12 @@ a { text-decoration: none; color: inherit; }
     position: fixed; top: 0; bottom: 0; width: 52%; z-index: 4;
     background:
         linear-gradient(160deg, rgba(255,255,255,.14), transparent 40%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 8px, transparent 8px 20px),
         linear-gradient(135deg, #A83A63, #7E2549 70%, #6B1D3D);
-    transition: transform 1.05s cubic-bezier(.7,0,.25,1) .8s;
+    transition: transform 1.2s cubic-bezier(.22,.9,.36,1) .7s, filter .8s ease .7s;
 }
-.rb-half-l { left: 0; border-right: 3px solid #ECD28F; box-shadow: inset -30px 0 70px rgba(60,10,30,.35); }
-.rb-half-r { right: 0; border-left: 3px solid #ECD28F; box-shadow: inset 30px 0 70px rgba(60,10,30,.35); }
+.rb-half-l { left: 0; border-right: 3px solid #ECD28F; box-shadow: inset -30px 0 70px rgba(60,10,30,.35), inset -4px 0 20px rgba(0,0,0,.2); }
+.rb-half-r { right: 0; border-left: 3px solid #ECD28F; box-shadow: inset 30px 0 70px rgba(60,10,30,.35), inset 4px 0 20px rgba(0,0,0,.2); }
 
 .rb-band-v {
     position: fixed; top: -6%; bottom: -6%; left: calc(50% - 26px); width: 52px; z-index: 6;
@@ -1407,11 +1412,11 @@ a { text-decoration: none; color: inherit; }
 }
 @keyframes bowPulse { 0%,100% { box-shadow: 0 2px 6px rgba(90,60,10,.5), 0 0 12px rgba(232,200,122,.3); } 50% { box-shadow: 0 2px 8px rgba(90,60,10,.6), 0 0 22px rgba(232,200,122,.5); } }
 
-.scene-opened[data-opening="ribbon"] .rb-band-v { transform: translateX(-130%) rotate(-7deg); opacity: 0; }
-.scene-opened[data-opening="ribbon"] .rb-band-h { transform: translateY(-130%) rotate(5deg); opacity: 0; }
-.scene-opened[data-opening="ribbon"] .rb-bow { transform: translate(-50%,-50%) scale(2.3) rotate(18deg); opacity: 0; }
-.scene-opened[data-opening="ribbon"] .rb-half-l { transform: translateX(-104%); }
-.scene-opened[data-opening="ribbon"] .rb-half-r { transform: translateX(104%); }
+.scene-opened[data-opening="ribbon"] .rb-band-v { transform: translateX(-140%) rotate(-10deg); opacity: 0; filter: blur(2px); }
+.scene-opened[data-opening="ribbon"] .rb-band-h { transform: translateY(-140%) rotate(8deg); opacity: 0; filter: blur(2px); }
+.scene-opened[data-opening="ribbon"] .rb-bow { transform: translate(-50%,-50%) scale(2.8) rotate(22deg); opacity: 0; filter: blur(3px); }
+.scene-opened[data-opening="ribbon"] .rb-half-l { transform: translateX(-106%); filter: brightness(.5) blur(2px); }
+.scene-opened[data-opening="ribbon"] .rb-half-r { transform: translateX(106%); filter: brightness(.5) blur(2px); }
 
 /* =====================================================
    TYPE: WOODEN DOOR (wood-door)
@@ -1626,8 +1631,9 @@ a { text-decoration: none; color: inherit; }
             rgba(255,255,255,.04) 0 4px,
             transparent 4px 18px),
         linear-gradient(90deg, #571512, #7A1F1B 30%, #8E2723 50%, #7A1F1B 70%, #571512);
-    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55), inset 0 0 120px rgba(0,0,0,.2);
-    transition: transform 1.5s cubic-bezier(.65,0,.25,1), filter .6s ease;
+    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55), inset 0 0 120px rgba(0,0,0,.2), inset 0 8px 40px rgba(0,0,0,.3);
+    transition: transform 1.8s cubic-bezier(.22,.9,.36,1), filter .8s ease, box-shadow .8s;
+}
 }
 .curtain-left  { left: 0;  transform-origin: left; }
 .curtain-right { right: 0; transform-origin: right; }
@@ -1641,8 +1647,8 @@ a { text-decoration: none; color: inherit; }
     box-shadow: 0 4px 18px rgba(0,0,0,.5);
 }
 
-.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg) scale(.92); filter: brightness(.45) blur(2px); }
-.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg) scale(.92); filter: brightness(.45) blur(2px); }
+.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-106%) rotateY(28deg) scale(.88); filter: brightness(.35) blur(3px); box-shadow: inset -40px 0 120px rgba(0,0,0,.6); }
+.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(106%) rotateY(-28deg) scale(.88); filter: brightness(.35) blur(3px); box-shadow: inset 40px 0 120px rgba(0,0,0,.6); }
 .curtain-dust {
     position: fixed;
     inset: 0;
@@ -3580,7 +3586,6 @@ footer p {
     z-index: 5;
     animation: stairGlow 4s ease-in-out infinite;
 }
-@keyframes stairGlow { 0%,100% { opacity: .4; } 50% { opacity: .8; } }
 [data-opening="stairs"] .stairs-card { width: 86%; top: 6%; }
     .sig-scene .sig-card { width: 90vw; min-height: auto; padding: 36px 22px; }
     .wax-seal-big { width: 92px; height: 92px; font-size: 34px; }
