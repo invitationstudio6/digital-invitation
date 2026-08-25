@@ -82,19 +82,21 @@ img{display:block;max-width:100%}
 .hero-text{width:min(540px,100%);margin:40px auto 0;font-size:11px;line-height:2.1;color:var(--muted);animation:fadeUp 1s .4s ease both}
 .hero-buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:30px;animation:fadeUp 1s .6s ease both}
 /* ===== KOLLEKSİYA MƏRTƏBƏSİ (design studio) ===== */
-.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
-.coll-card{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;background:#2a1c12;box-shadow:0 10px 30px rgba(62,37,24,.12);transition:transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s}
-.coll-card:hover{transform:translateY(-6px);box-shadow:0 22px 44px -14px rgba(62,37,24,.32)}
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.coll-card{position:relative;border-radius:50% 50% 16px 16px/32px 32px 16px 16px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;background:#2a1c12;box-shadow:0 20px 44px -12px rgba(62,37,24,.35),0 8px 20px -8px rgba(62,37,24,.25);transition:transform .4s cubic-bezier(.19,1,.22,1),box-shadow .4s;transform:perspective(900px) rotateX(2deg);transform-origin:center bottom}
+.coll-card:hover{transform:perspective(900px) rotateX(0) rotateY(-3deg) translateY(-8px) scale(1.03);box-shadow:0 32px 60px -16px rgba(62,37,24,.45),0 12px 28px -10px rgba(62,37,24,.3)}
 .coll-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.19,1,.22,1)}
-.coll-card:hover img{transform:scale(1.07)}
-.coll-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,6,0) 38%,rgba(20,12,6,.84))}
-.coll-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;color:#fff}
-.coll-body h3{font-family:"Cormorant Garamond",serif;font-size:27px;font-weight:500;font-style:italic;margin:0 0 5px;text-shadow:0 2px 12px rgba(0,0,0,.45)}
-.coll-body p{margin:0 0 11px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,248,240,.88)}
-.coll-body em{font-style:normal;font-size:8.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,248,240,.5);padding-bottom:3px;transition:.25s}
+.coll-card:hover img{transform:scale(1.08)}
+.coll-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,6,0) 30%,rgba(20,12,6,.82))}
+.coll-card::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(255,248,240,.12);z-index:3;pointer-events:none}
+.coll-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px 20px 20px;color:#fff}
+.coll-body h3{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:500;font-style:italic;margin:0 0 5px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.coll-body p{margin:0 0 11px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,248,240,.88)}
+.coll-body em{font-style:normal;font-size:8px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,248,240,.5);padding-bottom:3px;transition:.25s}
 .coll-card:hover em{border-color:#e8c574;color:#f4d9a0}
 .coll-special{background:radial-gradient(circle at 30% 22%,#4a2e1c,#20100a 78%);display:flex;align-items:center;justify-content:center;text-align:center}
 .coll-special::after{display:none}
+.coll-special::before{display:none}
 .coll-sp-body{color:#f7efe4;padding:22px;z-index:2}
 .coll-sp-body span{display:block;font-size:46px;margin-bottom:12px;line-height:1;animation:spFloat 3.4s ease-in-out infinite}
 @keyframes spFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
@@ -153,6 +155,21 @@ img{display:block;max-width:100%}
 .pkg-card li.off{color:#c2ab97}
 .pkg-card li.off::first-letter{color:#c2ab97}
 .pkg-card .btn{width:100%;justify-content:center;text-align:center}
+
+/* VİDEO DƏVƏTNAMƏ LATTİSİ */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:960px;margin:0 auto}
+.video-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a0e06;cursor:pointer;box-shadow:0 14px 34px -10px rgba(62,37,24,.3);transition:transform .35s,box-shadow .35s}
+.video-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 24px 50px -12px rgba(62,37,24,.45)}
+.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.video-card:hover img{transform:scale(1.06)}
+.video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.7))}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .3s}
+.video-card:hover .video-play{transform:translate(-50%,-50%) scale(1.12)}
+.video-play::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #3e2518;margin-left:3px}
+.video-label{position:absolute;bottom:14px;left:16px;right:16px;z-index:2;color:#fff}
+.video-label h4{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:500;font-style:italic;margin:0 0 3px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.video-label p{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.8);margin:0}
+
 @media(max-width:600px){
     .hero-text{display:none}
     .hero-label{font-size:10px;margin-bottom:10px}
@@ -166,6 +183,9 @@ img{display:block;max-width:100%}
     .pkg-mid:hover{transform:translateY(-7px)}
     .pkg-sum{flex-direction:column;text-align:center;gap:12px}
     .pkg-sum img{width:72px;height:72px}
+    .coll-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+    .coll-card{border-radius:40% 40% 12px 12px/24px 24px 12px 12px}
+    .video-grid{grid-template-columns:1fr}
 }
 
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;animation:fadeUp 1s .75s ease both}
@@ -1090,6 +1110,30 @@ body.has-announce .mobile-menu{padding-top:150px}
     </div>
 </section>
 
+<!-- ══════ QİYMƏTLƏR ══════ -->
+<section class="section" id="pricing" style="padding:80px 20px;background:linear-gradient(175deg,#faf6f0,#f3ece0)">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:44px">
+            <div class="kicker">Qiymətlər</div>
+            <h2>Paketinizi seçin</h2>
+            <p style="text-align:center;max-width:500px;margin:14px auto 0;font-size:12px;color:#8a6f58">Hər büdcəyə uyğun. Bütün paketlərə admin panel və dəyişiklik imkanı daxildir.</p>
+        </div>
+        <div class="pkg-grid" id="pricingGrid"></div>
+    </div>
+</section>
+
+<!-- ══════ VİDEO DƏVƏTNAMƏLƏR ══════ -->
+<section class="section" id="video-section" style="padding:80px 20px">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:44px">
+            <div class="kicker">Video dəvətnamələr</div>
+            <h2>Hekayənizi canlandırın</h2>
+            <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Fotolarınızdan, musiqinizdən və animasiyalardan ibarət video dəvətnamələr. 20 AZN-dən başlayır.</p>
+        </div>
+        <div class="video-grid" id="videoGrid"></div>
+    </div>
+</section>
+
 <!-- ══════ CTA ══════ -->
 <section class="section" id="cta-final" style="padding:80px 20px;text-align:center;background:linear-gradient(175deg,#3e2518,#1a0e06);color:#f7efe4">
     <div class="section-inner">
@@ -1815,7 +1859,52 @@ renderTemplates("all");
     });
 })();
 
-/* ===== CATEGORY FILTER → kolleksiya mühərrikinə keçid (openCollection/backToCollections yuxarıda) ===== */
+/* ===== QİYMƏT LATTİSİ (statik) ===== */
+(function renderPricingLattice() {
+    var grid = document.getElementById("pricingGrid");
+    if (!grid || typeof LUNA_PACKAGES === "undefined") return;
+    var pkgData = [
+        { id: "video", name: "Video Dəvətnamə", price: 20, tagline: "Animasiyalı video dəvətnamə", features: ["Video dəvətnamə","Cütlüyün adı","Tarix və saat","Məkan","Müştərinin fotoları","Fon musiqisi","Animasiya və keçidlər"] },
+        { id: "basic", name: "Basic", price: 25, tagline: "Sadə və zərif rəqəmsal dəvətnamə", features: ["Digital invitation","Cütlüyün adları","Tarix və saat","Məkan + Google Maps","Countdown"] },
+        { id: "premium", name: "Premium", price: 40, tagline: "Ən çox tövsiyə olunan paket", features: ["Basic paketdə olan hər şey +","RSVP forması","Qonaq sayı","Qonaqdan mesaj","Rəng və üslub seçimi","10 foto qaleryası","Our Story bölməsi","6 foto"], rec: true },
+        { id: "luxury", name: "Luxury", price: 60, tagline: "Daha xüsusi və premium görünüş", features: ["Fərdiləşdirilmiş dizayn","Cütlüyə xüsusi mətn","Foto qalerya","Countdown","Google Maps","RSVP","Qonaq sayı","Mesaj bölməsi","Musiqi"], gold: true }
+    ];
+    pkgData.forEach(function(p) {
+        var feats = p.features.map(function(f) { return "<li>" + f + "</li>"; }).join("");
+        var card = document.createElement("div");
+        card.className = "pkg-card" + (p.rec ? " pkg-mid" : "") + (p.gold ? " pkg-luxury" : "");
+        card.innerHTML =
+            (p.rec ? '<span class="pkg-ribbon">Ən populyar ★</span>' : (p.gold ? '<span class="pkg-ribbon pkg-ribbon-gold">Ən dolğun</span>' : '')) +
+            '<h4>' + p.name + '</h4>' +
+            '<div class="pkg-price"><b>' + p.price + '</b> <i>AZN</i></div>' +
+            '<p class="pkg-tag">' + p.tagline + '</p>' +
+            '<p class="pkg-includes">Daxildir:</p>' +
+            '<ul>' + feats + '</ul>' +
+            '<a class="btn ' + (p.rec ? "btn-dark" : "btn-light") + '" href="#collections">Seç &nbsp;→</a>';
+        grid.appendChild(card);
+    });
+})();
+
+/* ===== VİDEO DƏVƏTNAMƏ NÜMUNƏLƏRİ ===== */
+(function renderVideoSamples() {
+    var grid = document.getElementById("videoGrid");
+    if (!grid) return;
+    var samples = [
+        { title: "Toy dəvətnaməsi", cat: "wedding", img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" },
+        { title: "Nişan dəvətnaməsi", cat: "engagement", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85" },
+        { title: "Ad günü dəvətnaməsi", cat: "birthday", img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=85" }
+    ];
+    samples.forEach(function(s) {
+        var card = document.createElement("div");
+        card.className = "video-card";
+        card.innerHTML =
+            '<img src="' + s.img + '" alt="' + s.title + '" loading="lazy">' +
+            '<div class="video-play"></div>' +
+            '<div class="video-label"><h4>' + s.title + '</h4><p>Video dəvətnamə · 20 AZN</p></div>';
+        card.addEventListener("click", function() { window.location.href = "form/" + s.cat + ".html?design=video&package=video"; });
+        grid.appendChild(card);
+    });
+})();
 
 /* ===== PREVIEW MODAL — Full Invitation Experience ===== */
 var _mCurrentPkg = "basic";
