@@ -2405,6 +2405,13 @@ document.getElementById("previewModal").addEventListener("click", function(e) {
 document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") closePreviewModal();
 });
+    // Live preview button - opens full invitation with animation
+    document.getElementById("modalLiveBtn").addEventListener("click", function() {
+        var tpl = _mCurrentTpl;
+        if (!tpl) return;
+        var url = "data/invitation.html?design=" + tpl.id + "&package=" + _mCurrentPkg;
+        window.open(url, "_blank");
+    });
 
 /* ===== RENDER HOW IT WORKS STEPS ===== */
 (function renderSteps() {
