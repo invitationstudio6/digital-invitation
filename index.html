@@ -415,8 +415,8 @@ img{display:block;max-width:100%}
 #animatedShowcase{padding:72px 0 64px;background:linear-gradient(180deg,#faf5ee 0%,#fdfbf7 100%);position:relative;overflow:hidden;}
 .anim-strip{display:flex;gap:18px;overflow-x:auto;padding:8px 4px 24px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .anim-strip::-webkit-scrollbar{display:none;}
-.anim-card{position:relative;min-width:235px;max-width:235px;scroll-snap-align:start;background:#fff;border:1px solid rgba(92,61,46,.09);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s;box-shadow:0 4px 18px rgba(62,37,24,.06);}
-.anim-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 18px 44px rgba(62,37,24,.16);}
+.anim-card{position:relative;min-width:235px;max-width:235px;scroll-snap-align:start;background:#fff;border:1px solid rgba(92,61,46,.09);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .45s cubic-bezier(.19,1,.22,1),box-shadow .45s;box-shadow:0 6px 24px rgba(62,37,24,.1);transform:perspective(800px) rotateY(0);}
+.anim-card:hover{transform:perspective(800px) translateY(-8px) rotateY(-2deg) rotateX(1deg);box-shadow:0 24px 56px rgba(62,37,24,.22),0 0 0 1px rgba(196,168,130,.12);}
 .anim-card::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(115deg,rgba(255,244,224,0) 42%,rgba(255,244,224,.28) 50%,rgba(255,244,224,0) 58%);transform:translateX(-120%);pointer-events:none}
 .anim-card:hover::after{transition:transform .9s ease;transform:translateX(120%)}
 .anim-card .dt-imgwrap img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform 1s cubic-bezier(.19,1,.22,1);}
@@ -490,18 +490,22 @@ img{display:block;max-width:100%}
 .tpl-strip-head h3{font-family:"Cormorant Garamond",serif;font-size:clamp(19px,2.4vw,26px);font-weight:500;font-style:italic;color:#4a2e1c;margin:6px 0 0}
 
 /* ===== LIVE OPENING PREVIEWS ===== */
-.opv{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.opv{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;border-bottom:1px solid rgba(196,168,130,.1)}
 .opv i{position:absolute;display:block}
 
 /* pərdə — asılı teatr pərdəsi */
-.opv-curtain{background:#2a0810}
+.opv-curtain{background:#2a0810;overflow:hidden}
+.opv-curtain::after{content:"";position:absolute;bottom:0;left:10%;right:10%;height:30%;background:radial-gradient(ellipse at 50% 100%,rgba(233,206,126,.12),transparent 70%);z-index:0;opacity:0;animation:opvCurtGlow 7s ease-in-out infinite}
+@keyframes opvCurtGlow{0%,9%{opacity:0}20%,78%{opacity:1}92%,100%{opacity:0}}
 .opv-curtain i{top:0;bottom:0;width:52%;
     background:
-        linear-gradient(rgba(255,235,220,.05), rgba(20,0,5,.38)),
+        linear-gradient(rgba(255,235,220,.08), rgba(20,0,5,.38)),
+        repeating-linear-gradient(90deg,
+            rgba(255,255,255,.04) 0 3px, transparent 3px 14px),
         repeating-linear-gradient(90deg,
             #93303f 0px, #6b1626 12px, #4a0d1a 26px,
             #7b2438 40px, #a03a4c 52px, #6b1626 66px);
-    box-shadow:inset 0 0 46px rgba(0,0,0,.55), inset -6px 0 14px rgba(0,0,0,.35)}
+    box-shadow:inset 0 0 46px rgba(0,0,0,.55), inset -6px 0 14px rgba(0,0,0,.35), inset 0 0 80px rgba(0,0,0,.2)}
 .opv-curtain .c-l{left:0;border-right:4px solid #caa04c;animation:opvCurtL 7s ease-in-out infinite}
 .opv-curtain .c-r{right:0;border-left:4px solid #caa04c;animation:opvCurtR 7s ease-in-out infinite}
 .opv-curtain .c-t{left:-2%;width:104%;height:21%;bottom:auto;z-index:2;
@@ -536,8 +540,10 @@ img{display:block;max-width:100%}
 @keyframes opvStair{0%,12%{transform:translateX(0)}34%,64%{transform:translateX(104%)}88%,100%{transform:translateX(0)}}
 
 /* qapı */
-.opv-door{perspective:700px}
-.opv-door i{top:0;bottom:0;width:51%;background:linear-gradient(160deg,#31584a,#1e3d34 60%,#16302a)}
+.opv-door{perspective:700px;overflow:hidden}
+.opv-door::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,106,.12),transparent 50%);z-index:0;opacity:0;animation:opvDoorLight 7.5s ease-in-out infinite}
+@keyframes opvDoorLight{0%,12%{opacity:0}35%,70%{opacity:1}90%,100%{opacity:0}}
+.opv-door i{top:0;bottom:0;width:51%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 8px),linear-gradient(160deg,#31584a,#1e3d34 60%,#16302a)}
 .opv-door .d-l{left:0;transform-origin:left center;border-right:3px solid #c9a86a;animation:opvDoorL 7.5s ease-in-out infinite}
 .opv-door .d-r{right:0;transform-origin:right center;border-left:3px solid #c9a86a;animation:opvDoorR 7.5s ease-in-out infinite}
 @keyframes opvDoorL{0%,12%{transform:rotateY(0)}45%,70%{transform:rotateY(-98deg)}95%,100%{transform:rotateY(0)}}
@@ -546,11 +552,14 @@ img{display:block;max-width:100%}
 /* möhür */
 .opv-wax{display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 44%,rgba(253,251,247,0) 38%,rgba(58,22,16,.4))}
 .opv-wax i{position:static;width:36%;max-width:74px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#a33b3b,#6e1423 62%,#430b13);color:#f3d9a4;font-size:clamp(16px,2.2vw,26px);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 -4px 9px rgba(0,0,0,.35),inset 0 3px 6px rgba(255,255,255,.18);animation:opvWax 6.5s ease-in-out infinite}
-@keyframes opvWax{0%,16%{transform:scale(1);opacity:1}28%{transform:scale(2.7);opacity:0}30%{transform:scale(.55);opacity:0}56%{transform:scale(.55);opacity:0}76%,100%{transform:scale(1);opacity:1}}
+@keyframes opvWax{0%,16%{transform:scale(1);opacity:1;filter:blur(0)}28%{transform:scale(2.7);opacity:0;filter:blur(2px)}30%{transform:scale(.55);opacity:0;filter:blur(0)}56%{transform:scale(.55);opacity:0}76%,100%{transform:scale(1);opacity:1}}
+.opv-wax i::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(212,175,55,.3);animation:opvWaxRing 3s ease-in-out infinite}
+@keyframes opvWaxRing{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.2);opacity:.6}}
 
 /* ulduzlu gecə */
 .opv-stars{background:linear-gradient(180deg,rgba(12,19,44,.74),rgba(12,19,44,.22))}
-.opv-stars i{width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,.75);opacity:.15;animation:opvTwinkle 1.7s ease-in-out infinite alternate}
+.opv-stars i{width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,.75),0 0 16px rgba(255,255,255,.3);opacity:.15;animation:opvTwinkle 1.7s ease-in-out infinite alternate}
+.opv-stars i:nth-child(odd){width:3px;height:3px;box-shadow:0 0 6px 1px rgba(255,255,255,.6)}
 .opv-stars i:nth-child(1){top:18%;left:22%}
 .opv-stars i:nth-child(2){top:30%;left:70%;animation-delay:.3s}
 .opv-stars i:nth-child(3){top:56%;left:41%;animation-delay:.6s}
@@ -558,13 +567,15 @@ img{display:block;max-width:100%}
 .opv-stars i:nth-child(5){top:66%;left:81%;animation-delay:.45s}
 .opv-stars i:nth-child(6){top:47%;left:12%;animation-delay:1.2s}
 @keyframes opvTwinkle{from{opacity:.12;transform:scale(.6)}to{opacity:1;transform:scale(1.3)}}
+.opv-stars::after{content:"";position:absolute;top:15%;left:-10%;width:40px;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent);animation:shootStar 4s ease-in-out infinite}
+@keyframes shootStar{0%,80%{left:-10%;opacity:0}85%{opacity:1}100%{left:110%;opacity:0}}
 
 /* şənlik partlayışı */
-.opv-pop i{width:7px;height:11px;border-radius:2px;top:46%;left:48%;opacity:0;transform:translate(-50%,-50%);animation:opvPop 3.4s ease-out infinite}
+.opv-pop i{width:7px;height:11px;border-radius:2px;top:46%;left:48%;opacity:0;transform:translate(-50%,-50%);animation:opvPop 3.4s ease-out infinite;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 @keyframes opvPop{0%{opacity:0;transform:translate(-50%,-50%) rotate(0deg)}6%{opacity:1}55%{opacity:1;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(300deg)}72%,100%{opacity:0;transform:translate(calc(-50% + var(--tx)*1.2),calc(-50% + var(--ty)*1.2)) rotate(345deg)}}
 
 /* çiçək kəsmə */
-.opv-petals i{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#f7c6d0,#e58fa5);border-radius:62% 0 62% 0;top:-16px;opacity:0;animation:opvFall 4.8s linear infinite}
+.opv-petals i{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#f7c6d0,#e58fa5);border-radius:62% 0 62% 0;top:-16px;opacity:0;animation:opvFall 4.8s linear infinite;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
 .opv-petals i:nth-child(1){left:12%;animation-duration:4.4s}
 .opv-petals i:nth-child(2){left:31%;animation-delay:.8s;animation-duration:5.1s}
 .opv-petals i:nth-child(3){left:53%;animation-delay:1.5s;animation-duration:4.7s}
@@ -583,6 +594,7 @@ img{display:block;max-width:100%}
 .opv-env .e-ltr{left:12%;right:12%;top:34%;bottom:18%;background:#fffdf6;border-radius:3px;box-shadow:0 -4px 10px rgba(120,90,50,.25);animation:opvEnvLtr 5.8s ease-in-out infinite}
 .opv-env .e-pkt{left:8%;right:8%;top:26%;bottom:14%;background:linear-gradient(170deg,#EBDCC0,#D8C096);border-radius:4px;box-shadow:0 8px 20px rgba(90,60,25,.35)}
 .opv-env .e-flp{left:8%;right:8%;top:26%;height:38%;background:linear-gradient(180deg,#E3CDA5,#CFAE79);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;animation:opvEnvFlp 5.8s ease-in-out infinite;filter:drop-shadow(0 3px 5px rgba(90,60,20,.3))}
+.opv-env .e-wax::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(178,59,59,.3);animation:opvWaxRing 2.5s ease-in-out infinite}
 .opv-env .e-wax{left:50%;top:56%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B23B3B,#7C1A1A);animation:opvEnvWax 5.8s ease-in-out infinite}
 @keyframes opvEnvFlp{0%,12%{transform:rotateX(0)}30%,62%{transform:rotateX(-165deg)}85%,100%{transform:rotateX(0)}}
 @keyframes opvEnvLtr{0%,12%{transform:translateY(0)}32%,58%{transform:translateY(-42%)}82%,100%{transform:translateY(0)}}
@@ -592,13 +604,15 @@ img{display:block;max-width:100%}
 .opv-rbn::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,58,99,.92),rgba(126,37,73,.94));animation:opvRbnBg 5.2s ease-in-out infinite}
 @keyframes opvRbnBg{0%,32%{opacity:1}56%,80%{opacity:.12}100%{opacity:1}}
 .opv-rbn i{position:absolute;z-index:1}
-.opv-rbn .r-v{top:-6%;bottom:-6%;left:calc(50% - 11px);width:22px;background:linear-gradient(90deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnV 5.2s ease-in-out infinite}
-.opv-rbn .r-h{left:-6%;right:-6%;top:calc(50% - 11px);height:22px;background:linear-gradient(180deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnH 5.2s ease-in-out infinite}
+.opv-rbn .r-v{top:-6%;bottom:-6%;left:calc(50% - 11px);width:22px;background:linear-gradient(90deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnV 5.2s ease-in-out infinite;box-shadow:0 0 12px rgba(140,100,40,.25)}
+.opv-rbn .r-h{left:-6%;right:-6%;top:calc(50% - 11px);height:22px;background:linear-gradient(180deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnH 5.2s ease-in-out infinite;box-shadow:0 0 12px rgba(140,100,40,.25)}
 .opv-rbn .r-bow{left:50%;top:50%;width:44px;height:30px;margin:-15px 0 0 -22px;z-index:2;background:
     radial-gradient(circle at 22% 50%, #F2DFAC 0 30%, transparent 32%),
     radial-gradient(circle at 78% 50%, #F2DFAC 0 30%, transparent 32%),
     radial-gradient(circle at 50% 50%, #EED9A0 0 26%, #A3762E 30% 48%, transparent 52%);
     animation:opvRbnBow 5.2s cubic-bezier(.3,1.6,.5,1) infinite}
+.opv-rbn .r-bow::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:radial-gradient(circle,#EED9A0,transparent);box-shadow:0 0 10px rgba(232,200,122,.4);animation:opvBowGlow 2s ease-in-out infinite}
+@keyframes opvBowGlow{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
 .opv-rbn::before{content:"";position:absolute;left:-10%;right:-10%;height:120%;top:-10%;z-index:3;background:linear-gradient(180deg,rgba(253,244,236,.95),rgba(246,226,234,.92) 46%,transparent 46%);transform:translateY(-102%);animation:opvRbnOpen 5.2s cubic-bezier(.7,0,.25,1) infinite}
 @keyframes opvRbnV{0%,10%{transform:translateX(0)}30%,64%{transform:translateX(-130%) rotate(-6deg);opacity:.9}78%,100%{transform:translateX(0);opacity:1}}
 @keyframes opvRbnH{0%,10%{transform:translateY(0)}30%,64%{transform:translateY(-130%) rotate(4deg);opacity:.9}78%,100%{transform:translateY(0);opacity:1}}
@@ -607,9 +621,11 @@ img{display:block;max-width:100%}
 
 /* 🪵 taxta qapı */
 .opv-wdoor{perspective:500px;background:radial-gradient(circle at 50% 45%,rgba(255,220,150,.16),rgba(25,16,9,.88) 75%)}
-.opv-wdoor .w-panel{left:22%;right:22%;top:10%;bottom:8%;border-radius:44px 44px 4px 4px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,transparent 2px 11px),linear-gradient(180deg,#7A5230,#5E3D21 55%,#4A2E17);transform-origin:left center;box-shadow:inset 0 0 16px rgba(0,0,0,.5),4px 6px 18px rgba(0,0,0,.5);animation:opvWDoor 5.6s ease-in-out infinite}
-.opv-wdoor .w-knob{right:27%;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#E8C87A,#8a6a30);animation:opvWKnob 5.6s ease-in-out infinite}
+.opv-wdoor .w-panel{left:22%;right:22%;top:10%;bottom:8%;border-radius:44px 44px 4px 4px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,transparent 2px 11px),repeating-linear-gradient(0deg,rgba(255,220,160,.04) 0 2px,transparent 2px 20px),linear-gradient(180deg,#7A5230,#5E3D21 55%,#4A2E17);transform-origin:left center;box-shadow:inset 0 0 16px rgba(0,0,0,.5),4px 6px 18px rgba(0,0,0,.5);animation:opvWDoor 5.6s ease-in-out infinite}
+.opv-wdoor .w-knob{right:27%;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#E8C87A,#8a6a30);box-shadow:0 0 8px rgba(232,200,122,.3);animation:opvWKnob 5.6s ease-in-out infinite}
 @keyframes opvWDoor{0%,12%{transform:rotateY(0)}42%,68%{transform:rotateY(-84deg)}94%,100%{transform:rotateY(0)}}
+.opv-wdoor::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(255,236,200,.15),transparent 50%);z-index:0;opacity:0;animation:opvWDoorLight 5.6s ease-in-out infinite}
+@keyframes opvWDoorLight{0%,12%{opacity:0}35%,68%{opacity:1}88%,100%{opacity:0}}
 @keyframes opvWKnob{0%,12%{opacity:1}42%{opacity:.25}68%{opacity:.25}94%,100%{opacity:1}}
 
 @media (prefers-reduced-motion: reduce){.opv{display:none}}

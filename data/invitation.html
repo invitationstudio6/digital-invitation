@@ -285,6 +285,23 @@ a { text-decoration: none; color: inherit; }
 }
 [data-opening="door"] .door-left::after { right: 16px; }
 [data-opening="door"] .door-right::after { left: 16px; }
+[data-opening="door"] .door-knock {
+    position: absolute;
+    right: 22%;
+    top: 52%;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    z-index: 3;
+    animation: knockSwing 1.2s ease-in-out 0s 2 both;
+}
+@keyframes knockSwing {
+    0%,100% { transform: rotate(0); }
+    25% { transform: rotate(20deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(10deg); }
+}
 [data-opening="door"] .door-open .door-left { transform: perspective(1600px) rotateY(-105deg); }
 [data-opening="door"] .door-open .door-right { transform: perspective(1600px) rotateY(105deg); }
 [data-opening="door"] .door-invitation {
@@ -346,6 +363,8 @@ a { text-decoration: none; color: inherit; }
 
 /* Type: Stairs Climbing */
 [data-opening="stairs"] .opening {
+    perspective: 1200px;
+
     background: var(--bg);
     overflow: hidden;
 }
@@ -843,6 +862,8 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="royal-scroll"] .envelope-scene { display: none; }
 [data-opening="royal-scroll"] .opening {
+    perspective: 1100px;
+
     background:
         radial-gradient(ellipse at 50% 50%, rgba(212,184,150,.15), transparent 60%),
         linear-gradient(150deg, #2D2014 0%, #1A1208 50%, #2D2014 100%);
@@ -1085,6 +1106,19 @@ a { text-decoration: none; color: inherit; }
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
 }
+[data-opening="stairs"] .stairs-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212,175,55,.15), transparent 60%);
+    pointer-events: none;
+    z-index: 5;
+    animation: stairGlow 4s ease-in-out infinite;
+}
+@keyframes stairGlow { 0%,100% { opacity: .4; } 50% { opacity: .8; } }
 [data-opening="stairs"] .stairs-card {
     position: absolute;
     top: 5%;
@@ -1174,8 +1208,11 @@ a { text-decoration: none; color: inherit; }
     padding: 44px 30px;
     background: var(--white);
     border: 1px solid var(--border-strong);
-    box-shadow: 0 30px 80px rgba(0,0,0,.18);
+    box-shadow: 0 30px 80px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.08) inset;
+    transform-style: preserve-3d;
+    animation: sigCardFloat 6s ease-in-out infinite;
 }
+@keyframes sigCardFloat { 0%,100% { transform: perspective(800px) rotateX(0) translateY(0); } 50% { transform: perspective(800px) rotateX(.5deg) translateY(-4px); } }
 
 .sig-card small {
     font-family: "DM Sans", sans-serif;
@@ -1208,8 +1245,9 @@ a { text-decoration: none; color: inherit; }
     animation: sigCardIn .9s cubic-bezier(.22,.9,.32,1.1) both;
 }
 @keyframes sigCardIn {
-    from { opacity: 0; transform: translateY(24px) scale(.94); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
+    0% { opacity: 0; transform: perspective(800px) translateY(60px) rotateX(12deg) scale(.88); filter: blur(6px); }
+    60% { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: perspective(800px) translateY(0) rotateX(0deg) scale(1); filter: blur(0); }
 }
 
 
@@ -1223,7 +1261,13 @@ a { text-decoration: none; color: inherit; }
         radial-gradient(circle at 50% 30%, rgba(255,255,255,.5), transparent 55%),
         linear-gradient(160deg, #F6EFE2, #E7D9BC);
     overflow: hidden;
+    perspective: 1000px;
 }
+.es-wrap {
+    transform-style: preserve-3d;
+    animation: esFloat 5s ease-in-out infinite;
+}
+@keyframes esFloat { 0%,100% { transform: perspective(600px) rotateX(0) translateY(0); } 50% { transform: perspective(600px) rotateX(1.5deg) translateY(-6px); } }
 
 .es-wrap {
     position: relative;
@@ -1282,11 +1326,20 @@ a { text-decoration: none; color: inherit; }
     transition: transform .5s ease, opacity .45s ease .15s;
     animation: waxGlow 2.5s ease-in-out infinite;
 }
-@keyframes waxGlow { 0%,100% { box-shadow: 0 4px 12px rgba(60,10,10,.45), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 20px rgba(180,60,50,.25); } 50% { box-shadow: 0 4px 16px rgba(60,10,10,.55), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 30px rgba(180,60,50,.4); } }
+@keyframes waxGlow { 0%,100% { box-shadow: 0 4px 12px rgba(60,10,10,.45), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 20px rgba(180,60,50,.25); } 50% { box-shadow: 0 4px 16px rgba(60,10,10,.55), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 40px rgba(180,60,50,.5), 0 0 60px rgba(180,60,50,.2); } }
+.wax-seal-big::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,.25);
+    animation: waxRing 3s ease-in-out infinite;
+}
+@keyframes waxRing { 0%,100% { transform: scale(1); opacity: .3; } 50% { transform: scale(1.12); opacity: .6; } }
 
-.scene-opened[data-opening="envelope-seal"] .es-wax { transform: translate(-50%,-58%) scale(2); opacity: 0; }
-.scene-opened[data-opening="envelope-seal"] .es-flap { transform: rotateX(-178deg); }
-.scene-opened[data-opening="envelope-seal"] .es-letter { transform: translateY(-48%); }
+.scene-opened[data-opening="envelope-seal"] .es-wax { transform: translate(-50%,-58%) scale(2.5) rotate(20deg); opacity: 0; filter: blur(2px); }
+.scene-opened[data-opening="envelope-seal"] .es-flap { transform: rotateX(-185deg); filter: brightness(1.15); }
+.scene-opened[data-opening="envelope-seal"] .es-letter { transform: translateY(-52%) scale(1.04); }
 .scene-opened[data-opening="envelope-seal"] .es-wrap { animation: esAway .8s ease 1s forwards; }
 @keyframes esAway { to { opacity: 0; transform: translateY(-46px) scale(.95); } }
 
@@ -1349,8 +1402,10 @@ a { text-decoration: none; color: inherit; }
     position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
     width: 26px; height: 26px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #EED9A0, #A3762E);
-    box-shadow: 0 2px 6px rgba(90,60,10,.5);
+    box-shadow: 0 2px 6px rgba(90,60,10,.5), 0 0 12px rgba(232,200,122,.3);
+    animation: bowPulse 2s ease-in-out infinite;
 }
+@keyframes bowPulse { 0%,100% { box-shadow: 0 2px 6px rgba(90,60,10,.5), 0 0 12px rgba(232,200,122,.3); } 50% { box-shadow: 0 2px 8px rgba(90,60,10,.6), 0 0 22px rgba(232,200,122,.5); } }
 
 .scene-opened[data-opening="ribbon"] .rb-band-v { transform: translateX(-130%) rotate(-7deg); opacity: 0; }
 .scene-opened[data-opening="ribbon"] .rb-band-h { transform: translateY(-130%) rotate(5deg); opacity: 0; }
@@ -1423,9 +1478,19 @@ a { text-decoration: none; color: inherit; }
 }
 .scene-opened[data-opening="wood-door"] .wd-handle { transform: translateY(-50%) rotate(-60deg); box-shadow: 0 2px 8px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 16px rgba(232,200,122,.5); }
 
-.scene-opened[data-opening="wood-door"] .wd-door { transform: rotateY(-102deg); }
+.scene-opened[data-opening="wood-door"] .wd-door { transform: rotateY(-105deg) scale(.96); filter: brightness(.5); }
 .scene-opened[data-opening="wood-door"] .wd-frame { animation: wdAway .8s ease 1.05s forwards; }
-@keyframes wdAway { to { opacity: 0; transform: translateY(-40px); } }
+@keyframes wdAway { to { opacity: 0; transform: translateY(-60px) scale(.92); } }
+.wd-light {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(ellipse at 50% 45%, rgba(255,236,200,.18), transparent 50%);
+    opacity: 0;
+    transition: opacity 1.2s ease .8s;
+    pointer-events: none;
+}
+.scene-opened[data-opening="wood-door"] .wd-light { opacity: 1; }
 
 /* =====================================================
    TYPE: WAX SEAL (royal-seal)
@@ -1576,8 +1641,29 @@ a { text-decoration: none; color: inherit; }
     box-shadow: 0 4px 18px rgba(0,0,0,.5);
 }
 
-.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg); filter: brightness(.6); }
-.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg); filter: brightness(.6); }
+.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg) scale(.92); filter: brightness(.45) blur(2px); }
+.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg) scale(.92); filter: brightness(.45) blur(2px); }
+.curtain-dust {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+.curtain-dust span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(233,206,126,.5);
+    animation: dustFloat 3s ease-out forwards;
+}
+@keyframes dustFloat {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 1; transform: translateY(-20px) scale(1); }
+    100% { opacity: 0; transform: translateY(-120px) translateX(var(--dx,30px)) scale(0); }
+}
+.scene-opened[data-opening="curtain"] .curtain-dust span { animation-play-state: running; }
 .scene-opened[data-opening="curtain"] .curtain-rail  { opacity: 0; transition: opacity .8s ease .6s; }
 
 [data-opening="curtain"] .sig-scene { z-index: 2; }
@@ -1611,6 +1697,8 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="floral-paper"] .envelope-scene { display: none; }
 [data-opening="floral-paper"] .opening {
+    perspective: 900px;
+
     background:
         radial-gradient(circle at 22% 18%, rgba(143,174,126,.18), transparent 42%),
         radial-gradient(circle at 78% 82%, rgba(200,152,96,.16), transparent 44%),
@@ -1729,6 +1817,8 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="celebration-pop"] .envelope-scene { display: none; }
 [data-opening="celebration-pop"] .opening {
+    perspective: 800px;
+
     background:
         radial-gradient(circle at 18% 22%, rgba(255,159,67,.16), transparent 40%),
         radial-gradient(circle at 84% 76%, rgba(46,196,182,.14), transparent 42%),
@@ -3478,7 +3568,20 @@ footer p {
 
     /* Opening scenes */
     .envelope-scene { width: 92vw; }
-    [data-opening="stairs"] .stairs-card { width: 86%; top: 6%; }
+    [data-opening="stairs"] .stairs-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212,175,55,.15), transparent 60%);
+    pointer-events: none;
+    z-index: 5;
+    animation: stairGlow 4s ease-in-out infinite;
+}
+@keyframes stairGlow { 0%,100% { opacity: .4; } 50% { opacity: .8; } }
+[data-opening="stairs"] .stairs-card { width: 86%; top: 6%; }
     .sig-scene .sig-card { width: 90vw; min-height: auto; padding: 36px 22px; }
     .wax-seal-big { width: 92px; height: 92px; font-size: 34px; }
     .open-button { margin-top: 30px; padding: 15px 32px; letter-spacing: 3px; min-height: 48px; }
@@ -3629,7 +3732,8 @@ footer p {
 
     <!-- Stairs Scene (for stairs opening type) -->
     <div class="stairs-scene" id="stairsScene" style="display:none">
-        <div class="stairs-steps">
+        <div class="stairs-glow"></div>
+            <div class="stairs-steps">
             <div class="stairs-step"></div>
             <div class="stairs-step"></div>
             <div class="stairs-step"></div>
@@ -3680,6 +3784,7 @@ footer p {
     <!-- Signature Scene · WOODEN DOOR -->
     <div class="sig-scene" id="woodDoorScene" data-scene-for="wood-door">
         <div class="wd-frame">
+            <div class="wd-light"></div>
             <div class="wd-door">
                 <i class="wd-planks"></i>
                 <i class="wd-hinge t"></i>
