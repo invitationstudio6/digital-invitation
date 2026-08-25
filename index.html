@@ -265,15 +265,8 @@ img{display:block;max-width:100%}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 
 /* ===== FLOATING INVITATION CARDS (hero) ===== */
-.hero-floats{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;perspective:1200px}
-.float-card{position:absolute;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px -10px rgba(62,37,24,.25),0 0 0 1px rgba(201,168,106,.15);animation:floatDrift linear infinite;opacity:.6}
-.float-card img{width:100%;height:100%;object-fit:cover}
-.float-card:nth-child(1){width:140px;height:190px;top:12%;left:5%;animation-duration:18s;animation-delay:0s;transform:rotate(-8deg)}
-.float-card:nth-child(2){width:120px;height:160px;top:20%;right:8%;animation-duration:22s;animation-delay:-5s;transform:rotate(5deg)}
-.float-card:nth-child(3){width:100px;height:140px;bottom:18%;left:10%;animation-duration:20s;animation-delay:-10s;transform:rotate(3deg)}
-.float-card:nth-child(4){width:130px;height:175px;bottom:25%;right:5%;animation-duration:25s;animation-delay:-8s;transform:rotate(-4deg)}
-.float-card:nth-child(5){width:110px;height:150px;top:55%;left:50%;animation-duration:20s;animation-delay:-12s;transform:rotate(7deg)}
-@keyframes floatDrift{0%{transform:translateY(0) translateX(0) rotate(var(--r,-5deg))}25%{transform:translateY(-20px) translateX(15px) rotate(calc(var(--r,-5deg) + 3deg))}50%{transform:translateY(-8px) translateX(-10px) rotate(calc(var(--r,-5deg) - 2deg))}75%{transform:translateY(-25px) translateX(8px) rotate(calc(var(--r,-5deg) + 4deg))}100%{transform:translateY(0) translateX(0) rotate(var(--r,-5deg))}}
+.hero-floats{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+/* Old float-card removed — replaced by hero-inv-card oval system */
 
 /* ===== FLOATING PARTICLES ===== */
 .particles{position:absolute;inset:0;pointer-events:none;z-index:1}
@@ -841,8 +834,7 @@ body.has-announce .mobile-menu{padding-top:150px}
     .hero-text{font-size:10px}
     .hero-buttons{flex-direction:column;align-items:center}
     .hero-buttons .btn{width:min(220px,78vw)}
-    .hero-floats{display:flex;gap:10px;justify-content:center;margin-top:28px;padding:0 12px}
-    .float-card{width:calc(50% - 5px);max-width:140px;border-radius:10px;box-shadow:0 10px 28px rgba(62,37,24,.15)}
+    /* Hero invitation cards handle their own mobile layout */
     
     .designs-grid{grid-template-columns:1fr 1fr;gap:10px}
     .cat-collection-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -866,8 +858,7 @@ body.has-announce .mobile-menu{padding-top:150px}
     .hero h1 span{font-size:11px;letter-spacing:2px}
     .hero-text{font-size:9px;line-height:1.9}
     .hero-buttons .btn{padding:14px 20px;font-size:9px}
-    .hero-floats{gap:8px;margin-top:24px;padding:0 8px}
-    .float-card{width:calc(50% - 4px);max-width:130px;border-radius:8px;box-shadow:0 8px 24px rgba(62,37,24,.12)}
+    /* Hero cards mobile handled by hero-invites */
     .stat-num{font-size:28px}
     .stats-strip{padding:24px 12px;margin-top:0}
     .testi-card{padding:26px 16px}
@@ -911,6 +902,45 @@ body.has-announce .mobile-menu{padding-top:150px}
 @keyframes fadeRight{from{opacity:0;transform:translateX(-20px)}to{opacity:.15;transform:translateX(0)}}
 @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 .hero-floats{animation:heroFloat 6s ease-in-out infinite}
+
+
+/* ===== FLOATING OVAL INVITATION CARDS ===== */
+.hero-invites{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.hero-inv-card{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 20px 60px -10px rgba(45,27,18,.25),0 0 0 3px rgba(255,252,247,.6),0 0 0 4px rgba(212,165,116,.2);transition:transform .6s cubic-bezier(.19,1,.22,1)}
+.hi-img{width:100%;height:100%;background-size:cover;background-position:center;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.hero-inv-card:hover .hi-img{transform:scale(1.15)}
+.hi-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,0) 40%,rgba(26,26,46,.75) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:12px 8px 16px;opacity:0;transition:opacity .4s}
+.hero-inv-card:hover .hi-overlay{opacity:1}
+.hi-tag{font-size:7px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.hi-names{font-family:"Cormorant Garamond",serif;font-size:13px;font-weight:400;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+/* Individual card positions & animations */
+.hi-1{width:130px;height:130px;top:12%;left:4%;animation:hiFloat1 8s ease-in-out infinite;transform:rotate(-6deg)}
+.hi-2{width:110px;height:110px;top:18%;right:6%;animation:hiFloat2 9s ease-in-out infinite;transform:rotate(4deg)}
+.hi-3{width:100px;height:100px;bottom:22%;left:8%;animation:hiFloat3 7s ease-in-out infinite;transform:rotate(3deg)}
+.hi-4{width:120px;height:120px;bottom:16%;right:4%;animation:hiFloat1 10s ease-in-out infinite;transform:rotate(-3deg)}
+.hi-5{width:90px;height:90px;top:50%;left:2%;animation:hiFloat2 8.5s ease-in-out infinite;transform:rotate(5deg)}
+.hi-6{width:95px;height:95px;top:45%;right:2%;animation:hiFloat3 9.5s ease-in-out infinite;transform:rotate(-4deg)}
+@keyframes hiFloat1{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-18px) rotate(-3deg)}}
+@keyframes hiFloat2{0%,100%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(-14px) rotate(7deg)}}
+@keyframes hiFloat3{0%,100%{transform:translateY(0) rotate(3deg)}50%{transform:translateY(-20px) rotate(0deg)}}
+/* Mobile: smaller, fewer visible */
+@media(max-width:1024px){
+    .hi-1{width:100px;height:100px;left:2%}
+    .hi-2{width:90px;height:90px;right:3%}
+    .hi-3{width:80px;height:80px;left:4%}
+    .hi-4{width:95px;height:95px;right:2%}
+    .hi-5,.hi-6{display:none}
+}
+@media(max-width:600px){
+    .hero-invites{opacity:.6}
+    .hi-1{width:70px;height:70px;top:8%;left:3%}
+    .hi-2{width:65px;height:65px;top:12%;right:3%}
+    .hi-3{width:55px;height:55px;bottom:28%;left:5%}
+    .hi-4{width:60px;height:60px;bottom:22%;right:4%}
+    .hi-5,.hi-6{display:none}
+    .hi-overlay{opacity:1}
+    .hi-names{font-size:10px}
+}
 
 /* ===== PREMIUM IDENTITY ===== */
 .section-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 40px}
@@ -1022,16 +1052,45 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 
 <!-- ══════ HERO ══════ -->
 <section class="hero" id="home">
-    <div class="hero-floats" id="particles" aria-hidden="true"></div>
+    <!-- Floating oval invitation cards -->
+    <div class="hero-invites" aria-hidden="true">
+        <div class="hero-inv-card hi-1">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Toy</div><div class="hi-names">Aysel & Murad</div></div>
+        </div>
+        <div class="hero-inv-card hi-2">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Nişan</div><div class="hi-names">Leyla & Tural</div></div>
+        </div>
+        <div class="hero-inv-card hi-3">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Xına</div><div class="hi-names">Nigar & Elvin</div></div>
+        </div>
+        <div class="hero-inv-card hi-4">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Ad Günü</div><div class="hi-names">Səbinə</div></div>
+        </div>
+        <div class="hero-inv-card hi-5">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Biznes</div><div class="hi-names">Luna Studio</div></div>
+        </div>
+        <div class="hero-inv-card hi-6">
+            <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80')"></div>
+            <div class="hi-overlay"><div class="hi-tag">Şadlıq</div><div class="hi-names">Günel & Kamran</div></div>
+        </div>
+    </div>
+    <!-- Decorative elements -->
     <div class="hero-deco hero-deco-ring"></div>
+    <div class="hero-deco hero-deco-dots"><span></span><span></span><span></span></div>
     <div class="hero-deco hero-deco-line"></div>
+    <!-- Main content -->
     <div class="hero-content">
         <div class="hero-label">Digital dəvətnamələr</div>
         <h1><span class="hero-gradient">gözəl anlar,<br>gözəl dəvətlərlə</span><span>hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
         <p class="hero-text">3 sadə addımda öz rəqəmsal dəvətnaməni yarat. Dizaynını seç, məlumatlarını daxil et, linkini paylaş.</p>
         <div class="hero-buttons">
             <a href="#designs" class="btn btn-dark">Dizaynları kəşf et &nbsp;↓</a>
-            <a href="#designs" class="btn btn-light">Öz dəvətnaməni yarat</a>
+            <a href="#designs" class="btn btn-light">Öz dəvətnəməni yarat</a>
         </div>
     </div>
 </section>
@@ -1409,18 +1468,8 @@ window.addEventListener("scroll", function() {
 });
 
 
-/* ===== PARTICLES ===== */
-(function() {
-    var c = document.getElementById("particles");
-    if (!c) return;
-    for (var i = 0; i < 20; i++) {
-        var d = document.createElement("div");
-        d.className = "particle";
-        var s = Math.random() * 4 + 2;
-        d.style.cssText = "width:" + s + "px;height:" + s + "px;left:" + Math.random() * 100 + "%;background:" + (Math.random() > 0.5 ? "#C4A882" : "#A896BC") + ";animation-duration:" + (Math.random() * 10 + 10) + "s;animation-delay:" + (Math.random() * 10) + "s;opacity:" + (Math.random() * 0.3 + 0.1);
-        c.appendChild(d);
-    }
-})();
+/* ===== HERO INVITATION CARDS (static HTML, no JS needed) ===== */
+/* Cards are animated via CSS keyframes */
 
 
 /* ===== SMOOTH SCROLL ===== */
