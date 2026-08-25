@@ -107,59 +107,35 @@ const LUNA_CATEGORIES = [
 const LUNA_PACKAGES = [
     {
         id: "video",
-        name: "Video",
+        name: "Video Dəvətnamə",
         price: 20,
         currency: "AZN",
-        featured: false,
-        tagline: { az: "Animasiyalı video dəvətnamə", en: "Animated video invitation", ru: "Анимированное видео-приглашение", tr: "Animasyonlu video davetiye" },
-        features: {
-            designChoice: false,
-            personalInfo: true,
-            shareLink: true,
-            countdown: false,
-            maps: false,
-            rsvp: false,
-            gallery: false,
-            music: false,
-            story: false,
-            animations: false,
-            videoBackground: true
-        },
-        formFields: ["names", "date", "time", "venue", "location", "message", "videoFile"],
-        featureLabels: {
-            az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
-            en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
-            ru: { designChoice: "Выбор дизайна", personalInfo: "Личная информация", shareLink: "Ссылка", countdown: "Обратный отсчёт", maps: "Google Maps", rsvp: "RSVP", gallery: "Галерея", music: "Музыка", story: "История", animations: "Анимации", videoBackground: "Видео фон" },
-            tr: { designChoice: "Tasarım seçimi", personalInfo: "Kişisel bilgi", shareLink: "Paylaşım linki", countdown: "Geri sayım", maps: "Google Maps", rsvp: "RSVP", gallery: "Galeri", music: "Müzik", story: "Hikaye", animations: "Animasyonlar", videoBackground: "Video arka plan" }
-        }
+        tagline: "Animasiyalı video dəvətnamə",
+        features: [
+            "Video dəvətnamə",
+            "Cütlüyün adı",
+            "Tarix və saat",
+            "Məkan",
+            "Müştərinin fotoları",
+            "Fon musiqisi",
+            "Animasiya və keçidlər"
+        ],
+        formFields: ["names", "date", "time", "venue", "location", "message", "videoFile"]
     },
     {
         id: "basic",
         name: "Basic",
         price: 25,
         currency: "AZN",
-        featured: false,
-        tagline: { az: "Sadə və zərif", en: "Simple & elegant", ru: "Простое и элегантное", tr: "Basit ve zarif" },
-        features: {
-            designChoice: true,
-            personalInfo: true,
-            shareLink: true,
-            countdown: false,
-            maps: false,
-            rsvp: false,
-            gallery: false,
-            music: false,
-            story: false,
-            animations: false,
-            videoBackground: false
-        },
-        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map"],
-        featureLabels: {
-            az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
-            en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
-            ru: { designChoice: "Выбор дизайна", personalInfo: "Личная информация", shareLink: "Ссылка", countdown: "Обратный отсчёт", maps: "Google Maps", rsvp: "RSVP", gallery: "Галерея", music: "Музыка", story: "История", animations: "Анимации", videoBackground: "Видео фон" },
-            tr: { designChoice: "Tasarım seçimi", personalInfo: "Kişisel bilgi", shareLink: "Paylaşım linki", countdown: "Geri sayım", maps: "Google Maps", rsvp: "RSVP", gallery: "Galeri", music: "Müzik", story: "Hikaye", animations: "Animasyonlar", videoBackground: "Video arka plan" }
-        }
+        tagline: "Sadə və zərif rəqəmsal dəvətnamə",
+        features: [
+            "Digital invitation",
+            "Cütlüyün adları",
+            "Tarix və saat",
+            "Məkan + Google Maps",
+            "Countdown"
+        ],
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown"]
     },
     {
         id: "premium",
@@ -167,55 +143,37 @@ const LUNA_PACKAGES = [
         price: 40,
         currency: "AZN",
         featured: true,
-        tagline: { az: "Ən populyar seçim", en: "Most popular choice", ru: "Самый популярный выбор", tr: "En popüler seçim" },
-        features: {
-            designChoice: true,
-            personalInfo: true,
-            shareLink: true,
-            countdown: true,
-            maps: true,
-            rsvp: true,
-            gallery: true,
-            music: false,
-            story: false,
-            animations: true,
-            videoBackground: false
-        },
-        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "story", "agenda"],
-        featureLabels: {
-            az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
-            en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
-            ru: { designChoice: "Выбор дизайна", personalInfo: "Личная информация", shareLink: "Ссылка", countdown: "Обратный отсчёт", maps: "Google Maps", rsvp: "RSVP", gallery: "Галерея", music: "Музыка", story: "История", animations: "Анимации", videoBackground: "Видео фон" },
-            tr: { designChoice: "Tasarım seçimi", personalInfo: "Kişisel bilgi", shareLink: "Paylaşım linki", countdown: "Geri sayım", maps: "Google Maps", rsvp: "RSVP", gallery: "Galeri", music: "Müzik", story: "Hikaye", animations: "Animasyonlar", videoBackground: "Video arka plan" }
-        }
+        tagline: "Ən çox tövsiyə olunan paket",
+        features: [
+            "Basic paketdə olan hər şey +",
+            "RSVP forması",
+            "Qonaq sayı",
+            "Qonaqdan mesaj",
+            "Rəng və üslub seçimi",
+            "10 foto qaleryası",
+            "\"Our Story\" bölməsi",
+            "6 foto"
+        ],
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "story"]
     },
     {
         id: "luxury",
         name: "Luxury",
-        price: 65,
+        price: 60,
         currency: "AZN",
-        featured: false,
-        tagline: { az: "Tam premium təcrübə", en: "Full premium experience", ru: "Полный премиальный опыт", tr: "Tam premium deneyim" },
-        features: {
-            designChoice: true,
-            personalInfo: true,
-            shareLink: true,
-            countdown: true,
-            maps: true,
-            rsvp: true,
-            gallery: true,
-            music: true,
-            story: true,
-            animations: true,
-            videoBackground: false
-        },
-        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "music", "story", "agenda", "animations"],
-        featureLabels: {
-            az: { designChoice: "Dizayn seçimi", personalInfo: "Fərdi məlumatlar", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Qalereya", music: "Musiqi", story: "Hekayə", animations: "Animasiyalar", videoBackground: "Video fon" },
-            en: { designChoice: "Design choice", personalInfo: "Personal info", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP", gallery: "Gallery", music: "Music", story: "Story", animations: "Animations", videoBackground: "Video background" },
-            ru: { designChoice: "Выбор дизайна", personalInfo: "Личная информация", shareLink: "Ссылка", countdown: "Обратный отсчёт", maps: "Google Maps", rsvp: "RSVP", gallery: "Галерея", music: "Музыка", story: "История", animations: "Анимации", videoBackground: "Видео фон" },
-            tr: { designChoice: "Tasarım seçimi", personalInfo: "Kişisel bilgi", shareLink: "Paylaşım linki", countdown: "Geri sayım", maps: "Google Maps", rsvp: "RSVP", gallery: "Galeri", music: "Müzik", story: "Hikaye", animations: "Animasyonlar", videoBackground: "Video arka plan" }
-        }
+        tagline: "Daha xüsusi və premium görünüş",
+        features: [
+            "Fərdiləşdirilmiş dizayn",
+            "Cütlüyə xüsusi mətn",
+            "Foto qalerya",
+            "Countdown",
+            "Google Maps",
+            "RSVP",
+            "Qonaq sayı",
+            "Mesaj bölməsi",
+            "Musiqi"
+        ],
+        formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "music", "story"]
     }
 ];
 
@@ -1120,14 +1078,14 @@ function lunaDeleteVideoInvitation(id) {
    cards/QR, etc. have their own pricing)
 ===================================================== */
 const LUNA_CATEGORY_PRICING = {
-    wedding:       { video: 20, basic: 25, premium: 40, luxury: 65 },
-    engagement:    { video: 20, basic: 25, premium: 40, luxury: 65 },
-    henna:         { video: 20, basic: 25, premium: 40, luxury: 65 },
+    wedding:       { video: 20, basic: 25, premium: 40, luxury: 60 },
+    engagement:    { video: 20, basic: 25, premium: 40, luxury: 60 },
+    henna:         { video: 20, basic: 25, premium: 40, luxury: 60 },
     birthday:      { video: 20, basic: 20, premium: 35, luxury: 55 },
     graduation:    { video: 20, basic: 20, premium: 35, luxury: 55 },
     "baby-shower": { video: 20, basic: 20, premium: 35, luxury: 55 },
     business:      { video: 20, basic: 20, premium: 40, luxury: 65 },
-    other:         { video: 20, basic: 25, premium: 40, luxury: 65 }
+    other:         { video: 20, basic: 25, premium: 40, luxury: 60 }
 };
 
 /* Standalone digital products with their own price boxes */

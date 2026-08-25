@@ -152,7 +152,8 @@ body.lock-scroll{overflow:hidden;height:100vh}
 .pkg-price{margin-bottom:8px}
 .pkg-price b{font-size:46px;font-weight:400;font-family:"Cormorant Garamond",serif;color:#3e2518;line-height:1}
 .pkg-price i{font-style:normal;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#a0653f;margin-left:5px}
-.pkg-tag{font-size:11.5px;color:#8a6f58;font-style:italic;margin:0 0 16px}
+.pkg-tag{font-size:11.5px;color:#8a6f58;font-style:italic;margin:0 0 10px}
+.pkg-includes{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#a0653f;margin:0 0 10px;text-align:left}
 .pkg-card ul{list-style:none;text-align:left;margin:0 auto 20px;max-width:230px;flex-grow:1}
 .pkg-card li{font-size:11.5px;padding:5.5px 0;border-bottom:1px dashed rgba(176,125,79,.25);color:#4a3528}
 .pkg-card li.off{color:#c2ab97}
@@ -1555,27 +1556,27 @@ function renderPackages() {
     var grid = document.getElementById("pkgGrid");
     if (grid) grid.innerHTML = "";
 
-    ["basic", "premium", "luxury"].forEach(function(pid, i) {
+    var pkgOrder = ["basic", "premium", "luxury", "video"];
+    pkgOrder.forEach(function(pid, i) {
         var p = (typeof LUNA_PACKAGES !== "undefined") ? LUNA_PACKAGES.filter(function(x) { return x.id === pid; })[0] : null;
         if (!p) return;
         var price;
         try { price = lunaGetCategoryPrice(tpl.category, pid); } catch (e) { price = p.price; }
-        var labels = p.featureLabels ? p.featureLabels.az : {};
-        var featKeys = ["designChoice", "personalInfo", "shareLink", "countdown", "maps", "rsvp", "gallery", "music", "story", "animations"];
-        var feats = featKeys.map(function(k) {
-            if (!(k in p.features)) return "";
-            return '<li' + (p.features[k] ? '' : ' class="off"') + '>' +
-                (p.features[k] ? '✓' : '—') + ' ' + (labels[k] || k) + '</li>';
-        }).join("");
+        if (pid === "video" && tpl.minPackage !== "basic") return;
         var rec = tpl.minPackage === pid;
+        var feats = (p.features || []).map(function(f) {
+            return '<li>' + f + '</li>';
+        }).join("");
         var card = document.createElement("div");
-        card.className = "pkg-card pkg-" + pid + (rec ? " pkg-rec" : "") + (i === 1 ? " pkg-mid" : "");
+        card.className = "pkg-card pkg-" + pid + (rec ? " pkg-rec" : "") + (pid === "premium" ? " pkg-mid" : "") + (pid === "luxury" ? " pkg-luxury" : "");
         card.innerHTML =
-            (rec ? '<span class="pkg-ribbon">Sənə uyğun ★</span>' :
-             (pid === "luxury" ? '<span class="pkg-ribbon pkg-ribbon-gold">Ən dolğun</span>' : "")) +
+            (rec ? '<span class="pkg-ribbon">Sizə uyğun ★</span>' :
+             (pid === "luxury" ? '<span class="pkg-ribbon pkg-ribbon-gold">Ən dolğun</span>' :
+              (pid === "video" ? '<span class="pkg-ribbon" style="background:#5a3a26">Video</span>' : ""))) +
             '<h4>' + p.name + '</h4>' +
             '<div class="pkg-price"><b>' + price + '</b> <i>' + (p.currency || "AZN") + '</i></div>' +
-            (p.tagline && p.tagline.az ? '<p class="pkg-tag">' + p.tagline.az + '</p>' : '') +
+            (p.tagline ? '<p class="pkg-tag">' + p.tagline + '</p>' : '') +
+            '<p class="pkg-includes">Daxildir:</p>' +
             '<ul>' + feats + '</ul>' +
             '<a class="btn ' + (rec ? "btn-dark" : "btn-light") + '" href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + pid + '">Bu paketi seç →</a>';
         grid.appendChild(card);
