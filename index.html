@@ -461,6 +461,102 @@ img{display:block;max-width:100%}
 .dt-imgwrap{position:relative;overflow:hidden;}
 .dt-imgwrap .design-thumb-img{display:block;}
 
+/* ===== OPENING PREVIEW THUMBNAILS ===== */
+.opv{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s}
+.design-thumb:hover .opv,.anim-card:hover .opv{opacity:1}
+
+/* Curtain */
+.opv-curtain i{position:absolute;top:0;width:52%;height:100%;background:linear-gradient(180deg,#8B1A1A,#5C0E0E);transition:transform .8s cubic-bezier(.4,0,.2,1)}
+.opv-curtain .c-l{left:0;border-radius:0 12px 0 0;transform-origin:left}
+.opv-curtain .c-r{right:0;border-radius:12px 0 0 0;transform-origin:right}
+.opv-curtain .c-t{top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,.15);transform:translateX(-50%)}
+.design-thumb:hover .opv-curtain .c-l{transform:translateX(-85%)}
+.design-thumb:hover .opv-curtain .c-r{transform:translateX(85%)}
+
+/* Stairs */
+.opv-stairs{flex-direction:column;gap:3px}
+.opv-stairs i{display:block;width:60%;height:10px;background:linear-gradient(90deg,var(--gold),var(--gold-dark));border-radius:3px;opacity:0;transform:translateX(-20px);animation:stairIn .5s ease forwards}
+.opv-stairs i:nth-child(1){animation-delay:.1s}
+.opv-stairs i:nth-child(2){animation-delay:.2s;width:50%;transform:translateX(-15px)}
+.opv-stairs i:nth-child(3){animation-delay:.3s;width:45%}
+.opv-stairs i:nth-child(4){animation-delay:.4s;width:40%;transform:translateX(15px)}
+.opv-stairs i:nth-child(5){animation-delay:.5s;width:35%;transform:translateX(20px)}
+.opv-stairs i:nth-child(6){animation-delay:.6s;width:30%}
+@keyframes stairIn{to{opacity:.85;transform:translateX(0)}}
+
+/* Door */
+.opv-door i{position:absolute;top:0;width:52%;height:100%;background:linear-gradient(180deg,#3E2518,#2A170F);border:2px solid rgba(196,168,130,.3);transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.opv-door .d-l{left:0;transform-origin:left;border-radius:4px 0 0 4px}
+.opv-door .d-r{right:0;transform-origin:right;border-radius:0 4px 4px 0}
+.opv-door .d-l::after,.opv-door .d-r::after{content:"";position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--gold);transform:translateY(-50%)}
+.opv-door .d-l::after{right:8px}
+.opv-door .d-r::after{left:8px}
+.design-thumb:hover .opv-door .d-l{transform:perspective(600px) rotateY(-55deg)}
+.design-thumb:hover .opv-door .d-r{transform:perspective(600px) rotateY(55deg)}
+
+/* Wax seal */
+.opv-wax i{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#C4504A,#8B1A1A);display:grid;place-items:center;color:#FFD700;font-size:18px;box-shadow:0 4px 16px rgba(0,0,0,.4),inset 0 1px 2px rgba(255,255,255,.2);transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.design-thumb:hover .opv-wax i{transform:scale(1.2) rotate(15deg);box-shadow:0 6px 24px rgba(139,26,26,.5)}
+
+/* Starry night */
+.opv-stars i{position:absolute;width:4px;height:4px;border-radius:50%;background:#FFD700;box-shadow:0 0 6px #FFD700;animation:twinkle 2s ease-in-out infinite}
+.opv-stars i:nth-child(1){top:20%;left:25%;animation-delay:0s}
+.opv-stars i:nth-child(2){top:35%;left:70%;animation-delay:.3s;width:3px;height:3px}
+.opv-stars i:nth-child(3){top:55%;left:40%;animation-delay:.6s}
+.opv-stars i:nth-child(4){top:15%;left:60%;animation-delay:.9s;width:5px;height:5px}
+.opv-stars i:nth-child(5){top:65%;left:80%;animation-delay:1.2s;width:3px;height:3px}
+.opv-stars i:nth-child(6){top:45%;left:20%;animation-delay:1.5s}
+@keyframes twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+/* Celebration pop */
+.opv-pop i{position:absolute;width:8px;height:8px;border-radius:50%;animation:popBurst 1.2s ease-out infinite}
+.opv-pop i:nth-child(1){top:50%;left:50%;animation-delay:0s}
+.opv-pop i:nth-child(2){top:45%;left:55%;animation-delay:.15s}
+.opv-pop i:nth-child(3){top:55%;left:45%;animation-delay:.3s}
+.opv-pop i:nth-child(4){top:40%;left:60%;animation-delay:.45s}
+.opv-pop i:nth-child(5){top:60%;left:50%;animation-delay:.6s}
+.opv-pop i:nth-child(6){top:50%;left:40%;animation-delay:.75s}
+.opv-pop i:nth-child(7){top:35%;left:50%;animation-delay:.9s}
+.opv-pop i:nth-child(8){top:50%;left:65%;animation-delay:1.05s}
+@keyframes popBurst{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.3)}}
+
+/* Floral paper / petals */
+.opv-petals i{position:absolute;width:12px;height:8px;border-radius:50% 0 50% 0;background:rgba(196,135,154,.7);animation:petalFall 3s ease-in-out infinite}
+.opv-petals i:nth-child(1){left:20%;animation-delay:0s;transform:rotate(20deg)}
+.opv-petals i:nth-child(2){left:40%;animation-delay:.5s;transform:rotate(-15deg);background:rgba(168,150,188,.6)}
+.opv-petals i:nth-child(3){left:60%;animation-delay:1s;transform:rotate(35deg)}
+.opv-petals i:nth-child(4){left:80%;animation-delay:1.5s;transform:rotate(-25deg);background:rgba(196,168,130,.6)}
+.opv-petals i:nth-child(5){left:30%;animation-delay:2s;transform:rotate(10deg)}
+.opv-petals i:nth-child(6){left:70%;animation-delay:2.5s;transform:rotate(-30deg);background:rgba(232,168,112,.5)}
+@keyframes petalFall{0%{top:-10%;opacity:0;transform:rotate(0deg) translateX(0)}20%{opacity:1}80%{opacity:1}100%{top:110%;opacity:0;transform:rotate(180deg) translateX(20px)}}
+
+/* Luxury romance */
+.opv-lux i{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);position:relative;animation:luxReveal 2s ease-in-out infinite}
+.opv-lux i::before,.opv-lux i::after{content:"";position:absolute;width:8px;height:8px;border:1px solid var(--gold);transform:rotate(45deg);top:-3px}
+.opv-lux i::before{left:-4px}
+.opv-lux i::after{right:-4px}
+@keyframes luxReveal{0%,100%{width:40px;opacity:.5}50%{width:80px;opacity:1}}
+
+/* Envelope seal */
+.opv-env{position:relative}
+.opv-env .e-ltr{position:absolute;width:56px;height:38px;background:linear-gradient(135deg,#F5EDE3,#E8DFD0);border-radius:3px;box-shadow:0 3px 12px rgba(0,0,0,.15)}
+.opv-env .e-flp{position:absolute;width:56px;height:24px;background:linear-gradient(180deg,#EDE3D5,#E0D5C5);border-radius:3px 3px 0 0;top:-2px;transform-origin:top;transition:transform .6s ease;clip-path:polygon(0 0,50% 100%,100% 0)}
+.opv-env .e-wax{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#C4504A,#8B1A1A);top:10px;z-index:1;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.design-thumb:hover .opv-env .e-flp{transform:rotateX(180deg)}
+
+/* Ribbon */
+.opv-rbn{position:relative}
+.opv-rbn .r-v{position:absolute;width:3px;height:50px;background:linear-gradient(180deg,var(--gold),#D4915A);border-radius:2px;left:50%;transform:translateX(-50%);top:5px}
+.opv-rbn .r-h{position:absolute;width:50px;height:3px;background:linear-gradient(90deg,var(--gold),#D4915A);border-radius:2px;top:28px;left:50%;transform:translateX(-50%)}
+.opv-rbn .r-bow{position:absolute;width:20px;height:14px;border:2px solid var(--gold);border-radius:50%;top:18px;left:50%;transform:translateX(-50%);background:transparent;transition:transform .5s}
+.design-thumb:hover .opv-rbn .r-bow{transform:translateX(-50%) scale(1.2)}
+
+/* Wood door */
+.opv-wdoor{position:relative}
+.opv-wdoor .w-panel{position:absolute;width:50px;height:60px;background:linear-gradient(135deg,#5C3D2E,#3E2518);border-radius:3px;border:2px solid rgba(196,168,130,.3);transition:transform .7s cubic-bezier(.4,0,.2,1);transform-origin:left}
+.opv-wdoor .w-knob{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);right:12px;top:50%;transform:translateY(-50%);z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.design-thumb:hover .opv-wdoor .w-panel{transform:perspective(500px) rotateY(-50deg)}
+
 /* ===== REDESIGNED CARD INFO (always visible) ===== */
 .dt-meta{padding:14px 16px 8px;background:#fff;}
 .dt-cat{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
