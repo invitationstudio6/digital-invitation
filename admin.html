@@ -998,6 +998,12 @@ input,select,textarea{max-width:100%;}
     </div>
 
     <div class="panel">
+        <h2>Paket "Daxildir" Redaktəsi</h2>
+        <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər paketin "Daxildir" siyahısını redaktə edin. Bu siyahı ana səhifədəki qiymətlər bölməsində və client form səhifəsində görünür.</p>
+        <div id="pkgFeaturesEditor" style="display:grid;gap:16px;"></div>
+    </div>
+
+    <div class="panel">
         <h2>Kateqoriya Üzrə Qiymətlər</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Hər kateqoriya üçün fərqli paket qiyməti təyin edin.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;" id="pkgCategoryPricing"></div>
@@ -4570,6 +4576,64 @@ function buildPackagesEditor(){
     }
 
     renderCustomCategoriesList();
+    buildPkgFeaturesEditor();
+}
+
+/* ===== PAKET DAXİLDİR (FEATURES) REDAKTƏSİ ===== */
+function buildPkgFeaturesEditor(){
+    var wrap = document.getElementById('pkgFeaturesEditor');
+    if(!wrap) return;
+    var cfg = getPackagesConfig();
+    var savedFeats = cfg.features || {};
+    wrap.innerHTML = '';
+    LUNA_PACKAGES.forEach(function(p){
+        var feats = savedFeats[p.id] || p.features || [];
+        var box = document.createElement('div');
+        box.style.cssText = 'padding:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;';
+        var html = '<div style="font-size:12px;font-weight:600;margin-bottom:10px;color:#b88c76;">' + p.name + ' <span style="font-size:9px;color:rgba(255,255,255,.4);">(Features)</span></div>';
+        html += '<div id="featsList-' + p.id + '" style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">';
+        feats.forEach(function(f, idx){
+            html += '<div style="display:flex;gap:6px;align-items:center;">' +
+                '<input type="text" data-pkgfeat="' + p.id + '" value="' + lunaEscapeHtml(f) + '" style="flex:1;padding:6px 8px;font-size:11px;background:#111;border:1px solid rgba(255,255,255,.1);color:#fff;">' +
+                '<button onclick="removePkgFeature(\'' + p.id + '\',' + idx + ')" style="padding:4px 10px;font-size:10px;background:rgba(220,80,80,.15);border:1px solid rgba(220,80,80,.3);color:#e87070;cursor:pointer;border-radius:4px;">×</button>' +
+                '</div>';
+        });
+        html += '</div>';
+        html += '<button onclick="addPkgFeature(\'' + p.id + '\')" style="padding:5px 12px;font-size:9px;background:rgba(184,140,118,.15);border:1px solid rgba(184,140,118,.3);color:#b88c76;cursor:pointer;border-radius:4px;letter-spacing:1px;text-transform:uppercase;">+ Əlavə Et</button>';
+        box.innerHTML = html;
+        wrap.appendChild(box);
+    });
+}
+
+function addPkgFeature(pkgId){
+    var feats = collectPkgFeatures(pkgId);
+    feats.push('Yeni xüsusiyyət');
+    savePkgFeatures(pkgId, feats);
+    buildPkgFeaturesEditor();
+}
+
+function removePkgFeature(pkgId, idx){
+    var feats = collectPkgFeatures(pkgId);
+    if(feats.length <= 1){ showToast('Minimum 1 xüsusiyyət lazımdır'); return; }
+    feats.splice(idx, 1);
+    savePkgFeatures(pkgId, feats);
+    buildPkgFeaturesEditor();
+}
+
+function collectPkgFeatures(pkgId){
+    var feats = [];
+    document.querySelectorAll('input[data-pkgfeat="' + pkgId + '"]').forEach(function(inp){
+        var v = inp.value.trim();
+        if(v) feats.push(v);
+    });
+    return feats;
+}
+
+function savePkgFeatures(pkgId, feats){
+    var cfg = getPackagesConfig();
+    if(!cfg.features) cfg.features = {};
+    cfg.features[pkgId] = feats;
+    localStorage.setItem('luna_package_config', JSON.stringify(cfg));
 }
 
 function savePackagesConfig(){
@@ -4592,10 +4656,21 @@ function savePackagesConfig(){
     });
 
     var existingCfg = getPackagesConfig();
+    var featuresCfg = {};
+    document.querySelectorAll('input[data-pkgfeat]').forEach(function(inp){
+        var pkgId = inp.getAttribute('data-pkgfeat');
+        if(!featuresCfg[pkgId]) featuresCfg[pkgId] = [];
+    });
+    Object.keys(featuresCfg).forEach(function(pkgId){
+        featuresCfg[pkgId] = collectPkgFeatures(pkgId);
+    });
+    var mergedFeatures = Object.assign({}, existingCfg.features || {}, featuresCfg);
+
     localStorage.setItem('luna_package_config', JSON.stringify({
         packages: packagesCfg,
         categoryPricing: categoryPricing,
         extras: extras,
+        features: mergedFeatures,
         customCategories: existingCfg.customCategories || []
     }));
 

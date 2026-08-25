@@ -207,18 +207,27 @@ function lunaFormEngine(config) {
         var container = document.getElementById("pkgPicker");
         if (!container || typeof LUNA_PACKAGES === "undefined") return;
         container.innerHTML = "";
+        var cfgFeatures = {};
+        try { cfgFeatures = JSON.parse(localStorage.getItem('luna_package_config') || '{}').features || {}; } catch(e) {}
         LUNA_PACKAGES.forEach(function(pkg) {
             var card = document.createElement("div");
             card.className = "pkg-pick" + (pkg.id === packageName ? " selected" : "") + (pkg.featured ? " featured" : "");
             card.setAttribute("data-pkg", pkg.id);
             var tagline = (pkg.tagline && pkg.tagline[LUNA_LANG]) || (pkg.tagline && pkg.tagline.az) || "";
             var labels = (pkg.featureLabels && pkg.featureLabels[LUNA_LANG]) || (pkg.featureLabels && pkg.featureLabels.az) || {};
+            var pkgFeats = cfgFeatures[pkg.id] || pkg.features || [];
             var featsHtml = "";
-            Object.keys(pkg.features).forEach(function(key) {
-                if (pkg.features[key]) {
-                    featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
-                }
-            });
+            if (Array.isArray(pkgFeats)) {
+                pkgFeats.forEach(function(f) {
+                    featsHtml += '<div class="pkg-pick-feat">' + lunaEscapeHtml(f) + '</div>';
+                });
+            } else {
+                Object.keys(pkgFeats).forEach(function(key) {
+                    if (pkgFeats[key]) {
+                        featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
+                    }
+                });
+            }
             var catPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, pkg.id) : pkg.price;
             card.innerHTML =
                 '<div class="pkg-pick-name">' + pkg.name + '</div>' +

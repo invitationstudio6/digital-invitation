@@ -1864,14 +1864,16 @@ renderTemplates("all");
 (function renderPricingLattice() {
     var grid = document.getElementById("pricingGrid");
     if (!grid || typeof LUNA_PACKAGES === "undefined") return;
+    var cfgFeatures = {};
+    try { cfgFeatures = JSON.parse(localStorage.getItem('luna_package_config') || '{}').features || {}; } catch(e) {}
     var pkgData = [
         { id: "video", name: "Video Dəvətnamə", price: 20, tagline: "Animasiyalı video dəvətnamə", features: ["Video dəvətnamə","Cütlüyün adı","Tarix və saat","Məkan","Müştərinin fotoları","Fon musiqisi","Animasiya və keçidlər"] },
-        { id: "basic", name: "Basic", price: 25, tagline: "Sadə və zərif rəqəmsal dəvətnamə", features: ["Digital invitation","Cütlüyün adları","Tarix və saat","Məkan + Google Maps","Countdown"] },
-        { id: "premium", name: "Premium", price: 40, tagline: "Ən çox tövsiyə olunan paket", features: ["Basic paketdə olan hər şey +","RSVP forması","Qonaq sayı","Qonaqdan mesaj","Rəng və üslub seçimi","10 foto qaleryası","Our Story bölməsi","6 foto"], rec: true },
+        { id: "basic", name: "Basic", price: 25, tagline: "Sadə və zərif rəqəmsal dəvətnamə", features: ["Digital invitation","Cütlüyün adları","Tarix və saat","Məkan + Google Maps","Countdown","6 foto"] },
+        { id: "premium", name: "Premium", price: 40, tagline: "Ən çox tövsiyə olunan paket", features: ["Basic paketdə olan hər şey +","RSVP forması","Qonaq sayı","Qonaqdan mesaj","Rəng və üslub seçimi","8 foto qaleryası","Our Story bölməsi"], rec: true },
         { id: "luxury", name: "Luxury", price: 60, tagline: "Daha xüsusi və premium görünüş", features: ["Fərdiləşdirilmiş dizayn","Cütlüyə xüsusi mətn","Foto qalerya","Countdown","Google Maps","RSVP","Qonaq sayı","Mesaj bölməsi","Musiqi"], gold: true }
     ];
     pkgData.forEach(function(p) {
-        var feats = p.features.map(function(f) { return "<li>" + f + "</li>"; }).join("");
+        var feats = (cfgFeatures[p.id] || p.features || []).map(function(f) { return "<li>" + f + "</li>"; }).join("");
         var card = document.createElement("div");
         card.className = "pkg-card" + (p.rec ? " pkg-mid" : "") + (p.gold ? " pkg-luxury" : "");
         card.innerHTML =

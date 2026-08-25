@@ -133,7 +133,8 @@ const LUNA_PACKAGES = [
             "Cütlüyün adları",
             "Tarix və saat",
             "Məkan + Google Maps",
-            "Countdown"
+            "Countdown",
+            "6 foto"
         ],
         formFields: ["names", "date", "time", "venue", "location", "message", "countdown"]
     },
@@ -150,9 +151,8 @@ const LUNA_PACKAGES = [
             "Qonaq sayı",
             "Qonaqdan mesaj",
             "Rəng və üslub seçimi",
-            "10 foto qaleryası",
-            "\"Our Story\" bölməsi",
-            "6 foto"
+            "8 foto qaleryası",
+            "\"Our Story\" bölməsi"
         ],
         formFields: ["names", "date", "time", "venue", "location", "message", "countdown", "rsvp", "map", "gallery", "story"]
     },
