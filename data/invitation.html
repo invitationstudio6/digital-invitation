@@ -4232,6 +4232,7 @@ var params =
 
 (function lunaTemplatePreviewShim() {
     var tplId = (params.get("template") || "").trim();
+    var pkgOverride = (params.get("package") || "").trim().toLowerCase();
     if (!tplId || params.get("id")) return;
     var tpl = null;
     if (typeof lunaGetAllTemplates === "function") {
@@ -4243,10 +4244,11 @@ var params =
     var pv = tpl.preview || {};
     var imgs = (tpl.illustrations && tpl.illustrations.length) ? tpl.illustrations.slice(0, 6) : [];
     if (!imgs.length && tpl.cover) imgs = [tpl.cover];
+    var chosenPkg = pkgOverride || (tpl.packages && tpl.packages[tpl.packages.length - 1]) || "premium";
     window.__lunaTemplatePreview = true;
     window.lunaGetInvitationOverride = {
         id: "__preview__",
-        package: (tpl.packages && tpl.packages[tpl.packages.length - 1]) || "premium",
+        package: chosenPkg,
         category: tpl.category || "wedding",
         design: tpl.id,
         templateId: tpl.id,

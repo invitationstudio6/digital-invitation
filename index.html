@@ -1164,38 +1164,20 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Fotolarınızdan, musiqinizdən və animasiyalardan ibarət video dəvətnamələr. 20 AZN-dən başlayır.</p>
         </div>
         <div class="video-grid" id="videoGrid">
-            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample1','_blank')">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#3e2518,#2a170f);display:flex;align-items:center;justify-content:center;">
-                    <div style="text-align:center;color:#f7efe4;padding:30px">
-                        <div style="font-size:48px;margin-bottom:16px">🎬</div>
-                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Toy Dəvətnaməsi</div>
-                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Animasiyalı video</div>
-                    </div>
-                </div>
+            <div class="video-card" onclick="window.open('data/invitation.html?template=blossom&package=video','_blank')">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Toy dəvətnaməsi" loading="lazy">
                 <div class="video-play"></div>
-                <div class="video-label"><h4>Toy Dəvətnaməsi</h4><p>Video · 0:30</p></div>
+                <div class="video-label"><h4>Toy Dəvətnaməsi</h4><p>Video · Animasiyalı</p></div>
             </div>
-            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample2','_blank')">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#5a2d3e,#3e1a2a);display:flex;align-items:center;justify-content:center;">
-                    <div style="text-align:center;color:#f7efe4;padding:30px">
-                        <div style="font-size:48px;margin-bottom:16px">💎</div>
-                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Nişan Dəvətnaməsi</div>
-                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Premium video</div>
-                    </div>
-                </div>
+            <div class="video-card" onclick="window.open('data/invitation.html?template=royal-scroll&package=video','_blank')">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85" alt="Nişan dəvətnaməsi" loading="lazy">
                 <div class="video-play"></div>
-                <div class="video-label"><h4>Nişan Dəvətnaməsi</h4><p>Video · 0:45</p></div>
+                <div class="video-label"><h4>Nişan Dəvətnaməsi</h4><p>Video · Animasiyalı</p></div>
             </div>
-            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample3','_blank')">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#4a3520,#2a1a10);display:flex;align-items:center;justify-content:center;">
-                    <div style="text-align:center;color:#f7efe4;padding:30px">
-                        <div style="font-size:48px;margin-bottom:16px">🪔</div>
-                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Xına Gecəsi</div>
-                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Canlı video</div>
-                    </div>
-                </div>
+            <div class="video-card" onclick="window.open('data/invitation.html?template=garden-bloom&package=video','_blank')">
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85" alt="Xına gecəsi" loading="lazy">
                 <div class="video-play"></div>
-                <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · 0:25</p></div>
+                <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · Animasiyalı</p></div>
             </div>
         </div>
     </div>
@@ -1967,27 +1949,6 @@ renderTemplates("all");
     });
 })();
 
-/* ===== VİDEO DƏVƏTNAMƏ NÜMUNƏLƏRİ ===== */
-(function renderVideoSamples() {
-    var grid = document.getElementById("videoGrid");
-    if (!grid) return;
-    var samples = [
-        { title: "Toy dəvətnaməsi", cat: "wedding", img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" },
-        { title: "Nişan dəvətnaməsi", cat: "engagement", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85" },
-        { title: "Ad günü dəvətnaməsi", cat: "birthday", img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=85" }
-    ];
-    samples.forEach(function(s) {
-        var card = document.createElement("div");
-        card.className = "video-card";
-        card.innerHTML =
-            '<img src="' + s.img + '" alt="' + s.title + '" loading="lazy">' +
-            '<div class="video-play"></div>' +
-            '<div class="video-label"><h4>' + s.title + '</h4><p>Video dəvətnamə · 20 AZN</p></div>';
-        card.addEventListener("click", function() { window.location.href = "form/" + s.cat + ".html?design=video&package=video"; });
-        grid.appendChild(card);
-    });
-})();
-
 /* ===== PREVIEW MODAL — Full Invitation Experience ===== */
 var _mCurrentPkg = "basic";
 var _mCurrentTpl = null;
@@ -2074,7 +2035,23 @@ function renderModalPreview() {
     if (!tpl) return;
     var p = tpl.preview;
     var pkg = typeof LUNA_PACKAGES !== "undefined" ? LUNA_PACKAGES.find(function(pk) { return pk.id === _mCurrentPkg; }) : null;
-    var features = pkg ? pkg.features : {};
+    /* Map string-array features to boolean object for FEATURE_KEYS */
+    var rawFeats = pkg ? pkg.features : [];
+    var features = {};
+    if (Array.isArray(rawFeats)) {
+        var fLow = rawFeats.join(" ").toLowerCase();
+        features.designChoice = true;
+        features.personalInfo = true;
+        features.shareLink = true;
+        features.countdown = fLow.indexOf("countdown") !== -1;
+        features.maps = fLow.indexOf("maps") !== -1;
+        features.rsvp = fLow.indexOf("rsvp") !== -1;
+        features.gallery = fLow.indexOf("qalereya") !== -1 || fLow.indexOf("gallery") !== -1 || fLow.indexOf("foto") !== -1;
+        features.music = fLow.indexOf("musiqi") !== -1 || fLow.indexOf("music") !== -1;
+        features.story = fLow.indexOf("story") !== -1 || fLow.indexOf("hekayə") !== -1 || fLow.indexOf("hekaye") !== -1;
+        features.animations = true;
+        features.videoBackground = false;
+    }
     var lang = LUNA_LANG || "az";
     var fn = FEATURE_NAMES[lang] || FEATURE_NAMES.en;
 
@@ -2157,7 +2134,7 @@ document.addEventListener("keydown", function(e) {
     document.getElementById("modalLiveBtn").addEventListener("click", function() {
         var tpl = _mCurrentTpl;
         if (!tpl) return;
-        var url = "data/invitation.html?design=" + tpl.id + "&package=" + _mCurrentPkg;
+        var url = "data/invitation.html?template=" + tpl.id + "&package=" + _mCurrentPkg;
         window.open(url, "_blank");
     });
 
@@ -2471,40 +2448,6 @@ applyHomepageConfig();
         ".hero.hero-minimal{padding-top:160px}";
     document.head.appendChild(style);
 })();
-
-/* ===== VIDEO SAMPLES RENDER ===== */
-function renderVideoSamples() {
-    var grid = document.getElementById("videoSamplesGrid");
-    if (!grid) return;
-    /* lunaGetActiveVideos() reads the live admin catalog (luna_video_invitations)
-       and normalizes url/videoUrl + thumbnail fields; falls back to curated
-       samples while the admin has not published any video. */
-    var activeVideos = (typeof lunaGetActiveVideos === "function") ? lunaGetActiveVideos() : [];
-    if (!activeVideos.length) {
-        activeVideos = [
-            { id: "sample_flower", category: "wedding", title: "Toy — Zərif Açılış", thumbnailUrl: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
-            { id: "sample_jellyfish", category: "engagement", title: "Nişan — Okean Həvəsi", thumbnailUrl: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85", videoUrl: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" },
-            { id: "sample_sintel", category: "henna", title: "Xına — Kino Keyfiyyəti", thumbnailUrl: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=85", videoUrl: "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_2MB.mp4" }
-        ];
-    }
-    grid.innerHTML = "";
-    activeVideos.slice(0, 3).forEach(function(v, idx) {
-        var card = document.createElement("div");
-        card.className = "video-sample-card";
-        card.style.animationDelay = (idx * 0.08) + "s";
-        var thumb = v.thumbnailUrl || (v.videoUrl ? "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=85" : "");
-        var catName = lunaCategoryName(v.category || "");
-        card.innerHTML =
-            '<video playsinline muted loop preload="metadata" src="' + v.videoUrl + '" onerror="this.style.display=\'none\'"></video>' +
-            '<div class="video-sample-overlay">' +
-                '<div class="video-sample-title">' + (v.title || "Video Dəvətnamə") + '</div>' +
-                '<div class="video-sample-cat">' + catName + '</div>' +
-            '</div>';
-        card.addEventListener("click", function() { openVideoModal(v); });
-        grid.appendChild(card);
-    });
-}
-renderVideoSamples();
 
 /* ===== VIDEO MODAL ===== */
 function openVideoModal(video) {
