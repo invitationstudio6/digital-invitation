@@ -2602,6 +2602,28 @@ applyHomepageConfig();
     document.head.appendChild(style);
 })();
 
+/* ===== IndexedDB helpers for video blob storage ===== */
+var _lunaIDBHome = null;
+function lunaOpenIDBHome(cb) {
+    if (_lunaIDBHome) return cb(_lunaIDBHome);
+    var req = indexedDB.open("LunaFiles", 1);
+    req.onupgradeneeded = function(e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains("blobs")) db.createObjectStore("blobs");
+    };
+    req.onsuccess = function(e) { _lunaIDBHome = e.target.result; cb(_lunaIDBHome); };
+    req.onerror = function() { cb(null); };
+}
+function lunaIDBLoadHome(key, cb) {
+    lunaOpenIDBHome(function(db) {
+        if (!db) return cb && cb(null);
+        var tx = db.transaction("blobs", "readonly");
+        var req = tx.objectStore("blobs").get(key);
+        req.onsuccess = function() { cb && cb(req.result || null); };
+        req.onerror = function() { cb && cb(null); };
+    });
+}
+
 /* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN VIDEOS ===== */
 (function() {
     var grid = document.getElementById("videoGrid");
@@ -2610,24 +2632,40 @@ applyHomepageConfig();
     /* Load admin-uploaded videos from localStorage */
     try {
         var adminVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+        var pending = 0;
         adminVideos.filter(function(v) { return v.active !== false && v.url; }).forEach(function(v) {
-            var card = document.createElement("div");
-            card.className = "video-card";
-            card.setAttribute("data-video", v.url);
-            var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
-            card.innerHTML =
-                '<video muted loop preload="metadata"' + posterAttr + ' src="' + v.url + '"></video>' +
-                '<div class="video-play"></div>' +
-                '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + (v.category || 'Video') + ' · Animasiyalı</p></div>';
-            var vid = card.querySelector("video");
-            card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
-            card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
-            card.addEventListener("click", function() {
-                if (vid.requestFullscreen) vid.requestFullscreen();
-                else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
-                vid.play().catch(function(){});
-            });
-            grid.appendChild(card);
+            var isIDB = v.url.indexOf("__idb:") === 0;
+            var blobKey = isIDB ? v.url.slice(6) : null;
+            function addCard(videoSrc) {
+                var card = document.createElement("div");
+                card.className = "video-card";
+                card.setAttribute("data-video", videoSrc);
+                var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
+                card.innerHTML =
+                    '<video muted loop preload="metadata"' + posterAttr + ' src="' + videoSrc + '"></video>' +
+                    '<div class="video-play"></div>' +
+                    '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + (v.category || 'Video') + ' · Animasiyalı</p></div>';
+                var vid = card.querySelector("video");
+                card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
+                card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
+                card.addEventListener("click", function() {
+                    if (vid.requestFullscreen) vid.requestFullscreen();
+                    else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+                    vid.play().catch(function(){});
+                });
+                grid.appendChild(card);
+            }
+            if (isIDB && blobKey) {
+                pending++;
+                lunaIDBLoadHome(blobKey, function(blob) {
+                    if (blob) {
+                        addCard(URL.createObjectURL(blob));
+                    }
+                    pending--;
+                });
+            } else {
+                addCard(v.url);
+            }
         });
     } catch(e) {}
 

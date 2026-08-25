@@ -2568,7 +2568,12 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
 
 function deleteVideo(id){
     if(!confirm('Bu videonu silmək istədiyinizə əminsiniz?')) return;
-    var videos = getVideos().filter(function(v){ return v.id !== id; });
+    var videos = getVideos();
+    var v = videos.find(function(x){ return x.id === id; });
+    if (v && v.url && v.url.indexOf("__idb:") === 0) {
+        lunaIDBDelete(v.url.slice(6));
+    }
+    videos = videos.filter(function(v){ return v.id !== id; });
     saveVideos(videos);
     renderVideos();
     showToast('Video silindi');
@@ -3107,9 +3112,60 @@ var LUNA_FORM_FIELDS = [
     { id: 'invitationLanguage',label: 'Dil seçimi' }
 ];
 
+/* IndexedDB helper for large file storage */
+var _lunaIDB = null;
+function lunaOpenIDB(cb) {
+    if (_lunaIDB) return cb(_lunaIDB);
+    var req = indexedDB.open("LunaFiles", 1);
+    req.onupgradeneeded = function(e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains("blobs")) db.createObjectStore("blobs");
+    };
+    req.onsuccess = function(e) { _lunaIDB = e.target.result; cb(_lunaIDB); };
+    req.onerror = function() { cb(null); };
+}
+function lunaIDBSave(key, blob, cb) {
+    lunaOpenIDB(function(db) {
+        if (!db) return cb && cb(null);
+        var tx = db.transaction("blobs", "readwrite");
+        tx.objectStore("blobs").put(blob, key);
+        tx.oncomplete = function() { cb && cb(key); };
+        tx.onerror = function() { cb && cb(null); };
+    });
+}
+function lunaIDBLoad(key, cb) {
+    lunaOpenIDB(function(db) {
+        if (!db) return cb && cb(null);
+        var tx = db.transaction("blobs", "readonly");
+        var req = tx.objectStore("blobs").get(key);
+        req.onsuccess = function() { cb && cb(req.result || null); };
+        req.onerror = function() { cb && cb(null); };
+    });
+}
+function lunaIDBDelete(key) {
+    lunaOpenIDB(function(db) {
+        if (!db) return;
+        var tx = db.transaction("blobs", "readwrite");
+        tx.objectStore("blobs").delete(key);
+    });
+}
+
 function readUploadTo(input, targetId, previewId, kind){
     var f = input.files && input.files[0];
     if (!f) return;
+    if (kind === 'video') {
+        var blobKey = 'vid_blob_' + Date.now() + '_' + f.name.replace(/[^a-z0-9]/gi,'_');
+        var t = document.getElementById(targetId);
+        if (t) t.value = '__idb:' + blobKey;
+        var p = document.getElementById(previewId);
+        if (p) {
+            var blobUrl = URL.createObjectURL(f);
+            p.src = blobUrl;
+            p.style.display = 'block';
+        }
+        lunaIDBSave(blobKey, f, function() {});
+        return;
+    }
     if (f.size > 10 * 1024 * 1024) {
         if (!confirm('Fayl böyükdür (' + (f.size/1048576).toFixed(1) + ' MB). Böyük fayllar brauzerdə saxlanmaya bilər. Davam edilsin?')) { input.value = ''; return; }
     }
