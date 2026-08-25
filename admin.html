@@ -692,21 +692,9 @@ input,select,textarea{max-width:100%;}
                     <video id="videoFilePreview" controls muted playsinline style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:180px;background:#000"></video>
                     <input id="videoUrl" type="text" placeholder="və ya YouTube / Vimeo / MP4 linki" style="margin-top:10px">
                 </div>
-                <!-- STEP 2 · COVER -->
+                <!-- STEP 2 · INFO -->
                 <div class="vid-step">
                     <div class="vid-step-num">2</div>
-                    <h3>Örtük şəkli (Cover) — isteğe bağlı</h3>
-                    <label class="vid-drop" for="videoCoverInput">
-                        <input id="videoCoverInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'videoThumb','videoCoverPreview','image')">
-                        <span class="vid-drop-ico">🖼</span>
-                        <span>Örtük şəkli seçin<br><small>boş qoysanız videonun ilk kadrı göstərilir</small></span>
-                    </label>
-                    <img id="videoCoverPreview" alt="" style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:160px;object-fit:cover">
-                    <input id="videoThumb" type="text" placeholder="və ya şəkil linki" style="margin-top:10px">
-                </div>
-                <!-- STEP 3 · INFO -->
-                <div class="vid-step">
-                    <div class="vid-step-num">3</div>
                     <h3>Məlumat</h3>
                     <div class="field"><label>Başlıq</label><input id="videoTitle" type="text" placeholder="Toy Videosu" required></div>
                     <div class="field"><label>Kateqoriya</label><select id="videoCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
@@ -715,9 +703,9 @@ input,select,textarea{max-width:100%;}
                     <div class="field"><label>Dil</label><select id="videoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
                     <div class="field"><label>Göstərmə sırası</label><input id="videoOrder" type="number" value="0"></div>
                 </div>
-                <!-- STEP 4 · PUBLISH -->
+                <!-- STEP 3 · PUBLISH -->
                 <div class="vid-step">
-                    <div class="vid-step-num">4</div>
+                    <div class="vid-step-num">3</div>
                     <h3>Nəşr</h3>
                     <div class="field"><label>Status</label><select id="videoStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select></div>
                     <div class="field"><label>Seçilmiş (Featured)</label><select id="videoFeatured"><option value="no">Xeyr</option><option value="yes">Bəli</option></select></div>
@@ -2547,7 +2535,7 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
             videos[idx].description = document.getElementById('videoDescription').value.trim();
             videos[idx].price = parseFloat(document.getElementById('videoPrice').value) || 20;
             videos[idx].url = document.getElementById('videoUrl').value.trim();
-            videos[idx].thumbnail = document.getElementById('videoThumb').value.trim();
+            videos[idx].thumbnail = '';
             videos[idx].language = document.getElementById('videoLang').value;
             videos[idx].active = document.getElementById('videoStatus').value === 'active';
             videos[idx].featured = document.getElementById('videoFeatured').value === 'yes';
@@ -2564,7 +2552,7 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
             description: document.getElementById('videoDescription').value.trim(),
             price: parseFloat(document.getElementById('videoPrice').value) || 20,
             url: document.getElementById('videoUrl').value.trim(),
-            thumbnail: document.getElementById('videoThumb').value.trim(),
+            thumbnail: '',
             language: document.getElementById('videoLang').value,
             active: document.getElementById('videoStatus').value === 'active',
             featured: document.getElementById('videoFeatured').value === 'yes',

@@ -2602,10 +2602,36 @@ applyHomepageConfig();
     document.head.appendChild(style);
 })();
 
-/* ===== VIDEO HOVER-TO-PLAY + UPLOAD ===== */
+/* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN VIDEOS ===== */
 (function() {
     var grid = document.getElementById("videoGrid");
     if (!grid) return;
+
+    /* Load admin-uploaded videos from localStorage */
+    try {
+        var adminVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+        adminVideos.filter(function(v) { return v.active !== false && v.url; }).forEach(function(v) {
+            var card = document.createElement("div");
+            card.className = "video-card";
+            card.setAttribute("data-video", v.url);
+            var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
+            card.innerHTML =
+                '<video muted loop preload="metadata"' + posterAttr + ' src="' + v.url + '"></video>' +
+                '<div class="video-play"></div>' +
+                '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + (v.category || 'Video') + ' · Animasiyalı</p></div>';
+            var vid = card.querySelector("video");
+            card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
+            card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
+            card.addEventListener("click", function() {
+                if (vid.requestFullscreen) vid.requestFullscreen();
+                else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+                vid.play().catch(function(){});
+            });
+            grid.appendChild(card);
+        });
+    } catch(e) {}
+
+    /* Wire up existing sample videos */
     grid.querySelectorAll(".video-card[data-video]").forEach(function(card) {
         var vid = card.querySelector("video");
         if (!vid) return;
