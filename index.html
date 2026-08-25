@@ -81,6 +81,42 @@ img{display:block;max-width:100%}
 .hero h1 span{display:block;margin-top:32px;font-family:"Italiana",serif;font-size:clamp(16px,2.5vw,30px);letter-spacing:6px;line-height:1.4;color:var(--gold);-webkit-text-fill-color:var(--gold)}
 .hero-text{width:min(540px,100%);margin:40px auto 0;font-size:11px;line-height:2.1;color:var(--muted);animation:fadeUp 1s .4s ease both}
 .hero-buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:30px;animation:fadeUp 1s .6s ease both}
+/* ===== KOLLEKSİYA MƏRTƏBƏSİ (design studio) ===== */
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.coll-card{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;background:#2a1c12;box-shadow:0 10px 30px rgba(62,37,24,.12);transition:transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s}
+.coll-card:hover{transform:translateY(-6px);box-shadow:0 22px 44px -14px rgba(62,37,24,.32)}
+.coll-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.19,1,.22,1)}
+.coll-card:hover img{transform:scale(1.07)}
+.coll-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,6,0) 38%,rgba(20,12,6,.84))}
+.coll-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;color:#fff}
+.coll-body h3{font-family:"Cormorant Garamond",serif;font-size:27px;font-weight:500;font-style:italic;margin:0 0 5px;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.coll-body p{margin:0 0 11px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,248,240,.88)}
+.coll-body em{font-style:normal;font-size:8.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,248,240,.5);padding-bottom:3px;transition:.25s}
+.coll-card:hover em{border-color:#e8c574;color:#f4d9a0}
+.coll-special{background:radial-gradient(circle at 30% 22%,#4a2e1c,#20100a 78%);display:flex;align-items:center;justify-content:center;text-align:center}
+.coll-special::after{display:none}
+.coll-sp-body{color:#f7efe4;padding:22px;z-index:2}
+.coll-sp-body span{display:block;font-size:46px;margin-bottom:12px;line-height:1;animation:spFloat 3.4s ease-in-out infinite}
+@keyframes spFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.coll-sp-body h3{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500;font-style:italic;margin:0 0 6px;color:#f4d9a0}
+.coll-sp-body p{margin:0 0 12px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(247,239,228,.75)}
+.browse-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 16px;margin-bottom:20px}
+.back-btn{border:1px solid rgba(62,37,24,.3);background:transparent;color:#4a2e1c;font-family:inherit;font-size:9.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:11px 20px;border-radius:30px;cursor:pointer;transition:.25s}
+.back-btn:hover{background:#3e2518;color:#f7efe4;border-color:#3e2518}
+#collTitle{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,3vw,40px);font-weight:500;font-style:italic;color:#33200f;margin:0;width:100%;text-align:center}
+.sort-select{padding:13px 38px 13px 20px;border-radius:40px;border:1px solid rgba(62,37,24,.18);background-color:#fff;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a2e1c' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;font-family:inherit;font-size:12px;color:#33200f;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;transition:border-color .25s,box-shadow .25s}
+.sort-select:focus{border-color:#b07d4f;box-shadow:0 0 0 3px rgba(176,125,79,.14)}
+@media(max-width:600px){
+    .coll-grid{grid-template-columns:repeat(2,1fr);gap:11px}
+    .coll-card{border-radius:14px}
+    .coll-body{padding:12px 13px}
+    .coll-body h3{font-size:19px}
+    .coll-sp-body span{font-size:34px}
+    .coll-sp-body h3{font-size:19px}
+    #collTitle{order:-1;width:100%}
+    .browse-head{gap:10px;margin-bottom:16px}
+}
+
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;animation:fadeUp 1s .75s ease both}
 .hero-chip{border:1px solid rgba(62,37,24,.28);background:rgba(255,252,247,.68);color:#4a2e1c;font-size:9.5px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;padding:8px 15px;border-radius:30px;cursor:pointer;transition:.25s;font-family:inherit}
 .hero-chip:hover{background:#3e2518;color:#f7efe4;border-color:#3e2518}
@@ -957,10 +993,35 @@ body.has-announce .mobile-menu{padding-top:150px}
             <button class="s-clear" id="tplSearchClear" aria-label="Təmizlə">✕</button>
         </div>
     </div>
-    <div class="results-line" id="resultsLine"></div>
-    <div class="cat-tabs" id="catTabs"></div>
-    <div class="designs-grid" id="designsGrid"></div>
-    <div class="show-more-wrap"><button class="show-more-btn" id="showMoreBtn" style="display:none"></button></div>
+    <!-- MƏRTƏBƏ 1 · KOLLEKSİYALAR -->
+    <div id="collectionView">
+        <div class="coll-grid" id="collGrid"></div>
+    </div>
+
+    <!-- MƏRTƏBƏ 2 · KOLLEKSİYA DAXİLİ -->
+    <div id="browseView" style="display:none">
+        <div class="browse-head">
+            <button class="back-btn" id="backToColl">← Bütün kolleksiyalar</button>
+            <h3 id="collTitle"></h3>
+            <span class="results-line" id="collCount" style="margin:0"></span>
+        </div>
+        <div class="tpl-tools">
+            <div class="tpl-search" id="tplSearchWrap">
+                <span class="s-ico">🔍</span>
+                <input type="text" id="tplSearch" placeholder="Dizayn axtar…" autocomplete="off">
+                <button class="s-clear" id="tplSearchClear" aria-label="Təmizlə">✕</button>
+            </div>
+            <select class="sort-select" id="sortSelect" aria-label="Sıralama">
+                <option value="default">Tərcih olunan sıra</option>
+                <option value="price-asc">Qiymət: ucuz → bahalı</option>
+                <option value="price-desc">Qiymət: bahalı → ucuz</option>
+                <option value="name">Ad: A → Z</option>
+            </select>
+        </div>
+        <div class="results-line" id="resultsLine"></div>
+        <div class="designs-grid" id="designsGrid"></div>
+        <div class="show-more-wrap"><button class="show-more-btn" id="showMoreBtn" style="display:none"></button></div>
+    </div>
 </div>
 </section>
 
@@ -1412,32 +1473,102 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
 })();
 
-/* ===== RENDER CATEGORY FILTER TABS ===== */
-(function renderTabs() {
-    var tabs = document.getElementById("catTabs");
-    if (!tabs || typeof LUNA_CATEGORIES === "undefined") return;
-    tabs.innerHTML = "";
+/* ===== DESIGN STUDIO · COLLECTIONS ENGINE ===== */
+var _view = "collections", _sortMode = "default";
+
+function _priceOf(tpl) {
+    try {
+        var v = lunaGetCategoryPrice(tpl.category || "other", tpl.minPackage || "basic");
+        return typeof v === "number" ? v : (parseFloat(v) || 0);
+    } catch (e) { return 0; }
+}
+
+function _catCover(catId) {
+    var list = _getHomepageTemplates().filter(function(t) { return t.category === catId; });
+    var feat = list.filter(function(t) { return t.featured; });
+    return ((feat[0] || list[0] || {}).thumbnail) || "";
+}
+
+function renderCollections() {
+    var grid = document.getElementById("collGrid");
+    if (!grid || typeof LUNA_CATEGORIES === "undefined") return;
+    grid.innerHTML = "";
     var pool = _getHomepageTemplates();
-    var allBtn = document.createElement("button");
-    allBtn.className = "cat-tab active";
-    allBtn.setAttribute("data-cat", "all");
-    allBtn.textContent = lunaT("tplFilterAll") + " (" + pool.length + ")";
-    tabs.appendChild(allBtn);
-    var animatedCount = pool.filter(_isAnimated).length;
-    var animBtn = document.createElement("button");
-    animBtn.className = "cat-tab";
-    animBtn.setAttribute("data-cat", "__animated");
-    animBtn.textContent = "✨ Animasiyalı (" + animatedCount + ")";
-    tabs.appendChild(animBtn);
+
+    var animN = pool.filter(_isAnimated).length;
+    if (animN) {
+        var sp = document.createElement("div");
+        sp.className = "coll-card coll-special";
+        sp.innerHTML =
+            '<div class="coll-sp-body">' +
+                '<span>✨</span>' +
+                '<h3>Animasiyalı açılışlar</h3>' +
+                '<p>' + animN + ' dizayn · canlı önizləmə</p>' +
+                '<em>Kolleksiyaya gir →</em>' +
+            '</div>';
+        sp.addEventListener("click", function() { openCollection("__animated"); });
+        grid.appendChild(sp);
+    }
+
     LUNA_CATEGORIES.forEach(function(cat) {
-        var btn = document.createElement("button");
-        btn.className = "cat-tab";
-        btn.setAttribute("data-cat", cat.id);
-        var n = pool.filter(function(t) { return t.category === cat.id; }).length;
-        btn.textContent = lunaCategoryName(cat.id) + (n ? " (" + n + ")" : "");
-        tabs.appendChild(btn);
+        var items = pool.filter(function(t) { return t.category === cat.id; });
+        if (!items.length) return;
+        var animInCat = items.filter(_isAnimated).length;
+        var card = document.createElement("div");
+        card.className = "coll-card";
+        card.innerHTML =
+            '<img src="' + _catCover(cat.id) + '" alt="' + lunaCategoryName(cat.id) + '" loading="lazy">' +
+            '<div class="coll-body">' +
+                '<h3>' + lunaCategoryName(cat.id) + '</h3>' +
+                '<p>' + items.length + ' dizayn' + (animInCat ? ' · ✨ ' + animInCat : '') + '</p>' +
+                '<em>Kolleksiyaya gir →</em>' +
+            '</div>';
+        card.addEventListener("click", function() { openCollection(cat.id); });
+        grid.appendChild(card);
     });
-})();
+}
+
+function openCollection(catId) {
+    _view = "browse";
+    _gridFilter = catId;
+    _gridQuery = "";
+    _gridLimit = 24;
+    _sortMode = "default";
+
+    var sel = document.getElementById("sortSelect");
+    if (sel) sel.value = "default";
+    var inp = document.getElementById("tplSearch");
+    if (inp) { inp.value = ""; document.getElementById("tplSearchWrap").classList.remove("has-val"); }
+
+    document.getElementById("collectionView").style.display = "none";
+    document.getElementById("browseView").style.display = "";
+
+    var label = catId === "__animated" ? "✨ Animasiyalı açılışlar" : lunaCategoryName(catId);
+    document.getElementById("collTitle").textContent = label;
+
+    var n = _getHomepageTemplates().filter(function(t) {
+        return catId === "__animated" ? _isAnimated(t) : t.category === catId;
+    }).length;
+    document.getElementById("collCount").textContent = n + " dizayn";
+    inp.placeholder = label + " içində axtar…";
+
+    renderTemplates();
+}
+
+function backToCollections() {
+    _view = "collections";
+    document.getElementById("browseView").style.display = "none";
+    document.getElementById("collectionView").style.display = "";
+}
+
+renderCollections();
+document.getElementById("backToColl").addEventListener("click", backToCollections);
+document.addEventListener("keydown", function(e) {
+    if (e.key !== "Escape" || _view !== "browse") return;
+    var dr = document.getElementById("favDrawer");
+    if (dr && dr.classList.contains("open")) return;
+    backToCollections();
+});
 
 /* ===== GET ALL TEMPLATES (data.js + localStorage admin designs + custom templates) ===== */
 function _getAllTemplates() {
@@ -1496,6 +1627,10 @@ function renderTemplates(filter) {
     matched = matched.slice().sort(function(a, b) {
         return (_isAnimated(b) ? 1 : 0) - (_isAnimated(a) ? 1 : 0);
     });
+    /* istifadəçi sıralaması (default: animasiyalı-önə) */
+    if (_sortMode === "price-asc") matched.sort(function(a, b) { return _priceOf(a) - _priceOf(b); });
+    else if (_sortMode === "price-desc") matched.sort(function(a, b) { return _priceOf(b) - _priceOf(a); });
+    else if (_sortMode === "name") matched.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
     var shown = matched.slice(0, _gridLimit);
 
@@ -1588,6 +1723,13 @@ renderTemplates("all");
         if (typeof revealRefresh === "function") revealRefresh();
     });
 
+    var sortSel = document.getElementById("sortSelect");
+    if (sortSel) sortSel.addEventListener("change", function() {
+        _sortMode = sortSel.value;
+        _gridLimit = 24;
+        renderTemplates();
+    });
+
     document.addEventListener("click", function(e) {
         var fb = e.target.closest ? e.target.closest(".fav-btn") : null;
         if (!fb) return;
@@ -1660,6 +1802,7 @@ renderTemplates("all");
 })();
 
 /* ===== HERO QUICK CATEGORY CHIPS ===== */
+
 (function initHeroChips() {
     var box = document.getElementById("heroChips");
     if (!box || typeof LUNA_CATEGORIES === "undefined") return;
@@ -1671,11 +1814,7 @@ renderTemplates("all");
         b.className = "hero-chip";
         b.textContent = lunaCategoryName(cat.id) + " · " + n;
         b.addEventListener("click", function() {
-            _gridLimit = 24;
-            document.querySelectorAll(".cat-tab").forEach(function(t) {
-                t.classList.toggle("active", t.getAttribute("data-cat") === cat.id);
-            });
-            renderTemplates(cat.id);
+            openCollection(cat.id);
             var sec = document.getElementById("templates");
             if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -1745,15 +1884,7 @@ renderTemplates("all");
     });
 })();
 
-/* ===== CATEGORY FILTER ===== */
-document.getElementById("catTabs").addEventListener("click", function(e) {
-    var tab = e.target.closest(".cat-tab");
-    if (!tab) return;
-    document.querySelectorAll(".cat-tab").forEach(function(t) { t.classList.remove("active"); });
-    tab.classList.add("active");
-    _gridLimit = 24;
-    renderTemplates(tab.getAttribute("data-cat"));
-});
+/* ===== CATEGORY FILTER → kolleksiya mühərrikinə keçid (openCollection/backToCollections yuxarıda) ===== */
 
 /* ===== PREVIEW MODAL — Full Invitation Experience ===== */
 var _mCurrentPkg = "basic";
