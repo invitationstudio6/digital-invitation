@@ -170,7 +170,7 @@ img{display:block;max-width:100%}
 .pkg-sum{display:flex;align-items:center;gap:18px;max-width:520px;margin:0 auto;background:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 14px 36px -14px rgba(62,37,24,.22);border:1px solid rgba(62,37,24,.08)}
 .pkg-sum img{width:86px;height:86px;object-fit:cover;border-radius:12px;flex-shrink:0}
 .pkg-sum h3{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:500;font-style:italic;color:#33200f;margin:4px 0 2px}
-.pkg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1020px;margin:0 auto;align-items:stretch}
+.pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;align-items:stretch}
 .pkg-card{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,253,249,.95),rgba(255,253,249,.75));border-radius:48% 48% 16px 16px/28% 28% 14px 14px;padding:44px 32px 36px;text-align:center;transform:perspective(1000px) rotateX(1deg);transform-origin:center bottom;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;box-shadow:0 0 0 2px rgba(212,165,116,.08),0 20px 50px -15px rgba(45,27,18,.12),0 8px 24px -8px rgba(45,27,18,.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .pkg-card:hover{transform:perspective(1000px) rotateX(0) translateY(-8px);box-shadow:0 0 0 2px rgba(212,165,116,.2),0 30px 60px -20px rgba(45,27,18,.18),0 0 40px rgba(212,165,116,.06)}
 /* künc bəzəkləri */
@@ -288,7 +288,7 @@ img{display:block;max-width:100%}
 /* ===== BUTTONS ===== */
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 30px;font-size:8.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;transition:.4s cubic-bezier(.19,1,.22,1);position:relative;overflow:hidden;border:0;border-radius:50px;cursor:pointer}
 .btn::before{content:"";position:absolute;inset:0;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:-1}
-.btn-dark{background:var(--dark);color:var(--cream);box-shadow:0 8px 24px rgba(45,27,18,.2),0 0 0 1px rgba(255,253,249,.1) inset}
+.btn-dark{background:linear-gradient(135deg,var(--dark),var(--dark-soft));color:var(--cream);box-shadow:0 8px 24px rgba(26,26,46,.25),0 0 0 1px rgba(255,253,249,.1) inset}
 .btn-dark::before{background:var(--text)}
 .btn-dark:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(45,27,18,.25),0 0 0 1px rgba(255,253,249,.15) inset}
 .btn-light{background:linear-gradient(180deg,rgba(255,253,249,.7),rgba(255,253,249,.4));border:1px solid rgba(176,125,79,.15);color:var(--text);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:var(--shadow-sm)}
@@ -464,7 +464,7 @@ img{display:block;max-width:100%}
 .cat-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;justify-content:center}
 
 /* ===== ANIMATION BADGES ===== */
-.anim-badge{position:absolute;top:10px;left:10px;z-index:3;background:rgba(30,20,14,.88);color:#f7efe4;font-size:9px;font-weight:600;letter-spacing:1.2px;padding:5px 11px;border-radius:20px;text-transform:uppercase;backdrop-filter:blur(4px);}
+.anim-badge{position:absolute;top:8px;left:8px;z-index:3;background:linear-gradient(135deg,rgba(26,26,46,.9),rgba(45,27,18,.85));color:var(--gold-light);font-size:8px;font-weight:500;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;text-transform:uppercase;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .dt-imgwrap{position:relative;overflow:hidden;}
 .dt-imgwrap .design-thumb-img{display:block;}
 
@@ -499,7 +499,7 @@ img{display:block;max-width:100%}
 @media(max-width:768px){#animatedShowcase{padding:52px 0 44px;}.anim-card{min-width:200px;max-width:200px;}}
 
 /* ===== TEMPLATE TOOLS: SEARCH + RESULTS ===== */
-.tpl-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin-bottom:16px}
+.tpl-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin-bottom:20px}
 .tpl-search{position:relative;width:min(440px,100%)}
 .tpl-search input{width:100%;padding:13px 44px 13px 42px;border-radius:50px;border:1px solid rgba(212,165,116,.12);background:rgba(255,253,249,.8);font-size:13px;color:var(--text);outline:none;transition:.3s;font-family:inherit;box-sizing:border-box;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .tpl-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,165,116,.1)}
@@ -639,7 +639,7 @@ img{display:block;max-width:100%}
 .cta p{max-width:520px;margin:24px auto 30px;color:var(--muted);font-size:10px;line-height:2}
 
 /* ===== FOOTER ===== */
-footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+footer{padding:48px 5% 32px;border-top:1px solid rgba(212,165,116,.08);display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
 .footer-logo{font-family:"Italiana",serif;font-size:32px;color:var(--dark);letter-spacing:1px}
 .footer-center{text-align:center;line-height:2}
 .footer-socials{display:flex;gap:15px}
@@ -760,10 +760,11 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
 .modal-invite-footer-sub{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
 /* CTA */
-.modal-cta{padding:20px 24px;display:flex;gap:10px;justify-content:center;position:sticky;bottom:0;background:#fff;border-top:1px solid var(--border)}
-.modal-cta .btn{min-height:44px;font-size:9px;letter-spacing:2px}
-.btn-live{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--cream);border:none;box-shadow:0 6px 20px rgba(168,139,78,.3);font-weight:500;transition:.3s}
-.btn-live:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(168,139,78,.4)}
+.modal-cta{padding:16px 20px;display:flex;gap:10px;justify-content:center;position:sticky;bottom:0;background:linear-gradient(180deg,rgba(255,253,249,.95),#fff);border-top:1px solid rgba(212,165,116,.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.modal-cta .btn{min-height:44px;font-size:9px;letter-spacing:2px;flex:1;max-width:200px}
+.btn-live{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--cream);border:none;box-shadow:0 6px 24px rgba(212,165,116,.35);font-weight:500;transition:.4s;cursor:pointer;animation:livePulse 2s ease infinite}
+.btn-live:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(212,165,116,.5)}
+@keyframes livePulse{0%,100%{box-shadow:0 6px 24px rgba(212,165,116,.35)}50%{box-shadow:0 6px 30px rgba(212,165,116,.55),0 0 0 3px rgba(212,165,116,.1)}}
 
 @media(max-width:600px){
     .modal-content{max-height:92vh;border-radius:8px}
@@ -803,7 +804,7 @@ body.has-announce .mobile-menu{padding-top:150px}
 /* ===== RESPONSIVE ===== */
 @media(max-width:1100px){
     .categories-grid{grid-template-columns:repeat(3,1fr)}
-    .designs-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+    .designs-grid{grid-template-columns:repeat(3,1fr);gap:14px}
     .cat-collection-grid{grid-template-columns:repeat(3,1fr)}
     .compare-grid{grid-template-columns:repeat(2,1fr)}
     .features-grid{grid-template-columns:repeat(2,1fr)}
@@ -843,9 +844,8 @@ body.has-announce .mobile-menu{padding-top:150px}
     .hero-floats{display:flex;gap:10px;justify-content:center;margin-top:28px;padding:0 12px}
     .float-card{width:calc(50% - 5px);max-width:140px;border-radius:10px;box-shadow:0 10px 28px rgba(62,37,24,.15)}
     
-    .designs-grid,.categories-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .designs-grid{grid-template-columns:1fr 1fr;gap:10px}
     .cat-collection-grid{grid-template-columns:1fr 1fr;gap:10px}
-    .design-thumb-info h4{font-size:16px}
     .section{padding:80px 5%}
     .section-heading{margin-bottom:20px}
     .section-heading h2{font-size:clamp(28px,8vw,38px)}
@@ -877,6 +877,40 @@ body.has-announce .mobile-menu{padding-top:150px}
 @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
 }
+
+
+/* ===== COMPACT DESIGN CARDS ===== */
+.design-thumb{border-radius:4px 4px 16px 16px;overflow:hidden;background:#fff;border:1px solid rgba(212,165,116,.08);transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;cursor:pointer;display:flex;flex-direction:column}
+.design-thumb:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(45,27,18,.12),0 0 0 1px rgba(212,165,116,.12)}
+.design-thumb .dt-imgwrap{position:relative;overflow:hidden;aspect-ratio:3/4}
+.design-thumb .design-thumb-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.19,1,.22,1)}
+.design-thumb:hover .design-thumb-img{transform:scale(1.06)}
+.design-thumb .dt-meta{padding:10px 12px 6px;background:#fff}
+.design-thumb .dt-meta .dt-cat{font-size:7px;letter-spacing:1.8px;color:var(--gold)}
+.design-thumb .dt-meta h4{font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:500;color:var(--dark);margin:3px 0 4px;line-height:1.15}
+.design-thumb .dt-meta .dt-price{font-size:9px;color:var(--gold-dark);letter-spacing:.5px}
+.design-thumb .dt-actions{display:flex;gap:6px;padding:6px 12px 12px;background:#fff}
+.design-thumb .dt-actions .btn{flex:1;text-align:center;font-size:8px;letter-spacing:1.2px;text-transform:uppercase;padding:8px 4px;border-radius:6px;transition:.25s}
+.design-thumb .dt-features{padding:0 12px 6px}
+.design-thumb .dt-feat-item{font-size:7px;padding:2px 6px;border-radius:4px;background:rgba(212,165,116,.06);color:var(--muted);margin:2px;display:inline-block;letter-spacing:.5px}
+.designs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1200px;margin:0 auto}
+@media(max-width:1024px){.designs-grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media(max-width:768px){.designs-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+
+
+/* ===== HERO ENTRANCE ANIMATIONS ===== */
+.hero-deco{position:absolute;pointer-events:none;z-index:1}
+.hero-deco-ring{width:200px;height:200px;border:1px solid rgba(212,165,116,.12);border-radius:50%;top:15%;right:10%;animation:decoSpin 20s linear infinite}
+.hero-deco-dots{bottom:20%;left:8%;display:flex;gap:6px;animation:fadeUp 1.5s 1s ease both}
+.hero-deco-dots span{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.3}
+.hero-deco-dots span:nth-child(2){opacity:.5;animation:dotPulse 3s .5s ease infinite}
+.hero-deco-dots span:nth-child(4){opacity:.4;animation:dotPulse 2.5s 1s ease infinite}
+.hero-deco-line{top:30%;left:5%;width:80px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.15;animation:fadeRight 1.5s .8s ease both}
+@keyframes decoSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.8);opacity:.7}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(-20px)}to{opacity:.15;transform:translateX(0)}}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-floats{animation:heroFloat 6s ease-in-out infinite}
 
 /* ===== PREMIUM IDENTITY ===== */
 .section-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 40px}
@@ -989,6 +1023,8 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 <!-- ══════ HERO ══════ -->
 <section class="hero" id="home">
     <div class="hero-floats" id="particles" aria-hidden="true"></div>
+    <div class="hero-deco hero-deco-ring"></div>
+    <div class="hero-deco hero-deco-line"></div>
     <div class="hero-content">
         <div class="hero-label">Digital dəvətnamələr</div>
         <h1><span class="hero-gradient">gözəl anlar,<br>gözəl dəvətlərlə</span><span>hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
@@ -1068,7 +1104,41 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <h2>Hekayənizi canlandırın</h2>
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Fotolarınızdan, musiqinizdən və animasiyalardan ibarət video dəvətnamələr. 20 AZN-dən başlayır.</p>
         </div>
-        <div class="video-grid" id="videoGrid"></div>
+        <div class="video-grid" id="videoGrid">
+            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample1','_blank')">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#3e2518,#2a170f);display:flex;align-items:center;justify-content:center;">
+                    <div style="text-align:center;color:#f7efe4;padding:30px">
+                        <div style="font-size:48px;margin-bottom:16px">🎬</div>
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Toy Dəvətnaməsi</div>
+                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Animasiyalı video</div>
+                    </div>
+                </div>
+                <div class="video-play"></div>
+                <div class="video-label"><h4>Toy Dəvətnaməsi</h4><p>Video · 0:30</p></div>
+            </div>
+            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample2','_blank')">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#5a2d3e,#3e1a2a);display:flex;align-items:center;justify-content:center;">
+                    <div style="text-align:center;color:#f7efe4;padding:30px">
+                        <div style="font-size:48px;margin-bottom:16px">💎</div>
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Nişan Dəvətnaməsi</div>
+                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Premium video</div>
+                    </div>
+                </div>
+                <div class="video-play"></div>
+                <div class="video-label"><h4>Nişan Dəvətnaməsi</h4><p>Video · 0:45</p></div>
+            </div>
+            <div class="video-card" onclick="window.open('https://www.canva.com/design/DAFexample3','_blank')">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0e06,#4a3520,#2a1a10);display:flex;align-items:center;justify-content:center;">
+                    <div style="text-align:center;color:#f7efe4;padding:30px">
+                        <div style="font-size:48px;margin-bottom:16px">🪔</div>
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;margin-bottom:8px">Xına Gecəsi</div>
+                        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,228,.6)">Canlı video</div>
+                    </div>
+                </div>
+                <div class="video-play"></div>
+                <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · 0:25</p></div>
+            </div>
+        </div>
     </div>
 </section>
 
