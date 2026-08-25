@@ -4323,25 +4323,100 @@ var params =
     }
     if (!tpl) return;
     var pv = tpl.preview || {};
-    var imgs = (tpl.illustrations && tpl.illustrations.length) ? tpl.illustrations.slice(0, 6) : [];
-    if (!imgs.length && tpl.cover) imgs = [tpl.cover];
-    var chosenPkg = pkgOverride || (tpl.packages && tpl.packages[tpl.packages.length - 1]) || "premium";
+    var cat = (tpl.category || "wedding").toLowerCase();
+    var brideName = (pv.names && pv.names[0]) || "Aysel";
+    var groomName = (pv.names && pv.names[1]) || "Murad";
+    var dateISO = "2026-09-12";
+    var dateDisplay = pv.date || "12 · 09 · 2026";
+    var venue = pv.venue || "Crystal Hall";
+    var location = pv.location || "Bakı, Azərbaycan";
+    var coverUrl = tpl.cover || "";
+    var isCouple = (cat === "wedding" || cat === "engagement" || cat === "anniversary" || cat === "henna");
+    var catPrefix = cat.charAt(0).toUpperCase() + cat.slice(1);
+    var gallerySets = {
+        wedding: [
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=85"
+        ],
+        engagement: [
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=85"
+        ],
+        birthday: [
+            "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1496843916299-590492c751f4?auto=format&fit=crop&w=800&q=85"
+        ],
+        graduation: [
+            "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1416339442236-8ceb164046f8?auto=format&fit=crop&w=800&q=85"
+        ],
+        henna: [
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85"
+        ],
+        business: [
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1559223607-a43c990c692c?auto=format&fit=crop&w=800&q=85"
+        ],
+        other: [
+            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=85",
+            "https://images.unsplash.com/photo-1496024840928-4c417adf211d?auto=format&fit=crop&w=800&q=85"
+        ]
+    };
+    var baseGallery = gallerySets[cat] || gallerySets.wedding;
+    var galleryImages = baseGallery.slice(0, 6);
+    if (coverUrl && galleryImages.indexOf(coverUrl) === -1) {
+        galleryImages.unshift(coverUrl);
+        if (galleryImages.length > 6) galleryImages.pop();
+    }
+    var stories = {
+        wedding: brideName + " və " + groomName + " sevgi ilə dolu bir yolculuğa çıxmağa qərar verdilər. İlk görüşlərindən bu yana keçən hər an, onların hekayəsini daha da gözəl etdi. Dostlarının və ailələrinin sevgisi ilə əhatə olunmuş bu gözəl gündə, " + venue + " məkanında birlikdə addımlayacaqlar. Siz də bu unudulmaz anda şahidlik etməyi arzulayırsınızsa, bizimlə birlikdə olun.",
+        engagement: brideName + " və " + groomName + " nişan mərasimləri ilə yeni bir başlanğıca imza atırlar. Bu gözəl addımı, ən yaxın dostları və ailələri ilə birlikdə qeyd etmək istəyirlər. " + venue + " məkanında baş tutacaq bu xüsusi gecədə, sevginin və vədlərin şahidi olacaqsınız.",
+        birthday: brideName + " sağ olmağın sevincini, sevdikləri ilə birlikdə qeyd etməyə dəvət edir. " + venue + " məkanında baş tutacaq bu şən gecədə, birlikdə əylənəcək, güləcək və xatirələr yaradacağıq. Gəlin bu gözəl günü birlikdə qeyd edək!",
+        graduation: brideName + " uzun bir təhsil yolculuğunun sonuna çatmanın sevincini yaşayır. " + venue + " məkanında baş tutacaq bu mərasimdə, ən yaxın dostları və ailələri ilə birlikdə bu nailiyyəti qeyd etmək istəyir. Gəlin birlikdə bu uğuru qeyd edək!",
+        henna: brideName + " " + (isCouple ? "və " + groomName + " ilə birlikdə " : "") + "xına gecəsində son subay gecəsini qeyd etməyə dəvət edir. " + venue + " məkanında baş tutacaq bu ənənəvi mərasimdə, rəqs, musiqi və əyləncə ilə dolu bir gecə sizi gözləyir.",
+        business: brideName + " tərəfindən təşkil olunan bu " + catPrefix.toLowerCase() + " tədbirində iştirak etməyə dəvət edirik. " + venue + " məkanında baş tutacaq bu tədbirdə, sahənin ekspertləri ilə tanış olacaq və yeni imkanlar kəşf edəcəksiniz.",
+        other: brideName + " sizi xüsusi bir tədbirə dəvət edir. " + venue + ", " + location + " məkanında baş tutacaq bu hadisə, unudulmaz anlar və gözəl xatirələr vəd edir."
+    };
+    var storyText = stories[cat] || stories.wedding;
+    var chosenPkg = "luxury";
     window.__lunaTemplatePreview = true;
     window.lunaGetInvitationOverride = {
         id: "__preview__",
         package: chosenPkg,
-        category: tpl.category || "wedding",
+        category: cat,
         design: tpl.id,
         templateId: tpl.id,
-        bride: (pv.names && pv.names[0]) || "Aysel",
-        groom: (pv.names && pv.names[1]) || "Murad",
-        date: "2026-09-12",
-        dateShort: pv.date || "",
+        style: tpl.style || "",
+        bride: brideName,
+        groom: groomName,
+        date: dateISO,
+        dateShort: dateDisplay,
         time: "19:00",
-        venue: pv.venue || "Crystal Hall",
-        location: pv.location || "Bakı, Azərbaycan",
+        venue: venue,
+        location: location,
         message: pv.message || "",
-        images: imgs,
+        story: storyText,
+        images: galleryImages,
         approved: true,
         createdAt: Date.now()
     };
@@ -4625,6 +4700,19 @@ document.getElementById("openButton").textContent =
     var openingType = cfg.openingType
         || (tplData && (tplData.openingType || tplData.openingStyle || tplData.animationStyle || tplData.animationType))
         || (_theme.openingType || "envelope");
+
+    /* Map openingStyle aliases to actual scene types */
+    var _openingMap = {
+        "floral-reveal": "floral-paper", "editorial-reveal": "editorial-card",
+        "luxury-reveal": "luxury-romance", "envelope-reveal": "envelope-seal",
+        "stairs-reveal": "stairs", "wax-reveal": "wax-seal",
+        "curtain-reveal": "curtain", "ribbon-reveal": "ribbon",
+        "door-reveal": "door", "wood-door-reveal": "wood-door",
+        "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
+        "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
+        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter"
+    };
+    openingType = _openingMap[openingType] || openingType;
 
     /* Apply opening type to root element */
     document.documentElement.setAttribute("data-opening", openingType);
@@ -5434,7 +5522,18 @@ var _openingStyle = (function() {
             return t.id === invitation.templateId;
         });
     }
-    return (tData && tData.openingStyle) || "envelope";
+    var raw = (tData && tData.openingStyle) || "envelope";
+    var map = {
+        "floral-reveal": "floral-paper", "editorial-reveal": "editorial-card",
+        "luxury-reveal": "luxury-romance", "envelope-reveal": "envelope-seal",
+        "stairs-reveal": "stairs", "wax-reveal": "wax-seal",
+        "curtain-reveal": "curtain", "ribbon-reveal": "ribbon",
+        "door-reveal": "door", "wood-door-reveal": "wood-door",
+        "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
+        "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
+        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter"
+    };
+    return map[raw] || raw;
 })();
 
 
