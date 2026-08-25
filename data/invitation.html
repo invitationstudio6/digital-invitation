@@ -1263,6 +1263,13 @@ a { text-decoration: none; color: inherit; }
     filter: drop-shadow(0 8px 12px rgba(90,60,20,.28));
     transition: transform .95s cubic-bezier(.6,0,.3,1) .5s;
 }
+.es-flap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.2) 0%, transparent 50%);
+    clip-path: inherit;
+}
 
 .es-wax {
     position: absolute; left: 50%; top: 56%;
@@ -1271,9 +1278,11 @@ a { text-decoration: none; color: inherit; }
     background: radial-gradient(circle at 34% 30%, #B23B3B, #7C1A1A 62%, #520F0F);
     color: #F3D9A4; display: flex; align-items: center; justify-content: center;
     font-family: "Italiana", serif; font-size: 27px; z-index: 5;
-    box-shadow: 0 4px 12px rgba(60,10,10,.45), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16);
+    box-shadow: 0 4px 12px rgba(60,10,10,.45), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 20px rgba(180,60,50,.25);
     transition: transform .5s ease, opacity .45s ease .15s;
+    animation: waxGlow 2.5s ease-in-out infinite;
 }
+@keyframes waxGlow { 0%,100% { box-shadow: 0 4px 12px rgba(60,10,10,.45), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 20px rgba(180,60,50,.25); } 50% { box-shadow: 0 4px 16px rgba(60,10,10,.55), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 6px rgba(255,255,255,.16), 0 0 30px rgba(180,60,50,.4); } }
 
 .scene-opened[data-opening="envelope-seal"] .es-wax { transform: translate(-50%,-58%) scale(2); opacity: 0; }
 .scene-opened[data-opening="envelope-seal"] .es-flap { transform: rotateX(-178deg); }
@@ -1307,6 +1316,15 @@ a { text-decoration: none; color: inherit; }
     box-shadow: 0 0 24px rgba(140,100,40,.35);
     transition: transform .85s cubic-bezier(.55,0,.45,1) .35s, opacity .5s ease .95s;
 }
+.rb-band-v::after, .rb-band-h::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,.3), transparent);
+    animation: ribbonShimmer 2s ease-in-out infinite;
+}
+.rb-band-v::after { top: 0; bottom: 0; left: 0; right: 0; }
+.rb-band-h::after { left: 0; right: 0; top: 0; bottom: 0; }
+@keyframes ribbonShimmer { 0%,100% { opacity: .3; } 50% { opacity: .8; } }
 .rb-band-h {
     position: fixed; left: -6%; right: -6%; top: calc(50% - 26px); height: 52px; z-index: 6;
     background: linear-gradient(180deg, #B8893A, #EED9A0 45%, #CAA04C);
@@ -1400,8 +1418,10 @@ a { text-decoration: none; color: inherit; }
     transform: translateY(-50%);
     width: 22px; height: 22px; border-radius: 50%;
     background: radial-gradient(circle at 34% 30%, #E8C87A, #8a6a30 60%, #4d3812);
-    box-shadow: 0 2px 6px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4);
+    box-shadow: 0 2px 6px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 10px rgba(232,200,122,.3);
+    transition: transform .4s ease, box-shadow .4s ease;
 }
+.scene-opened[data-opening="wood-door"] .wd-handle { transform: translateY(-50%) rotate(-60deg); box-shadow: 0 2px 8px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 16px rgba(232,200,122,.5); }
 
 .scene-opened[data-opening="wood-door"] .wd-door { transform: rotateY(-102deg); }
 .scene-opened[data-opening="wood-door"] .wd-frame { animation: wdAway .8s ease 1.05s forwards; }
@@ -1466,6 +1486,26 @@ a { text-decoration: none; color: inherit; }
     36%  { transform: scale(.94) rotate(3deg); }
     100% { transform: scale(1.5) rotate(-14deg); opacity: 0; filter: blur(2px); }
 }
+.wax-sparkles {
+    position: absolute; inset: -30px; pointer-events: none; z-index: 6;
+    opacity: 0;
+    transition: opacity .3s ease .3s;
+}
+.wax-sparkle {
+    position: absolute;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #F4D9A0;
+    box-shadow: 0 0 6px #E8C574;
+}
+.wax-sparkle:nth-child(1) { top: 10%; left: 20%; animation: sparkPop .7s ease-out .3s both; }
+.wax-sparkle:nth-child(2) { top: 5%; left: 70%; animation: sparkPop .7s ease-out .4s both; }
+.wax-sparkle:nth-child(3) { top: 80%; left: 15%; animation: sparkPop .7s ease-out .35s both; }
+.wax-sparkle:nth-child(4) { top: 75%; left: 80%; animation: sparkPop .7s ease-out .45s both; }
+.wax-sparkle:nth-child(5) { top: 40%; left: 5%; animation: sparkPop .7s ease-out .25s both; }
+.wax-sparkle:nth-child(6) { top: 45%; left: 90%; animation: sparkPop .7s ease-out .5s both; }
+.scene-opened[data-opening="wax-seal"] .wax-sparkles { opacity: 1; }
+@keyframes sparkPop { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.8); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
 
 .scene-opened[data-opening="wax-seal"] .wax-half-l,
 .scene-opened[data-opening="wax-seal"] .wax-half-r { opacity: 1; }
@@ -1517,9 +1557,12 @@ a { text-decoration: none; color: inherit; }
         repeating-linear-gradient(90deg,
             rgba(0,0,0,.32) 0 10px,
             transparent 10px 26px),
+        repeating-linear-gradient(90deg,
+            rgba(255,255,255,.04) 0 4px,
+            transparent 4px 18px),
         linear-gradient(90deg, #571512, #7A1F1B 30%, #8E2723 50%, #7A1F1B 70%, #571512);
-    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55);
-    transition: transform 1.5s cubic-bezier(.65,0,.25,1);
+    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55), inset 0 0 120px rgba(0,0,0,.2);
+    transition: transform 1.5s cubic-bezier(.65,0,.25,1), filter .6s ease;
 }
 .curtain-left  { left: 0;  transform-origin: left; }
 .curtain-right { right: 0; transform-origin: right; }
@@ -1533,8 +1576,8 @@ a { text-decoration: none; color: inherit; }
     box-shadow: 0 4px 18px rgba(0,0,0,.5);
 }
 
-.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg); }
-.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg); }
+.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-104%) rotateY(24deg); filter: brightness(.6); }
+.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(104%) rotateY(-24deg); filter: brightness(.6); }
 .scene-opened[data-opening="curtain"] .curtain-rail  { opacity: 0; transition: opacity .8s ease .6s; }
 
 [data-opening="curtain"] .sig-scene { z-index: 2; }
@@ -1545,6 +1588,21 @@ a { text-decoration: none; color: inherit; }
 }
 [data-opening="curtain"] .sig-card h1 { color: #F7EDDF; }
 [data-opening="curtain"] .open-button { border-color: rgba(212,175,55,.5); color: #E9CE7E; }
+[data-opening="curtain"] .curtain-stage::after {
+    content: "";
+    position: fixed;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160%;
+    height: 280px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(233,206,126,.18), transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease .8s;
+    z-index: 1;
+}
+.scene-opened[data-opening="curtain"] .curtain-stage::after { opacity: 1; }
 
 
 /* =====================================================
@@ -3642,6 +3700,7 @@ footer p {
         <div class="wax-wrap">
             <div class="wax-half-l"></div>
             <div class="wax-half-r"></div>
+                <div class="wax-sparkles"><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span></div>
             <div class="wax-seal-big" id="waxSealBig">L</div>
         </div>
         <div class="sig-card">
