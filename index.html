@@ -735,6 +735,8 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
 /* CTA */
 .modal-cta{padding:20px 24px;display:flex;gap:10px;justify-content:center;position:sticky;bottom:0;background:#fff;border-top:1px solid var(--border)}
 .modal-cta .btn{min-height:44px;font-size:9px;letter-spacing:2px}
+.btn-live{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--cream);border:none;box-shadow:0 6px 20px rgba(168,139,78,.3);font-weight:500;transition:.3s}
+.btn-live:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(168,139,78,.4)}
 
 @media(max-width:600px){
     .modal-content{max-height:92vh;border-radius:8px}
@@ -957,7 +959,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 
 <!-- ══════ HERO ══════ -->
 <section class="hero" id="home">
-    <div class="hero-floats" aria-hidden="true"></div>
+    <div class="hero-floats" id="particles" aria-hidden="true"></div>
     <div class="hero-content">
         <div class="hero-label">Digital dəvətnamələr</div>
         <h1><span class="hero-gradient">gözəl anlar,<br>gözəl dəvətlərlə</span><span>hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
@@ -1179,7 +1181,16 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
                 <div class="modal-invite-footer-sub">WITH LOVE · LUNA</div>
             </div>
         </div>
-<!-- TESTIMONIALS -->
+        <!-- Modal CTA -->
+        <div class="modal-cta">
+            <a id="modalFormLink" href="#" class="btn btn-dark">Bu dizaynı seç</a>
+            <button class="btn btn-live" id="modalLiveBtn">Canlı açılışı izlə</button>
+            <button class="btn btn-light" id="modalCloseBtn">Geri</button>
+        </div>
+    </div>
+</div>
+
+<!-- TESTIMONIALS (outside modal) -->
 <section class="section reveal" id="testimonials" style="display:none">
 <div class="section-inner">
     <div class="section-heading" style="text-align:center">
@@ -1189,14 +1200,6 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     <div class="testi-grid" id="testiGrid"></div>
 </div>
 </section>
-
-<!-- CTA -->
-        <div class="modal-cta">
-            <a id="modalFormLink" href="#" class="btn btn-dark">Bu dizaynı seç</a>
-            <button class="btn btn-light" id="modalCloseBtn">Geri</button>
-        </div>
-    </div>
-</div>
 
 <!-- FAVORITES FAB + DRAWER -->
 <button class="to-top" id="toTop" aria-label="Yuxarı qalx">↑</button>
