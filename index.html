@@ -1346,21 +1346,14 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 
 <!-- ══════ HERO ══════ -->
 <section class="hero" id="home">
-    <div class="particles" id="particles"></div>
-    <div class="hero-floats">
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=400&q=80'"></div>
-    </div>
+    <div class="hero-floats" aria-hidden="true"></div>
     <div class="hero-content">
         <div class="hero-label">Digital dəvətnamələr</div>
         <h1><span class="hero-gradient">gözəl anlar,<br>gözəl dəvətlərlə</span><span>hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
         <p class="hero-text">3 sadə addımda öz rəqəmsal dəvətnaməni yarat. Dizaynını seç, məlumatlarını daxil et, linkini paylaş.</p>
         <div class="hero-buttons">
-            <a href="#how" class="btn btn-dark">Kəşf et &nbsp;↓</a>
-            <a href="invitations.html" class="btn btn-light">Hazır nümunələr</a>
+            <a href="#designs" class="btn btn-dark">Dizaynları bax &nbsp;↓</a>
+            <a href="#collections" class="btn btn-light">Kolleksiyalar</a>
         </div>
     </div>
 </section>
@@ -1392,28 +1385,6 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     </div>
 </section>
 
-<!-- ══════ KOLLEKSİYALAR ══════ -->
-<section class="section" id="collections" style="padding:70px 20px">
-    <div class="section-inner">
-        <div class="section-heading" style="text-align:center;margin-bottom:36px">
-            <div class="kicker">Kolleksiyalar</div>
-            <h2>Hansı münasibət üçün?</h2>
-        </div>
-        <div class="coll-grid" id="collGrid"></div>
-    </div>
-</section>
-
-<!-- ══════ CANLI AÇILIŞLAR ══════ -->
-<section class="section" id="showcase" style="padding:50px 20px 40px">
-    <div class="section-inner">
-        <div class="tpl-strip-head" style="text-align:center;margin-bottom:20px">
-            <span class="kicker" style="color:#a0653f">🔥 Canlı açılışlar</span>
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(19px,2.4vw,26px);font-weight:500;font-style:italic;color:#4a2e1c;margin:6px 0 0">Açılışını izlə, bəyəndiyini seç.</h3>
-        </div>
-        <div class="anim-strip" id="animStrip2"></div>
-    </div>
-</section>
-
 <!-- ══════ DİZAYNLAR ══════ -->
 <section class="section" id="designs" style="padding:60px 20px 80px">
     <div class="section-inner">
@@ -1421,6 +1392,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <div class="kicker">Dizaynlar</div>
             <h2>Bəyəndiyinizi seçin</h2>
         </div>
+        <div class="cat-tabs" id="catTabs" role="tablist" aria-label="Kateqoriya"></div>
         <div class="tpl-tools">
             <div class="tpl-search" id="tplSearchWrap">
                 <span class="s-ico">🔍</span>
@@ -1461,18 +1433,6 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Fotolarınızdan, musiqinizdən və animasiyalardan ibarət video dəvətnamələr. 20 AZN-dən başlayır.</p>
         </div>
         <div class="video-grid" id="videoGrid"></div>
-    </div>
-</section>
-
-<!-- ══════ İLHAM ALIN ══════ -->
-<section class="section" id="inspiration" style="padding:80px 20px">
-    <div class="section-inner">
-        <div class="section-heading" style="text-align:center;margin-bottom:36px">
-            <div class="kicker">✦ Luna-dan ilham alın</div>
-            <h2>Seçdiyimiz anlar</h2>
-            <p style="text-align:center;max-width:420px;margin:12px auto 0;font-size:12px;color:#8a6f58">Müştərilərimizin sevdiyi dizaynlar. Klikləyin — canlı təcrübəni hiss edin.</p>
-        </div>
-        <div class="inspo-grid" id="inspoGrid"></div>
     </div>
 </section>
 
@@ -2823,6 +2783,56 @@ function toggleMainVideo() {
 
 /* ===== RE-RENDER ON LANGUAGE CHANGE ===== */
 var _origSetLang = lunaSetLanguage;
+
+/* ===== RENDER CATEGORY TABS ===== */
+function renderTabs() {
+    var tabs = document.getElementById("catTabs");
+    if (!tabs || typeof LUNA_CATEGORIES === "undefined") return;
+    tabs.innerHTML = "";
+    var cats = LUNA_CATEGORIES.slice();
+    // "all" tab first
+    var allBtn = document.createElement("button");
+    allBtn.className = "cat-tab active";
+    allBtn.setAttribute("data-cat", "all");
+    allBtn.setAttribute("role", "tab");
+    allBtn.setAttribute("aria-selected", "true");
+    allBtn.textContent = (LUNA_LANG === "az" ? "Hamısı" : LUNA_LANG === "en" ? "All" : LUNA_LANG === "ru" ? "Все" : "Hepsi");
+    allBtn.addEventListener("click", function() {
+        document.querySelectorAll(".cat-tab").forEach(function(b) { b.classList.remove("active"); b.setAttribute("aria-selected", "false"); });
+        this.classList.add("active");
+        this.setAttribute("aria-selected", "true");
+        _gridFilter = "all";
+        _gridQuery = "";
+        _gridLimit = 24;
+        var inp = document.getElementById("tplSearch");
+        if (inp) inp.value = "";
+        renderTemplates(getCurrentFilter());
+    });
+    tabs.appendChild(allBtn);
+    // category tabs
+    cats.forEach(function(cat) {
+        var btn = document.createElement("button");
+        btn.className = "cat-tab";
+        btn.setAttribute("data-cat", cat.id);
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-selected", "false");
+        btn.textContent = lunaCategoryName(cat.id);
+        btn.addEventListener("click", function() {
+            document.querySelectorAll(".cat-tab").forEach(function(b) { b.classList.remove("active"); b.setAttribute("aria-selected", "false"); });
+            this.classList.add("active");
+            this.setAttribute("aria-selected", "true");
+            _gridFilter = cat.id;
+            _gridQuery = "";
+            _gridLimit = 24;
+            var inp = document.getElementById("tplSearch");
+            if (inp) inp.value = "";
+            renderTemplates(getCurrentFilter());
+        });
+        tabs.appendChild(btn);
+    });
+}
+
+
 lunaSetLanguage = function(lang) {
     _origSetLang(lang);
     applyHomepageConfig();
