@@ -938,6 +938,36 @@ const LUNA_TEMPLATES = [
         design: { primaryColor: "#1e3d34", secondaryColor: "#c9a86a", font: "Marcellus" },
         layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "dark", openingType: "door" },
         preview: { eyebrow: "QAPINI AÇ", names: ["Aytən", "Fuad"], date: "28 · 11 · 2026", message: "Yeni həyatımızın qapısı sizin üçün açılır.", venue: "Four Seasons Baku", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "love-letter", name: "Love Letter", category: "wedding", style: "Klassik · Möhürlü Məktub", galleryStyle: "slider", openingStyle: "envelope-seal",
+        animationStyle: "envelope-seal",
+        thumbnail: "https://images.unsplash.com/photo-1522673607200-8d1d38c61bbe?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1522673607200-8d1d38c61bbe?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#7a4a2b", secondaryColor: "#b03a3a", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral", openingType: "envelope-seal" },
+        preview: { eyebrow: "MƏKTUBU AÇ", names: ["Səbinə", "Elvin"], date: "14 · 02 · 2027", message: "Möhürü qırın və ürək sözlərimizi ilk oxuyan siz olun.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "serena" }
+    },
+    {
+        id: "unwrap-gift", name: "Unwrap the Gift", category: "birthday", style: "Şənlik · Hədiyyə Lentlə", galleryStyle: "collage", openingStyle: "ribbon",
+        animationStyle: "ribbon",
+        thumbnail: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "basic", packages: ["basic", "premium"],
+        design: { primaryColor: "#a83a63", secondaryColor: "#caa04c", font: "Playfair Display" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","countdown","rsvp","story"], heroType: "hero-style-dark", backgroundStyle: "floral", openingType: "ribbon" },
+        preview: { eyebrow: "HƏDİYYƏNİ AÇ!", names: ["Nuray"], date: "09 · 09 · 2026", message: "Lenti çək və sürprizlə dolu gecəyə başla!", venue: "Cafe City", location: "Bakı, Azərbaycan", theme: "default" }
+    },
+    {
+        id: "manor-door", name: "Manor Door", category: "engagement", style: "Rustik · Taxta Qapı", galleryStyle: "editorial", openingStyle: "wood-door",
+        animationStyle: "wood-door",
+        thumbnail: "https://images.unsplash.com/photo-1487530811176-3780de880392?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1487530811176-3780de880392?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#5d4037", secondaryColor: "#c9a86a", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "wood-door" },
+        preview: { eyebrow: "QAPINI DÖYƏRƏK GİRİN", names: ["Leyla", "Murad"], date: "22 · 05 · 2027", message: "Taxta qapının arxasında bizim gələcəyimizə açılan yol var.", venue: "Şahdağ Resort", location: "Qusar, Azərbaycan", theme: "noir" }
     }
 ];
 

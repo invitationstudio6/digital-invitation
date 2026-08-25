@@ -469,6 +469,41 @@ img{display:block;max-width:100%}
 .opv-lux i{top:-20%;left:-80%;width:55%;height:140%;background:linear-gradient(100deg,rgba(255,240,214,0),rgba(255,240,214,.6),rgba(255,240,214,0));transform:skewX(-18deg);animation:opvShine 3.8s ease-in-out infinite}
 @keyframes opvShine{0%,50%{left:-80%}88%,100%{left:135%}}
 
+/* ✉️ möhürlü məktub */
+.opv-env{background:linear-gradient(160deg,rgba(246,239,226,.94),rgba(231,217,188,.9))}
+.opv-env i{position:absolute}
+.opv-env .e-ltr{left:12%;right:12%;top:34%;bottom:18%;background:#fffdf6;border-radius:3px;box-shadow:0 -4px 10px rgba(120,90,50,.25);animation:opvEnvLtr 5.8s ease-in-out infinite}
+.opv-env .e-pkt{left:8%;right:8%;top:26%;bottom:14%;background:linear-gradient(170deg,#EBDCC0,#D8C096);border-radius:4px;box-shadow:0 8px 20px rgba(90,60,25,.35)}
+.opv-env .e-flp{left:8%;right:8%;top:26%;height:38%;background:linear-gradient(180deg,#E3CDA5,#CFAE79);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;animation:opvEnvFlp 5.8s ease-in-out infinite;filter:drop-shadow(0 3px 5px rgba(90,60,20,.3))}
+.opv-env .e-wax{left:50%;top:56%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B23B3B,#7C1A1A);animation:opvEnvWax 5.8s ease-in-out infinite}
+@keyframes opvEnvFlp{0%,12%{transform:rotateX(0)}30%,62%{transform:rotateX(-165deg)}85%,100%{transform:rotateX(0)}}
+@keyframes opvEnvLtr{0%,12%{transform:translateY(0)}32%,58%{transform:translateY(-42%)}82%,100%{transform:translateY(0)}}
+@keyframes opvEnvWax{0%,12%{transform:scale(1);opacity:1}24%{transform:scale(2.1);opacity:0}28%,72%{opacity:0;transform:scale(.7)}88%,100%{transform:scale(1);opacity:1}}
+
+/* 🎀 lentlə açılış */
+.opv-rbn::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,58,99,.92),rgba(126,37,73,.94));animation:opvRbnBg 5.2s ease-in-out infinite}
+@keyframes opvRbnBg{0%,32%{opacity:1}56%,80%{opacity:.12}100%{opacity:1}}
+.opv-rbn i{position:absolute;z-index:1}
+.opv-rbn .r-v{top:-6%;bottom:-6%;left:calc(50% - 11px);width:22px;background:linear-gradient(90deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnV 5.2s ease-in-out infinite}
+.opv-rbn .r-h{left:-6%;right:-6%;top:calc(50% - 11px);height:22px;background:linear-gradient(180deg,#B8893A,#EED9A0 45%,#CAA04C);animation:opvRbnH 5.2s ease-in-out infinite}
+.opv-rbn .r-bow{left:50%;top:50%;width:44px;height:30px;margin:-15px 0 0 -22px;z-index:2;background:
+    radial-gradient(circle at 22% 50%, #F2DFAC 0 30%, transparent 32%),
+    radial-gradient(circle at 78% 50%, #F2DFAC 0 30%, transparent 32%),
+    radial-gradient(circle at 50% 50%, #EED9A0 0 26%, #A3762E 30% 48%, transparent 52%);
+    animation:opvRbnBow 5.2s cubic-bezier(.3,1.6,.5,1) infinite}
+.opv-rbn::before{content:"";position:absolute;left:-10%;right:-10%;height:120%;top:-10%;z-index:3;background:linear-gradient(180deg,rgba(253,244,236,.95),rgba(246,226,234,.92) 46%,transparent 46%);transform:translateY(-102%);animation:opvRbnOpen 5.2s cubic-bezier(.7,0,.25,1) infinite}
+@keyframes opvRbnV{0%,10%{transform:translateX(0)}30%,64%{transform:translateX(-130%) rotate(-6deg);opacity:.9}78%,100%{transform:translateX(0);opacity:1}}
+@keyframes opvRbnH{0%,10%{transform:translateY(0)}30%,64%{transform:translateY(-130%) rotate(4deg);opacity:.9}78%,100%{transform:translateY(0);opacity:1}}
+@keyframes opvRbnBow{0%,10%{transform:scale(1)}22%{transform:scale(2) rotate(14deg);opacity:0}40%,70%{opacity:0}88%,100%{transform:scale(1);opacity:1}}
+@keyframes opvRbnOpen{0%,34%{transform:translateY(0)}58%,80%{transform:translateY(-102%)}100%{transform:translateY(0)}}
+
+/* 🪵 taxta qapı */
+.opv-wdoor{perspective:500px;background:radial-gradient(circle at 50% 45%,rgba(255,220,150,.16),rgba(25,16,9,.88) 75%)}
+.opv-wdoor .w-panel{left:22%;right:22%;top:10%;bottom:8%;border-radius:44px 44px 4px 4px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,transparent 2px 11px),linear-gradient(180deg,#7A5230,#5E3D21 55%,#4A2E17);transform-origin:left center;box-shadow:inset 0 0 16px rgba(0,0,0,.5),4px 6px 18px rgba(0,0,0,.5);animation:opvWDoor 5.6s ease-in-out infinite}
+.opv-wdoor .w-knob{right:27%;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#E8C87A,#8a6a30);animation:opvWKnob 5.6s ease-in-out infinite}
+@keyframes opvWDoor{0%,12%{transform:rotateY(0)}42%,68%{transform:rotateY(-84deg)}94%,100%{transform:rotateY(0)}}
+@keyframes opvWKnob{0%,12%{opacity:1}42%{opacity:.25}68%{opacity:.25}94%,100%{opacity:1}}
+
 @media (prefers-reduced-motion: reduce){.opv{display:none}}
 .cat-tab{padding:10px 22px;border:1px solid rgba(92,61,46,.12);background:transparent;color:var(--muted);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.35s;border-radius:0}
 .cat-tab:hover{border-color:var(--gold);color:var(--gold)}
@@ -1210,7 +1245,10 @@ var _OPENING_META = {
     "door":            { emoji: "🚪", label: "Qapı açılışı" },
     "celebration-pop": { emoji: "🎉", label: "Şənlik partlayışı" },
     "floral-paper":    { emoji: "🌸", label: "Çiçək kəsmə" },
-    "luxury-romance":  { emoji: "💎", label: "Lüks romantika" }
+    "luxury-romance":  { emoji: "💎", label: "Lüks romantika" },
+    "envelope-seal":   { emoji: "✉️", label: "Möhürlü məktub" },
+    "ribbon":          { emoji: "🎀", label: "Lentlə açılış" },
+    "wood-door":       { emoji: "🪵", label: "Taxta qapı" }
 };
 function _openingOf(tpl) {
     if (!tpl) return null;
@@ -1250,6 +1288,12 @@ function _opvHTML(type) {
             return s + '</div>';
         case "luxury-romance":
             return '<div class="opv opv-lux"><i></i></div>';
+        case "envelope-seal":
+            return '<div class="opv opv-env"><i class="e-ltr"></i><i class="e-pkt"></i><i class="e-flp"></i><i class="e-wax"></i></div>';
+        case "ribbon":
+            return '<div class="opv opv-rbn"><i class="r-v"></i><i class="r-h"></i><i class="r-bow"></i></div>';
+        case "wood-door":
+            return '<div class="opv opv-wdoor"><i class="w-panel"></i><i class="w-knob"></i></div>';
         default:
             return "";
     }
@@ -1679,7 +1723,7 @@ renderTemplates("all");
     if (!strip) return;
     var list = _getHomepageTemplates().filter(_isAnimated);
     list.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
-    list.slice(0, 16).forEach(function(tpl) {
+    list.slice(0, 20).forEach(function(tpl) {
         var opening = _openingOf(tpl);
         var card = document.createElement("div");
         card.className = "anim-card";
