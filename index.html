@@ -117,19 +117,13 @@ img{display:block;max-width:100%}
     .browse-head{gap:10px;margin-bottom:16px}
 }
 
-/* ===== EKRAN SİSTEMİ (4 addım) ===== */
-body.lock-scroll{overflow:hidden;height:100vh}
-.scr{min-height:100vh;padding:110px 20px 60px;animation:scrIn .55s cubic-bezier(.19,1,.22,1)}
-@keyframes scrIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-.scr-hero{position:relative;height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:80px 20px 140px}
-.hero-live{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:14px 20px 18px;background:linear-gradient(0deg,rgba(253,251,247,.88),rgba(253,251,247,0));z-index:10}
-.hero-live .kicker{display:block;margin-bottom:10px;font-size:9.5px}
-.btn-xl{font-size:13px !important;padding:18px 44px !important;border-radius:40px !important;box-shadow:0 14px 34px -10px rgba(62,37,24,.45);animation:pulseBtn 2.6s ease-in-out infinite}
-@keyframes pulseBtn{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
-.steps{display:flex;gap:8px;justify-content:center;margin-bottom:34px;flex-wrap:wrap}
-.steps b{font-weight:600;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(62,37,24,.42);border:1px solid rgba(62,37,24,.16);border-radius:30px;padding:8px 16px;background:rgba(255,252,247,.6);transition:.3s}
-.steps b.on{color:#f7efe4;background:#3e2518;border-color:#3e2518;box-shadow:0 8px 20px -8px rgba(62,37,24,.5)}
-
+/* NECƏ İŞLƏYİR */
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;max-width:900px;margin:0 auto}
+.step-card{text-align:center;background:#fff;border-radius:18px;padding:32px 24px 28px;border:1px solid rgba(62,37,24,.08);box-shadow:0 14px 34px -14px rgba(62,37,24,.1);transition:.3s}
+.step-card:hover{transform:translateY(-5px);box-shadow:0 22px 44px -14px rgba(62,37,24,.2)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#3e2518,#5a3a26);color:#f4d9a0;font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;margin-bottom:14px}
+.step-card h3{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:500;font-style:italic;color:#33200f;margin:0 0 8px}
+.step-card p{font-size:11.5px;color:#8a6f58;line-height:1.8;margin:0}
 /* ===== PAKET KARTLARI (çərçivəli) ===== */
 .pkg-sum{display:flex;align-items:center;gap:18px;max-width:520px;margin:0 auto;background:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 14px 36px -14px rgba(62,37,24,.22);border:1px solid rgba(62,37,24,.08)}
 .pkg-sum img{width:86px;height:86px;object-fit:cover;border-radius:12px;flex-shrink:0}
@@ -160,20 +154,13 @@ body.lock-scroll{overflow:hidden;height:100vh}
 .pkg-card li.off::first-letter{color:#c2ab97}
 .pkg-card .btn{width:100%;justify-content:center;text-align:center}
 @media(max-width:600px){
-    .scr{padding:96px 16px 48px}
-    .scr-hero{padding-top:90px}
     .hero-text{display:none}
     .hero-label{font-size:10px;margin-bottom:10px}
     .hero-content h1 span:first-child{font-size:34px;line-height:1.18}
     .hero-content h1 span{font-size:9.5px}
     .hero-buttons{gap:10px;margin-top:24px}
-    .btn-xl{padding:14px 32px !important;font-size:11.5px !important}
-    .hero-chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding-bottom:8px;gap:8px}
-    .hero-chip{white-space:nowrap;flex-shrink:0;font-size:8.5px;padding:7px 13px}
-    .hero-live{padding:10px 0 14px}
-    .hero-live .kicker{font-size:8.5px}
-    .hero-live .anim-strip{height:116px}
-    .steps b{padding:7px 12px;font-size:8px}
+    .how-steps{grid-template-columns:1fr;gap:14px}
+    .step-card{padding:24px 20px 22px}
     .pkg-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto}
     .pkg-mid{transform:none}
     .pkg-mid:hover{transform:translateY(-7px)}
@@ -1007,56 +994,82 @@ body.has-announce .mobile-menu{padding-top:150px}
     </div>
 </div>
 
-<!-- ══════ ADDIM 1 · GİRİŞ EKRANI (dolü, canlı, scroll yoxdur) ══════ -->
-<section class="scr scr-hero" id="scrHero">
+<!-- ══════ HERO ══════ -->
+<section class="hero" id="home">
     <div class="particles" id="particles"></div>
     <div class="hero-floats">
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Wedding" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="Birthday" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=400&q=80" alt="Engagement" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="Henna" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=400&q=80'"></div>
-        <div class="float-card"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=400&q=80" alt="Graduation" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=400&q=80'"></div>
+        <div class="float-card"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=400&q=80" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=400&q=80'"></div>
     </div>
     <div class="hero-content">
-        <div class="hero-label" data-i18n="heroLabel">Digital dəvətnamələr</div>
-        <h1><span class="hero-gradient" data-i18n="heroTitle">gözəl anlar,<br>gözəl dəvətlərlə</span><span data-i18n="heroSubtitle">hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
-        <p class="hero-text" data-i18n="heroText">3 sadə addımda öz dəvətnaməni yarat: kolleksiya seç → dizayn bəyən → paketini müəyyənləşdir.</p>
+        <div class="hero-label">Digital dəvətnamələr</div>
+        <h1><span class="hero-gradient">gözəl anlar,<br>gözəl dəvətlərlə</span><span>hərəkət edən, açılan və hekayənizi danışan dəvətnamələr</span></h1>
+        <p class="hero-text">3 sadə addımda öz rəqəmsal dəvətnaməni yarat. Dizaynını seç, məlumatlarını daxil et, linkini paylaş.</p>
         <div class="hero-buttons">
-            <button id="startBtn" class="btn btn-dark btn-xl">Başla &nbsp;→</button>
+            <a href="#how" class="btn btn-dark">Kəşf et &nbsp;↓</a>
             <a href="invitations.html" class="btn btn-light">Hazır nümunələr</a>
         </div>
-        <div class="hero-chips" id="heroChips"></div>
-    </div>
-    <div class="hero-live">
-        <span class="kicker" style="color:#e8c574">🔥 Canlı açılışlar — izlə, bəyən</span>
-        <div class="anim-strip" id="animStrip"></div>
     </div>
 </section>
 
-<!-- ══════ ADDIM 2 · KOLLEKSİYALAR ══════ -->
-<section class="scr" id="scrColl" style="display:none">
+<!-- ══════ NECƏ İŞLƏYİR ══════ -->
+<section class="section" id="how" style="padding:90px 20px 70px">
     <div class="section-inner">
-        <div class="steps"><b class="on">1 · Kolleksiya</b><b>2 · Dizayn</b><b>3 · Paket</b></div>
-        <div class="section-heading" style="text-align:center;margin-bottom:30px">
-            <div class="kicker">Addım 1 / 3</div>
+        <div class="section-heading" style="text-align:center;margin-bottom:44px">
+            <div class="kicker">Necə işləyir?</div>
+            <h2>3 sadə addım</h2>
+        </div>
+        <div class="how-steps">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <h3>Kolleksiyanı seçin</h3>
+                <p>Toy, nişan, xına, ad günü — hansı münasibət üçün lazımdırsa, kolleksiyamızdan seçin.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <h3>Dizaynı bəyənin</h3>
+                <p>Canlı açılış animasiyalarını izləyin, bəyəndiyiniz dizaynı seçin və paketini müəyyənləşdirin.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <h3>Linki paylaşın</h3>
+                <p>Məlumatlarınızı daxil edin, şəxsi linkinizi qonaqlarınıza göndərin. Hamısı bu qədər sadə.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════ KOLLEKSİYALAR ══════ -->
+<section class="section" id="collections" style="padding:70px 20px">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:36px">
+            <div class="kicker">Kolleksiyalar</div>
             <h2>Hansı münasibət üçün?</h2>
-            <p style="text-align:center;max-width:520px;margin:16px auto 0">Kolleksiyanı seç — içində hazır dizaynları görəcəksən.</p>
         </div>
         <div class="coll-grid" id="collGrid"></div>
-        <div style="text-align:center;margin-top:34px">
-            <button class="back-btn" data-go="#basla">← Əvvəlki ekran</button>
-        </div>
     </div>
 </section>
 
-<!-- ══════ ADDIM 3 · DİZAYNLAR ══════ -->
-<section class="scr" id="scrDesigns" style="display:none">
+<!-- ══════ CANLI AÇILIŞLAR ══════ -->
+<section class="section" id="showcase" style="padding:50px 20px 40px">
     <div class="section-inner">
-        <div class="steps"><b>1 · Kolleksiya</b><b class="on">2 · Dizayn</b><b>3 · Paket</b></div>
-        <div class="browse-head">
-            <button class="back-btn" data-go="#kolleksiyalar">← Kolleksiyalar</button>
-            <h3 id="collTitle"></h3>
-            <span class="results-line" id="collCount" style="margin:0"></span>
+        <div class="tpl-strip-head" style="text-align:center;margin-bottom:20px">
+            <span class="kicker" style="color:#a0653f">🔥 Canlı açılışlar</span>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(19px,2.4vw,26px);font-weight:500;font-style:italic;color:#4a2e1c;margin:6px 0 0">Açılışını izlə, bəyəndiyini seç.</h3>
+        </div>
+        <div class="anim-strip" id="animStrip2"></div>
+    </div>
+</section>
+
+<!-- ══════ DİZAYNLAR ══════ -->
+<section class="section" id="designs" style="padding:60px 20px 80px">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:30px">
+            <div class="kicker">Dizaynlar</div>
+            <h2>Bəyəndiyinizi seçin</h2>
         </div>
         <div class="tpl-tools">
             <div class="tpl-search" id="tplSearchWrap">
@@ -1077,20 +1090,12 @@ body.has-announce .mobile-menu{padding-top:150px}
     </div>
 </section>
 
-<!-- ══════ ADDIM 4 · PAKETLƏR ══════ -->
-<section class="scr" id="scrPkg" style="display:none">
+<!-- ══════ CTA ══════ -->
+<section class="section" id="cta-final" style="padding:80px 20px;text-align:center;background:linear-gradient(175deg,#3e2518,#1a0e06);color:#f7efe4">
     <div class="section-inner">
-        <div class="steps"><b>1 · Kolleksiya</b><b>2 · Dizayn</b><b class="on">3 · Paket</b></div>
-        <div class="browse-head">
-            <button class="back-btn" data-go="#dizaynlar">← Dizaynlara qayıt</button>
-        </div>
-        <div class="pkg-sum" id="pkgSum"></div>
-        <div class="section-heading" style="text-align:center;margin:36px 0 26px">
-            <div class="kicker">Addım 3 / 3</div>
-            <h2>Paketini seç</h2>
-        </div>
-        <div class="pkg-grid" id="pkgGrid"></div>
-        <p class="results-line" style="margin-top:22px">Bütün paketlərdə: fərdi məlumatlar · paylaşım linki · dəyişiklik üçün admin panel.</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,48px);font-weight:500;font-style:italic;color:#f4d9a0;margin-bottom:16px">Dəvətnəmənizi indi yaradın</h2>
+        <p style="font-size:13px;color:rgba(247,239,228,.8);margin-bottom:32px;max-width:440px;margin-left:auto;margin-right:auto">Bir neçə dəqiqədə rəqəmsal dəvətnaməniz hazır olsun. Dizaynınızı seçin, məlumatlarınızı göndərin.</p>
+        <a href="#collections" class="btn btn-dark" style="background:#f4d9a0;color:#3e2518;border:1px solid #f4d9a0">Dizaynları看到 &nbsp;→</a>
     </div>
 </section>
 
@@ -1479,129 +1484,40 @@ function openCollection(catId) {
     _gridQuery = "";
     _gridLimit = 24;
     _sortMode = "default";
-
     var sel = document.getElementById("sortSelect");
     if (sel) sel.value = "default";
     var inp = document.getElementById("tplSearch");
     if (inp) { inp.value = ""; document.getElementById("tplSearchWrap").classList.remove("has-val"); }
-
-    var label = catId === "__animated" ? "✨ Animasiyalı açılışlar" : lunaCategoryName(catId);
-    document.getElementById("collTitle").textContent = label;
-
-    var n = _getHomepageTemplates().filter(function(t) {
-        return catId === "__animated" ? _isAnimated(t) : t.category === catId;
-    }).length;
-    document.getElementById("collCount").textContent = n + " dizayn";
-    inp.placeholder = label + " içində axtar…";
-
-    go("#dizaynlar");
-}
-
-/* ===== EKRAN MARŞRUTU: #basla → #kolleksiyalar → #dizaynlar → #paket ===== */
-var _pkgTplId = null;
-
-var _SCREENS = { "#basla": "scrHero", "#kolleksiyalar": "scrColl", "#dizaynlar": "scrDesigns", "#paket": "scrPkg" };
-
-function showScreen(id) {
-    Object.keys(_SCREENS).forEach(function(h) {
-        var el = document.getElementById(_SCREENS[h]);
-        if (el) el.style.display = (h === id) ? "" : "none";
-    });
-    /* giriş ekranı dolü olmalıdır — scroll kilidi */
-    document.body.classList.toggle("lock-scroll", id === "#basla");
-    window.scrollTo(0, 0);
-    if (typeof revealRefresh === "function") revealRefresh();
-}
-
-function go(hash) {
-    if (location.hash === hash) route();
-    else location.hash = hash;
-}
-
-function route() {
-    var h = location.hash || "#basla";
-    if (!_SCREENS[h]) h = "#basla";
-    if (h === "#dizaynlar" && !_gridFilter) { go("#kolleksiyalar"); return; }
-    if (h === "#paket") {
-        if (!_pkgTplId) { go("#kolleksiyalar"); return; }
-        renderPackages();
-    }
-    if (h === "#kolleksiyalar") renderCollections();
-    if (h === "#dizaynlar") renderTemplates();
-    showScreen(h);
-}
-window.addEventListener("hashchange", route);
-
-function selectDesign(tplId) {
-    _pkgTplId = tplId;
-    go("#paket");
-}
-
-function renderPackages() {
-    var tpl = null;
-    try { tpl = lunaGetTemplateById(_pkgTplId); } catch (e) {}
-    if (!tpl && typeof _getAllTemplates === "function")
-        tpl = _getAllTemplates().filter(function(t) { return t.id === _pkgTplId; })[0];
-    if (!tpl) { go("#kolleksiyalar"); return; }
-
-    var sum = document.getElementById("pkgSum");
-    var priceHint = "";
-    try { priceHint = lunaGetCategoryPrice(tpl.category, tpl.minPackage); } catch (e) {}
-    sum.innerHTML =
-        '<img src="' + tpl.thumbnail + '" alt="' + tpl.name + '">' +
-        '<div><span class="dt-cat">' + lunaCategoryName(tpl.category) + '</span>' +
-        '<h3>' + tpl.name + '</h3>' +
-        (priceHint ? '<span class="dt-price">' + priceHint + ' AZN-dən</span>' : '') + '</div>';
-
-    var grid = document.getElementById("pkgGrid");
-    if (grid) grid.innerHTML = "";
-
-    var pkgOrder = ["basic", "premium", "luxury", "video"];
-    pkgOrder.forEach(function(pid, i) {
-        var p = (typeof LUNA_PACKAGES !== "undefined") ? LUNA_PACKAGES.filter(function(x) { return x.id === pid; })[0] : null;
-        if (!p) return;
-        var price;
-        try { price = lunaGetCategoryPrice(tpl.category, pid); } catch (e) { price = p.price; }
-        if (pid === "video" && tpl.minPackage !== "basic") return;
-        var rec = tpl.minPackage === pid;
-        var feats = (p.features || []).map(function(f) {
-            return '<li>' + f + '</li>';
-        }).join("");
-        var card = document.createElement("div");
-        card.className = "pkg-card pkg-" + pid + (rec ? " pkg-rec" : "") + (pid === "premium" ? " pkg-mid" : "") + (pid === "luxury" ? " pkg-luxury" : "");
-        card.innerHTML =
-            (rec ? '<span class="pkg-ribbon">Sizə uyğun ★</span>' :
-             (pid === "luxury" ? '<span class="pkg-ribbon pkg-ribbon-gold">Ən dolğun</span>' :
-              (pid === "video" ? '<span class="pkg-ribbon" style="background:#5a3a26">Video</span>' : ""))) +
-            '<h4>' + p.name + '</h4>' +
-            '<div class="pkg-price"><b>' + price + '</b> <i>' + (p.currency || "AZN") + '</i></div>' +
-            (p.tagline ? '<p class="pkg-tag">' + p.tagline + '</p>' : '') +
-            '<p class="pkg-includes">Daxildir:</p>' +
-            '<ul>' + feats + '</ul>' +
-            '<a class="btn ' + (rec ? "btn-dark" : "btn-light") + '" href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + pid + '">Bu paketi seç →</a>';
-        grid.appendChild(card);
-    });
+    renderTemplates();
+    var sec = document.getElementById("designs");
+    if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 renderCollections();
+renderTemplates();
 
 document.addEventListener("click", function(e) {
-    var g = e.target.closest ? e.target.closest("[data-go]") : null;
-    if (g) { go(g.getAttribute("data-go")); return; }
     var d = e.target.closest ? e.target.closest("[data-design]") : null;
-    if (d) selectDesign(d.getAttribute("data-design"));
+    if (d) {
+        var tplId = d.getAttribute("data-design");
+        var tpl = null;
+        try { tpl = lunaGetTemplateById(tplId); } catch(ex) {}
+        if (!tpl && typeof _getAllTemplates === "function")
+            tpl = _getAllTemplates().filter(function(t) { return t.id === tplId; })[0];
+        if (tpl) {
+            var url = "form/" + tpl.category + ".html?design=" + tpl.id + "&package=" + (tpl.minPackage || "basic");
+            window.location.href = url;
+        }
+    }
 });
-document.getElementById("startBtn").addEventListener("click", function() { go("#kolleksiyalar"); });
-
-route(); /* ilkin ekran (hash boşdursa → giriş) */
 
 document.addEventListener("keydown", function(e) {
     if (e.key !== "Escape") return;
     var dr = document.getElementById("favDrawer");
     if (dr && dr.classList.contains("open")) return;
-    var order = ["#basla", "#kolleksiyalar", "#dizaynlar", "#paket"];
-    var cur = order.indexOf(location.hash || "#basla");
-    if (cur > 0) go(order[cur - 1]);
+    var modal = document.getElementById("previewModal");
+    if (modal && modal.classList.contains("active")) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 /* ===== GET ALL TEMPLATES (data.js + localStorage admin designs + custom templates) ===== */
@@ -1837,26 +1753,9 @@ renderTemplates("all");
 
 /* ===== HERO QUICK CATEGORY CHIPS ===== */
 
-(function initHeroChips() {
-    var box = document.getElementById("heroChips");
-    if (!box || typeof LUNA_CATEGORIES === "undefined") return;
-    var pool = _getHomepageTemplates();
-    LUNA_CATEGORIES.forEach(function(cat) {
-        var n = pool.filter(function(t) { return t.category === cat.id; }).length;
-        if (!n) return;
-        var b = document.createElement("button");
-        b.className = "hero-chip";
-        b.textContent = lunaCategoryName(cat.id) + " · " + n;
-        b.addEventListener("click", function() {
-            openCollection(cat.id);
-        });
-        box.appendChild(b);
-    });
-})();
-
 /* ===== STRIP AUTO-SCROLL (marquee) ===== */
 (function initStripMarquee() {
-    var strip = document.getElementById("animStrip");
+    var strip = document.getElementById("animStrip2");
     if (!strip) return;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
@@ -1890,7 +1789,7 @@ renderTemplates("all");
 
 /* ===== RENDER ANIMATED SHOWCASE STRIP ===== */
 (function renderAnimStrip() {
-    var strip = document.getElementById("animStrip");
+    var strip = document.getElementById("animStrip2");
     if (!strip) return;
     var list = _getHomepageTemplates().filter(_isAnimated);
     list.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
