@@ -301,10 +301,12 @@ img{display:block;max-width:100%}
 
 /* ===== ANIMATED SHOWCASE STRIP ===== */
 #animatedShowcase{padding:72px 0 64px;background:linear-gradient(180deg,#faf5ee 0%,#fdfbf7 100%);position:relative;overflow:hidden;}
-.anim-strip{display:flex;gap:18px;overflow-x:auto;padding:8px 4px 24px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.anim-strip{display:flex;gap:18px;overflow-x:auto;padding:8px 4px 24px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .anim-strip::-webkit-scrollbar{display:none;}
-.anim-card{min-width:235px;max-width:235px;scroll-snap-align:start;background:#fff;border:1px solid rgba(92,61,46,.09);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s;box-shadow:0 4px 18px rgba(62,37,24,.06);}
-.anim-card:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(62,37,24,.14);}
+.anim-card{position:relative;min-width:235px;max-width:235px;scroll-snap-align:start;background:#fff;border:1px solid rgba(92,61,46,.09);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s;box-shadow:0 4px 18px rgba(62,37,24,.06);}
+.anim-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 18px 44px rgba(62,37,24,.16);}
+.anim-card::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(115deg,rgba(255,244,224,0) 42%,rgba(255,244,224,.28) 50%,rgba(255,244,224,0) 58%);transform:translateX(-120%);pointer-events:none}
+.anim-card:hover::after{transition:transform .9s ease;transform:translateX(120%)}
 .anim-card .dt-imgwrap img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform 1s cubic-bezier(.19,1,.22,1);}
 .anim-card:hover .dt-imgwrap img{transform:scale(1.05);}
 .anim-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;}
@@ -345,6 +347,9 @@ img{display:block;max-width:100%}
 .fav-fab.show{opacity:1;pointer-events:auto;transform:none}
 .fav-fab:hover{background:#5a3a26}
 .fav-fab b{background:#c0392b;border-radius:20px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;padding:0 5px}
+.to-top{position:fixed;left:18px;bottom:18px;z-index:4800;width:47px;height:47px;border-radius:50%;border:0;background:#3e2518;color:#f7efe4;font-size:17px;cursor:pointer;box-shadow:0 10px 26px rgba(30,20,14,.35);opacity:0;pointer-events:none;transform:translateY(16px);transition:.3s;display:flex;align-items:center;justify-content:center}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{background:#5a3a26}
 .fav-backdrop{position:fixed;inset:0;background:rgba(30,20,14,.45);z-index:5500;opacity:0;pointer-events:none;transition:.3s}
 .fav-backdrop.show{opacity:1;pointer-events:auto}
 .fav-drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,92vw);background:#fdfbf7;z-index:6000;box-shadow:-18px 0 60px rgba(30,20,14,.28);transform:translateX(105%);transition:transform .45s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column}
@@ -376,12 +381,37 @@ img{display:block;max-width:100%}
 .opv{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .opv i{position:absolute;display:block}
 
-/* pərdə */
-.opv-curtain i{top:0;bottom:0;width:52%;background:linear-gradient(100deg,#4a0d18,#7b2438 55%,#52101f);box-shadow:inset 0 0 40px rgba(0,0,0,.45)}
-.opv-curtain .c-l{left:0;border-right:3px solid #caa04c;animation:opvCurtL 6.5s ease-in-out infinite}
-.opv-curtain .c-r{right:0;border-left:3px solid #caa04c;animation:opvCurtR 6.5s ease-in-out infinite}
-@keyframes opvCurtL{0%,10%{transform:translateX(0)}38%,68%{transform:translateX(-102%)}92%,100%{transform:translateX(0)}}
-@keyframes opvCurtR{0%,10%{transform:translateX(0)}38%,68%{transform:translateX(102%)}92%,100%{transform:translateX(0)}}
+/* pərdə — asılı teatr pərdəsi */
+.opv-curtain{background:#2a0810}
+.opv-curtain i{top:0;bottom:0;width:52%;
+    background:
+        linear-gradient(rgba(255,235,220,.05), rgba(20,0,5,.38)),
+        repeating-linear-gradient(90deg,
+            #93303f 0px, #6b1626 12px, #4a0d1a 26px,
+            #7b2438 40px, #a03a4c 52px, #6b1626 66px);
+    box-shadow:inset 0 0 46px rgba(0,0,0,.55), inset -6px 0 14px rgba(0,0,0,.35)}
+.opv-curtain .c-l{left:0;border-right:4px solid #caa04c;animation:opvCurtL 7s ease-in-out infinite}
+.opv-curtain .c-r{right:0;border-left:4px solid #caa04c;animation:opvCurtR 7s ease-in-out infinite}
+.opv-curtain .c-t{left:-2%;width:104%;height:21%;bottom:auto;z-index:2;
+    background:
+        radial-gradient(circle at 50% -42%, #7b2438 60%, rgba(123,36,56,0) 61%);
+    background-size:17% 190%;
+    background-repeat:repeat-x;
+    filter:drop-shadow(0 4px 5px rgba(20,0,5,.5))}
+.opv-curtain .c-t::after{content:"";position:absolute;left:0;right:0;top:0;height:34%;
+    background:linear-gradient(#5a1220,#6f1c2e);box-shadow:inset 0 -3px 0 #caa04c}
+@keyframes opvCurtL{
+    0%,9%{transform:translateX(0) rotate(0deg)}
+    20%{transform:translateX(-14%) rotate(-.6deg)}
+    36%,64%{transform:translateX(-102%) rotate(.5deg)}
+    78%{transform:translateX(-20%) rotate(-.5deg)}
+    92%,100%{transform:translateX(0) rotate(0deg)}}
+@keyframes opvCurtR{
+    0%,9%{transform:translateX(0) rotate(0deg)}
+    20%{transform:translateX(14%) rotate(.6deg)}
+    36%,64%{transform:translateX(102%) rotate(-.5deg)}
+    78%{transform:translateX(20%) rotate(.5deg)}
+    92%,100%{transform:translateX(0) rotate(0deg)}}
 
 /* piləkən */
 .opv-stairs i{left:0;width:104%;height:17%;background:linear-gradient(90deg,#efe4cb,#c9a86a 70%,#b3925a);box-shadow:0 2px 6px rgba(62,37,24,.35)}
@@ -1155,6 +1185,7 @@ body.has-announce .mobile-menu{padding-top:150px}
 </div>
 
 <!-- FAVORITES FAB + DRAWER -->
+<button class="to-top" id="toTop" aria-label="Yuxarı qalx">↑</button>
 <button class="fav-fab" id="favFab">♥ Seçilmişlər <b id="favCount">0</b></button>
 <div class="fav-backdrop" id="favBackdrop"></div>
 <aside class="fav-drawer" id="favDrawer" aria-label="Seçilmiş dizaynlar">
@@ -1188,7 +1219,7 @@ function _opvHTML(type) {
     var s, k;
     switch (type) {
         case "curtain":
-            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i></div>';
+            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i><i class="c-t"></i></div>';
         case "stairs":
             s = '<div class="opv opv-stairs">';
             for (k = 0; k < 6; k++) s += '<i></i>';
@@ -1412,6 +1443,10 @@ function renderTemplates(filter) {
         if (_gridFilter !== "all") return t.category === _gridFilter;
         return true;
     }).filter(function(t) { return _tplMatches(t, _gridQuery); });
+    /* canlı animasiyalı dizaynlar həmişə önə çıxsın */
+    matched = matched.slice().sort(function(a, b) {
+        return (_isAnimated(b) ? 1 : 0) - (_isAnimated(a) ? 1 : 0);
+    });
 
     var shown = matched.slice(0, _gridLimit);
 
@@ -1573,6 +1608,40 @@ renderTemplates("all");
     });
 
     refreshFavFab();
+})();
+
+/* ===== STRIP AUTO-SCROLL (marquee) ===== */
+(function initStripMarquee() {
+    var strip = document.getElementById("animStrip");
+    if (!strip) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    var paused = false;
+    ["mouseenter", "focusin", "touchstart", "pointerdown"].forEach(function(ev) {
+        strip.addEventListener(ev, function() { paused = true; }, { passive: true });
+    });
+    ["mouseleave", "touchend"].forEach(function(ev) {
+        strip.addEventListener(ev, function() { paused = false; }, { passive: true });
+    });
+    setInterval(function() {
+        if (paused || !strip.isConnected) return;
+        var max = strip.scrollWidth - strip.clientWidth;
+        if (max <= 4) return;
+        if (strip.scrollLeft >= max - 1) strip.scrollLeft = 0;
+        else strip.scrollLeft += 0.55;
+    }, 28);
+})();
+
+/* ===== BACK TO TOP ===== */
+(function initToTop() {
+    var btn = document.getElementById("toTop");
+    if (!btn) return;
+    window.addEventListener("scroll", function() {
+        btn.classList.toggle("show", window.scrollY > 650);
+    }, { passive: true });
+    btn.addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 })();
 
 /* ===== RENDER ANIMATED SHOWCASE STRIP ===== */
