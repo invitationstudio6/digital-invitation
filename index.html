@@ -577,6 +577,47 @@ img{display:block;max-width:100%}
 .opv-scroll i::before{left:-6px}
 .opv-scroll i::after{right:-6px}
 
+/* Magic wand hover */
+.opv-magic{overflow:hidden}
+.opv-magic .m-wand{position:absolute;bottom:18%;left:50%;width:4px;height:40px;background:linear-gradient(180deg,#F5E6C8,#8A6E2F);border-radius:2px;transform:translateX(-50%) rotate(-30deg);transform-origin:bottom center;animation:mWandHover 2s ease-in-out infinite}
+.opv-magic .m-wand::before{content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,#FFD700,#E8A000);box-shadow:0 0 10px rgba(255,215,0,.6)}
+@keyframes mWandHover{0%,100%{transform:translateX(-50%) rotate(-30deg)}50%{transform:translateX(-50%) rotate(-40deg)}}
+.opv-magic .m-spark{position:absolute;width:4px;height:4px;border-radius:50%;background:#FFD700;box-shadow:0 0 6px rgba(255,215,0,.7)}
+.opv-magic .s1{top:20%;left:35%;animation:sparkHover 1.8s ease-in-out infinite}
+.opv-magic .s2{top:15%;right:30%;animation:sparkHover 2.2s .4s ease-in-out infinite}
+.opv-magic .s3{top:30%;left:55%;animation:sparkHover 2s .8s ease-in-out infinite}
+@keyframes sparkHover{0%,100%{opacity:.3;transform:scale(.5)}50%{opacity:1;transform:scale(1.4)}}
+
+/* Glowing door hover */
+.opv-gdoor{overflow:hidden}
+.opv-gdoor .gd-l,.opv-gdoor .gd-r{position:absolute;top:8%;width:44%;height:84%;background:linear-gradient(180deg,#3A2818,#2A1A10);border-radius:60% 0 0 0;transition:transform .9s cubic-bezier(.4,0,.2,1)}
+.opv-gdoor .gd-l{left:0;transform-origin:left;border-radius:50% 0 0 0}
+.opv-gdoor .gd-r{right:0;transform-origin:right;border-radius:0 50% 0 0}
+.opv-gdoor .gd-g{position:absolute;inset:8%;background:radial-gradient(circle,rgba(255,200,80,.5),transparent 70%);z-index:0;transition:opacity .6s}
+.design-thumb:hover .opv-gdoor .gd-l{transform:translateX(-90%)}
+.design-thumb:hover .opv-gdoor .gd-r{transform:translateX(90%)}
+
+/* Forest hover */
+.opv-forest{overflow:hidden}
+.opv-forest i{position:absolute;bottom:0;width:22%;height:100%;background:linear-gradient(180deg,transparent 10%,rgba(20,50,20,.7));transition:transform 1.2s cubic-bezier(.22,.9,.36,1),opacity 1s}
+.opv-forest i:nth-child(1){left:-5%;border-radius:0 0 0 0}
+.opv-forest i:nth-child(2){right:-5%;border-radius:0 0 0 0}
+.opv-forest i:nth-child(3){left:15%;height:80%;opacity:.6}
+.opv-forest i:nth-child(4){right:15%;height:80%;opacity:.6}
+.opv-forest i:nth-child(5){left:35%;right:35%;height:50%;top:50%;background:linear-gradient(180deg,transparent,rgba(40,28,14,.5));clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}
+.design-thumb:hover .opv-forest i:nth-child(1){transform:translateX(-120%);opacity:0}
+.design-thumb:hover .opv-forest i:nth-child(2){transform:translateX(120%);opacity:0}
+.design-thumb:hover .opv-forest i:nth-child(3){transform:translateX(-80%);opacity:0}
+.design-thumb:hover .opv-forest i:nth-child(4){transform:translateX(80%);opacity:0}
+
+/* Old book hover */
+.opv-book{overflow:hidden}
+.opv-book .ob-c{position:absolute;inset:12%;background:linear-gradient(135deg,#5C2E14,#3E1E0C);border:1px solid #6A3A1C;border-radius:3px 8px 8px 3px;transform-origin:left;transition:transform 1s cubic-bezier(.4,0,.2,1);z-index:2;box-shadow:3px 3px 10px rgba(0,0,0,.4)}
+.opv-book .ob-c::after{content:"";position:absolute;top:50%;right:8px;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#D4AF37,#8A6E2F)}
+.opv-book .ob-p{position:absolute;inset:14%;right:14%;background:linear-gradient(135deg,#FFF8EE,#F0E4D0);border-radius:2px 6px 6px 2px;z-index:1;opacity:0;transition:opacity .5s .5s}
+.design-thumb:hover .opv-book .ob-c{transform:rotateY(-140deg);filter:brightness(.6)}
+.design-thumb:hover .opv-book .ob-p{opacity:1}
+
 /* ===== KOLLEKSİYA KARTLARI (semicircle + glow) ===== */
 .coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .coll-card{position:relative;border-radius:50% 50% 20px 20px/36% 36% 18px 18px;overflow:hidden;aspect-ratio:5/7;cursor:pointer;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;box-shadow:0 0 0 2px rgba(212,165,116,.15),0 8px 32px rgba(45,27,18,.12)}
@@ -1537,7 +1578,11 @@ var _OPENING_META = {
     "typewriter":      { emoji: "⌨️", label: "Daktilo açılışı" },
     "candlelight":     { emoji: "🕯️", label: "Şam işığı" },
     "winter-drift":    { emoji: "❄️", label: "Qış nağılı" },
-    "royal-scroll":    { emoji: "📜", label: "Şah fərmanı" }
+    "royal-scroll":    { emoji: "📜", label: "Şah fərmanı" },
+    "magic-wand":      { emoji: "🪄", label: "Sihir çubuğu" },
+    "glowing-door":    { emoji: "✨", label: "Parlaq qapı" },
+    "ancient-forest":  { emoji: "🌲", label: "Qədim meşə" },
+    "old-book":        { emoji: "📖", label: "Qədim kitab" }
 };
 /* Alias → real scene type (mirrors data/invitation.html mapping) */
 var _OPENING_ALIAS = {
@@ -1550,7 +1595,9 @@ var _OPENING_ALIAS = {
     "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
     "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter",
     "luxury-silk": "luxury-romance", "confetti-burst": "celebration-pop",
-    "shooting-star": "starry-night"
+    "shooting-star": "starry-night",
+    "magic-reveal": "magic-wand", "glow-door": "glowing-door",
+    "forest-walk": "ancient-forest", "book-reveal": "old-book"
 };
 function _openingOf(tpl) {
     if (!tpl) return null;
@@ -1610,6 +1657,16 @@ function _opvHTML(type) {
         }
         case "royal-scroll":
             return '<div class="opv opv-scroll"><i></i></div>';
+        case "magic-wand":
+            return '<div class="opv opv-magic"><i class="m-wand"></i><i class="m-spark s1"></i><i class="m-spark s2"></i><i class="m-spark s3"></i></div>';
+        case "glowing-door":
+            return '<div class="opv opv-gdoor"><i class="gd-l"></i><i class="gd-r"></i><i class="gd-g"></i></div>';
+        case "ancient-forest":
+            s = '<div class="opv opv-forest">';
+            for (k = 0; k < 5; k++) s += '<i></i>';
+            return s + '</div>';
+        case "old-book":
+            return '<div class="opv opv-book"><i class="ob-c"></i><i class="ob-p"></i></div>';
         default:
             return "";
     }

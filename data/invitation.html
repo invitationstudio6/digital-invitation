@@ -1206,6 +1206,486 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* =====================================================
+   TYPE: MAGIC WAND (magic-wand)
+===================================================== */
+
+[data-opening="magic-wand"] .envelope-scene { display: none; }
+[data-opening="magic-wand"] .opening {
+    background: radial-gradient(ellipse at 50% 55%, #16102E, #0A0614);
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.mw-star {
+    position: absolute;
+    width: var(--s,3px); height: var(--s,3px);
+    border-radius: 50%;
+    background: rgba(255,220,130,.7);
+    animation: mwStarTwinkle var(--d,3s) ease-in-out infinite alternate;
+}
+@keyframes mwStarTwinkle { 0% { opacity: .15; transform: scale(.6); } 100% { opacity: 1; transform: scale(1.3); } }
+
+.mw-wand {
+    position: absolute;
+    bottom: 28%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-35deg);
+    transform-origin: bottom center;
+    z-index: 3;
+    animation: mwWave 2.8s ease-in-out infinite;
+}
+@keyframes mwWave {
+    0%,100% { transform: translateX(-50%) rotate(-35deg); }
+    30% { transform: translateX(-50%) rotate(-42deg); }
+    60% { transform: translateX(-50%) rotate(-28deg); }
+}
+
+.mw-shaft {
+    width: 8px;
+    height: 140px;
+    background: linear-gradient(180deg, #F5E6C8, #C9A86C 30%, #5C3A1E 100%);
+    border-radius: 4px 4px 3px 3px;
+    margin: 0 auto;
+    box-shadow: 2px 4px 12px rgba(0,0,0,.5);
+}
+.mw-tip {
+    width: 14px; height: 14px;
+    background: radial-gradient(circle at 35% 35%, #FFF8E8, #FFD700, #E8A000);
+    border-radius: 50%;
+    margin: -2px auto 0;
+    box-shadow: 0 0 20px rgba(255,215,0,.6), 0 0 50px rgba(255,215,0,.3);
+    animation: mwTipPulse 1.5s ease-in-out infinite;
+}
+@keyframes mwTipPulse {
+    0%,100% { box-shadow: 0 0 20px rgba(255,215,0,.6), 0 0 50px rgba(255,215,0,.3); }
+    50% { box-shadow: 0 0 35px rgba(255,215,0,.9), 0 0 80px rgba(255,215,0,.5); }
+}
+
+.mw-spark {
+    position: absolute;
+    width: var(--sp,4px); height: var(--sp,4px);
+    border-radius: 50%;
+    background: radial-gradient(circle, #FFD700, #FFF8E0);
+    box-shadow: 0 0 8px rgba(255,215,0,.7);
+    animation: mwSparkBurst 2s ease-out infinite;
+    animation-delay: var(--sd, 0s);
+}
+@keyframes mwSparkBurst {
+    0% { opacity: 0; transform: translate(0,0) scale(0); }
+    10% { opacity: 1; transform: translate(0,0) scale(1.5); }
+    100% { opacity: 0; transform: translate(var(--tx,40px), var(--ty,-80px)) scale(0); }
+}
+
+.scene-opened[data-opening="magic-wand"] .mw-wand {
+    opacity: 0;
+    transform: translateX(-50%) rotate(-35deg) translateY(-60px) scale(.5);
+    filter: blur(8px);
+    transition: transform 1.2s cubic-bezier(.4,0,.2,1), opacity 1s ease, filter 1s ease;
+}
+.scene-opened[data-opening="magic-wand"] .mw-spark {
+    animation-play-state: running;
+}
+
+[data-opening="magic-wand"] .sig-scene { z-index: 2; }
+[data-opening="magic-wand"] .sig-card {
+    background: linear-gradient(165deg, #1E1535, #120E22);
+    border-color: rgba(180,140,255,.3);
+    box-shadow: 0 0 100px rgba(120,80,220,.15), 0 30px 80px rgba(0,0,0,.6);
+}
+[data-opening="magic-wand"] .sig-card h1 { color: #E8E0FF; }
+[data-opening="magic-wand"] .open-button { border-color: rgba(180,140,255,.5); color: #C8A8FF; }
+
+[data-opening="magic-wand"] .opening::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(180,140,255,.08), transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+    animation: mwGlow 4s ease-in-out infinite;
+}
+@keyframes mwGlow {
+    0%,100% { opacity: .3; }
+    50% { opacity: .7; }
+}
+.scene-opened[data-opening="magic-wand"] .opening::after {
+    opacity: 1;
+    background: radial-gradient(ellipse at 50% 50%, rgba(180,140,255,.18), transparent 55%);
+    transition: all 2s ease .5s;
+}
+
+/* =====================================================
+   TYPE: GLOWING DOOR (glowing-door)
+===================================================== */
+
+[data-opening="glowing-door"] .envelope-scene { display: none; }
+[data-opening="glowing-door"] .opening {
+    background: #060408;
+    overflow: hidden;
+    perspective: 1200px;
+}
+
+.gd-corridor {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(180deg, #0A0610 0%, #0E0818 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.01) 0 1px, transparent 1px 80px);
+    z-index: 1;
+}
+
+.gd-frame {
+    position: fixed;
+    top: 12%; bottom: 12%;
+    left: 50%; transform: translateX(-50%);
+    width: min(280px, 44vw);
+    border: 4px solid #5C4A28;
+    box-shadow: 0 0 40px rgba(0,0,0,.6), inset 0 0 30px rgba(0,0,0,.4);
+    z-index: 2;
+    border-radius: 160px 160px 0 0;
+}
+.gd-frame::before {
+    content: "";
+    position: absolute;
+    top: 16px; bottom: 16px; left: 16px; right: 16px;
+    border: 2px solid #3A2E18;
+    border-radius: 140px 140px 0 0;
+}
+
+.gd-door-l,
+.gd-door-r {
+    position: fixed;
+    top: 12%; bottom: 12%;
+    width: min(142px, 22.2vw);
+    z-index: 3;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.4) 0%, transparent 10%, transparent 90%, rgba(0,0,0,.5) 100%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.4) 0 5px, rgba(0,0,0,0) 12px 24px, rgba(255,255,255,.05) 32px 36px, rgba(0,0,0,0) 44px 56px),
+        linear-gradient(90deg, #3A2818, #5C4028, #4A3420, #3A2818);
+    box-shadow: inset 0 0 30px rgba(0,0,0,.5);
+    transition: transform 2.2s cubic-bezier(.22,.9,.36,1), filter 1.2s ease, opacity 1.5s ease 1.2s;
+}
+.gd-door-l {
+    left: 50%; margin-left: -min(140px, 22vw);
+    transform-origin: left center;
+    border-radius: 140px 0 0 0;
+}
+.gd-door-r {
+    left: 50%;
+    transform-origin: right center;
+    border-radius: 0 140px 0 0;
+}
+
+.gd-glow {
+    position: fixed;
+    top: 12%; bottom: 12%;
+    left: 50%; transform: translateX(-50%);
+    width: min(272px, 43vw);
+    z-index: 2;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,200,80,.25), rgba(255,160,40,.08) 50%, transparent 80%);
+    filter: blur(20px);
+    opacity: .6;
+    animation: gdPulse 4s ease-in-out infinite;
+}
+@keyframes gdPulse {
+    0%,100% { opacity: .4; }
+    50% { opacity: .85; }
+}
+
+.gd-ray {
+    position: fixed;
+    top: 12%; bottom: 12%;
+    width: min(272px, 43vw);
+    left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    background:
+        conic-gradient(from 170deg at 50% 50%,
+            transparent 0deg, rgba(255,200,80,.06) 10deg, transparent 20deg,
+            transparent 40deg, rgba(255,200,80,.04) 50deg, transparent 60deg,
+            transparent 120deg, rgba(255,200,80,.05) 130deg, transparent 140deg,
+            transparent 200deg, rgba(255,200,80,.06) 210deg, transparent 220deg,
+            transparent 320deg, rgba(255,200,80,.04) 330deg, transparent 340deg);
+    opacity: .5;
+    filter: blur(6px);
+    transition: opacity 1.5s ease .8s, filter 2s ease 1s;
+}
+
+.gd-floor-glow {
+    position: fixed;
+    bottom: 0; left: 30%; right: 30%;
+    height: 25vh;
+    z-index: 1;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,200,80,.12), transparent 70%);
+    opacity: 0;
+    transition: opacity 2s ease 1s;
+}
+
+.scene-opened[data-opening="glowing-door"] .gd-door-l {
+    transform: translateX(-108%) rotateY(35deg) scaleX(.85);
+    filter: brightness(.3) blur(3px);
+    opacity: 0;
+}
+.scene-opened[data-opening="glowing-door"] .gd-door-r {
+    transform: translateX(108%) rotateY(-35deg) scaleX(.85);
+    filter: brightness(.3) blur(3px);
+    opacity: 0;
+}
+.scene-opened[data-opening="glowing-door"] .gd-glow {
+    opacity: 1;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,210,100,.35), rgba(255,180,60,.12) 45%, transparent 75%);
+    filter: blur(8px);
+    transition: all 2s ease .6s;
+}
+.scene-opened[data-opening="glowing-door"] .gd-ray { opacity: 1; filter: blur(3px); transition: all 2.5s ease .8s; }
+.scene-opened[data-opening="glowing-door"] .gd-floor-glow { opacity: 1; }
+
+[data-opening="glowing-door"] .sig-scene { z-index: 2; }
+[data-opening="glowing-door"] .sig-card {
+    background: linear-gradient(165deg, #1E150C, #120E08);
+    border-color: rgba(255,200,80,.4);
+    box-shadow: 0 0 100px rgba(255,180,60,.15), 0 30px 80px rgba(0,0,0,.6);
+}
+[data-opening="glowing-door"] .sig-card h1 { color: #FFF0D0; }
+[data-opening="glowing-door"] .open-button { border-color: rgba(255,200,80,.5); color: #FFD070; }
+
+/* =====================================================
+   TYPE: ANCIENT FOREST (ancient-forest)
+===================================================== */
+
+[data-opening="ancient-forest"] .envelope-scene { display: none; }
+[data-opening="ancient-forest"] .opening {
+    background: linear-gradient(180deg, #0C1A0C, #061008);
+    overflow: hidden;
+}
+
+.af-layer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+}
+.af-treel {
+    height: 100vh; z-index: 3;
+    background:
+        linear-gradient(90deg, #040A04 0%, transparent 55%),
+        radial-gradient(ellipse at 18% 25%, rgba(20,50,20,.8), transparent 50%);
+    transition: transform 2.5s cubic-bezier(.22,.9,.36,1), opacity 2s ease 1s;
+}
+.af-treer {
+    height: 100vh; z-index: 3;
+    background:
+        linear-gradient(270deg, #040A04 0%, transparent 55%),
+        radial-gradient(ellipse at 82% 25%, rgba(20,50,20,.8), transparent 50%);
+    transition: transform 2.5s cubic-bezier(.22,.9,.36,1), opacity 2s ease 1s;
+}
+
+.af-mid {
+    height: 100vh; z-index: 2;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(30,60,20,.3), transparent 40%),
+        radial-gradient(ellipse at 80% 35%, rgba(25,55,18,.3), transparent 40%);
+    transition: transform 2.5s cubic-bezier(.22,.9,.36,1) .15s, opacity 2s ease 1.2s;
+}
+
+.af-path {
+    position: fixed;
+    bottom: 0; left: 35%; right: 35%;
+    height: 55vh;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(30,20,10,.4) 40%, rgba(40,28,14,.6) 100%);
+    clip-path: polygon(35% 0%, 65% 0%, 80% 100%, 20% 100%);
+    transition: opacity 2s ease .5s;
+}
+
+.af-leaf {
+    position: fixed;
+    z-index: 4;
+    font-size: var(--ls,16px);
+    opacity: .6;
+    animation: afLeafDrift var(--ld,10s) linear infinite;
+    animation-delay: var(--lde,0s);
+    pointer-events: none;
+}
+@keyframes afLeafDrift {
+    0% { opacity: 0; transform: translate(0,0) rotate(0deg); }
+    5% { opacity: .7; }
+    90% { opacity: .5; }
+    100% { opacity: 0; transform: translate(var(--lx,40px), 110vh) rotate(var(--lr,360deg)); }
+}
+
+.af-mist {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 30% 70%, rgba(100,140,100,.06), transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(80,120,80,.05), transparent 50%);
+    animation: afMistDrift 12s ease-in-out infinite alternate;
+}
+@keyframes afMistDrift {
+    0% { transform: translateX(-20px); }
+    100% { transform: translateX(20px); }
+}
+
+.scene-opened[data-opening="ancient-forest"] .af-treel { transform: translateX(-50vw); opacity: 0; }
+.scene-opened[data-opening="ancient-forest"] .af-treer { transform: translateX(50vw); opacity: 0; }
+.scene-opened[data-opening="ancient-forest"] .af-mid { transform: translateX(-30vw) scale(.8); opacity: 0; }
+.scene-opened[data-opening="ancient-forest"] .af-path { opacity: 0; transition: opacity 1.5s ease .3s; }
+.scene-opened[data-opening="ancient-forest"] .af-mist { opacity: 0; transition: opacity 2s ease 1s; }
+
+[data-opening="ancient-forest"] .sig-scene { z-index: 5; }
+[data-opening="ancient-forest"] .sig-card {
+    background: linear-gradient(165deg, #1A2418, #0E160C);
+    border-color: rgba(120,160,90,.3);
+    box-shadow: 0 0 100px rgba(80,140,60,.12), 0 30px 80px rgba(0,0,0,.6);
+}
+[data-opening="ancient-forest"] .sig-card h1 { color: #E0F0D0; }
+[data-opening="ancient-forest"] .open-button { border-color: rgba(120,160,90,.5); color: #A0D080; }
+
+[data-opening="ancient-forest"] .opening::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(120,180,80,.06), transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+    animation: afCanopy 6s ease-in-out infinite;
+}
+@keyframes afCanopy {
+    0%,100% { opacity: .3; }
+    50% { opacity: .65; }
+}
+
+/* =====================================================
+   TYPE: OLD BOOK (old-book)
+===================================================== */
+
+[data-opening="old-book"] .envelope-scene { display: none; }
+[data-opening="old-book"] .opening {
+    background: radial-gradient(ellipse at 50% 55%, #1A1208, #0C0804);
+    overflow: hidden;
+    perspective: 1100px;
+}
+
+.ob-desk {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 35vh;
+    z-index: 1;
+    background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 80px),
+        linear-gradient(180deg, #2A1C10, #1A1008);
+    box-shadow: inset 0 10px 40px rgba(0,0,0,.5);
+}
+
+.ob-book {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(420px, 72vw);
+    height: min(280px, 48vw);
+    z-index: 3;
+    transform-style: preserve-3d;
+}
+
+.ob-cover {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #5C2E14, #3E1E0C 40%, #2A1408);
+    border: 3px solid #6A3A1C;
+    border-radius: 4px 14px 14px 4px;
+    box-shadow:
+        8px 8px 30px rgba(0,0,0,.6),
+        -2px 0 8px rgba(0,0,0,.3),
+        inset 0 0 20px rgba(0,0,0,.3);
+    z-index: 2;
+    transform-origin: left center;
+    transition: transform 2.5s cubic-bezier(.22,.9,.36,1);
+}
+.ob-cover::before {
+    content: "";
+    position: absolute;
+    top: 15%; bottom: 15%; left: 10px;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, rgba(180,140,80,.3), transparent);
+}
+.ob-cover::after {
+    content: "";
+    position: absolute;
+    top: 50%; right: 14px;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #D4AF37, #8A6E2F);
+    box-shadow: 0 2px 8px rgba(0,0,0,.4), inset 0 1px 2px rgba(255,255,255,.3);
+}
+
+.ob-page {
+    position: absolute;
+    top: 6px; bottom: 6px; left: 6px; right: 6px;
+    background: linear-gradient(135deg, #FFF8EE, #F0E4D0);
+    border-radius: 2px 10px 10px 2px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity .8s ease 1.2s;
+}
+.ob-page::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 40px;
+    background: linear-gradient(90deg, rgba(0,0,0,.08), transparent);
+}
+
+.ob-pageturn {
+    position: absolute;
+    top: 6px; bottom: 6px; left: 6px; right: 50%;
+    background: linear-gradient(90deg, #F5EBD8, #FFF6E8);
+    border-radius: 2px 0 0 2px;
+    transform-origin: right center;
+    z-index: 4;
+    box-shadow: -3px 0 10px rgba(0,0,0,.15);
+    opacity: 0;
+}
+
+.scene-opened[data-opening="old-book"] .ob-cover {
+    transform: translate(-50%, -50%) rotateY(-165deg);
+    filter: brightness(.5);
+}
+.scene-opened[data-opening="old-book"] .ob-page { opacity: 1; transition-delay: 1.5s; }
+.scene-opened[data-opening="old-book"] .ob-pageturn {
+    opacity: 1;
+    animation: obPageTurn 2s cubic-bezier(.22,.9,.36,1) 1.6s both;
+}
+@keyframes obPageTurn {
+    0% { transform: rotateY(0deg); opacity: 1; }
+    100% { transform: rotateY(-170deg); opacity: 0; }
+}
+
+[data-opening="old-book"] .sig-scene { z-index: 5; }
+[data-opening="old-book"] .sig-card {
+    position: relative;
+    z-index: 3;
+    background: linear-gradient(165deg, #FFF8EE, #F5EBD8);
+    border-color: rgba(140,100,50,.3);
+    box-shadow: 0 0 80px rgba(140,100,50,.1), 0 30px 80px rgba(0,0,0,.4);
+}
+[data-opening="old-book"] .sig-card h1 { color: #3A2410; }
+[data-opening="old-book"] .sig-card small { color: #8A7040; }
+[data-opening="old-book"] .open-button { border-color: rgba(140,100,50,.5); color: #8A6830; }
+
+[data-opening="old-book"] .opening::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 45%, rgba(200,160,80,.06), transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* =====================================================
    OPENING SCENE SHARED LAYOUT
    All signature scenes share .sig-scene scaffolding
 ===================================================== */
@@ -4123,6 +4603,12 @@ footer p {
     [data-opening="royal-scroll"] .scroll-roll { max-width: 90vw; }
     [data-opening="royal-scroll"] .scroll-seal { width: 56px; height: 56px; font-size: 22px; }
 
+    /* New scenes responsive */
+    [data-opening="magic-wand"] .mw-shaft { height: 100px; }
+    [data-opening="glowing-door"] .gd-door-l, [data-opening="glowing-door"] .gd-door-r { width: min(120px, 20vw); }
+    [data-opening="old-book"] .ob-book { width: min(320px, 80vw); height: min(220px, 50vw); }
+    [data-opening="ancient-forest"] .af-path { left: 25%; right: 25%; }
+
     /* Music button — proper tap target */
     .music-button { right: 14px; bottom: 14px; padding: 0; width: 52px; height: 52px; display: grid; place-items: center; text-align: center; line-height: 1.2; }
 
@@ -4485,6 +4971,75 @@ footer p {
                 <div class="scene-fill">
                     <small></small><h1></h1><p></p>
                 </div>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 11 · MAGIC WAND -->
+    <div class="sig-scene" id="magicWandScene" data-scene-for="magic-wand">
+        <div class="mw-star" style="top:12%;left:18%;--s:2px;--d:2.5s"></div>
+        <div class="mw-star" style="top:22%;left:72%;--s:3px;--d:3.2s"></div>
+        <div class="mw-star" style="top:8%;left:45%;--s:2px;--d:2.8s"></div>
+        <div class="mw-star" style="top:35%;left:88%;--s:4px;--d:3.5s"></div>
+        <div class="mw-star" style="top:18%;left:32%;--s:2px;--d:2.2s"></div>
+        <div class="mw-wand" id="mwWand">
+            <div class="mw-tip"></div>
+            <div class="mw-shaft"></div>
+        </div>
+        <div id="mwSparks"></div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 12 · GLOWING DOOR -->
+    <div class="sig-scene" id="glowingDoorScene" data-scene-for="glowing-door">
+        <div class="gd-corridor"></div>
+        <div class="gd-glow"></div>
+        <div class="gd-ray"></div>
+        <div class="gd-door-l"></div>
+        <div class="gd-door-r"></div>
+        <div class="gd-frame"></div>
+        <div class="gd-floor-glow"></div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 13 · ANCIENT FOREST -->
+    <div class="sig-scene" id="ancientForestScene" data-scene-for="ancient-forest">
+        <div class="af-mist"></div>
+        <div class="af-layer af-treel"></div>
+        <div class="af-layer af-treer"></div>
+        <div class="af-layer af-mid"></div>
+        <div class="af-path"></div>
+        <div id="afLeaves"></div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
+            </div>
+        </div>
+        <button class="open-button scene-open-btn" type="button"></button>
+    </div>
+
+    <!-- Signature Scene 14 · OLD BOOK -->
+    <div class="sig-scene" id="oldBookScene" data-scene-for="old-book">
+        <div class="ob-desk"></div>
+        <div class="ob-book">
+            <div class="ob-page"></div>
+            <div class="ob-pageturn"></div>
+            <div class="ob-cover"></div>
+        </div>
+        <div class="sig-card">
+            <div class="scene-fill">
+                <small></small><h1></h1><p></p>
             </div>
         </div>
         <button class="open-button scene-open-btn" type="button"></button>
@@ -5104,7 +5659,7 @@ if (finalDesign) {
 
     /* Signature scenes take over — skip envelope styling entirely */
     if (!envScene) return;
-    if (["wax-seal","curtain","floral-paper","luxury-romance","celebration-pop","starry-night","door","stairs","envelope-seal","ribbon","wood-door"].indexOf(openingType) !== -1) {
+    if (["wax-seal","curtain","floral-paper","luxury-romance","celebration-pop","starry-night","door","stairs","envelope-seal","ribbon","wood-door","magic-wand","glowing-door","ancient-forest","old-book"].indexOf(openingType) !== -1) {
         envScene.style.display = "none";
         return;
     }
@@ -5182,7 +5737,9 @@ document.getElementById("openButton").textContent =
         "door-reveal": "door", "wood-door-reveal": "wood-door",
         "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
         "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
-        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter"
+        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter",
+        "magic-reveal": "magic-wand", "glow-door": "glowing-door",
+        "forest-walk": "ancient-forest", "book-reveal": "old-book"
     };
     openingType = _openingMap[openingType] || openingType;
 
@@ -6124,7 +6681,9 @@ var _openingStyle = (function() {
         "door-reveal": "door", "wood-door-reveal": "wood-door",
         "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
         "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
-        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter"
+        "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter",
+        "magic-reveal": "magic-wand", "glow-door": "glowing-door",
+        "forest-walk": "ancient-forest", "book-reveal": "old-book"
     };
     return map[raw] || raw;
 })();
@@ -6154,7 +6713,11 @@ var _openingStyle = (function() {
         "stairs":         { id: "stairsScene",  delay: 1900 },
         "envelope-seal":  { id: "envSealScene", delay: 2100 },
         "ribbon":         { id: "ribbonScene",  delay: 2000 },
-        "wood-door":      { id: "woodDoorScene", delay: 2000 }
+        "wood-door":      { id: "woodDoorScene", delay: 2000 },
+        "magic-wand":     { id: "magicWandScene", delay: 2800 },
+        "glowing-door":   { id: "glowingDoorScene", delay: 2600 },
+        "ancient-forest": { id: "ancientForestScene", delay: 2600 },
+        "old-book":       { id: "oldBookScene", delay: 3000 }
     };
 
     var type = document.documentElement.getAttribute("data-opening") || "";
@@ -6327,6 +6890,40 @@ var _openingStyle = (function() {
                 sp.style.width = sz + "px";
                 sp.style.height = sz + "px";
                 dustWrap.appendChild(sp);
+            }
+        }
+    } else if (type === "magic-wand") {
+        var sparksWrap = document.getElementById("mwSparks");
+        if (sparksWrap) {
+            for (var ms = 0; ms < 18; ms++) {
+                var spark = document.createElement("div");
+                spark.className = "mw-spark";
+                var spSize = rnd(3, 8);
+                spark.style.setProperty("--sp", spSize + "px");
+                spark.style.setProperty("--tx", rnd(-120, 120) + "px");
+                spark.style.setProperty("--ty", rnd(-160, -20) + "px");
+                spark.style.setProperty("--sd", rnd(0, 2.5) + "s");
+                spark.style.left = rnd(35, 65) + "vw";
+                spark.style.top = rnd(30, 55) + "vh";
+                sparksWrap.appendChild(spark);
+            }
+        }
+    } else if (type === "ancient-forest") {
+        var leavesWrap = document.getElementById("afLeaves");
+        if (leavesWrap) {
+            var leafChars = ["🍃", "🍂", "🌿", "☘️"];
+            for (var lf = 0; lf < 14; lf++) {
+                var leaf = document.createElement("div");
+                leaf.className = "af-leaf";
+                leaf.textContent = leafChars[lf % leafChars.length];
+                leaf.style.left = rnd(10, 90) + "vw";
+                leaf.style.top = rnd(-10, 5) + "vh";
+                leaf.style.setProperty("--ls", rnd(12, 24) + "px");
+                leaf.style.setProperty("--ld", rnd(8, 16) + "s");
+                leaf.style.setProperty("--lde", rnd(0, 10) + "s");
+                leaf.style.setProperty("--lx", rnd(-60, 60) + "px");
+                leaf.style.setProperty("--lr", rnd(180, 720) + "deg");
+                leavesWrap.appendChild(leaf);
             }
         }
     }

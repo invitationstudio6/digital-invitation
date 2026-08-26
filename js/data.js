@@ -934,6 +934,46 @@ const LUNA_TEMPLATES = [
         design: { primaryColor: "#5d4037", secondaryColor: "#c9a86a", font: "Marcellus" },
         layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "dark", openingType: "wood-door" },
         preview: { eyebrow: "QAPINI DÖYƏRƏK GİRİN", names: ["Leyla", "Murad"], date: "22 · 05 · 2027", message: "Taxta qapının arxasında bizim gələcəyimizə açılan yol var.", venue: "Şahdağ Resort", location: "Qusar, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "magic-reveal", name: "Magic Reveal", category: "wedding", style: "Sihir · Qızıl Toz", galleryStyle: "collage", openingStyle: "magic-wand",
+        animationStyle: "magic-wand",
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#2a1a3e", secondaryColor: "#c8a8ff", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "dark", openingType: "magic-wand" },
+        preview: { eyebrow: "SƏHİR BARMAQ UCUNDA", names: ["Aysəl", "Murad"], date: "15 · 06 · 2027", message: "Sihirli an — sevgimizin ən gözəl sehrini sizinlə bölüşürük.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "glow-entrance", name: "Glow Entrance", category: "wedding", style: "İşıq · Parlaq Qapı", galleryStyle: "fullscreen", openingStyle: "glowing-door",
+        animationStyle: "glowing-door",
+        thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#1a1008", secondaryColor: "#ffd070", font: "Marcellus" },
+        layoutConfig: { sectionOrder: ["hero","details","gallery","countdown","rsvp","story"], heroType: "hero-style-dark", backgroundStyle: "dark", openingType: "glowing-door" },
+        preview: { eyebrow: "İŞIQ QAPISI", names: ["Nigar", "Elvin"], date: "20 · 09 · 2027", message: "Qapı arxasında bizi gözləyən işıqlı gələcək.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "noir" }
+    },
+    {
+        id: "forest-walk", name: "Forest Walk", category: "wedding", style: "Meşə · Yarpaqlar Arasında", galleryStyle: "editorial", openingStyle: "ancient-forest",
+        animationStyle: "ancient-forest",
+        thumbnail: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        design: { primaryColor: "#0e160c", secondaryColor: "#a0d080", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-botanical", backgroundStyle: "default", openingType: "ancient-forest" },
+        preview: { eyebrow: "QƏDİMDİ MEŞƏDƏ", names: ["Leyla", "Tural"], date: "05 · 08 · 2027", message: "Meşənin qoynunda, yarpaqların pıçıltısı ilə sevgimizi elan edirik.", venue: "Şirvanşah Hotel", location: "Şamaxı, Azərbaycan", theme: "floral" }
+    },
+    {
+        id: "story-book", name: "Story Book", category: "wedding", style: "Kitab · Qədim Hekayə", galleryStyle: "collage", openingStyle: "old-book",
+        animationStyle: "old-book",
+        thumbnail: "https://images.unsplash.com/photo-1524578271613-d550eacf6090?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1524578271613-d550eacf6090?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "premium", packages: ["premium", "luxury"],
+        design: { primaryColor: "#2a1a08", secondaryColor: "#d4af37", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "vintage", openingType: "old-book" },
+        preview: { eyebrow: "HEKAYƏMİZ", names: ["Aysəl", "Murad"], date: "12 · 04 · 2027", message: "Həyatımızın ən gözəl hekayəsi — ilk səhifəsini sizinlə açırıq.", venue: "Fairmont Baku", location: "Bakı, Azərbaycan", theme: "default" }
     }
 ];
 
