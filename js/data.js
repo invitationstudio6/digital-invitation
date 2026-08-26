@@ -1003,65 +1003,18 @@ function lunaNormalizeVideo(v) {
     };
 }
 
-/* Read the live admin catalog (fresh from localStorage on every call).
-   If the admin hasn't published any video yet, show curated samples so the
-   collection is never empty. */
+/* Read the live admin catalog (fresh from localStorage on every call). */
 function lunaGetActiveVideos() {
     var raw = [];
     try { raw = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]"); } catch(e) {}
-    var list = raw.map(lunaNormalizeVideo)
+    return raw.map(lunaNormalizeVideo)
         .filter(function(v) { return v.active && v.videoUrl; })
         .sort(function(a,b) { return a.order - b.order; });
-    if (list.length) return list;
-    return LUNA_VIDEO_SAMPLES.map(lunaNormalizeVideo);
 }
 
 /* Built-in demo videos — used only while there are no admin-published videos.
    All URLs are public CDNs verified to serve video/mp4 with CORS-friendly
    direct links (media.w3.org, test-videos.co.uk, MDN examples). */
-var LUNA_VIDEO_SAMPLES = [
-    {
-        id: "sample_flower",
-        category: "wedding",
-        title: "Toy — Zərif Açılış",
-        description: "İpək kimi keçidlər və qızılı işıqlı açılış səhnəsi.",
-        url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
-        price: 20, active: true, order: 1
-    },
-    {
-        id: "sample_jellyfish",
-        category: "engagement",
-        title: "Nişan — Okean Həvəsi",
-        description: "Dərin mavi fonlarda yumaqvari hərəkətli animasiya.",
-        url: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
-        price: 20, active: true, order: 2
-    },
-    {
-        id: "sample_sintel",
-        category: "henna",
-        title: "Xına — Kino Keyfiyyəti",
-        description: "Kino tonlarında intro — hekayənizin ilk kadrı.",
-        url: "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_2MB.mp4",
-        price: 20, active: true, order: 3
-    },
-    {
-        id: "sample_trailer",
-        category: "graduation",
-        title: "Məzuniyyət — Epik Treiler",
-        description: "Grand treiler üslubunda epik açılış.",
-        url: "https://media.w3.org/2010/05/sintel/trailer.mp4",
-        price: 20, active: true, order: 4
-    },
-    {
-        id: "sample_bunny",
-        category: "birthday",
-        title: "Ad Günü — Şən Klasik",
-        description: "Yüngül, şən və klassik animasiya nümunəsi.",
-        url: "https://media.w3.org/2010/05/bunny/movie.mp4",
-        price: 20, active: true, order: 5
-    }
-];
-
 /* Media helpers — single shared implementations (mp4/webm file, YouTube, Vimeo) */
 function lunaMediaKind(url) {
     url = (url || "").trim();
@@ -1426,25 +1379,7 @@ function seedSampleData(){
             localStorage.setItem("luna_category_previews", JSON.stringify(previews));
         }
 
-        /* Seed video invitations if empty */
-        var existingVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
-        if(!existingVideos.length){
-            localStorage.setItem("luna_video_invitations", JSON.stringify(LUNA_VIDEO_SAMPLES.map(function(v){
-                return {
-                    id: v.id,
-                    category: v.category,
-                    title: v.title,
-                    description: v.description,
-                    videoUrl: v.url,
-                    thumbnailUrl: v.thumbnail || "",
-                    price: v.price,
-                    active: v.active,
-                    featured: v.featured || false,
-                    order: v.order || 0,
-                    language: "az"
-                };
-            })));
-        }
+        /* Video invitations — no auto-seeding; admin adds videos via admin panel */
 
         /* Seed form config if empty */
         if(!localStorage.getItem("luna_form_config")){

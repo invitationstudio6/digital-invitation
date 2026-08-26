@@ -1394,25 +1394,10 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <h2>Hekayənizi canlandırın</h2>
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Canva-dan yükləyin və ya kompüterinizdən video əlavə edin. 20 AZN-dən başlayır.</p>
         </div>
-        <div class="video-grid" id="videoGrid">
-            <div class="video-card" data-video="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
-                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
-                <div class="video-play"></div>
-                <span class="video-badge">Video</span>
-                <div class="video-label"><h4>Toy Dəvətnaməsi</h4><p>Video · Animasiyalı</p></div>
-            </div>
-            <div class="video-card" data-video="https://media.w3.org/2010/05/sintel/trailer.mp4">
-                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" src="https://media.w3.org/2010/05/sintel/trailer.mp4"></video>
-                <div class="video-play"></div>
-                <span class="video-badge">Video</span>
-                <div class="video-label"><h4>Nişan Dəvətnaməsi</h4><p>Video · Kino</p></div>
-            </div>
-            <div class="video-card" data-video="https://media.w3.org/2010/05/bunny/movie.mp4">
-                <video muted loop preload="metadata" poster="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" src="https://media.w3.org/2010/05/bunny/movie.mp4"></video>
-                <div class="video-play"></div>
-                <span class="video-badge">Video</span>
-                <div class="video-label"><h4>Xına Gecəsi</h4><p>Video · Animasiyalı</p></div>
-            </div>
+        <div class="video-grid" id="videoGrid"></div>
+        <div id="videoEmpty" style="display:none;text-align:center;padding:40px 20px;color:#8a6f58">
+            <p style="font-size:14px;margin:0">Hələ video dəvətnamə əlavə edilməyib.</p>
+            <p style="font-size:11px;margin:8px 0 0;opacity:.6">Admin paneldən video əlavə edə bilərsiniz.</p>
         </div>
     </div>
 </section>
@@ -2814,6 +2799,7 @@ function lunaIDBLoadHome(key, cb) {
 /* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN VIDEOS ===== */
 (function() {
     var grid = document.getElementById("videoGrid");
+    var emptyEl = document.getElementById("videoEmpty");
     if (!grid) return;
 
     function isYouTube(url) {
@@ -2823,12 +2809,27 @@ function lunaIDBLoadHome(key, cb) {
         var m = (url || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
         return m ? m[1] : "";
     }
+    function catLabel(cat) {
+        var map = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthday:"Ad Günü", graduation:"Məzuniyyət", "baby-shower":"Körpə Partisi", business:"Biznes", other:"Digər" };
+        return map[cat] || cat || "Video";
+    }
 
     /* Load admin-uploaded videos from localStorage */
     try {
         var adminVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+        var filtered = adminVideos.filter(function(v) { return v.active !== false && v.url; });
+        filtered.sort(function(a,b) { return (a.order||0) - (b.order||0); });
+
+        if (!filtered.length) {
+            grid.style.display = "none";
+            if (emptyEl) emptyEl.style.display = "block";
+            return;
+        }
+        if (emptyEl) emptyEl.style.display = "none";
+        grid.style.display = "";
+
         var pending = 0;
-        adminVideos.filter(function(v) { return v.active !== false && v.url; }).forEach(function(v) {
+        filtered.forEach(function(v) {
             var isIDB = v.url.indexOf("__idb:") === 0;
             var blobKey = isIDB ? v.url.slice(6) : null;
             var ytId = isYouTube(v.url) ? youTubeId(v.url) : "";
@@ -2839,7 +2840,6 @@ function lunaIDBLoadHome(key, cb) {
                 card.setAttribute("data-video", videoSrc);
 
                 if (ytId) {
-                    /* YouTube — use iframe embed */
                     var thumb = v.thumbnail || "https://img.youtube.com/vi/" + ytId + "/hqdefault.jpg";
                     card.innerHTML =
                         '<div class="video-yt-wrap" style="position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:inherit;overflow:hidden">' +
@@ -2847,18 +2847,17 @@ function lunaIDBLoadHome(key, cb) {
                             '<div class="video-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2"></div>' +
                         '</div>' +
                         '<span class="video-badge">Video</span>' +
-                        '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + (v.category || 'Video') + ' · YouTube</p></div>';
+                        '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · YouTube</p></div>';
                     card.addEventListener("click", function() {
                         openVideoModal({ videoUrl: videoSrc, isYouTube: true, title: v.title || 'Video' });
                     });
                 } else {
-                    /* Regular video file */
                     var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
                     card.innerHTML =
                         '<video muted loop preload="metadata"' + posterAttr + ' src="' + videoSrc + '"></video>' +
                         '<div class="video-play"></div>' +
                         '<span class="video-badge">Video</span>' +
-                        '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + (v.category || 'Video') + ' · Animasiyalı</p></div>';
+                        '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · Animasiyalı</p></div>';
                     var vid = card.querySelector("video");
                     card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
                     card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
@@ -2873,9 +2872,7 @@ function lunaIDBLoadHome(key, cb) {
             if (isIDB && blobKey) {
                 pending++;
                 lunaIDBLoadHome(blobKey, function(blob) {
-                    if (blob) {
-                        addCard(URL.createObjectURL(blob));
-                    }
+                    if (blob) addCard(URL.createObjectURL(blob));
                     pending--;
                 });
             } else {
@@ -2883,19 +2880,6 @@ function lunaIDBLoadHome(key, cb) {
             }
         });
     } catch(e) {}
-
-    /* Wire up existing sample videos */
-    grid.querySelectorAll(".video-card[data-video]").forEach(function(card) {
-        var vid = card.querySelector("video");
-        if (!vid) return;
-        card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
-        card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
-        card.addEventListener("click", function(e) {
-            if (vid.requestFullscreen) vid.requestFullscreen();
-            else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
-            vid.play().catch(function(){});
-        });
-    });
 })();
 
 /* ===== VIDEO MODAL ===== */
