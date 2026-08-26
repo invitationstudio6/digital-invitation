@@ -6085,6 +6085,10 @@ var invitationPage =
 
 
 var _openingStyle = (function() {
+    /* First check data-opening attribute (set by scene engine) */
+    var fromAttr = document.documentElement.getAttribute("data-opening") || "";
+    if (fromAttr && fromAttr !== "envelope") return fromAttr;
+
     var tData = null;
     if (typeof LUNA_TEMPLATES !== "undefined" && invitation.templateId) {
         tData = LUNA_TEMPLATES.find(function(t) {
