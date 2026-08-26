@@ -527,15 +527,16 @@ const LUNA_TEMPLATES = [
                 elements: [{ type: "line", class: "deco-line-h", style: "width:60px;left:50%;top:20%;transform:translateX(-50%)" }]
             },
             {
-                id: "stairs", type: "scene", className: "scene-stairs",
+                id: "stairs", type: "scene", className: "scene-stairs3d",
                 background: "https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&w=1800&q=90",
                 overlay: "linear-gradient(to bottom, rgba(26,20,16,.3), rgba(26,20,16,.6))",
                 animation: { enter: "slide-up", duration: 1200 },
                 content: { eyebrow: "", title: "Xoş gəlmisiniz", subtitle: "Qonaqlarımızı qarşılayırıq...", hint: "Scroll to continue ▼" },
-                elements: [{ type: "circle", class: "deco-circle", style: "width:120px;height:120px;right:10%;top:15%;border-color:rgba(196,168,130,.15)" }]
+                elements: [{ type: "circle", class: "deco-circle", style: "width:120px;height:120px;right:10%;top:15%;border-color:rgba(196,168,130,.15)" }],
+                countdown: "{{dateLong}}"
             },
             {
-                id: "wedding-hall", type: "scene", className: "scene-hall",
+                id: "wedding-hall", type: "scene", className: "scene-theatre",
                 background: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
                 overlay: "linear-gradient(to bottom, rgba(26,20,16,.4), rgba(26,20,16,.55))",
                 animation: { enter: "zoom", duration: 1500 },
@@ -583,6 +584,13 @@ const LUNA_TEMPLATES = [
                 animation: { enter: "zoom", duration: 1200 },
                 content: { eyebrow: "", title: "", hint: "Tap to open ▼" },
                 envelope: { seal: "L", names: "{{bride}} & {{groom}}", date: "{{dateLong}}" }
+            },
+            {
+                id: "ribbon-opening", type: "scene", className: "scene-ribbon",
+                background: "linear-gradient(135deg, #FF6B6B, #FFD93D)",
+                overlay: "none",
+                animation: { enter: "fadeIn", duration: 1000 },
+                content: { eyebrow: "CELEBRATION", title: "{{bride}} & {{groom}}", subtitle: "{{dateLong}}", hint: "Tap to continue ▼" }
             },
             {
                 id: "card-reveal", type: "scene", className: "scene-venue",

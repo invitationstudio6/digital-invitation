@@ -289,6 +289,7 @@
         status: function () { return state; },
         currentUser: function () { return user; },
         enabled: function () { return ENABLED; },
-        onChange: function (cb) { onChangeCb = cb; if (state !== "off") cb(state, user); }
+        onChange: function (cb) { onChangeCb = cb; if (state !== "off") cb(state, user); },
+        client: function () { return client; }
     };
 })();

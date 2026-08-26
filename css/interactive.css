@@ -406,7 +406,118 @@
   transform: translateX(100%);
 }
 
-/* --- Envelope Reveal --- */
+/* --- 3D Theatre Curtains (enhanced) --- */
+.scene-theatre .curtain-left,
+.scene-theatre .curtain-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(135deg, #3E2518, #2a1a14);
+  z-index: 5;
+  transition: transform 1.8s cubic-bezier(.19, 1, .22, 1);
+  transform-style: preserve-3d;
+}
+
+.scene-theatre .curtain-left {
+  left: 0;
+  transform-origin: left top;
+  clip-path: inset(0 100% 0 0);
+}
+
+.scene-theatre .curtain-right {
+  right: 0;
+  transform-origin: right top;
+  clip-path: inset(0 0 0 100%);
+}
+
+.scene-theatre.opened .curtain-left {
+  animation: curtainOpen3D 1.5s cubic-bezier(.19, 1, .22, 1) forwards;
+}
+
+.scene-theatre.opened .curtain-right {
+  animation: curtainOpen3D 1.5s cubic-bezier(.19, 1, .22, 1) 0.2s forwards reverse;
+}
+
+/* --- Wax Seal Animation --- */
+.wax-seal {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #FFDAB9, #FFA500);
+  border: 2px solid #DAA520;
+  border-radius: 50% 50% 30% 30%;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.8),
+              0 5px 15px 2px rgba(255, 99, 71, 0.4);
+  animation: waxDrip 3s ease-in-out infinite;
+}
+
+.wax-seal::after {
+  content: "L";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #3E2518;
+}
+
+/* --- Ribbon Opening --- */
+.ribbon {
+  width: 80px;
+  height: 80px;
+  background: #FF6B6B;
+  position: relative;
+  margin: 20px auto;
+  transform-style: preserve-3d;
+  animation: ribbonUnwrap 1.5s cubic-bezier(.19, 1, .22, 1) forwards;
+}
+
+.ribbon::before,
+.ribbon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #FFD93D;
+  z-index: 5;
+}
+
+.ribbon::before {
+  top: 0;
+  border-radius: 50% 50% 0 0;
+}
+
+.ribbon::after {
+  bottom: 0;
+  border-radius: 0 0 50% 50%;
+}
+
+/* --- Stairs 3D --- */
+.scene-stairs3d .stairs-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(45deg);
+  z-index: 5;
+  animation: stairsClimb 2s cubic-bezier(.19, 1, .22, 1) forwards;
+}
+
+/* --- Countdown Number --- */
+.countdown-number {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #FF6B6B;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
 
 .envelope-container {
   perspective: 1000px;
@@ -559,6 +670,70 @@
   50% {
     transform: scale(1.1);
     opacity: .8;
+  }
+}
+
+/* --- New: Theatre Curtains 3D --- */
+@keyframes curtainOpen3D {
+  0% {
+    transform: perspective(800px) rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(800px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* --- New: Wax Seal Drip --- */
+@keyframes waxDrip {
+  0% {
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.8), 0 0 0 4px rgba(255, 165, 0, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(255, 99, 71, 1), 0 5px 10px 2px rgba(255, 99, 71, 0.5);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.8), 0 0 0 4px rgba(255, 165, 0, 0.5);
+    transform: scale(1);
+  }
+}
+
+/* --- New: Ribbon Unwrap --- */
+@keyframes ribbonUnwrap {
+  0% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* --- New: Stairs 3D Climb --- */
+@keyframes stairsClimb {
+  0% {
+    transform: rotateX(45deg) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- New: Countdown Number Animation --- */
+@keyframes countUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

@@ -51,6 +51,13 @@ var LunaSceneEngine = (function () {
             sizeRange: [3, 6],
             durationRange: [4, 10],
             delayRange: [0, 5]
+        },
+        ribbon: {
+            count: 1,
+            className: "particle particle-ribbon",
+            sizeRange: [0, 0],
+            durationRange: [1.5, 1.5],
+            delayRange: [0, 0]
         }
     };
 
@@ -261,7 +268,7 @@ var LunaSceneEngine = (function () {
     };
 
 
-    /* ----- Render specialized scene elements (hall curtains, envelope, screen, balloons, cake) ----- */
+    /* ----- Render specialized scene elements (hall curtains, envelope, screen, balloons, cake, ribbon, stairs 3D, countdown) ----- */
     Engine.prototype._renderSpecialElements = function (scene, sceneConfig) {
         var className = sceneConfig.className || "";
 
@@ -269,10 +276,12 @@ var LunaSceneEngine = (function () {
         if (className.indexOf("scene-hall") !== -1) {
             var curtainLeft = document.createElement("div");
             curtainLeft.className = "hall-curtain-left";
+            curtainLeft.innerHTML = '<div class="curtain-wrapper"><div class="curtain-face"></div></div>';
             scene.appendChild(curtainLeft);
 
             var curtainRight = document.createElement("div");
             curtainRight.className = "hall-curtain-right";
+            curtainRight.innerHTML = '<div class="curtain-wrapper"><div class="curtain-face"></div></div>';
             scene.appendChild(curtainRight);
 
             /* Auto-open curtains after a delay */
@@ -297,7 +306,12 @@ var LunaSceneEngine = (function () {
 
             var seal = document.createElement("div");
             seal.className = "envelope-seal";
-            seal.textContent = "L";
+            if (sceneConfig.envelope.seal) {
+                seal.textContent = sceneConfig.envelope.seal;
+                seal.classList.add("wax-seal");
+            } else {
+                seal.textContent = "L";
+            }
             container.appendChild(seal);
 
             var card = document.createElement("div");
@@ -381,6 +395,33 @@ var LunaSceneEngine = (function () {
             glow.style.top = "50%";
             glow.style.transform = "translate(-50%, -50%)";
             scene.appendChild(glow);
+        }
+
+        /* Ribbon opening for wedding/celebration */
+        if (className.indexOf("scene-ribbon") !== -1) {
+            var ribbon = document.createElement("div");
+            ribbon.className = "ribbon";
+            scene.appendChild(ribbon);
+        }
+
+        /* 3D Stairs */
+        if (className.indexOf("scene-stairs3d") !== -1) {
+            var stairsText = document.createElement("div");
+            stairsText.className = "stairs-text";
+            if (sceneConfig.content && sceneConfig.content.title) {
+                stairsText.textContent = this.interpolate(sceneConfig.content.title);
+            } else {
+                stairsText.textContent = "Scroll to continue";
+            }
+            scene.appendChild(stairsText);
+        }
+
+        /* Countdown number */
+        if (sceneConfig.countdown) {
+            var countdown = document.createElement("div");
+            countdown.className = "countdown-number";
+            countdown.textContent = this.interpolate(sceneConfig.countdown);
+            scene.appendChild(countdown);
         }
     };
 
