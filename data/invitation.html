@@ -1320,131 +1320,264 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="glowing-door"] .envelope-scene { display: none; }
 [data-opening="glowing-door"] .opening {
-    background: #060408;
+    background: #040208;
     overflow: hidden;
-    perspective: 1200px;
+    perspective: 1400px;
 }
 
+/* Corridor walls — perspective vanishing lines */
 .gd-corridor {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0; z-index: 1;
     background:
-        linear-gradient(180deg, #0A0610 0%, #0E0818 100%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 80px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.01) 0 1px, transparent 1px 80px);
-    z-index: 1;
+        linear-gradient(180deg, #06030E 0%, #0C0618 100%);
+}
+.gd-corridor::before,
+.gd-corridor::after {
+    content: ""; position: fixed; top: 0; bottom: 0; width: 35vw; z-index: 1; opacity: .7;
+}
+.gd-corridor::before {
+    left: 0;
+    background: linear-gradient(100deg, rgba(40,20,10,.6) 0%, transparent 70%);
+    border-right: 1px solid rgba(180,140,80,.06);
+}
+.gd-corridor::after {
+    right: 0;
+    background: linear-gradient(-100deg, rgba(40,20,10,.6) 0%, transparent 70%);
+    border-left: 1px solid rgba(180,140,80,.06);
 }
 
+/* Floor tiles perspective */
+.gd-floor {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 40vh; z-index: 1;
+    background:
+        repeating-linear-gradient(90deg, rgba(180,140,80,.03) 0 1px, transparent 1px 60px),
+        linear-gradient(0deg, rgba(15,8,4,.9) 0%, transparent 100%);
+    transform: perspective(600px) rotateX(55deg);
+    transform-origin: bottom center;
+    opacity: .6;
+}
+
+/* Archway frame — ornate stone with gold trim */
 .gd-frame {
     position: fixed;
-    top: 12%; bottom: 12%;
+    top: 8%; bottom: 10%;
     left: 50%; transform: translateX(-50%);
-    width: min(280px, 44vw);
-    border: 4px solid #5C4A28;
-    box-shadow: 0 0 40px rgba(0,0,0,.6), inset 0 0 30px rgba(0,0,0,.4);
-    z-index: 2;
-    border-radius: 160px 160px 0 0;
+    width: min(320px, 50vw);
+    z-index: 4;
+    border: 6px solid #6B5228;
+    border-radius: 180px 180px 0 0;
+    background: transparent;
+    box-shadow:
+        0 0 60px rgba(0,0,0,.8),
+        inset 0 0 40px rgba(0,0,0,.5),
+        0 0 120px rgba(255,180,60,.08);
 }
 .gd-frame::before {
-    content: "";
-    position: absolute;
-    top: 16px; bottom: 16px; left: 16px; right: 16px;
-    border: 2px solid #3A2E18;
-    border-radius: 140px 140px 0 0;
+    content: ""; position: absolute;
+    top: 14px; bottom: 14px; left: 14px; right: 14px;
+    border: 3px solid #4A3A1A;
+    border-radius: 164px 164px 0 0;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.4);
+}
+.gd-frame::after {
+    content: ""; position: absolute;
+    top: 28px; bottom: 28px; left: 28px; right: 28px;
+    border: 1px solid rgba(212,175,55,.15);
+    border-radius: 148px 148px 0 0;
 }
 
+/* Light seeping through crack before opening */
+.gd-crack {
+    position: fixed;
+    top: 10%; bottom: 10%;
+    left: 50%; transform: translateX(-50%);
+    width: 3px; z-index: 5;
+    background: linear-gradient(180deg, transparent, rgba(255,200,80,.15) 20%, rgba(255,210,100,.35) 50%, rgba(255,200,80,.15) 80%, transparent);
+    filter: blur(2px);
+    opacity: 0;
+    animation: gdCrackPulse 3s ease-in-out 1.5s infinite;
+}
+@keyframes gdCrackPulse {
+    0%,100% { opacity: .2; filter: blur(3px); }
+    50% { opacity: .8; filter: blur(1px); }
+}
+.scene-opened[data-opening="glowing-door"] .gd-crack { opacity: 0; transition: opacity .3s; }
+
+/* Double doors */
 .gd-door-l,
 .gd-door-r {
     position: fixed;
-    top: 12%; bottom: 12%;
-    width: min(142px, 22.2vw);
-    z-index: 3;
-    background:
-        linear-gradient(180deg, rgba(0,0,0,.4) 0%, transparent 10%, transparent 90%, rgba(0,0,0,.5) 100%),
-        repeating-linear-gradient(90deg, rgba(0,0,0,.4) 0 5px, rgba(0,0,0,0) 12px 24px, rgba(255,255,255,.05) 32px 36px, rgba(0,0,0,0) 44px 56px),
-        linear-gradient(90deg, #3A2818, #5C4028, #4A3420, #3A2818);
-    box-shadow: inset 0 0 30px rgba(0,0,0,.5);
-    transition: transform 2.2s cubic-bezier(.22,.9,.36,1), filter 1.2s ease, opacity 1.5s ease 1.2s;
+    top: 8%; bottom: 10%;
+    width: min(162px, 25.2vw);
+    z-index: 5;
+    transition: transform 2.4s cubic-bezier(.22,.9,.36,1), filter 1.4s ease, opacity 1.8s ease 1.4s;
 }
 .gd-door-l {
-    left: 50%; margin-left: -min(140px, 22vw);
+    left: 50%; margin-left: -min(160px, 25vw);
     transform-origin: left center;
-    border-radius: 140px 0 0 0;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 8%, transparent 92%, rgba(0,0,0,.6) 100%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 4px, rgba(0,0,0,0) 10px 20px, rgba(255,255,255,.04) 28px 32px, rgba(0,0,0,0) 40px 52px),
+        linear-gradient(90deg, #2E1C10, #4A3018, #3C2614, #2E1C10);
+    border-radius: 170px 0 0 0;
+    box-shadow: inset -8px 0 30px rgba(0,0,0,.6), 4px 0 20px rgba(0,0,0,.4);
 }
 .gd-door-r {
     left: 50%;
     transform-origin: right center;
-    border-radius: 0 140px 0 0;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 8%, transparent 92%, rgba(0,0,0,.6) 100%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 4px, rgba(0,0,0,0) 10px 20px, rgba(255,255,255,.04) 28px 32px, rgba(0,0,0,0) 40px 52px),
+        linear-gradient(90deg, #2E1C10, #4A3018, #3C2614, #2E1C10);
+    border-radius: 0 170px 0 0;
+    box-shadow: inset 8px 0 30px rgba(0,0,0,.6), -4px 0 20px rgba(0,0,0,.4);
 }
 
+/* Door panels — raised rectangles */
+.gd-door-l::before, .gd-door-r::before {
+    content: ""; position: absolute;
+    top: 12%; left: 12%; right: 12%; height: 36%;
+    border: 2px solid rgba(180,140,80,.12);
+    border-radius: 60px 60px 3px 3px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.3), 0 1px 2px rgba(255,200,80,.05);
+}
+.gd-door-l::after, .gd-door-r::after {
+    content: ""; position: absolute;
+    top: 54%; left: 12%; right: 12%; height: 32%;
+    border: 2px solid rgba(180,140,80,.1);
+    border-radius: 3px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.3);
+}
+
+/* Door handles — ornate gold */
+.gd-handle {
+    position: absolute; top: 48%; width: 18px; height: 32px; z-index: 6;
+    background: linear-gradient(180deg, #C8A040, #8A6A28, #C8A040);
+    border-radius: 3px 3px 8px 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.6), 0 0 12px rgba(200,160,64,.2);
+    transition: transform .5s ease;
+}
+.gd-door-l .gd-handle { right: 14px; }
+.gd-door-r .gd-handle { left: 14px; }
+.scene-opened[data-opening="glowing-door"] .gd-handle { transform: rotateX(30deg); }
+
+/* Glow behind doors — builds up */
 .gd-glow {
     position: fixed;
-    top: 12%; bottom: 12%;
+    top: 8%; bottom: 10%;
     left: 50%; transform: translateX(-50%);
-    width: min(272px, 43vw);
-    z-index: 2;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,200,80,.25), rgba(255,160,40,.08) 50%, transparent 80%);
-    filter: blur(20px);
-    opacity: .6;
+    width: min(310px, 49vw);
+    z-index: 3;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,200,80,.3), rgba(255,160,40,.1) 45%, transparent 75%);
+    filter: blur(25px);
+    opacity: .5;
     animation: gdPulse 4s ease-in-out infinite;
 }
 @keyframes gdPulse {
-    0%,100% { opacity: .4; }
-    50% { opacity: .85; }
+    0%,100% { opacity: .35; }
+    50% { opacity: .75; }
 }
 
+/* Light rays — conic beams */
 .gd-ray {
     position: fixed;
-    top: 12%; bottom: 12%;
-    width: min(272px, 43vw);
+    top: 8%; bottom: 10%;
+    width: min(310px, 49vw);
     left: 50%; transform: translateX(-50%);
-    z-index: 2;
+    z-index: 3;
     background:
-        conic-gradient(from 170deg at 50% 50%,
-            transparent 0deg, rgba(255,200,80,.06) 10deg, transparent 20deg,
-            transparent 40deg, rgba(255,200,80,.04) 50deg, transparent 60deg,
-            transparent 120deg, rgba(255,200,80,.05) 130deg, transparent 140deg,
-            transparent 200deg, rgba(255,200,80,.06) 210deg, transparent 220deg,
-            transparent 320deg, rgba(255,200,80,.04) 330deg, transparent 340deg);
-    opacity: .5;
-    filter: blur(6px);
-    transition: opacity 1.5s ease .8s, filter 2s ease 1s;
+        conic-gradient(from 165deg at 50% 50%,
+            transparent 0deg, rgba(255,200,80,.07) 8deg, transparent 16deg,
+            transparent 35deg, rgba(255,200,80,.05) 43deg, transparent 51deg,
+            transparent 80deg, rgba(255,200,80,.04) 88deg, transparent 96deg,
+            transparent 120deg, rgba(255,200,80,.06) 128deg, transparent 136deg,
+            transparent 180deg, rgba(255,200,80,.05) 188deg, transparent 196deg,
+            transparent 240deg, rgba(255,200,80,.04) 248deg, transparent 256deg,
+            transparent 310deg, rgba(255,200,80,.06) 318deg, transparent 326deg);
+    opacity: .4;
+    filter: blur(8px);
+    transition: opacity 1.8s ease .8s, filter 2.5s ease 1s;
 }
 
+/* Floating dust/light particles */
+.gd-particles { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.gd-particle {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: rgba(255,200,80,.6);
+    box-shadow: 0 0 6px rgba(255,200,80,.4);
+    animation: gdFloat linear infinite;
+}
+.gd-particle:nth-child(1) { left: 15%; animation-duration: 7s; animation-delay: 0s; width: 2px; height: 2px; }
+.gd-particle:nth-child(2) { left: 28%; animation-duration: 9s; animation-delay: 1.5s; }
+.gd-particle:nth-child(3) { left: 42%; animation-duration: 6s; animation-delay: .8s; width: 4px; height: 4px; }
+.gd-particle:nth-child(4) { left: 58%; animation-duration: 8s; animation-delay: 2.2s; }
+.gd-particle:nth-child(5) { left: 72%; animation-duration: 7.5s; animation-delay: .5s; width: 2px; height: 2px; }
+.gd-particle:nth-child(6) { left: 85%; animation-duration: 10s; animation-delay: 3s; }
+.gd-particle:nth-child(7) { left: 35%; animation-duration: 8.5s; animation-delay: 1.8s; width: 2px; height: 2px; }
+.gd-particle:nth-child(8) { left: 65%; animation-duration: 6.5s; animation-delay: 2.8s; }
+@keyframes gdFloat {
+    0% { bottom: -5%; opacity: 0; }
+    10% { opacity: .8; }
+    90% { opacity: .6; }
+    100% { bottom: 105%; opacity: 0; }
+}
+.scene-opened[data-opening="glowing-door"] .gd-particles { opacity: 0; transition: opacity 1.5s; }
+
+/* Floor glow — spills out when doors open */
 .gd-floor-glow {
     position: fixed;
-    bottom: 0; left: 30%; right: 30%;
-    height: 25vh;
-    z-index: 1;
-    background: radial-gradient(ellipse at 50% 0%, rgba(255,200,80,.12), transparent 70%);
+    bottom: 0; left: 20%; right: 20%;
+    height: 35vh; z-index: 2;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,200,80,.15), transparent 70%);
     opacity: 0;
-    transition: opacity 2s ease 1s;
+    transition: opacity 2.5s ease 1s;
 }
 
+/* Light burst on open */
+.gd-burst {
+    position: fixed; inset: 0; z-index: 6;
+    background: radial-gradient(ellipse at 50% 45%, rgba(255,220,120,.4), rgba(255,180,60,.1) 40%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+}
+.scene-opened[data-opening="glowing-door"] .gd-burst {
+    animation: gdBurst 2.5s ease-out .4s forwards;
+}
+@keyframes gdBurst {
+    0% { opacity: 0; filter: blur(30px); }
+    15% { opacity: 1; filter: blur(5px); }
+    100% { opacity: 0; filter: blur(60px); }
+}
+
+/* --- OPENED STATE --- */
 .scene-opened[data-opening="glowing-door"] .gd-door-l {
-    transform: translateX(-108%) rotateY(35deg) scaleX(.85);
-    filter: brightness(.3) blur(3px);
+    transform: translateX(-115%) rotateY(40deg) scaleX(.8);
+    filter: brightness(.2) blur(4px);
     opacity: 0;
 }
 .scene-opened[data-opening="glowing-door"] .gd-door-r {
-    transform: translateX(108%) rotateY(-35deg) scaleX(.85);
-    filter: brightness(.3) blur(3px);
+    transform: translateX(115%) rotateY(-40deg) scaleX(.8);
+    filter: brightness(.2) blur(4px);
     opacity: 0;
 }
 .scene-opened[data-opening="glowing-door"] .gd-glow {
     opacity: 1;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,210,100,.35), rgba(255,180,60,.12) 45%, transparent 75%);
-    filter: blur(8px);
-    transition: all 2s ease .6s;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,220,120,.45), rgba(255,180,60,.15) 40%, transparent 70%);
+    filter: blur(10px);
+    transition: all 2.2s ease .6s;
 }
-.scene-opened[data-opening="glowing-door"] .gd-ray { opacity: 1; filter: blur(3px); transition: all 2.5s ease .8s; }
+.scene-opened[data-opening="glowing-door"] .gd-ray {
+    opacity: 1; filter: blur(3px);
+    transition: all 2.8s ease .8s;
+}
 .scene-opened[data-opening="glowing-door"] .gd-floor-glow { opacity: 1; }
 
+/* Scene card */
 [data-opening="glowing-door"] .sig-scene { z-index: 2; }
 [data-opening="glowing-door"] .sig-card {
     background: linear-gradient(165deg, #1E150C, #120E08);
     border-color: rgba(255,200,80,.4);
-    box-shadow: 0 0 100px rgba(255,180,60,.15), 0 30px 80px rgba(0,0,0,.6);
+    box-shadow: 0 0 120px rgba(255,180,60,.15), 0 30px 80px rgba(0,0,0,.6);
 }
 [data-opening="glowing-door"] .sig-card h1 { color: #FFF0D0; }
 [data-opening="glowing-door"] .open-button { border-color: rgba(255,200,80,.5); color: #FFD070; }
@@ -1937,83 +2070,212 @@ a { text-decoration: none; color: inherit; }
 .scene-opened[data-opening="ribbon"] .rb-half-r { transform: translateX(106%); filter: brightness(.5) blur(2px); }
 
 /* =====================================================
-   TYPE: WOODEN DOOR (wood-door)
+   TYPE: WOODEN DOOR (wood-door) — CINEMATIC
 ===================================================== */
 
 [data-opening="wood-door"] .envelope-scene { display: none; }
 [data-opening="wood-door"] .opening {
     background:
-        radial-gradient(circle at 50% 42%, rgba(255,236,200,.2), transparent 55%),
-        linear-gradient(170deg, #2B1D13, #191009);
+        radial-gradient(circle at 50% 40%, rgba(255,236,200,.15), transparent 50%),
+        linear-gradient(170deg, #1A120A, #0E0A05);
     overflow: hidden;
-    perspective: 1100px;
+    perspective: 1200px;
 }
 
-.wd-frame {
-    position: relative; z-index: 3;
-    width: min(300px, 68vw); height: min(430px, 64vh);
-    margin-bottom: -50px;
-    padding: 12px;
-    border-radius: 150px 150px 8px 8px;
-    background: linear-gradient(160deg, #4E3620, #382512 70%);
-    box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,220,170,.18);
-    perspective: 900px;
-}
-
-.wd-door {
-    position: relative; width: 100%; height: 100%;
-    border-radius: 140px 140px 4px 4px;
+/* Stone wall texture */
+.wd-wall {
+    position: fixed; inset: 0; z-index: 1;
     background:
-        repeating-linear-gradient(90deg,
-            rgba(0,0,0,.28) 0 3px,
-            transparent 3px 15px),
-        linear-gradient(180deg, #7A5230, #5E3D21 55%, #4A2E17);
-    transform-origin: left center;
-    transition: transform 1.25s cubic-bezier(.65,0,.3,1) .35s;
-    box-shadow: inset 0 0 40px rgba(0,0,0,.45);
+        repeating-linear-gradient(0deg, transparent 0 48px, rgba(0,0,0,.08) 48px 50px),
+        repeating-linear-gradient(90deg, transparent 0 78px, rgba(0,0,0,.06) 78px 80px),
+        linear-gradient(180deg, #1E150D, #14100A);
 }
-
-.wd-planks {
-    position: absolute; inset: 8px; border-radius: 130px 130px 2px 2px;
+.wd-wall::before {
+    content: ""; position: absolute; inset: 0;
     background:
-        repeating-linear-gradient(0deg,
-            rgba(255,220,160,.06) 0 2px,
-            transparent 2px 34px),
-        linear-gradient(90deg, transparent 96%, rgba(0,0,0,.3));
-    pointer-events: none;
+        radial-gradient(ellipse at 30% 20%, rgba(80,60,30,.08), transparent 40%),
+        radial-gradient(ellipse at 70% 70%, rgba(60,40,20,.06), transparent 35%);
 }
 
-.wd-hinge {
-    position: absolute; right: 12%; width: 26px; height: 7px;
-    background: linear-gradient(#3a3a3a, #191919);
-    border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,.6);
-}
-.wd-hinge.t { top: 22%; }
-.wd-hinge.b { bottom: 22%; }
-
-.wd-handle {
-    position: absolute; right: 11%; top: 50%;
-    transform: translateY(-50%);
-    width: 22px; height: 22px; border-radius: 50%;
-    background: radial-gradient(circle at 34% 30%, #E8C87A, #8a6a30 60%, #4d3812);
-    box-shadow: 0 2px 6px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 10px rgba(232,200,122,.3);
-    transition: transform .4s ease, box-shadow .4s ease;
-}
-.scene-opened[data-opening="wood-door"] .wd-handle { transform: translateY(-50%) rotate(-60deg); box-shadow: 0 2px 8px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 16px rgba(232,200,122,.5); }
-
-.scene-opened[data-opening="wood-door"] .wd-door { transform: rotateY(-105deg) scale(.96); filter: brightness(.5); }
-.scene-opened[data-opening="wood-door"] .wd-frame { animation: wdAway .8s ease 1.05s forwards; }
-@keyframes wdAway { to { opacity: 0; transform: translateY(-60px) scale(.92); } }
-.wd-light {
-    position: absolute;
-    inset: 0;
+/* Stone archway frame — layered depth */
+.wd-arch {
+    position: fixed;
+    top: 6%; bottom: 8%;
+    left: 50%; transform: translateX(-50%);
+    width: min(340px, 72vw);
     z-index: 2;
-    background: radial-gradient(ellipse at 50% 45%, rgba(255,236,200,.18), transparent 50%);
+}
+/* Outer stone ring */
+.wd-arch-outer {
+    position: absolute; inset: 0;
+    border: 10px solid #3A2A18;
+    border-radius: 170px 170px 6px 6px;
+    background: linear-gradient(160deg, #4A3622, #2E1E12);
+    box-shadow:
+        0 0 50px rgba(0,0,0,.7),
+        inset 0 0 30px rgba(0,0,0,.4),
+        inset 0 2px 0 rgba(255,220,170,.1);
+}
+/* Inner stone ring */
+.wd-arch::after {
+    content: ""; position: absolute;
+    top: 12px; bottom: 12px; left: 12px; right: 12px;
+    border: 4px solid #2A1E10;
+    border-radius: 154px 154px 2px 2px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,.5);
+}
+
+/* Light seeping through cracks */
+.wd-crack {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%; transform: translateX(-50%);
+    width: 4px; z-index: 5;
+    background: linear-gradient(180deg,
+        transparent 5%,
+        rgba(255,236,200,.12) 15%,
+        rgba(255,230,180,.25) 35%,
+        rgba(255,220,160,.3) 50%,
+        rgba(255,230,180,.25) 65%,
+        rgba(255,236,200,.12) 85%,
+        transparent 95%);
+    filter: blur(2px);
+    animation: wdCrackPulse 3.5s ease-in-out 1s infinite;
+}
+@keyframes wdCrackPulse {
+    0%,100% { opacity: .15; filter: blur(3px); }
+    50% { opacity: .7; filter: blur(1px); }
+}
+.scene-opened[data-opening="wood-door"] .wd-crack { opacity: 0; transition: opacity .4s; }
+
+/* The door itself */
+.wd-door {
+    position: absolute;
+    top: 14px; bottom: 14px; left: 14px; right: 14px;
+    border-radius: 154px 154px 0 0;
+    z-index: 3;
+    transform-origin: left center;
+    transition: transform 1.4s cubic-bezier(.65,0,.3,1) .35s;
+    overflow: hidden;
+    /* Multi-layer wood grain */
+    background:
+        /* grain lines */
+        repeating-linear-gradient(90deg,
+            rgba(0,0,0,.22) 0 2px,
+            transparent 2px 12px,
+            rgba(255,220,160,.03) 14px 16px,
+            transparent 16px 28px),
+        /* knot hints */
+        radial-gradient(ellipse at 30% 25%, rgba(80,50,20,.2), transparent 8%),
+        radial-gradient(ellipse at 65% 60%, rgba(70,40,18,.15), transparent 6%),
+        radial-gradient(ellipse at 45% 80%, rgba(60,35,15,.12), transparent 7%),
+        /* base gradient */
+        linear-gradient(180deg, #7A5230, #6A4425 30%, #5E3D21 55%, #4E3018 80%, #4A2E17);
+    box-shadow:
+        inset 0 0 50px rgba(0,0,0,.45),
+        inset -4px 0 20px rgba(0,0,0,.3),
+        4px 0 20px rgba(0,0,0,.3);
+}
+
+/* Raised panel insets */
+.wd-panel {
+    position: absolute; z-index: 1;
+    border: 2px solid rgba(180,140,90,.1);
+    border-radius: 50px 50px 3px 3px;
+    box-shadow:
+        inset 0 2px 6px rgba(0,0,0,.3),
+        inset 0 -1px 3px rgba(255,220,160,.05),
+        0 1px 2px rgba(0,0,0,.2);
+}
+.wd-panel-top { top: 8%; left: 10%; right: 10%; height: 34%; }
+.wd-panel-bot { top: 50%; left: 10%; right: 10%; height: 36%; border-radius: 3px; }
+
+/* Iron hinges */
+.wd-hinge {
+    position: absolute; right: 10%; z-index: 2;
+    width: 30px; height: 8px;
+    background: linear-gradient(180deg, #4A4A4A, #222, #3A3A3A);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.wd-hinge::after {
+    content: ""; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 6px; height: 6px; border-radius: 50%;
+    background: radial-gradient(circle, #555, #222);
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+.wd-hinge.t { top: 20%; }
+.wd-hinge.b { bottom: 20%; }
+
+/* Door handle — ornate brass knocker */
+.wd-handle {
+    position: absolute; right: 10%; top: 46%;
+    z-index: 4;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #E8C87A, #9A7A38 50%, #5A4018);
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.6),
+        inset 0 -2px 4px rgba(0,0,0,.4),
+        0 0 14px rgba(232,200,122,.25);
+    transition: transform .5s ease, box-shadow .5s ease;
+}
+/* Knocker ring */
+.wd-handle::after {
+    content: ""; position: absolute;
+    bottom: -10px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 14px;
+    border: 3px solid #B8943C;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,.4);
+}
+.scene-opened[data-opening="wood-door"] .wd-handle {
+    transform: rotate(-55deg);
+    box-shadow: 0 3px 10px rgba(0,0,0,.6), inset 0 -2px 4px rgba(0,0,0,.4), 0 0 20px rgba(232,200,122,.4);
+}
+
+/* Dust particles on door open */
+.wd-dust { position: fixed; inset: 0; z-index: 6; pointer-events: none; overflow: hidden; }
+.wd-dust-i {
+    position: absolute; border-radius: 50%;
+    background: rgba(180,150,100,.4);
     opacity: 0;
-    transition: opacity 1.2s ease .8s;
+}
+.scene-opened[data-opening="wood-door"] .wd-dust-i {
+    animation: wdDust 2s ease-out forwards;
+}
+.wd-dust-i:nth-child(1) { width: 3px; height: 3px; top: 30%; left: 35%; animation-delay: .3s !important; }
+.wd-dust-i:nth-child(2) { width: 2px; height: 2px; top: 45%; left: 42%; animation-delay: .5s !important; }
+.wd-dust-i:nth-child(3) { width: 4px; height: 4px; top: 55%; left: 38%; animation-delay: .2s !important; }
+.wd-dust-i:nth-child(4) { width: 2px; height: 2px; top: 40%; left: 50%; animation-delay: .6s !important; }
+.wd-dust-i:nth-child(5) { width: 3px; height: 3px; top: 60%; left: 45%; animation-delay: .4s !important; }
+.wd-dust-i:nth-child(6) { width: 2px; height: 2px; top: 35%; left: 55%; animation-delay: .7s !important; }
+@keyframes wdDust {
+    0% { opacity: 0; transform: translate(0,0) scale(1); }
+    20% { opacity: .7; }
+    100% { opacity: 0; transform: translate(-40px, 30px) scale(0); }
+}
+
+/* Light behind door */
+.wd-light {
+    position: absolute; inset: 0; z-index: 2;
+    background: radial-gradient(ellipse at 50% 40%, rgba(255,236,200,.2), transparent 55%);
+    opacity: 0;
+    transition: opacity 1.4s ease .8s;
     pointer-events: none;
 }
 .scene-opened[data-opening="wood-door"] .wd-light { opacity: 1; }
+
+/* --- OPENED STATE --- */
+.scene-opened[data-opening="wood-door"] .wd-door {
+    transform: rotateY(-110deg) scale(.95);
+    filter: brightness(.4);
+}
+.scene-opened[data-opening="wood-door"] .wd-arch {
+    animation: wdArchAway 1s ease 1.2s forwards;
+}
+@keyframes wdArchAway { to { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(.9); } }
 
 /* =====================================================
    TYPE: WAX SEAL (royal-seal)
@@ -4605,7 +4867,9 @@ footer p {
 
     /* New scenes responsive */
     [data-opening="magic-wand"] .mw-shaft { height: 100px; }
-    [data-opening="glowing-door"] .gd-door-l, [data-opening="glowing-door"] .gd-door-r { width: min(120px, 20vw); }
+    [data-opening="glowing-door"] .gd-door-l, [data-opening="glowing-door"] .gd-door-r { width: min(130px, 22vw); }
+    [data-opening="glowing-door"] .gd-frame { width: min(260px, 44vw); }
+    [data-opening="wood-door"] .wd-arch { width: min(280px, 64vw); }
     [data-opening="old-book"] .ob-book { width: min(320px, 80vw); height: min(220px, 50vw); }
     [data-opening="ancient-forest"] .af-path { left: 25%; right: 25%; }
 
@@ -4785,17 +5049,22 @@ footer p {
         <button class="open-button scene-open-btn" type="button"></button>
     </div>
 
-    <!-- Signature Scene · WOODEN DOOR -->
+    <!-- Signature Scene · WOODEN DOOR (cinematic) -->
     <div class="sig-scene" id="woodDoorScene" data-scene-for="wood-door">
-        <div class="wd-frame">
-            <div class="wd-light"></div>
+        <div class="wd-wall"></div>
+        <div class="wd-arch">
+            <div class="wd-arch-outer"></div>
+            <div class="wd-crack"></div>
             <div class="wd-door">
-                <i class="wd-planks"></i>
+                <i class="wd-panel wd-panel-top"></i>
+                <i class="wd-panel wd-panel-bot"></i>
                 <i class="wd-hinge t"></i>
                 <i class="wd-hinge b"></i>
                 <i class="wd-handle"></i>
             </div>
+            <div class="wd-light"></div>
         </div>
+        <div class="wd-dust"><i class="wd-dust-i"></i><i class="wd-dust-i"></i><i class="wd-dust-i"></i><i class="wd-dust-i"></i><i class="wd-dust-i"></i><i class="wd-dust-i"></i></div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
@@ -4996,15 +5265,19 @@ footer p {
         <button class="open-button scene-open-btn" type="button"></button>
     </div>
 
-    <!-- Signature Scene 12 · GLOWING DOOR -->
+    <!-- Signature Scene 12 · GLOWING DOOR (cinematic) -->
     <div class="sig-scene" id="glowingDoorScene" data-scene-for="glowing-door">
         <div class="gd-corridor"></div>
+        <div class="gd-floor"></div>
         <div class="gd-glow"></div>
         <div class="gd-ray"></div>
-        <div class="gd-door-l"></div>
-        <div class="gd-door-r"></div>
+        <div class="gd-crack"></div>
+        <div class="gd-door-l"><i class="gd-handle"></i></div>
+        <div class="gd-door-r"><i class="gd-handle"></i></div>
         <div class="gd-frame"></div>
+        <div class="gd-particles"><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i><i class="gd-particle"></i></div>
         <div class="gd-floor-glow"></div>
+        <div class="gd-burst"></div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
