@@ -730,6 +730,77 @@ var urlParams = new URLSearchParams(window.location.search);
 var urlCategory = urlParams.get("category") || "all";
 var currentStyle = "all";
 
+/* ===== OPENING PREVIEW HTML ===== */
+function _opvHTML(type) {
+    var s, k;
+    switch (type) {
+        case "curtain":
+            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i><i class="c-t"></i><i class="c-rail"></i><i class="c-val"></i></div>';
+        case "stairs":
+            s = '<div class="opv opv-stairs">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "door":
+            return '<div class="opv opv-door"><i class="d-l"></i><i class="d-r"></i></div>';
+        case "wax-seal":
+            return '<div class="opv opv-wax"><i>\u2665</i></div>';
+        case "starry-night":
+            s = '<div class="opv opv-stars">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "celebration-pop": {
+            var dirs = [[-70,-90],[70,-90],[-100,-20],[100,-25],[-60,60],[65,70],[-15,-110],[20,95]];
+            var cols = ["#e74c3c","#f1c40f","#9b59b6","#2ecc71","#3498db","#e67e22","#fd79a8","#00cec9"];
+            s = '<div class="opv opv-pop">';
+            for (k = 0; k < 8; k++) s += '<i style="--tx:' + dirs[k][0] + 'px;--ty:' + dirs[k][1] + 'px;background:' + cols[k] + '"></i>';
+            return s + '</div>';
+        }
+        case "floral-paper":
+            s = '<div class="opv opv-petals">';
+            for (k = 0; k < 6; k++) s += '<i></i>';
+            return s + '</div>';
+        case "luxury-romance":
+            return '<div class="opv opv-lux"><i></i></div>';
+        case "envelope-seal":
+            return '<div class="opv opv-env"><i class="e-ltr"></i><i class="e-pkt"></i><i class="e-flp"></i><i class="e-wax"></i></div>';
+        case "ribbon":
+            return '<div class="opv opv-rbn"><i class="r-v"></i><i class="r-h"></i><i class="r-bow"></i></div>';
+        case "wood-door":
+            return '<div class="opv opv-wdoor"><div class="w-arch"><div class="w-door"><i class="w-panel w-panel-top"></i><i class="w-panel w-panel-bot"></i><i class="w-knob"></i></div></div><div class="w-crack"></div></div>';
+        case "typewriter":
+            return '<div class="opv opv-type"><i></i></div>';
+        case "candlelight":
+            return '<div class="opv opv-candle"><i></i></div>';
+        case "winter-drift":
+            s = '<div class="opv opv-snow">';
+            for (k = 0; k < 7; k++) s += '<i></i>';
+            return s + '</div>';
+        case "royal-scroll":
+            return '<div class="opv opv-scroll"><i></i></div>';
+        case "magic-wand":
+            return '<div class="opv opv-magic"><i class="m-wand"></i><i class="m-spark s1"></i><i class="m-spark s2"></i><i class="m-spark s3"></i></div>';
+        case "glowing-door":
+            return '<div class="opv opv-gdoor"><div class="gd-glow"></div><div class="gd-crack"></div><div class="gd-l"><div class="gd-panel"></div><div class="gd-hl"></div></div><div class="gd-r"><div class="gd-panel"></div><div class="gd-hr"></div></div><div class="gd-particles"><i class="gd-sp"></i><i class="gd-sp"></i><i class="gd-sp"></i></div></div>';
+        case "ancient-forest":
+            s = '<div class="opv opv-forest">';
+            for (k = 0; k < 5; k++) s += '<i></i>';
+            return s + '</div>';
+        case "old-book":
+            return '<div class="opv opv-book"><i class="ob-c"></i><i class="ob-p"></i></div>';
+        default:
+            return "";
+    }
+}
+function _resolveOpeningType(tpl) {
+    if (tpl && tpl.layoutConfig && tpl.layoutConfig.openingType) return tpl.layoutConfig.openingType;
+    if (tpl && tpl.openingType) return tpl.openingType;
+    try {
+        var saved = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}");
+        if (saved.openingType) return saved.openingType;
+    } catch (e) {}
+    return "envelope-seal";
+}
+
 /* Video invitations are paused for now */
 if (urlCategory === "video") {
     window.location.replace("index.html");
@@ -832,6 +903,8 @@ function renderTemplates(catFilter, styleFilter) {
         var animClass = "";
         if (resolveAnim(tpl) === "floral") animClass = '<span class="floral-dot"></span>';
 
+        var opvType = _resolveOpeningType(tpl);
+        var opvHtml = _opvHTML(opvType);
         card.innerHTML =
             '<div class="design-thumb-img-wrap">' +
                 '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="var f=this.parentNode.querySelector(\'.design-thumb-fallback\');if(f){f.style.display=\'flex\';this.style.display=\'none\';}">' +
@@ -840,6 +913,7 @@ function renderTemplates(catFilter, styleFilter) {
                     '<span class="fb-cat">' + catName + '</span>' +
                 '</div>' +
                 animClass +
+                opvHtml +
             '</div>' +
             '<div class="design-thumb-overlay"></div>' +
             '<div class="design-thumb-info">' +

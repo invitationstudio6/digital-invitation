@@ -113,6 +113,79 @@ function lunaFormEngine(config) {
         });
     }
 
+    /* ===== OPENING PREVIEW HTML ===== */
+    function _opvHTML(type) {
+        var s, k;
+        switch (type) {
+            case "curtain":
+                return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i><i class="c-t"></i><i class="c-rail"></i><i class="c-val"></i></div>';
+            case "stairs":
+                s = '<div class="opv opv-stairs">';
+                for (k = 0; k < 6; k++) s += '<i></i>';
+                return s + '</div>';
+            case "door":
+                return '<div class="opv opv-door"><i class="d-l"></i><i class="d-r"></i></div>';
+            case "wax-seal":
+                return '<div class="opv opv-wax"><i>\u2665</i></div>';
+            case "starry-night":
+                s = '<div class="opv opv-stars">';
+                for (k = 0; k < 6; k++) s += '<i></i>';
+                return s + '</div>';
+            case "celebration-pop": {
+                var dirs = [[-70,-90],[70,-90],[-100,-20],[100,-25],[-60,60],[65,70],[-15,-110],[20,95]];
+                var cols = ["#e74c3c","#f1c40f","#9b59b6","#2ecc71","#3498db","#e67e22","#fd79a8","#00cec9"];
+                s = '<div class="opv opv-pop">';
+                for (k = 0; k < 8; k++) s += '<i style="--tx:' + dirs[k][0] + 'px;--ty:' + dirs[k][1] + 'px;background:' + cols[k] + '"></i>';
+                return s + '</div>';
+            }
+            case "floral-paper":
+                s = '<div class="opv opv-petals">';
+                for (k = 0; k < 6; k++) s += '<i></i>';
+                return s + '</div>';
+            case "luxury-romance":
+                return '<div class="opv opv-lux"><i></i></div>';
+            case "envelope-seal":
+                return '<div class="opv opv-env"><i class="e-ltr"></i><i class="e-pkt"></i><i class="e-flp"></i><i class="e-wax"></i></div>';
+            case "ribbon":
+                return '<div class="opv opv-rbn"><i class="r-v"></i><i class="r-h"></i><i class="r-bow"></i></div>';
+            case "wood-door":
+                return '<div class="opv opv-wdoor"><div class="w-arch"><div class="w-door"><i class="w-panel w-panel-top"></i><i class="w-panel w-panel-bot"></i><i class="w-knob"></i></div></div><div class="w-crack"></div></div>';
+            case "typewriter":
+                return '<div class="opv opv-type"><i></i></div>';
+            case "candlelight":
+                return '<div class="opv opv-candle"><i></i></div>';
+            case "winter-drift": {
+                s = '<div class="opv opv-snow">';
+                for (k = 0; k < 7; k++) s += '<i></i>';
+                return s + '</div>';
+            }
+            case "royal-scroll":
+                return '<div class="opv opv-scroll"><i></i></div>';
+            case "magic-wand":
+                return '<div class="opv opv-magic"><i class="m-wand"></i><i class="m-spark s1"></i><i class="m-spark s2"></i><i class="m-spark s3"></i></div>';
+            case "glowing-door":
+                return '<div class="opv opv-gdoor"><div class="gd-glow"></div><div class="gd-crack"></div><div class="gd-l"><div class="gd-panel"></div><div class="gd-hl"></div></div><div class="gd-r"><div class="gd-panel"></div><div class="gd-hr"></div></div><div class="gd-particles"><i class="gd-sp"></i><i class="gd-sp"></i><i class="gd-sp"></i></div></div>';
+            case "ancient-forest":
+                s = '<div class="opv opv-forest">';
+                for (k = 0; k < 5; k++) s += '<i></i>';
+                return s + '</div>';
+            case "old-book":
+                return '<div class="opv opv-book"><i class="ob-c"></i><i class="ob-p"></i></div>';
+            default:
+                return "";
+        }
+    }
+
+    function _resolveOpeningType(tpl) {
+        if (tpl && tpl.layoutConfig && tpl.layoutConfig.openingType) return tpl.layoutConfig.openingType;
+        if (tpl && tpl.openingType) return tpl.openingType;
+        try {
+            var saved = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}");
+            if (saved.openingType) return saved.openingType;
+        } catch (e) {}
+        return "envelope-seal";
+    }
+
     function populateTemplateSelect() {
         var grid = document.getElementById("templateGrid");
         var hidden = document.getElementById("selectedTemplate");
@@ -130,8 +203,11 @@ function lunaFormEngine(config) {
             card.className = "tpl-card" + (t.id === currentDesign ? " selected" : "");
             card.setAttribute("data-tpl", t.id);
             var minPkg = t.minPackage ? t.minPackage.charAt(0).toUpperCase() + t.minPackage.slice(1) : "";
+            var opvType = _resolveOpeningType(t);
+            var opvHtml = _opvHTML(opvType);
             card.innerHTML =
                 '<img class="tpl-card-img" src="' + t.thumbnail + '" alt="' + t.name + '" loading="lazy">' +
+                opvHtml +
                 '<div class="tpl-card-info">' +
                     '<h4>' + t.name + '</h4>' +
                     '<p>' + t.style + '</p>' +
@@ -378,6 +454,7 @@ function lunaFormEngine(config) {
                     package: packageName,
                     category: category,
                     design: design,
+                    approved: false,
                     date: v.date,
                     dateShort: lunaDateShort(v.date),
                     time: v.time,
@@ -433,10 +510,50 @@ function lunaFormEngine(config) {
                 var viewerFile = (tplData && tplData.experienceType === "interactive") ? "../data/interactive.html" : "../data/invitation.html";
                 var url = new URL(viewerFile, window.location.href);
                 url.searchParams.set("id", invitationId);
+
+                /* Register in admin orders list */
+                if (typeof lunaSaveOrder === "function") {
+                    lunaSaveOrder({
+                        id: "ord_" + Date.now(),
+                        ts: new Date().toISOString(),
+                        productType: "invitation",
+                        productTypeName: "D\u00e9v\u00e9tnam\u00e9",
+                        lang: typeof LUNA_LANG !== "undefined" ? LUNA_LANG : "az",
+                        status: "new",
+                        contact: v.contact || "",
+                        data: {
+                            category: data.category,
+                            package: data.package,
+                            design: data.design,
+                            names: [data.bride, data.groom, data.celebrant, data.graduate, data.eventName].filter(Boolean).join(" & ") || "-",
+                            date: data.date,
+                            time: data.time,
+                            venue: data.venue,
+                            location: data.location,
+                            contact: v.contact || ""
+                        },
+                        invitationId: invitationId
+                    });
+                }
+
+                /* APPROVAL FLOW: link is prepared but NOT revealed. Admin activates it after payment confirmation. */
                 var link = document.getElementById("generatedLink");
                 link.href = url.href;
                 link.textContent = url.href;
                 document.getElementById("openLink").href = url.href;
+                link.style.display = "none";
+                var actionsEl = document.querySelector("#resultCard .result-actions");
+                if (actionsEl) actionsEl.style.display = "none";
+                var pendMsg = document.getElementById("pendingApprovalMsg");
+                if (pendMsg) {
+                    pendMsg.style.display = "block";
+                } else {
+                    var rc = document.getElementById("resultCard");
+                    rc.insertAdjacentHTML("beforeend",
+                        '<p id="pendingApprovalMsg" style="margin-top:16px;padding:14px 18px;background:rgba(196,168,130,.1);border:1px solid rgba(196,168,130,.3);border-radius:8px;font-size:12px;line-height:1.9;color:#7a5c49;">' +
+                        '\u23F3 <b>Sifari\u015finiz al\u0131nd\u0131!</b> \u00d6d\u0259ni\u015f t\u0259sdiql\u0259ndikd\u0259n sonra d\u00e9v\u0259tnam\u00e9 linki aktivl\u015f\u0259c\u0259k v\u00e9 WhatsApp vasit\u0259sil\u0259 sizinl\u0259 payla\u015f\u0131lacaq.</p>'
+                    );
+                }
                 document.getElementById("resultCard").style.display = "block";
                 document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
             }
