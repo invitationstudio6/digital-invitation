@@ -116,7 +116,7 @@ function lunaCountdownTarget(invitation) {
 function lunaDisplayNames(invitation) {
     if (!invitation) return "Luna";
 
-    var cat = invitation.category || "";
+    var cat = invitation.category || "wedding";
 
     /* Wedding / Engagement / Anniversary */
     if (cat === "wedding" || cat === "engagement" || cat === "anniversary") {

@@ -1660,69 +1660,260 @@ a { text-decoration: none; color: inherit; }
 
 
 /* =====================================================
-   TYPE: GRAND CURTAIN (grand-curtain)
+   TYPE: GRAND CURTAIN — Premium Theater
 ===================================================== */
 
 [data-opening="curtain"] .envelope-scene { display: none; }
 [data-opening="curtain"] .opening {
-    background: #0B0605;
+    background: radial-gradient(ellipse at 50% 45%, #1A0C08, #0B0605);
     overflow: hidden;
-    perspective: 900px;
+    perspective: 1000px;
 }
 
-.curtain-stage { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-
-/* Light beam behind curtains */
-[data-opening="curtain"] .opening::after {
-    content: "";
-    position: absolute;
-    top: -20%;
-    left: 30%;
-    right: 30%;
-    bottom: -20%;
-    background: radial-gradient(ellipse at 50% 40%, rgba(233,206,126,.25), transparent 65%);
-    z-index: 1;
-    pointer-events: none;
-    animation: curtainGlow 4s ease-in-out infinite;
-}
-@keyframes curtainGlow {
-    0%,100% { opacity: .4; }
-    50% { opacity: .8; }
-}
-
+/* ── Velvet curtains ── */
 .curtain-left,
 .curtain-right {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 52%;
+    top: -2px;
+    bottom: -2px;
+    width: 54%;
     z-index: 4;
     background:
+        linear-gradient(180deg, rgba(0,0,0,.4) 0%, transparent 8%, transparent 92%, rgba(0,0,0,.55) 100%),
         repeating-linear-gradient(90deg,
-            rgba(0,0,0,.32) 0 10px,
-            transparent 10px 26px),
-        repeating-linear-gradient(90deg,
-            rgba(255,255,255,.04) 0 4px,
-            transparent 4px 18px),
-        linear-gradient(90deg, #571512, #7A1F1B 30%, #8E2723 50%, #7A1F1B 70%, #571512);
-    box-shadow: inset 0 -40px 90px rgba(0,0,0,.55), inset 0 0 120px rgba(0,0,0,.2), inset 0 8px 40px rgba(0,0,0,.3);
-    transition: transform 1.8s cubic-bezier(.22,.9,.36,1), filter .8s ease, box-shadow .8s;
+            rgba(0,0,0,.6) 0 5px, rgba(0,0,0,0) 14px 28px,
+            rgba(255,255,255,.07) 38px 44px, rgba(0,0,0,0) 54px 70px),
+        linear-gradient(90deg, #2E0806, #5E1612 15%, #7E1F1A 32%, #94261F 44%, #A8302A 50%, #94261F 56%, #7E1F1A 68%, #5E1612 85%, #2E0806);
+    box-shadow:
+        inset 0 -60px 100px rgba(0,0,0,.6),
+        inset 0 0 140px rgba(0,0,0,.25),
+        inset 0 10px 50px rgba(0,0,0,.35),
+        inset -8px 0 40px rgba(0,0,0,.3);
+    transition: transform 2.2s cubic-bezier(.22,.9,.36,1), filter 1s ease, box-shadow 1s, opacity 1.8s ease 1s;
 }
-}
-.curtain-left  { left: 0;  transform-origin: left; }
-.curtain-right { right: 0; transform-origin: right; }
+.curtain-left  { left: 0;  transform-origin: left center; }
+.curtain-right { right: 0; transform-origin: right center; }
 
+.scene-opened[data-opening="curtain"] .curtain-left  {
+    transform: translateX(-108%) rotateY(35deg) scaleX(.82);
+    filter: brightness(.25) blur(4px);
+    box-shadow: inset -60px 0 160px rgba(0,0,0,.8);
+    opacity: 0;
+}
+.scene-opened[data-opening="curtain"] .curtain-right {
+    transform: translateX(108%) rotateY(-35deg) scaleX(.82);
+    filter: brightness(.25) blur(4px);
+    box-shadow: inset 60px 0 160px rgba(0,0,0,.8);
+    opacity: 0;
+}
+
+/* ── Gold rail with finials ── */
 .curtain-rail {
     position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 16px;
+    top: 0; left: -2%; right: -2%;
+    height: 20px;
     z-index: 5;
-    background: linear-gradient(#E9CE7E, #A98B3E);
-    box-shadow: 0 4px 18px rgba(0,0,0,.5);
+    background: linear-gradient(180deg, #F0D68A, #D4AF37 30%, #A98B3E 70%, #8A6E2F);
+    box-shadow: 0 6px 24px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.35);
+    border-radius: 0 0 3px 3px;
+}
+.curtain-rail::before,
+.curtain-rail::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #F5E0A0, #D4AF37 50%, #8A6E2F);
+    box-shadow: 0 3px 10px rgba(0,0,0,.5), inset 0 1px 2px rgba(255,255,255,.4);
+}
+.curtain-rail::before { left: -8px; }
+.curtain-rail::after  { right: -8px; }
+
+.scene-opened[data-opening="curtain"] .curtain-rail {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity .8s ease .5s, transform .8s ease .5s;
 }
 
-.scene-opened[data-opening="curtain"] .curtain-left  { transform: translateX(-106%) rotateY(28deg) scale(.88); filter: brightness(.35) blur(3px); box-shadow: inset -40px 0 120px rgba(0,0,0,.6); }
-.scene-opened[data-opening="curtain"] .curtain-right { transform: translateX(106%) rotateY(-28deg) scale(.88); filter: brightness(.35) blur(3px); box-shadow: inset 40px 0 120px rgba(0,0,0,.6); }
+/* ── Gold valance with scalloped edge ── */
+.th-valance {
+    position: fixed;
+    top: 0; left: -2%; right: -2%;
+    height: 120px;
+    z-index: 6;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.3) 0%, transparent 100%),
+        repeating-linear-gradient(90deg,
+            rgba(0,0,0,.5) 0 4px, rgba(0,0,0,0) 10px 20px,
+            rgba(255,255,255,.06) 28px 32px, rgba(0,0,0,0) 40px 50px),
+        linear-gradient(180deg, #6B1510, #8B1E18 50%, #7A1A15);
+    background-size: 100% 120px, 100% 120px, 100% 82px;
+    background-repeat: no-repeat;
+}
+/* Scalloped bottom edge */
+.th-valance::before {
+    content: "";
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 48px;
+    background:
+        radial-gradient(circle 25px at 50% 0, #D4AF37 23px, transparent 24px),
+        radial-gradient(circle 23px at 50% 0, #7A1A15 21px, transparent 22px);
+    background-size: 46px 48px;
+    background-position: 0 0;
+    background-repeat: repeat-x;
+}
+/* Fringe tassels */
+.th-valance::after {
+    content: "";
+    position: absolute;
+    bottom: -18px; left: 0; right: 0;
+    height: 18px;
+    background:
+        radial-gradient(circle 2px at 50% 0, #D4AF37 1.5px, transparent 2px),
+        linear-gradient(180deg, #C4A035, #A08530);
+    background-size: 14px 18px, 100% 6px;
+    background-position: 3px 0, 0 0;
+    background-repeat: repeat-x;
+    mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 10px);
+    -webkit-mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 10px);
+    opacity: .7;
+}
+
+.scene-opened[data-opening="curtain"] .th-valance {
+    transform: translateY(-120px);
+    opacity: 0;
+    transition: transform 1.4s cubic-bezier(.65,0,.35,1) .3s, opacity 1s ease .5s;
+}
+
+/* ── Spotlight cones ── */
+.th-spot {
+    position: fixed;
+    top: -12%;
+    width: 38vw;
+    height: 130vh;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,230,160,.3), rgba(255,230,160,.08) 45%, transparent 75%);
+    filter: blur(10px);
+    mix-blend-mode: screen;
+    opacity: .55;
+    animation: spotBreath 6s ease-in-out infinite alternate;
+}
+.th-spot.l {
+    left: 8%;
+    transform: rotate(22deg);
+    transform-origin: top center;
+}
+.th-spot.r {
+    right: 8%;
+    transform: rotate(-22deg);
+    transform-origin: top center;
+    animation-delay: -3s;
+}
+@keyframes spotBreath { 0% { opacity: .4; } 100% { opacity: .85; } }
+
+.scene-opened[data-opening="curtain"] .th-spot {
+    opacity: 1;
+    filter: blur(4px);
+    transition: opacity 1.5s ease .6s, filter 2s ease .8s;
+}
+.scene-opened[data-opening="curtain"] .th-spot.l { transform: rotate(18deg) translateX(-5vw); }
+.scene-opened[data-opening="curtain"] .th-spot.r { transform: rotate(-18deg) translateX(5vw); }
+
+/* ── Stage floor ── */
+.th-stage-floor {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 18vh;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,.6) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 100px),
+        linear-gradient(180deg, #180D08, #0E0704);
+    opacity: .7;
+    transition: opacity 2s ease 1s;
+}
+.th-stage-floor::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 30%; right: 30%; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(233,206,126,.12), transparent 70%);
+    opacity: 0;
+    transition: opacity 1.5s ease 1.2s;
+}
+.scene-opened[data-opening="curtain"] .th-stage-floor { opacity: 1; }
+.scene-opened[data-opening="curtain"] .th-stage-floor::after { opacity: 1; }
+
+/* ── Monogram overlay (visible on closed curtains) ── */
+.th-mono {
+    position: fixed;
+    inset: 0;
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+.th-mono .mono-eyebrow {
+    font-family: "DM Sans", sans-serif;
+    font-size: 8px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(212,175,55,.7);
+    margin-bottom: 16px;
+}
+.th-mono .mono-names {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(28px, 7vw, 52px);
+    font-weight: 300;
+    color: #F7EDDF;
+    text-shadow: 0 2px 30px rgba(212,175,55,.2);
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+.th-mono .mono-date {
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(240,228,216,.45);
+}
+.th-mono .mono-tap {
+    margin-top: 32px;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: monoPulse 2.5s ease-in-out infinite;
+}
+.th-mono .mono-tap::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 10px solid rgba(212,175,55,.7);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 3px;
+}
+@keyframes monoPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,.25); }
+    50% { box-shadow: 0 0 0 14px rgba(212,175,55,0); }
+}
+
+.scene-opened[data-opening="curtain"] .th-mono {
+    opacity: 0;
+    transition: opacity .6s ease;
+}
+
+/* ── Dust / gold sparkles ── */
 .curtain-dust {
     position: fixed;
     inset: 0;
@@ -1735,40 +1926,49 @@ a { text-decoration: none; color: inherit; }
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background: rgba(233,206,126,.5);
-    animation: dustFloat 3s ease-out forwards;
+    background: rgba(233,206,126,.6);
+    animation: dustFloat 3.5s ease-out forwards;
+    animation-play-state: paused;
 }
 @keyframes dustFloat {
     0% { opacity: 0; transform: translateY(0) scale(0); }
-    20% { opacity: 1; transform: translateY(-20px) scale(1); }
-    100% { opacity: 0; transform: translateY(-120px) translateX(var(--dx,30px)) scale(0); }
+    15% { opacity: 1; transform: translateY(-10px) scale(1); }
+    100% { opacity: 0; transform: translateY(-140px) translateX(var(--dx,30px)) scale(0); }
 }
-.scene-opened[data-opening="curtain"] .curtain-dust span { animation-play-state: running; }
-.scene-opened[data-opening="curtain"] .curtain-rail  { opacity: 0; transition: opacity .8s ease .6s; }
+.scene-opened[data-opening="curtain"] .curtain-dust span {
+    animation-play-state: running;
+}
 
+/* ── Card behind curtains ── */
 [data-opening="curtain"] .sig-scene { z-index: 2; }
 [data-opening="curtain"] .sig-card {
     background: linear-gradient(165deg, #1E110C, #140B08);
     border-color: rgba(212,175,55,.4);
-    box-shadow: 0 0 90px rgba(212,175,55,.14), 0 30px 80px rgba(0,0,0,.6);
+    box-shadow: 0 0 100px rgba(212,175,55,.14), 0 30px 80px rgba(0,0,0,.6);
 }
 [data-opening="curtain"] .sig-card h1 { color: #F7EDDF; }
 [data-opening="curtain"] .open-button { border-color: rgba(212,175,55,.5); color: #E9CE7E; }
-[data-opening="curtain"] .curtain-stage::after {
+
+/* ── Ambient back glow ── */
+[data-opening="curtain"] .opening::after {
     content: "";
     position: fixed;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160%;
-    height: 280px;
-    background: radial-gradient(ellipse at 50% 100%, rgba(233,206,126,.18), transparent 60%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 1.2s ease .8s;
+    top: 15%; left: 25%; right: 25%; bottom: 15%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(233,206,126,.1), transparent 65%);
     z-index: 1;
+    pointer-events: none;
+    animation: curtainGlow 5s ease-in-out infinite;
 }
-.scene-opened[data-opening="curtain"] .curtain-stage::after { opacity: 1; }
+@keyframes curtainGlow {
+    0%,100% { opacity: .3; }
+    50% { opacity: .7; }
+}
+.scene-opened[data-opening="curtain"] .opening::after {
+    opacity: 1;
+    top: 5%; left: 15%; right: 15%; bottom: 5%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(233,206,126,.22), transparent 60%);
+    transition: all 2s ease .8s;
+}
 
 
 /* =====================================================
@@ -3028,79 +3228,301 @@ a { text-decoration: none; color: inherit; }
 ===================================================== */
 
 .rsvp-section {
-    background: var(--bg-alt);
-    border-top: 1px solid var(--border);
-}
-
-.rsvp-button {
-    margin-top: 32px;
-    padding: 16px 36px;
-    border: 1px solid var(--fg);
-    background: transparent;
-    color: var(--fg);
-    font-family: "DM Sans", sans-serif;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    transition: .4s ease;
     position: relative;
+    /* White cards inside — fixed ink colors, independent of page theme */
+    --rsvp-ink: #2D1B12;
+    --rsvp-ink-soft: rgba(45,27,18,.55);
+    --rsvp-line: rgba(45,27,18,.16);
+    background:
+        radial-gradient(ellipse at 50% 0%, var(--accent-light), transparent 62%),
+        var(--bg-alt);
+    border-top: 1px solid var(--border);
     overflow: hidden;
 }
 
-.rsvp-button::before {
+.rsvp-button {
+    margin-top: 36px;
+    padding: 18px 44px;
+    border: none;
+    border-radius: 100px;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 32px -10px var(--accent-light), 0 0 0 1px rgba(255,255,255,.14) inset;
+    animation: rsvpGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes rsvpGlow {
+    0%,100% { box-shadow: 0 12px 32px -10px var(--accent-light), 0 0 0 1px rgba(255,255,255,.14) inset; }
+    50% { box-shadow: 0 16px 46px -10px var(--accent), 0 0 0 7px var(--accent-light), 0 0 0 1px rgba(255,255,255,.14) inset; }
+}
+
+.rsvp-button::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background: var(--fg);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform .4s cubic-bezier(.4,0,.2,1);
-    z-index: -1;
+    top: 0;
+    bottom: 0;
+    width: 42%;
+    left: -70%;
+    background: linear-gradient(105deg, transparent, rgba(255,255,255,.4), transparent);
+    transform: skewX(-20deg);
+    animation: rsvpShine 3.4s ease-in-out infinite;
+    pointer-events: none;
 }
 
-.rsvp-button:hover { color: var(--white); }
-.rsvp-button:hover::before { transform: scaleX(1); }
+@keyframes rsvpShine { 0%,55% { left: -70%; } 85%,100% { left: 140%; } }
+
+.rsvp-button:hover { transform: translateY(-2px) scale(1.02); }
 
 .rsvp-form {
-    margin-top: 24px;
+    margin: 28px auto 0;
     display: grid;
-    gap: 12px;
-    max-width: 340px;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 14px;
+    max-width: 460px;
+    padding: 28px 26px 26px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    box-shadow: 0 28px 64px -28px rgba(45,27,18,.22), 0 0 0 1px rgba(255,255,255,.4) inset;
+    text-align: left;
+    animation: rsvpCardIn .55s cubic-bezier(.19,1,.22,1) both;
 }
 
-.rsvp-form input,
-.rsvp-form select {
+@keyframes rsvpCardIn {
+    from { opacity: 0; transform: translateY(20px) scale(.98); }
+    to { opacity: 1; transform: none; }
+}
+
+/* --- Floating label fields --- */
+.rsvp-field { position: relative; }
+
+.rsvp-field input {
     width: 100%;
-    padding: 14px 18px;
-    border: 1px solid var(--border-strong);
-    background: var(--white);
+    padding: 19px 16px 8px;
+    border: 1.5px solid var(--rsvp-line);
+    background: rgba(255,255,255,.65);
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    color: var(--rsvp-ink);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.rsvp-field label {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%);
     font-family: "DM Sans", sans-serif;
     font-size: 13px;
-    color: var(--fg);
-    border-radius: 0;
-    transition: border-color .3s ease;
-    -webkit-appearance: none;
+    color: var(--rsvp-ink-soft);
+    pointer-events: none;
+    transition: all .22s cubic-bezier(.4,0,.2,1);
 }
 
-.rsvp-form input:focus,
-.rsvp-form select:focus {
-    outline: none;
-    border-color: var(--fg);
+.rsvp-field input:focus,
+.rsvp-field input:not(:placeholder-shown) {
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px var(--accent-light);
 }
+
+.rsvp-field input:focus + label,
+.rsvp-field input:not(:placeholder-shown) + label {
+    top: 10px;
+    transform: none;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+/* --- Segmented status selector --- */
+.rsvp-segmented {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px;
+    background: rgba(45,27,18,.05);
+    border: 1px solid rgba(45,27,18,.08);
+    border-radius: 14px;
+}
+
+.rsvp-seg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 6px 9px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--rsvp-ink-soft);
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.19,1,.22,1);
+    line-height: 1.3;
+}
+
+.rsvp-seg-ico {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    border: 1.5px solid rgba(45,27,18,.18);
+    transition: all .3s cubic-bezier(.19,1,.22,1);
+}
+
+.rsvp-seg:hover { color: var(--rsvp-ink); transform: translateY(-1px); }
+
+.rsvp-seg.active {
+    background: var(--white);
+    color: var(--rsvp-ink);
+    box-shadow: 0 8px 22px -8px rgba(45,27,18,.25);
+    transform: translateY(-1px);
+}
+
+.rsvp-seg.active .rsvp-seg-ico {
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 12px -3px var(--accent);
+}
+
+/* Native select kept for JS compatibility — visually hidden */
+.rsvp-native-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Guest stepper + message row --- */
+.rsvp-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.rsvp-stepper {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--rsvp-line);
+    border-radius: 12px;
+    background: rgba(255,255,255,.65);
+    overflow: hidden;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+.rsvp-stepper:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.rsvp-step-btn {
+    width: 40px;
+    height: 47px;
+    border: none;
+    background: transparent;
+    color: var(--rsvp-ink);
+    font-family: "DM Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+    display: grid;
+    place-items: center;
+    padding: 0;
+}
+
+.rsvp-step-btn:hover { background: var(--accent-light); color: var(--rsvp-ink); }
+.rsvp-step-btn:active { background: var(--accent); color: #fff; }
+
+#rsvpGuests {
+    width: 44px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--rsvp-ink);
+    -moz-appearance: textfield;
+    appearance: textfield;
+    padding: 0;
+}
+
+#rsvpGuests::-webkit-outer-spin-button,
+#rsvpGuests::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+#rsvpGuests:focus { outline: none; }
+
+.rsvp-submit { margin-top: 4px; width: 100%; }
 
 .rsvp-form[hidden],
 #rsvpThanks[hidden],
 .music-button[hidden] { display: none !important; }
 
 #rsvpThanks {
-    margin-top: 24px;
+    margin: 26px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    max-width: 460px;
+    padding: 16px 22px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 48px -24px rgba(45,27,18,.2);
     font-family: "Cormorant Garamond", serif;
-    font-size: 20px;
+    font-size: 18px;
     font-style: italic;
-    color: var(--fg-muted);
+    color: var(--rsvp-ink);
+    animation: rsvpCardIn .55s cubic-bezier(.19,1,.22,1) both;
+}
+
+#rsvpThanks::before {
+    content: "✓";
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 600;
+    animation: rsvpCheckPop .6s cubic-bezier(.19,1,.22,1) .18s both;
+}
+
+@keyframes rsvpCheckPop {
+    from { transform: scale(0) rotate(-40deg); }
+    to { transform: scale(1) rotate(0); }
 }
 
 .music-button {
@@ -3130,31 +3552,50 @@ a { text-decoration: none; color: inherit; }
 .rsvp-counts {
     display: flex;
     justify-content: center;
-    gap: 32px;
-    margin-top: 24px;
-    font-family: "DM Sans", sans-serif;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--fg-muted);
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
 }
 
 .rsvp-counts[hidden] { display: none !important; }
 
 .rsvp-counts span {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 9px;
+    padding: 10px 18px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rsvp-ink-soft);
+    box-shadow: 0 8px 20px -10px rgba(45,27,18,.15);
 }
+
+.rsvp-counts span::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.rsvp-counts span:first-child::before { background: #5B8C6F; box-shadow: 0 0 0 3px rgba(91,140,111,.18); }
+.rsvp-counts span:nth-child(2)::before { background: #D4915A; box-shadow: 0 0 0 3px rgba(212,145,90,.18); }
+.rsvp-counts span:last-child::before { background: #B76E79; box-shadow: 0 0 0 3px rgba(183,110,121,.18); }
 
 .rsvp-counts strong {
     font-family: "Cormorant Garamond", serif;
-    font-size: 28px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--fg-heading);
+    font-size: 19px;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--rsvp-ink);
+    line-height: 1;
 }
 
 
@@ -3309,20 +3750,8 @@ footer p {
 .opening-minimal .seal { background: #333; width: 40px; height: 40px; }
 .opening-minimal .letter { font-family: "DM Sans", sans-serif; font-size: 14px; letter-spacing: 1px; }
 
-/* RSVP premium polish */
-.rsvp-form input:focus,
-.rsvp-form select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-light);
-}
-
-.rsvp-button:active {
-    transform: scale(.97);
-}
-
-#rsvpThanks {
-    animation: nameReveal .8s cubic-bezier(.19,1,.22,1) both;
-}
+/* RSVP modern polish */
+.rsvp-button:active { transform: scale(.97); }
 
 
 /* =====================================================
@@ -3612,16 +4041,21 @@ footer p {
     .eyebrow, .kicker { letter-spacing: 3px; }
 
     /* Forms — 16px prevents iOS auto-zoom that breaks the page */
-    .rsvp-form { max-width: 100%; gap: 10px; }
+    .rsvp-form { max-width: 100%; gap: 12px; padding: 22px 18px 20px; border-radius: 18px; }
     .rsvp-form input,
     .rsvp-form select,
     .rsvp-form textarea {
         font-size: 16px !important;
-        padding: 13px 14px;
-        border-radius: 0;
+        padding: 18px 15px 8px;
+        border-radius: 12px;
     }
+    .rsvp-field label { left: 16px; }
+    .rsvp-row { grid-template-columns: 1fr; }
+    .rsvp-step-btn { height: 50px; }
+    .rsvp-seg span { font-size: 8px; }
+    .rsvp-button,
     .rsvp-form button,
-    .rsvp-form input[type="submit"] { min-height: 48px; font-size: 12px; }
+    .rsvp-form input[type="submit"] { min-height: 48px; font-size: 11px; width: 100%; }
 
     /* Countdown */
     .timer div { padding: 20px 8px; }
@@ -3897,11 +4331,22 @@ footer p {
         <button class="open-button scene-open-btn" type="button"></button>
     </div>
 
-    <!-- Signature Scene 2 · GRAND CURTAIN -->
+    <!-- Signature Scene 2 · GRAND CURTAIN — Premium Theater -->
     <div class="sig-scene" id="curtainScene" data-scene-for="curtain">
-        <div class="curtain-rail"></div>
+        <div class="th-spot l"></div>
+        <div class="th-spot r"></div>
+        <div class="th-stage-floor"></div>
         <div class="curtain-left"></div>
         <div class="curtain-right"></div>
+        <div class="curtain-rail"></div>
+        <div class="th-valance"></div>
+        <div class="curtain-dust" id="curtainDust"></div>
+        <div class="th-mono">
+            <div class="mono-eyebrow"></div>
+            <div class="mono-names"></div>
+            <div class="mono-date"></div>
+            <div class="mono-tap"></div>
+        </div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
@@ -4240,15 +4685,36 @@ footer p {
         ></button>
 
         <form id="rsvpForm" class="rsvp-form" hidden>
-            <input id="rsvpName" type="text" required>
-            <select id="rsvpStatus">
+            <div class="rsvp-field">
+                <input id="rsvpName" type="text" required placeholder=" " autocomplete="name">
+                <label class="rsvp-float-label" for="rsvpName" id="rsvpNameLabel"></label>
+            </div>
+
+            <div class="rsvp-segmented" id="rsvpSegmented" role="radiogroup" aria-label="RSVP">
+                <button type="button" class="rsvp-seg" data-val="yes"><i class="rsvp-seg-ico">✓</i><span></span></button>
+                <button type="button" class="rsvp-seg" data-val="maybe"><i class="rsvp-seg-ico">?</i><span></span></button>
+                <button type="button" class="rsvp-seg" data-val="no"><i class="rsvp-seg-ico">✕</i><span></span></button>
+            </div>
+
+            <select id="rsvpStatus" class="rsvp-native-status" aria-hidden="true" tabindex="-1">
                 <option value="yes" id="rsvpOptYes"></option>
                 <option value="maybe" id="rsvpOptMaybe"></option>
                 <option value="no" id="rsvpOptNo"></option>
             </select>
-            <input id="rsvpGuests" type="number" min="1" max="20" value="1" required>
-            <input id="rsvpMessage" type="text" placeholder="">
-            <button class="rsvp-button" type="submit" id="rsvpSubmitBtn"></button>
+
+            <div class="rsvp-row">
+                <div class="rsvp-stepper" id="rsvpStepper">
+                    <button type="button" class="rsvp-step-btn" id="rsvpGuestMinus" aria-label="azalt">−</button>
+                    <input id="rsvpGuests" type="number" min="1" max="20" value="1" required>
+                    <button type="button" class="rsvp-step-btn" id="rsvpGuestPlus" aria-label="artır">+</button>
+                </div>
+                <div class="rsvp-field">
+                    <input id="rsvpMessage" type="text" placeholder=" ">
+                    <label class="rsvp-float-label" for="rsvpMessage" id="rsvpMessageLabel"></label>
+                </div>
+            </div>
+
+            <button class="rsvp-button rsvp-submit" type="submit" id="rsvpSubmitBtn"></button>
         </form>
 
         <p id="rsvpThanks" hidden></p>
@@ -4422,26 +4888,29 @@ var params =
     };
 })();
 
-var invitationId =
-    (
-        params.get("id") ||
-        localStorage.getItem("luna_last_invitation") ||
-        ""
-    ).toLowerCase().trim();
+var invitationId = "";
+var invitation = null;
 
+/* Template demo mode takes priority — a stale luna_last_invitation
+   saved from an earlier order must never shadow the ?template= preview */
+if (window.lunaGetInvitationOverride) {
 
-/* =====================================================
-   CHECK DATA — SHOW 404 IF MISSING
-===================================================== */
-
-var invitation = invitationId
-    ? lunaGetInvitation(invitationId)
-    : null;
-
-/* Template demo mode bypasses storage lookup */
-if (!invitation && window.lunaGetInvitationOverride) {
     invitation = window.lunaGetInvitationOverride;
     invitationId = invitation.id;
+
+} else {
+
+    invitationId =
+        (
+            params.get("id") ||
+            localStorage.getItem("luna_last_invitation") ||
+            ""
+        ).toLowerCase().trim();
+
+    invitation = invitationId
+        ? lunaGetInvitation(invitationId)
+        : null;
+
 }
 
 
@@ -5277,10 +5746,17 @@ document.getElementById("rsvpOptNo").textContent =
 document.getElementById("rsvpSubmitBtn").textContent =
     lunaT("invRsvpSubmit");
 
-document.getElementById("rsvpGuests").placeholder =
-    lunaT("invRsvpGuests");
+document.getElementById("rsvpGuests").placeholder = "1";
 
-document.getElementById("rsvpMessage").placeholder =
+var _rsvpNameLabel = document.getElementById("rsvpNameLabel");
+if (_rsvpNameLabel) _rsvpNameLabel.textContent =
+    LUNA_LANG === "en" ? "Your name" :
+    LUNA_LANG === "ru" ? "Ваше имя" :
+    LUNA_LANG === "tr" ? "Adınız" :
+    "Adınız";
+
+var _rsvpMsgLabel = document.getElementById("rsvpMessageLabel");
+if (_rsvpMsgLabel) _rsvpMsgLabel.textContent =
     LUNA_LANG === "en" ? "Message (optional)" :
     LUNA_LANG === "ru" ? "Сообщение (необязательно)" :
     LUNA_LANG === "tr" ? "Mesaj (isteğe bağlı)" :
@@ -5346,6 +5822,99 @@ rsvpForm.addEventListener("submit", function(event) {
     document.getElementById("rsvpMessage").value = "";
     renderRsvpCounts();
 });
+
+
+/* =====================================================
+   MODERN RSVP — segmented status + guest stepper
+   (native select stays synced for submit logic)
+===================================================== */
+
+(function rsvpModern() {
+
+    var statusSel = document.getElementById("rsvpStatus");
+    var segmented = document.getElementById("rsvpSegmented");
+
+    /* Segmented control ↔ hidden select sync */
+    if (statusSel && segmented) {
+
+        var segBtns = segmented.querySelectorAll(".rsvp-seg");
+
+        var syncSeg = function() {
+            segBtns.forEach(function(b) {
+                b.classList.toggle(
+                    "active",
+                    b.getAttribute("data-val") === statusSel.value
+                );
+                b.setAttribute(
+                    "aria-checked",
+                    b.getAttribute("data-val") === statusSel.value ? "true" : "false"
+                );
+            });
+        };
+
+        segBtns.forEach(function(btn) {
+            /* Labels come from the already-translated <option> texts */
+            var opt = document.getElementById(
+                "rsvpOpt" + btn.getAttribute("data-val").charAt(0).toUpperCase() +
+                btn.getAttribute("data-val").slice(1)
+            );
+            var label = btn.querySelector("span");
+            if (opt && label) label.textContent = opt.textContent;
+
+            btn.addEventListener("click", function() {
+                statusSel.value = this.getAttribute("data-val");
+                syncSeg();
+            });
+        });
+
+        syncSeg();
+    }
+
+    /* Guest stepper */
+    var guests = document.getElementById("rsvpGuests");
+    var minus = document.getElementById("rsvpGuestMinus");
+    var plus = document.getElementById("rsvpGuestPlus");
+
+    if (guests && minus && plus) {
+
+        var clampGuests = function() {
+            var v = parseInt(guests.value, 10);
+            if (isNaN(v) || v < 1) v = 1;
+            if (v > 20) v = 20;
+            guests.value = v;
+        };
+
+        minus.addEventListener("click", function() {
+            guests.value = (parseInt(guests.value, 10) || 1) - 1;
+            clampGuests();
+        });
+
+        plus.addEventListener("click", function() {
+            guests.value = (parseInt(guests.value, 10) || 1) + 1;
+            clampGuests();
+        });
+
+        guests.addEventListener("change", clampGuests);
+    }
+
+    /* Re-sync segmented labels if language changes at runtime */
+    var _origRsvpSetLang = window.lunaSetLanguage;
+    if (typeof _origRsvpSetLang === "function") {
+        window.lunaSetLanguage = function(lang) {
+            _origRsvpSetLang(lang);
+            if (!segmented) return;
+            segmented.querySelectorAll(".rsvp-seg").forEach(function(btn) {
+                var opt = document.getElementById(
+                    "rsvpOpt" + btn.getAttribute("data-val").charAt(0).toUpperCase() +
+                    btn.getAttribute("data-val").slice(1)
+                );
+                var label = btn.querySelector("span");
+                if (opt && label) label.textContent = opt.textContent;
+            });
+        };
+    }
+
+})();
 
 
 /* =====================================================
@@ -5548,7 +6117,7 @@ var _openingStyle = (function() {
 
     var SCENES = {
         "wax-seal":       { id: "waxSealScene", delay: 1700 },
-        "curtain":        { id: "curtainScene", delay: 2100 },
+        "curtain":        { id: "curtainScene", delay: 2600 },
         "floral-paper":   { id: "floralScene",  delay: 1800 },
         "luxury-romance": { id: "silkScene",    delay: 2000 },
         "celebration-pop":{ id: "fiestaScene",  delay: 1900 },
@@ -5593,6 +6162,14 @@ var _openingStyle = (function() {
             try { _wi = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}").waxInitial || ""; } catch(e) {}
             royalSeal.textContent = (_wi || (invitation.bride || "").charAt(0)).toUpperCase() || "L";
         }
+
+        /* Curtain monogram */
+        var thMonoNames = document.querySelector(".th-mono .mono-names");
+        var thMonoDate = document.querySelector(".th-mono .mono-date");
+        var thMonoEye = document.querySelector(".th-mono .mono-eyebrow");
+        if (thMonoNames) thMonoNames.textContent = lunaDisplayNames(invitation);
+        if (thMonoDate) thMonoDate.textContent = displayDate;
+        if (thMonoEye) thMonoEye.textContent = lunaT("invOpen");
         
         ["doorEyebrow","stairsEyebrow"].forEach(function(id) {
             var el = document.getElementById(id);
@@ -5712,6 +6289,22 @@ var _openingStyle = (function() {
             el.style.animationDelay = "-" + rnd(0, 10) + "s";
             el.style.fontSize = rnd(8, 18) + "px";
         });
+    } else if (type === "curtain") {
+        var dustWrap = document.getElementById("curtainDust");
+        if (dustWrap) {
+            for (var d = 0; d < 30; d++) {
+                var sp = document.createElement("span");
+                sp.style.left = rnd(10, 90) + "vw";
+                sp.style.top = rnd(25, 80) + "vh";
+                sp.style.setProperty("--dx", rnd(-80, 80) + "px");
+                sp.style.animationDelay = rnd(0, 1.5) + "s";
+                sp.style.animationDuration = rnd(2.5, 4.5) + "s";
+                var sz = rnd(2, 5);
+                sp.style.width = sz + "px";
+                sp.style.height = sz + "px";
+                dustWrap.appendChild(sp);
+            }
+        }
     }
 
     /* Wax seal is itself a trigger */

@@ -612,8 +612,265 @@ var invitations = {
         music:
             "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
 
-        design: "royal-scroll",
+design: "royal-scroll",
         templateId: "royal-scroll"
-    }
+    },
+
+    /* =====================================================
+       THEATRE CURTAINS + YOUTUBE (Premium Wedding)
+==================================================== */
+
+"theatre-curtains-wedding": {
+
+    package: "premium",
+
+    bride: "Aysel",
+    groom: "Murad",
+
+    date: "12 September 2026",
+    dateShort: "12 · 09 · 2026",
+    time: "19:00",
+
+    location: "Bakı, Azərbaycan",
+    venue: "Theatre Hall",
+
+    map: "https://www.google.com/maps",
+
+    story: `
+        <p>
+            Bəzir hekayələr kitablarda yazılır.
+            Bizimki kiçik anlarda,
+            paylaşılan gülüşlərdə və
+            unudulmaz xatirələrdə yazıldı.
+        </p>
+
+        <br>
+
+        <p>
+            Birlikdə keçirdiyimiz hər an bizi
+            bu gözəl günə gətirdi.
+        </p>
+
+        <br>
+
+        <p>
+            İndi isə həyatımızın yeni fəslinə
+            collectively başlayırıq.
+        </p>
+    `,
+
+    images: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90"
+    ],
+
+    countdown: "2026-09-12T19:00:00",
+
+    youtubeUrl: "https://youtube.com/watch?v=demo_wedding_scene",
+
+    design: "curtain-reveal",
+    templateId: "curtain-reveal"
+},
+
+
+
+
+/* =====================================================
+   3D STAIRS + COUNTDOWN (Premium Wedding)
+==================================================== */
+
+"stairs-3d-wedding": {
+
+    package: "premium",
+
+    bride: "Leyla",
+    groom: "Kamran",
+
+    date: "20 October 2026",
+    dateShort: "20 · 10 · 2026",
+    time: "18:30",
+
+    location: "Bakı, Azərbaycan",
+    venue: "Grand Staircase Hotel",
+
+    map: "https://www.google.com/maps",
+
+    story: `
+        <p>
+            Hekayəmiz sadı bir salamla başladı
+            və zaman keçdikcə gözəl bir hekayəyə çevrildi.
+        </p>
+
+        <br>
+
+        <p>
+            Birlikdə yaşadığımız hər an
+            bizi bir-birimizə daha da yaxınlaşdırdı.
+        </p>
+    `,
+
+    images: [
+        "https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=90"
+    ],
+
+    countdown: "2026-10-20T18:30:00",
+
+    youtubeUrl: "https://youtu.be/demo_stairs_scene",
+
+    design: "stairs-reveal",
+    templateId: "stairs-reveal"
+},
+
+
+
+
+/* =====================================================
+   RIBBON OPENING + ENVELOPE WITH WAX (Luxury Wedding)
+==================================================== */
+
+"ribbon-wax-seal-wedding": {
+
+    package: "luxury",
+
+    bride: "Nigar",
+    groom: "Elvin",
+
+    date: "20 October 2026",
+    dateShort: "20 · 10 · 2026",
+    time: "19:00",
+
+    location: "Bakı, Azərbaycan",
+    venue: "Palace Wedding Hall",
+
+    map: "https://www.google.com/maps",
+
+    story: `
+        <p>
+            Hekayəmiz sadı bir salamla başladı
+            və zaman keçdikcə gözəl bir hekayəyə çevrildi.
+        </p>
+
+        <br>
+
+        <p>
+            Birlikdə paylaşdığımız hər an
+            bizi bir-birmizə daha da yaxınlaşdırdı.
+        </p>
+    `,
+
+    images: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1500&q=90"
+    ],
+
+    countdown: "2026-10-20T19:00:00",
+
+    youtubeUrl: "https://youtube.com/watch?v=ribbon_opening_demo",
+
+    design: "envelope-seal",
+    templateId: "envelope-seal"
+},
+
+
+
+
+/* =====================================================
+   COMBINED FEATURES: ALL ANIMATIONS + VIDEO (Luxury)
+==================================================== */
+
+"all-features-wedding": {
+
+    package: "luxury",
+
+    bride: "Günel",
+    groom: "Rəşad",
+
+    date: "18 October 2026",
+    dateShort: "18 · 10 · 2026",
+    time: "19:00",
+
+    location: "Bakı, Azərbaycan",
+    venue: "Grand Ballroom",
+
+    map: "https://www.google.com/maps",
+
+    story: `
+        <p>
+            Xınanın rəngi kimi, həyatımız
+            indi daha gözəl və rəngli olacaq.
+        </p>
+
+        <br>
+
+        <p>
+            Qız toyumuzdan əvvəl bu xüsusi axşamı
+            sizinlə gemeinsam recall edək.
+        </p>
+    `,
+
+    images: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1500&q=90"
+    ],
+
+    countdown: "2026-10-18T19:00:00",
+
+    youtubeUrl: "https://youtu.be/all_features_demo",
+
+    design: "envelope-seal",
+    templateId: "envelope-seal"
+},
+
+
+
+
+/* =====================================================
+   ENGAGEMENT WITH RIbbON OPENING
+==================================================== */
+
+"engagement-ribbon": {
+
+    package: "premium",
+
+    bride: "Səbinə",
+    groom: "Tural",
+
+    date: "5 November 2026",
+    dateShort: "05 · 11 · 2026",
+    time: "18:00",
+
+    location: "Bakı, Azərbaycan",
+    venue: "Saray Wedding Palace",
+
+    map: "https://www.google.com/maps",
+
+    story: `
+        <p>
+            Bir-birinə yoluxan iki ürək,
+            sevgi ilə dolu gözəl bir başlanğıc.
+        </p>
+
+        <br>
+
+        <p>
+            Nişan mərasimimizdə bu xoşbəxt anı
+            sənlə bölüşmək istəyirik.
+        </p>
+    `,
+
+    images: [
+        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1500&q=90",
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=90"
+    ],
+
+    countdown: "2026-11-05T18:00:00",
+
+    youtubeUrl: "https://youtube.com/watch?v=engagement_ribbon_demo",
+
+    design: "ribbon-reveal",
+    templateId: "ribbon-reveal"
+},
 
 };

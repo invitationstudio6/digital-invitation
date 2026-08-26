@@ -447,12 +447,18 @@ img{display:block;max-width:100%}
 .design-thumb:hover .opv,.anim-card:hover .opv{opacity:1}
 
 /* Curtain */
-.opv-curtain i{position:absolute;top:0;width:52%;height:100%;background:linear-gradient(180deg,#8B1A1A,#5C0E0E);transition:transform .8s cubic-bezier(.4,0,.2,1)}
-.opv-curtain .c-l{left:0;border-radius:0 12px 0 0;transform-origin:left}
-.opv-curtain .c-r{right:0;border-radius:12px 0 0 0;transform-origin:right}
-.opv-curtain .c-t{top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,.15);transform:translateX(-50%)}
-.design-thumb:hover .opv-curtain .c-l{transform:translateX(-85%)}
-.design-thumb:hover .opv-curtain .c-r{transform:translateX(85%)}
+.opv-curtain{overflow:hidden}
+.opv-curtain i{position:absolute;top:0;width:54%;height:100%;background:linear-gradient(180deg,#7A1A15,#5E1612 40%,#3A0D0A);transition:transform .9s cubic-bezier(.4,0,.2,1)}
+.opv-curtain .c-l{left:0;border-radius:0 10px 0 0;transform-origin:left;box-shadow:inset -6px 0 16px rgba(0,0,0,.3)}
+.opv-curtain .c-r{right:0;border-radius:10px 0 0 0;transform-origin:right;box-shadow:inset 6px 0 16px rgba(0,0,0,.3)}
+.opv-curtain .c-rail{position:absolute;top:0;left:-4%;right:-4%;height:4px;background:linear-gradient(180deg,#E9CE7E,#A98B3E);z-index:2;border-radius:0 0 2px 2px}
+.opv-curtain .c-val{position:absolute;top:4px;left:-4%;right:-4%;height:12px;background:linear-gradient(180deg,#6B1510,#7A1A15);z-index:1;overflow:hidden}
+.opv-curtain .c-val::before{content:"";position:absolute;bottom:-1px;left:0;right:0;height:8px;
+  background:radial-gradient(circle 5px at 50% 0, #D4AF37 4px, transparent 4.5px);
+  background-size:10px 8px;background-repeat:repeat-x;background-position:0 0}
+.opv-curtain .c-t{top:4px;left:50%;width:1px;height:100%;background:rgba(255,255,255,.08);transform:translateX(-50%)}
+.design-thumb:hover .opv-curtain .c-l{transform:translateX(-88%)}
+.design-thumb:hover .opv-curtain .c-r{transform:translateX(88%)}
 
 /* Stairs */
 .opv-stairs{flex-direction:column;gap:3px}
@@ -537,6 +543,36 @@ img{display:block;max-width:100%}
 .opv-wdoor .w-panel{position:absolute;width:50px;height:60px;background:linear-gradient(135deg,#5C3D2E,#3E2518);border-radius:3px;border:2px solid rgba(196,168,130,.3);transition:transform .7s cubic-bezier(.4,0,.2,1);transform-origin:left}
 .opv-wdoor .w-knob{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);right:12px;top:50%;transform:translateY(-50%);z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .design-thumb:hover .opv-wdoor .w-panel{transform:perspective(500px) rotateY(-50deg)}
+
+/* Typewriter */
+.opv-type i{position:relative;width:58px;height:42px;background:linear-gradient(180deg,#FFFDF6,#F4ECDC);border:1px solid rgba(196,168,130,.45);border-radius:3px;box-shadow:0 4px 12px rgba(62,37,24,.18)}
+.opv-type i::before{content:"";position:absolute;top:9px;left:9px;right:9px;height:3px;border-radius:2px;background:#C9A86A;animation:typeLine 1.4s linear infinite}
+.opv-type i::after{content:"";position:absolute;top:17px;left:9px;right:22px;height:3px;border-radius:2px;background:rgba(201,168,106,.5);animation:typeLine 1.4s .35s linear infinite}
+@keyframes typeLine{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* Candlelight */
+.opv-candle i{position:relative;width:11px;height:28px;border-radius:2px 2px 4px 4px;background:linear-gradient(180deg,#FFF8F0,#E8D4B8);box-shadow:0 4px 10px rgba(232,168,80,.25)}
+.opv-candle i::before{content:"";position:absolute;top:-16px;left:50%;width:10px;height:17px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:radial-gradient(ellipse at 50% 30%,#FFF8E0,#FFB340 55%,#E85A00);filter:blur(.6px);transform-origin:bottom center;animation:candleFlk .32s ease-in-out infinite alternate}
+.opv-candle i::after{content:"";position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,rgba(255,190,90,.35),transparent 70%);animation:candleGlowP 1.6s ease-in-out infinite}
+@keyframes candleFlk{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-56%) scale(1.12,.88)}}
+@keyframes candleGlowP{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* Winter drift */
+.opv-snow i{position:absolute;top:-8%;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 7px rgba(150,185,220,.95);animation:snowDrop linear infinite}
+.opv-snow i:nth-child(1){left:18%;animation-duration:1.9s}
+.opv-snow i:nth-child(2){left:32%;animation-duration:2.6s;animation-delay:.4s;width:4px;height:4px}
+.opv-snow i:nth-child(3){left:46%;animation-duration:2.1s;animation-delay:.9s}
+.opv-snow i:nth-child(4){left:58%;animation-duration:2.8s;animation-delay:.2s;width:5px;height:5px}
+.opv-snow i:nth-child(5){left:68%;animation-duration:2s;animation-delay:1.3s}
+.opv-snow i:nth-child(6){left:78%;animation-duration:2.5s;animation-delay:.7s;width:4px;height:4px}
+.opv-snow i:nth-child(7){left:86%;animation-duration:2.2s;animation-delay:1.6s}
+@keyframes snowDrop{0%{top:-8%;opacity:0}15%{opacity:.95}85%{opacity:.85}100%{top:106%;opacity:0}}
+
+/* Royal scroll */
+.opv-scroll i{position:relative;width:64px;height:44px;background:linear-gradient(180deg,#F0DFBE,#DCC79C);border:1px solid rgba(150,110,60,.45);border-radius:4px;box-shadow:0 4px 14px rgba(90,60,20,.28),inset 0 0 18px rgba(150,110,60,.12)}
+.opv-scroll i::before,.opv-scroll i::after{content:"";position:absolute;top:-5px;width:9px;height:54px;background:linear-gradient(180deg,#C89B63,#8B653D);border-radius:5px;box-shadow:0 2px 6px rgba(90,60,20,.35)}
+.opv-scroll i::before{left:-6px}
+.opv-scroll i::after{right:-6px}
 
 /* ===== KOLLEKSİYA KARTLARI (semicircle + glow) ===== */
 .coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:1100px;margin:0 auto}
@@ -1121,6 +1157,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <a href="#video-section">Video dəvətnamə</a>
         <a href="#pricing">Qiymətlər</a>
         <a href="#how">Nə daxildir</a>
+        <a href="admin.html" style="opacity:.55;font-size:8px;border-left:1px solid var(--border);padding-left:18px">Admin</a>
     </div>
     <div class="languages">
         <button class="active" data-lang="az">AZ</button>
@@ -1139,6 +1176,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     <a href="#video-section">Video dəvətnamə</a>
     <a href="#pricing">Qiymətlər</a>
     <a href="#how">Nə daxildir</a>
+    <a href="admin.html" style="opacity:.55;font-size:9px;border-top:1px solid var(--border);padding-top:12px;margin-top:4px">Admin panel</a>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
@@ -1228,6 +1266,18 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Hər bir kolleksiya xüsusi dizaynlar və animasiyalarla zəngindir</p>
         </div>
         <div class="coll-grid" id="collGrid"></div>
+    </div>
+</section>
+
+<!-- ══════ CANLI AÇILIŞ ANİMASİYALARI ══════ -->
+<section id="animatedShowcase">
+    <div class="section-inner" style="text-align:center">
+        <div class="section-heading" style="margin-bottom:6px">
+            <div class="kicker">Canlı açılış</div>
+            <h2>3D animasiyalı açılışlar</h2>
+            <p style="text-align:center;max-width:540px;margin:14px auto 0;font-size:12px;color:#8a6f58">Kartların üzərinə gəlin — hər dəvətnamənin real açılış animasiyasını görün. Kliklədikdə nümunə dəvətnamə tam formada canlı açılır.</p>
+        </div>
+        <div class="anim-strip" id="animStrip2"></div>
     </div>
 </section>
 
@@ -1480,12 +1530,32 @@ var _OPENING_META = {
     "luxury-romance":  { emoji: "💎", label: "Lüks romantika" },
     "envelope-seal":   { emoji: "✉️", label: "Möhürlü məktub" },
     "ribbon":          { emoji: "🎀", label: "Lentlə açılış" },
-    "wood-door":       { emoji: "🪵", label: "Taxta qapı" }
+    "wood-door":       { emoji: "🪵", label: "Taxta qapı" },
+    "typewriter":      { emoji: "⌨️", label: "Daktilo açılışı" },
+    "candlelight":     { emoji: "🕯️", label: "Şam işığı" },
+    "winter-drift":    { emoji: "❄️", label: "Qış nağılı" },
+    "royal-scroll":    { emoji: "📜", label: "Şah fərmanı" }
+};
+/* Alias → real scene type (mirrors data/invitation.html mapping) */
+var _OPENING_ALIAS = {
+    "floral-reveal": "floral-paper", "editorial-reveal": "editorial-card",
+    "luxury-reveal": "luxury-romance", "envelope-reveal": "envelope-seal",
+    "stairs-reveal": "stairs", "wax-reveal": "wax-seal",
+    "curtain-reveal": "curtain", "ribbon-reveal": "ribbon",
+    "door-reveal": "door", "wood-door-reveal": "wood-door",
+    "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
+    "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
+    "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter",
+    "luxury-silk": "luxury-romance", "confetti-burst": "celebration-pop",
+    "shooting-star": "starry-night"
 };
 function _openingOf(tpl) {
     if (!tpl) return null;
-    var t = tpl.openingStyle || tpl.openingType || tpl.animationType ||
-            tpl.animationStyle || (tpl.layoutConfig && tpl.layoutConfig.openingType) || "";
+    /* Same priority as the live page: layoutConfig.openingType wins */
+    var t = (tpl.layoutConfig && tpl.layoutConfig.openingType) ||
+            tpl.openingType || tpl.openingStyle || tpl.animationType ||
+            tpl.animationStyle || "";
+    if (_OPENING_ALIAS[t]) t = _OPENING_ALIAS[t];
     return _OPENING_META[t] ? { type: t, emoji: _OPENING_META[t].emoji, label: _OPENING_META[t].label } : null;
 }
 function _isAnimated(tpl) { return !!_openingOf(tpl); }
@@ -1494,7 +1564,7 @@ function _opvHTML(type) {
     var s, k;
     switch (type) {
         case "curtain":
-            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i><i class="c-t"></i></div>';
+            return '<div class="opv opv-curtain"><i class="c-l"></i><i class="c-r"></i><i class="c-t"></i><i class="c-rail"></i><i class="c-val"></i></div>';
         case "stairs":
             s = '<div class="opv opv-stairs">';
             for (k = 0; k < 6; k++) s += '<i></i>';
@@ -1526,6 +1596,17 @@ function _opvHTML(type) {
             return '<div class="opv opv-rbn"><i class="r-v"></i><i class="r-h"></i><i class="r-bow"></i></div>';
         case "wood-door":
             return '<div class="opv opv-wdoor"><i class="w-panel"></i><i class="w-knob"></i></div>';
+        case "typewriter":
+            return '<div class="opv opv-type"><i></i></div>';
+        case "candlelight":
+            return '<div class="opv opv-candle"><i></i></div>';
+        case "winter-drift": {
+            s = '<div class="opv opv-snow">';
+            for (k = 0; k < 7; k++) s += '<i></i>';
+            return s + '</div>';
+        }
+        case "royal-scroll":
+            return '<div class="opv opv-scroll"><i></i></div>';
         default:
             return "";
     }
@@ -2052,7 +2133,29 @@ renderTemplates("all");
     if (!strip) return;
     var list = _getHomepageTemplates().filter(_isAnimated);
     list.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
-    list.slice(0, 20).forEach(function(tpl) {
+    /* Hər səhnə tipindən bir nümunə — bütün animasiya növləri görünsün */
+    var byType = {};
+    list.forEach(function(tpl) {
+        var t = _openingOf(tpl).type;
+        (byType[t] = byType[t] || []).push(tpl);
+    });
+    var ordered = [];
+    var types = Object.keys(byType);
+    var round = 0;
+    while (ordered.length < list.length) {
+        var progressed = false;
+        for (var i = 0; i < types.length; i++) {
+            var bucket = byType[types[i]];
+            if (round < bucket.length) {
+                ordered.push(bucket[round]);
+                progressed = true;
+                if (ordered.length >= 24) break;
+            }
+        }
+        if (!progressed || ordered.length >= 24) break;
+        round++;
+    }
+    ordered.slice(0, 24).forEach(function(tpl) {
         var opening = _openingOf(tpl);
         var card = document.createElement("div");
         card.className = "anim-card";
@@ -2145,7 +2248,7 @@ function openPreviewModal(tplId) {
     // Header
     document.getElementById("mTplName").textContent = tpl.name;
     document.getElementById("mTplCat").textContent = lunaCategoryName(tpl.category);
-    document.getElementById("mTplStyle").textContent = tpl.style;
+    document.getElementById("mTplStyle").textContent = tpl.style || "";
 
     // Package switcher tabs
     renderModalPkgTabs(pkgs);
