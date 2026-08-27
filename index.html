@@ -171,13 +171,16 @@ img{display:block;max-width:100%}
 .pkg-card .btn{width:100%;justify-content:center;text-align:center}
 
 /* VİDEO DƏVƏTNAMƏ LATTİSİ */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1080px;margin:0 auto}
-.video-card{position:relative;border-radius:50% 50% 22px 22px/30% 30% 22px 22px;overflow:hidden;aspect-ratio:9/16;background:#1a1410;cursor:pointer;box-shadow:0 0 0 3px rgba(212,165,116,.12),0 0 25px rgba(212,165,116,.06),0 20px 50px -10px rgba(45,27,18,.25);transition:transform .6s cubic-bezier(.19,1,.22,1),box-shadow .6s}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;max-width:1000px;margin:0 auto}
+.video-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#1a1410;cursor:pointer;box-shadow:0 0 0 1px rgba(212,165,116,.14),0 14px 36px -12px rgba(45,27,18,.28);transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s}
 .video-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(180deg,rgba(212,165,116,.25),rgba(183,110,121,.15));z-index:-1;opacity:0;transition:opacity .5s}
-.video-card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 0 3px rgba(212,165,116,.25),0 0 45px rgba(212,165,116,.12),0 40px 100px -20px rgba(45,27,18,.35)}
+.video-card:hover{transform:translateY(-8px);box-shadow:0 0 0 1px rgba(212,165,116,.3),0 22px 54px -16px rgba(45,27,18,.34)}
 .video-card:hover::before{opacity:1}
 .video-card video,.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
-.video-card:hover video,.video-card:hover img{transform:scale(1.06)}
+.video-card .video-yt-wrap{position:absolute;inset:0;overflow:hidden;background:#000}
+.video-card .video-yt-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.video-card:hover video,.video-card:hover img{transform:scale(1.05)}
+.video-card:hover .video-yt-wrap img{transform:scale(1.05)}
 .video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.7))}
 .video-upload-card{background:linear-gradient(135deg,#2D2D44,#1A1A2E);border:2px dashed rgba(212,165,116,.3);display:flex;align-items:center;justify-content:center}
 .video-upload-card:hover{border-color:rgba(212,165,116,.6)}
@@ -217,7 +220,7 @@ img{display:block;max-width:100%}
     .logo{font-size:26px}
     .nav-links{gap:14px}
     .nav-links a{font-size:7.5px;letter-spacing:1px}
-    .video-grid{grid-template-columns:1fr;gap:16px}
+    .video-grid{grid-template-columns:repeat(2,1fr);gap:12px}
     .coll-grid{grid-template-columns:repeat(2,1fr);gap:8px}
     .coll-card{aspect-ratio:2/3;border-radius:36% 36% 10px 10px/20px 20px 10px 10px}
     .how-steps{grid-template-columns:1fr;gap:10px}
@@ -225,7 +228,7 @@ img{display:block;max-width:100%}
     .pkg-card{padding:26px 18px 18px;border-radius:40% 40% 14px 14px/24% 24% 12px 12px}
     .pkg-card h4{font-size:24px}
     .pkg-price b{font-size:36px}
-    .video-card{aspect-ratio:9/16}
+    .video-card{aspect-ratio:4/5}
     .cat-tabs{gap:6px;padding:0 4px}
     .cat-tab{padding:8px 14px;font-size:7.5px}
     .how-steps{grid-template-columns:1fr;gap:14px}
@@ -237,7 +240,7 @@ img{display:block;max-width:100%}
     .pkg-sum img{width:72px;height:72px}
     .coll-grid{grid-template-columns:repeat(2,1fr);gap:12px}
     .coll-card{border-radius:40% 40% 12px 12px/24px 24px 12px 12px}
-    .video-grid{grid-template-columns:1fr}
+    .video-grid{grid-template-columns:repeat(2,1fr);gap:12px}
 }
 
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;animation:fadeUp 1s .75s ease both}
@@ -641,6 +644,48 @@ img{display:block;max-width:100%}
 .opv-book .ob-p{position:absolute;inset:14%;right:14%;background:linear-gradient(135deg,#FFF8EE,#F0E4D0);border-radius:2px 6px 6px 2px;z-index:1;opacity:0;transition:opacity .5s .5s}
 .design-thumb:hover .opv-book .ob-c{transform:rotateY(-140deg);filter:brightness(.6)}
 .design-thumb:hover .opv-book .ob-p{opacity:1}
+
+/* Animated showcase — live + hover reveals (canlı açılışlar) */
+.anim-card:hover .opv,
+.anim-card.live .opv{opacity:1}
+.anim-card:hover .opv-curtain .c-l,
+.anim-card.live .opv-curtain .c-l{transform:translateX(-88%)}
+.anim-card:hover .opv-curtain .c-r,
+.anim-card.live .opv-curtain .c-r{transform:translateX(88%)}
+.anim-card:hover .opv-door .d-l,
+.anim-card.live .opv-door .d-l{transform:perspective(600px) rotateY(-55deg)}
+.anim-card:hover .opv-door .d-r,
+.anim-card.live .opv-door .d-r{transform:perspective(600px) rotateY(55deg)}
+.anim-card:hover .opv-wax i,
+.anim-card.live .opv-wax i{transform:scale(1.2) rotate(15deg);box-shadow:0 6px 24px rgba(139,26,26,.5)}
+.anim-card:hover .opv-env .e-flp,
+.anim-card.live .opv-env .e-flp{transform:rotateX(180deg)}
+.anim-card:hover .opv-rbn .r-bow,
+.anim-card.live .opv-rbn .r-bow{transform:translateX(-50%) scale(1.2)}
+.anim-card:hover .opv-wdoor .w-door,
+.anim-card.live .opv-wdoor .w-door{transform:perspective(500px) rotateY(-55deg);filter:brightness(.5)}
+.anim-card:hover .opv-wdoor .w-crack,
+.anim-card.live .opv-wdoor .w-crack{opacity:0}
+.anim-card:hover .opv-gdoor .gd-l,
+.anim-card.live .opv-gdoor .gd-l{transform:translateX(-95%);filter:brightness(.4)}
+.anim-card:hover .opv-gdoor .gd-r,
+.anim-card.live .opv-gdoor .gd-r{transform:translateX(95%);filter:brightness(.4)}
+.anim-card:hover .opv-gdoor .gd-glow,
+.anim-card.live .opv-gdoor .gd-glow{filter:blur(3px);opacity:1}
+.anim-card:hover .opv-gdoor .gd-crack,
+.anim-card.live .opv-gdoor .gd-crack{opacity:0}
+.anim-card:hover .opv-forest i:nth-child(1),
+.anim-card.live .opv-forest i:nth-child(1){transform:translateX(-120%);opacity:0}
+.anim-card:hover .opv-forest i:nth-child(2),
+.anim-card.live .opv-forest i:nth-child(2){transform:translateX(120%);opacity:0}
+.anim-card:hover .opv-forest i:nth-child(3),
+.anim-card.live .opv-forest i:nth-child(3){transform:translateX(-80%);opacity:0}
+.anim-card:hover .opv-forest i:nth-child(4),
+.anim-card.live .opv-forest i:nth-child(4){transform:translateX(80%);opacity:0}
+.anim-card:hover .opv-book .ob-c,
+.anim-card.live .opv-book .ob-c{transform:rotateY(-140deg);filter:brightness(.6)}
+.anim-card:hover .opv-book .ob-p,
+.anim-card.live .opv-book .ob-p{opacity:1}
 
 /* ===== KOLLEKSİYA KARTLARI (semicircle + glow) ===== */
 .coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:1100px;margin:0 auto}
@@ -2243,6 +2288,15 @@ renderTemplates("all");
                 '<p>' + lunaCategoryName(tpl.category) + ' · Açılışa bax</p>' +
             '</div>';
         strip.appendChild(card);
+        /* Canlı açılış — kartları dalğa şəklində avtomatik oynat */
+        (function(card, idx) {
+            var period = 3000;
+            var phase = (idx * 380) % period;
+            setTimeout(function() {
+                card.classList.add("live");
+                setInterval(function() { card.classList.toggle("live"); }, period);
+            }, phase);
+        })(card, i);
     });
 })();
 
@@ -2842,9 +2896,9 @@ function lunaIDBLoadHome(key, cb) {
                 if (ytId) {
                     var thumb = v.thumbnail || "https://img.youtube.com/vi/" + ytId + "/hqdefault.jpg";
                     card.innerHTML =
-                        '<div class="video-yt-wrap" style="position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:inherit;overflow:hidden">' +
-                            '<img src="' + thumb + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">' +
-                            '<div class="video-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2"></div>' +
+                        '<div class="video-yt-wrap">' +
+                            '<img src="' + thumb + '" loading="lazy">' +
+                            '<div class="video-play"></div>' +
                         '</div>' +
                         '<span class="video-badge">Video</span>' +
                         '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · YouTube</p></div>';
