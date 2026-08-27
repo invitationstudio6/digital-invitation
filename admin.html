@@ -384,6 +384,7 @@ input,select,textarea{max-width:100%;}
     <a data-section="orders" onclick="switchSection('orders')">Sifarişlər</a>
     <a data-section="templates" onclick="switchSection('templates')">Dizaynlar</a>
     <a data-section="videos" onclick="switchSection('videos')">Videolar</a>
+    <a data-section="cards" onclick="switchSection('cards')">Kartlar</a>
     <a data-section="homepage" onclick="switchSection('homepage')">Sayt Görünüşü</a>
     <a data-section="settings" onclick="switchSection('settings')">Tənzimləmələr</a>
 </nav>
@@ -410,6 +411,10 @@ input,select,textarea{max-width:100%;}
         <a class="sidebar-link" data-section="videos" href="javascript:void(0)" onclick="switchSection('videos')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             <span>Video Dəvətnamələr</span>
+        </a>
+        <a class="sidebar-link" data-section="cards" href="javascript:void(0)" onclick="switchSection('cards')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M12 6v13"/></svg>
+            <span>Təşəkkür &amp; Paylama</span>
         </a>
         <div class="sidebar-group-label">Sayt</div>
         <a class="sidebar-link" data-section="homepage" href="javascript:void(0)" onclick="switchSection('homepage')">
@@ -732,6 +737,70 @@ input,select,textarea{max-width:100%;}
             </select>
         </div>
         <div id="videoList" class="grid-3"></div>
+    </div>
+</div>
+
+<!-- ========== GREETING CARDS (thank-you & distribution) ========== -->
+<div id="section-cards" class="section">
+    <div class="header">
+        <div class="page-title">
+            <small>Luna Studio</small>
+            <h1>Təşəkkür &amp; Paylama Kartları</h1>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2 id="gcardFormTitle">Yeni Kart Əlavə Et</h2>
+        <form id="gcardForm">
+            <div class="form-grid">
+                <div class="field">
+                    <label>Kart növü</label>
+                    <select id="gcardKind">
+                        <option value="thankyou">Təşəkkür Kartı</option>
+                        <option value="distribution">Paylama Kartı</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Başlıq</label>
+                    <input id="gcardTitle" type="text" placeholder="Təşəkkür edirik" required>
+                </div>
+                <div class="field full">
+                    <label>Şəkil (yüklə və ya link)</label>
+                    <label class="vid-drop" for="gcardImageInput" style="cursor:pointer">
+                        <input id="gcardImageInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'gcardImage','gcardImagePreview','image')">
+                        <span class="vid-drop-ico">🖼️</span>
+                        <span>Şəkil seçin<br><small>və ya aşağıya link yazın</small></span>
+                    </label>
+                    <img id="gcardImagePreview" style="display:none;width:100%;max-height:220px;object-fit:contain;border-radius:8px;margin-top:10px;background:#0e0e14">
+                    <input id="gcardImage" type="text" placeholder="və ya şəkil URL-i (https://...)" style="margin-top:10px">
+                </div>
+                <div class="field">
+                    <label>Keçid linki (istəyə bağlı)</label>
+                    <input id="gcardLink" type="text" placeholder="https://... (karta klikləyəndə açılır)">
+                </div>
+                <div class="field">
+                    <label>Göstərmə sırası</label>
+                    <input id="gcardOrder" type="number" value="0">
+                </div>
+                <div class="field">
+                    <label>Status</label>
+                    <select id="gcardStatus"><option value="active">Aktiv</option><option value="inactive">Deaktiv</option></select>
+                </div>
+                <div class="field full">
+                    <label>Təsvir (istəyə bağlı)</label>
+                    <input id="gcardDescription" type="text" placeholder="Qısa təsvir">
+                </div>
+            </div>
+            <div class="button-row" style="margin-top:18px;display:flex;gap:10px">
+                <button type="submit" class="save" style="flex:1" id="gcardSaveBtn">Saxla</button>
+                <button type="button" class="clear" style="flex:1" onclick="resetGCardForm()">Təmizlə</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Mövcud Kartlar</h2>
+        <div id="gcardList" class="grid-3"></div>
     </div>
 </div>
 
@@ -1610,6 +1679,7 @@ function switchSection(name){
      ['customers', renderCustomers],
      ['designs', renderDesigns],
      ['videos', renderVideos],
+     ['cards', renderGreetingCards],
      ['templates', renderTemplates],
      ['clientform', loadFormConfig],
      ['orders', renderOrders],
@@ -2649,6 +2719,123 @@ document.getElementById('editVideoForm').addEventListener('submit', function(e){
     showToast('Video yeniləndi');
 });
 
+
+/* =====================================================
+   GREETING CARDS (thank-you & distribution)
+===================================================== */
+var editingGCardId = null;
+
+function getGreetingCards(){
+    try { return JSON.parse(localStorage.getItem('luna_greeting_cards') || '[]'); } catch(e){ return []; }
+}
+function saveGreetingCards(cards){
+    localStorage.setItem('luna_greeting_cards', JSON.stringify(cards));
+}
+
+function renderGreetingCards(){
+    var cards = getGreetingCards();
+    cards.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
+    var list = document.getElementById('gcardList');
+    if(!list) return;
+    list.innerHTML = '';
+    if(!cards.length){
+        list.innerHTML = '<div class="empty">Hələ kart yoxdur. Yuxarıdakı formadan əlavə edin.</div>';
+        return;
+    }
+    cards.forEach(function(c){
+        var card = document.createElement('div');
+        card.className = 'card';
+        var img = c.image
+            ? '<img src="' + lunaEscapeHtml(c.image) + '" alt="' + lunaEscapeHtml(c.title) + '">'
+            : '<div style="width:100%;height:200px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">ŞƏKİL</div>';
+        var kindLabel = c.kind === 'thankyou' ? 'Təşəkkür' : 'Paylama';
+        var statusBadge = c.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
+        card.innerHTML =
+            img +
+            '<h3>' + lunaEscapeHtml(c.title || '') + '</h3>' +
+            '<div class="card-meta"><span class="badge">' + kindLabel + '</span>' + statusBadge + '</div>' +
+            (c.description ? '<p>' + lunaEscapeHtml(c.description) + '</p>' : '') +
+            '<div class="card-actions">' +
+                '<button class="edit-btn" onclick="openEditGCard(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə</button>' +
+                '<button class="toggle-btn" onclick="toggleGCardActive(\'' + lunaEscapeHtml(c.id) + '\')">' + (c.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                '<button class="delete" onclick="deleteGCard(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+            '</div>';
+        list.appendChild(card);
+    });
+}
+
+document.getElementById('gcardForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var data = {
+        kind: document.getElementById('gcardKind').value,
+        title: document.getElementById('gcardTitle').value.trim(),
+        image: document.getElementById('gcardImage').value.trim(),
+        link: document.getElementById('gcardLink').value.trim(),
+        description: document.getElementById('gcardDescription').value.trim(),
+        active: document.getElementById('gcardStatus').value === 'active',
+        order: parseInt(document.getElementById('gcardOrder').value) || 0
+    };
+    if(!data.title){ showToast('Başlıq tələb olunur'); return; }
+    if(!data.image){ showToast('Şəkil əlavə edin (yükləyin və ya link yazın)'); return; }
+    var cards = getGreetingCards();
+    if(editingGCardId){
+        var idx = cards.findIndex(function(x){ return x.id === editingGCardId; });
+        if(idx !== -1){ Object.assign(cards[idx], data); }
+        editingGCardId = null;
+        document.getElementById('gcardFormTitle').textContent = 'Yeni Kart Əlavə Et';
+        document.getElementById('gcardSaveBtn').textContent = 'Saxla';
+    } else {
+        data.id = 'gc_' + Date.now();
+        cards.push(data);
+    }
+    saveGreetingCards(cards);
+    document.getElementById('gcardForm').reset();
+    resetGCardImagePreview();
+    renderGreetingCards();
+    showToast(editingGCardId ? 'Kart yeniləndi' : 'Kart əlavə edildi');
+});
+
+function resetGCardForm(){
+    editingGCardId = null;
+    document.getElementById('gcardForm').reset();
+    resetGCardImagePreview();
+    document.getElementById('gcardFormTitle').textContent = 'Yeni Kart Əlavə Et';
+    document.getElementById('gcardSaveBtn').textContent = 'Saxla';
+}
+function resetGCardImagePreview(){
+    var p = document.getElementById('gcardImagePreview');
+    if(p){ p.style.display = 'none'; p.removeAttribute('src'); }
+}
+function openEditGCard(id){
+    var cards = getGreetingCards();
+    var c = cards.find(function(x){ return x.id === id; });
+    if(!c) return;
+    editingGCardId = c.id;
+    document.getElementById('gcardKind').value = c.kind || 'thankyou';
+    document.getElementById('gcardTitle').value = c.title || '';
+    document.getElementById('gcardImage').value = c.image || '';
+    document.getElementById('gcardLink').value = c.link || '';
+    document.getElementById('gcardDescription').value = c.description || '';
+    document.getElementById('gcardStatus').value = c.active ? 'active' : 'inactive';
+    document.getElementById('gcardOrder').value = c.order || 0;
+    var p = document.getElementById('gcardImagePreview');
+    if(p && c.image){ p.src = c.image; p.style.display = 'block'; }
+    document.getElementById('gcardFormTitle').textContent = 'Kartı Redaktə Et';
+    document.getElementById('gcardSaveBtn').textContent = 'Yenilə';
+    switchSection('cards');
+}
+function deleteGCard(id){
+    if(!confirm('Bu kartı silmək istədiyinizə əminsiniz?')) return;
+    var cards = getGreetingCards().filter(function(x){ return x.id !== id; });
+    saveGreetingCards(cards);
+    renderGreetingCards();
+    showToast('Kart silindi');
+}
+function toggleGCardActive(id){
+    var cards = getGreetingCards();
+    var c = cards.find(function(x){ return x.id === id; });
+    if(c){ c.active = !c.active; saveGreetingCards(cards); renderGreetingCards(); showToast(c.active ? 'Aktiv edildi' : 'Deaktiv edildi'); }
+}
 
 /* =====================================================
    SETTINGS — CLEAR ALL

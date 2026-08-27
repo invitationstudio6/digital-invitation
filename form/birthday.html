@@ -199,11 +199,30 @@ button,input,textarea,select{font-family:inherit}
 .opv-env .e-flp{position:absolute;width:56px;height:24px;background:linear-gradient(180deg,#EDE3D5,#E0D5C5);border-radius:3px 3px 0 0;top:-2px;transform-origin:top;transition:transform .6s ease;clip-path:polygon(0 0,50% 100%,100% 0)}
 .opv-env .e-wax{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#C4504A,#8B1A1A);top:10px;z-index:1;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .tpl-card:hover .opv-env .e-flp{transform:rotateX(180deg)}
+/* Ribbon - lively untying preview */
 .opv-rbn{position:relative}
-.opv-rbn .r-v{position:absolute;width:3px;height:50px;background:linear-gradient(180deg,var(--gold),#D4915A);border-radius:2px;left:50%;transform:translateX(-50%);top:5px}
-.opv-rbn .r-h{position:absolute;width:50px;height:3px;background:linear-gradient(90deg,var(--gold),#D4915A);border-radius:2px;top:28px;left:50%;transform:translateX(-50%)}
-.opv-rbn .r-bow{position:absolute;width:20px;height:14px;border:2px solid var(--gold);border-radius:50%;top:18px;left:50%;transform:translateX(-50%);background:transparent;transition:transform .5s}
-.tpl-card:hover .opv-rbn .r-bow{transform:translateX(-50%) scale(1.2)}
+.opv-rbn .r-band{position:absolute;background:linear-gradient(135deg,#E9C77E,#C99B45);box-shadow:0 2px 6px rgba(150,110,40,.4);border-radius:3px;transition:transform .6s cubic-bezier(.3,1,.4,1),opacity .4s}
+.opv-rbn .r-band-v{left:50%;top:6px;width:9px;height:58px;transform:translateX(-50%)}
+.opv-rbn .r-band-h{top:50%;left:8px;right:8px;height:9px;transform:translateY(-50%)}
+.opv-rbn .r-band::after{content:'';position:absolute;inset:0;border-radius:3px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.5),transparent);animation:rbpShimmer 2.2s ease-in-out infinite}
+.opv-rbn .r-loop{position:absolute;top:50%;width:24px;height:30px;background:radial-gradient(circle at 35% 30%,#F2DFAC,#CAA04C 60%,#A3762E);box-shadow:0 3px 8px rgba(120,80,20,.4);transition:transform .6s cubic-bezier(.3,1,.4,1),opacity .4s;z-index:2}
+.opv-rbn .r-loop.r-bl{left:50%;transform:translate(-26px,-50%);border-radius:60% 65% 65% 14%/60% 60% 18% 60%}
+.opv-rbn .r-loop.r-br{right:50%;transform:translate(26px,-50%);border-radius:65% 60% 14% 65%/60% 60% 60% 18%}
+.opv-rbn .r-knot{position:absolute;left:50%;top:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#EED9A0,#A3762E);box-shadow:0 0 12px rgba(232,200,122,.5);animation:rbpKnot 2s ease-in-out infinite;z-index:3}
+.opv-rbn .r-tail{position:absolute;top:60%;width:7px;height:22px;background:linear-gradient(180deg,#EED9A0,#CAA04C);border-radius:0 0 6px 6px;transform-origin:top center;box-shadow:0 3px 8px rgba(120,80,20,.3);transition:transform .6s ease,opacity .4s}
+.opv-rbn .r-tail.r-tl{left:50%;transform:translate(-12px,0) rotate(9deg);animation:rbpTailL 2.4s ease-in-out infinite}
+.opv-rbn .r-tail.r-tr{right:50%;transform:translate(12px,0) rotate(-9deg);animation:rbpTailR 2.4s ease-in-out infinite}
+@keyframes rbpShimmer{0%,100%{opacity:.25}50%{opacity:.9}}
+@keyframes rbpKnot{0%,100%{box-shadow:0 0 12px rgba(232,200,122,.4)}50%{box-shadow:0 0 22px rgba(232,200,122,.7)}}
+@keyframes rbpTailL{0%,100%{transform:translate(-12px,0) rotate(11deg)}50%{transform:translate(-12px,0) rotate(-7deg)}}
+@keyframes rbpTailR{0%,100%{transform:translate(12px,0) rotate(-11deg)}50%{transform:translate(12px,0) rotate(7deg)}}
+.tpl-card:hover .opv-rbn .r-loop.r-bl{transform:translate(-48px,16px) rotate(-55deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-loop.r-br{transform:translate(48px,16px) rotate(55deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-knot{transform:translate(-50%,-50%) scale(1.6) rotate(180deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-tail.r-tl{transform:translate(-26px,16px) rotate(-30deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-tail.r-tr{transform:translate(26px,16px) rotate(30deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-band-v{transform:translateX(-160%) rotate(-12deg);opacity:0}
+.tpl-card:hover .opv-rbn .r-band-h{transform:translateY(-160%) rotate(12deg);opacity:0}
 .opv-wdoor{position:relative;overflow:hidden;background:linear-gradient(170deg,#1A120A,#0E0A05)}
 .opv-wdoor .w-arch{position:absolute;inset:6%;border:4px solid #3A2A18;border-radius:50% 50% 3px 3px/40% 40% 3px 3px;background:linear-gradient(160deg,#4A3622,#2E1E12);box-shadow:inset 0 0 10px rgba(0,0,0,.4)}
 .opv-wdoor .w-panel{position:absolute;border:1px solid rgba(180,140,90,.1);border-radius:20px 20px 2px 2px;box-shadow:inset 0 1px 3px rgba(0,0,0,.3)}

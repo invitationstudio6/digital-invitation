@@ -172,6 +172,18 @@ img{display:block;max-width:100%}
 
 /* VİDEO DƏVƏTNAMƏ LATTİSİ */
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;max-width:1000px;margin:0 auto}
+
+/* Greeting cards section (thank-you & distribution) */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;max-width:1000px;margin:0 auto 38px}
+.cards-empty{text-align:center;color:#8a6f58;font-size:12px;padding:18px;max-width:1000px;margin:0 auto 38px}
+.cards-subhead{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:400;color:#3E2518;text-align:center;margin:34px 0 18px;letter-spacing:.5px}
+.card-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 10px 30px rgba(62,37,24,.1);background:#EDE3D5;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s ease}
+.card-item:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(62,37,24,.18)}
+.card-item img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.card-item:hover img{transform:scale(1.06)}
+.card-item .card-cap{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(to top,rgba(30,20,12,.8),transparent);color:#fff;pointer-events:none}
+.card-item .card-cap h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;line-height:1.15}
+.card-item .card-cap span{font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:.8}
 .video-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#1a1410;cursor:pointer;box-shadow:0 0 0 1px rgba(212,165,116,.14),0 14px 36px -12px rgba(45,27,18,.28);transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s}
 .video-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(180deg,rgba(212,165,116,.25),rgba(183,110,121,.15));z-index:-1;opacity:0;transition:opacity .5s}
 .video-card:hover{transform:translateY(-8px);box-shadow:0 0 0 1px rgba(212,165,116,.3),0 22px 54px -16px rgba(45,27,18,.34)}
@@ -241,6 +253,7 @@ img{display:block;max-width:100%}
     .coll-grid{grid-template-columns:repeat(2,1fr);gap:12px}
     .coll-card{border-radius:40% 40% 12px 12px/24px 24px 12px 12px}
     .video-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+    .cards-grid{grid-template-columns:repeat(2,1fr);gap:12px}
 }
 
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;animation:fadeUp 1s .75s ease both}
@@ -537,12 +550,30 @@ img{display:block;max-width:100%}
 .opv-env .e-wax{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#C4504A,#8B1A1A);top:10px;z-index:1;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .design-thumb:hover .opv-env .e-flp{transform:rotateX(180deg)}
 
-/* Ribbon */
+/* Ribbon — lively untying preview */
 .opv-rbn{position:relative}
-.opv-rbn .r-v{position:absolute;width:3px;height:50px;background:linear-gradient(180deg,var(--gold),#D4915A);border-radius:2px;left:50%;transform:translateX(-50%);top:5px}
-.opv-rbn .r-h{position:absolute;width:50px;height:3px;background:linear-gradient(90deg,var(--gold),#D4915A);border-radius:2px;top:28px;left:50%;transform:translateX(-50%)}
-.opv-rbn .r-bow{position:absolute;width:20px;height:14px;border:2px solid var(--gold);border-radius:50%;top:18px;left:50%;transform:translateX(-50%);background:transparent;transition:transform .5s}
-.design-thumb:hover .opv-rbn .r-bow{transform:translateX(-50%) scale(1.2)}
+.opv-rbn .r-band{position:absolute;background:linear-gradient(135deg,#E9C77E,#C99B45);box-shadow:0 2px 6px rgba(150,110,40,.4);border-radius:3px;transition:transform .6s cubic-bezier(.3,1,.4,1),opacity .4s}
+.opv-rbn .r-band-v{left:50%;top:6px;width:9px;height:58px;transform:translateX(-50%)}
+.opv-rbn .r-band-h{top:50%;left:8px;right:8px;height:9px;transform:translateY(-50%)}
+.opv-rbn .r-band::after{content:"";position:absolute;inset:0;border-radius:3px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.5),transparent);animation:rbpShimmer 2.2s ease-in-out infinite}
+.opv-rbn .r-loop{position:absolute;top:50%;width:24px;height:30px;background:radial-gradient(circle at 35% 30%,#F2DFAC,#CAA04C 60%,#A3762E);box-shadow:0 3px 8px rgba(120,80,20,.4);transition:transform .6s cubic-bezier(.3,1,.4,1),opacity .4s;z-index:2}
+.opv-rbn .r-loop.r-bl{left:50%;transform:translate(-26px,-50%);border-radius:60% 65% 65% 14%/60% 60% 18% 60%}
+.opv-rbn .r-loop.r-br{right:50%;transform:translate(26px,-50%);border-radius:65% 60% 14% 65%/60% 60% 60% 18%}
+.opv-rbn .r-knot{position:absolute;left:50%;top:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#EED9A0,#A3762E);box-shadow:0 0 12px rgba(232,200,122,.5);animation:rbpKnot 2s ease-in-out infinite;z-index:3}
+.opv-rbn .r-tail{position:absolute;top:60%;width:7px;height:22px;background:linear-gradient(180deg,#EED9A0,#CAA04C);border-radius:0 0 6px 6px;transform-origin:top center;box-shadow:0 3px 8px rgba(120,80,20,.3);transition:transform .6s ease,opacity .4s}
+.opv-rbn .r-tail.r-tl{left:50%;transform:translate(-12px,0) rotate(9deg);animation:rbpTailL 2.4s ease-in-out infinite}
+.opv-rbn .r-tail.r-tr{right:50%;transform:translate(12px,0) rotate(-9deg);animation:rbpTailR 2.4s ease-in-out infinite}
+@keyframes rbpShimmer{0%,100%{opacity:.25}50%{opacity:.9}}
+@keyframes rbpKnot{0%,100%{box-shadow:0 0 12px rgba(232,200,122,.4)}50%{box-shadow:0 0 22px rgba(232,200,122,.7)}}
+@keyframes rbpTailL{0%,100%{transform:translate(-12px,0) rotate(11deg)}50%{transform:translate(-12px,0) rotate(-7deg)}}
+@keyframes rbpTailR{0%,100%{transform:translate(12px,0) rotate(-11deg)}50%{transform:translate(12px,0) rotate(7deg)}}
+.anim-card:hover .opv-rbn .r-loop.r-bl,.anim-card.live .opv-rbn .r-loop.r-bl,.design-thumb:hover .opv-rbn .r-loop.r-bl,.tpl-card:hover .opv-rbn .r-loop.r-bl{transform:translate(-48px,16px) rotate(-55deg);opacity:0}
+.anim-card:hover .opv-rbn .r-loop.r-br,.anim-card.live .opv-rbn .r-loop.r-br,.design-thumb:hover .opv-rbn .r-loop.r-br,.tpl-card:hover .opv-rbn .r-loop.r-br{transform:translate(48px,16px) rotate(55deg);opacity:0}
+.anim-card:hover .opv-rbn .r-knot,.anim-card.live .opv-rbn .r-knot,.design-thumb:hover .opv-rbn .r-knot,.tpl-card:hover .opv-rbn .r-knot{transform:translate(-50%,-50%) scale(1.6) rotate(180deg);opacity:0}
+.anim-card:hover .opv-rbn .r-tail.r-tl,.anim-card.live .opv-rbn .r-tail.r-tl,.design-thumb:hover .opv-rbn .r-tail.r-tl,.tpl-card:hover .opv-rbn .r-tail.r-tl{transform:translate(-26px,16px) rotate(-30deg);opacity:0}
+.anim-card:hover .opv-rbn .r-tail.r-tr,.anim-card.live .opv-rbn .r-tail.r-tr,.design-thumb:hover .opv-rbn .r-tail.r-tr,.tpl-card:hover .opv-rbn .r-tail.r-tr{transform:translate(26px,16px) rotate(30deg);opacity:0}
+.anim-card:hover .opv-rbn .r-band-v,.anim-card.live .opv-rbn .r-band-v,.design-thumb:hover .opv-rbn .r-band-v,.tpl-card:hover .opv-rbn .r-band-v{transform:translateX(-160%) rotate(-12deg);opacity:0}
+.anim-card:hover .opv-rbn .r-band-h,.anim-card.live .opv-rbn .r-band-h,.design-thumb:hover .opv-rbn .r-band-h,.tpl-card:hover .opv-rbn .r-band-h{transform:translateY(-160%) rotate(12deg);opacity:0}
 
 /* Wood door — cinematic */
 .opv-wdoor{position:relative;overflow:hidden;background:linear-gradient(170deg,#1A120A,#0E0A05)}
@@ -660,8 +691,6 @@ img{display:block;max-width:100%}
 .anim-card.live .opv-wax i{transform:scale(1.2) rotate(15deg);box-shadow:0 6px 24px rgba(139,26,26,.5)}
 .anim-card:hover .opv-env .e-flp,
 .anim-card.live .opv-env .e-flp{transform:rotateX(180deg)}
-.anim-card:hover .opv-rbn .r-bow,
-.anim-card.live .opv-rbn .r-bow{transform:translateX(-50%) scale(1.2)}
 .anim-card:hover .opv-wdoor .w-door,
 .anim-card.live .opv-wdoor .w-door{transform:perspective(500px) rotateY(-55deg);filter:brightness(.5)}
 .anim-card:hover .opv-wdoor .w-crack,
@@ -1268,6 +1297,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <a href="#collections">Kolleksiya</a>
         <a href="#designs">Dəvətnamə</a>
         <a href="#video-section">Video dəvətnamə</a>
+        <a href="#cards-section">Təşəkkür &amp; Paylama</a>
         <a href="#pricing">Qiymətlər</a>
         <a href="#how">Nə daxildir</a>
     </div>
@@ -1285,9 +1315,11 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
     <a href="#home">Ana səhifə</a>
     <a href="#collections">Kolleksiya</a>
     <a href="#designs">Dəvətnamə</a>
-    <a href="#video-section">Video dəvətnamə</a>
-    <a href="#pricing">Qiymətlər</a>
-    <a href="#how">Nə daxildir</a>
+        <a href="#video-section">Video dəvətnamə</a>
+        <a href="#cards-section">Təşəkkür &amp; Paylama</a>
+        <a href="#pricing">Qiymətlər</a>
+        <a href="#how">Nə daxildir</a>
+    </div>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
         <button data-lang="en">EN</button>
@@ -1444,6 +1476,23 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
             <p style="font-size:14px;margin:0">Hələ video dəvətnamə əlavə edilməyib.</p>
             <p style="font-size:11px;margin:8px 0 0;opacity:.6">Admin paneldən video əlavə edə bilərsiniz.</p>
         </div>
+    </div>
+</section>
+
+<!-- ══════ GREETING CARDS (thank-you & distribution) ══════ -->
+<section class="section" id="cards-section" style="padding:80px 20px;background:linear-gradient(180deg,#fdfbf7 0%,#faf5ee 100%)">
+    <div class="section-inner">
+        <div class="section-heading" style="text-align:center;margin-bottom:30px">
+            <div class="kicker">Təşəkkür &amp; Paylama</div>
+            <h2>Xüsusi kartlar</h2>
+            <p style="text-align:center;max-width:540px;margin:14px auto 0;font-size:12px;color:#8a6f58">Tədbirinizdən sonra qonaqlara təşəkkür etmək və ya dəvətnamələrin paylanması üçün nəfis kartlar. Admin paneldən şəkil əlavə edin.</p>
+        </div>
+        <div class="cards-subhead">Təşəkkür Kartları</div>
+        <div class="cards-grid" id="thankYouGrid"></div>
+        <div id="thankYouEmpty" class="cards-empty" style="display:none">Hələ təşəkkür kartı əlavə edilməyib.</div>
+        <div class="cards-subhead">Paylama Kartları</div>
+        <div class="cards-grid" id="distributionGrid"></div>
+        <div id="distributionEmpty" class="cards-empty" style="display:none">Hələ paylama kartı əlavə edilməyib.</div>
     </div>
 </section>
 
@@ -1697,7 +1746,7 @@ function _opvHTML(type) {
         case "envelope-seal":
             return '<div class="opv opv-env"><i class="e-ltr"></i><i class="e-pkt"></i><i class="e-flp"></i><i class="e-wax"></i></div>';
         case "ribbon":
-            return '<div class="opv opv-rbn"><i class="r-v"></i><i class="r-h"></i><i class="r-bow"></i></div>';
+            return '<div class="opv opv-rbn"><i class="r-band r-band-v"></i><i class="r-band r-band-h"></i><i class="r-loop r-bl"></i><i class="r-loop r-br"></i><i class="r-tail r-tl"></i><i class="r-tail r-tr"></i><i class="r-knot"></i></div>';
         case "wood-door":
             return '<div class="opv opv-wdoor"><div class="w-arch"><div class="w-door"><i class="w-panel w-panel-top"></i><i class="w-panel w-panel-bot"></i><i class="w-knob"></i></div></div><div class="w-crack"></div></div>';
         case "typewriter":
@@ -2935,6 +2984,63 @@ function lunaIDBLoadHome(key, cb) {
         });
     } catch(e) {}
 })();
+
+/* ===== GREETING CARDS (thank-you & distribution) ===== */
+(function() {
+    var tyGrid = document.getElementById("thankYouGrid");
+    var dGrid = document.getElementById("distributionGrid");
+    var tyEmpty = document.getElementById("thankYouEmpty");
+    var dEmpty = document.getElementById("distributionEmpty");
+    if (!tyGrid || !dGrid) return;
+
+    function gcEsc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function(x) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[x];
+        });
+    }
+
+    try {
+        var cards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
+        var ty = cards.filter(function(c) { return c.kind === "thankyou" && c.active !== false && c.image; })
+                      .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
+        var dp = cards.filter(function(c) { return c.kind === "distribution" && c.active !== false && c.image; })
+                      .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
+
+        function makeCard(c) {
+            var el = document.createElement("div");
+            el.className = "card-item";
+            el.innerHTML =
+                '<img src="' + gcEsc(c.image) + '" alt="' + gcEsc(c.title) + '" loading="lazy">' +
+                '<div class="card-cap"><h4>' + gcEsc(c.title || "") + '</h4>' +
+                (c.description ? '<span>' + gcEsc(c.description) + '</span>' : '') + '</div>';
+            el.addEventListener("click", function() {
+                if (c.link) { window.open(c.link, "_blank", "noopener"); }
+                else { openImageModal(c.image, c.title || ""); }
+            });
+            return el;
+        }
+
+        tyGrid.innerHTML = ""; dGrid.innerHTML = "";
+        if (!ty.length) { if (tyEmpty) tyEmpty.style.display = "block"; }
+        else { if (tyEmpty) tyEmpty.style.display = "none"; ty.forEach(function(c) { tyGrid.appendChild(makeCard(c)); }); }
+        if (!dp.length) { if (dEmpty) dEmpty.style.display = "block"; }
+        else { if (dEmpty) dEmpty.style.display = "none"; dp.forEach(function(c) { dGrid.appendChild(makeCard(c)); }); }
+    } catch(e) {}
+})();
+
+/* ===== IMAGE MODAL (greeting cards) ===== */
+function openImageModal(src, title) {
+    var m = document.createElement("div");
+    m.className = "modal-overlay";
+    m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
+    m.innerHTML =
+        '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
+        '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)">';
+    m.addEventListener("click", function(ev) {
+        if (ev.target === m || ev.target.tagName === "IMG") m.remove();
+    });
+    document.body.appendChild(m);
+}
 
 /* ===== VIDEO MODAL ===== */
 function openVideoModal(video) {
