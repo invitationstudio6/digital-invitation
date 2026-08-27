@@ -406,6 +406,14 @@ button,input,textarea,select{font-family:inherit}
 .video-addon-toggle .btn-add{min-width:120px;padding:12px 20px;border:1px solid var(--dark);background:transparent;color:var(--dark);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.3s;border-radius:6px}
 .video-addon-card.selected .video-addon-toggle .btn-add{background:var(--dark);color:var(--cream);border-color:var(--dark)}
 .video-addon-toggle .btn-add:hover{background:var(--dark);color:var(--cream)}
+.photo-invite-block{margin:18px 0 6px;padding:22px;border:1px solid rgba(196,168,130,.18);border-radius:14px;background:rgba(255,252,249,.7)}
+.photo-invite-block .sub-title{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;font-style:italic;color:var(--dark);margin-bottom:4px}
+.photo-invite-block .step-desc{margin-bottom:14px}
+.photo-invite-block input[type=file]{display:block;font-size:10px;color:var(--muted)}
+.photo-invite-preview{margin-top:14px;display:none}
+.photo-invite-preview img{width:min(220px,70%);border-radius:10px;cursor:zoom-in;box-shadow:0 12px 30px rgba(62,37,24,.18);transition:transform .35s cubic-bezier(.19,1,.22,1);display:block}
+.photo-invite-preview img:hover{transform:scale(1.03)}
+@keyframes imgZoom{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
 @media(max-width:720px){
     .video-addon-card{flex-direction:column;text-align:center;gap:16px;padding:24px 20px}
     .video-addon-visual{width:80px;height:110px}
@@ -554,6 +562,12 @@ button,input,textarea,select{font-family:inherit}
                 <div class="form-step" id="formStep5">
                     <h3 class="step-title">Şəkillər və musiqi</h3>
                     <p class="step-desc">Qalereya şəkilləri və fon musiqisi əlavə edin</p>
+                    <div class="photo-invite-block">
+                        <h4 class="sub-title">Şəkil dəvətnamə</h4>
+                        <p class="step-desc">Dəvətnamənizin əsas şəklini (poster) əlavə edin. Şəklə basdıqda böyük formada açılır.</p>
+                        <input type="file" id="photoInviteInput" accept="image/*">
+                        <div class="photo-invite-preview" id="photoInvitePreview"></div>
+                    </div>
                     <div class="form-grid" id="mediaGrid"></div>
                 </div>
 
@@ -605,6 +619,7 @@ button,input,textarea,select{font-family:inherit}
     var packageName = (params.get("package") || "basic").toLowerCase();
     var category = (params.get("category") || "wedding").toLowerCase();
     var designId = design;
+    var photoInvitationImg = "";
 
     /* ===== APPLY ADMIN FORM CONFIG ===== */
     var _formCfg = {};
@@ -644,6 +659,25 @@ button,input,textarea,select{font-family:inherit}
 
         /* Admin-defined extra info fields */
         renderAdminCustomFields();
+
+        /* Photo invitation upload + click-to-enlarge */
+        var piInput = document.getElementById("photoInviteInput");
+        var piPreview = document.getElementById("photoInvitePreview");
+        if (piInput && piPreview) {
+            piInput.addEventListener("change", function() {
+                var f = piInput.files && piInput.files[0];
+                if (!f) return;
+                lunaCompressImage(f, function(dataUrl) {
+                    if (!dataUrl) { alert("Şəkil oxunmadı."); return; }
+                    photoInvitationImg = dataUrl;
+                    piPreview.innerHTML = '<img src="' + dataUrl + '" alt="Şəkil dəvətnamə">';
+                    piPreview.style.display = "block";
+                    piPreview.querySelector("img").addEventListener("click", function() {
+                        lunaOpenImageLightbox(dataUrl, "Şəkil dəvətnamə");
+                    });
+                });
+            });
+        }
     });
 
     function renderAdminCustomFields() {
@@ -1480,6 +1514,41 @@ button,input,textarea,select{font-family:inherit}
         }
     }
 
+    /* ===== PHOTO INVITATION: compress + lightbox ===== */
+    function lunaCompressImage(file, cb) {
+        var max = 1100, quality = 0.82;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = new Image();
+            img.onload = function() {
+                try {
+                    var scale = Math.min(1, max / Math.max(img.width, img.height));
+                    var cw = Math.max(1, Math.round(img.width * scale));
+                    var ch = Math.max(1, Math.round(img.height * scale));
+                    var canvas = document.createElement("canvas");
+                    canvas.width = cw; canvas.height = ch;
+                    canvas.getContext("2d").drawImage(img, 0, 0, cw, ch);
+                    cb(canvas.toDataURL("image/jpeg", quality));
+                } catch (err) { cb(e.target.result); }
+            };
+            img.onerror = function() { cb(e.target.result); };
+            img.src = e.target.result;
+        };
+        reader.onerror = function() { cb(""); };
+        reader.readAsDataURL(file);
+    }
+
+    function lunaOpenImageLightbox(src, title) {
+        var m = document.createElement("div");
+        m.className = "modal-overlay";
+        m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
+        m.innerHTML =
+            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
+            '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:imgZoom .35s ease" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
+        m.addEventListener("click", function(ev) { if (ev.target === m) m.remove(); });
+        document.body.appendChild(m);
+    }
+
     function renderMediaFields() {
         var grid = document.getElementById("mediaGrid");
         if (!grid) return;
@@ -1521,6 +1590,10 @@ button,input,textarea,select{font-family:inherit}
         var tplObj = typeof LUNA_TEMPLATES !== "undefined" ? LUNA_TEMPLATES.find(function(t) { return t.id === tplId; }) : null;
         rows += '<div class="preview-row"><span class="preview-row-label">Dizayn</span><span class="preview-row-value">' + (tplObj ? tplObj.name + ' (' + tplObj.style + ')' : tplId || '—') + '</span></div>';
 
+        if (photoInvitationImg) {
+            rows += '<div class="preview-row"><span class="preview-row-label">Şəkil dəvətnamə</span><span class="preview-row-value"><img id="previewPhotoInvite" src="' + photoInvitationImg + '" alt="Şəkil dəvətnamə" style="max-width:130px;border-radius:8px;display:block;cursor:zoom-in"></span></div>';
+        }
+
         if (fields) {
             var labels = fields.querySelectorAll("label");
             var inputs = fields.querySelectorAll("input, textarea, select");
@@ -1536,6 +1609,9 @@ button,input,textarea,select{font-family:inherit}
         }
 
         container.innerHTML = '<h4>Dəvətnamə xülasəsi</h4>' + rows;
+
+        var ppImg = document.getElementById("previewPhotoInvite");
+        if (ppImg) ppImg.addEventListener("click", function() { lunaOpenImageLightbox(photoInvitationImg, "Şəkil dəvətnamə"); });
     }
 
     renderForm();
@@ -1700,6 +1776,7 @@ button,input,textarea,select{font-family:inherit}
                         package: packageName,
                         category: category,
                         design: design,
+                        photoInvitation: photoInvitationImg || "",
                         approved: false,
                         bride: primaryName,
                         date: v.date,
