@@ -77,6 +77,9 @@ button,input,textarea,select{font-family:inherit}
 
 .meta-pills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;animation:fadeUp .8s .5s ease both}
 .pill{border:1px solid rgba(92,61,46,.10);background:rgba(255,252,247,.65);padding:8px 18px;border-radius:999px;font-size:9px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.hero-links{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:24px;animation:fadeUp .8s .6s ease both}
+.hero-links a{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:#4a2e1c;border:1px solid rgba(92,61,46,.22);background:rgba(255,252,247,.7);padding:10px 18px;border-radius:30px;transition:.25s;cursor:pointer}
+.hero-links a:hover{background:#3e2518;color:#f7efe4;border-color:#3e2518}
 
 .form-section{padding:10px 6% 100px}
 .form-wrap{width:min(880px,100%);margin:0 auto}
@@ -480,6 +483,10 @@ button,input,textarea,select{font-family:inherit}
                 <span class="pill" id="pillPackage">—</span>
                 <span class="pill" id="pillCategory">—</span>
             </div>
+            <div class="hero-links">
+                <a href="invitations.html">Dəvətnamələrə bax →</a>
+                <a href="index.html#collections">Kolleksiyalara bax →</a>
+            </div>
         </div>
     </section>
 
@@ -859,8 +866,6 @@ button,input,textarea,select{font-family:inherit}
         if (isCouple) {
             f.push({ name: "story", type: "textarea", labelI18n: "formStory", col: "full", placeholderKey: "formStoryPlaceholder", rows: 5, forPackages: ["luxury"] });
         }
-
-        f.push({ name: "invitationLanguage", type: "select", labelI18n: "formLanguage", col: "half", options: LANGUAGE_OPTIONS, forPackages: ["video", "basic", "premium", "luxury"] });
 
         return f;
     }
@@ -1709,7 +1714,7 @@ button,input,textarea,select{font-family:inherit}
                         message: v.message || "",
                         countdown: v.date + "T" + v.time + ":00",
                         images: images.length ? images : defaultImages,
-                        invitationLanguage: v.invitationLanguage || "az",
+                        invitationLanguage: (localStorage.getItem("lunaLanguage") || v.invitationLanguage || "az"),
                         template: v.template || ""
                     };
 
