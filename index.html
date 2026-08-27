@@ -179,7 +179,7 @@ img{display:block;max-width:100%}
 .cards-subhead{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:400;color:#3E2518;text-align:center;margin:34px 0 18px;letter-spacing:.5px}
 .card-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 10px 30px rgba(62,37,24,.1);background:#EDE3D5;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s ease}
 .card-item:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(62,37,24,.18)}
-.card-item img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.card-item img{width:100%;aspect-ratio:4/5;object-fit:contain;display:block;background:#EDE3D5;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
 .card-item:hover img{transform:scale(1.06)}
 .card-item .card-cap{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(to top,rgba(30,20,12,.8),transparent);color:#fff;pointer-events:none}
 .card-item .card-cap h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;line-height:1.15}
@@ -1700,7 +1700,9 @@ var _OPENING_ALIAS = {
     "luxury-silk": "luxury-romance", "confetti-burst": "celebration-pop",
     "shooting-star": "starry-night",
     "magic-reveal": "magic-wand", "glow-door": "glowing-door",
-    "forest-walk": "ancient-forest", "book-reveal": "old-book"
+    "forest-walk": "ancient-forest", "book-reveal": "old-book",
+    "editorial-card": "luxury-romance", "fullscreen-photo": "celebration-pop",
+    "minimal": "door", "envelope": "envelope-seal"
 };
 function _openingOf(tpl) {
     if (!tpl) return null;
@@ -2318,7 +2320,7 @@ renderTemplates("all");
         if (!progressed || ordered.length >= 24) break;
         round++;
     }
-    ordered.slice(0, 24).forEach(function(tpl) {
+    ordered.slice(0, 24).forEach(function(tpl, idx) {
         var opening = _openingOf(tpl);
         var card = document.createElement("div");
         card.className = "anim-card";
@@ -2337,16 +2339,34 @@ renderTemplates("all");
                 '<p>' + lunaCategoryName(tpl.category) + ' · Açılışa bax</p>' +
             '</div>';
         strip.appendChild(card);
-        /* Canlı açılış — kartları dalğa şəklində avtomatik oynat */
-        (function(card, idx) {
-            var period = 3000;
-            var phase = (idx * 380) % period;
-            setTimeout(function() {
-                card.classList.add("live");
-                setInterval(function() { card.classList.toggle("live"); }, period);
-            }, phase);
-        })(card, i);
     });
+    /* Canlı açılış — bölmə ekrana daxil olanda dalğa şəklində avtomatik oynat */
+    var _waveTimer = null;
+    function playAnimWave() {
+        var cards = strip.querySelectorAll(".anim-card");
+        cards.forEach(function(c, i) {
+            c.classList.remove("live");
+            void c.offsetWidth;
+            setTimeout(function() { c.classList.add("live"); }, (i % 12) * 130);
+        });
+    }
+    if ("IntersectionObserver" in window) {
+        var _io = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    playAnimWave();
+                    if (_waveTimer) clearInterval(_waveTimer);
+                    _waveTimer = setInterval(playAnimWave, 4600);
+                } else if (_waveTimer) {
+                    clearInterval(_waveTimer);
+                    _waveTimer = null;
+                }
+            });
+        }, { threshold: 0.2 });
+        _io.observe(document.getElementById("animatedShowcase"));
+    } else {
+        playAnimWave();
+    }
 })();
 
 /* ===== QİYMƏT LATTİSİ (statik) ===== */
