@@ -95,6 +95,8 @@ img{display:block;max-width:100%}
 .languages button{border:0;background:transparent;color:var(--muted);font-size:8px;font-weight:500;padding:7px 10px;border-radius:20px;transition:.3s}
 .languages button:hover{background:rgba(196,168,130,.12)}
 .languages button.active{background:var(--dark);color:var(--cream)}
+.nav-cta{margin-left:14px;padding:9px 18px;border-radius:24px;background:var(--dark);color:var(--cream);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:.3s;white-space:nowrap}
+.nav-cta:hover{background:var(--gold);color:#2b2016}
 .menu-toggle{display:none;width:42px;height:42px;border:0;border-radius:50%;background:var(--dark);color:var(--cream)}
 .menu-toggle span{display:block;width:16px;height:1px;margin:4px auto;background:var(--cream);transition:.3s}
 .menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
@@ -190,6 +192,7 @@ img{display:block;max-width:100%}
 .video-card:hover::before{opacity:1}
 .video-card video,.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
 .video-card .video-yt-wrap{position:absolute;inset:0;overflow:hidden;background:#000}
+.video-card>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;display:block}
 .video-card .video-yt-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .video-card:hover video,.video-card:hover img{transform:scale(1.05)}
 .video-card:hover .video-yt-wrap img{transform:scale(1.05)}
@@ -748,7 +751,7 @@ img{display:block;max-width:100%}
 #animatedShowcase{padding:72px 0 64px;background:linear-gradient(180deg,#faf5ee 0%,#fdfbf7 100%);position:relative;overflow:hidden;}
 .anim-strip{display:flex;gap:18px;overflow-x:auto;padding:8px 4px 24px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .anim-strip::-webkit-scrollbar{display:none;}
-.anim-card{position:relative;min-width:240px;max-width:240px;scroll-snap-align:start;background:linear-gradient(180deg,rgba(255,253,249,.95),rgba(255,253,249,.7));border:1px solid rgba(212,165,116,.1);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;box-shadow:0 6px 24px rgba(45,27,18,.08);transform:perspective(800px) rotateY(0);backdrop-filter:blur(8px)}
+.anim-card{position:relative;min-width:262px;max-width:262px;scroll-snap-align:start;background:linear-gradient(180deg,rgba(255,253,249,.95),rgba(255,253,249,.7));border:1px solid rgba(212,165,116,.1);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;box-shadow:0 6px 24px rgba(45,27,18,.08);transform:perspective(800px) rotateY(0);backdrop-filter:blur(8px)}
 .anim-card:hover{transform:perspective(800px) translateY(-10px) rotateY(-2deg) rotateX(1deg);box-shadow:0 24px 60px rgba(45,27,18,.18),0 0 0 1px rgba(212,165,116,.15)}
 .anim-card::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(115deg,rgba(255,244,224,0) 42%,rgba(255,244,224,.28) 50%,rgba(255,244,224,0) 58%);transform:translateX(-120%);pointer-events:none}
 .anim-card:hover::after{transition:transform .9s ease;transform:translateX(120%)}
@@ -760,7 +763,7 @@ img{display:block;max-width:100%}
 .anim-card-body{padding:13px 15px 15px;}
 .anim-card-body h4{font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:500;color:#33200f;margin:0 0 3px;}
 .anim-card-body p{margin:0;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:#a67c52;}
-@media(max-width:768px){#animatedShowcase{padding:52px 0 44px;}.anim-card{min-width:200px;max-width:200px;}}
+@media(max-width:768px){#animatedShowcase{padding:52px 0 44px;}.anim-card{min-width:220px;max-width:220px;}}
 
 /* ===== TEMPLATE TOOLS: SEARCH + RESULTS ===== */
 .tpl-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin-bottom:20px}
@@ -1078,7 +1081,7 @@ body.has-announce .mobile-menu{padding-top:150px}
     .navbar{height:62px}
     .nav-links{display:none}
     .menu-toggle{display:block}
-    .languages{margin-left:auto;margin-right:10px}
+    .languages{display:none}
     .logo{font-size:30px}
     .hero{padding-top:140px}
     .categories-grid{grid-template-columns:repeat(2,1fr)}
@@ -1307,6 +1310,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <button data-lang="ru">RU</button>
         <button data-lang="tr">TR</button>
     </div>
+    <a href="client-form.html" class="nav-cta">Sifariş et</a>
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
 </nav>
 
@@ -1319,6 +1323,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <a href="#cards-section">Təşəkkür &amp; Paylama</a>
         <a href="#pricing">Qiymətlər</a>
         <a href="#how">Nə daxildir</a>
+        <a href="client-form.html">Dəvətnamə yarat</a>
     </div>
     <div class="mobile-languages">
         <button data-lang="az">AZ</button>
@@ -1506,7 +1511,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <p style="font-size:13px;color:rgba(247,239,228,.7);margin-bottom:40px;max-width:460px;margin-left:auto;margin-right:auto;line-height:2">Bir neçə dəqiqədə rəqəmsal dəvətnaməniz hazır olsun. Dizaynınızı seçin, məlumatlarınızı göndərin, dəvətnaməniz hazırdır.</p>
         <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
             <a href="#designs" class="btn btn-gold" style="min-height:52px;padding:0 36px;font-size:9.5px">Dizaynlara bax &nbsp;→</a>
-            <a href="#collections" class="btn" style="background:transparent;border:1px solid rgba(244,217,160,.3);color:var(--gold-light);min-height:52px;padding:0 36px;font-size:9.5px">Öz dəvətnaməni yarat</a>
+            <a href="client-form.html" class="btn" style="background:transparent;border:1px solid rgba(244,217,160,.3);color:var(--gold-light);min-height:52px;padding:0 36px;font-size:9.5px">Dəvətnamə yarat &nbsp;→</a>
         </div>
         <div style="margin-top:48px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap;opacity:.6">
             <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--gold-light)">69+</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#f7efe4">Dizayn</div></div>
@@ -2325,7 +2330,7 @@ renderTemplates("all");
         var card = document.createElement("div");
         card.className = "anim-card";
         card.addEventListener("click", function() {
-            if (typeof openPreviewModal === "function") openPreviewModal(tpl.id);
+            window.open('data/invitation.html?id=' + encodeURIComponent(tpl.id), '_blank');
         });
         card.innerHTML =
             '<div class="dt-imgwrap">' +
@@ -2985,9 +2990,7 @@ function lunaIDBLoadHome(key, cb) {
                     card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
                     card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
                     card.addEventListener("click", function() {
-                        if (vid.requestFullscreen) vid.requestFullscreen();
-                        else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
-                        vid.play().catch(function(){});
+                        openVideoModal({ videoUrl: videoSrc, isYouTube: false, title: v.title || 'Video', poster: v.thumbnail || "" });
                     });
                 }
                 grid.appendChild(card);
@@ -3030,7 +3033,7 @@ function lunaIDBLoadHome(key, cb) {
             var el = document.createElement("div");
             el.className = "card-item";
             el.innerHTML =
-                '<img src="' + gcEsc(c.image) + '" alt="' + gcEsc(c.title) + '" loading="lazy">' +
+                '<img src="' + gcEsc(c.image) + '" alt="' + gcEsc(c.title) + '" loading="lazy" onerror="this.style.background=\'#EDE3D5\';this.alt=\'Şəkil yüklənmədi\'">' +
                 '<div class="card-cap"><h4>' + gcEsc(c.title || "") + '</h4>' +
                 (c.description ? '<span>' + gcEsc(c.description) + '</span>' : '') + '</div>';
             el.addEventListener("click", function() {
@@ -3055,7 +3058,7 @@ function openImageModal(src, title) {
     m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
     m.innerHTML =
         '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
-        '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)">';
+        '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
     m.addEventListener("click", function(ev) {
         if (ev.target === m || ev.target.tagName === "IMG") m.remove();
     });
@@ -3081,7 +3084,7 @@ function openVideoModal(video) {
     } else {
         modal.innerHTML =
             '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
-            '<video src="' + video.videoUrl + '" controls autoplay playsinline style="max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>';
+            '<video src="' + video.videoUrl + '" controls autoplay playsinline preload="auto" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:85vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>';
         modal.querySelector("video").play().catch(function(){});
     }
     document.body.appendChild(modal);

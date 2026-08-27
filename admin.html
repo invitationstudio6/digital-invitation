@@ -3371,6 +3371,15 @@ function readUploadTo(input, targetId, previewId, kind){
         lunaIDBSave(blobKey, f, function() {});
         return;
     }
+    if (kind === 'image' || (f.type && f.type.indexOf('image/') === 0)) {
+        compressImageFile(f, function(dataUrl){
+            var t = document.getElementById(targetId);
+            if (t) t.value = dataUrl;
+            var p = document.getElementById(previewId);
+            if (p) { p.src = dataUrl; p.style.display = 'block'; }
+        });
+        return;
+    }
     if (f.size > 10 * 1024 * 1024) {
         if (!confirm('Fayl böyükdür (' + (f.size/1048576).toFixed(1) + ' MB). Böyük fayllar brauzerdə saxlanmaya bilər. Davam edilsin?')) { input.value = ''; return; }
     }
@@ -3382,6 +3391,30 @@ function readUploadTo(input, targetId, previewId, kind){
         if (p) { p.src = e.target.result; p.style.display = 'block'; }
     };
     r.readAsDataURL(f);
+}
+
+/* Compress uploaded images to a web-safe size so they fit localStorage */
+function compressImageFile(file, cb) {
+    var max = 1100, quality = 0.82;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+            try {
+                var scale = Math.min(1, max / Math.max(img.width, img.height));
+                var cw = Math.max(1, Math.round(img.width * scale));
+                var ch = Math.max(1, Math.round(img.height * scale));
+                var canvas = document.createElement('canvas');
+                canvas.width = cw; canvas.height = ch;
+                canvas.getContext('2d').drawImage(img, 0, 0, cw, ch);
+                cb(canvas.toDataURL('image/jpeg', quality));
+            } catch (err) { cb(e.target.result); }
+        };
+        img.onerror = function() { cb(e.target.result); };
+        img.src = e.target.result;
+    };
+    reader.onerror = function() { cb(''); };
+    reader.readAsDataURL(file);
 }
 
 function resetVideoForm(){
