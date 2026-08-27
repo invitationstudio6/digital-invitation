@@ -1415,14 +1415,11 @@ button,input,textarea,select{font-family:inherit}
             card.className = "pkg-pick" + (pkg.id === packageName ? " selected" : "") + (pkg.featured ? " featured" : "");
             card.setAttribute("data-pkg", pkg.id);
             card.style.setProperty("--cat-gradient", catGradient);
-            var tagline = (pkg.tagline && pkg.tagline[LUNA_LANG]) || (pkg.tagline && pkg.tagline.az) || "";
-            var labels = (pkg.featureLabels && pkg.featureLabels[LUNA_LANG]) || (pkg.featureLabels && pkg.featureLabels.az) || {};
+            var tagline = pkg.tagline || "";
             var featsHtml = "";
             var iconMap = { video: "🎬", basic: "✨", premium: "💎", luxury: "👑" };
-            Object.keys(pkg.features).forEach(function(key) {
-                if (pkg.features[key]) {
-                    featsHtml += '<div class="pkg-pick-feat">' + (labels[key] || key) + '</div>';
-                }
+            (pkg.features || []).forEach(function(f) {
+                if (f) featsHtml += '<div class="pkg-pick-feat">' + f + '</div>';
             });
             var catPrice = (typeof lunaGetCategoryPrice === "function") ? lunaGetCategoryPrice(category, pkg.id) : pkg.price;
             card.innerHTML =
