@@ -2733,6 +2733,12 @@ function saveGreetingCards(cards){
     localStorage.setItem('luna_greeting_cards', JSON.stringify(cards));
 }
 
+function lunaEscapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(x) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[x];
+    });
+}
+
 function renderGreetingCards(){
     var cards = getGreetingCards();
     cards.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
