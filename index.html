@@ -2983,7 +2983,7 @@ function lunaIDBLoadHome(key, cb) {
                 } else {
                     var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
                     card.innerHTML =
-                        '<video muted loop preload="metadata"' + posterAttr + ' src="' + videoSrc + '"></video>' +
+                        '<video autoplay muted loop playsinline preload="metadata"' + posterAttr + ' src="' + videoSrc + '"></video>' +
                         '<div class="video-play"></div>' +
                         '<span class="video-badge">Video</span>' +
                         '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · Animasiyalı</p></div>';
@@ -3061,7 +3061,7 @@ function openImageModal(src, title) {
         '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
         '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:imgZoom .35s ease" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
     m.addEventListener("click", function(ev) {
-        if (ev.target === m || ev.target.tagName === "IMG") m.remove();
+        if (ev.target === m) m.remove();
     });
     document.body.appendChild(m);
 }
@@ -3083,19 +3083,30 @@ function openVideoModal(video) {
                 '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
             '</div>';
     } else {
-        modal.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
-            '<video src="' + video.videoUrl + '" controls autoplay playsinline preload="auto" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:85vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>';
+        function showVidErr() {
+            if (modal.querySelector(".vid-err")) return;
+            var msg = document.createElement("div");
+            msg.className = "vid-err";
+            msg.style.cssText = "color:#fff;padding:16px 22px;text-align:center;font-size:13px;max-width:90vw;line-height:1.7";
+            msg.innerHTML = "Video açıla bilmədi. Faylın formatı brauzər tərəfindən vizual olaraq dəstəklənməyə bilər (məsələn iPhone HEVC videoları — səs eşidilər, amma təsvir göstərilməz). MP4 (H.264) formatına çevirib yenidən yükləyin.<br><a href='" + video.videoUrl + "' download target='_blank' rel='noopener' style='color:#d8b98f;text-decoration:underline'>Videonu yüklə</a>";
+            wrap.appendChild(msg);
+        }
+        var wrap = document.createElement("div");
+        wrap.style.cssText = "position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px";
+        wrap.innerHTML =
+            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<video src="' + video.videoUrl + '" controls autoplay playsinline preload="auto" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
+            '<a href="' + video.videoUrl + '" download target="_blank" rel="noopener" style="color:#d8b98f;font-size:12px;text-decoration:underline">Videonu yüklə</a>';
+        modal.appendChild(wrap);
         var _vv = modal.querySelector("video");
         if (_vv) {
-            _vv.addEventListener("error", function() {
-                var msg = document.createElement("div");
-                msg.style.cssText = "color:#fff;padding:22px;text-align:center;font-size:13px;max-width:90vw";
-                msg.textContent = "Video yüklənə bilmədi və ya brauzər tərəfindən dəstəklənmir.";
-                _vv.parentNode.insertBefore(msg, _vv.nextSibling);
-            });
+            _vv.addEventListener("error", function() { showVidErr(); });
             var _pp = _vv.play();
             if (_pp && _pp.catch) _pp.catch(function(){});
+            /* Audio-only / undecodable video track (e.g. HEVC): no error fires but no frames render */
+            setTimeout(function() {
+                if (_vv && _vv.readyState >= 2 && _vv.videoWidth === 0 && _vv.videoHeight === 0) showVidErr();
+            }, 1600);
         }
     }
     document.body.appendChild(modal);
