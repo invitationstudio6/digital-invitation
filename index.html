@@ -182,6 +182,7 @@ img{display:block;max-width:100%}
 .card-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 10px 30px rgba(62,37,24,.1);background:#EDE3D5;transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s ease}
 .card-item:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(62,37,24,.18)}
 .card-item img{width:100%;aspect-ratio:4/5;object-fit:contain;display:block;background:#EDE3D5;transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+@keyframes imgZoom{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
 .card-item:hover img{transform:scale(1.06)}
 .card-item .card-cap{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(to top,rgba(30,20,12,.8),transparent);color:#fff;pointer-events:none}
 .card-item .card-cap h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;line-height:1.15}
@@ -1149,7 +1150,7 @@ body.has-announce .mobile-menu{padding-top:150px}
 .design-thumb:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(45,27,18,.12),0 0 0 1px rgba(212,165,116,.12)}
 .design-thumb .dt-imgwrap{position:relative;overflow:hidden;aspect-ratio:3/4}
 .design-thumb .design-thumb-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.19,1,.22,1)}
-.design-thumb:hover .design-thumb-img{transform:scale(1.06)}
+.design-thumb:hover .design-thumb-img{transform:scale(1.06);filter:brightness(.8)}
 .design-thumb .dt-meta{padding:10px 12px 6px;background:#fff}
 .design-thumb .dt-meta .dt-cat{font-size:7px;letter-spacing:1.8px;color:var(--gold)}
 .design-thumb .dt-meta h4{font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:500;color:var(--dark);margin:3px 0 4px;line-height:1.15}
@@ -2330,7 +2331,7 @@ renderTemplates("all");
         var card = document.createElement("div");
         card.className = "anim-card";
         card.addEventListener("click", function() {
-            window.open('data/invitation.html?id=' + encodeURIComponent(tpl.id), '_blank');
+            window.open('data/invitation.html?template=' + encodeURIComponent(tpl.id), '_blank');
         });
         card.innerHTML =
             '<div class="dt-imgwrap">' +
@@ -3058,7 +3059,7 @@ function openImageModal(src, title) {
     m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
     m.innerHTML =
         '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
-        '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
+        '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:imgZoom .35s ease" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
     m.addEventListener("click", function(ev) {
         if (ev.target === m || ev.target.tagName === "IMG") m.remove();
     });
@@ -3085,7 +3086,17 @@ function openVideoModal(video) {
         modal.innerHTML =
             '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
             '<video src="' + video.videoUrl + '" controls autoplay playsinline preload="auto" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:85vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>';
-        modal.querySelector("video").play().catch(function(){});
+        var _vv = modal.querySelector("video");
+        if (_vv) {
+            _vv.addEventListener("error", function() {
+                var msg = document.createElement("div");
+                msg.style.cssText = "color:#fff;padding:22px;text-align:center;font-size:13px;max-width:90vw";
+                msg.textContent = "Video yüklənə bilmədi və ya brauzər tərəfindən dəstəklənmir.";
+                _vv.parentNode.insertBefore(msg, _vv.nextSibling);
+            });
+            var _pp = _vv.play();
+            if (_pp && _pp.catch) _pp.catch(function(){});
+        }
     }
     document.body.appendChild(modal);
     modal.addEventListener("click", function(e) { if (e.target === modal) modal.remove(); });
