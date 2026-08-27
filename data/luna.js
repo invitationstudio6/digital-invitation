@@ -87,9 +87,66 @@ function _lunaFetchRemoteInvitation(invitationId) {
 }
 
 function lunaSaveInvitation(invitation) {
-    if (!invitation || !invitation.id) return;
-    localStorage.setItem("luna_" + invitation.id, JSON.stringify(invitation));
-    localStorage.setItem("luna_last_invitation", invitation.id);
+    if (!invitation || !invitation.id) return false;
+    var heavy = ["videoUrl", "video", "images", "photoInvitation", "logoUrl", "music"];
+    function trySave(obj) {
+        try {
+            localStorage.setItem("luna_" + obj.id, JSON.stringify(obj));
+            return true;
+        } catch (e) { return false; }
+    }
+    if (trySave(invitation)) {
+        try { localStorage.setItem("luna_last_invitation", invitation.id); } catch (e) {}
+        return true;
+    }
+    /* Quota exceeded — strip heavy media progressively and retry */
+    var copy = JSON.parse(JSON.stringify(invitation));
+    for (var i = 0; i < heavy.length; i++) {
+        if (copy[heavy[i]] !== undefined) delete copy[heavy[i]];
+        if (trySave(copy)) {
+            try { localStorage.setItem("luna_last_invitation", invitation.id); } catch (e) {}
+            return true;
+        }
+    }
+    return false;
+}
+
+/* ===== IndexedDB media store (shared with admin / home / viewer) ===== */
+var _lunaIDB = null;
+function lunaOpenIDB(cb) {
+    if (_lunaIDB) { cb(_lunaIDB); return; }
+    if (!window.indexedDB) { cb(null); return; }
+    try {
+        var req = indexedDB.open("LunaFiles", 1);
+        req.onupgradeneeded = function(e) {
+            var db = e.target.result;
+            if (!db.objectStoreNames.contains("blobs")) db.createObjectStore("blobs");
+        };
+        req.onsuccess = function(e) { _lunaIDB = e.target.result; cb(_lunaIDB); };
+        req.onerror = function() { cb(null); };
+    } catch (e) { cb(null); }
+}
+function lunaIDBSave(key, blob, cb) {
+    lunaOpenIDB(function(db) {
+        if (!db) { cb && cb(false); return; }
+        try {
+            var tx = db.transaction("blobs", "readwrite");
+            tx.objectStore("blobs").put(blob, key);
+            tx.oncomplete = function() { cb && cb(true); };
+            tx.onerror = function() { cb && cb(false); };
+        } catch (e) { cb && cb(false); }
+    });
+}
+function lunaIDBLoad(key, cb) {
+    lunaOpenIDB(function(db) {
+        if (!db) { cb && cb(null); return; }
+        try {
+            var tx = db.transaction("blobs", "readonly");
+            var rq = tx.objectStore("blobs").get(key);
+            rq.onsuccess = function() { cb && cb(rq.result || null); };
+            rq.onerror = function() { cb && cb(null); };
+        } catch (e) { cb && cb(null); }
+    });
 }
 
 function lunaCountdownTarget(invitation) {

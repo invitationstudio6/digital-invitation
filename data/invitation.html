@@ -6285,7 +6285,14 @@ if (invitation.videoUrl) {
         video.loop = true;
         video.playsInline = true;
         video.className = "hero-video-bg";
-        video.src = invitation.videoUrl;
+        var _vu = invitation.videoUrl;
+        if (_vu.indexOf("__idb:") === 0) {
+            lunaIDBLoad(_vu.slice(6), function(blob) {
+                if (blob) video.src = URL.createObjectURL(blob);
+            });
+        } else {
+            video.src = _vu;
+        }
         hero.insertBefore(video, hero.firstChild);
     }
 
@@ -6445,7 +6452,6 @@ if (customerImages.length === 0) {
 
     galleryImages.forEach(function(src, i) {
         var img = document.createElement("img");
-        img.src = src;
         img.alt = lunaDisplayNames(invitation) + " — " + (i + 1);
         img.loading = "lazy";
         img.dataset.index = i;
@@ -6459,6 +6465,14 @@ if (customerImages.length === 0) {
                 document.getElementById("gallerySection").hidden = true;
             }
         };
+
+        if (src.indexOf("__idb:") === 0) {
+            lunaIDBLoad(src.slice(6), function(blob) {
+                if (blob) img.src = URL.createObjectURL(blob);
+            });
+        } else {
+            img.src = src;
+        }
 
         galleryEl.appendChild(img);
     });

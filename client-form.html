@@ -1360,7 +1360,24 @@ button,input,textarea,select{font-family:inherit}
             var orders = JSON.parse(localStorage.getItem("luna_orders") || "[]");
             orders.unshift(order);
             localStorage.setItem("luna_orders", JSON.stringify(orders));
-        } catch(e) {}
+        } catch(e) {
+            /* Quota — keep a light version of the order and trim old ones */
+            try {
+                var o2 = JSON.parse(localStorage.getItem("luna_orders") || "[]");
+                if (order.data) {
+                    order.data = {
+                        category: order.data.category, package: order.data.package,
+                        design: order.data.design, names: order.data.names,
+                        date: order.data.date, time: order.data.time,
+                        venue: order.data.venue, location: order.data.location,
+                        contact: order.data.contact
+                    };
+                }
+                o2.unshift(order);
+                while (o2.length > 25) o2.pop();
+                localStorage.setItem("luna_orders", JSON.stringify(o2));
+            } catch(e2) {}
+        }
     }
 
     function submitProductOrder() {
@@ -1681,6 +1698,30 @@ button,input,textarea,select{font-family:inherit}
         });
     }
 
+    /* Store a single File in IndexedDB, return "__idb:<key>" ref (or "" on failure) */
+    function storeSingleToIdb(file, cb) {
+        if (!file) { cb(""); return; }
+        var key = "cf_blob_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8) + "_" + String(file.name || "file").replace(/[^a-z0-9]/gi, "_");
+        lunaIDBSave(key, file, function(ok) { cb(ok ? "__idb:" + key : ""); });
+    }
+
+    /* Store multiple Files in IndexedDB, return array of "__idb:<key>" refs */
+    function storeFilesToIdbRefs(files) {
+        return new Promise(function(resolve) {
+            var list = Array.prototype.slice.call(files || []).slice(0, 12);
+            if (!list.length) { resolve([]); return; }
+            var refs = [];
+            var pending = list.length;
+            list.forEach(function(f, i) {
+                var key = "cf_blob_" + Date.now() + "_" + i + "_" + Math.random().toString(36).slice(2, 8);
+                lunaIDBSave(key, f, function(ok) {
+                    refs[i] = ok ? "__idb:" + key : "";
+                    if (--pending === 0) resolve(refs.filter(Boolean));
+                });
+            });
+        });
+    }
+
     function collectValues() {
         var values = {};
         var form = document.getElementById("invitationForm");
@@ -1755,20 +1796,13 @@ button,input,textarea,select{font-family:inherit}
             ? imageText.split(/\s+/).filter(function(url) { return /^https?:\/\//i.test(url); })
             : [];
 
-        filesToDataUrls(v.photos).then(function(fromFiles) {
+        storeFilesToIdbRefs(v.photos).then(function(fromFiles) {
             var videoFile = v.videoFile && v.videoFile[0] ? v.videoFile[0] : null;
             var logoFile = v.logo && v.logo[0] ? v.logo[0] : null;
 
-            function readLogo(callback) {
-                if (!logoFile) { callback(null); return; }
-                var reader = new FileReader();
-                reader.onload = function(e) { callback(e.target.result); };
-                reader.onerror = function() { callback(null); };
-                reader.readAsDataURL(logoFile);
-            }
-
-            readLogo(function(logoDataUrl) {
-                function proceedWithVideo(videoDataUrl) {
+            storeSingleToIdb(videoFile, function(videoRef) {
+                storeSingleToIdb(logoFile, function(logoRef) {
+                function proceedWithVideo() {
                     var images = fromText.concat(fromFiles);
 
                     var data = {
@@ -1792,8 +1826,8 @@ button,input,textarea,select{font-family:inherit}
                         template: v.template || ""
                     };
 
-                    if (videoDataUrl) data.videoUrl = videoDataUrl;
-                    if (logoDataUrl) data.logoUrl = logoDataUrl;
+                    if (videoRef) data.videoUrl = videoRef;
+                    if (logoRef) data.logoUrl = logoRef;
                     if (Object.keys(extraFields).length) {
                         data.extraFields = extraFields;
                         data.extraInfo = extraText;
@@ -1923,16 +1957,11 @@ button,input,textarea,select{font-family:inherit}
                     document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
                 }
 
-                if (videoFile) {
-                    var reader = new FileReader();
-                    reader.onload = function(ev) { proceedWithVideo(ev.target.result); };
-                    reader.readAsDataURL(videoFile);
-                } else {
-                    proceedWithVideo(null);
-                }
+                proceedWithVideo();
             });
         });
     });
+});
 
     // ===== COPY LINK =====
     window.copyLink = function() {
