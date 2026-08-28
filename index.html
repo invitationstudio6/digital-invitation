@@ -2932,15 +2932,22 @@ function lunaIDBLoadHome(key, cb) {
     if (!grid) return;
 
     function isYouTube(url) {
-        return /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)/.test(url || "")
-            || /(?:music\.|m\.)?youtube\.com\/watch\?v=/.test(url || "")
-            || /youtube-nocookie\.com\/embed\//.test(url || "");
+        url = String(url || "");
+        return /(?:^|[^a-z0-9])(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url)
+            && /(\?|&|&amp;)v=|youtu\.be\/|\/(?:watch|embed|shorts|live|clip|playlist|v)\//.test(url);
     }
     function youTubeId(url) {
-        var m = (url || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/)
-                || (url || "").match(/(?:music\.|m\.)?youtube\.com\/watch\?v=([\w-]{6,})/)
-                || (url || "").match(/youtube-nocookie\.com\/embed\/([\w-]{6,})/);
-        return m ? m[1] : "";
+        url = String(url || "");
+        var m = url.match(/[?&](?:v|video_id)=([\w-]{6,})/);
+        if (m) return m[1];
+        m = url.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/);
+        if (m) return m[1];
+        m = url.match(/youtu\.be\/([\w-]{6,})/);
+        if (m) return m[1];
+        /* Fallback: any 11-char base64-ish token inside a known youtube domain */
+        m = url.match(/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)\/[^?]*?([\w-]{11})/);
+        if (m) return m[1];
+        return "";
     }
     function catLabel(cat) {
         var map = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthday:"Ad Günü", graduation:"Məzuniyyət", "baby-shower":"Körpə Partisi", business:"Biznes", other:"Digər" };
@@ -3151,7 +3158,9 @@ function openVideoModal(video) {
 
     if (video.isYouTube) {
         var ytUrl = video.videoUrl || "";
-        var ytM = ytUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+        var ytM = ytUrl.match(/[?&](?:v|video_id)=([\w-]{6,})/)
+            || ytUrl.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
+            || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
         var ytId = ytM ? ytM[1] : "";
         var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?autoplay=1&rel=0&playsinline=1" : ytUrl;
         modal.innerHTML =
