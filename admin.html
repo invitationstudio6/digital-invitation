@@ -1805,10 +1805,47 @@ function getVideos(){
 function saveVideos(videos){
     try {
         localStorage.setItem('luna_video_invitations', JSON.stringify(videos));
+        lunaPublishPublicCatalog();
     } catch(e) {
         showToast('Yaddaş doludur — video faylı çox böyükdür. URL istifadə edin.');
         throw e;
     }
+}
+
+/* =====================================================
+   PUBLIC CATALOG — kart & video stilləri hər cihazda görünsün.
+   Admin bunları luna_invitations (public anon read) cədvəlinə yazar;
+   müştəri formu oradan oxuyub vizual seçim göstərir.
+   Yalnız yüngül sahələr (şəkil URL, başlıq) — böyük base64 deyil.
+===================================================== */
+function lunaPublishPublicCatalog(){
+    var cfg = window.LUNA_SUPABASE;
+    if(!cfg || !cfg.url) return;
+    var client = (window.LunaSync && typeof LunaSync.client === 'function') ? LunaSync.client() : null;
+    var anonKey = cfg.anonKey || '';
+    try {
+        var cards = [];
+        try { cards = JSON.parse(localStorage.getItem('luna_greeting_cards') || '[]'); } catch(e){}
+        var pubCards = cards.filter(function(c){ return c && c.active !== false && c.image; })
+            .map(function(c){ return { id: c.id, title: c.title, kind: c.kind, image: c.image, link: c.link || '' }; });
+        var videos = [];
+        try { videos = JSON.parse(localStorage.getItem('luna_video_invitations') || '[]'); } catch(e){}
+        var pubVideos = videos.filter(function(v){ return v && v.active !== false; })
+            .map(function(v){ return { id: v.id, title: v.title, category: v.category, thumbnail: v.thumbnail || '', url: v.url || '' }; });
+
+        function send(routeKey, table, body){
+            if(client){
+                client.from(table).upsert({ id: routeKey, value: body, updated_at: new Date().toISOString() })
+                    .then(function(){})
+                    .catch(function(){});
+            } else if (anonKey && table === 'luna_kv' && anonKey) {
+                /* luna_kv anon insert mümkün deyil — ancaq authenticated client ilə yazılır */
+            }
+        }
+        /* luna_invitations cədvəlinə yaz (public anon read) */
+        send('__pub_greeting_cards', 'luna_invitations', { cards: pubCards });
+        send('__pub_video_invitations', 'luna_invitations', { videos: pubVideos });
+    } catch(e){}
 }
 
 /* =====================================================
@@ -2731,6 +2768,7 @@ function getGreetingCards(){
 }
 function saveGreetingCards(cards){
     localStorage.setItem('luna_greeting_cards', JSON.stringify(cards));
+    lunaPublishPublicCatalog();
 }
 
 function lunaEscapeHtml(s) {

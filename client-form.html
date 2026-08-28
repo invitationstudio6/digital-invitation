@@ -1354,23 +1354,130 @@ button,input,textarea,select{font-family:inherit}
         return p["name" + suffix] || p.nameAz || p.nameEn || p.id;
     }
 
+    var _pubCatalog = { greetingCards: [], videoInvitations: [] };
+    var _pubCatalogLoaded = false;
+
+    function lunaLoadPublicCatalog() {
+        var cfg = window.LUNA_SUPABASE;
+        if (!cfg || !cfg.url || !cfg.anonKey) return;
+        var base = cfg.url + "/rest/v1/luna_invitations";
+        function getOne(id, cb) {
+            fetch(base + "?select=value&id=eq." + encodeURIComponent(id), {
+                headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+            }).then(function(r){ return r.json(); }).then(function(rows){
+                cb(rows && rows[0] ? rows[0].value : null);
+            }).catch(function(){ cb(null); });
+        }
+        getOne("__pub_greeting_cards", function(v){
+            if (v && v.cards) _pubCatalog.greetingCards = v.cards;
+            getOne("__pub_video_invitations", function(v2){
+                if (v2 && v2.videos) _pubCatalog.videoInvitations = v2.videos;
+                _pubCatalogLoaded = true;
+                refreshProductStyleGrid();
+            });
+        });
+    }
+
     function productStyleOptions(ptype) {
         var out = [];
+        var seen = {};
+        function push(id, name, image, icon) {
+            if (seen[id]) return;
+            seen[id] = 1;
+            out.push({ id: id, name: name, image: image, icon: icon });
+        }
         try {
             if (ptype.styleSource === "greetingCards") {
+                (_pubCatalog.greetingCards || []).forEach(function(c) {
+                    if (!c.image) return;
+                    push("gc_" + c.id, c.title || "Kart", c.image, "💌");
+                });
                 var cards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
                 cards.filter(function(c) { return c.active !== false; }).forEach(function(c) {
-                    out.push({ id: "gc_" + c.id, name: c.title || "Kart", image: c.image || "", icon: "💌" });
+                    if (!c.image) return;
+                    push("gc_" + c.id, c.title || "Kart", c.image, "💌");
                 });
             } else if (ptype.styleSource === "videoInvitations") {
+                (_pubCatalog.videoInvitations || []).forEach(function(v) {
+                    push("vi_" + v.id, v.title || "Video", v.thumbnail || "", "🎬");
+                });
                 var vids = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
                 vids.filter(function(v) { return v.active !== false; }).forEach(function(v) {
-                    out.push({ id: "vi_" + v.id, name: v.title || "Video", image: v.thumbnail || "", icon: "🎬" });
+                    push("vi_" + v.id, v.title || "Video", v.thumbnail || "", "🎬");
                 });
             }
         } catch (e) {}
         return out;
     }
+
+    function refreshProductStyleGrid() {
+        var wrap = document.getElementById("productWrap");
+        var ptype = getProductTypes().find(function(p) { return p.id === selectedProduct; });
+        if (!wrap || !ptype || !ptype.styleSource) return;
+        var sOpts = productStyleOptions(ptype);
+        if (!sOpts.length) return;
+
+        var grid = document.getElementById("prodStyleGrid");
+        var hs = document.getElementById("prodStyle");
+        if (!grid || !hs) {
+            var fld = document.createElement("div");
+            fld.className = "form-field";
+            fld.style.cssText = "grid-column:1/-1;order:-1;margin-bottom:6px;";
+            var lbl = document.createElement("label");
+            lbl.textContent = "Dizayn seçin *";
+            fld.appendChild(lbl);
+            grid = document.createElement("div");
+            grid.className = "prod-style-grid";
+            grid.id = "prodStyleGrid";
+            fld.appendChild(grid);
+            hs = document.createElement("input");
+            hs.type = "hidden";
+            hs.id = "prodStyle";
+            hs.setAttribute("data-pf", "__style");
+            hs.setAttribute("data-prequired", "1");
+            hs.value = "";
+            wrap.insertBefore(fld, wrap.firstChild);
+            wrap.appendChild(hs);
+        }
+
+        var prevSel = hs.value || "";
+        grid.innerHTML = "";
+        sOpts.forEach(function(o) {
+            var cell = document.createElement("div");
+            cell.className = "prod-style" + (o.id === prevSel ? " selected" : "");
+            cell.setAttribute("data-style", o.id);
+            if (o.image) {
+                var img = document.createElement("img");
+                img.src = o.image;
+                img.loading = "lazy";
+                img.onerror = function(){ this.style.display = "none"; };
+                cell.appendChild(img);
+            } else {
+                var ic = document.createElement("div");
+                ic.className = "prod-style-ico";
+                ic.textContent = o.icon || "✦";
+                cell.appendChild(ic);
+            }
+            var b = document.createElement("b");
+            b.textContent = o.name;
+            cell.appendChild(b);
+            grid.appendChild(cell);
+        });
+        if (!window.__lunaStyleClickBound) {
+            window.__lunaStyleClickBound = true;
+            wrap.addEventListener("click", function(e) {
+                var cell = e.target && e.target.closest ? e.target.closest(".prod-style") : null;
+                if (!cell) return;
+                var g = document.getElementById("prodStyleGrid");
+                var h = document.getElementById("prodStyle");
+                if (!g || !h) return;
+                g.querySelectorAll(".prod-style").forEach(function(c) { c.classList.remove("selected"); });
+                cell.classList.add("selected");
+                h.value = cell.getAttribute("data-style");
+            });
+        }
+    }
+    lunaLoadPublicCatalog();
 
     var selectedProduct = (function() {
         var pp = new URLSearchParams(window.location.search).get("product");
