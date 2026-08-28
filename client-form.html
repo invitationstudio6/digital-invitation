@@ -1174,9 +1174,13 @@ button,input,textarea,select{font-family:inherit}
         var hidden = document.getElementById("selectedTemplate");
         if (!grid || !hidden) return;
         var templates = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
-        var filtered = templates.filter(function(t) {
-            return t.category === category && (t.packages ? t.packages.indexOf(packageName) !== -1 : true);
-        });
+        function matchCat(t) { return t.category === category; }
+        function matchPkg(t) { return t.packages ? t.packages.indexOf(packageName) !== -1 : true; }
+        var filtered = templates.filter(function(t) { return matchCat(t) && matchPkg(t); });
+        /* Fallback: if this exact category+package has no designs, show the
+           category's designs (so every category always has selectable options). */
+        if (filtered.length === 0) filtered = templates.filter(function(t) { return matchCat(t); });
+        if (filtered.length === 0) filtered = templates;
         if (filtered.length === 0) {
             grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:11px">Bu paket v\u00e9 kateqoriya \u00fc\u00e7\u00fcn dizayn yoxdur.</div>';
             hidden.value = "";
@@ -1832,13 +1836,54 @@ button,input,textarea,select{font-family:inherit}
             html += '<div class="form-field full" style="animation-delay:.15s" data-field="music"><label>Musiqi linki</label><input type="url" name="music" placeholder="https://.../song.mp3"></div>';
         }
         if (packageName === "video") {
-            html += '<div class="form-field full" style="animation-delay:.05s" data-field="videoFile"><label>Video yüklə</label><input type="file" name="videoFile" accept="video/*"></div>';
+            html += '<div class="form-field full" style="animation-delay:.05s" data-field="videoFile"><label>Video yüklə</label><input type="file" name="videoFile" id="lunaVideoFile" accept="video/*"><div id="lunaVideoWarn" style="display:none;margin-top:8px;padding:10px 12px;border-radius:8px;background:#fff4e6;border:1px solid #f0c36d;color:#8a5a00;font-size:11px;line-height:1.5"></div><div id="lunaVideoOk" style="display:none;margin-top:8px;padding:10px 12px;border-radius:8px;background:#eafaf1;border:1px solid #a3d9b1;color:#1e7a44;font-size:11px"></div></div>';
         }
         if (!html) {
             html = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Bu paketdə əlavə media sahəsi yoxdur.</div>';
         }
         grid.innerHTML = html;
+        bindVideoCompatCheck();
         applyVisibility();
+    }
+
+    /* Warn immediately if the client's uploaded video won't show video frames
+       (e.g. iPhone HEVC files that play audio but no picture in many browsers). */
+    function bindVideoCompatCheck() {
+        var input = document.getElementById("lunaVideoFile");
+        if (!input) return;
+        input.addEventListener("change", function() {
+            var f = this.files && this.files[0];
+            var warn = document.getElementById("lunaVideoWarn");
+            var ok = document.getElementById("lunaVideoOk");
+            if (warn) warn.style.display = "none";
+            if (ok) ok.style.display = "none";
+            if (!f) return;
+            var url = URL.createObjectURL(f);
+            var v = document.createElement("video");
+            v.preload = "metadata";
+            v.muted = true;
+            var done = false;
+            function finish(frames) {
+                if (done) return; done = true;
+                URL.revokeObjectURL(url);
+                if (frames > 0) {
+                    if (ok) { ok.textContent = "✓ Video uyğundur — təsvir və səs oynadılacaq."; ok.style.display = "block"; }
+                } else {
+                    if (warn) {
+                        warn.innerHTML = "⚠ Bu video bu brauzerdə <b>təsvirsiz</b> oynadıla bilər (iPhone/HEVC faylları — yalnız səs eşidilər).<br>Universal görünmə üçün videonu <b>MP4 (H.264) + AAC</b> formatına çevirib yenidən yükləyin.";
+                        warn.style.display = "block";
+                    }
+                }
+            }
+            v.addEventListener("loadedmetadata", function() {
+                finish(v.videoWidth);
+            });
+            v.addEventListener("error", function() {
+                finish(null);
+            });
+            v.src = url;
+            setTimeout(function() { if (typeof v.videoWidth === "number" && v.videoWidth !== 0) finish(v.videoWidth); }, 4000);
+        });
     }
 
     function renderPreviewSummary() {
@@ -2041,6 +2086,9 @@ button,input,textarea,select{font-family:inherit}
                 invitationId = lunaCreateSlug(v.eventName);
                 break;
         }
+
+        /* Same-name clients must never overwrite each other's links */
+        invitationId = lunaUniqueInvitationId(invitationId);
 
         var imageText = v.images || "";
         var fromText = imageText

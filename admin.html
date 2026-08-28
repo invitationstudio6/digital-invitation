@@ -758,6 +758,7 @@ input,select,textarea{max-width:100%;}
                     <label>Kart növü</label>
                     <select id="gcardKind">
                         <option value="thankyou">Təşəkkür Kartı</option>
+                        <option value="invitation">Dəvət Kartı</option>
                         <option value="distribution">Paylama Kartı</option>
                     </select>
                 </div>
@@ -2793,7 +2794,7 @@ function renderGreetingCards(){
         var img = c.image
             ? '<img src="' + lunaEscapeHtml(c.image) + '" alt="' + lunaEscapeHtml(c.title) + '">'
             : '<div style="width:100%;height:200px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">ŞƏKİL</div>';
-        var kindLabel = c.kind === 'thankyou' ? 'Təşəkkür' : 'Paylama';
+        var kindLabel = c.kind === 'invitation' ? 'Dəvət' : (c.kind === 'thankyou' ? 'Təşəkkür' : 'Paylama');
         var statusBadge = c.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
         card.innerHTML =
             img +

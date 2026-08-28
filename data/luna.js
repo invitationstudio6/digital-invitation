@@ -18,6 +18,24 @@ function lunaCreateSlug(text) {
         .replace(/^-+|-+$/g, "");
 }
 
+/* Keep a human-friendly slug but avoid collisions between clients with the same
+   name. If localStorage already holds luna_<id>, append -2, -3, ... so their
+   invitation links never overwrite each other. */
+function lunaUniqueInvitationId(base) {
+    var id = base || "invitation";
+    var n = 2;
+    while (true) {
+        var existing = null;
+        try { existing = localStorage.getItem("luna_" + id); } catch (e) {}
+        if (!existing) return id;
+        var suffix = "-" + n;
+        var candidate = base + suffix;
+        if (candidate.length <= 48) id = candidate;
+        else id = (base.slice(0, Math.max(1, 48 - 3)) + suffix);
+        n++;
+    }
+}
+
 function lunaEscapeHtml(text) {
     return String(text || "")
         .replace(/&/g, "&amp;")

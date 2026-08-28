@@ -1496,6 +1496,9 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <div class="cards-subhead">Təşəkkür Kartları</div>
         <div class="cards-grid" id="thankYouGrid"></div>
         <div id="thankYouEmpty" class="cards-empty" style="display:none">Hələ təşəkkür kartı əlavə edilməyib.</div>
+        <div class="cards-subhead">Dəvət Kartı</div>
+        <div class="cards-grid" id="invitationGrid"></div>
+        <div id="invitationEmpty" class="cards-empty" style="display:none">Hələ dəvət kartı əlavə edilməyib.</div>
         <div class="cards-subhead">Paylama Kartları</div>
         <div class="cards-grid" id="distributionGrid"></div>
         <div id="distributionEmpty" class="cards-empty" style="display:none">Hələ paylama kartı əlavə edilməyib.</div>
@@ -3009,14 +3012,8 @@ function lunaIDBLoadHome(key, cb) {
     } catch(e) {}
 })();
 
-/* ===== GREETING CARDS (thank-you & distribution) ===== */
+/* ===== GREETING CARDS (thank-you, invitation, distribution) ===== */
 (function() {
-    var tyGrid = document.getElementById("thankYouGrid");
-    var dGrid = document.getElementById("distributionGrid");
-    var tyEmpty = document.getElementById("thankYouEmpty");
-    var dEmpty = document.getElementById("distributionEmpty");
-    if (!tyGrid || !dGrid) return;
-
     function gcEsc(s) {
         return String(s == null ? "" : s).replace(/[&<>"']/g, function(x) {
             return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[x];
@@ -3025,30 +3022,39 @@ function lunaIDBLoadHome(key, cb) {
 
     try {
         var cards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
-        var ty = cards.filter(function(c) { return c.kind === "thankyou" && c.active !== false && c.image; })
-                      .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
-        var dp = cards.filter(function(c) { return c.kind === "distribution" && c.active !== false && c.image; })
-                      .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
 
-        function makeCard(c) {
-            var el = document.createElement("div");
-            el.className = "card-item";
-            el.innerHTML =
-                '<img src="' + gcEsc(c.image) + '" alt="' + gcEsc(c.title) + '" loading="lazy" onerror="this.style.background=\'#EDE3D5\';this.alt=\'Şəkil yüklənmədi\'">' +
-                '<div class="card-cap"><h4>' + gcEsc(c.title || "") + '</h4>' +
-                (c.description ? '<span>' + gcEsc(c.description) + '</span>' : '') + '</div>';
-            el.addEventListener("click", function() {
-                if (c.link) { window.open(c.link, "_blank", "noopener"); }
-                else { openImageModal(c.image, c.title || ""); }
+        function fill(kind, gridId, emptyId) {
+            var grid = document.getElementById(gridId);
+            if (!grid) return;
+            var empty = document.getElementById(emptyId);
+            var list = cards.filter(function(c) { return c.kind === kind && c.active !== false && c.image; })
+                            .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
+            grid.innerHTML = "";
+            if (!list.length) {
+                if (empty) empty.style.display = "block";
+                grid.style.display = "none";
+                return;
+            }
+            if (empty) empty.style.display = "none";
+            grid.style.display = "";
+            list.forEach(function(c) {
+                var el = document.createElement("div");
+                el.className = "card-item";
+                el.innerHTML =
+                    '<img src="' + gcEsc(c.image) + '" alt="' + gcEsc(c.title) + '" loading="lazy" onerror="this.style.background=\'#EDE3D5\';this.alt=\'Şəkil yüklənmədi\'">' +
+                    '<div class="card-cap"><h4>' + gcEsc(c.title || "") + '</h4>' +
+                    (c.description ? '<span>' + gcEsc(c.description) + '</span>' : '') + '</div>';
+                el.addEventListener("click", function() {
+                    if (c.link) { window.open(c.link, "_blank", "noopener"); }
+                    else { openImageModal(c.image, c.title || ""); }
+                });
+                grid.appendChild(el);
             });
-            return el;
         }
 
-        tyGrid.innerHTML = ""; dGrid.innerHTML = "";
-        if (!ty.length) { if (tyEmpty) tyEmpty.style.display = "block"; }
-        else { if (tyEmpty) tyEmpty.style.display = "none"; ty.forEach(function(c) { tyGrid.appendChild(makeCard(c)); }); }
-        if (!dp.length) { if (dEmpty) dEmpty.style.display = "block"; }
-        else { if (dEmpty) dEmpty.style.display = "none"; dp.forEach(function(c) { dGrid.appendChild(makeCard(c)); }); }
+        fill("thankyou", "thankYouGrid", "thankYouEmpty");
+        fill("invitation", "invitationGrid", "invitationEmpty");
+        fill("distribution", "distributionGrid", "distributionEmpty");
     } catch(e) {}
 })();
 
