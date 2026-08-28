@@ -142,6 +142,14 @@ button,input,textarea,select{font-family:inherit}
 .tpl-card-info h4{font-family:"Cormorant Garamond",serif;font-size:14px;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2}
 .tpl-card-info p{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
 .tpl-card-info .pkg{display:inline-block;margin-top:5px;padding:2px 8px;font-size:7px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(196,168,130,.3);color:var(--gold);border-radius:3px}
+.anim-block{margin-top:26px;padding-top:24px;border-top:1px dashed rgba(92,61,46,.14)}
+.anim-block .sub-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:600;color:var(--dark);margin-bottom:2px}
+.anim-hint{font-size:11px;color:var(--muted);margin:2px 0 16px}
+.anim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.anim-card{position:relative;aspect-ratio:4/3;background:#f7f2ea;border:2px solid rgba(92,61,46,.08);border-radius:8px;overflow:hidden;cursor:pointer;transition:.3s}
+.anim-card:hover{border-color:rgba(196,168,130,.45);transform:translateY(-2px);box-shadow:0 8px 20px rgba(62,37,24,.1)}
+.anim-card .anim-label{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:8px;font-weight:700;letter-spacing:.6px;color:var(--dark);text-transform:uppercase;background:rgba(247,242,234,.85);padding:2px}
+.anim-card.selected::after{content:"✓";position:absolute;top:6px;right:6px;width:20px;height:20px;background:var(--gold);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;z-index:3}
 @media(max-width:720px){
     .template-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
     .tpl-card-info h4{font-size:12px}
@@ -355,6 +363,14 @@ button,input,textarea,select{font-family:inherit}
 .prod-pick:hover{border-color:rgba(196,168,130,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,37,24,.08)}
 .prod-pick.selected{border-color:var(--gold);background:rgba(196,168,130,.08)}
 .prod-pick .prod-icon{font-size:20px}
+.prod-style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:6px}
+.prod-style{position:relative;border:2px solid rgba(92,61,46,.08);border-radius:8px;overflow:hidden;cursor:pointer;transition:.3s;background:#fff}
+.prod-style:hover{border-color:rgba(196,168,130,.4);transform:translateY(-2px);box-shadow:0 8px 20px rgba(62,37,24,.1)}
+.prod-style img{width:100%;aspect-ratio:1/1.2;object-fit:cover;display:block}
+.prod-style-ico{width:100%;aspect-ratio:1/1.2;display:flex;align-items:center;justify-content:center;font-size:30px;background:linear-gradient(135deg,#f7f2ea,#efe6d8)}
+.prod-style b{display:block;padding:8px 10px;text-align:center;font-size:11px;font-weight:600;color:var(--dark);letter-spacing:.3px}
+.prod-style.selected{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,168,130,.2)}
+.prod-style.selected::after{content:"✓";position:absolute;top:6px;right:6px;width:20px;height:20px;background:var(--gold);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;z-index:2}
 
 /* ===== PACKAGE PICKER — Premium Cards ===== */
 .pkg-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -548,6 +564,12 @@ button,input,textarea,select{font-family:inherit}
                     <p class="step-desc">Bəyəndiyiniz dəvətnamə dizaynını seçin</p>
                     <div class="template-grid" id="templateGrid"></div>
                     <input type="hidden" id="selectedTemplate" name="template" value="">
+                    <div class="anim-block">
+                        <h4 class="sub-title">Açılış animasiyası seçin</h4>
+                        <p class="anim-hint">Dəvətnaməniz açılarkən necə animasiya olsun istəyirsiniz?</p>
+                        <div class="anim-grid" id="animGrid"></div>
+                        <input type="hidden" id="selectedOpening" name="opening" value="">
+                    </div>
                 </div>
 
                 <!-- Step 4: Details -->
@@ -619,6 +641,7 @@ button,input,textarea,select{font-family:inherit}
     var packageName = (params.get("package") || "basic").toLowerCase();
     var category = (params.get("category") || "wedding").toLowerCase();
     var designId = design;
+    var selectedOpening = "";
     var photoInvitationImg = "";
 
     /* ===== APPLY ADMIN FORM CONFIG ===== */
@@ -1096,6 +1119,56 @@ button,input,textarea,select{font-family:inherit}
         return "envelope-seal";
     }
 
+    /* ===== OPENING ANIMATION PICKER ===== */
+    function _openingAliasMap() {
+        var m = {
+            "floral-reveal":"floral-paper", "editorial-reveal":"envelope-seal", "luxury-reveal":"luxury-romance",
+            "envelope-reveal":"envelope-seal", "stairs-reveal":"stairs", "wax-reveal":"wax-seal", "curtain-reveal":"curtain",
+            "ribbon-reveal":"ribbon", "door-reveal":"door", "wood-door-reveal":"wood-door", "starry-reveal":"starry-night",
+            "celebration-reveal":"celebration-pop", "candlelight-reveal":"candlelight", "winter-reveal":"winter-drift",
+            "royal-reveal":"royal-scroll", "typewriter-reveal":"typewriter", "magic-reveal":"magic-wand", "glow-door":"glowing-door",
+            "forest-walk":"ancient-forest", "book-reveal":"old-book", "fullscreen-photo":"curtain", "editorial-card":"envelope-seal"
+        };
+        return m;
+    }
+    var OPENINGS = [
+        {type:"envelope-seal", name:"Zərf"}, {type:"curtain", name:"Pərdə"}, {type:"door", name:"Qapı"},
+        {type:"wood-door", name:"Taxta qapı"}, {type:"glowing-door", name:"İşıq qapı"}, {type:"luxury-romance", name:"Lüks"}
+    ];
+    var OPENINGS_EXT = [
+        {type:"floral-paper", name:"Çiçək ləçəyi"}, {type:"ribbon", name:"Lent"}, {type:"wax-seal", name:"Möhür"},
+        {type:"stairs", name:"Pilləkən"}, {type:"starry-night", name:"Ulduzlu"}, {type:"celebration-pop", name:"Şənlik"},
+        {type:"winter-drift", name:"Qar"}, {type:"royal-scroll", name:"Tür"}, {type:"typewriter", name:"Yazı makinası"},
+        {type:"candlelight", name:"Şam"}, {type:"magic-wand", name:"Sehrli çubuq"}, {type:"ancient-forest", name:"Meşə"},
+        {type:"old-book", name:"Köhnə kitab"}
+    ];
+    function renderAnimationPicker() {
+        var grid = document.getElementById("animGrid");
+        if (!grid) return;
+        if (!selectedOpening) {
+            var all = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
+            var tpl = all.find(function(x){ return x.id === designId; }) || all.find(function(x){ return x.id === design; });
+            var base = tpl ? _resolveOpeningType(tpl) : "";
+            selectedOpening = _openingAliasMap()[base] || base || "envelope-seal";
+        }
+        var hidden = document.getElementById("selectedOpening");
+        if (hidden) hidden.value = selectedOpening;
+        grid.innerHTML = "";
+        OPENINGS.concat(OPENINGS_EXT).forEach(function(o) {
+            var cell = document.createElement("div");
+            cell.className = "anim-card tpl-card" + (o.type === selectedOpening ? " selected" : "");
+            cell.setAttribute("data-opening", o.type);
+            cell.innerHTML = _opvHTML(o.type) + '<span class="anim-label">' + o.name + '</span>';
+            cell.addEventListener("click", function() {
+                grid.querySelectorAll(".anim-card").forEach(function(c){ c.classList.remove("selected"); });
+                this.classList.add("selected");
+                selectedOpening = o.type;
+                if (hidden) hidden.value = o.type;
+            });
+            grid.appendChild(cell);
+        });
+    }
+
     function populateTemplateSelect() {
         var grid = document.getElementById("templateGrid");
         var hidden = document.getElementById("selectedTemplate");
@@ -1136,6 +1209,9 @@ button,input,textarea,select{font-family:inherit}
                 designId = this.getAttribute("data-tpl");
                 var pillEl = document.getElementById("pillDesign");
                 if (pillEl) pillEl.textContent = t.name;
+                var base = _resolveOpeningType(t);
+                selectedOpening = _openingAliasMap()[base] || base || "envelope-seal";
+                renderAnimationPicker();
             });
             grid.appendChild(card);
         });
@@ -1170,7 +1246,7 @@ button,input,textarea,select{font-family:inherit}
         document.getElementById("stepSubmit").style.display = isLast ? "" : "none";
 
         if (step === 2) renderPkgPicker();
-        if (step === 3) populateTemplateSelect();
+        if (step === 3) { populateTemplateSelect(); renderAnimationPicker(); }
         if (step === 5) renderMediaFields();
         if (step === 6) renderPreviewSummary();
 
@@ -1254,6 +1330,15 @@ button,input,textarea,select{font-family:inherit}
             { id: "opProduct", labelAz: "Məhsul növü (menyu, stand, açıqca...)", labelEn: "Product type (menu, stand, card...)", labelRu: "Тип продукта", labelTr: "Ürün türü", type: "text" },
             { id: "opQty", labelAz: "Tiraj / say", labelEn: "Quantity", labelRu: "Количество", labelTr: "Adet", type: "number" },
             { id: "opDetails", labelAz: "Ətraflı məlumat", labelEn: "Details", labelRu: "Подробности", labelTr: "Ayrıntılar", type: "textarea" }
+        ]},
+        { id: "greeting-card", nameAz: "Təşəkkür / Paylama kartı", nameEn: "Thank-you / Note card", nameRu: "Благодарственная карточка", nameTr: "Teşekkür kartı", icon: "💌", active: true, styleSource: "greetingCards", fields: [
+            { id: "gcName", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+            { id: "gcQty", labelAz: "Say", labelEn: "Quantity", labelRu: "Количество", labelTr: "Adet", type: "select", options: ["25", "50", "100", "200", "500"] },
+            { id: "gcNotes", labelAz: "Kart üzərində yazılacaq mətn (arxa tərəf)", labelEn: "Text for card back", labelRu: "Текст на обратной стороне", labelTr: "Kartın arkasına yazı", type: "textarea" }
+        ]},
+        { id: "video-invitation", nameAz: "Video dəvətnamə", nameEn: "Video invitation", nameRu: "Видео-приглашение", labelTr: "Video davetiye", icon: "🎬", active: true, styleSource: "videoInvitations", fields: [
+            { id: "viName", labelAz: "Ad Soyad *", labelEn: "Full name *", labelRu: "ФИО *", labelTr: "Ad Soyad *", type: "text", required: true },
+            { id: "viNotes", labelAz: "Əlavə məlumat / mətn", labelEn: "Extra info / text", labelRu: "Дополнительно", labelTr: "Ek bilgi", type: "textarea" }
         ]}
     ];
 
@@ -1267,6 +1352,24 @@ button,input,textarea,select{font-family:inherit}
     }
     function prodLabel(p, suffix) {
         return p["name" + suffix] || p.nameAz || p.nameEn || p.id;
+    }
+
+    function productStyleOptions(ptype) {
+        var out = [];
+        try {
+            if (ptype.styleSource === "greetingCards") {
+                var cards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
+                cards.filter(function(c) { return c.active !== false; }).forEach(function(c) {
+                    out.push({ id: "gc_" + c.id, name: c.title || "Kart", image: c.image || "", icon: "💌" });
+                });
+            } else if (ptype.styleSource === "videoInvitations") {
+                var vids = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+                vids.filter(function(v) { return v.active !== false; }).forEach(function(v) {
+                    out.push({ id: "vi_" + v.id, name: v.title || "Video", image: v.thumbnail || "", icon: "🎬" });
+                });
+            }
+        } catch (e) {}
+        return out;
     }
 
     var selectedProduct = (function() {
@@ -1318,6 +1421,24 @@ button,input,textarea,select{font-family:inherit}
         var sfx = langSuffix();
         var html = '<div class="form-field" style="grid-column:1/-1;padding:14px 16px;border:1px solid rgba(196,168,130,.25);border-radius:8px;background:rgba(196,168,130,.05);font-size:12px;color:#7a5c49;">' +
             '✨ <b>' + prodLabel(ptype, sfx) + '</b> sifarişi üçün məlumatları doldurun.</div>';
+
+        /* Style picker sourced from admin (greeting cards / video invitations) */
+        if (ptype.styleSource) {
+            var sOpts = productStyleOptions(ptype);
+            if (sOpts.length) {
+                html += '<div class="form-field" style="grid-column:1/-1">' +
+                    '<label>Dizayn seçin *</label>' +
+                    '<div class="prod-style-grid" id="prodStyleGrid">';
+                sOpts.forEach(function(o) {
+                    html += '<div class="prod-style" data-style="' + o.id + '">' +
+                        (o.image ? '<img src="' + o.image + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div class="prod-style-ico">' + (o.icon || "✦") + '</div>') +
+                        '<b>' + o.name + '</b></div>';
+                });
+                html += '</div></div>';
+                html += '<input type="hidden" id="prodStyle" data-pf="__style" data-prequired="1" value="">';
+            }
+        }
+
         (ptype.fields || []).forEach(function(fdef, i) {
             var fid = "pf_" + fdef.id;
             var lbl = fdef["label" + sfx] || fdef.labelAz || fdef.labelEn || fdef.id;
@@ -1341,6 +1462,17 @@ button,input,textarea,select{font-family:inherit}
         wrap.innerHTML = html;
         wrap.style.display = "";
         submitBtn.style.display = "";
+        var sGrid = document.getElementById("prodStyleGrid");
+        if (sGrid) {
+            sGrid.addEventListener("click", function(e) {
+                var cell = e.target.closest(".prod-style");
+                if (!cell) return;
+                sGrid.querySelectorAll(".prod-style").forEach(function(c) { c.classList.remove("selected"); });
+                cell.classList.add("selected");
+                var hs = document.getElementById("prodStyle");
+                if (hs) hs.value = cell.getAttribute("data-style");
+            });
+        }
         wrap.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
@@ -1420,6 +1552,18 @@ button,input,textarea,select{font-family:inherit}
         };
         delete order.data.__contact;
         if (logoDataUrl) order.logoUrl = logoDataUrl;
+
+        /* Resolve chosen style into a readable name */
+        var _sid = order.data.__style || "";
+        delete order.data.__style;
+        if (_sid) {
+            var _pt = getProductTypes().find(function(p) { return p.id === selectedProduct; });
+            var _opts = _pt ? productStyleOptions(_pt) : [];
+            var _m = _opts.find(function(o) { return o.id === _sid; });
+            order.styleId = _sid;
+            order.styleName = _m ? _m.name : _sid;
+            order.data.styleName = order.styleName;
+        }
 
         lunaSaveOrder(order);
 
@@ -1823,7 +1967,8 @@ button,input,textarea,select{font-family:inherit}
                         countdown: v.date + "T" + v.time + ":00",
                         images: images.length ? images : defaultImages,
                         invitationLanguage: (localStorage.getItem("lunaLanguage") || v.invitationLanguage || "az"),
-                        template: v.template || ""
+                        template: v.template || "",
+                        openingType: selectedOpening
                     };
 
                     if (videoRef) data.videoUrl = videoRef;

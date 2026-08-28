@@ -6044,7 +6044,9 @@ document.getElementById("openButton").textContent =
     /* Admin-created templates may carry opening/animation type directly */
     var _theme = {};
     try { _theme = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}"); } catch(e) {}
-    var openingType = cfg.openingType
+    var clientOpening = invitation ? (invitation.openingType || invitation.openingStyle || "") : "";
+    var openingType = clientOpening
+        || cfg.openingType
         || (tplData && (tplData.openingType || tplData.openingStyle || tplData.animationStyle || tplData.animationType))
         || (_theme.openingType || "envelope");
 

@@ -1188,7 +1188,7 @@ input,select,textarea{max-width:100%;}
             <h1>Sifarişlər</h1>
         </div>
         <div class="header-actions">
-            <button onclick="renderOrders()">↻ Yenilə</button>
+            <button onclick="refreshOrders()">↻ Yenilə</button>
         </div>
     </div>
     <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştəri formadan gələn bütün sifarişlər. Hazırladıqdan sonra görüntü (GR) əlavə edin, link yaradın və WhatsApp mesajı ilə göndərin.</p>
@@ -3640,6 +3640,13 @@ function updateOrdersBadge() {
     var fresh = getOrders().filter(function(o) { return o.status === 'new'; }).length;
     badge.textContent = fresh;
     badge.style.display = fresh > 0 ? 'inline-block' : 'none';
+}
+
+function refreshOrders() {
+    if (window.LunaSync && LunaSync.enabled() && LunaSync.currentUser()) {
+        try { LunaSync.pullNow(); } catch (e) {}
+    }
+    setTimeout(renderOrders, 350);
 }
 
 function renderOrders() {

@@ -283,7 +283,7 @@ function _lunaPushOrderToDb(payload) {
                 "Content-Type": "application/json",
                 "Prefer": "return=minimal"
             },
-            body: JSON.stringify({ payload: payload })
+            body: JSON.stringify({ payload: payload, status: "new", created_at: new Date().toISOString() })
         }).catch(function (err) {
             console.warn("Luna order sync failed", err);
         });
