@@ -3163,11 +3163,53 @@ function openVideoModal(video) {
             || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
         var ytId = ytM ? ytM[1] : "";
         var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?autoplay=1&rel=0&playsinline=1" : ytUrl;
+        var watchUrl = ytId ? "https://www.youtube.com/watch?v=" + ytId : ytUrl;
+
+        /* Show a graceful fallback when YouTube blocks inline playback (e.g. Error 153). */
+        function showYTFallback() {
+            if (modal.querySelector(".yt-fallback")) return;
+            var f = document.createElement("div");
+            f.className = "yt-fallback";
+            f.style.cssText = "position:absolute;inset:0;z-index:2;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;border-radius:8px";
+            f.innerHTML =
+                '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d8b98f,#b98d5a);display:flex;align-items:center;justify-content:center;font-size:26px">&#9654;</div>' +
+                '<div style="color:#fff;font-size:15px;line-height:1.6;max-width:420px">Bu video YouTube tərəfindən səhifə daxilində oynadılmağa icazə vermir.<br><span style="opacity:.75;font-size:12px">(YouTube "Player configuration error" — Error 153)</span></div>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#d8b98f,#b98d5a);color:#1a1a1a;font-weight:700;padding:12px 22px;border-radius:30px;text-decoration:none;font-size:14px">YouTube-da aç</a>';
+            var holder = modal.querySelector(".youtube-holder");
+            if (holder) { holder.appendChild(f); holder.querySelector("iframe").style.opacity = ".15"; }
+        }
+
         modal.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
-            '<div style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
+            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<div class="youtube-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
                 '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="YouTube-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">YouTube</span></a>' +
             '</div>';
+        /* Detect YouTube blocking playback. Error 153 ("Watch this video on YouTube") is
+           surfaced via a postMessage/loadFrame with code/errorCode 153. Only an actual
+           error message triggers the fallback, so normal playable videos are never affected. */
+        var _ytShown = 0;
+        function showYTFallbackOnce() {
+            if (_ytShown) return;
+            _ytShown = 1;
+            window.removeEventListener("message", _onYTMsg);
+            showYTFallback();
+        }
+        var _onYTMsg = function(ev) {
+            if (_ytShown) return;
+            var d = ev && ev.data;
+            if (typeof d === "string") { try { d = JSON.parse(d); } catch (e) {} }
+            if (d && typeof d === "object" && d.event) {
+                var n = d.error !== undefined ? d.error
+                    : (d.info && d.info.code != null) ? d.info.code
+                    : (d.data && (d.data.errorCode != null ? d.data.errorCode : d.data.code));
+                if (d.event === "onError" || String(n).indexOf("153") !== -1) showYTFallbackOnce();
+            }
+        };
+        window.addEventListener("message", _onYTMsg);
+        modal.addEventListener("remove", function() {
+            window.removeEventListener("message", _onYTMsg);
+        });
     } else {
         function showVidErr() {
             if (modal.querySelector(".vid-err")) return;
