@@ -1831,8 +1831,11 @@ function lunaPublishPublicCatalog(){
             .map(function(c){ return { id: c.id, title: c.title, kind: c.kind, image: c.image, link: c.link || '' }; });
         var videos = [];
         try { videos = JSON.parse(localStorage.getItem('luna_video_invitations') || '[]'); } catch(e){}
-        var pubVideos = videos.filter(function(v){ return v && v.active !== false; })
-            .map(function(v){ return { id: v.id, title: v.title, category: v.category, thumbnail: v.thumbnail || '', url: v.url || '' }; });
+        /* __idb: videos are stored ONLY in this device's browser — visitors cannot
+           play them → exclude from the public catalog. YouTube / direct URLs publish. */
+        var pubVideos = videos.filter(function(v){
+            return v && v.active !== false && v.url && (v.url.indexOf('__idb:') !== 0);
+        }).map(function(v){ return { id: v.id, title: v.title, category: v.category, thumbnail: v.thumbnail || '', url: v.url || '' }; });
 
         function send(routeKey, table, body){
             if(client){
@@ -1846,6 +1849,14 @@ function lunaPublishPublicCatalog(){
         /* luna_invitations cədvəlinə yaz (public anon read) */
         send('__pub_greeting_cards', 'luna_invitations', { cards: pubCards });
         send('__pub_video_invitations', 'luna_invitations', { videos: pubVideos });
+
+        if (typeof showToast === 'function') {
+            if (client) {
+                showToast('Kataloq dərc edildi — bütün cihazlarda görünəcək.');
+            } else {
+                showToast('Kataloq dərc edilə BİLMƏDİ — Supabase-ə daxil olmamısınız. Digər cihazlar bu dəyişikliyi görə bilməz.');
+            }
+        }
     } catch(e){}
 }
 

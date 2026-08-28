@@ -1672,6 +1672,7 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 </aside>
 
 <script src="js/data.js?v=20260824b"></script>
+<script src="js/config.js"></script>
 <script src="js/i18n.js"></script>
 <script>
 /* ===== ANIMATED OPENING HELPERS ===== */
@@ -2928,7 +2929,7 @@ function lunaIDBLoadHome(key, cb) {
     });
 }
 
-/* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN VIDEOS ===== */
+/* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN/PUBLISHED VIDEOS ===== */
 (function() {
     var grid = document.getElementById("videoGrid");
     var emptyEl = document.getElementById("videoEmpty");
@@ -2950,13 +2951,27 @@ function lunaIDBLoadHome(key, cb) {
         return map[cat] || cat || "Video";
     }
 
-    /* Load admin-uploaded videos from localStorage */
-    try {
-        var adminVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
-        var filtered = adminVideos.filter(function(v) { return v.active !== false && v.url; });
-        filtered.sort(function(a,b) { return (a.order||0) - (b.order||0); });
+    /* Combined source of truth: local admin videos + published Supabase catalog.
+       Local wins on conflicts; published fills in for other visitors' devices. */
+    var localVideos = [];
+    var publishedVideos = [];
 
-        if (!filtered.length) {
+    function renderVideos() {
+        var byId = {};
+        function add(v) {
+            if (!v || v.active === false || !v.url) return;
+            var k = (v.id != null ? String(v.id) : "src_" + v.url);
+            if (byId[k]) return;
+            byId[k] = v;
+        }
+        (publishedVideos || []).forEach(add);
+        (localVideos || []).forEach(add);
+
+        var list = Object.keys(byId).map(function(k) { return byId[k]; });
+        list.sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
+
+        grid.innerHTML = "";
+        if (!list.length) {
             grid.style.display = "none";
             if (emptyEl) emptyEl.style.display = "block";
             return;
@@ -2964,8 +2979,7 @@ function lunaIDBLoadHome(key, cb) {
         if (emptyEl) emptyEl.style.display = "none";
         grid.style.display = "";
 
-        var pending = 0;
-        filtered.forEach(function(v) {
+        list.forEach(function(v) {
             var isIDB = v.url.indexOf("__idb:") === 0;
             var blobKey = isIDB ? v.url.slice(6) : null;
             var ytId = isYouTube(v.url) ? youTubeId(v.url) : "";
@@ -3003,17 +3017,41 @@ function lunaIDBLoadHome(key, cb) {
                 }
                 grid.appendChild(card);
             }
+
             if (isIDB && blobKey) {
-                pending++;
                 lunaIDBLoadHome(blobKey, function(blob) {
                     if (blob) addCard(URL.createObjectURL(blob));
-                    pending--;
                 });
             } else {
                 addCard(v.url);
             }
         });
-    } catch(e) {}
+    }
+
+    /* Load published video catalog so visitors (who have no local admin data)
+       also see the admin-added videos. YouTube links / direct URLs play for all. */
+    function loadPublishedVideos() {
+        try {
+            var cfg = window.LUNA_SUPABASE;
+            if (!cfg || !cfg.url || !cfg.anonKey) return;
+            var base = cfg.url + "/rest/v1/luna_invitations";
+            fetch(base + "?select=value&id=eq.__pub_video_invitations", {
+                headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+            }).then(function(r) { return r.json(); }).then(function(rows) {
+                var val = rows && rows[0] && rows[0].value;
+                if (val && val.videos) {
+                    publishedVideos = val.videos;
+                    renderVideos();
+                }
+            }).catch(function() {});
+        } catch (e) {}
+    }
+
+    try {
+        localVideos = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+    } catch (e) {}
+    renderVideos();
+    loadPublishedVideos();
 })();
 
 /* ===== GREETING CARDS (thank-you, invitation, distribution) ===== */
@@ -3024,14 +3062,14 @@ function lunaIDBLoadHome(key, cb) {
         });
     }
 
-    try {
-        var cards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
+    var allCards = [];
 
+    function renderCards() {
         function fill(kind, gridId, emptyId) {
             var grid = document.getElementById(gridId);
             if (!grid) return;
             var empty = document.getElementById(emptyId);
-            var list = cards.filter(function(c) { return c.kind === kind && c.active !== false && c.image; })
+            var list = allCards.filter(function(c) { return c.kind === kind && c.active !== false && c.image; })
                             .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
             grid.innerHTML = "";
             if (!list.length) {
@@ -3055,11 +3093,37 @@ function lunaIDBLoadHome(key, cb) {
                 grid.appendChild(el);
             });
         }
-
         fill("thankyou", "thankYouGrid", "thankYouEmpty");
         fill("invitation", "invitationGrid", "invitationEmpty");
         fill("distribution", "distributionGrid", "distributionEmpty");
-    } catch(e) {}
+    }
+
+    function loadPublishedCards() {
+        try {
+            var cfg = window.LUNA_SUPABASE;
+            if (!cfg || !cfg.url || !cfg.anonKey) return;
+            var base = cfg.url + "/rest/v1/luna_invitations";
+            fetch(base + "?select=value&id=eq.__pub_greeting_cards", {
+                headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+            }).then(function(r) { return r.json(); }).then(function(rows) {
+                var val = rows && rows[0] && rows[0].value;
+                if (val && val.cards) {
+                    var byId = {};
+                    function keyOf(c) { return (c && c.id != null) ? String(c.id) : (c ? "src_" + c.title + "_" + c.kind : ""); }
+                    (val.cards || []).forEach(function(c) { if (c) byId[keyOf(c)] = c; });
+                    allCards.forEach(function(c) { if (c) byId[keyOf(c)] = c; });
+                    allCards = Object.keys(byId).map(function(k) { return byId[k]; });
+                    renderCards();
+                }
+            }).catch(function() {});
+        } catch (e) {}
+    }
+
+    try {
+        allCards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
+    } catch (e) {}
+    renderCards();
+    loadPublishedCards();
 })();
 
 /* ===== IMAGE MODAL (greeting cards) ===== */
