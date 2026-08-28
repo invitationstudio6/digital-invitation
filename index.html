@@ -927,6 +927,8 @@ footer{padding:48px 5% 32px;border-top:1px solid rgba(212,165,116,.08);display:f
 .cat-col-card:hover .cat-col-card-img{transform:scale(1.05);filter:saturate(1)}
 .cat-col-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(62,37,24,.7) 0%,transparent 50%);opacity:0;transition:.4s}
 .cat-col-card:hover .cat-col-card-overlay{opacity:1}
+.cat-col-tint{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(160deg,var(--tpl-c1) -45%,transparent 50%);mix-blend-mode:multiply;opacity:.42;transition:opacity .4s}
+.cat-col-card:hover .cat-col-tint{opacity:.15}
 .cat-col-card-info{position:absolute;bottom:0;left:0;right:0;padding:16px;transform:translateY(8px);transition:.4s}
 .cat-col-card:hover .cat-col-card-info{transform:translateY(0)}
 .cat-col-card-info h4{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:300;font-style:italic;color:#fff}
@@ -1161,6 +1163,12 @@ body.has-announce .mobile-menu{padding-top:150px}
 .design-thumb .dt-actions .btn{flex:1;text-align:center;font-size:8px;letter-spacing:1.2px;text-transform:uppercase;padding:8px 4px;border-radius:6px;transition:.25s}
 .design-thumb .dt-features{padding:0 12px 6px}
 .design-thumb .dt-feat-item{font-size:7px;padding:2px 6px;border-radius:4px;background:rgba(212,165,116,.06);color:var(--muted);margin:2px;display:inline-block;letter-spacing:.5px}
+/* Distinct template identity: unique colour tint + swatch per şablon */
+.dt-tint{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(160deg,var(--tpl-c1) -45%,transparent 50%),linear-gradient(0deg,rgba(30,18,12,.42) 0%,transparent 38%);mix-blend-mode:multiply;opacity:.5;transition:opacity .4s}
+.design-thumb:hover .dt-tint{opacity:.15}
+.tpl-swatch{display:inline-flex;gap:3px;vertical-align:middle}
+.tpl-swatch i{width:13px;height:13px;border-radius:50%;border:1px solid rgba(92,61,46,.24);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.design-thumb .dt-meta .tpl-swatch{margin-bottom:4px}
 .designs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1200px;margin:0 auto}
 @media(max-width:1024px){.designs-grid{grid-template-columns:repeat(3,1fr);gap:14px}}
 @media(max-width:768px){.designs-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
@@ -2119,9 +2127,15 @@ function renderTemplates(filter) {
             featHtml += '</div></div>';
         }
 
+        /* Distinct colour identity per template so no two şablonlar look alike */
+        var pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(tpl) : { c1: "#c4a882", c2: "#d9bf9e" };
+        card.style.setProperty("--tpl-c1", pal.c1);
+        card.style.setProperty("--tpl-c2", pal.c2);
+
         card.innerHTML =
             '<div class="dt-imgwrap">' +
                 '<img class="design-thumb-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
+                '<span class="dt-tint"></span>' +
                 (opening ? _opvHTML(opening.type) : "") +
                 animBadge +
                 '<button class="fav-btn' + (isFav ? ' active' : '') + '" data-fav="' + tpl.id + '" aria-label="Seçilmişlərə əlavə et">♥</button>' +
@@ -2129,6 +2143,7 @@ function renderTemplates(filter) {
             '<div class="dt-meta">' +
                 '<span class="dt-cat">' + catName + (tpl.featured ? ' · ★ Seçilmiş' : '') + '</span>' +
                 '<h4>' + tpl.name + '</h4>' +
+                '<span class="tpl-swatch"><i style="background:' + pal.c1 + '"></i><i style="background:' + pal.c2 + '"></i></span>' +
                 '<div class="dt-price"><span class="price-val">' + (priceVal || "—") + '</span><span class="price-curr">AZN</span><span style="font-size:8px;color:#b08d6e;margin-left:4px;">· ' + minPkg + '</span></div>' +
             '</div>' +
             featHtml +
@@ -2675,13 +2690,18 @@ function renderCatCollection(catId, gridId, limit) {
         card.className = "cat-col-card";
         var catName = lunaCategoryName(tpl.category);
         var minPkg = tpl.minPackage ? tpl.minPackage.charAt(0).toUpperCase() + tpl.minPackage.slice(1) : "";
+        var pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(tpl) : { c1: "#c4a882", c2: "#d9bf9e" };
+        card.style.setProperty("--tpl-c1", pal.c1);
+        card.style.setProperty("--tpl-c2", pal.c2);
         card.innerHTML =
             '<img class="cat-col-card-img" src="' + tpl.thumbnail + '" alt="' + tpl.name + '" loading="lazy" onerror="this.src=\'' + tpl.cover + '\'">' +
+            '<span class="cat-col-tint"></span>' +
             '<div class="cat-col-card-overlay"></div>' +
             '<div class="cat-col-card-info">' +
                 '<h4>' + tpl.name + '</h4>' +
                 '<p>' + tpl.style + '</p>' +
                 '<span class="pkg">' + minPkg + '</span>' +
+                '<span class="tpl-swatch" style="margin-top:5px"><i style="background:' + pal.c1 + '"></i><i style="background:' + pal.c2 + '"></i></span>' +
             '</div>' +
             '<div class="cat-col-card-actions">' +
                 '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +

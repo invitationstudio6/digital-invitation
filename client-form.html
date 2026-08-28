@@ -155,6 +155,20 @@ button,input,textarea,select{font-family:inherit}
     .tpl-card-info h4{font-size:12px}
 }
 
+/* ===== DISTINCT TEMPLATE IDENTITY =====
+   Each card is colour-coded (unique swatch + tint) + shows its
+   opening animation badge + readable style, so şablonlar differ. */
+.tpl-imgwrap{position:relative;overflow:hidden;aspect-ratio:3/4;background:#f4ece0}
+.tpl-card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform .6s,filter .4s}
+.tpl-card:hover .tpl-card-img{transform:scale(1.04);filter:saturate(1)}
+.tpl-tint{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(160deg,var(--tpl-c1,rgba(196,168,130,.5)) -40%,transparent 55%),linear-gradient(0deg,rgba(30,18,12,.45) 0%,transparent 40%);mix-blend-mode:multiply;opacity:.5;transition:opacity .4s}
+.tpl-card:hover .tpl-tint{opacity:.18}
+.tpl-badge{position:absolute;top:8px;left:8px;z-index:3;display:flex;align-items:center;gap:4px;max-width:calc(100% - 44px);padding:3px 7px;border-radius:20px;background:rgba(30,18,12,.62);color:#fff;backdrop-filter:blur(4px);font-size:9px;font-weight:600;letter-spacing:.3px}
+.tpl-badge em{font-style:normal;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tpl-swatch{display:inline-flex;gap:3px;margin:5px 0 4px;vertical-align:middle}
+.tpl-swatch i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(92,61,46,.22);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tpl-card-info p{font-size:9px;color:var(--dark);opacity:.72;letter-spacing:.6px;margin-top:3px}
+
 /* ===== OPENING PREVIEW ON DESIGN CARDS ===== */
 .opv{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s}
 .tpl-card:hover .opv,.design-thumb:hover .opv{opacity:1}
@@ -1197,14 +1211,25 @@ button,input,textarea,select{font-family:inherit}
             var minPkg = t.minPackage ? t.minPackage.charAt(0).toUpperCase() + t.minPackage.slice(1) : "";
             var opvType = _resolveOpeningType(t);
             var opvHtml = _opvHTML(opvType);
+            /* Distinct colour identity per template (unique swatch + tint). */
+            var pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(t) : { c1: "#c4a882", c2: "#d9bf9e" };
+            var openInfo = (typeof lunaOpeningInfo === "function") ? lunaOpeningInfo(t) : null;
+            var badge = openInfo ? '<span class="tpl-badge">' + openInfo.emoji + ' <em>' + openInfo.label + '</em></span>' : "";
             card.innerHTML =
-                '<img class="tpl-card-img" src="' + t.thumbnail + '" alt="' + t.name + '" loading="lazy">' +
-                opvHtml +
+                '<div class="tpl-imgwrap">' +
+                    '<img class="tpl-card-img" src="' + t.thumbnail + '" alt="' + t.name + '" loading="lazy">' +
+                    '<span class="tpl-tint"></span>' +
+                    opvHtml +
+                    badge +
+                '</div>' +
                 '<div class="tpl-card-info">' +
                     '<h4>' + t.name + '</h4>' +
                     '<p>' + t.style + '</p>' +
+                    '<span class="tpl-swatch"><i style="background:' + pal.c1 + '"></i><i style="background:' + pal.c2 + '"></i></span>' +
                     '<span class="pkg">' + minPkg + '</span>' +
                 '</div>';
+            card.style.setProperty("--tpl-c1", pal.c1);
+            card.style.setProperty("--tpl-c2", pal.c2);
             card.addEventListener("click", function() {
                 grid.querySelectorAll(".tpl-card").forEach(function(c) { c.classList.remove("selected"); });
                 this.classList.add("selected");

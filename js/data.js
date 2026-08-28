@@ -1309,6 +1309,79 @@ function lunaGetAllTemplates() {
 }
 
 /* =====================================================
+   UNIQUE PER-TEMPLATE COLOR IDENTITY
+   Every template gets a stable, distinct 2-colour palette
+   so the şablon pickers no longer all look the same.
+   - Uses tpl.design.{primaryColor,secondaryColor} when present.
+   - Otherwise derives a deterministic, well-spread hue from the id
+     (golden-ratio hue stepping) so duplicates never collide.
+   Shared by index.html grid + client-form template picker.
+===================================================== */
+function lunaTplHash(id) {
+    var h = 0, s = String(id || "");
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    return h;
+}
+function lunaHslToHex(h, s, l) {
+    h = ((h % 360) + 360) % 360;
+    s /= 100; l /= 100;
+    var c = (1 - Math.abs(2 * l - 1)) * s;
+    var x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    var m = l - c / 2, r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; b = x; } else if (h < 240) { g = x; b = c; }
+    else if (h < 300) { r = x; b = c; } else { r = c; b = x; }
+    function to(v) { v = Math.round((v + m) * 255); var hex = v.toString(16); return hex.length === 1 ? "0" + hex : hex; }
+    return "#" + to(r) + to(g) + to(b);
+}
+/* Returns {c1, c2}: two harmonically-related colours for a template. */
+function lunaTemplatePalette(tpl) {
+    var id = (tpl && tpl.id) || "";
+    if (tpl && tpl.design && tpl.design.primaryColor) {
+        return { c1: tpl.design.primaryColor, c2: tpl.design.secondaryColor || tpl.design.primaryColor };
+    }
+    /* Deterministic well-spread hue from id (golden angle 137.5°). */
+    var seed = (lunaTplHash(id) % 360 + 360) % 360;
+    var hue = (seed + 137.5 * (Math.floor(seed / 25) + 1)) % 360;
+    var hue2 = (hue + 42) % 360;
+    return {
+        c1: lunaHslToHex(hue, 45, 58),
+        c2: lunaHslToHex(hue2, 40, 72)
+    };
+}
+/* Opening badge (emoji + label) — single source for both pages. */
+function lunaOpeningInfo(tpl) {
+    var meta = {
+        "curtain":{"emoji":"🎭","label":"Pərdə açılışı"},"stairs":{"emoji":"🪜","label":"Pilləkən"},"door":{"emoji":"🚪","label":"Qapı"},
+        "wax-seal":{"emoji":"🕯️","label":"Möhür"},"starry-night":{"emoji":"✨","label":"Ulduzlu"},"celebration-pop":{"emoji":"🎉","label":"Şənlik"},
+        "floral-paper":{"emoji":"🌸","label":"Çiçək"},"luxury-romance":{"emoji":"👑","label":"Lüks"},"envelope-seal":{"emoji":"✉️","label":"Zərf"},
+        "ribbon":{"emoji":"🎀","label":"Lent"},"wood-door":{"emoji":"🪵","label":"Taxta qapı"},"typewriter":{"emoji":"⌨️","label":"Makina"},
+        "candlelight":{"emoji":"🕯️","label":"Şam"},"winter-drift":{"emoji":"❄️","label":"Qar"},"royal-scroll":{"emoji":"📜","label":"Tür"},
+        "magic-wand":{"emoji":"🪄","label":"Sehir"},"glowing-door":{"emoji":"🚪✨","label":"İşıq qapı"},"ancient-forest":{"emoji":"🌲","label":"Meşə"},
+        "old-book":{"emoji":"📖","label":"Köhnə kitab"}
+    };
+    var type = null;
+    if (tpl) {
+        if (tpl.layoutConfig && tpl.layoutConfig.openingType) type = tpl.layoutConfig.openingType;
+        else if (tpl.openingType) type = tpl.openingType;
+    }
+    var alias = {
+        "floral-reveal":"floral-paper","editorial-reveal":"envelope-seal","luxury-reveal":"luxury-romance",
+        "envelope-reveal":"envelope-seal","stairs-reveal":"stairs","wax-reveal":"wax-seal","curtain-reveal":"curtain",
+        "ribbon-reveal":"ribbon","door-reveal":"door","wood-door-reveal":"wood-door","starry-reveal":"starry-night",
+        "celebration-reveal":"celebration-pop","candlelight-reveal":"candlelight","winter-reveal":"winter-drift",
+        "royal-reveal":"royal-scroll","typewriter-reveal":"typewriter","magic-reveal":"magic-wand","glow-door":"glowing-door",
+        "forest-walk":"ancient-forest","book-reveal":"old-book","fullscreen-photo":"curtain","editorial-card":"envelope-seal"
+    };
+    if (type && alias[type]) type = alias[type];
+    if (type && meta[type]) return meta[type];
+    for (var key in alias) {
+        if (tpl && tpl.style && tpl.style.toLowerCase().indexOf(key.replace("-reveal", "")) !== -1 && meta[alias[key]]) return meta[alias[key]];
+    }
+    return null;
+}
+
+/* =====================================================
    HOMEPAGE TEMPLATES
    Active + Show on Homepage enabled, Featured first,
    then by Sort Order. Used by index.html design grid.
