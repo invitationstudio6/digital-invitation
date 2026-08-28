@@ -19,21 +19,34 @@ function lunaCreateSlug(text) {
 }
 
 /* Keep a human-friendly slug but avoid collisions between clients with the same
-   name. If localStorage already holds luna_<id>, append -2, -3, ... so their
-   invitation links never overwrite each other. */
+   name. Checks EVERY source of taken invitation IDs — current device localStorage,
+   any other client invitations stored across the account (window.LUNA_TAKEN_IDS),
+   and the Supabase-published invitation list — so same-name clients on any device
+   or published remotely never end up with an identical link. */
+function lunaIsIdTaken(id) {
+    if (!id) return false;
+    try { if (localStorage.getItem("luna_" + id)) return true; } catch (e) {}
+    try {
+        var list = JSON.parse(localStorage.getItem("luna_client_invitations") || "[]");
+        if (list.some(function(c){ return c && c.id === id; })) return true;
+    } catch (e) {}
+    if (window.LUNA_TAKEN_IDS && window.LUNA_TAKEN_IDS[id]) return true;
+    return false;
+}
 function lunaUniqueInvitationId(base) {
     var id = base || "invitation";
+    /* avoid infinite loop if base itself is somehow taken with no suffix possible */
+    if (!base && lunaIsIdTaken(id)) id = "invitation-2";
     var n = 2;
-    while (true) {
-        var existing = null;
-        try { existing = localStorage.getItem("luna_" + id); } catch (e) {}
-        if (!existing) return id;
+    while (lunaIsIdTaken(id)) {
         var suffix = "-" + n;
         var candidate = base + suffix;
         if (candidate.length <= 48) id = candidate;
         else id = (base.slice(0, Math.max(1, 48 - 3)) + suffix);
         n++;
+        if (n > 1000) break;
     }
+    return id;
 }
 
 function lunaEscapeHtml(text) {

@@ -1380,6 +1380,30 @@ button,input,textarea,select{font-family:inherit}
                 refreshProductStyleGrid();
             });
         });
+        lunaLoadTakenIds();
+    }
+
+    /* Preload every existing invitation id (local + Supabase) so same-name
+       clients on any device never get a duplicate link. Fills window.LUNA_TAKEN_IDS. */
+    function lunaLoadTakenIds() {
+        window.LUNA_TAKEN_IDS = window.LUNA_TAKEN_IDS || {};
+        try {
+            var list = JSON.parse(localStorage.getItem("luna_client_invitations") || "[]");
+            list.forEach(function(c){ if (c && c.id) window.LUNA_TAKEN_IDS[c.id] = 1; });
+        } catch (e) {}
+        try { if (localStorage.getItem("luna_last_invitation")) window.LUNA_TAKEN_IDS[localStorage.getItem("luna_last_invitation")] = 1; } catch (e) {}
+        var cfg = window.LUNA_SUPABASE;
+        if (!cfg || !cfg.url || !cfg.anonKey) return;
+        var base = cfg.url + "/rest/v1/luna_invitations";
+        fetch(base + "?select=id", {
+            headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+        }).then(function(r){ return r.json(); }).then(function(rows){
+            (rows || []).forEach(function(row){
+                var k = row && row.id;
+                /* skip the special public-catalog rows, they aren't invitation ids */
+                if (k && k.indexOf("__pub_") !== 0) window.LUNA_TAKEN_IDS[k] = 1;
+            });
+        }).catch(function(){});
     }
 
     function productStyleOptions(ptype) {
@@ -2088,6 +2112,7 @@ button,input,textarea,select{font-family:inherit}
         }
 
         /* Same-name clients must never overwrite each other's links */
+        lunaLoadTakenIds();
         invitationId = lunaUniqueInvitationId(invitationId);
 
         var imageText = v.images || "";
