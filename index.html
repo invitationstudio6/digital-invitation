@@ -1475,13 +1475,9 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <div class="section-heading" style="text-align:center;margin-bottom:44px">
             <div class="kicker">Video dəvətnamələr</div>
             <h2>Hekayənizi canlandırın</h2>
-            <p style="text-align:center;max-width:520px;margin:14px auto 0;font-size:12px;color:#8a6f58">Canva-dan yükləyin və ya kompüterinizdən video əlavə edin. 20 AZN-dən başlayır.</p>
         </div>
         <div class="video-grid" id="videoGrid"></div>
-        <div id="videoEmpty" style="display:none;text-align:center;padding:40px 20px;color:#8a6f58">
-            <p style="font-size:14px;margin:0">Hələ video dəvətnamə əlavə edilməyib.</p>
-            <p style="font-size:11px;margin:8px 0 0;opacity:.6">Admin paneldən video əlavə edə bilərsiniz.</p>
-        </div>
+        <div id="videoEmpty" style="display:none"></div>
     </div>
 </section>
 
@@ -1491,17 +1487,17 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
         <div class="section-heading" style="text-align:center;margin-bottom:30px">
             <div class="kicker">Təşəkkür &amp; Paylama</div>
             <h2>Xüsusi kartlar</h2>
-            <p style="text-align:center;max-width:540px;margin:14px auto 0;font-size:12px;color:#8a6f58">Tədbirinizdən sonra qonaqlara təşəkkür etmək və ya dəvətnamələrin paylanması üçün nəfis kartlar. Admin paneldən şəkil əlavə edin.</p>
+            <p style="text-align:center;max-width:540px;margin:14px auto 0;font-size:12px;color:#8a6f58">Tədbirinizdən sonra qonaqlara təşəkkür etmək və ya dəvətnamələrin paylanması üçün nəfis kartlar.</p>
         </div>
         <div class="cards-subhead">Təşəkkür Kartları</div>
         <div class="cards-grid" id="thankYouGrid"></div>
-        <div id="thankYouEmpty" class="cards-empty" style="display:none">Hələ təşəkkür kartı əlavə edilməyib.</div>
+        <div id="thankYouEmpty" class="cards-empty" style="display:none"></div>
         <div class="cards-subhead">Dəvət Kartı</div>
         <div class="cards-grid" id="invitationGrid"></div>
-        <div id="invitationEmpty" class="cards-empty" style="display:none">Hələ dəvət kartı əlavə edilməyib.</div>
+        <div id="invitationEmpty" class="cards-empty" style="display:none"></div>
         <div class="cards-subhead">Paylama Kartları</div>
         <div class="cards-grid" id="distributionGrid"></div>
-        <div id="distributionEmpty" class="cards-empty" style="display:none">Hələ paylama kartı əlavə edilməyib.</div>
+        <div id="distributionEmpty" class="cards-empty" style="display:none"></div>
     </div>
 </section>
 
@@ -2971,12 +2967,15 @@ function lunaIDBLoadHome(key, cb) {
         list.sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
 
         grid.innerHTML = "";
+        var sectionEl = document.getElementById("video-section");
         if (!list.length) {
             grid.style.display = "none";
-            if (emptyEl) emptyEl.style.display = "block";
+            if (emptyEl) emptyEl.style.display = "none";
+            if (sectionEl) sectionEl.style.display = "none";
             return;
         }
         if (emptyEl) emptyEl.style.display = "none";
+        if (sectionEl) sectionEl.style.display = "";
         grid.style.display = "";
 
         list.forEach(function(v) {
@@ -3065,6 +3064,7 @@ function lunaIDBLoadHome(key, cb) {
     var allCards = [];
 
     function renderCards() {
+        var any = false;
         function fill(kind, gridId, emptyId) {
             var grid = document.getElementById(gridId);
             if (!grid) return;
@@ -3073,10 +3073,11 @@ function lunaIDBLoadHome(key, cb) {
                             .sort(function(a, b) { return (a.order || 0) - (b.order || 0); });
             grid.innerHTML = "";
             if (!list.length) {
-                if (empty) empty.style.display = "block";
+                if (empty) empty.style.display = "none";
                 grid.style.display = "none";
                 return;
             }
+            any = true;
             if (empty) empty.style.display = "none";
             grid.style.display = "";
             list.forEach(function(c) {
@@ -3096,6 +3097,8 @@ function lunaIDBLoadHome(key, cb) {
         fill("thankyou", "thankYouGrid", "thankYouEmpty");
         fill("invitation", "invitationGrid", "invitationEmpty");
         fill("distribution", "distributionGrid", "distributionEmpty");
+        var sec = document.getElementById("cards-section");
+        if (sec) sec.style.display = any ? "" : "none";
     }
 
     function loadPublishedCards() {

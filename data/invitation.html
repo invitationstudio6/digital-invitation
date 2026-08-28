@@ -193,6 +193,64 @@ a { text-decoration: none; color: inherit; }
     filter: blur(4px) brightness(1.2);
 }
 
+/* ==== Ambient Pinterest-style layers (apply to every opening scene) ==== */
+.opening-light {
+    position: absolute;
+    inset: -12%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(60% 45% at 30% 22%, rgba(255,214,182,.38), transparent 60%),
+        radial-gradient(50% 40% at 72% 78%, rgba(214,196,236,.30), transparent 62%),
+        radial-gradient(40% 50% at 50% 50%, rgba(255,240,225,.22), transparent 70%);
+    mix-blend-mode: screen;
+    animation: openingBreath 11s ease-in-out infinite;
+    filter: blur(6px);
+}
+@keyframes openingBreath {
+    0%, 100% { transform: scale(1) translateY(0); opacity: .7; }
+    50%      { transform: scale(1.06) translateY(-8px); opacity: 1; }
+}
+.opening-petals {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,0) 82%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,0) 82%);
+}
+.opening-petals i {
+    position: absolute;
+    top: -8%;
+    width: 13px;
+    height: 9px;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: petalDrift 14s linear infinite;
+}
+.opening-petals i:nth-child(1) { left: 8%;  width: 11px; height: 8px; animation-duration: 16s; animation-delay: 0s;   transform: rotate(24deg);  background: linear-gradient(135deg, rgba(255,190,170,.75), rgba(235,150,150,.55)); }
+.opening-petals i:nth-child(2) { left: 22%; width: 9px;  height: 7px; animation-duration: 13s; animation-delay: 2s;   transform: rotate(-18deg); background: linear-gradient(135deg, rgba(255,214,190,.8), rgba(245,170,165,.5)); }
+.opening-petals i:nth-child(3) { left: 36%; width: 14px; height: 10px;animation-duration: 18s; animation-delay: 4s;   transform: rotate(32deg);  background: linear-gradient(135deg, rgba(225,200,245,.7), rgba(195,170,225,.5)); }
+.opening-petals i:nth-child(4) { left: 51%; width: 10px; height: 7px; animation-duration: 15s; animation-delay: 1s;   transform: rotate(-26deg); background: linear-gradient(135deg, rgba(255,180,160,.7), rgba(240,150,150,.5)); }
+.opening-petals i:nth-child(5) { left: 64%; width: 13px; height: 9px; animation-duration: 17s; animation-delay: 5s;   transform: rotate(20deg);  background: linear-gradient(135deg, rgba(255,220,200,.78), rgba(250,180,160,.5)); }
+.opening-petals i:nth-child(6) { left: 78%; width: 9px;  height: 6px; animation-duration: 14s; animation-delay: 3s;   transform: rotate(-22deg); background: linear-gradient(135deg, rgba(235,215,250,.7), rgba(205,185,230,.5)); }
+.opening-petals i:nth-child(7) { left: 90%; width: 12px; height: 8px; animation-duration: 19s; animation-delay: 6s;   transform: rotate(28deg);  background: linear-gradient(135deg, rgba(255,190,165,.72), rgba(240,150,145,.5)); }
+.opening-petals i:nth-child(8) { left: 15%; width: 8px;  height: 6px; animation-duration: 12s; animation-delay: 7s;   transform: rotate(-30deg); background: linear-gradient(135deg, rgba(250,205,225,.7), rgba(230,170,200,.5)); }
+.opening-petals i:nth-child(9) { left: 44%; width: 11px; height: 8px; animation-duration: 16s; animation-delay: 8s;   transform: rotate(16deg);  background: linear-gradient(135deg, rgba(214,235,250,.65), rgba(180,200,235,.5)); }
+.opening-petals i:nth-child(10){ left: 68%; width: 9px;  height: 7px; animation-duration: 13s; animation-delay: 9s;   transform: rotate(-14deg); background: linear-gradient(135deg, rgba(255,200,180,.7), rgba(245,160,150,.5)); }
+.opening-petals i:nth-child(11){ left: 30%; width: 12px; height: 8px; animation-duration: 18s; animation-delay: 10s;  transform: rotate(36deg);  background: linear-gradient(135deg, rgba(230,205,250,.7), rgba(200,175,235,.5)); }
+.opening-petals i:nth-child(12){ left: 55%; width: 10px; height: 7px; animation-duration: 15s; animation-delay: 11s;  transform: rotate(-20deg); background: linear-gradient(135deg, rgba(255,185,170,.72), rgba(240,150,150,.5)); }
+@keyframes petalDrift {
+    0%   { top: -8%;  opacity: 0; transform: translateX(0) rotate(0deg); }
+    8%   { opacity: .9; }
+    50%  { opacity: .8; transform: translateX(26px) rotate(110deg); }
+    92%  { opacity: .6; }
+    100% { top: 108%; opacity: 0; transform: translateX(-18px) rotate(240deg); }
+}
+.opening.scene-opened .opening-petals,
+.opening.scene-opened .opening-light { opacity: 0; transition: opacity 1.2s ease; }
+
 /* Type: Fullscreen Photo opening */
 [data-opening="fullscreen-photo"] .opening {
     background: var(--cover) center/cover no-repeat;
@@ -4987,6 +5045,10 @@ footer p {
 >
 
     <div class="opening-grain"></div>
+
+    <!-- Ambient Pinterest-style layers: breathing light + drifting petals -->
+    <div class="opening-light"></div>
+    <div class="opening-petals"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
     <!-- Envelope Scene (default) -->
     <div class="envelope-scene" id="envelopeScene">
