@@ -700,6 +700,7 @@ input,select,textarea{max-width:100%;}
                     </label>
                     <video id="videoFilePreview" controls muted playsinline style="display:none;width:100%;border-radius:8px;margin-top:10px;max-height:180px;background:#000"></video>
                     <input id="videoUrl" type="text" placeholder="və ya YouTube / Vimeo / MP4 linki" style="margin-top:10px">
+                    <div id="videoStatusHint" style="margin-top:8px;font-size:11px;line-height:1.5;color:#a9a193;min-height:15px"></div>
                 </div>
                 <!-- STEP 2 · INFO -->
                 <div class="vid-step">
@@ -2693,9 +2694,20 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
         videos.push(video);
     }
     saveVideos(videos);
+    var _savedUrl = document.getElementById('videoUrl').value.trim();
     document.getElementById('videoForm').reset();
     renderVideos();
-    showToast(editingVideoId ? 'Video yeniləndi' : 'Video əlavə edildi');
+    /* Comfortable, honest feedback: does this reach visitors? */
+    var _info = videoKindInfo(_savedUrl);
+    var _isLogged = !!(window.LunaSync && typeof LunaSync.client === 'function' && LunaSync.client());
+    if (_info.kind === 'local') {
+        showToast('Saxlandı, amma fayl YALNIZ bu cihazdadır. Ziyarətçilər üçün YouTube linki istifadə edin və ya faylı hosting-ə verin.');
+    } else if (_info.kind === 'youtube' || _info.kind === 'mp4') {
+        if (_isLogged) showToast('Video saxlandı və dərc edildi — bütün cihazlarda oynayır.');
+        else showToast('Video saxlandı. Digər cihazlarda görünməsi üçün Supabase-ə daxil olun və yenidən saxlayın.');
+    } else {
+        showToast(editingVideoId ? 'Video yeniləndi' : 'Video əlavə edildi');
+    }
 });
 
 function deleteVideo(id){
@@ -2766,7 +2778,17 @@ document.getElementById('editVideoForm').addEventListener('submit', function(e){
     saveVideos(videos);
     closeModal('editVideoModal');
     renderVideos();
-    showToast('Video yeniləndi');
+    var _info = videoKindInfo(videos[idx].url);
+    var _isLogged = !!(window.LunaSync && typeof LunaSync.client === 'function' && LunaSync.client());
+    if (_info.kind === 'local') {
+        showToast('Saxlandı, amma fayl YALNIZ bu cihazdadır. Ziyarətçilər üçün YouTube linki və ya hosting linki istifadə edin.');
+    } else if ((_info.kind === 'youtube' || _info.kind === 'mp4') && _isLogged) {
+        showToast('Video yeniləndi və dərc edildi — bütün cihazlarda oynayır.');
+    } else if ((_info.kind === 'youtube' || _info.kind === 'mp4') && !_isLogged) {
+        showToast('Video yeniləndi. Dərci üçün Supabase-ə daxil olub yenidən saxlayın.');
+    } else {
+        showToast('Video yeniləndi');
+    }
 });
 
 
@@ -3481,7 +3503,53 @@ function resetVideoForm(){
         var p = document.getElementById(id);
         if (p) { p.style.display = 'none'; p.removeAttribute('src'); }
     });
+    /* fluent: also reset the truthiness of the select */
+    var _sel = document.getElementById('videoStatus');
+    if (_sel) _sel.value = 'active';
+    var _fsel = document.getElementById('videoFeatured');
+    if (_fsel) _fsel.value = 'no';
+    /* məntiqli: həm də gizli thumbnail input(lar) lazımdırsa */
+    refreshVideoStatusHint();
 }
+
+/* Fluent visitor-facing guidance: what will visitors actually see/play? */
+function videoKindInfo(url){
+    url = String(url || "").trim();
+    if (!url) return { kind: 'none', html: '' };
+    if (url.indexOf('__idb:') === 0) {
+        return { kind: 'local',
+            html: '<span style="color:#e8a05a">⚠ Yüklədiyiniz fayl YALNIZ bu cihazda oynayır — digər cihazlar görə BİLMƏZ.</span> Ya YouTube linkindən istifadə edin, ya da faylı mənə verin (hosting əlavə edərəm).' };
+    }
+    if (/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url)) {
+        return { kind: 'youtube',
+            html: '<span style="color:#7fce7f">✔ YouTube linki — hamıda oynayır. Əgər YouTube qovuşdurmursa (Error 153), ziyarətçi "YouTube-da aç" düyməsi görər.</span>' };
+    }
+    if (/\.(mp4|webm|ogv|m4v)(\?|$)/i.test(url)) {
+        return { kind: 'mp4',
+            html: '<span style="color:#7fce7f">✔ MP4/video linki — hamıda oynayır.</span>' };
+    }
+    if (/^https?:\/\//i.test(url)) {
+        return { kind: 'url',
+            html: '<span style="color:#9fb6d8">? Link — təsdiq üçün sınayın. YouTube/MP4 linki hamıda oynayır.</span>' };
+    }
+    return { kind: 'other', html: '' };
+}
+function refreshVideoStatusHint(){
+    var h = document.getElementById('videoStatusHint');
+    if (!h) return;
+    var url = (document.getElementById('videoUrl') && document.getElementById('videoUrl').value) || '';
+    /* find the active source: a file upload sets videoUrl to __idb: */
+    var info = videoKindInfo(url);
+    h.innerHTML = info.html;
+}
+(function(){
+    var u = document.getElementById('videoUrl');
+    if (u) u.addEventListener('input', refreshVideoStatusHint);
+    var f = document.getElementById('videoFileInput');
+    if (f) f.addEventListener('change', function(){ setTimeout(refreshVideoStatusHint, 30); });
+    document.addEventListener('DOMContentLoaded', refreshVideoStatusHint);
+})();
+
 
 /* =====================================================
    PACKAGE ADDONS (client-form per-package fields)
