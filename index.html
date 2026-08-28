@@ -2935,10 +2935,14 @@ function lunaIDBLoadHome(key, cb) {
     if (!grid) return;
 
     function isYouTube(url) {
-        return /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)/.test(url || "");
+        return /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)/.test(url || "")
+            || /(?:music\.|m\.)?youtube\.com\/watch\?v=/.test(url || "")
+            || /youtube-nocookie\.com\/embed\//.test(url || "");
     }
     function youTubeId(url) {
-        var m = (url || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+        var m = (url || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/)
+                || (url || "").match(/(?:music\.|m\.)?youtube\.com\/watch\?v=([\w-]{6,})/)
+                || (url || "").match(/youtube-nocookie\.com\/embed\/([\w-]{6,})/);
         return m ? m[1] : "";
     }
     function catLabel(cat) {
@@ -3094,7 +3098,7 @@ function openVideoModal(video) {
             var msg = document.createElement("div");
             msg.className = "vid-err";
             msg.style.cssText = "color:#fff;padding:16px 22px;text-align:center;font-size:13px;max-width:90vw;line-height:1.7";
-            msg.innerHTML = "Video açıla bilmədi. Faylın formatı brauzər tərəfindən vizual olaraq dəstəklənməyə bilər (məsələn iPhone HEVC videoları — səs eşidilər, amma təsvir göstərilməz). MP4 (H.264) formatına çevirib yenidən yükləyin.<br><a href='" + video.videoUrl + "' download target='_blank' rel='noopener' style='color:#d8b98f;text-decoration:underline'>Videonu yüklə</a>";
+            msg.innerHTML = "Video oynadıla bilmədi. Ən çox bu iki səbəbdən olur:<br>1) Fayl/format brauzerdə təsvirsiz dəstəklənir (HEVC/VP9/AV1 — səs var, şəkil yox). Çözüm: MP4 (H.264) formatına çevirin.<br>2) Yapışdırdığınız link YouTube video linki deyil. Çözüm: YouTube-da videonu açıb ünvan çubuğundan <b>https://www.youtube.com/watch?v=...</b> şəklində linki kopyalayın (və ya fayl yükləyin).<br><a href='" + video.videoUrl + "' download target='_blank' rel='noopener' style='color:#d8b98f;text-decoration:underline'>Videonu yüklə</a>";
             wrap.appendChild(msg);
         }
         var wrap = document.createElement("div");
