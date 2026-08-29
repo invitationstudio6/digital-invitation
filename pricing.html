@@ -483,6 +483,39 @@ var featureKeys = [
     "maps", "rsvp", "gallery", "music", "story", "animations", "videoBackground"
 ];
 
+/* ===== PRICING PACKAGE NORMALIZATION =====
+   LUNA_PACKAGES in js/data.js stores each package's features as a plain
+   string array and tagline as a string, while the renderers below expect
+   a features object keyed by featureKey plus per-language labels. Rebuild
+   the packages into the expected shape so the page renders correctly. */
+var pkgFeatureLabels = {
+    az: { designChoice: "Rəng və üslub seçimi", personalInfo: "Cütlüyün adları", shareLink: "Paylaşım linki", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP forması", gallery: "Foto qalereya", music: "Musiqi", story: "\"Our Story\" bölməsi", animations: "Animasiya və keçidlər", videoBackground: "Video dəvətnamə" },
+    en: { designChoice: "Color & style choice", personalInfo: "Couple's names", shareLink: "Share link", countdown: "Countdown", maps: "Google Maps", rsvp: "RSVP form", gallery: "Photo gallery", music: "Music", story: "\"Our Story\" section", animations: "Animations & transitions", videoBackground: "Video invitation" },
+    ru: { designChoice: "Выбор цвета и стиля", personalInfo: "Имена пары", shareLink: "Ссылка для открытия", countdown: "Обратный отсчёт", maps: "Google Maps", rsvp: "Форма RSVP", gallery: "Фотогалерея", music: "Музыка", story: "Раздел \"Our Story\"", animations: "Анимации и переходы", videoBackground: "Видео-приглашение" },
+    tr: { designChoice: "Renk ve stil seçimi", personalInfo: "Çiftin isimleri", shareLink: "Paylaşım linki", countdown: "Geri sayım", maps: "Google Maps", rsvp: "RSVP formu", gallery: "Foto galerisi", music: "Müzik", story: "\"Our Story\" bölümü", animations: "Animasyon ve geçişler", videoBackground: "Video davetiye" }
+};
+var pkgFeatureSet = {
+    video:   ["videoBackground", "animations", "music", "gallery", "personalInfo", "shareLink"],
+    basic:   ["personalInfo", "shareLink", "countdown", "maps", "gallery"],
+    premium: ["personalInfo", "shareLink", "countdown", "maps", "gallery", "rsvp", "designChoice", "story", "music"],
+    luxury:  ["personalInfo", "shareLink", "countdown", "maps", "gallery", "rsvp", "designChoice", "story", "music"]
+};
+var pkgTagline = {
+    video:   { az: "Animasiyalı video dəvətnamə", en: "Animated video invitation", ru: "Анимированное видео-приглашение", tr: "Animasyonlu video davetiye" },
+    basic:   { az: "Sadə və zərif rəqəmsal dəvətnamə", en: "Simple & elegant digital invitation", ru: "Простое и элегантное приглашение", tr: "Basit ve zarif dijital davetiye" },
+    premium: { az: "Ən çox tövsiyə olunan paket", en: "Most recommended package", ru: "Самый рекомендуемый пакет", tr: "En çok önerilen paket" },
+    luxury:  { az: "Daha xüsusi və premium görünüş", en: "A more special & premium look", ru: "Более особенный и премиальный вид", tr: "Daha özel ve premium görünüm" }
+};
+LUNA_PACKAGES.forEach(function(p) {
+    var set = pkgFeatureSet[p.id] || [];
+    p.features = {};
+    set.forEach(function(k) { p.features[k] = true; });
+    p.featureLabels = pkgFeatureLabels;
+    if (!p.tagline || typeof p.tagline !== "object") {
+        p.tagline = pkgTagline[p.id] || { az: p.tagline || "", en: p.tagline || "" };
+    }
+});
+
 function renderPackages() {
     var grid = document.getElementById("packagesGrid");
     grid.innerHTML = "";
