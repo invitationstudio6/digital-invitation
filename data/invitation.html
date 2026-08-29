@@ -314,9 +314,7 @@ a { text-decoration: none; color: inherit; }
     opacity: 0;
     transition: opacity 1.2s ease .3s;
 }
-[data-opening="door"] .door-open .door-scene::before {
-    opacity: 1;
-}
+.scene-opened[data-opening="door"]:not(.revealed) .door-scene::before { opacity: 1; }
 
 [data-opening="door"] .door-scene {
     position: relative;
@@ -335,7 +333,7 @@ a { text-decoration: none; color: inherit; }
     height: 100%;
     background: var(--bg-alt);
     border: 1px solid var(--border-strong);
-    transition: transform 1.8s cubic-bezier(.22,.9,.36,1), filter .8s, box-shadow .8s;
+    transition: transform 2.4s cubic-bezier(.16,.8,.28,1), filter .9s, box-shadow .9s;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -381,8 +379,8 @@ a { text-decoration: none; color: inherit; }
     50% { transform: rotate(-15deg); }
     75% { transform: rotate(10deg); }
 }
-[data-opening="door"] .door-open .door-left { transform: perspective(1200px) rotateY(-110deg); filter: brightness(.6); box-shadow: inset 30px 0 80px rgba(0,0,0,.4); }
-[data-opening="door"] .door-open .door-right { transform: perspective(1200px) rotateY(110deg); filter: brightness(.6); box-shadow: inset -30px 0 80px rgba(0,0,0,.4); }
+.scene-opened[data-opening="door"] .door-left { transform: perspective(1200px) rotateY(-112deg); filter: brightness(.6); box-shadow: inset 30px 0 80px rgba(0,0,0,.4); transition: transform 2.4s cubic-bezier(.16,.8,.28,1), filter .9s, box-shadow .9s; }
+.scene-opened[data-opening="door"] .door-right { transform: perspective(1200px) rotateY(112deg); filter: brightness(.6); box-shadow: inset -30px 0 80px rgba(0,0,0,.4); transition: transform 2.4s cubic-bezier(.16,.8,.28,1), filter .9s, box-shadow .9s; }
 [data-opening="door"] .door-invitation {
     position: absolute;
     inset: 8%;
@@ -397,7 +395,7 @@ a { text-decoration: none; color: inherit; }
     transform: scale(.9);
     transition: opacity .8s .6s ease, transform .8s .6s cubic-bezier(.19,1,.22,1);
 }
-[data-opening="door"] .door-open .door-invitation { opacity: 1; transform: scale(1); }
+.scene-opened[data-opening="door"] .door-invitation { opacity: 1; transform: scale(1); transition: opacity .9s 1.4s ease, transform .9s 1.4s cubic-bezier(.19,1,.22,1); }
 [data-opening="door"] .door-invitation::before {
     content: "";
     position: absolute;
@@ -1752,107 +1750,199 @@ a { text-decoration: none; color: inherit; }
    TYPE: OLD BOOK (old-book)
 ===================================================== */
 
-[data-opening="old-book"] .envelope-scene { display: none; }
 [data-opening="old-book"] .opening {
-    background: radial-gradient(ellipse at 50% 55%, #1A1208, #0C0804);
+    background: radial-gradient(ellipse at 50% 40%, #241709, #0A0603 75%);
     overflow: hidden;
-    perspective: 1100px;
+    perspective: 1300px;
 }
+[data-opening="old-book"] .envelope-scene,
+[data-opening="old-book"] .opening-petals,
+[data-opening="old-book"] .opening-light { display: none; }
 
 .ob-desk {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: 35vh;
+    height: 34vh;
     z-index: 1;
     background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 80px),
-        linear-gradient(180deg, #2A1C10, #1A1008);
-    box-shadow: inset 0 10px 40px rgba(0,0,0,.5);
+        radial-gradient(ellipse at 50% 0%, rgba(212,175,80,.08), transparent 45%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 90px),
+        linear-gradient(180deg, #2A1C10, #160D06);
+    box-shadow: inset 0 12px 50px rgba(0,0,0,.55);
+}
+.ob-desk::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,80,.5), transparent);
 }
 
+/* ---- book body ---- */
 .ob-book {
     position: fixed;
-    top: 50%; left: 50%;
+    top: 46%; left: 50%;
     transform: translate(-50%, -50%);
-    width: min(420px, 72vw);
-    height: min(280px, 48vw);
+    width: min(430px, 74vw);
+    height: min(288px, 50vw);
     z-index: 3;
     transform-style: preserve-3d;
+    animation: obBreathe 6s ease-in-out infinite;
+}
+@keyframes obBreathe { 0%,100% { transform: translate(-50%,-50%) translateY(0); } 50% { transform: translate(-50%,-50%) translateY(-6px); } }
+
+.ob-spine {
+    position: absolute;
+    top: -6px; bottom: -6px; left: -7px;
+    width: 12px;
+    background: linear-gradient(180deg, #3E1E0C, #2A1408);
+    transform: translateZ(-2px);
+    box-shadow: -4px 0 18px rgba(0,0,0,.6);
 }
 
+/* ---- cover with embossed gold + monogram ---- */
 .ob-cover {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #5C2E14, #3E1E0C 40%, #2A1408);
-    border: 3px solid #6A3A1C;
-    border-radius: 4px 14px 14px 4px;
-    box-shadow:
-        8px 8px 30px rgba(0,0,0,.6),
-        -2px 0 8px rgba(0,0,0,.3),
-        inset 0 0 20px rgba(0,0,0,.3);
+    background: linear-gradient(135deg, #5C2E14, #3A1D0B 45%, #241006);
+    border-radius: 4px 16px 16px 4px;
+    box-shadow: 10px 14px 40px rgba(0,0,0,.7), -2px 0 10px rgba(0,0,0,.4), inset 0 0 30px rgba(0,0,0,.28);
     z-index: 2;
     transform-origin: left center;
-    transition: transform 2.5s cubic-bezier(.22,.9,.36,1);
+    transform-style: preserve-3d;
+    transition: transform 2s cubic-bezier(.16,.9,.24,1);
 }
 .ob-cover::before {
     content: "";
     position: absolute;
-    top: 15%; bottom: 15%; left: 10px;
-    width: 2px;
-    background: linear-gradient(180deg, transparent, rgba(180,140,80,.3), transparent);
+    inset: 8px;
+    border: 1px solid rgba(212,175,80,.28);
+    border-radius: 2px 12px 12px 2px;
 }
-.ob-cover::after {
-    content: "";
+.ob-gold {
     position: absolute;
-    top: 50%; right: 14px;
-    transform: translateY(-50%);
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #D4AF37, #8A6E2F);
-    box-shadow: 0 2px 8px rgba(0,0,0,.4), inset 0 1px 2px rgba(255,255,255,.3);
+    top: 14px; left: 0; right: 0;
+    height: 1px; margin: 0 26px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,80,.5), transparent);
 }
+.ob-title {
+    position: absolute;
+    top: 26px; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(232,200,122,.85);
+}
+.ob-title i { font-size: 9px; color: rgba(212,175,80,.6); }
+.ob-monogram {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 64px; line-height: 1;
+    color: #E9CB8B;
+    text-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+.ob-monogram span { font-size: 36px; color: #C9A848; padding: 0 6px; }
 
-.ob-page {
+/* ---- base page (revealed under cover) ---- */
+.ob-page-0 {
     position: absolute;
     top: 6px; bottom: 6px; left: 6px; right: 6px;
     background: linear-gradient(135deg, #FFF8EE, #F0E4D0);
-    border-radius: 2px 10px 10px 2px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+    border-radius: 2px 12px 12px 2px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,.18);
     z-index: 1;
     opacity: 0;
-    transition: opacity .8s ease 1.2s;
 }
-.ob-page::before {
+.ob-page-0::before {
     content: "";
     position: absolute;
-    top: 0; bottom: 0; left: 0;
-    width: 40px;
-    background: linear-gradient(90deg, rgba(0,0,0,.08), transparent);
+    top: 0; bottom: 0; left: 0; width: 34px;
+    background: linear-gradient(90deg, rgba(0,0,0,.09), transparent);
+}
+.ob-page-0::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(120,80,40,.2), transparent);
 }
 
-.ob-pageturn {
+/* ---- turning page layers (ruled, right-half) ---- */
+.ob-pl {
     position: absolute;
-    top: 6px; bottom: 6px; left: 6px; right: 50%;
-    background: linear-gradient(90deg, #F5EBD8, #FFF6E8);
-    border-radius: 2px 0 0 2px;
+    top: 4px; bottom: 4px; left: 4px; right: 50%;
+    background: linear-gradient(90deg, #F4E8D2, #FFF6E8 65%);
+    border-radius: 3px 0 0 3px;
     transform-origin: right center;
     z-index: 4;
-    box-shadow: -3px 0 10px rgba(0,0,0,.15);
     opacity: 0;
+    box-shadow: -4px 0 14px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.7);
+}
+.ob-pl-line {
+    position: absolute;
+    left: 16px; right: 12px; height: 1px;
+    background: linear-gradient(90deg, rgba(150,110,60,.35), transparent);
+}
+.ob-pl-line.l1 { top: 26%; }
+.ob-pl-line.l2 { top: 40%; }
+.ob-pl-line.l3 { top: 54%; }
+.ob-pl-line.l4 { top: 68%; }
+.ob-pl2 { top: 3.5px; bottom: 3.5px; left: 5px; background: linear-gradient(90deg, #EFE1C8, #FFF4E2); }
+.ob-pl3 { top: 3px; bottom: 3px; left: 6px; background: linear-gradient(90deg, #EBDBBC, #FDF0D8); }
+
+/* ---- embers ---- */
+.ob-ember { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.ob-ember i {
+    position: absolute; bottom: -10px; width: 4px; height: 4px; border-radius: 50%;
+    background: radial-gradient(circle, #FFD98A, rgba(255,140,40,.9));
+    animation: obEmber linear infinite; opacity: 0;
+}
+.ob-ember i:nth-child(1){ left: 22%; animation-duration: 5s; animation-delay: .2s; }
+.ob-ember i:nth-child(2){ left: 38%; animation-duration: 6.5s; animation-delay: 1.4s; width: 3px; }
+.ob-ember i:nth-child(3){ left: 55%; animation-duration: 5.5s; animation-delay: .8s; width: 5px; }
+.ob-ember i:nth-child(4){ left: 68%; animation-duration: 7s; animation-delay: 2.1s; width: 3px; }
+.ob-ember i:nth-child(5){ left: 80%; animation-duration: 6s; animation-delay: .4s; }
+.ob-ember i:nth-child(6){ left: 30%; animation-duration: 8s; animation-delay: 2.8s; width: 3px; }
+.ob-ember i:nth-child(7){ left: 60%; animation-duration: 7.5s; animation-delay: 1s; width: 2px; }
+@keyframes obEmber {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    12% { opacity: .9; }
+    50% { transform: translateY(-42vh) translateX(14px); opacity: .7; }
+    100% { transform: translateY(-88vh) translateX(-12px); opacity: 0; }
 }
 
+/* ===== MULTI-STAGE OPENING SEQUENCE (~6s) ===== */
+/* Stage 2 — cover creaks open */
 .scene-opened[data-opening="old-book"] .ob-cover {
-    transform: translate(-50%, -50%) rotateY(-165deg);
-    filter: brightness(.5);
+    transform: rotateY(-172deg);
 }
-.scene-opened[data-opening="old-book"] .ob-page { opacity: 1; transition-delay: 1.5s; }
-.scene-opened[data-opening="old-book"] .ob-pageturn {
-    opacity: 1;
-    animation: obPageTurn 2s cubic-bezier(.22,.9,.36,1) 1.6s both;
+.scene-opened[data-opening="old-book"] .ob-cover::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.55));
 }
-@keyframes obPageTurn {
+/* Stage 1 — base page peeks */
+.scene-opened[data-opening="old-book"] .ob-page-0 { opacity: 1; transition: opacity 1s ease .9s; }
+
+/* Stage 3 — pages flip one by one */
+.scene-opened[data-opening="old-book"] .ob-pl  { opacity: 1; animation: obTurn 1s cubic-bezier(.3,.9,.3,1) 2.3s both; }
+.scene-opened[data-opening="old-book"] .ob-pl2 { opacity: 1; animation: obTurn 1s cubic-bezier(.3,.9,.3,1) 3.5s both; }
+.scene-opened[data-opening="old-book"] .ob-pl3 { opacity: 1; animation: obTurn .9s cubic-bezier(.3,.9,.3,1) 4.7s both; }
+@keyframes obTurn {
     0% { transform: rotateY(0deg); opacity: 1; }
-    100% { transform: rotateY(-170deg); opacity: 0; }
+    100% { transform: rotateY(-176deg); opacity: 0; }
+}
+
+/* Stage 4 — invitation rises from the opened book */
+[data-opening="old-book"].scene-opened .sig-scene.active .sig-card {
+    animation: obCardIn 1.4s cubic-bezier(.2,.9,.3,1) 5.4s both;
+    transform-style: preserve-3d;
+}
+@keyframes obCardIn {
+    0% { transform: translateY(26px) scale(.95); opacity: 0; filter: blur(5px); }
+    100% { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
 }
 
 [data-opening="old-book"] .sig-scene { z-index: 5; }
@@ -1861,7 +1951,7 @@ a { text-decoration: none; color: inherit; }
     z-index: 3;
     background: linear-gradient(165deg, #FFF8EE, #F5EBD8);
     border-color: rgba(140,100,50,.3);
-    box-shadow: 0 0 80px rgba(140,100,50,.1), 0 30px 80px rgba(0,0,0,.4);
+    box-shadow: 0 0 90px rgba(212,180,90,.12), 0 30px 80px rgba(0,0,0,.45);
 }
 [data-opening="old-book"] .sig-card h1 { color: #3A2410; }
 [data-opening="old-book"] .sig-card small { color: #8A7040; }
@@ -1871,7 +1961,7 @@ a { text-decoration: none; color: inherit; }
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 45%, rgba(200,160,80,.06), transparent 55%);
+    background: radial-gradient(ellipse at 50% 45%, rgba(200,160,80,.07), transparent 58%);
     pointer-events: none;
     z-index: 1;
 }
@@ -3283,10 +3373,12 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 120px 24px;
+    padding: 150px 28px;
     position: relative;
     overflow: hidden;
-    background: var(--cover) center/cover no-repeat;
+    background:
+        radial-gradient(ellipse at 50% 0%, var(--accent-light), transparent 60%),
+        var(--cover) center/cover no-repeat;
 }
 
 .hero::before {
@@ -3294,8 +3386,8 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 50% 40%, rgba(245,237,227,.60) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(62,37,24,.05), rgba(62,37,24,.25));
+        radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--accent, #c4a882) 34%, transparent) 0%, transparent 62%),
+        linear-gradient(to bottom, color-mix(in srgb, var(--accent, #c4a882) 8%, rgba(5,5,20,.15)) 0%, color-mix(in srgb, var(--accent, #c4a882) 10%, rgba(5,5,20,.42)) 100%);
     z-index: 1;
 }
 
@@ -3436,16 +3528,17 @@ a { text-decoration: none; color: inherit; }
 ===================================================== */
 
 .section {
-    padding: 120px 8%;
+    padding: clamp(96px, 14vh, 180px) 8%;
     text-align: center;
+    position: relative;
 }
 
 .section-divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin: 0 auto 50px;
+    gap: 18px;
+    margin: 0 auto clamp(44px, 7vh, 70px);
 }
 
 .section-divider::before,
@@ -5411,13 +5504,21 @@ footer p {
         <button class="open-button scene-open-btn" type="button"></button>
     </div>
 
-    <!-- Signature Scene 14 · OLD BOOK -->
+    <!-- Signature Scene 14 · OLD BOOK (cinematic multi-stage) -->
     <div class="sig-scene" id="oldBookScene" data-scene-for="old-book">
         <div class="ob-desk"></div>
+        <div class="ob-ember"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="ob-book">
-            <div class="ob-page"></div>
-            <div class="ob-pageturn"></div>
-            <div class="ob-cover"></div>
+            <div class="ob-page ob-page-0"></div>
+            <div class="ob-pl"><span class="ob-pl-line l1"></span><span class="ob-pl-line l2"></span><span class="ob-pl-line l3"></span><span class="ob-pl-line l4"></span></div>
+            <div class="ob-pl ob-pl2"><span class="ob-pl-line l1"></span><span class="ob-pl-line l2"></span><span class="ob-pl-line l3"></span><span class="ob-pl-line l4"></span></div>
+            <div class="ob-pl ob-pl3"><span class="ob-pl-line l1"></span><span class="ob-pl-line l2"></span><span class="ob-pl-line l3"></span></div>
+            <div class="ob-spine"></div>
+            <div class="ob-cover">
+                <span class="ob-gold"></span>
+                <span class="ob-title"><i>✦</i><b>Love Story</b><i>✦</i></span>
+                <span class="ob-monogram">L<span>&amp;</span>M</span>
+            </div>
         </div>
         <div class="sig-card">
             <div class="scene-fill">
@@ -6235,10 +6336,21 @@ document.getElementById("openButton").textContent =
         var _tplAll = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : [];
         var _tpl = _tplAll.find(function(t) { return t.id === _tplId; });
         var td = (_tpl && (_tpl.design || null)) || {};
-        if (td.primaryColor || td.secondaryColor) {
-            var acc = td.primaryColor || td.secondaryColor;
-            var acc2 = td.secondaryColor || td.primaryColor;
-            css += ":root{--gold:" + acc + "!important;--accent:" + acc + "!important;--accent-light:" + acc2 + "33!important}";
+        /* Distinct colour identity for EVERY template:
+           use design colours when present, otherwise fall back to the same
+           deterministic per-template palette used on the homepage cards, so no
+           invitation renders in the default beige and no two look the same */
+        var _acc = td.primaryColor || td.secondaryColor;
+        var _acc2 = td.secondaryColor || td.primaryColor;
+        var _tplId2 = (_tpl && _tpl.id) || _tplId;
+        if ((!_acc || !_acc2) && typeof lunaTemplatePalette === "function") {
+            try {
+                var _pal = lunaTemplatePalette(_tpl || { id: _tplId2 });
+                if (_pal && _pal.c1) { _acc = _acc || _pal.c1; _acc2 = _acc2 || _pal.c2; }
+            } catch (ePal) {}
+        }
+        if (_acc && _acc2) {
+            css += ":root{--gold:" + _acc + "!important;--accent:" + _acc + "!important;--accent-light:" + _acc2 + "33!important;--tpl-c1:" + _acc + "!important;--tpl-c2:" + _acc2 + "!important}";
         }
         if (td.font && (!th.font || td.font !== th.font)) {
             try {
@@ -7107,7 +7219,7 @@ var _openingStyle = (function() {
         "candlelight":    { id: "candlelightScene", delay: 2400 },
         "winter-drift":   { id: "winterScene",  delay: 2000 },
         "royal-scroll":   { id: "royalScrollScene", delay: 2200 },
-        "door":           { id: "doorScene",    delay: 1900 },
+        "door":           { id: "doorScene",    delay: 5200 },
         "stairs":         { id: "stairsScene",  delay: 1900 },
         "envelope-seal":  { id: "envSealScene", delay: 2100 },
         "ribbon":         { id: "ribbonScene",  delay: 2000 },
@@ -7115,7 +7227,7 @@ var _openingStyle = (function() {
         "magic-wand":     { id: "magicWandScene", delay: 2800 },
         "glowing-door":   { id: "glowingDoorScene", delay: 2600 },
         "ancient-forest": { id: "ancientForestScene", delay: 2600 },
-        "old-book":       { id: "oldBookScene", delay: 3000 }
+        "old-book":       { id: "oldBookScene", delay: 7000 }
     };
 
     var type = document.documentElement.getAttribute("data-opening") || "";
@@ -7185,6 +7297,14 @@ var _openingStyle = (function() {
             var _wi = "";
             try { _wi = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}").waxInitial || ""; } catch(e) {}
             wax.textContent = (_wi || (invitation.bride || "").charAt(0)).toUpperCase() || "L";
+        }
+
+        /* Old-book cover monogram — real couple initials */
+        var obMono = document.querySelector(".ob-monogram");
+        if (obMono) {
+            var initA = (invitation.bride || invitation.celebrant || invitation.graduate || invitation.companyName || "").charAt(0).toUpperCase() || "L";
+            var initB = (invitation.groom || invitation.celebrant || invitation.hostName || invitation.eventName || "").charAt(0).toUpperCase() || "";
+            obMono.innerHTML = initA + '<span>&amp;</span>' + (initB || initA);
         }
 
         /* Scene buttons text */

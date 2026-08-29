@@ -454,6 +454,7 @@ function lunaFormEngine(config) {
                     package: packageName,
                     category: category,
                     design: design,
+                    templateId: designId,
                     approved: false,
                     date: v.date,
                     dateShort: lunaDateShort(v.date),
