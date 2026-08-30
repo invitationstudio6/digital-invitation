@@ -2967,26 +2967,34 @@ function lunaIDBLoadHome(key, cb) {
 /* ===== VIDEO HOVER-TO-PLAY + LOAD ADMIN/PUBLISHED VIDEOS ===== */
 (function() {
     var grid = document.getElementById("videoGrid");
-    var emptyEl = document.getElementById("videoEmpty");
+var emptyEl = document.getElementById("videoEmpty");
     if (!grid) return;
 
-    function isYouTube(url) {
-        url = String(url || "");
-        return /(?:^|[^a-z0-9])(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url)
-            && /(\?|&|&amp;)v=|youtu\.be\/|\/(?:watch|embed|shorts|live|clip|playlist|v)\//.test(url);
+    function getVideoInfo(url) {
+        url = String(url || "").trim();
+        if (!url) return { type: 'none', id: '', isYouTube: false, isTikTok: false };
+
+        var ytId = (url.match(/[?&](?:v|video_id)=([\w-]{6,})/)
+            || url.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
+            || url.match(/youtu\.be\/([\w-]{6,})/)
+            || (/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url) ? url.match(/[\w-]{11}/) : null)
+            || [])[1];
+
+        var ttId = (url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/))
+            ? (url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/) || [])[1]
+            : '';
+
+        if (ytId) return { type: 'youtube', id: ytId, isYouTube: true, isTikTok: false };
+        if (ttId) return { type: 'tiktok', id: ttId, isYouTube: false, isTikTok: true };
+        if (/\.(mp4|webm|ogv|m4v)(\?|$)/i.test(url)) return { type: 'file', id: '', isYouTube: false, isTikTok: false };
+        return { type: 'other', id: '', isYouTube: false, isTikTok: false };
     }
     function youTubeId(url) {
-        url = String(url || "");
-        var m = url.match(/[?&](?:v|video_id)=([\w-]{6,})/);
-        if (m) return m[1];
-        m = url.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/);
-        if (m) return m[1];
-        m = url.match(/youtu\.be\/([\w-]{6,})/);
-        if (m) return m[1];
-        /* Fallback: any 11-char base64-ish token inside a known youtube domain */
-        m = url.match(/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)\/[^?]*?([\w-]{11})/);
-        if (m) return m[1];
-        return "";
+        var info = getVideoInfo(url);
+        return info.isYouTube ? info.id : "";
+    }
+    function isYouTube(url) {
+        return getVideoInfo(url).isYouTube;
     }
     function catLabel(cat) {
         var map = { wedding:"Toy", engagement:"Nişan", henna:"Xına", birthday:"Ad Günü", graduation:"Məzuniyyət", "baby-shower":"Körpə Partisi", business:"Biznes", other:"Digər" };
@@ -3027,15 +3035,15 @@ function lunaIDBLoadHome(key, cb) {
         list.forEach(function(v) {
             var isIDB = v.url.indexOf("__idb:") === 0;
             var blobKey = isIDB ? v.url.slice(6) : null;
-            var ytId = isYouTube(v.url) ? youTubeId(v.url) : "";
+            var vinfo = getVideoInfo(v.url);
 
             function addCard(videoSrc) {
                 var card = document.createElement("div");
                 card.className = "video-card";
                 card.setAttribute("data-video", videoSrc);
 
-                if (ytId) {
-                    var thumb = v.thumbnail || "https://img.youtube.com/vi/" + ytId + "/hqdefault.jpg";
+                if (vinfo.isYouTube) {
+                    var thumb = v.thumbnail || "https://img.youtube.com/vi/" + vinfo.id + "/hqdefault.jpg";
                     card.innerHTML =
                         '<div class="video-yt-wrap">' +
                             '<img src="' + thumb + '" loading="lazy">' +
@@ -3043,6 +3051,18 @@ function lunaIDBLoadHome(key, cb) {
                         '</div>' +
                         '<span class="video-badge">Video</span>' +
                         '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · YouTube</p></div>';
+                    card.addEventListener("click", function() {
+                        openVideoModal({ videoUrl: videoSrc, isYouTube: true, title: v.title || 'Video' });
+                    });
+                } else if (vinfo.isTikTok) {
+                    var thumb = v.thumbnail || 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + vinfo.id + '~c5_720x720.jpeg';
+                    card.innerHTML =
+                        '<div class="video-yt-wrap">' +
+                            '<img src="' + thumb + '" loading="lazy">' +
+                            '<div class="video-play"></div>' +
+                        '</div>' +
+                        '<span class="video-badge">Video</span>' +
+                        '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · TikTok</p></div>';
                     card.addEventListener("click", function() {
                         openVideoModal({ videoUrl: videoSrc, isYouTube: true, title: v.title || 'Video' });
                     });
@@ -3197,59 +3217,71 @@ function openVideoModal(video) {
     modal.className = "modal-overlay";
     modal.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;padding:20px";
 
-    if (video.isYouTube) {
-        var ytUrl = video.videoUrl || "";
-        var ytM = ytUrl.match(/[?&](?:v|video_id)=([\w-]{6,})/)
-            || ytUrl.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
-            || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
-        var ytId = ytM ? ytM[1] : "";
-        var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?rel=0&playsinline=1" : ytUrl;
-        var watchUrl = ytId ? "https://www.youtube.com/watch?v=" + ytId : ytUrl;
+    var vinfo = getVideoInfo(video.videoUrl || "");
 
-        /* Show a graceful fallback when YouTube blocks inline playback (e.g. Error 153). */
-        function showYTFallback() {
-            if (modal.querySelector(".yt-fallback")) return;
+    if (vinfo.isYouTube || vinfo.isTikTok) {
+        var isTT = vinfo.isTikTok;
+        var embedSrc, watchUrl, platformLabel;
+
+        if (isTT) {
+            embedSrc = "https://www.tiktok.com/embed/v2/" + vinfo.id;
+            watchUrl = "https://www.tiktok.com/@user/video/" + vinfo.id;
+            platformLabel = "TikTok";
+        } else {
+            var ytUrl = video.videoUrl || "";
+            var ytM = ytUrl.match(/[?&](?:v|video_id)=([\w-]{6,})/)
+                || ytUrl.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
+                || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
+            var ytId = ytM ? ytM[1] : "";
+            embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?rel=0&playsinline=1" : ytUrl;
+            watchUrl = ytId ? "https://www.youtube.com/watch?v=" + ytId : ytUrl;
+            platformLabel = "YouTube";
+        }
+
+        /* Show a graceful fallback when platform blocks inline playback. */
+        function showFallback() {
+            if (modal.querySelector(".platform-fallback")) return;
             var f = document.createElement("div");
-            f.className = "yt-fallback";
+            f.className = "platform-fallback";
             f.style.cssText = "position:absolute;inset:0;z-index:2;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;border-radius:8px";
             f.innerHTML =
                 '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d8b98f,#b98d5a);display:flex;align-items:center;justify-content:center;font-size:26px">&#9654;</div>' +
-                '<div style="color:#fff;font-size:15px;line-height:1.6;max-width:420px">Bu video YouTube tərəfindən səhifə daxilində oynadılmağa icazə vermir.<br><span style="opacity:.75;font-size:12px">(YouTube "Player configuration error" — Error 153)</span></div>' +
-                '<a href="' + watchUrl + '" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#d8b98f,#b98d5a);color:#1a1a1a;font-weight:700;padding:12px 22px;border-radius:30px;text-decoration:none;font-size:14px">YouTube-da aç</a>';
-            var holder = modal.querySelector(".youtube-holder");
+                '<div style="color:#fff;font-size:15px;line-height:1.6;max-width:420px">Bu video ' + platformLabel + ' tərəfindən səhifə daxilində oynadılmağa icazə vermir.<br><span style="opacity:.75;font-size:12px">(Player configuration error)</span></div>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#d8b98f,#b98d5a);color:#1a1a1a;font-weight:700;padding:12px 22px;border-radius:30px;text-decoration:none;font-size:14px">' + platformLabel + '-da aç</a>';
+            var holder = modal.querySelector(".platform-holder");
             if (holder) { holder.appendChild(f); holder.querySelector("iframe").style.opacity = ".15"; }
         }
 
         modal.innerHTML =
             '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
-            '<div class="youtube-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
+            '<div class="platform-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
                 '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
-                '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="YouTube-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">YouTube</span></a>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="' + platformLabel + '-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">' + platformLabel + '</span></a>' +
             '</div>';
-        /* Detect YouTube blocking playback. Error 153 ("Watch this video on YouTube") is
+        /* Detect platform blocking playback. Error 153 ("Watch this video on YouTube") is
            surfaced via a postMessage/loadFrame with code/errorCode 153. Only an actual
            error message triggers the fallback, so normal playable videos are never affected. */
-        var _ytShown = 0;
-        function showYTFallbackOnce() {
-            if (_ytShown) return;
-            _ytShown = 1;
-            window.removeEventListener("message", _onYTMsg);
-            showYTFallback();
+        var _shown = 0;
+        function showFallbackOnce() {
+            if (_shown) return;
+            _shown = 1;
+            window.removeEventListener("message", _onMsg);
+            showFallback();
         }
-        var _onYTMsg = function(ev) {
-            if (_ytShown) return;
+        var _onMsg = function(ev) {
+            if (_shown) return;
             var d = ev && ev.data;
             if (typeof d === "string") { try { d = JSON.parse(d); } catch (e) {} }
             if (d && typeof d === "object" && d.event) {
                 var n = d.error !== undefined ? d.error
                     : (d.info && d.info.code != null) ? d.info.code
                     : (d.data && (d.data.errorCode != null ? d.data.errorCode : d.data.code));
-                if (d.event === "onError" || String(n).indexOf("153") !== -1) showYTFallbackOnce();
+                if (d.event === "onError" || String(n).indexOf("153") !== -1) showFallbackOnce();
             }
         };
-        window.addEventListener("message", _onYTMsg);
+        window.addEventListener("message", _onMsg);
         modal.addEventListener("remove", function() {
-            window.removeEventListener("message", _onYTMsg);
+            window.removeEventListener("message", _onMsg);
         });
     } else {
         function showVidErr() {
