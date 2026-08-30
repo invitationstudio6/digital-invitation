@@ -740,6 +740,9 @@ body.menu-open .languages{display:none}
         if (packageName === "video") {
             html += '<div class="form-field full" style="animation-delay:.05s"><label>Video yüklə</label><input type="file" name="videoFile" accept="video/*"></div>';
         }
+        if (currentRank >= 2) {
+            html += '<div class="form-field full" style="animation-delay:.1s"><label>Video URL (YouTube / MP4 / TikTok)</label><input type="url" name="videoUrl" placeholder="https://youtube.com/watch?v=... və ya .mp4 linki"></div>';
+        }
         if (!html) {
             html = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Bu paketdə əlavə media sahəsi yoxdur.</div>';
         }

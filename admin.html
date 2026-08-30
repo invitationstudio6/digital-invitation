@@ -1500,6 +1500,7 @@ input,select,textarea{max-width:100%;}
                 <div class="field full"><label>Hekayə (Story)</label><textarea id="efStory" rows="3"></textarea></div>
                 <div class="field full"><label>Qalereya şəkilləri (hər sətirdə bir URL)</label><textarea id="efImages" rows="3" placeholder="https://..."></textarea></div>
                 <div class="field full"><label>Musiqi (URL)</label><input id="efMusic" type="url" placeholder="https://... mp3"></div>
+                <div class="field full"><label>Video URL (YouTube / MP4 / TikTok)</label><input id="efVideoUrl" type="url" placeholder="https://youtube.com/watch?v=... və ya .mp4 linki"></div>
             </div>
             <div class="button-row">
                 <button type="submit" class="save">Yadda Saxla</button>
@@ -5036,6 +5037,7 @@ function openEditInvitation(id){
     document.getElementById('efStory').value = inv.story ? inv.story.replace(/<[^>]*>/g, '') : '';
     document.getElementById('efImages').value = Array.isArray(inv.images) ? inv.images.join('\n') : '';
     document.getElementById('efMusic').value = inv.music || '';
+    document.getElementById('efVideoUrl').value = inv.videoUrl || '';
     document.getElementById('editInvitationModal').classList.add('open');
 }
 
@@ -5077,6 +5079,9 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
 
     var music = document.getElementById('efMusic').value.trim();
     if(music) inv.music = music; else delete inv.music;
+
+    var videoUrl = document.getElementById('efVideoUrl').value.trim();
+    if(videoUrl) inv.videoUrl = videoUrl; else delete inv.videoUrl;
 
     lunaSaveInvitation(inv);
 
