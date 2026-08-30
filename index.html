@@ -3194,7 +3194,7 @@ function openVideoModal(video) {
             || ytUrl.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
             || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
         var ytId = ytM ? ytM[1] : "";
-        var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?autoplay=1&rel=0&playsinline=1" : ytUrl;
+        var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?rel=0&playsinline=1" : ytUrl;
         var watchUrl = ytId ? "https://www.youtube.com/watch?v=" + ytId : ytUrl;
 
         /* Show a graceful fallback when YouTube blocks inline playback (e.g. Error 153). */
@@ -3255,14 +3255,14 @@ function openVideoModal(video) {
         wrap.style.cssText = "position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px";
         wrap.innerHTML =
             '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
-            '<video src="' + video.videoUrl + '" controls autoplay playsinline preload="auto" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
+            '<video src="' + video.videoUrl + '" controls playsinline preload="metadata" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
             '<a href="' + video.videoUrl + '" download target="_blank" rel="noopener" style="color:#d8b98f;font-size:12px;text-decoration:underline">Videonu yüklə</a>';
         modal.appendChild(wrap);
         var _vv = modal.querySelector("video");
         if (_vv) {
             _vv.addEventListener("error", function() { showVidErr(); });
-            var _pp = _vv.play();
-            if (_pp && _pp.catch) _pp.catch(function(){});
+            /* Do NOT autoplay: clicking a card opens the preview paused so the
+               invitation's music/sound does not start unexpectedly. */
             /* Audio-only / undecodable video track (e.g. HEVC): no error fires but no frames render */
             setTimeout(function() {
                 if (_vv && _vv.readyState >= 2 && _vv.videoWidth === 0 && _vv.videoHeight === 0) showVidErr();

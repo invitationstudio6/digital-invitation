@@ -3016,8 +3016,16 @@ function getGreetingCards(){
     try { return JSON.parse(localStorage.getItem('luna_greeting_cards') || '[]'); } catch(e){ return []; }
 }
 function saveGreetingCards(cards){
-    localStorage.setItem('luna_greeting_cards', JSON.stringify(cards));
+    try {
+        localStorage.setItem('luna_greeting_cards', JSON.stringify(cards));
+    } catch (e) {
+        if (typeof showToast === 'function') {
+            showToast('Yaddaş doldu — kart saxlanmadı. Çoxlu kart üçün şəkilləri link (URL) kimi yazın və ya daha kiçik şəkil yükləyin.');
+        }
+        return false;
+    }
     lunaPublishPublicCatalog();
+    return true;
 }
 
 function lunaEscapeHtml(s) {
@@ -3072,7 +3080,8 @@ document.getElementById('gcardForm').addEventListener('submit', function(e){
     if(!data.title){ showToast('Başlıq tələb olunur'); return; }
     if(!data.image){ showToast('Şəkil əlavə edin (yükləyin və ya link yazın)'); return; }
     var cards = getGreetingCards();
-    if(editingGCardId){
+    var edited = !!editingGCardId;
+    if(edited){
         var idx = cards.findIndex(function(x){ return x.id === editingGCardId; });
         if(idx !== -1){ Object.assign(cards[idx], data); }
         editingGCardId = null;
@@ -3082,11 +3091,11 @@ document.getElementById('gcardForm').addEventListener('submit', function(e){
         data.id = 'gc_' + Date.now();
         cards.push(data);
     }
-    saveGreetingCards(cards);
+    if(saveGreetingCards(cards) === false) return;
     document.getElementById('gcardForm').reset();
     resetGCardImagePreview();
     renderGreetingCards();
-    showToast(editingGCardId ? 'Kart yeniləndi' : 'Kart əlavə edildi');
+    showToast(edited ? 'Kart yeniləndi' : 'Kart əlavə edildi');
 });
 
 function resetGCardForm(){
@@ -3686,9 +3695,10 @@ function readUploadTo(input, targetId, previewId, kind){
     r.readAsDataURL(f);
 }
 
-/* Compress uploaded images to a web-safe size so they fit localStorage */
+/* Compress uploaded images to a web-safe size so they fit localStorage.
+   Smaller size => many more cards fit in localStorage (the ~5MB browser cap). */
 function compressImageFile(file, cb) {
-    var max = 1100, quality = 0.82;
+    var max = 800, quality = 0.7;
     var reader = new FileReader();
     reader.onload = function(e) {
         var img = new Image();
