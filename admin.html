@@ -3121,6 +3121,24 @@ document.getElementById('gcardForm').addEventListener('submit', function(e){
     showToast(edited ? 'Kart yeniləndi' : 'Kart əlavə edildi');
 });
 
+/* Auto-fetch thumbnail from TikTok/YouTube URL in gcardImage field */
+document.getElementById('gcardImage').addEventListener('blur', function(){
+    var url = this.value.trim();
+    if (!url) return;
+    var _ttM = url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/);
+    var _ytM = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    var thumb = '';
+    if (_ttM) thumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + (_ttM[1] || _ttM[2] || _ttM[3]) + '~c5_720x720.jpeg';
+    else if (_ytM) thumb = 'https://img.youtube.com/vi/' + _ytM[1] + '/hqdefault.jpg';
+    if (thumb) {
+        var preview = document.getElementById('gcardImagePreview');
+        preview.src = thumb;
+        preview.style.display = 'block';
+        this.value = thumb; // replace URL with thumbnail URL
+        showToast('Thumbnail avtomatik yükləndi');
+    }
+});
+
 function resetGCardForm(){
     editingGCardId = null;
     document.getElementById('gcardForm').reset();
