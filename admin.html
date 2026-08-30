@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{
     min-height:100vh;
     background:radial-gradient(circle at 15% 15%,rgba(155,105,80,.22),transparent 28%),radial-gradient(circle at 85% 80%,rgba(117,77,58,.25),transparent 30%),#17120f;
@@ -384,6 +385,63 @@ input,select,textarea{max-width:100%;}
     .quick-actions a,.quick-actions button{flex:1 1 100%;}
     .customer-actions button,.customer-actions a{min-height:46px;font-size:11px;}
     .recent-item{flex-wrap:wrap;gap:8px;}
+
+    /* Card grids: 1 column on mobile */
+    .grid-3,.grid-2,.stats-grid,.card-grid{grid-template-columns:1fr !important;}
+    .card-grid .card,.grid-3 .card,.grid-2 .card{margin-bottom:12px;}
+
+    /* Touch targets: min 44px */
+    button, .btn, a.btn, .sidebar-link, .mobile-nav a, .section-tab,
+    .toggle-slider, .vid-drop, .vid-step, .video-addon-card,
+    .tpl-card, .anim-card, .pkg-pick, .cat-pick, .prod-pick,
+    .video-addon-toggle .btn-add, .modal-close, .card-actions button,
+    .card-actions a, .customer-actions button, .customer-actions a,
+    .quick-actions a, .quick-actions button, .quickstart button,
+    .modal-close, .play-btn, .edit-btn, .toggle-btn, .delete,
+    .open-btn, .scene-open-btn, .btn-primary, .btn-ghost,
+    .btn-select, .save, .clear, .open-btn { min-height: 44px; }
+
+    /* Better form spacing */
+    .field{margin-bottom:14px;}
+    .form-grid{gap:0 !important;}
+    .field.full{grid-column:auto !important;}
+
+    /* Tables: ensure horizontal scroll */
+    .panel,.panel>*,table{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+
+    /* Modals */
+    .modal-overlay{padding:12px;align-items:flex-start;overflow-y:auto;}
+    .modal{padding:20px 16px;max-height:90vh;border-radius:12px;}
+    .modal-box{max-width:100%;margin:0;}
+    .modal-header{padding:0 0 12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08);}
+
+    /* Mobile nav spacing */
+    .mobile-nav a{padding:14px 16px;font-size:12px;}
+    .mobile-nav a.active{color:#b88c76;border-bottom-color:#b88c76;}
+
+    /* Quickstart buttons */
+    .quickstart button{flex:1 1 100%;min-height:56px;text-align:left;padding:16px;}
+
+    /* Card grids */
+    .template-grid,.video-grid{grid-template-columns:1fr !important;gap:12px;}
+    .template-card,.video-card{width:100%;}
+
+    /* Header improvements */
+    .header{gap:12px;}
+    .header-actions{flex-wrap:wrap;width:100%;gap:8px;}
+    .header-actions>button,.header-actions>a{min-width:auto;flex:1 1 auto;}
+
+    /* Panel overflow */
+    .panel{overflow-x:auto;}
+    .panel>*{min-width:0;}
+
+    /* Sidebar improvements on mobile */
+    .sidebar{display:none;}
+
+    /* Modal improvements */
+    .modal-overlay{padding:12px;align-items:flex-start;overflow-y:auto;}
+    .modal{padding:20px 16px;max-height:90vh;border-radius:12px;}
+    .modal-box{max-width:100%;margin:0;border-radius:12px;}
 }
 </style>
 </head>
@@ -629,7 +687,7 @@ input,select,textarea{max-width:100%;}
 
     <div class="panel">
         <h2>Mövcud Dizaynlar</h2>
-        <div id="designList" class="grid-3"></div>
+        <div id="designList" class="grid-3 card-grid"></div>
     </div>
 
     <div class="panel">
@@ -759,7 +817,7 @@ input,select,textarea{max-width:100%;}
                 <option value="featured">Seçilmiş</option>
             </select>
         </div>
-        <div id="videoList" class="grid-3"></div>
+        <div id="videoList" class="grid-3 card-grid"></div>
     </div>
 </div>
 
@@ -824,7 +882,7 @@ input,select,textarea{max-width:100%;}
 
     <div class="panel">
         <h2>Mövcud Kartlar</h2>
-        <div id="gcardList" class="grid-3"></div>
+        <div id="gcardList" class="grid-3 card-grid"></div>
     </div>
 </div>
 
@@ -940,7 +998,7 @@ input,select,textarea{max-width:100%;}
             </select>
             <span style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;" id="templateCount"></span>
         </div>
-        <div id="templateList" class="grid-3"></div>
+        <div id="templateList" class="grid-3 card-grid"></div>
     </div>
 </div>
 
@@ -1215,7 +1273,7 @@ input,select,textarea{max-width:100%;}
         </div>
     </div>
     <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştəri formadan gələn bütün sifarişlər. Hazırladıqdan sonra görüntü (GR) əlavə edin, link yaradın və WhatsApp mesajı ilə göndərin.</p>
-    <div id="ordersList" style="display:grid;gap:16px;"></div>
+    <div id="ordersList" class="card-grid" style="gap:16px;"></div>
 </div>
 
 <!-- ========== HOMEPAGE EDITOR ========== -->
