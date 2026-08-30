@@ -361,19 +361,29 @@ input,select,textarea{max-width:100%;}
     .grid-3,.grid-2{grid-template-columns:1fr;}
     .form-grid{grid-template-columns:1fr;}
     .field.full{grid-column:auto;}
-    .page-title h1{font-size:32px;}
+    .page-title h1{font-size:30px;}
     .customer-row{flex-direction:column;align-items:flex-start;}
+    .customer-actions{display:flex;flex-wrap:wrap;gap:8px;width:100%;}
+    .customer-actions>button,.customer-actions>a{flex:1 1 auto;min-height:42px;display:inline-flex;align-items:center;justify-content:center;text-align:center;padding:10px 12px;}
     /* Headers must wrap on narrow screens or buttons overflow horizontally */
     .header{flex-wrap:wrap;gap:14px;align-items:flex-start;}
     .header-actions{flex-wrap:wrap;width:100%;}
     .header-actions>*{min-width:0;}
     .panel,.panel>*,table{max-width:100%;overflow-x:auto;}
+    /* Modals fit phone screens */
+    .modal-overlay{padding:16px;align-items:flex-start;overflow-y:auto;}
+    .modal{padding:24px 20px;max-height:88vh;}
+    .modal-box{max-width:100%;}
+    .quickstart button{flex:1 1 100%;min-height:56px;}
 }
 @media(max-width:480px){
-    .main{padding:22px 14px;}
+    .main{padding:20px 12px;}
     .stats-grid{grid-template-columns:1fr;}
-    .stat-card{padding:18px 12px;}
-    .quick-actions{flex-wrap:wrap;}
+    .stat-card{padding:16px 12px;}
+    .quick-actions{flex-wrap:wrap;gap:8px;}
+    .quick-actions a,.quick-actions button{flex:1 1 100%;}
+    .customer-actions button,.customer-actions a{min-height:46px;font-size:11px;}
+    .recent-item{flex-wrap:wrap;gap:8px;}
 }
 </style>
 </head>
@@ -382,7 +392,9 @@ input,select,textarea{max-width:100%;}
 
 <nav class="mobile-nav">
     <a data-section="dashboard" onclick="switchSection('dashboard')">Ana Panel</a>
+    <a data-section="createinv" onclick="switchSection('createinv')">Dəvətnamə Yarat</a>
     <a data-section="orders" onclick="switchSection('orders')">Sifarişlər</a>
+    <a data-section="client-invitations" onclick="switchSection('client-invitations')">Müştəri Dizaynı</a>
     <a data-section="templates" onclick="switchSection('templates')">Dizaynlar</a>
     <a data-section="videos" onclick="switchSection('videos')">Videolar</a>
     <a data-section="cards" onclick="switchSection('cards')">Kartlar</a>
@@ -403,6 +415,15 @@ input,select,textarea{max-width:100%;}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><polyline points="3 8 12 13 21 8"/><line x1="12" y1="13" x2="12" y2="21"/></svg>
             <span>Sifarişlər</span>
             <b id="ordersBadge" style="margin-left:auto;background:#c0392b;color:#fff;border-radius:10px;padding:2px 8px;font-size:9px;display:none;">0</b>
+        </a>
+        <div class="sidebar-group-label">Müştərilər</div>
+        <a class="sidebar-link" data-section="createinv" href="javascript:void(0)" onclick="switchSection('createinv')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Dəvətnamə Yarat</span>
+        </a>
+        <a class="sidebar-link" data-section="client-invitations" href="javascript:void(0)" onclick="switchSection('client-invitations')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Müştəri Dizaynı</span>
         </a>
         <div class="sidebar-group-label">Dizayn</div>
         <a class="sidebar-link" data-section="templates" href="javascript:void(0)" onclick="switchSection('templates')">
