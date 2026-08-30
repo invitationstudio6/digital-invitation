@@ -242,18 +242,85 @@ function lunaDisplayNames(invitation) {
 }
 
 function lunaGetRsvps(invitationId) {
+    var seen = {};
+    var out = [];
+    function add(e) {
+        if (!e) return;
+        var u = e.uid || (e.at + "|" + (e.name || ""));
+        if (seen[u]) return;
+        seen[u] = 1;
+        out.push(e);
+    }
+    /* köhnə format: tək açarda massiv (luna_rsvp_<id>) */
     try {
         var raw = localStorage.getItem("luna_rsvp_" + invitationId);
-        return raw ? JSON.parse(raw) : [];
-    } catch (error) {
-        return [];
+        var arr = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(arr)) arr.forEach(add);
+    } catch (e) {}
+    /* yeni format: hər RSVP ayrı açar (luna_rsvp_<id>__<uid>) — cloud-dan gəlir */
+    var prefix = "luna_rsvp_" + invitationId + "__";
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.indexOf(prefix) !== 0) continue;
+        try {
+            var val = JSON.parse(localStorage.getItem(key));
+            if (val && typeof val === "object" && !Array.isArray(val)) add(val);
+        } catch (e) {}
     }
+    out.sort(function (a, b) { return (Date.parse(a.at) || 0) - (Date.parse(b.at) || 0); });
+    return out;
 }
 
 function lunaSaveRsvp(invitationId, entry) {
+    if (!invitationId) return;
+    entry = entry || {};
+    if (!entry.uid) entry.uid = Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+    if (!entry.at) entry.at = new Date().toISOString();
+    entry.invitationId = invitationId;
+
+    /* 1) köhnə massiv-format açara yaz (ani göstəriş + geriyə uyğunluq) */
     var list = lunaGetRsvps(invitationId);
     list.push(entry);
-    localStorage.setItem("luna_rsvp_" + invitationId, JSON.stringify(list));
+    try {
+        localStorage.setItem("luna_rsvp_" + invitationId, JSON.stringify(list));
+    } catch (e) {}
+
+    /* 2) kanonik per-RSVP açar — hər RSVP ayrıca sətir (cloud üçün) */
+    var rowKey = "luna_rsvp_" + invitationId + "__" + entry.uid;
+    try {
+        localStorage.setItem(rowKey, JSON.stringify(entry));
+    } catch (e) {}
+
+    /* 3) buluda anon INSERT — qonağın devayıcısında belə saxlanır */
+    _lunaPushRsvpToDb(rowKey, entry);
+}
+
+/* Hər RSVP-ni luna_kv cədvəlinə ayrıca sətir kimi yaz.
+   Schema-da anon INSERT yalnız key LIKE 'luna_rsvp_%' üçün açıqdır,
+   buna görə hər RSVP üçün unikal açardan istifadə edilir. */
+function _lunaPushRsvpToDb(rowKey, entry) {
+    var cfg = window.LUNA_SUPABASE || {};
+    if (!cfg.url || !cfg.anonKey) return;
+    try {
+        fetch(cfg.url + "/rest/v1/luna_kv", {
+            method: "POST",
+            headers: {
+                "apikey": cfg.anonKey,
+                "Authorization": "Bearer " + cfg.anonKey,
+                "Content-Type": "application/json",
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({
+                key: rowKey,
+                value: entry,
+                updated_at: new Date().toISOString()
+            })
+        }).catch(function (err) {
+            console.warn("Luna RSVP cloud sync failed", err);
+        });
+    } catch (err) {
+        console.warn("Luna RSVP cloud sync failed", err);
+    }
 }
 
 /* Get all customer invitations from localStorage */

@@ -1582,6 +1582,25 @@ input,select,textarea{max-width:100%;}
     </div>
 </div>
 
+<div class="modal-overlay" id="rsvpListModal">
+    <div class="modal" style="max-width:760px;">
+        <button class="modal-close" onclick="closeModal('rsvpListModal')">&times;</button>
+        <h2 id="rsvpListTitle">RSVP-lər</h2>
+        <div id="rsvpListBody" class="rsvp-list-body"></div>
+    </div>
+</div>
+
+<style>
+    .rsvp-list-body{max-height:60vh;overflow:auto;display:flex;flex-direction:column;gap:10px;}
+    .rsvp-row{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;}
+    .rsvp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+    .rsvp-head strong{font-size:13px;}
+    .rsvp-status{font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(184,140,118,.15);color:#e4c3a8;}
+    .rsvp-msg{margin-top:8px;font-size:11px;color:#b8a493;font-style:italic;border-left:2px solid rgba(184,140,118,.4);padding-left:10px;}
+    .rsvp-time{margin-top:8px;font-size:9px;color:#6f5f55;text-transform:uppercase;letter-spacing:.5px;}
+    .rsvp-list-body .empty{text-align:center;padding:40px;color:#8a7a70;font-size:12px;}
+</style>
+
 <script src="data/luna.js?v=20260824"></script>
 <script src="js/data.js?v=20260824b"></script>
 <script src="js/i18n.js?v=20260824"></script>
@@ -1761,6 +1780,40 @@ function showToast(msg){
 
 function closeModal(id){
     document.getElementById(id).classList.remove('open');
+}
+
+function openRsvpList(clientId){
+    document.getElementById('rsvpListModal').classList.add('open');
+    var customers = getCustomers();
+    var c = null;
+    for(var i = 0; i < customers.length; i++){ if(customers[i].id === clientId){ c = customers[i]; break; } }
+    var name = c ? lunaDisplayNames(c) : clientId;
+    document.getElementById('rsvpListTitle').textContent = 'RSVP-lər — ' + name;
+
+    var rsvps = lunaGetRsvps(clientId);
+    var bodyEl = document.getElementById('rsvpListBody');
+    if(!rsvps.length){
+        bodyEl.innerHTML = '<div class="empty">Hələ RSVP yoxdur.</div>';
+        return;
+    }
+
+    var statusText = { yes: 'Gəlir ✓', maybe: 'Bəlkə ?', no: 'Gəlmir ✗' };
+    var rows = rsvps.map(function(r){
+        var st = statusText[r.status] || r.status || '—';
+        var guests = r.guests ? '<span style="color:#b8a493;"> · ' + lunaEscapeHtml(String(r.guests)) + ' qonaq</span>' : '';
+        var when = '';
+        if(r.at){
+            try { when = new Date(r.at).toLocaleString('az-AZ', { dateStyle: 'short', timeStyle: 'short' }); }
+            catch(e){ when = r.at; }
+        }
+        return '<div class="rsvp-row">' +
+            '<div class="rsvp-head"><strong>' + lunaEscapeHtml(r.name || '—') + '</strong>' +
+            '<span class="rsvp-status">' + lunaEscapeHtml(st) + guests + '</span></div>' +
+            (r.message ? '<div class="rsvp-msg">' + lunaEscapeHtml(r.message) + '</div>' : '') +
+            '<div class="rsvp-time">' + lunaEscapeHtml(when) + '</div>' +
+        '</div>';
+    }).join('');
+    bodyEl.innerHTML = rows;
 }
 
 
@@ -1971,6 +2024,7 @@ function renderClientInvitations(){
                     : '<button class="save" onclick="openAssignDesignModalFor(\'' + c.id + '\')">Təyin Et</button>'
                 ) +
                 '<button class="copy-btn" onclick="copyClientInvitationLink(\'' + c.id + '\')">Link</button>' +
+                '<button class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
                 (inv ? '<button class="delete" onclick="removeClientInvitationConfirm(\'' + c.id + '\')">Sil</button>' : '') +
             '</div>';
         listEl.appendChild(div);
@@ -2201,13 +2255,23 @@ document.getElementById('quickDesignAssignForm').addEventListener('submit', func
 });
 
 function totalCountRsvps(){
-    var total = 0;
+    var total = 0, seen = {};
     for(var i = 0; i < localStorage.length; i++){
         var key = localStorage.key(i);
         if(!key.startsWith('luna_rsvp_')) continue;
         try {
-            var arr = JSON.parse(localStorage.getItem(key));
-            total += arr.length;
+            var val = JSON.parse(localStorage.getItem(key));
+            if(Array.isArray(val)){
+                val.forEach(function(e){
+                    if(e && typeof e === 'object'){
+                        if(e.uid){ if(!seen[e.uid]){ seen[e.uid] = 1; total++; } }
+                        else total += 1;
+                    }
+                });
+            } else if(val && typeof val === 'object'){
+                if(val.uid){ if(!seen[val.uid]){ seen[val.uid] = 1; total++; } }
+                else total += 1;
+            }
         } catch(e){}
     }
     return total;
@@ -2328,6 +2392,7 @@ function renderCustomers(){
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
                 '<button class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
                 '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
                 '<button class="delete" onclick="deleteCustomer(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
         list.appendChild(row);

@@ -2271,6 +2271,20 @@ function setupRSVP() {
 
     document.getElementById("rsvpForm").addEventListener("submit", function(e) {
         e.preventDefault();
+        var name = (document.getElementById("rsvpName").value || "").trim();
+        var status = document.getElementById("rsvpStatus").value || "yes";
+        var guests = parseInt(document.getElementById("rsvpGuests").value, 10) || 1;
+        var message = (document.getElementById("rsvpMessage").value || "").trim();
+        if (!invitationId || !name) {
+            document.getElementById("rsvpThanks").textContent = lunaT("invRsvpThanks");
+            this.hidden = true;
+            document.getElementById("rsvpThanks").hidden = false;
+            return;
+        }
+        lunaSaveRsvp(invitationId, { name: name, status: status, guests: guests, message: message });
+        document.getElementById("rsvpName").value = "";
+        document.getElementById("rsvpGuests").value = "1";
+        document.getElementById("rsvpMessage").value = "";
         this.hidden = true;
         document.getElementById("rsvpThanks").textContent = lunaT("invRsvpThanks");
         document.getElementById("rsvpThanks").hidden = false;
