@@ -4109,7 +4109,37 @@ function saveFormConfig() {
 /* =====================================================
    ORDERS MANAGER (Sifarişlər)
 ===================================================== */
+/* Fetch orders from Supabase (shared) with localStorage fallback */
 function getOrders() {
+    var cfg = window.LUNA_SUPABASE;
+    if (cfg && cfg.url && cfg.anonKey) {
+        return fetch(cfg.url + "/rest/v1/luna_orders?select=*&order=ts.desc", {
+            headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+        }).then(function(r){ return r.json(); })
+        .then(function(rows){
+            if (rows && rows.length) {
+                return rows.map(function(r){
+                    return {
+                        id: r.id,
+                        ts: r.ts,
+                        productType: r.product_type,
+                        productTypeName: r.product_type_name,
+                        lang: r.lang,
+                        status: r.status,
+                        contact: r.contact,
+                        data: r.data,
+                        invitationId: r.invitation_id,
+                        grImage: r.gr_image,
+                        deliveryLink: r.delivery_link
+                    };
+                });
+            }
+            return [];
+        }).catch(function(){ return getOrdersLocal(); });
+    }
+    return getOrdersLocal();
+}
+function getOrdersLocal() {
     try { return JSON.parse(localStorage.getItem('luna_orders') || '[]'); } catch(e) { return []; }
 }
 function saveOrders(orders) {
@@ -4117,10 +4147,11 @@ function saveOrders(orders) {
     updateOrdersBadge();
 }
 
-function updateOrdersBadge() {
+async function updateOrdersBadge() {
     var badge = document.getElementById('ordersBadge');
     if (!badge) return;
-    var fresh = getOrders().filter(function(o) { return o.status === 'new'; }).length;
+    var orders = await getOrders();
+    var fresh = orders.filter(function(o) { return o.status === 'new'; }).length;
     badge.textContent = fresh;
     badge.style.display = fresh > 0 ? 'inline-block' : 'none';
 }
@@ -4132,11 +4163,11 @@ function refreshOrders() {
     setTimeout(renderOrders, 350);
 }
 
-function renderOrders() {
+async function renderOrders() {
     var list = document.getElementById('ordersList');
     if (!list) return;
-    var orders = getOrders();
-    updateOrdersBadge();
+    var orders = await getOrders();
+    await updateOrdersBadge();
     if (!orders.length) {
         list.innerHTML = '<div style="padding:40px;text-align:center;color:#ad8c7d;font-size:12px;">Hələ sifariş yoxdur. Müştəri formanı dolduranda burada görünəcək.</div>';
         return;
@@ -4202,8 +4233,8 @@ function isInvitationApproved(invitationId) {
     } catch(e) { return true; }
 }
 
-function approveOrder(id) {
-    var f = findOrder(id);
+async function approveOrder(id) {
+    var f = await findOrder(id);
     if (!f) return;
     var o = f.order;
     if (o.invitationId) {
@@ -4221,46 +4252,49 @@ function approveOrder(id) {
         if (inp) inp.value = url.href;
     }
     o.status = 'approved';
-    saveOrders(getOrders().map(function(x, i) { return i === f.index ? o : x; }));
+    var orders = await getOrders();
+    saveOrders(orders.map(function(x, i) { return i === f.index ? o : x; }));
     renderOrders();
     showToast('Ödəniş təsdiqləndi ✓ Link aktivdir — WhatsApp mesajı ilə göndərin');
 }
 
-function findOrder(id) {
-    var orders = getOrders();
+async function findOrder(id) {
+    var orders = await getOrders();
     for (var i = 0; i < orders.length; i++) if (orders[i].id === id) return { order: orders[i], index: i };
     return null;
 }
 
-function setOrderStatus(id, status) {
-    var f = findOrder(id);
-    if (f) { f.order.status = status; saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; })); renderOrders(); }
+async function setOrderStatus(id, status) {
+    var f = await findOrder(id);
+    if (f) { f.order.status = status; var orders = await getOrders(); saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; })); renderOrders(); }
 }
 
-function saveOrderMeta(id) {
-    var f = findOrder(id);
+async function saveOrderMeta(id) {
+    var f = await findOrder(id);
     if (!f) return;
     var gr = document.getElementById('gr_' + id);
     var lnk = document.getElementById('lnk_' + id);
     if (gr) f.order.grImage = gr.value.trim();
     if (lnk) f.order.deliveryLink = lnk.value.trim();
-    saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; }));
+    var orders = await getOrders();
+    saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
     showToast('Sifariş məlumatları saxlandı');
 }
 
-function genOrderLink(id) {
-    var f = findOrder(id);
+async function genOrderLink(id) {
+    var f = await findOrder(id);
     if (!f) return;
     var url = new URL('data/invitation.html', window.location.href);
     url.searchParams.set('id', f.order.invitationId);
     var inp = document.getElementById('lnk_' + id);
     if (inp) inp.value = url.href;
     f.order.deliveryLink = url.href;
-    saveOrders(getOrders().map(function(o, i) { return i === f.index ? f.order : o; }));
+    var orders = await getOrders();
+    saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
 }
 
-function copyOrderMessage(id) {
-    var f = findOrder(id);
+async function copyOrderMessage(id) {
+    var f = await findOrder(id);
     if (!f) return;
     var o = f.order;
     if (o.productType === 'invitation' && o.invitationId && !isInvitationApproved(o.invitationId)) {
@@ -4273,9 +4307,10 @@ function copyOrderMessage(id) {
     navigator.clipboard.writeText(msg).then(function() { showToast('WhatsApp mesajı kopyalandı'); }, function() { alert(msg); });
 }
 
-function deleteOrder(id) {
+async function deleteOrder(id) {
     if (!confirm('Bu sifarişi silmək istəyirsiniz?')) return;
-    saveOrders(getOrders().filter(function(o) { return o.id !== id; }));
+    var orders = await getOrders();
+    saveOrders(orders.filter(function(o) { return o.id !== id; }));
     renderOrders();
 }
 

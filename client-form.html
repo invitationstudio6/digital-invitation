@@ -1672,6 +1672,37 @@ body.menu-open .languages{display:none}
                 localStorage.setItem("luna_orders", JSON.stringify(o2));
             } catch(e2) {}
         }
+
+        /* Also save to Supabase so all admins see it */
+        lunaSaveOrderToSupabase(order);
+    }
+
+    /* Save order to Supabase (shared database) so all admins see it */
+    function lunaSaveOrderToSupabase(order) {
+        var cfg = window.LUNA_SUPABASE;
+        if (!cfg || !cfg.url || !cfg.anonKey) return;
+        var payload = {
+            id: order.id,
+            ts: order.ts,
+            product_type: order.productType,
+            product_type_name: order.productTypeName,
+            lang: order.lang,
+            status: order.status,
+            contact: order.contact,
+            data: order.data,
+            invitation_id: order.invitationId || null,
+            created_at: new Date().toISOString()
+        };
+        fetch(cfg.url + "/rest/v1/luna_orders", {
+            method: "POST",
+            headers: {
+                "apikey": cfg.anonKey,
+                "Authorization": "Bearer " + cfg.anonKey,
+                "Content-Type": "application/json",
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify(payload)
+        }).catch(function(){ /* silent fail */ });
     }
 
     function submitProductOrder() {
