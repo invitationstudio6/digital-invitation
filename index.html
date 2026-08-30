@@ -2970,7 +2970,7 @@ function lunaIDBLoadHome(key, cb) {
 var emptyEl = document.getElementById("videoEmpty");
     if (!grid) return;
 
-    function getVideoInfo(url) {
+function getVideoInfo(url) {
         url = String(url || "").trim();
         if (!url) return { type: 'none', id: '', isYouTube: false, isTikTok: false };
 
@@ -2980,14 +2980,16 @@ var emptyEl = document.getElementById("videoEmpty");
             || (/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url) ? url.match(/[\w-]{11}/) : null)
             || [])[1];
 
-        var ttId = (url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/))
-            ? (url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/) || [])[1]
-            : '';
+        var ttId = extractTikTokId(url);
 
         if (ytId) return { type: 'youtube', id: ytId, isYouTube: true, isTikTok: false };
         if (ttId) return { type: 'tiktok', id: ttId, isYouTube: false, isTikTok: true };
         if (/\.(mp4|webm|ogv|m4v)(\?|$)/i.test(url)) return { type: 'file', id: '', isYouTube: false, isTikTok: false };
         return { type: 'other', id: '', isYouTube: false, isTikTok: false };
+    }
+    function extractTikTokId(url) {
+        var m = url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)/?|vt\.tiktok\.com\/(\w+)?)?/);
+        return m ? (m[1] || m[2] || m[3] || '') : '';
     }
     function youTubeId(url) {
         var info = getVideoInfo(url);

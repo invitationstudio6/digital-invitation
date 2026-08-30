@@ -2894,10 +2894,10 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
             videos[idx].price = parseFloat(document.getElementById('videoPrice').value) || 20;
             videos[idx].url = document.getElementById('videoUrl').value.trim();
             /* Auto-generate YouTube / TikTok thumbnail */
-            var _ytM = videos[idx].url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
-            var _ttM = videos[idx].url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/);
-            if (_ytM) videos[idx].thumbnail = 'https://img.youtube.com/vi/' + _ytM[1] + '/hqdefault.jpg';
-            else if (_ttM) videos[idx].thumbnail = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + (_ttM[1] || _ttM[2] || _ttM[3]) + '~c5_720x720.jpeg';
+            var _ytM = extractYouTubeId(videos[idx].url);
+            var _ttM = extractTikTokId(videos[idx].url);
+            if (_ytM) videos[idx].thumbnail = 'https://img.youtube.com/vi/' + _ytM + '/hqdefault.jpg';
+            else if (_ttM) videos[idx].thumbnail = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + _ttM + '~c5_720x720.jpeg';
             else videos[idx].thumbnail = '';
             videos[idx].language = document.getElementById('videoLang').value;
             videos[idx].active = document.getElementById('videoStatus').value === 'active';
@@ -2908,11 +2908,11 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
         document.querySelector('#videoForm .save').textContent = 'Saxla';
     } else {
         var _rawUrl = document.getElementById('videoUrl').value.trim();
-        var _ytM2 = _rawUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
-        var _ttM2 = _rawUrl.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/);
+        var _ytM2 = extractYouTubeId(_rawUrl);
+        var _ttM2 = extractTikTokId(_rawUrl);
         var thumb = '';
-        if (_ytM2) thumb = 'https://img.youtube.com/vi/' + _ytM2[1] + '/hqdefault.jpg';
-        else if (_ttM2) thumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + (_ttM2[1] || _ttM2[2] || _ttM2[3]) + '~c5_720x720.jpeg';
+        if (_ytM2) thumb = 'https://img.youtube.com/vi/' + _ytM2 + '/hqdefault.jpg';
+        else if (_ttM2) thumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + _ttM2 + '~c5_720x720.jpeg';
         var video = {
             id: 'vid_' + Date.now(),
             type: 'video',
@@ -3003,10 +3003,10 @@ document.getElementById('editVideoForm').addEventListener('submit', function(e){
     videos[idx].url = document.getElementById('editVideoUrl').value.trim();
     var _editThumb = document.getElementById('editVideoThumb').value.trim();
     if (!_editThumb && videos[idx].url) {
-        var _eytM = videos[idx].url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
-        var _ettM = videos[idx].url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/);
-        if (_eytM) _editThumb = 'https://img.youtube.com/vi/' + _eytM[1] + '/hqdefault.jpg';
-        else if (_ettM) _editThumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + (_ettM[1] || _ettM[2] || _ettM[3]) + '~c5_720x720.jpeg';
+        var _eytM = extractYouTubeId(videos[idx].url);
+        var _ettM = extractTikTokId(videos[idx].url);
+        if (_eytM) _editThumb = 'https://img.youtube.com/vi/' + _eytM + '/hqdefault.jpg';
+        else if (_ettM) _editThumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + _ettM + '~c5_720x720.jpeg';
     }
     videos[idx].thumbnail = _editThumb;
     videos[idx].language = document.getElementById('editVideoLang').value;
@@ -3125,11 +3125,11 @@ document.getElementById('gcardForm').addEventListener('submit', function(e){
 document.getElementById('gcardImage').addEventListener('blur', function(){
     var url = this.value.trim();
     if (!url) return;
-    var _ttM = url.match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)|vt\.tiktok\.com\/(\w+))/);
-    var _ytM = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    var _ttM = extractTikTokId(url);
+    var _ytM = extractYouTubeId(url);
     var thumb = '';
-    if (_ttM) thumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + (_ttM[1] || _ttM[2] || _ttM[3]) + '~c5_720x720.jpeg';
-    else if (_ytM) thumb = 'https://img.youtube.com/vi/' + _ytM[1] + '/hqdefault.jpg';
+    if (_ttM) thumb = 'https://p16-sign.tiktokcdn.com/tos-maliva-avt-0068/' + _ttM + '~c5_720x720.jpeg';
+    else if (_ytM) thumb = 'https://img.youtube.com/vi/' + _ytM + '/hqdefault.jpg';
     if (thumb) {
         var preview = document.getElementById('gcardImagePreview');
         preview.src = thumb;
@@ -3778,7 +3778,22 @@ function resetVideoForm(){
     refreshVideoStatusHint();
 }
 
-/* Fluent visitor-facing guidance: what will visitors actually see/play? */
+/* Helper: extract TikTok video ID from various URL formats */
+function extractTikTokId(url) {
+    var m = String(url || "").match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)/?|vt\.tiktok\.com\/(\w+)?)?/);
+    return m ? (m[1] || m[2] || m[3] || '') : '';
+}
+
+/* Helper: extract YouTube video ID */
+function extractYouTubeId(url) {
+    var m = String(url || "").match(/[?&](?:v|video_id)=([\w-]{6,})/)
+        || String(url || "").match(/\/(?:watch|embed\/|shorts\/|live\/|clip\/|v\/)([\w-]{6,})/)
+        || String(url || "").match(/youtu\.be\/([\w-]{6,})/)
+        || (/(?:youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(url) ? String(url || "").match(/[\w-]{11}/) : null);
+    return m ? m[1] : '';
+}
+
+/* Helper: video kind info */
 function videoKindInfo(url){
     url = String(url || "").trim();
     if (!url) return { kind: 'none', html: '' };
