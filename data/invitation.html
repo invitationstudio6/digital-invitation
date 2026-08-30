@@ -3562,6 +3562,32 @@ a { text-decoration: none; color: inherit; }
     z-index: 0;
 }
 
+.hero-yt-play {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    border: 2px solid rgba(255,255,255,.3);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s, transform .2s;
+}
+.hero-yt-play:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,.25);
+    border-color: rgba(255,255,255,.5);
+}
+.hero-yt-play svg {
+    width: 28px;
+    height: 28px;
+}
+
 
 /* =====================================================
    SECTIONS
@@ -6507,12 +6533,46 @@ if (invitation.videoUrl) {
         var _ytId = _ytMatch ? _ytMatch[1] : "";
         if (_ytId) {
             var iframe = document.createElement("iframe");
-            iframe.src = "https://www.youtube.com/embed/" + _ytId + "?autoplay=1&mute=1&loop=1&playlist=" + _ytId + "&controls=0&showinfo=0&rel=0&playsinline=1";
-            iframe.allow = "autoplay;encrypted-media";
+            iframe.src = "https://www.youtube.com/embed/" + _ytId + "?autoplay=1&mute=1&loop=1&playlist=" + _ytId + "&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1";
+            iframe.allow = "autoplay;encrypted-media;fullscreen";
             iframe.setAttribute("playsinline", "");
             iframe.className = "hero-video-bg";
-            iframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:none";
+            iframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
             hero.insertBefore(iframe, hero.firstChild);
+
+            /* Play button overlay in case autoplay is blocked */
+            var ytPlay = document.createElement("button");
+            ytPlay.className = "hero-yt-play";
+            ytPlay.setAttribute("aria-label", "Video oynat");
+            ytPlay.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s";
+            ytPlay.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg>';
+            hero.appendChild(ytPlay);
+
+            /* Show play button on hover or if autoplay fails */
+            hero.addEventListener("mouseenter", function(){ ytPlay.style.opacity = "1"; ytPlay.style.pointerEvents = "auto"; });
+            hero.addEventListener("mouseleave", function(){ ytPlay.style.opacity = "0"; ytPlay.style.pointerEvents = "none"; });
+
+            /* Try to play via YouTube API on click */
+            ytPlay.addEventListener("click", function(e){
+                e.stopPropagation();
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":[]}', '*');
+                ytPlay.style.opacity = "0";
+                ytPlay.style.pointerEvents = "none";
+            });
+
+            /* Detect if autoplay was blocked - show play button */
+            var _ytCheck = 0;
+            function checkYTAutoplay(){
+                if (_ytCheck++ > 20) return; // ~2s
+                iframe.contentWindow.postMessage('{"event":"command","func":"getPlayerState","args":[]}', '*');
+            }
+            window.addEventListener("message", function(ev){
+                if (ev.data && ev.data.info && ev.data.info.playerState === 5) { // video cued/unstarted
+                    ytPlay.style.opacity = "1";
+                    ytPlay.style.pointerEvents = "auto";
+                }
+            });
+            setTimeout(checkYTAutoplay, 1000);
         }
     } else {
         /* Regular video file */

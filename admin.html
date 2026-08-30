@@ -2854,8 +2854,13 @@ function renderVideos(){
         var thumb = thumbSrc ? '<img src="' + lunaEscapeHtml(thumbSrc) + '" alt="' + lunaEscapeHtml(v.title) + '">' : '<div style="width:100%;height:240px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;">VIDEO</div>';
         var statusBadge = v.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
         var featuredBadge = v.featured ? '<span class="badge featured">Featured</span>' : '';
+        var isYT = v.url && /(?:youtube\.com|youtu\.be)/i.test(v.url);
+        var playBtn = isYT ? '<button class="play-btn" onclick="openVideoModal({videoUrl:\'' + lunaEscapeHtml(v.url) + '\',isYouTube:true,title:\'' + lunaEscapeHtml(v.title || 'Video') + '\'})" aria-label="Oynat" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;opacity:0;transition:opacity .3s"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg></button>' : '';
         card.innerHTML =
-            thumb +
+            '<div class="card-thumb" style="position:relative;overflow:hidden;">' +
+                thumb +
+                playBtn +
+            '</div>' +
             '<h3>' + lunaEscapeHtml(v.title || '') + '</h3>' +
             '<div class="card-meta">' +
                 '<span class="badge">' + lunaEscapeHtml(lunaCategoryName(v.category || '')) + '</span>' +
@@ -2869,6 +2874,8 @@ function renderVideos(){
                 '<button class="toggle-btn" onclick="toggleVideoFeatured(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.featured ? 'Featured Sil' : 'Featured Et') + '</button>' +
                 '<button class="delete" onclick="deleteVideo(\'' + lunaEscapeHtml(v.id) + '\')">Sil</button>' +
             '</div>';
+        card.querySelector('.card-thumb').addEventListener('mouseenter', function(){ var pb=this.querySelector('.play-btn'); if(pb){pb.style.opacity='1';} });
+        card.querySelector('.card-thumb').addEventListener('mouseleave', function(){ var pb=this.querySelector('.play-btn'); if(pb){pb.style.opacity='0';} });
         list.appendChild(card);
     });
 }
@@ -3777,6 +3784,86 @@ function videoKindInfo(url){
             html: '<span style="color:#9fb6d8">? Link — təsdiq üçün sınayın. YouTube/TikTok/MP4 linki hamıda oynayır.</span>' };
     }
     return { kind: 'other', html: '' };
+}
+
+/* ---- Video preview modal for admin panel ---- */
+function openVideoModal(video) {
+    var modal = document.createElement("div");
+    modal.className = "modal-overlay";
+    modal.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;padding:20px";
+
+    if (video.isYouTube) {
+        var ytUrl = video.videoUrl || "";
+        var ytM = ytUrl.match(/[?&](?:v|video_id)=([\w-]{6,})/)
+            || ytUrl.match(/\/(?:watch|embed|shorts|live|clip|v)\/([\w-]{6,})/)
+            || ytUrl.match(/youtu\.be\/([\w-]{6,})/);
+        var ytId = ytM ? ytM[1] : "";
+        var embedSrc = ytId ? "https://www.youtube.com/embed/" + ytId + "?rel=0&playsinline=1" : ytUrl;
+        var watchUrl = ytId ? "https://www.youtube.com/watch?v=" + ytId : ytUrl;
+
+        function showYTFallback() {
+            if (modal.querySelector(".yt-fallback")) return;
+            var f = document.createElement("div");
+            f.className = "yt-fallback";
+            f.style.cssText = "position:absolute;inset:0;z-index:2;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;border-radius:8px";
+            f.innerHTML =
+                '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d8b98f,#b98d5a);display:flex;align-items:center;justify-content:center;font-size:26px">&#9654;</div>' +
+                '<div style="color:#fff;font-size:15px;line-height:1.6;max-width:420px">Bu video YouTube tərəfindən səhifə daxilində oynadılmağa icazə vermir.<br><span style="opacity:.75;font-size:12px">(YouTube "Player configuration error" — Error 153)</span></div>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#d8b98f,#b98d5a);color:#1a1a1a;font-weight:700;padding:12px 22px;border-radius:30px;text-decoration:none;font-size:14px">YouTube-da aç</a>';
+            var holder = modal.querySelector(".youtube-holder");
+            if (holder) { holder.appendChild(f); holder.querySelector("iframe").style.opacity = ".15"; }
+        }
+
+        modal.innerHTML =
+            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<div class="youtube-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
+                '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
+                '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="YouTube-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">YouTube</span></a>' +
+            '</div>';
+        var _ytShown = 0;
+        function showYTFallbackOnce() {
+            if (_ytShown) return;
+            _ytShown = 1;
+            window.removeEventListener("message", _onYTMsg);
+            showYTFallback();
+        }
+        var _onYTMsg = function(ev) {
+            if (_ytShown) return;
+            var d = ev && ev.data;
+            if (typeof d === "string") { try { d = JSON.parse(d); } catch (e) {} }
+            if (d && typeof d === "object" && d.event) {
+                var n = d.error !== undefined ? d.error
+                    : (d.info && d.info.code != null) ? d.info.code
+                    : (d.data && (d.data.errorCode != null ? d.data.errorCode : d.data.code));
+                if (d.event === "onError" || String(n).indexOf("153") !== -1) showYTFallbackOnce();
+            }
+        };
+        window.addEventListener("message", _onYTMsg);
+        modal.addEventListener("remove", function() {
+            window.removeEventListener("message", _onYTMsg);
+        });
+    } else {
+        function showVidErr() {
+            if (modal.querySelector(".vid-err")) return;
+            var msg = document.createElement("div");
+            msg.className = "vid-err";
+            msg.style.cssText = "color:#fff;padding:16px 22px;text-align:center;font-size:13px;max-width:90vw;line-height:1.7";
+            msg.innerHTML = "Video oynadıla bilmədi. Ən çox bu iki səbəbdən olur:<br>1) Fayl/format brauzerdə dəstəklənir (HEVC/VP9/AV1 — səs var, şəkil yox). Çözüm: MP4 (H.264) formatına çevirin.<br>2) Link YouTube video linki deyil. Çözüm: YouTube-da videonu açıb ünvan çubuğundan <b>https://www.youtube.com/watch?v=...</b> şəklində linki kopyalayın (və ya fayl yükləyin).<br><a href='" + video.videoUrl + "' download target='_blank' rel='noopener' style='color:#d8b98f;text-decoration:underline'>Videonu yüklə</a>";
+            wrap.appendChild(msg);
+        }
+        var wrap = document.createElement("div");
+        wrap.style.cssText = "position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px";
+        wrap.innerHTML =
+            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<video src="' + video.videoUrl + '" controls playsinline preload="metadata" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
+            '<a href="' + video.videoUrl + '" download target="_blank" rel="noopener" style="color:#d8b98f;font-size:12px;text-decoration:underline">Videonu yüklə</a>';
+        modal.appendChild(wrap);
+        var _vv = modal.querySelector("video");
+        if (_vv) {
+            _vv.addEventListener("error", function() { showVidErr(); });
+        }
+    }
+    document.body.appendChild(modal);
 }
 function refreshVideoStatusHint(){
     var h = document.getElementById('videoStatusHint');
