@@ -93,3 +93,16 @@ Supabase Auth (magic-link) + RLS ilə təmin olunur.
 - Qonaq bu düyməni görsə belə — siyahını **görə bilməz**, çünki
   cütlüyün e-maili olmadan RLS heç nə qaytarmır.
 
+### 6.6 Email göndərmə limitini artır (rate limit)
+Magic-link məktublarının sayı Supabase tərəfindən **saatlıq limitə** tabedir
+(default aşağı ola bilər — çox dəfə "Giriş linki göndər" basılsa məktub gəlməz).
+
+- Supabase → **Authentication** → **Rate Limits** → aç
+- **"Send magic link"** (və ya Email OTP / sending email) sətrini tap
+- Onun **hourly limit** dəyərini artır (məs: 30 → 100+)
+- **Save** et
+
+Qeyd: Free planda həddindən artıq artırma poçt xidmətindən imtina ala və
+spam-ə düşə bilər. Çox böyük həcm üçün üçüncü tərəf SMTP (SendGrid/Resend)
+qoşmaq lazımdır — əlavə addım/xərc tələb edir, amma limiti böyük artırır.
+

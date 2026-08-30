@@ -5761,8 +5761,7 @@ footer p {
         <p id="rsvpThanks" hidden></p>
 
         <div id="couplePanel" class="couple-panel">
-            <div class="couple-panel-divider"><span>&#10022;</span></div>
-            <button type="button" class="rsvp-button" id="coupleOpenBtn"></button>
+            <button type="button" id="coupleOpenBtn" class="couple-open-btn"></button>
 
             <div id="coupleLoginBox" hidden>
                 <form id="coupleLoginForm" class="couple-login-form">
@@ -7547,13 +7546,16 @@ if (_openingStyle !== "envelope") {
 
 
 <style>
-.couple-panel{margin-top:26px;border-top:1px solid rgba(184,140,118,.25);padding-top:22px;}
-.couple-panel-divider{text-align:center;color:#d8bfa8;margin-bottom:12px;}
-.couple-login-form{display:flex;flex-direction:column;gap:14px;max-width:400px;margin:0 auto;}
-.couple-msg{margin:0;min-height:18px;font-size:12px;color:#e4c3a8;}
+.couple-panel{margin-top:14px;text-align:center;}
+.couple-open-btn{background:none;border:none;color:rgba(184,140,118,.55);font-size:9px;letter-spacing:.3px;cursor:pointer;padding:6px 10px;text-transform:uppercase;}
+.couple-open-btn:hover{color:#b88c76;}
+.couple-login-form{display:flex;flex-direction:column;gap:14px;max-width:320px;margin:18px auto 0;}
+.couple-msg{margin:0;min-height:18px;font-size:11px;color:#b8a493;}
+.couple-panel input{font-size:13px;}
 .couple-panel .rsvp-field{position:relative;}
-.couple-list-body{display:flex;flex-direction:column;gap:10px;max-height:50vh;overflow:auto;}
-.couple-list-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}
+.couple-panel .rsvp-button{padding:12px 22px;font-size:11px;}
+.couple-list-body{display:flex;flex-direction:column;gap:10px;max-height:50vh;overflow:auto;margin-top:10px;}
+.couple-list-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:6px;}
 .couple-list-head strong{font-size:15px;color:#e4c3a8;}
 .couple-signout{background:none;border:1px solid rgba(255,255,255,.15);color:#b8a493;border-radius:8px;padding:6px 12px;font-size:11px;cursor:pointer;}
 .couple-signout:hover{color:#fff;border-color:#e4c3a8;}
