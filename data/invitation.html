@@ -183,14 +183,14 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     align-items: center;
     background: var(--bg);
-    transition: opacity 1.6s cubic-bezier(.22,.9,.36,1), visibility 1.6s, filter .8s;
+    transition: opacity .8s cubic-bezier(.22,.9,.36,1), visibility .8s, filter .5s;
 }
 
 .opening.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    filter: blur(4px) brightness(1.2);
+    filter: blur(3px) brightness(1.2);
 }
 
 /* ==== Ambient Pinterest-style layers (apply to every opening scene) ==== */
@@ -3401,7 +3401,7 @@ a { text-decoration: none; color: inherit; }
 
 .invitation {
     opacity: 0;
-    transition: opacity 1.6s cubic-bezier(.4,0,.2,1);
+    transition: opacity .8s cubic-bezier(.4,0,.2,1);
 }
 
 .invitation.visible { opacity: 1; }
@@ -7270,25 +7270,25 @@ var _openingStyle = (function() {
 (function signatureSceneEngine() {
 
     var SCENES = {
-        "wax-seal":       { id: "waxSealScene", delay: 1700 },
-        "curtain":        { id: "curtainScene", delay: 2600 },
-        "floral-paper":   { id: "floralScene",  delay: 1800 },
-        "luxury-romance": { id: "silkScene",    delay: 2000 },
-        "celebration-pop":{ id: "fiestaScene",  delay: 1900 },
-        "starry-night":   { id: "starryScene",  delay: 1900 },
-        "typewriter":     { id: "typewriterScene", delay: 2200 },
-        "candlelight":    { id: "candlelightScene", delay: 2400 },
-        "winter-drift":   { id: "winterScene",  delay: 2000 },
-        "royal-scroll":   { id: "royalScrollScene", delay: 2200 },
-        "door":           { id: "doorScene",    delay: 5200 },
-        "stairs":         { id: "stairsScene",  delay: 1900 },
-        "envelope-seal":  { id: "envSealScene", delay: 2100 },
-        "ribbon":         { id: "ribbonScene",  delay: 2000 },
-        "wood-door":      { id: "woodDoorScene", delay: 2000 },
-        "magic-wand":     { id: "magicWandScene", delay: 2800 },
-        "glowing-door":   { id: "glowingDoorScene", delay: 2600 },
-        "ancient-forest": { id: "ancientForestScene", delay: 2600 },
-        "old-book":       { id: "oldBookScene", delay: 7000 }
+        "wax-seal":       { id: "waxSealScene", delay: 1300 },
+        "curtain":        { id: "curtainScene", delay: 1800 },
+        "floral-paper":   { id: "floralScene",  delay: 1400 },
+        "luxury-romance": { id: "silkScene",    delay: 1500 },
+        "celebration-pop":{ id: "fiestaScene",  delay: 1400 },
+        "starry-night":   { id: "starryScene",  delay: 1400 },
+        "typewriter":     { id: "typewriterScene", delay: 1500 },
+        "candlelight":    { id: "candlelightScene", delay: 1600 },
+        "winter-drift":   { id: "winterScene",  delay: 1400 },
+        "royal-scroll":   { id: "royalScrollScene", delay: 1500 },
+        "door":           { id: "doorScene",    delay: 2600 },
+        "stairs":         { id: "stairsScene",  delay: 1400 },
+        "envelope-seal":  { id: "envSealScene", delay: 1500 },
+        "ribbon":         { id: "ribbonScene",  delay: 1400 },
+        "wood-door":      { id: "woodDoorScene", delay: 1500 },
+        "magic-wand":     { id: "magicWandScene", delay: 1900 },
+        "glowing-door":   { id: "glowingDoorScene", delay: 1800 },
+        "ancient-forest": { id: "ancientForestScene", delay: 1800 },
+        "old-book":       { id: "oldBookScene", delay: 3200 }
     };
 
     var type = document.documentElement.getAttribute("data-opening") || "";
