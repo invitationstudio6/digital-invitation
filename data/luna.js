@@ -433,3 +433,108 @@ function lunaRsvpText(invitation) {
 
     return (texts[cat] && texts[cat][lang]) || (texts.wedding && texts.wedding[lang]) || texts.wedding.az;
 }
+
+/* =====================================================
+   CÜTLÜK RSVP PANELİ — klientlər üçün məxfilik istiqaməti
+   Qonaq heç nə görmür; cütlük yalnız ÖZ dəvətnaməsinin
+   RSVP-lərini görür (Supabase Auth magic-link vasitəsilə).
+   RLS siyasətləri: supabase/rsvp-client-panel.sql
+===================================================== */
+
+/* Supabase SDK-nı bir dəfə yüklə (admin paneldəki kimidir) */
+function _lunaLoadSupabase(cb) {
+    if (window.lunaSbClient && window.lunaSbClient.auth) { cb(); return; }
+    if (window.supabase && window.supabase.createClient) {
+        var cfg = window.LUNA_SUPABASE || {};
+        window.lunaSbClient = window.supabase.createClient(cfg.url, cfg.anonKey);
+        cb(); return;
+    }
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js";
+    s.onload = function () {
+        var cfg = window.LUNA_SUPABASE || {};
+        try { window.lunaSbClient = window.supabase.createClient(cfg.url, cfg.anonKey); } catch (e) {}
+        cb();
+    };
+    s.onerror = function () { cb(); };
+    document.head.appendChild(s);
+}
+
+function lunaRsvpClientRef() {
+    var cfg = window.LUNA_SUPABASE || {};
+    if (!window.lunaSbClient && window.supabase && window.supabase.createClient && cfg.url) {
+        window.lunaSbClient = window.supabase.createClient(cfg.url, cfg.anonKey);
+    }
+    return window.lunaSbClient || null;
+}
+
+/* Cütlük üçün magic-link məktubu göndər */
+function lunaCoupleSendMagicLink(email) {
+    return new Promise(function (resolve) {
+        _lunaLoadSupabase(function () {
+            var sb = lunaRsvpClientRef();
+            if (!sb) { resolve({ error: { message: "Sinkronizasiya deaktivdir" } }); return; }
+            sb.auth.signInWithOtp({
+                email: email,
+                options: {
+                    emailRedirectTo: window.location.href.split("#")[0]
+                }
+            }).then(function (res) {
+                resolve(res);
+            }).catch(function (err) { resolve({ error: err }); });
+        });
+    });
+}
+
+/* Cari cütlük session-u (magic-link ilə) */
+function lunaCoupleSession() {
+    return new Promise(function (resolve) {
+        _lunaLoadSupabase(function () {
+            var sb = lunaRsvpClientRef();
+            if (!sb) { resolve(null); return; }
+            sb.auth.getSession().then(function (res) {
+                resolve(res && res.data && res.data.session ? res.data.session : null);
+            }).catch(function () { resolve(null); });
+        });
+    });
+}
+
+function lunaCoupleSignOut() {
+    return new Promise(function (resolve) {
+        var sb = lunaRsvpClientRef();
+        if (!sb) { resolve(); return; }
+        sb.auth.signOut().then(resolve).catch(resolve);
+    });
+}
+
+/* Cütlüyün ÖZ dəvətnaməsinin RSVP-lərini Supabase-dən çək.
+   RLS yalnız sahibin email-inə aid luna_rsvp_<id>__* sətirləri qaytarır —
+   başqa cütlüyün RSVP-ləri qayıtmaz, qonaq (anon) ümumiyyətlə çəkə bilməz. */
+function lunaCoupleFetchOwnRsvps(invitationId) {
+    return new Promise(function (resolve) {
+        var cfg = window.LUNA_SUPABASE || {};
+        if (!cfg.url) { resolve([]); return; }
+        _lunaLoadSupabase(function () {
+            var sb = lunaRsvpClientRef();
+            if (!sb) { resolve([]); return; }
+            var prefix = "luna_rsvp_" + String(invitationId).toLowerCase() + "__";
+            sb.from("luna_kv")
+                .select("key,value")
+                .like("key", prefix + "%")
+                .then(function (res) {
+                    if (res.error) { resolve({ error: res.error }); return; }
+                    var out = [];
+                    (res.data || []).forEach(function (row) {
+                        var v = row.value;
+                        if (v && typeof v === "object" && !Array.isArray(v)) {
+                            if (!v.uid) v.uid = (row.key || "").split("__").pop() || "";
+                            out.push(v);
+                        }
+                    });
+                    out.sort(function (a, b) { return (Date.parse(a.at) || 0) - (Date.parse(b.at) || 0); });
+                    resolve(out);
+                })
+                .catch(function (err) { resolve({ error: err }); });
+        });
+    });
+}

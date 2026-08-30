@@ -56,3 +56,40 @@ hər şey lokalda işləyir, qoşulanda avtomatik ötürülür.
 ## Qiymət
 Supabase pulsuz planı bu layihə üçün birmənalı bəs edir
 (500 MB bazа, 50K ayda aktiv istifadəçi).
+
+## 6. Cütlük RSVP paneli (məxfilik) — klientlər üçün
+Məqsəd: **qonaqlar/dəvətlilər heç bir RSVP siyahısını görməsin**,
+cütlük isə **yalnız öz dəvətnaməsinin** siyahısını görsün. Bu,
+Supabase Auth (magic-link) + RLS ilə təmin olunur.
+
+### 6.1 Yeni cədvəli və siyasətləri quraşdır
+- SQL Editor → New query → `supabase/rsvp-client-panel.sql` faylının hamısını Run et.
+- Bu, `luna_owner_invitations` cədvəlini + aşağıdakıları yaradır:
+  - Admin (rol=`admin`) `luna_kv`-də hər şeyi oxuya bilir
+  - Cütlük yalnız öz `luna_rsvp_<id>__*` sətirlərini oxuya bilir
+  - **Qonaq (anon) heç nə oxuya BİLMƏZ** — ancaq RSVP yaza bilir
+
+### 6.2 Magic-link (Email) provider'ını aktivləşdir
+- **Authentication** → Providers → **Email** → aktiv et
+- "Sign up" qutusu varsa söndür (yalnız magic-link göndərmək üçün)
+
+### 6.3 Admin istifadəçiyə `admin` rolunu ver
+- **Authentication** → Users → admin istifadəçi → Edit
+- **user_metadata** sahəsinə:
+  ```json
+  { "role": "admin" }
+  ```
+- Həmin admin **bir dəfə çıxıb yenidən daxil olmalıdır** (yeni session/JWT üçün).
+  Cədvələ yalnız o admin yaza bilir.
+
+### 6.4 Klient e-mailini təyin et
+- Admin panel → müştəri sətri → **"Cütlük Girişi"** → e-maili yaz → Saxla.
+- Bu, `luna_owner_invitations`-a yazılır.
+
+### 6.5 Cütlük necə görür?
+- Dəvətnamənin RSVP bölməsindəki **"Cütlük üçün RSVP (giriş)"** düyməsi,
+  e-mailini yazıb "Giriş linki göndər" — e-poçta magic-link gəlir.
+- Linki açanda avtomatik giriş olur və **yalnız öz** siyahısı açılır.
+- Qonaq bu düyməni görsə belə — siyahını **görə bilməz**, çünki
+  cütlüyün e-maili olmadan RLS heç nə qaytarmır.
+

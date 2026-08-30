@@ -5760,6 +5760,28 @@ footer p {
 
         <p id="rsvpThanks" hidden></p>
 
+        <div id="couplePanel" class="couple-panel">
+            <div class="couple-panel-divider"><span>&#10022;</span></div>
+            <button type="button" class="rsvp-button" id="coupleOpenBtn"></button>
+
+            <div id="coupleLoginBox" hidden>
+                <form id="coupleLoginForm" class="couple-login-form">
+                    <input id="coupleEmail" type="email" required placeholder=" " autocomplete="email">
+                    <label class="rsvp-float-label" for="coupleEmail" id="coupleEmailLabel"></label>
+                    <button class="rsvp-button rsvp-submit" type="submit" id="coupleSendBtn"></button>
+                    <p id="coupleLoginMsg" class="couple-msg"></p>
+                </form>
+            </div>
+
+            <div id="coupleListBox" hidden>
+                <div class="couple-list-head">
+                    <span id="coupleListTitle"></span>
+                    <button type="button" id="coupleSignOut" class="couple-signout"></button>
+                </div>
+                <div id="coupleListBody" class="couple-list-body"></div>
+            </div>
+        </div>
+
     </div>
 
 </section>
@@ -7521,6 +7543,150 @@ if (_openingStyle !== "envelope") {
 }
 
 
+</script>
+
+
+<style>
+.couple-panel{margin-top:26px;border-top:1px solid rgba(184,140,118,.25);padding-top:22px;}
+.couple-panel-divider{text-align:center;color:#d8bfa8;margin-bottom:12px;}
+.couple-login-form{display:flex;flex-direction:column;gap:14px;max-width:400px;margin:0 auto;}
+.couple-msg{margin:0;min-height:18px;font-size:12px;color:#e4c3a8;}
+.couple-panel .rsvp-field{position:relative;}
+.couple-list-body{display:flex;flex-direction:column;gap:10px;max-height:50vh;overflow:auto;}
+.couple-list-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}
+.couple-list-head strong{font-size:15px;color:#e4c3a8;}
+.couple-signout{background:none;border:1px solid rgba(255,255,255,.15);color:#b8a493;border-radius:8px;padding:6px 12px;font-size:11px;cursor:pointer;}
+.couple-signout:hover{color:#fff;border-color:#e4c3a8;}
+.couple-empty{text-align:center;padding:24px;color:#8a7a70;font-size:12px;}
+</style>
+
+<script>
+/* =====================================================
+   CÜTLÜK RSVP PANELİ — klientlər üçün
+   Qonaq heç nə görmür; cütlük yalnız ÖZ siyahısını görür.
+   Magic-link (Supabase Auth) ilə giriş, RLS-yə söykənir.
+===================================================== */
+(function () {
+    var panel = document.getElementById("couplePanel");
+    if (!panel || !window.LUNA_SUPABASE || !window.LUNA_SUPABASE.url) return;
+
+    var LL = window.LUNA_LANG || "az";
+    function t(str) {
+        return {
+            en: str.en, ru: str.ru, tr: str.tr
+        }[LL] || str.az;
+    }
+    var openBtn = document.getElementById("coupleOpenBtn");
+    var loginBox = document.getElementById("coupleLoginBox");
+    var loginForm = document.getElementById("coupleLoginForm");
+    var emailInput = document.getElementById("coupleEmail");
+    var emailLabel = document.getElementById("coupleEmailLabel");
+    var sendBtn = document.getElementById("coupleSendBtn");
+    var loginMsg = document.getElementById("coupleLoginMsg");
+    var listBox = document.getElementById("coupleListBox");
+    var listTitle = document.getElementById("coupleListTitle");
+    var listBody = document.getElementById("coupleListBody");
+    var signOut = document.getElementById("coupleSignOut");
+
+    var i18n = {
+        open:   { az: "Cütlük üçün RSVP (giriş)", en: "Couple RSVP (login)", ru: "RSVP для пары (вход)", tr: "Çift RSVP (giriş)" },
+        emailL: { az: "E-mail", en: "Email", ru: "E-mail", tr: "E-posta" },
+        send:   { az: "Giriş linki göndər", en: "Send login link", ru: "Отправить ссылку входа", tr: "Giriş bağlantısı gönder" },
+        sent:   { az: "E-poçtunuza giriş linki göndərildi. Linkə daxil olub yenidən bu səhifəyə qayıdın.", en: "A login link was sent to your email. Open it and return to this page.", ru: "Ссылка для входа отправлена на почту. Откройте её и вернитесь на страницу.", tr: "E-postanıza giriş bağlantısı gönderildi. Açıp bu sayfaya dönün." },
+        fetching:{ az: "RSVP-lər çəkilir...", en: "Loading RSVPs...", ru: "Загрузка ответов...", tr: "Yanıtlar yükleniyor..." },
+        none:   { az: "Hələ RSVP yoxdur.", en: "No RSVPs yet.", ru: "Пока нет ответов.", tr: "Henüz yanıt yok." },
+        signout:{ az: "Çıxış", en: "Sign out", ru: "Выйти", tr: "Çıkış" },
+        title:  { az: "RSVP siyahısı", en: "RSVP list", ru: "Список ответов", tr: "Yanıt listesi" },
+        need:   { az: "Daxil olmaq lazımdır (magic-link). Əgər link açılmadısa, bu e-mail cütlük kimi qeyd olunmalıdır.", en: "Please sign in (magic link). If it didn't open, this email must be registered as the couple.", ru: "Необходимо войти (magic-link). Если не открылось — этот e-mail должен быть сохранён как владелец.", tr: "Giriş gerekli (magic-link). Açılmadıysa bu e-posta çift olarak kayıtlı olmalı." }
+    };
+
+    openBtn.textContent = t(i18n.open);
+    emailLabel.textContent = t(i18n.emailL);
+    sendBtn.textContent = t(i18n.send);
+    signOut.textContent = t(i18n.signout);
+
+    function showList(rsvps) {
+        listBox.hidden = false;
+        loginBox.hidden = true;
+        listTitle.textContent = t(i18n.title);
+        if (!rsvps.length) {
+            listBody.innerHTML = '<div class="couple-empty">' + t(i18n.none) + '</div>';
+            return;
+        }
+        var statusText = { yes: "Gəlir ✓", maybe: "Bəlkə ?", no: "Gəlmir ✗" };
+        listBody.innerHTML = rsvps.map(function (r) {
+            var st = statusText[r.status] || r.status || "—";
+            var guests = r.guests ? " · " + String(r.guests) + " qonaq" : "";
+            var when = r.at;
+            try { when = new Date(r.at).toLocaleString("az-AZ", { dateStyle: "short", timeStyle: "short" }); } catch (e) {}
+            return '<div class="rsvp-row">' +
+                '<div class="rsvp-head"><strong>' + (window.lunaEscapeHtml(r.name || "—")) + '</strong>' +
+                '<span class="rsvp-status">' + st + '</span></div>' +
+                (r.message ? '<div class="rsvp-msg">' + window.lunaEscapeHtml(r.message) + '</div>' : '') +
+                (guests ? '<div class="rsvp-time">' + guests + '</div>' : '') +
+                '<div class="rsvp-time">' + (window.lunaEscapeHtml(when || "")) + '</div>' +
+                '</div>';
+        }).join("");
+    }
+
+    function onAuthed(session) {
+        if (!session) {
+            /* Cütlük giriş etməyib — sadəcə düyməni göstər,
+               login qutusu yalnız düyməyə kliklədikdə açılır.
+               Qonaq heç bir RSVP siyahısı görmür. */
+            openBtn.hidden = false;
+            loginBox.hidden = true;
+            listBox.hidden = true;
+            return;
+        }
+        openBtn.hidden = true;
+        loginBox.hidden = true;
+        listBody.innerHTML = '<div class="couple-empty">' + t(i18n.fetching) + '</div>';
+        listBox.hidden = false;
+        window.lunaCoupleFetchOwnRsvps(invitationId).then(function (res) {
+            if (res && res.error) {
+                listBody.innerHTML = '<div class="couple-empty">' + t(i18n.need) + '</div>';
+                return;
+            }
+            showList(res);
+        });
+    }
+
+    openBtn.addEventListener("click", function () {
+        loginMsg.textContent = "";
+        loginBox.hidden = !loginBox.hidden;
+    });
+
+    loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = emailInput.value.trim();
+        if (!email) return;
+        loginMsg.textContent = t(i18n.fetching);
+        window.lunaCoupleSendMagicLink(email).then(function (res) {
+            if (res && res.error) {
+                loginMsg.textContent = (res.error.message ? String(res.error.message) : t(i18n.need));
+                return;
+            }
+            loginMsg.textContent = t(i18n.sent);
+        }).catch(function () {
+            loginMsg.textContent = t(i18n.need);
+        });
+    });
+
+    signOut.addEventListener("click", function () {
+        window.lunaCoupleSignOut().then(function () {
+            listBox.hidden = true;
+            loginBox.hidden = false;
+            openBtn.hidden = false;
+            loginMsg.textContent = "";
+        });
+    });
+
+    /* Magic-link ilə qayıdanda session-u yoxla */
+    window.lunaCoupleSession().then(function (session) {
+        onAuthed(session);
+    });
+})();
 </script>
 
 
