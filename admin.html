@@ -408,7 +408,9 @@ input,select,textarea{max-width:100%;}
     .sidebar{display:none;}
     .main{margin-left:0;width:100%;}
     .stats-grid{grid-template-columns:1fr 1fr;}
-    .grid-3,.grid-2{grid-template-columns:1fr;}
+    .grid-2{grid-template-columns:1fr;}
+    /* Cards use 2 columns on tablets/landscape phones for a fuller layout; 1 col only on narrow phones (≤480) */
+    .grid-3,.card-grid,.template-grid,.video-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
     .form-grid{grid-template-columns:1fr;}
     .field.full{grid-column:auto;}
     .page-title h1{font-size:30px;}
@@ -3887,7 +3889,7 @@ function resetVideoForm(){
 
 /* Helper: extract TikTok video ID from various URL formats */
 function extractTikTokId(url) {
-    var m = String(url || "").match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|vm\.tiktok\.com\/(\w+)/?|vt\.tiktok\.com\/(\w+)?)?/);
+    var m = String(url || "").match(/(?:tiktok\.com\/@[\w.]+\/video\/(\d+)|(?:vm|vt)\.tiktok\.com\/([a-zA-Z0-9_]+))/);
     return m ? (m[1] || m[2] || m[3] || '') : '';
 }
 
