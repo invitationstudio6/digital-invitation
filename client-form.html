@@ -358,6 +358,29 @@ body.menu-open .languages{display:none}
 .tpl-card:hover .opv-book .ob-c{transform:perspective(700px) rotateY(-160deg) translateZ(-2px);filter:brightness(.6)}
 .tpl-card:hover .opv-book .ob-p{opacity:1;transform:rotateY(-2deg);box-shadow:3px 0 8px rgba(0,0,0,.15)}
 
+/* Golden Ring preview */
+.opv-goldenring{overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(255,205,110,.25),transparent 60%),linear-gradient(170deg,#2A1520,#120812)}
+.opv-goldenring .gr-glow{position:absolute;inset:12%;background:radial-gradient(circle,rgba(255,205,110,.4),transparent 70%);animation:opvGrGlow 2.2s ease-in-out infinite}
+.opv-goldenring .gr-bg-ring{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:2px dashed rgba(255,205,110,.35);animation:opvGrSpin 6s linear infinite}
+.opv-goldenring .gr-band{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:radial-gradient(circle at 50% 30%,#FFF6DC,#D9B15C 45%,#8A6428 80%);box-shadow:0 0 14px rgba(255,200,110,.5),inset 0 2px 4px rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.4)}
+.opv-goldenring .gr-dia{position:absolute;left:50%;top:calc(50% - 34px);width:16px;height:16px;margin-left:-8px;background:linear-gradient(135deg,#fff,#8FD0F0);clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);box-shadow:0 0 12px rgba(180,225,255,.9);animation:opvGrDia 2.4s ease-in-out infinite}
+@keyframes opvGrGlow{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes opvGrSpin{to{transform:rotate(360deg)}}
+@keyframes opvGrDia{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Origami Lotus preview */
+.opv-lotus{overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.35),transparent 55%),linear-gradient(170deg,#296866,#1C4F4C)}
+.opv-lotus .lot-p{position:absolute;left:50%;top:50%;width:22px;height:38px;margin:-19px 0 0 -11px;background:linear-gradient(160deg,#FFE9F0,#F3BBD6);border:1px solid rgba(255,255,255,.5);border-radius:70% 70% 50% 50%/80% 80% 30% 30%;transform-origin:50% 100%;transition:transform .8s cubic-bezier(.25,.9,.3,1),opacity .7s ease}
+.opv-lotus .lot-p:nth-child(1){transform:rotate(0deg) translateY(-14px)}
+.opv-lotus .lot-p:nth-child(2){transform:rotate(60deg) translateY(-14px)}
+.opv-lotus .lot-p:nth-child(3){transform:rotate(120deg) translateY(-14px)}
+.opv-lotus .lot-p:nth-child(4){transform:rotate(180deg) translateY(-14px)}
+.opv-lotus .lot-p:nth-child(5){transform:rotate(240deg) translateY(-14px)}
+.opv-lotus .lot-p:nth-child(6){transform:rotate(300deg) translateY(-14px)}
+.opv-lotus .lot-c{position:absolute;left:50%;top:50%;width:16px;height:24px;margin:-12px 0 0 -8px;border-radius:60% 60% 50% 50%;background:radial-gradient(circle at 50% 30%,#FFF8FB,#FFD9E8);z-index:2;transition:transform .8s .1s cubic-bezier(.25,.9,.3,1),opacity .7s ease .1s}
+.tpl-card:hover .opv-lotus .lot-p{opacity:0;transform:perspective(500px) rotateX(78deg) translateZ(-20px)}
+.tpl-card:hover .opv-lotus .lot-c{opacity:0;transform:perspective(500px) rotateX(66deg)}
+
 /* ===== STEP INDICATOR ===== */
 .step-indicator{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;margin-bottom:24px;overflow-x:auto}
 .step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:60px;cursor:pointer;transition:.3s}
@@ -1149,6 +1172,14 @@ body.menu-open .languages{display:none}
                 return s + '</div>';
             case "old-book":
                 return '<div class="opv opv-book"><i class="ob-c"></i><i class="ob-p"></i></div>';
+            case "golden-ring":
+                return '<div class="opv opv-goldenring"><i class="gr-glow"></i><i class="gr-bg-ring"></i><i class="gr-band"></i><i class="gr-dia"></i></div>';
+            case "origami-lotus": {
+                s = '<div class="opv opv-lotus">';
+                for (k = 0; k < 6; k++) s += '<i class="lot-p"></i>';
+                s += '<i class="lot-c"></i>';
+                return s + '</div>';
+            }
             default:
                 return "";
         }
@@ -1172,7 +1203,8 @@ body.menu-open .languages{display:none}
             "ribbon-reveal":"ribbon", "door-reveal":"door", "wood-door-reveal":"wood-door", "starry-reveal":"starry-night",
             "celebration-reveal":"celebration-pop", "candlelight-reveal":"candlelight", "winter-reveal":"winter-drift",
             "royal-reveal":"royal-scroll", "typewriter-reveal":"typewriter", "magic-reveal":"magic-wand", "glow-door":"glowing-door",
-            "forest-walk":"ancient-forest", "book-reveal":"old-book", "fullscreen-photo":"curtain", "editorial-card":"envelope-seal"
+            "forest-walk":"ancient-forest", "book-reveal":"old-book", "fullscreen-photo":"curtain", "editorial-card":"envelope-seal",
+            "golden-ring":"golden-ring", "origami-lotus":"origami-lotus"
         };
         return m;
     }
@@ -1185,7 +1217,7 @@ body.menu-open .languages{display:none}
         {type:"stairs", name:"Pilləkən"}, {type:"starry-night", name:"Ulduzlu"}, {type:"celebration-pop", name:"Şənlik"},
         {type:"winter-drift", name:"Qar"}, {type:"royal-scroll", name:"Tür"}, {type:"typewriter", name:"Yazı makinası"},
         {type:"candlelight", name:"Şam"}, {type:"magic-wand", name:"Sehrli çubuq"}, {type:"ancient-forest", name:"Meşə"},
-        {type:"old-book", name:"Köhnə kitab"}
+        {type:"old-book", name:"Köhnə kitab"}, {type:"golden-ring", name:"Qızıl Üzük"}, {type:"origami-lotus", name:"Origami Lotos"}
     ];
     function renderAnimationPicker() {
         var grid = document.getElementById("animGrid");

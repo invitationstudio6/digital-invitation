@@ -222,6 +222,24 @@ const LUNA_TEMPLATES = [
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Günel", "Samir"], date: "28 · 06 · 2026", message: "Təbiətin qoynunda, çiçəklərin ətrində birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Quba, Azərbaycan", theme: "default" }
     },
     {
+        id: "royal-gold", name: "Royal Gold", category: "wedding", style: "Qızıl · Lüks", galleryStyle: "editorial", openingStyle: "golden-ring",
+        animationStyle: "luxury",
+        thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "dark", openingType: "golden-ring" },
+        preview: { eyebrow: "QIZIL SARAY DƏVƏTNAMƏSİ", names: ["Nərmin", "Tahir"], date: "18 · 07 · 2026", message: "Qızıl üzükdə parıldayan sevgimiz, ürəyimizin ən dərin yerində əbədi qalacaq.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "royal-gold" }
+    },
+    {
+        id: "blossom", name: "Blossom", category: "wedding", style: "Origami · Zərif", galleryStyle: "masonry", openingStyle: "origami-lotus",
+        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral", openingType: "origami-lotus" },
+        preview: { eyebrow: "ÇİÇƏK AÇAN DƏVƏT", names: ["Aytac", "Elvin"], date: "05 · 08 · 2026", message: "Lotos çiçəyi kimi açılan sevgimiz, zərif və əbədi olacaq.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "blossom" }
+    },
+    {
         id: "editorial", name: "Editorial Love", category: "wedding", style: "Foto · Redaksiya", galleryStyle: "editorial", openingStyle: "editorial-reveal",
         animationStyle: "editorial",
         thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85",
