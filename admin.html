@@ -13,13 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Italiana&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden;}
 body{
     min-height:100vh;
     background:radial-gradient(circle at 15% 15%,rgba(155,105,80,.22),transparent 28%),radial-gradient(circle at 85% 80%,rgba(117,77,58,.25),transparent 30%),#17120f;
     color:#f5eee8;
     font-family:"DM Sans",sans-serif;
     display:flex;
+    overflow-x:hidden;
 }
 .sidebar{
     width:240px;
@@ -185,7 +186,8 @@ input,select,textarea{max-width:100%;}
     outline:none;
     font-family:"DM Sans",sans-serif;
     font-size:12px;
-    width:250px;
+    width:100%;
+    max-width:250px;
 }
 .search-bar:focus{border-color:#b88c76;}
 .customer-list{display:flex;flex-direction:column;gap:12px;}
@@ -213,6 +215,11 @@ input,select,textarea{max-width:100%;}
     padding:14px 18px;
     background:rgba(255,255,255,.03);
     border:1px solid rgba(255,255,255,.06);
+}
+@media(max-width:480px){
+    .recent-item{flex-wrap:wrap;gap:8px;justify-content:flex-start;}
+    .recent-item .name{flex:1 1 100%;}
+    .recent-item .meta{flex:1 1 100%;}
 }
 .recent-item .name{font-size:13px;}
 .recent-item .meta{font-size:9px;color:rgba(255,255,255,.4);}
@@ -248,24 +255,41 @@ input,select,textarea{max-width:100%;}
     position:fixed;top:0;left:0;right:0;bottom:0;
     background:rgba(0,0,0,.7);z-index:200;
     display:none;justify-content:center;align-items:center;
-    padding:40px;
+    padding:24px 16px;
 }
 .modal-overlay.open{display:flex;}
 .modal{
     background:#1e1815;
     border:1px solid rgba(255,255,255,.1);
-    padding:35px;
-    max-width:700px;width:100%;
+    padding:32px 24px;
+    max-width:min(700px, 100vw - 32px);
+    width:100%;
     max-height:80vh;overflow-y:auto;
 }
 .modal h2{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;margin-bottom:20px;}
 .modal-close{
-    float:right;
+    position:absolute;
+    top:16px;
+    right:16px;
     background:none;
     border:none;
     color:rgba(255,255,255,.4);
-    font-size:18px;
+    font-size:20px;
     cursor:pointer;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    transition:all .2s;
+}
+.modal-close:hover{
+    color:white;
+    background:rgba(255,255,255,.15);
+    border-color:rgba(255,255,255,.2);
 }
 .modal-close:hover{color:white;}
 .toast{
@@ -290,7 +314,12 @@ input,select,textarea{max-width:100%;}
 .checkbox-group{display:flex;gap:12px;flex-wrap:wrap;}
 .vid-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:1100px){.vid-steps{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.vid-steps{grid-template-columns:1fr}}
+@media(max-width:768px){.vid-steps{grid-template-columns:1fr}}
+@media(max-width:480px){
+    .vid-steps{gap:12px;}
+    .vid-step{padding:12px;}
+    .vid-step-num{width:22px;height:22px;font-size:11px;}
+}
 .vid-step{display:flex;flex-direction:column;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:16px}
 .vid-step h3{font-family:Cormorant Garamond,serif;font-size:16px;font-style:italic;color:#fff;margin:8px 0 12px}
 .vid-step-num{width:26px;height:26px;border-radius:50%;background:#D4AF37;color:#1A100A;display:grid;place-items:center;font-weight:700;font-size:12px}
@@ -299,8 +328,18 @@ input,select,textarea{max-width:100%;}
 .vid-drop-ico{font-size:30px}
 .pa-row{display:flex;align-items:center;gap:14px;padding:11px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;flex-wrap:wrap}
 .pa-row .ff-name{min-width:180px}
+@media(max-width:768px){
+    .pa-row .ff-name{min-width:140px;}
+    .quickstart button{min-width:140px;}
+}
 .pa-cb{display:flex;align-items:center;gap:5px;color:#fff;font-size:11px;cursor:pointer}
 #formFieldsEditor .ff-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 52px 52px;gap:8px;align-items:center;padding:7px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px}
+@media(max-width:768px){
+    #formFieldsEditor .ff-row{grid-template-columns:1fr 1fr 1fr 1fr 48px 48px;gap:6px;padding:6px 8px;}
+    #formFieldsEditor .ff-head{font-size:8px;padding:0 6px;}
+    #formFieldsEditor input[type=text]{padding:6px 8px;font-size:10px;}
+    #formFieldsEditor .ff-name{min-width:120px;}
+}
 #formFieldsEditor .ff-head{background:none;border:none;padding:0 10px;color:#ad8c7d;font-size:9px;text-transform:uppercase;letter-spacing:1.5px}
 #formFieldsEditor .ff-name{font-size:11px;color:#fff}
 #formFieldsEditor input[type=text]{width:100%;padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:11px;border-radius:6px;font-family:inherit}
@@ -311,6 +350,10 @@ input,select,textarea{max-width:100%;}
 #invEffectPresets button:hover{border-color:#b88c76;background:rgba(184,140,118,.12)}
 #invEffectPresets button.active{border-color:#b88c76;background:rgba(184,140,118,.22)}
 #invOpeningGrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 12px;min-width:96px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;border-radius:10px;transition:.25s;text-align:center}
+@media(max-width:768px){
+    #invOpeningGrid button{min-width:72px;padding:12px 8px;font-size:9px;}
+    #invOpeningGrid .open-ico{font-size:18px;}
+}
 #invOpeningGrid button:hover{border-color:#b88c76;background:rgba(184,140,118,.12);transform:translateY(-2px)}
 #invOpeningGrid button.active{border-color:#D4AF37;background:rgba(212,175,55,.15)}
 #invOpeningGrid .open-ico{font-size:22px}
@@ -326,6 +369,9 @@ input,select,textarea{max-width:100%;}
 /* Dashboard quick start */
 .quickstart{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap;}
 .quickstart button{flex:1;min-width:180px;padding:18px 16px;background:rgba(184,140,118,.08);border:1px solid rgba(184,140,118,.35);color:#e8d5c4;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;text-align:left;}
+@media(max-width:768px){
+    .quickstart button{min-width:140px;}
+}
 .quickstart button:hover{background:rgba(184,140,118,.18);border-color:#b88c76;}
 .quickstart button small{display:block;font-weight:400;font-size:10px;color:#ad8c7d;margin-top:4px;}
 @media(max-width:768px){
@@ -354,10 +400,13 @@ input,select,textarea{max-width:100%;}
     .main{margin-left:60px;}
     .stats-grid{grid-template-columns:repeat(2,1fr);}
     .grid-3{grid-template-columns:repeat(2,1fr);}
+    .quick-actions{flex-wrap:wrap;}
+    .quick-actions a,.quick-actions button{flex:1 1 auto;min-width:0;white-space:normal;}
 }
 @media(max-width:768px){
+    body{display:block;}
     .sidebar{display:none;}
-    .main{margin-left:0;}
+    .main{margin-left:0;width:100%;}
     .stats-grid{grid-template-columns:1fr 1fr;}
     .grid-3,.grid-2{grid-template-columns:1fr;}
     .form-grid{grid-template-columns:1fr;}
