@@ -7094,6 +7094,8 @@ if (invitation.videoUrl) {
                 if (blob) video.src = URL.createObjectURL(blob);
             });
         } else {
+            /* This page lives in /data/, so repo-relative media paths (media/videos/...) need ../ */
+            if (/^media\//i.test(_vu)) _vu = "../" + _vu;
             video.src = _vu;
         }
         hero.insertBefore(video, hero.firstChild);

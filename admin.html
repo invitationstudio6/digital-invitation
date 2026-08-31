@@ -2965,7 +2965,8 @@ function renderVideos(){
         var statusBadge = v.active ? '<span class="badge active">Aktiv</span>' : '<span class="badge inactive">Deaktiv</span>';
         var featuredBadge = v.featured ? '<span class="badge featured">Featured</span>' : '';
         var isYT = v.url && /(?:youtube\.com|youtu\.be)/i.test(v.url);
-        var playBtn = isYT ? '<button class="play-btn" onclick="openVideoModal({videoUrl:\'' + lunaEscapeHtml(v.url) + '\',isYouTube:true,title:\'' + lunaEscapeHtml(v.title || 'Video') + '\'})" aria-label="Oynat" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;opacity:0;transition:opacity .3s"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg></button>' : '';
+        var isPlayable = isYT || ['file','mp4','local','url'].indexOf(videoKindInfo(v.url).kind) !== -1 || /^media\//i.test((v.url||'').trim());
+        var playBtn = isPlayable ? '<button class="play-btn" onclick="openVideoModal({videoUrl:\'' + lunaEscapeHtml(v.url) + '\',isYouTube:' + isYT + ',title:\'' + lunaEscapeHtml(v.title || 'Video') + '\'})" aria-label="Oynat" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;opacity:0;transition:opacity .3s"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg></button>' : '';
         card.innerHTML =
             '<div class="card-thumb" style="position:relative;overflow:hidden;">' +
                 thumb +

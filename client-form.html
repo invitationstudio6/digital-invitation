@@ -1785,6 +1785,16 @@ body.menu-open .languages{display:none}
             order.styleId = _sid;
             order.styleName = _m ? _m.name : _sid;
             order.data.styleName = order.styleName;
+            /* Video invitation → also attach the concrete video URL so the order is actionable */
+            if (_sid.indexOf("vi_") === 0 && _pt && _pt.styleSource === "videoInvitations") {
+                var _allVids = [];
+                (_pubCatalog.videoInvitations || []).forEach(function(v){ _allVids.push(v); });
+                try { JSON.parse(localStorage.getItem("luna_video_invitations") || "[]").forEach(function(v){ _allVids.push(v); }); } catch(e){}
+                var _vid = _allVids.find(function(v){ return v && ("vi_" + v.id) === _sid; });
+                if (_vid && (_vid.videoUrl || _vid.url)) {
+                    order.data.videoUrl = _vid.videoUrl || _vid.url;
+                }
+            }
         }
 
         lunaSaveOrder(order);

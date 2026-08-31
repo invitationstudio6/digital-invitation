@@ -1012,9 +1012,31 @@ function lunaGetActiveVideos() {
         .sort(function(a,b) { return a.order - b.order; });
 }
 
-/* Built-in demo videos — used only while there are no admin-published videos.
-   All URLs are public CDNs verified to serve video/mp4 with CORS-friendly
-   direct links (media.w3.org, test-videos.co.uk, MDN examples). */
+/* The studio's curated built-in video invitations (files live in media/videos).
+   They are merged into luna_video_invitations idempotently by id so they show up
+   in the admin "Video Dəvətnamələr" panel and the client-form picker on every
+   device. Admin can still edit / feature / toggle-active / delete them. */
+var LUNA_BUILTIN_VIDEOS = [
+    { id:"vb_elegant_wedding", category:"wedding", title:"Elegant Toy Videosu", description:"Qara & bej elegant toy video dəvətnaməsi.", price:20, order:1, featured:true, active:true, url:"media/videos/elegant-wedding.mp4" },
+    { id:"vb_watercolor_wedding", category:"wedding", title:"Akvarel Çiçək Toy Videosu", description:"Yaşıl & çəhrayı pastel akvarel çiçək toy video dəvətnaməsi.", price:20, order:2, featured:true, active:true, url:"media/videos/watercolor-wedding.mp4" },
+    { id:"vb_indian_wedding", category:"wedding", title:"Ənənəvi Toy Videosu", description:"Bej & qəhvəyi ənənəvi animasiyalı toy video dəvətnaməsi.", price:20, order:3, featured:false, active:true, url:"media/videos/indian-wedding.mp4" },
+    { id:"vb_floral_wedding", category:"wedding", title:"Çiçəkli Toy Videosu", description:"Qəhvəyi çiçəkli toy virtual video dəvətnaməsi.", price:20, order:4, featured:false, active:true, url:"media/videos/floral-wedding.mp4" },
+    { id:"vb_golden_birthday", category:"birthday", title:"Qızıl Balonlar Ad Günü Videosu", description:"Parlaq qızıl balonlu ad günü partisi virtual video dəvətnaməsi.", price:20, order:5, featured:true, active:true, url:"media/videos/golden-balloons-birthday.mp4" },
+    { id:"vb_princess_birthday", category:"birthday", title:"Prenses Nağıl Ad Günü Videosu", description:"Çəhrayı pastel şahzadə nağıl & fantaziya ad günü video dəvətnaməsi.", price:20, order:6, featured:false, active:true, url:"media/videos/princess-fairy-birthday.mp4" },
+    { id:"vb_castle_birthday", category:"birthday", title:"Akvarel Qala Ad Günü Videosu", description:"Çəhrayı illustrasiyalı akvarel qala ad günü mobil video dəvətnaməsi.", price:20, order:7, featured:false, active:true, url:"media/videos/watercolor-castle-birthday.mp4" },
+    { id:"vb_playful_birthday", category:"birthday", title:"Şən Ad Günü Videosu", description:"Çəhrayı & ağ şən ad günü kartı videosu.", price:20, order:8, featured:false, active:true, url:"media/videos/playful-birthday.mp4" },
+    { id:"vb_red_birthday", category:"birthday", title:"Qırmızı Kollaj Ad Günü Videosu", description:"Qırmızı kollaj ad günü arzusu animasiya videosu.", price:20, order:9, featured:false, active:true, url:"media/videos/red-collage-birthday.mp4" }
+];
+try {
+    (function lunaSeedBuiltinVideos(){
+        var now = JSON.parse(localStorage.getItem("luna_video_invitations") || "[]");
+        var ids = {}; now.forEach(function(v){ if(v && v.id) ids[v.id] = 1; });
+        var added = [];
+        LUNA_BUILTIN_VIDEOS.forEach(function(bv){ if(!ids[bv.id]){ now.push(bv); ids[bv.id] = 1; added.push(bv); } });
+        if(added.length){ now.sort(function(a,b){ return (a.order||0) - (b.order||0); }); localStorage.setItem("luna_video_invitations", JSON.stringify(now)); }
+    })();
+} catch(e) {}
+
 /* Media helpers — single shared implementations (mp4/webm file, YouTube, Vimeo) */
 function lunaMediaKind(url) {
     url = (url || "").trim();
