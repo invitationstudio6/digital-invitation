@@ -478,6 +478,28 @@ body.menu-open .languages{display:none}
 .photo-invite-preview:not(:empty){display:flex}
 .photo-invite-preview img{width:min(180px,45%);border-radius:10px;cursor:zoom-in;box-shadow:0 12px 30px rgba(62,37,24,.18);transition:transform .35s cubic-bezier(.19,1,.22,1)}
 .photo-invite-preview img:hover{transform:scale(1.03)}
+
+    /* Gallery uploader styles */
+    .luna-gallery-uploader{position:relative}
+    .luna-dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 20px;border:2px dashed var(--border-strong);border-radius:14px;background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .2s,background .2s}
+    .luna-dropzone:hover,.luna-dropzone.drag-active{border-color:var(--gold);background:rgba(196,168,130,.08)}
+    .luna-dropzone p{text-align:center}
+    .luna-browse-btn{background:none;border:none;color:var(--gold);font-weight:600;text-decoration:underline;cursor:pointer;font-size:inherit;font-family:inherit;padding:0}
+    .luna-browse-btn:hover{color:var(--accent)}
+    .luna-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+    .luna-thumb-wrapper{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid var(--border);cursor:grab;transition:transform .2s,box-shadow .2s,border-color .2s}
+    .luna-thumb-wrapper:hover{transform:scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:2}
+    .luna-thumb-wrapper.dragging{opacity:.5;cursor:grabbing}
+    .luna-thumb-wrapper.drag-over-top{border-top:3px solid var(--gold)}
+    .luna-thumb-wrapper.drag-over-bottom{border-bottom:3px solid var(--gold)}
+    .luna-thumb-wrapper img{width:100%;height:100%;object-fit:cover;display:block}
+    .luna-thumb-delete{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .2s,transform .2s}
+    .luna-thumb-wrapper:hover .luna-thumb-delete{opacity:1;transform:scale(1)}
+    .luna-thumb-delete:hover{background:#c0392b;transform:scale(1.1)}
+    .luna-thumb-index{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px}
+    .luna-upload-progress{padding:12px 16px;background:rgba(196,168,130,.1);border:1px solid rgba(196,168,130,.2);border-radius:10px}
+    .luna-progress-bar{height:6px;background:rgba(92,61,46,.2);border-radius:3px;overflow:hidden}
+    .luna-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:3px;transition:width .3s ease}
 @keyframes imgZoom{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
 @media(max-width:720px){
     .video-addon-card{flex-direction:column;text-align:center;gap:16px;padding:24px 20px}
@@ -1963,6 +1985,7 @@ body.menu-open .languages{display:none}
         reader.onerror = function() { cb(""); };
         reader.readAsDataURL(file);
     }
+    window.lunaCompressImage = lunaCompressImage;
 
     function lunaOpenImageLightbox(src, title) {
         var m = document.createElement("div");
@@ -1982,9 +2005,24 @@ body.menu-open .languages{display:none}
         var tierRank = {"default":0,"basic":1,"premium":2,"luxury":3};
         var currentRank = tierRank[packageName] || 0;
 
-        /* Direct multi-image gallery upload is available for ALL packages —
-           customers upload from their device, no link needed (link is optional). */
-        html += '<div class="form-field full" style="animation-delay:.05s" data-field="photos"><label>Qalereya şəkilləri (birdən artıq seçə bilərsiniz)</label><input type="file" name="photos" accept="image/*" multiple></div>';
+        /* Enhanced gallery upload with drag&drop, preview, reorder, delete, compression */
+        html += '<div class="form-field full" style="animation-delay:.05s" data-field="photos">' +
+            '<label>Qalereya şəkilləri <span style="font-weight:400;color:var(--muted);font-size:11px">(sürüşdürüb buraxın və ya klikləyin, limit yoxdur)</span></label>' +
+            '<div class="luna-gallery-uploader" id="lunaGalleryUploader">' +
+            '<input type="file" name="photos" accept="image/*" multiple id="lunaGalleryInput" style="display:none">' +
+            '<div class="luna-dropzone" id="lunaGalleryDropzone">' +
+            '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:12px;opacity:.6"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<p style="margin:0 0 4px;font-size:14px;font-weight:500">Şəkilləri sürüşdürüb buraxın</p>' +
+            '<p style="margin:0;font-size:12px;color:var(--muted)">və ya <button type="button" class="luna-browse-btn" id="lunaGalleryBrowse">seçin</button></p>' +
+            '<p style="margin:8px 0 0;font-size:11px;color:var(--muted)">JPG, PNG, WebP — ölçüsünün üstü yoxdur (avtomatik sıkışdırılır)</p>' +
+            '</div>' +
+            '<div class="luna-thumbs" id="lunaGalleryThumbs" style="display:none"></div>' +
+            '<div class="luna-upload-progress" id="lunaGalleryProgress" style="display:none;margin-top:12px">' +
+            '<div class="luna-progress-bar"><div class="luna-progress-fill" id="lunaProgressFill"></div></div>' +
+            '<p class="luna-progress-text" id="lunaProgressText" style="margin:8px 0 0;font-size:12px;color:var(--muted)"></p>' +
+            '</div>' +
+            '</div></div>';
+
         if (currentRank >= 2) {
             html += '<div class="form-field full" style="animation-delay:.1s" data-field="images"><label>Şəkil linkləri (opsional)</label><textarea name="images" placeholder="Əgər şəkillər internetdə onlayndırsa, linklərini yazın — hər sətirdə bir (https://...). Boş buraxıb yuxarıdan yükləyə bilərsiniz." rows="2"></textarea></div>';
         }
@@ -1998,9 +2036,176 @@ body.menu-open .languages{display:none}
             html = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Bu paketdə əlavə media sahəsi yoxdur.</div>';
         }
         grid.innerHTML = html;
+        bindGalleryUploader();
         bindVideoCompatCheck();
         applyVisibility();
     }
+
+    /* Gallery uploader state */
+    var galleryFiles = [];
+    var galleryCompressed = [];
+    window.galleryFiles = galleryFiles;
+    window.galleryCompressed = galleryCompressed;
+
+    function bindGalleryUploader() {
+        var dropzone = document.getElementById("lunaGalleryDropzone");
+        var input = document.getElementById("lunaGalleryInput");
+        var browseBtn = document.getElementById("lunaGalleryBrowse");
+        var thumbs = document.getElementById("lunaGalleryThumbs");
+        var progressWrap = document.getElementById("lunaGalleryProgress");
+        var progressFill = document.getElementById("lunaProgressFill");
+        var progressText = document.getElementById("lunaProgressText");
+
+        if (!dropzone || !input) return;
+
+        function renderThumbs() {
+            if (!thumbs) return;
+            if (!galleryCompressed.length) {
+                thumbs.style.display = "none";
+                dropzone.style.display = "flex";
+                return;
+            }
+            thumbs.style.display = "grid";
+            dropzone.style.display = "none";
+            thumbs.innerHTML = "";
+            galleryCompressed.forEach(function(item, idx) {
+                var wrapper = document.createElement("div");
+                wrapper.className = "luna-thumb-wrapper";
+                wrapper.draggable = true;
+                wrapper.dataset.idx = idx;
+                wrapper.innerHTML =
+                    '<img src="' + item.dataUrl + '" alt="Qalereya ' + (idx + 1) + '" loading="lazy">' +
+                    '<button type="button" class="luna-thumb-delete" data-idx="' + idx + '" aria-label="Sil">×</button>' +
+                    '<span class="luna-thumb-index">' + (idx + 1) + '</span>';
+                thumbs.appendChild(wrapper);
+            });
+            bindThumbDrag();
+            bindThumbDelete();
+        }
+
+        function bindThumbDrag() {
+            var dragSrc = null;
+            thumbs.querySelectorAll(".luna-thumb-wrapper").forEach(function(el) {
+                el.addEventListener("dragstart", function(e) {
+                    dragSrc = this;
+                    this.classList.add("dragging");
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("text/plain", this.dataset.idx);
+                });
+                el.addEventListener("dragend", function() {
+                    this.classList.remove("dragging");
+                });
+                el.addEventListener("dragover", function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = "move";
+                    var rect = this.getBoundingClientRect();
+                    var mid = rect.top + rect.height / 2;
+                    this.classList.toggle("drag-over-top", e.clientY < mid);
+                    this.classList.toggle("drag-over-bottom", e.clientY >= mid);
+                });
+                el.addEventListener("dragleave", function() {
+                    this.classList.remove("drag-over-top", "drag-over-bottom");
+                });
+                el.addEventListener("drop", function(e) {
+                    e.preventDefault();
+                    this.classList.remove("drag-over-top", "drag-over-bottom");
+                    if (dragSrc && dragSrc !== this) {
+                        var fromIdx = parseInt(dragSrc.dataset.idx, 10);
+                        var toIdx = parseInt(this.dataset.idx, 10);
+                        var item = galleryCompressed.splice(fromIdx, 1)[0];
+                        galleryCompressed.splice(toIdx, 0, item);
+                        var f = galleryFiles.splice(fromIdx, 1)[0];
+                        galleryFiles.splice(toIdx, 0, f);
+                        renderThumbs();
+                    }
+                });
+            });
+        }
+
+        function bindThumbDelete() {
+            thumbs.querySelectorAll(".luna-thumb-delete").forEach(function(btn) {
+                btn.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    var idx = parseInt(this.dataset.idx, 10);
+                    galleryCompressed.splice(idx, 1);
+                    galleryFiles.splice(idx, 1);
+                    renderThumbs();
+                });
+            });
+        }
+
+        function updateProgress(done, total) {
+            if (progressWrap && progressFill && progressText) {
+                var pct = total ? Math.round((done / total) * 100) : 0;
+                progressFill.style.width = pct + "%";
+                progressText.textContent = done + " / " + total + " şəkil hazırlanır...";
+                progressWrap.style.display = done === total ? "none" : "block";
+            }
+        }
+
+        function processFiles(files) {
+            var list = Array.prototype.slice.call(files);
+            if (!list.length) return;
+            var total = list.length;
+            var done = 0;
+            progressWrap.style.display = "block";
+            updateProgress(0, total);
+            list.forEach(function(f, idx) {
+                if (!f.type.match(/^image\//)) return;
+                lunaCompressImage(f, function(dataUrl) {
+                    if (!dataUrl) {
+                        if (++done === total) updateProgress(done, total);
+                        return;
+                    }
+                    galleryFiles.push(f);
+                    galleryCompressed.push({ file: f, dataUrl: dataUrl });
+                    if (++done === total) {
+                        updateProgress(done, total);
+                        setTimeout(function() { renderThumbs(); }, 300);
+                    }
+                });
+            });
+        }
+
+        dropzone.addEventListener("click", function(e) {
+            if (e.target === browseBtn || e.target.closest(".luna-browse-btn")) return;
+            input.click();
+        });
+        browseBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            input.click();
+        });
+        input.addEventListener("change", function() {
+            processFiles(this.files);
+            this.value = "";
+        });
+
+        ["dragenter", "dragover"].forEach(function(evt) {
+            dropzone.addEventListener(evt, function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add("drag-active");
+            });
+        });
+        ["dragleave", "dragend"].forEach(function(evt) {
+            dropzone.addEventListener(evt, function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove("drag-active");
+            });
+        });
+        dropzone.addEventListener("drop", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove("drag-active");
+            if (e.dataTransfer.files && e.dataTransfer.files.length) {
+                processFiles(e.dataTransfer.files);
+            }
+        });
+
+        renderThumbs();
+    }
+    window.bindGalleryUploader = bindGalleryUploader;
 
     /* Warn immediately if the client's uploaded video won't show video frames
        (e.g. iPhone HEVC files that play audio but no picture in many browsers). */
@@ -2256,15 +2461,15 @@ body.menu-open .languages{display:none}
             ? imageText.split(/\s+/).filter(function(url) { return /^https?:\/\//i.test(url); })
             : [];
 
-        storeFilesToIdbRefs(v.photos).then(function(fromFiles) {
-            var videoFile = v.videoFile && v.videoFile[0] ? v.videoFile[0] : null;
-            var logoFile = v.logo && v.logo[0] ? v.logo[0] : null;
+        var videoFile = v.videoFile && v.videoFile[0] ? v.videoFile[0] : null;
+        var logoFile = v.logo && v.logo[0] ? v.logo[0] : null;
 
-            storeSingleToIdb(videoFile, function(videoRef) {
-                storeSingleToIdb(logoFile, function(logoRef) {
-                function proceedWithVideo() {
-                    var posterImgs = (photoInvitationImgs || []).filter(function(s){ return !!s; });
-                    var images = posterImgs.concat(fromFiles).concat(fromText);
+        storeSingleToIdb(videoFile, function(videoRef) {
+            storeSingleToIdb(logoFile, function(logoRef) {
+            function proceedWithVideo() {
+                var posterImgs = (photoInvitationImgs || []).filter(function(s){ return !!s; });
+                var galleryImgs = (galleryCompressed || []).map(function(item){ return item.dataUrl; });
+                var images = posterImgs.concat(galleryImgs).concat(fromText);
 
                     var data = {
                         id: invitationId,
@@ -2424,7 +2629,6 @@ body.menu-open .languages{display:none}
             });
         });
     });
-});
 
     // ===== COPY LINK =====
     window.copyLink = function() {
