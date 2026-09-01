@@ -200,6 +200,9 @@ input,select,textarea{max-width:100%;}
     border:1px solid rgba(255,255,255,.07);
     gap:15px;
 }
+.customer-row.selected{border-color:rgba(184,140,118,.5);background:rgba(184,140,118,.08);}
+.customer-check{display:flex;align-items:center;flex-shrink:0;}
+.customer-check input{width:16px;height:16px;accent-color:#b88c76;cursor:pointer;}
 .customer-info{flex:1;min-width:0;}
 .customer-info h4{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;}
 .customer-info p{color:rgba(255,255,255,.4);font-size:10px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -326,7 +329,50 @@ input,select,textarea{max-width:100%;}
 .vid-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:130px;border:2px dashed rgba(212,175,55,.45);border-radius:10px;padding:18px;text-align:center;color:#ad8c7d;font-size:11px;cursor:pointer;transition:.25s}
 .vid-drop:hover{border-color:#D4AF37;background:rgba(212,175,55,.07);color:#E9CE7E}
 .vid-drop-ico{font-size:30px}
-.pa-row{display:flex;align-items:center;gap:14px;padding:11px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;flex-wrap:wrap}
+
+/* ===== Luna Admin Toolkit UI ===== */
+.report-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.report-table th{text-align:left;padding:10px 12px;color:#b88c76;letter-spacing:1px;text-transform:uppercase;font-size:9px;border-bottom:1px solid rgba(255,255,255,.12);}
+.report-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.8);}
+.report-table tr:hover td{background:rgba(255,255,255,.03);}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:18px;}
+.kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px;text-align:center;}
+.kpi .num{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:#b88c76;}
+.kpi .lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:4px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px;}
+.bar-row .bl{width:150px;flex-shrink:0;color:rgba(255,255,255,.7);}
+.bar-track{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;background:linear-gradient(90deg,#b88c76,#d4af37);border-radius:4px;transition:width .5s;}
+.bar-row .bv{width:50px;text-align:right;color:#f5eee8;font-weight:600;}
+.audit-item{display:flex;gap:12px;padding:12px 6px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px;align-items:flex-start;}
+.audit-item .a-time{color:rgba(255,255,255,.35);font-size:10px;white-space:nowrap;flex-shrink:0;}
+.audit-item .a-action{color:#d4af37;font-weight:600;flex-shrink:0;min-width:120px;}
+.audit-item .a-detail{color:rgba(255,255,255,.7);}
+.kbd-hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(30,24,21,.95);border:1px solid rgba(255,255,255,.15);padding:8px 18px;font-size:11px;color:rgba(255,255,255,.7);border-radius:8px;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;}
+.kbd-hint.show{opacity:1;}
+.kbd-hint kbd{background:rgba(184,140,118,.2);border:1px solid rgba(184,140,118,.4);border-radius:4px;padding:2px 6px;color:#f5eee8;font-size:10px;margin:0 2px;}
+.toolbar-wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+.toolbar-wrap .tb-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;font-size:10px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(184,140,118,.4);color:#b88c76;background:rgba(184,140,118,.06);cursor:pointer;border-radius:6px;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.toolbar-wrap .tb-btn:hover{background:rgba(184,140,118,.18);color:#f5eee8;}
+.toolbar-wrap .tb-btn.primary{background:#b88c76;color:#17120f;border-color:#b88c76;}
+.toolbar-wrap .tb-btn.primary:hover{background:#c9a089;}
+.toolbar-wrap .tb-btn.danger{border-color:rgba(200,90,60,.5);color:#e5a595;background:rgba(200,90,60,.08);}
+.toolbar-wrap .tb-btn.danger:hover{background:rgba(200,90,60,.2);color:#fff;}
+.toolbar-wrap .tb-btn.success{border-color:rgba(100,180,100,.5);color:#8dd88d;background:rgba(100,180,100,.06);}
+.toolbar-wrap .tb-btn.success:hover{background:rgba(100,180,100,.16);color:#fff;}
+.drag-handle{cursor:grab;display:inline-flex;align-items:center;justify-content:center;width:26px;color:rgba(255,255,255,.4);flex-shrink:0;font-size:14px;}
+.drag-handle:hover{color:#b88c76;}
+.drag-item{display:flex;align-items:center;}
+.drag-item.dragging{opacity:.4;}
+.cmd-modal .cmd-input{width:100%;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(184,140,118,.3);color:#f5eee8;font-size:15px;border-radius:8px;outline:none;font-family:'DM Sans',sans-serif;}
+.cmd-modal .cmd-input:focus{border-color:#b88c76;}
+.cmd-list{list-style:none;margin-top:8px;}
+.cmd-list li{padding:12px 14px;border-radius:8px;cursor:pointer;display:flex;gap:12px;align-items:center;font-size:13px;color:rgba(255,255,255,.75);}
+.cmd-list li:hover,.cmd-list li.active{background:rgba(184,140,118,.15);color:#fff;}
+.cmd-list li .cmd-ico{width:24px;height:24px;display:grid;place-items:center;background:rgba(184,140,118,.15);border-radius:6px;color:#b88c76;flex-shrink:0;}
+.cmd-list li .cmd-keys{margin-left:auto;color:rgba(255,255,255,.35);font-size:10px;}
+.section-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
 .pa-row .ff-name{min-width:180px}
 @media(max-width:768px){
     .pa-row .ff-name{min-width:140px;}
@@ -594,6 +640,42 @@ input,select,textarea{max-width:100%;}
     </div>
 </div>
 
+<!-- Əməliyyat Jurnalı (Audit Log) modalı -->
+<div id="auditLogModal" class="modal-overlay">
+    <div class="modal" style="max-width:min(760px,100vw - 32px);">
+        <button class="modal-close" onclick="closeModal('auditLogModal')">×</button>
+        <h2>📋 Əməliyyat Jurnalı</h2>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span id="auditCount" style="font-size:11px;color:rgba(255,255,255,.45);"></span>
+            <button class="tb-btn danger" onclick="clearAuditLog()">📌 Jurnalı təmizlə</button>
+        </div>
+        <div id="auditList" style="max-height:60vh;overflow-y:auto;"></div>
+    </div>
+</div>
+
+<!-- Hesabat modalı (təhlil) -->
+<div id="reportModal" class="modal-overlay">
+    <div class="modal" style="max-width:min(820px,100vw - 32px);">
+        <button class="modal-close" onclick="closeModal('reportModal')">×</button>
+        <h2 id="reportTitle">Hesabat</h2>
+        <div id="reportBody"></div>
+    </div>
+</div>
+
+<!-- Əmr Palitrası (⌘K) -->
+<div id="cmdPaletteModal" class="modal-overlay cmd-modal">
+    <div class="modal" style="max-width:min(560px,100vw - 32px);padding:20px;">
+        <input type="text" id="cmdInput" class="cmd-input" placeholder="Əmr axtar... (Müştərilər, Dizaynlar, Video, Sifarişlər...)" autocomplete="off">
+        <ul id="cmdList" class="cmd-list"></ul>
+    </div>
+</div>
+
+<!-- Əmr palitrası sürətli düyməsi -->
+<div style="position:fixed;bottom:24px;right:24px;z-index:150;">
+    <button onclick="openCmdPalette()" title="Əmr palitrası (⌘K)" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#b88c76,#d4af37);border:none;color:#17120f;font-size:22px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);display:grid;place-items:center;">⌘</button>
+</div>
+<div class="kbd-hint" id="kbdHint"><kbd>⌘</kbd> <kbd>K</kbd> Əmr palitrası aç</div>
+
 <main class="main">
 
 <!-- ========== DASHBOARD ========== -->
@@ -684,6 +766,22 @@ input,select,textarea{max-width:100%;}
                     <button class="clear" onclick="showPopularDesigns()" style="padding:12px;font-size:11px;">Ən populyar dizaynlar</button>
                 </div>
             </div>
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">💾 Ehtiyat Nüsxə & Audit</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="lunaExportAll()" style="padding:12px;font-size:11px;background:#6a9c89;">📤 Bütün məlumatları ehtiyat nüsxə (JSON)</button>
+                    <button class="save" onclick="lunaImportAllTrigger()" style="padding:12px;font-size:11px;background:#8a6ec9;">📥 Ehtiyat nüsxəni bərpa et (import)</button>
+                    <button class="save" onclick="openAuditLog()" style="padding:12px;font-size:11px;background:#5a7ba8;">📋 Əməliyyat jurnalı (audit log)</button>
+                    <button class="clear" onclick="lunaDeleteAllCustomers()" style="padding:12px;font-size:11px;">🗑 Bütün müştəriləri sil</button>
+                </div>
+            </div>
+            <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
+                <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📤 İxrac Alətləri</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="save" onclick="lunaExportCustomersCsv()" style="padding:12px;font-size:11px;">Müştəriləri CSV endir (genişləndirilmiş)</button>
+                    <button class="clear" onclick="openLinkedinShare()" style="padding:12px;font-size:11px;">Açıq linkləri gör</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -697,8 +795,19 @@ input,select,textarea{max-width:100%;}
         </div>
         <div class="header-actions">
             <input type="text" class="search-bar" id="customerSearch" placeholder="Axtarış..." oninput="renderCustomers()">
+            <button class="tb-btn" onclick="openCmdPalette()" title="Əmr palitrası">⌘ Əmrlər</button>
             <a href="client-form.html" class="save" style="padding:12px 22px;font-size:8px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;">+ Yeni Müştəri</a>
         </div>
+    </div>
+    <div class="toolbar-wrap" id="customerBulkBar" style="display:none;margin-top:-8px;">
+        <label style="display:inline-flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
+            <input type="checkbox" id="customerSelectAll" onchange="toggleSelectAllCustomers(this.checked)"> Hamısını seç
+        </label>
+        <button class="tb-btn success" onclick="bulkSendLink()">📤 Link göndər</button>
+        <button class="tb-btn" onclick="bulkAssignDesign2()">🎨 Dizayn təyin et</button>
+        <button class="tb-btn" onclick="bulkExportSelected()">📄 CSV endir</button>
+        <button class="tb-btn danger" onclick="bulkDeleteSelected()">🗑 Sil</button>
+        <span id="customerSelCount" style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.5);"></span>
     </div>
     <div class="panel">
         <div id="customerList" class="customer-list"></div>
@@ -1518,6 +1627,20 @@ input,select,textarea{max-width:100%;}
         </div>
     </div>
     <div class="panel">
+        <h2>💬 Dəvət Mesajı Şablonları</h2>
+        <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:16px;">Müştəriyə dəvət linki göndərərkən istifadə ediləcək hazır mesajlar. <b style="color:#b88c76;">{} — müştəri adı, {}</b> — link yerinə işləyir.</p>
+        <div class="form-grid">
+            <div class="field full"><label>Şablon adı</label>
+                <div style="display:flex;gap:8px;">
+                    <input id="tmplName" type="text" placeholder="Standart dəvət mesajı" style="flex:1;">
+                    <button type="button" onclick="addMsgTemplate()" style="padding:8px 14px;background:#b88c76;border:none;color:#17120f;border-radius:6px;font-size:11px;cursor:pointer;">+ Əlavə Et</button>
+                </div>
+            </div>
+            <div class="field full"><label>Mesaj mətni</label><textarea id="tmplBody" rows="4" placeholder="Salam {}! Sizin Luna dəvətnaməniz hazırdır: {}"></textarea></div>
+        </div>
+        <div id="msgTemplateList" style="margin-top:16px;display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+    <div class="panel">
         <h2>Bütün Məlumatları Sil</h2>
         <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:20px;">Bu əməliyyat bütün localStorage məlumatlarını siləcək. Bu geri alınamaz.</p>
         <button class="delete" onclick="clearAllData()" style="padding:12px 22px;">Bütün Məlumatları Sil</button>
@@ -1864,7 +1987,8 @@ function switchSection(name){
      ['packages', buildPackagesEditor],
      ['catpreviews', buildCatPreviewsEditor],
      ['client-invitations', function(){ renderClientInvitations(); populateQuickDesignAssignClientSelect(); }],
-     ['createinv', populateDesignDropdown]
+     ['createinv', populateDesignDropdown],
+     ['settings', renderMsgTemplates]
     ].forEach(function(pair){
         if (name !== pair[0]) return;
         try { pair[1](); }
@@ -2210,6 +2334,117 @@ function removeClientInvitation(clientId){
 function getDesignById(designId){
     var designs = getDesigns();
     return designs.find(function(d){ return d.id === designId; });
+}
+
+/* =====================================================
+   ADMIN TOOLKIT — EXPORT / IMPORT, BACKUP, AUDIT LOG
+   Added high-level workflow helpers for easier control.
+===================================================== */
+
+function lunaDownload(filename, text){
+    var blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+}
+
+function lunaCsvEscape(v){
+    v = (v === null || v === undefined) ? '' : String(v);
+    return '"' + v.replace(/"/g, '""') + '"';
+}
+
+/* ---- AUDIT LOG ---- */
+function lunaAudit(action, detail){
+    try {
+        var log = JSON.parse(localStorage.getItem('luna_audit_log') || '[]');
+        log.unshift({ ts: new Date().toISOString(), action: action, detail: detail || '' });
+        localStorage.setItem('luna_audit_log', JSON.stringify(log.slice(0, 500)));
+    } catch(e){}
+}
+function lunaAuditList(){ try { return JSON.parse(localStorage.getItem('luna_audit_log') || '[]'); } catch(e){ return []; } }
+function lunaAuditClear(){ try { localStorage.removeItem('luna_audit_log'); } catch(e){} }
+
+/* ---- EXPORT (JSON) — asan ehtiyat nüsxə ---- */
+function lunaExportAll(){
+    var data = {
+        meta: { exportedAt: new Date().toISOString(), app: 'Luna Admin' },
+        customers: getCustomers(),
+        designs: getDesigns(),
+        videos: getVideos(),
+        greetingCards: getGreetingCardsData(),
+        clientInvitations: getClientInvitations(),
+        packages: (function(){ try { return JSON.parse(localStorage.getItem('luna_package_config') || '{}'); } catch(e){ return {}; } })(),
+        formConfig: (function(){ try { return JSON.parse(localStorage.getItem('luna_form_config') || '{}'); } catch(e){ return {}; } })(),
+    };
+    lunaDownload('luna-backup-' + new Date().toISOString().slice(0,10) + '.json', JSON.stringify(data, null, 2));
+    lunaAudit('export_all', data.customers.length + ' müştəri');
+    showToast('Ehtiyat nüsxə endirildi ✅');
+}
+function getGreetingCardsData(){ try { return JSON.parse(localStorage.getItem('luna_greeting_cards') || '[]'); } catch(e){ return []; } }
+
+/* ---- EXPORT CSV ---- */
+function lunaExportCustomersCsv(){
+    var customers = getCustomers();
+    if(!customers.length){ showToast('İxrac etmək üçün müştəri yoxdur.'); return; }
+    var head = ['ID','Adlar','Kateqoriya','Paket','Tarix','Məkan','Şəhər'];
+    var lines = [head.map(lunaCsvEscape).join(',')];
+    customers.forEach(function(c){
+        lines.push([c.id, lunaDisplayNames(c), c.category||'', c.package||'', c.date||'', c.venue||'', c.location||''].map(lunaCsvEscape).join(','));
+    });
+    lunaDownload('luna-musteriler-' + new Date().toISOString().slice(0,10) + '.csv', lines.join('\n'));
+    lunaAudit('export_csv_customers', customers.length + ' müştəri');
+    showToast('Müştərilər CSV kimi endirildi 📄');
+}
+
+/* ---- IMPORT (JSON backup) ---- */
+function lunaImportAll(file){
+    var reader = new FileReader();
+    reader.onload = function(ev){
+        try {
+            var data = JSON.parse(ev.target.result);
+            var imported = 0;
+            if(Array.isArray(data.customers)){
+                data.customers.forEach(function(c){
+                    if(c && c.id){
+                        var jid = (c.id.indexOf('luna_') === 0) ? c.id : 'luna_' + c.id;
+                        localStorage.setItem(jid, JSON.stringify(c));
+                        imported++;
+                    }
+                });
+            }
+            if(Array.isArray(data.designs)) localStorage.setItem('luna_designs', JSON.stringify(data.designs));
+            if(Array.isArray(data.videos)) localStorage.setItem('luna_video_invitations', JSON.stringify(data.videos));
+            if(Array.isArray(data.greetingCards)) localStorage.setItem('luna_greeting_cards', JSON.stringify(data.greetingCards));
+            if(Array.isArray(data.clientInvitations)) localStorage.setItem('luna_client_invitations', JSON.stringify(data.clientInvitations));
+            if(data.packages) localStorage.setItem('luna_package_config', JSON.stringify(data.packages));
+            if(data.formConfig) localStorage.setItem('luna_form_config', JSON.stringify(data.formConfig));
+            lunaAudit('import_all', imported + ' müştəri');
+            try { renderDashboard(); renderCustomers(); renderClientInvitations(); } catch(e){}
+            showToast('İmport tamamlandı — ' + imported + ' müştəri yükləndi ✅');
+        } catch(e){
+            showToast('İmport xətası: fayl JSON deyil.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function lunaImportAllTrigger(){
+    var inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = '.json';
+    inp.onchange = function(){ if(inp.files && inp.files[0]) lunaImportAll(inp.files[0]); };
+    inp.click();
+}
+
+/* ---- DATASET CLEAR (ehtiyatlı) ---- */
+function lunaDeleteAllCustomers(){
+    if(!confirm('BÜTÜN müştəriləri silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.')) return;
+    var customers = getCustomers();
+    customers.forEach(function(c){ try { localStorage.removeItem(c.id); localStorage.removeItem('luna_rsvp_' + c.id); } catch(e){} });
+    lunaAudit('delete_all_customers', customers.length + ' müştəri');
+    try { renderDashboard(); renderCustomers(); } catch(e){}
+    showToast(customers.length + ' müştəri silindi 🗑');
 }
 
 /* =====================================================
@@ -2621,6 +2856,8 @@ function renderCustomers(){
     list.innerHTML = '';
     if(!customers.length){
         list.innerHTML = '<div class="empty">Hələ müştəri yoxdur. <a href="client-form.html" style="color:#b88c76;">İlk müştərini əlavə et</a></div>';
+        window.__customerSel = window.__customerSel || {};
+        updateSelUI();
         return;
     }
 
@@ -2634,10 +2871,12 @@ function renderCustomers(){
         var rsvpMaybe = rsvps.filter(function(r){ return r.status === 'maybe'; }).length;
         var rsvpNo = rsvps.filter(function(r){ return r.status === 'no'; }).length;
         var link = getInvitationLink(c.id);
+        var sel = (window.__customerSel && window.__customerSel[c.id]) ? 'checked' : '';
 
         var row = document.createElement('div');
-        row.className = 'customer-row';
+        row.className = 'customer-row' + (sel ? ' selected' : '');
         row.innerHTML =
+            '<label class="customer-check"><input type="checkbox" ' + sel + ' onchange="toggleCustomerSel(\'' + lunaEscapeHtml(c.id) + '\')"></label>' +
             '<div class="customer-info">' +
                 '<h4>' + lunaEscapeHtml(name) + '</h4>' +
                 '<p>' + lunaEscapeHtml(cat) + ' · ' + lunaEscapeHtml(pkg) + (date ? ' · ' + lunaEscapeHtml(date) : '') + '</p>' +
@@ -2657,10 +2896,75 @@ function renderCustomers(){
             '</div>';
         list.appendChild(row);
     });
+    updateSelUI();
+}
+
+function updateSelUI(){
+    if(!document.getElementById('customerBulkBar')) return;
+    window.__customerSel = window.__customerSel || {};
+    var sel = window.__customerSel;
+    var ids = Object.keys(sel).filter(function(k){ return sel[k]; });
+    document.getElementById('customerBulkBar').style.display = ids.length ? 'flex' : 'none';
+    document.getElementById('customerSelCount').textContent = ids.length + ' seçildi';
+    var selAll = document.getElementById('customerSelectAll');
+    if(selAll) selAll.checked = ids.length > 0;
+}
+function toggleCustomerSel(id){
+    window.__customerSel = window.__customerSel || {};
+    window.__customerSel[id] = !window.__customerSel[id];
+    renderCustomers();
+}
+function toggleSelectAllCustomers(check){
+    window.__customerSel = {};
+    if(check){
+        getCustomers().forEach(function(c){ window.__customerSel[c.id] = true; });
+    }
+    renderCustomers();
+}
+function lunaSelectedCustomerIds(){
+    window.__customerSel = window.__customerSel || {};
+    return getCustomers().filter(function(c){ return window.__customerSel[c.id]; });
+}
+function bulkSendLink(){
+    var sel = lunaSelectedCustomerIds();
+    if(!sel.length) return showToast('Müştəri seçilməyib');
+    var text = encodeURIComponent('Salam! Dəvət linkiniz:\n\n' + sel.map(function(c){ return lunaDisplayNames(c) + ': ' + getInvitationLink(c.id); }).join('\n'));
+    window.open('https://wa.me/?text=' + text, '_blank');
+    showToast('WhatsApp açıldı');
+}
+function bulkAssignDesign2(){
+    var sel = lunaSelectedCustomerIds();
+    if(!sel.length) return showToast('Müştəri seçilməyib');
+    bulkAssignDesigns();
+}
+function bulkExportSelected(){
+    var sel = lunaSelectedCustomerIds();
+    if(!sel.length) return showToast('Müştəri seçilməyib');
+    var head = ['ID','Adlar','Kateqoriya','Paket','Tarix','Məkan','Link'];
+    var lines = [head.map(lunaCsvEscape).join(',')];
+    sel.forEach(function(c){
+        lines.push([c.id, lunaDisplayNames(c), c.category||'', c.package||'', c.date||'', c.venue||'', getInvitationLink(c.id)].map(lunaCsvEscape).join(','));
+    });
+    lunaDownload('luna-secilmis-' + new Date().toISOString().slice(0,10) + '.csv', lines.join('\n'));
+    lunaAudit('export_selected_csv', sel.length + ' müştəri');
+    showToast(sel.length + ' müştəri CSV endirildi');
+}
+function bulkDeleteSelected(){
+    var sel = lunaSelectedCustomerIds();
+    if(!sel.length) return showToast('Müştəri seçilməyib');
+    if(!confirm(sel.length + ' seçilmiş müştərini silmək istədiyinizə əminsiniz?')) return;
+    sel.forEach(function(c){
+        lunaAudit('delete_customer', c.id);
+        try { localStorage.removeItem(c.id); localStorage.removeItem('luna_rsvp_' + c.id); } catch(e){}
+    });
+    window.__customerSel = {};
+    showToast(sel.length + ' müştəri silindi 🗑');
+    renderCustomers(); renderDashboard();
 }
 
 function deleteCustomer(id){
     if(!confirm('Bu müştərini silmək istədiyinizə əminsiniz?')) return;
+    lunaAudit('delete_customer', id);
     lunaDeleteInvitation(id);
     renderCustomers();
     showToast('Müştəri silindi');
@@ -2749,6 +3053,7 @@ document.getElementById('designCover').addEventListener('change', function(){
 
 function deleteDesign(id){
     if(!confirm('Bu dizaynı silmək istədiyinizə əminsiniz?')) return;
+    lunaAudit('delete_design', String(id));
     var designs = getDesigns().filter(function(d){ return d.id !== id; });
     saveDesigns(designs);
     renderDesigns();
@@ -2980,6 +3285,8 @@ function renderVideos(){
             '</div>' +
             (v.description ? '<p>' + lunaEscapeHtml(v.description) + '</p>' : '') +
             '<div class="card-actions">' +
+                '<button class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',-1)">▲</button>' +
+                '<button class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',1)">▼</button>' +
                 '<button class="edit-btn" onclick="openEditVideo(\'' + lunaEscapeHtml(v.id) + '\')">Redaktə</button>' +
                 '<button class="toggle-btn" onclick="toggleVideoActive(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
                 '<button class="toggle-btn" onclick="toggleVideoFeatured(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.featured ? 'Featured Sil' : 'Featured Et') + '</button>' +
@@ -3041,6 +3348,7 @@ document.getElementById('videoForm').addEventListener('submit', function(e){
     }
     saveVideos(videos);
     var _savedUrl = document.getElementById('videoUrl').value.trim();
+    lunaAudit(editingVideoId ? 'edit_video' : 'add_video', (document.getElementById('videoTitle').value || '') + ' — ' + _savedUrl);
     document.getElementById('videoForm').reset();
     renderVideos();
     /* Comfortable, honest feedback: does this reach visitors? */
@@ -3079,6 +3387,18 @@ function toggleVideoFeatured(id){
     var videos = getVideos();
     var v = videos.find(function(x){ return x.id === id; });
     if(v){ v.featured = !v.featured; saveVideos(videos); renderVideos(); showToast(v.featured ? 'Featured edildi' : 'Featured silindi'); }
+}
+
+function moveVideo(id, dir){
+    var videos = getVideos();
+    videos.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
+    var idx = videos.findIndex(function(v){ return v.id === id; });
+    var nidx = idx + dir;
+    if(idx === -1 || nidx < 0 || nidx >= videos.length) return;
+    var tmp = videos[idx]; videos[idx] = videos[nidx]; videos[nidx] = tmp;
+    videos.forEach(function(v,i){ v.order = i; });
+    saveVideos(videos);
+    renderVideos();
 }
 
 function openEditVideo(id){
@@ -3124,6 +3444,7 @@ document.getElementById('editVideoForm').addEventListener('submit', function(e){
     videos[idx].featured = document.getElementById('editVideoFeatured').value === 'yes';
     videos[idx].order = parseInt(document.getElementById('editVideoOrder').value) || 0;
     saveVideos(videos);
+    lunaAudit('edit_video', videos[idx].title + ' (' + id + ')');
     closeModal('editVideoModal');
     renderVideos();
     var _info = videoKindInfo(videos[idx].url);
@@ -3191,6 +3512,8 @@ function renderGreetingCards(){
             '<div class="card-meta"><span class="badge">' + kindLabel + '</span>' + statusBadge + '</div>' +
             (c.description ? '<p>' + lunaEscapeHtml(c.description) + '</p>' : '') +
             '<div class="card-actions">' +
+                '<button class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',-1)">▲</button>' +
+                '<button class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',1)">▼</button>' +
                 '<button class="edit-btn" onclick="openEditGCard(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə</button>' +
                 '<button class="toggle-btn" onclick="toggleGCardActive(\'' + lunaEscapeHtml(c.id) + '\')">' + (c.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
                 '<button class="delete" onclick="deleteGCard(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
@@ -3280,6 +3603,7 @@ function openEditGCard(id){
 }
 function deleteGCard(id){
     if(!confirm('Bu kartı silmək istədiyinizə əminsiniz?')) return;
+    lunaAudit('delete_card', id);
     var cards = getGreetingCards().filter(function(x){ return x.id !== id; });
     saveGreetingCards(cards);
     renderGreetingCards();
@@ -3289,6 +3613,91 @@ function toggleGCardActive(id){
     var cards = getGreetingCards();
     var c = cards.find(function(x){ return x.id === id; });
     if(c){ c.active = !c.active; saveGreetingCards(cards); renderGreetingCards(); showToast(c.active ? 'Aktiv edildi' : 'Deaktiv edildi'); }
+}
+function moveGCard(id, dir){
+    var cards = getGreetingCards();
+    cards.sort(function(a,b){ return (a.order || 0) - (b.order || 0); });
+    var idx = cards.findIndex(function(x){ return x.id === id; });
+    var nidx = idx + dir;
+    if(idx === -1 || nidx < 0 || nidx >= cards.length) return;
+    var tmp = cards[idx]; cards[idx] = cards[nidx]; cards[nidx] = tmp;
+    cards.forEach(function(x,i){ x.order = i; });
+    saveGreetingCards(cards);
+    renderGreetingCards();
+}
+
+/* =====================================================
+   MESSAGE TEMPLATES — dəvət mesajı şablonları
+===================================================== */
+function getMsgTemplates(){ try { return JSON.parse(localStorage.getItem('luna_msg_templates') || '[]'); } catch(e){ return []; } }
+function saveMsgTemplates(tmpls){ localStorage.setItem('luna_msg_templates', JSON.stringify(tmpls)); }
+
+function addMsgTemplate(){
+    var name = (document.getElementById('tmplName').value || '').trim();
+    var body = (document.getElementById('tmplBody').value || '').trim();
+    if(!name || !body){ showToast('Ad və mesaj mətni tələb olunur'); return; }
+    var tmpls = getMsgTemplates();
+    tmpls.push({ id: 'mt_' + Date.now(), name: name, body: body });
+    saveMsgTemplates(tmpls);
+    document.getElementById('tmplName').value = '';
+    document.getElementById('tmplBody').value = '';
+    renderMsgTemplates();
+    showToast('Şablon əlavə edildi');
+    lunaAudit('add_msg_template', name);
+}
+function deleteMsgTemplate(id){
+    if(!confirm('Bu şablonu silmək istədiyinizə əminsiniz?')) return;
+    var tmpls = getMsgTemplates().filter(function(t){ return t.id !== id; });
+    saveMsgTemplates(tmpls);
+    renderMsgTemplates();
+    showToast('Şablon silindi');
+}
+function renderMsgTemplates(){
+    var el = document.getElementById('msgTemplateList');
+    if(!el) return;
+    var tmpls = getMsgTemplates();
+    el.innerHTML = '';
+    if(!tmpls.length){ el.innerHTML = '<div style="padding:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;color:rgba(255,255,255,.4);font-size:12px;">Hələ şablon yoxdur. Yuxarıdakı formadan əlavə edin.</div>'; return; }
+    tmpls.forEach(function(t){
+        var div = document.createElement('div');
+        div.style.cssText = 'padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;';
+        div.innerHTML =
+            '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">' +
+                '<div style="flex:1;min-width:0;">' +
+                    '<div style="font-size:13px;font-weight:600;color:#f5eee8;margin-bottom:6px;">' + lunaEscapeHtml(t.name) + '</div>' +
+                    '<div style="font-size:11px;color:rgba(255,255,255,.6);white-space:pre-wrap;line-height:1.6;">' + lunaEscapeHtml(t.body) + '</div>' +
+                '</div>' +
+                '<div style="display:flex;gap:6px;flex-shrink:0;">' +
+                    '<button class="edit-btn" onclick="useMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">İstifadə Et</button>' +
+                    '<button class="delete" onclick="deleteMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>' +
+                '</div>' +
+            '</div>';
+        el.appendChild(div);
+    });
+}
+function useMsgTemplate(id){
+    var t = getMsgTemplates().find(function(x){ return x.id === id; });
+    if(!t) return;
+    /* Pre-fill WhatsApp bulk message */
+    switchSection('dashboard');
+    openWhatsAppBulkWithTemplate(t.body);
+}
+function openWhatsAppBulkWithTemplate(tmplBody){
+    var customers = getCustomers();
+    if(!customers.length){ showToast('Müştəri yoxdur'); return; }
+    /* Build message with first customer as example */
+    var c = customers[0];
+    var link = getInvitationLink(c.id);
+    var msg = tmplBody.replace(/\{name\}/g, lunaDisplayNames(c)).replace(/\{link\}/g, link).replace(/\{\}/g, lunaDisplayNames(c));
+    var fullText = customers.map(function(c2){
+        var l = getInvitationLink(c2.id);
+        var m = tmplBody.replace(/\{name\}/g, lunaDisplayNames(c2)).replace(/\{link\}/g, l).replace(/\{\}/g, lunaDisplayNames(c2));
+        return lunaDisplayNames(c2) + ': ' + m;
+    }).join('\n\n');
+    copyToClipboard(fullText);
+    showToast(customers.length + ' müştəri mesajı panoya kopyalandı. WhatsApp-a yapışdırın.');
+    window.open('https://wa.me/?text=' + encodeURIComponent(fullText.substring(0, 2000)), '_blank');
+    lunaAudit('whatsapp_bulk_with_template', customers.length + ' müştəri');
 }
 
 /* =====================================================
@@ -5978,21 +6387,45 @@ function showRevenueReport(){
     var customers = getCustomers();
     var total = customers.reduce(function(sum,c){ return sum + (parseFloat(c.price) || 0); }, 0);
     var byPkg = {};
-    customers.forEach(function(c){
-        var p = c.package || 'basic';
-        byPkg[p] = (byPkg[p] || 0) + 1;
+    customers.forEach(function(c){ var p = c.package || 'basic'; byPkg[p] = (byPkg[p] || 0) + 1; });
+    var pkgMap = { basic:'Basic', premium:'Premium', luxury:'Luxury', video:'Video' };
+    var orders = [];
+    try { orders = JSON.parse(localStorage.getItem('luna_orders') || '[]'); } catch(e){}
+    var orderTotal = orders.reduce(function(s,o){ return s + (o.amount || 0); }, 0);
+    var html = '<div class="kpi-row">' +
+        '<div class="kpi"><div class="num">' + total.toFixed(2) + '</div><div class="lbl">Gəlir (AZN)</div></div>' +
+        '<div class="kpi"><div class="num">' + customers.length + '</div><div class="lbl">Müştəri</div></div>' +
+        '<div class="kpi"><div class="num">' + orderTotal.toFixed(2) + '</div><div class="lbl">Sifariş (AZN)</div></div>' +
+        '<div class="kpi"><div class="num">' + orders.length + '</div><div class="lbl">Sifariş</div></div>' +
+        '</div>';
+    html += '<h3 style="margin:14px 0 10px;font-size:14px;color:#b88c76;">Paketlər üzrə paylanma</h3>';
+    Object.keys(byPkg).forEach(function(p){
+        var n = byPkg[p];
+        var pct = customers.length ? Math.round(n/customers.length*100) : 0;
+        html += '<div class="bar-row"><div class="bl">' + (pkgMap[p] || p) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div><div class="bv">' + n + '</div></div>';
     });
-    alert('Gəlir Hesabatı\n\nÜmumi: ' + total + ' AZN\n\nPaketlər:\nBasic: ' + (byPkg.basic||0) + '\nPremium: ' + (byPkg.premium||0) + '\nLuxury: ' + (byPkg.luxury||0) + '\nVideo: ' + (byPkg.video||0));
+    openReport('💰 Gəlir Hesabatı', html);
 }
 
 function showConversionReport(){
     var customers = getCustomers();
-    var total = customers.length;
+    var total = customers.length || 1;
     var withDesign = getClientInvitations().length;
-    var withLink = customers.filter(function(c){ return c.approved !== false; }).length;
-    alert('Konversiya Analizi\n\nÜmumi müştəri: ' + total +
-        '\nDizayn təyin olunmuş: ' + withDesign + ' (%' + Math.round(withDesign/total*100) + ')' +
-        '\nLink aktiv: ' + withLink + ' (%' + Math.round(withLink/total*100) + ')');
+    var designs = getDesigns();
+    var cats = LUNA_CATEGORIES;
+    var html = '<div class="kpi-row">' +
+        '<div class="kpi"><div class="num">' + customers.length + '</div><div class="lbl">Ümumi müştəri</div></div>' +
+        '<div class="kpi"><div class="num">' + Math.round(withDesign/total*100) + '%</div><div class="lbl">Dizayn təyinli</div></div>' +
+        '<div class="kpi"><div class="num">' + designs.length + '</div><div class="lbl">Dizayn sayı</div></div>' +
+        '</div>';
+    html += '<h3 style="margin:14px 0 10px;font-size:14px;color:#b88c76;">Kateqoriyalar üzrə müştəri paylanması</h3>';
+    cats.forEach(function(cat){
+        var n = customers.filter(function(c){ return c.category === cat.id; }).length;
+        if(!n) return;
+        var pct = Math.round(n/total*100);
+        html += '<div class="bar-row"><div class="bl">' + cat.icon + ' ' + lunaCategoryName(cat.id) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div><div class="bv">' + n + '</div></div>';
+    });
+    openReport('📈 Konversiya & Paylanma', html);
 }
 
 function showPopularDesigns(){
@@ -6000,14 +6433,130 @@ function showPopularDesigns(){
     var designs = getDesigns();
     var count = {};
     clientInvs.forEach(function(c){ count[c.designId] = (count[c.designId]||0)+1; });
-    var sorted = Object.entries(count).sort(function(a,b){ return b[1]-a[1]; }).slice(0,5);
-    var msg = 'Ən Populyar Dizaynlar:\n\n';
-    sorted.forEach(function(s,i){
+    var sorted = Object.entries(count).sort(function(a,b){ return b[1]-a[1]; }).slice(0,10);
+    var max = sorted.length ? sorted[0][1] : 1;
+    var html = '';
+    if(!sorted.length){ html = '<div class="empty">Məlumat yoxdur.</div>'; }
+    sorted.forEach(function(s){
         var d = designs.find(function(x){ return x.id === s[0]; });
-        msg += (i+1) + '. ' + (d?d.name:s[0]) + ' — ' + s[1] + ' müştəri\n';
+        var pct = Math.round(s[1]/max*100);
+        html += '<div class="bar-row"><div class="bl">' + lunaEscapeHtml(d ? d.name : s[0]) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div><div class="bv">' + s[1] + '</div></div>';
     });
-    alert(msg || 'Məlumat yoxdur');
+    openReport('⭐ Ən Populyar Dizaynlar', '<div class="kpi-row"><div class="kpi"><div class="num">' + clientInvs.length + '</div><div class="lbl">Təyin edilmiş</div></div><div class="kpi"><div class="num">' + designs.length + '</div><div class="lbl">Ümumi dizayn</div></div></div>' + html);
 }
+
+function openReport(title, html){
+    document.getElementById('reportTitle').textContent = title;
+    document.getElementById('reportBody').innerHTML = html;
+    document.getElementById('reportModal').classList.add('open');
+}
+function closeReport(){ document.getElementById('reportModal').classList.remove('open'); }
+
+function openLinkedinShare(){
+    var customers = getCustomers();
+    var html = '<div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:8px;">Bütün müştəri dəvət linkləri:</div>';
+    customers.forEach(function(c){
+        html += '<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;margin-bottom:8px;font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">' +
+            '<span>' + lunaEscapeHtml(lunaDisplayNames(c)) + '</span>' +
+            '<span style="color:#b88c76;word-break:break-all;font-size:10px;">' + getInvitationLink(c.id) + '</span></div>';
+    });
+    openReport('🔗 Müştəri Dəvət Linkləri', html);
+}
+
+/* ---- Audit Log Viev ----- */
+function openAuditLog(){
+    var log = lunaAuditList();
+    var el = document.getElementById('auditList');
+    var cnt = document.getElementById('auditCount');
+    el.innerHTML = '';
+    cnt.textContent = log.length ? log.length + ' əməliyyat' : 'Hələ əməliyyat yoxdur';
+    if(!log.length){ el.innerHTML = '<div class="empty">Jurnal boşdur.</div>'; }
+    log.forEach(function(a){
+        var div = document.createElement('div');
+        div.className = 'audit-item';
+        var t = '';
+        try { t = new Date(a.ts).toLocaleString('az-AZ', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); } catch(e){ t = a.ts; }
+        div.innerHTML = '<div class="a-time">' + lunaEscapeHtml(t) + '</div>' +
+            '<div class="a-action">' + lunaEscapeHtml(a.action) + '</div>' +
+            '<div class="a-detail">' + lunaEscapeHtml(a.detail || '') + '</div>';
+        el.appendChild(div);
+    });
+    document.getElementById('auditLogModal').classList.add('open');
+}
+function clearAuditLog(){
+    if(!confirm('Bütün əməliyyat jurnalı silinsin?')) return;
+    lunaAuditClear();
+    openAuditLog();
+    showToast('Jurnal təmizləndi');
+}
+
+/* ---- Əmr Palitrası (⌘K / Ctrl+K) ---- */
+function lunaCmdItems(){
+    return [
+        { label:'Ana Panel', ico:'🏠', keys:'G', go:function(){ switchSection('dashboard'); } },
+        { label:'Müştərilər', ico:'👥', keys:'C', go:function(){ switchSection('customers'); } },
+        { label:'+ Yeni Müştəri', ico:'➕', keys:'N', go:function(){ window.location.href='client-form.html'; } },
+        { label:'Dizaynlar', ico:'🎨', keys:'D', go:function(){ switchSection('designs'); } },
+        { label:'Video Dəvətnamələr', ico:'🎬', keys:'V', go:function(){ switchSection('videos'); } },
+        { label:'Təşəkkür & Paylama', ico:'💌', keys:'K', go:function(){ switchSection('cards'); } },
+        { label:'Sifarişlər', ico:'📥', keys:'O', go:function(){ switchSection('orders'); } },
+        { label:'Müştəri Dizaynı', ico:'🔗', keys:'M', go:function(){ switchSection('client-invitations'); } },
+        { label:'Müştəriyə Dəvət Yarat', ico:'✉️', keys:'I', go:function(){ switchSection('createinv'); } },
+        { label:'Sayt Görünüşü', ico:'🌐', keys:'H', go:function(){ switchSection('homepage'); } },
+        { label:'Tənzimləmələr', ico:'⚙️', keys:'S', go:function(){ switchSection('settings'); } },
+        { label:'Gəlir Hesabatı', ico:'💰', keys:'R', go:function(){ switchSection('dashboard'); showRevenueReport(); } },
+        { label:'Konversiya Analizi', ico:'📈', keys:'A', go:function(){ switchSection('dashboard'); showConversionReport(); } },
+        { label:'Əməliyyat Jurnalı', ico:'📋', keys:'L', go:function(){ openAuditLog(); } },
+        { label:'Ehtiyat Nüsxə (JSON)', ico:'💾', keys:'', go:function(){ lunaExportAll(); } },
+        { label:'Müştəriləri CSV endir', ico:'📄', keys:'', go:function(){ lunaExportCustomersCsv(); } },
+    ];
+}
+function openCmdPalette(){
+    var m = document.getElementById('cmdPaletteModal');
+    m.classList.add('open');
+    setTimeout(function(){ document.getElementById('cmdInput').value=''; renderCmdList(''); document.getElementById('cmdInput').focus(); }, 30);
+    window.__cmdIdx = 0;
+}
+function closeCmdPalette(){ document.getElementById('cmdPaletteModal').classList.remove('open'); }
+function renderCmdList(q){
+    q = (q||'').toLowerCase();
+    var items = lunaCmdItems().filter(function(i){
+        return !q || i.label.toLowerCase().indexOf(q) !== -1 || i.keys.toLowerCase().indexOf(q) !== -1;
+    });
+    var el = document.getElementById('cmdList');
+    el.innerHTML = '';
+    items.forEach(function(it, idx){
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="cmd-ico">' + it.ico + '</span><span>' + it.label + '</span>' + (it.keys ? '<span class="cmd-keys">' + it.keys + '</span>' : '');
+        li.onclick = function(){ closeCmdPalette(); it.go(); };
+        if(idx === window.__cmdIdx) li.classList.add('active');
+        el.appendChild(li);
+    });
+    window.__cmdLen = items.length;
+}
+function runCmdAt(idx){
+    var items = lunaCmdItems().filter(function(i){
+        var q=(document.getElementById('cmdInput').value||'').toLowerCase();
+        return !q || i.label.toLowerCase().indexOf(q)!==-1 || i.keys.toLowerCase().indexOf(q)!==-1;
+    });
+    if(items[idx]){ closeCmdPalette(); items[idx].go(); }
+}
+document.addEventListener('keydown', function(e){
+    if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault(); openCmdPalette(); return;
+    }
+    if(document.getElementById('cmdPaletteModal').classList.contains('open')){
+        var inp = document.getElementById('cmdInput');
+        if(e.key === 'ArrowDown'){ e.preventDefault(); window.__cmdIdx = (window.__cmdIdx + 1) % window.__cmdLen; renderCmdList(inp.value); }
+        else if(e.key === 'ArrowUp'){ e.preventDefault(); window.__cmdIdx = (window.__cmdIdx - 1 + window.__cmdLen) % window.__cmdLen; renderCmdList(inp.value); }
+        else if(e.key === 'Enter'){ e.preventDefault(); runCmdAt(window.__cmdIdx); }
+        else if(e.key === 'Escape'){ closeCmdPalette(); }
+    }
+});
+document.getElementById('cmdInput').addEventListener('input', function(e){ window.__cmdIdx = 0; renderCmdList(e.target.value); });
+document.getElementById('cmdPaletteModal').addEventListener('click', function(e){ if(e.target.id === 'cmdPaletteModal') closeCmdPalette(); });
+document.getElementById('reportModal').addEventListener('click', function(e){ if(e.target.id === 'reportModal') closeReport(); });
+document.getElementById('auditLogModal').addEventListener('click', function(e){ if(e.target.id === 'auditLogModal') closeModal('auditLogModal'); });
 
 /* =====================================================
    SUPABASE SYNC — status çipi + giriş
