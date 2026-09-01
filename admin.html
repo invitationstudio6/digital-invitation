@@ -1188,6 +1188,7 @@ input,select,textarea{max-width:100%;}
                 <div class="field"><label>Kateqoriya</label><select id="ciCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Paket</label><select id="ciPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
                 <div class="field"><label>Dizayn</label><select id="ciDesign"><option value="amelia">Amelia</option><option value="amour">Amour</option><option value="noir">Noir</option><option value="editorial">Editorial Love</option><option value="minimal-white">Minimal White</option><option value="botanical">Botanical</option><option value="florence">Florence</option><option value="classic">Classic</option></select></div>
+                <div class="field"><label>Açılış animasiyası</label><select id="ciOpening"><option value="">Dizayn standartı</option></select></div>
                 <div class="field"><label>Dil</label><select id="ciLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
                 <div class="field"><label>Gəlin / Ad</label><input id="ciBride" type="text" placeholder="Aysel" required></div>
                 <div class="field"><label>Bəy (opsional)</label><input id="ciGroom" type="text" placeholder="Murad"></div>
@@ -5526,6 +5527,71 @@ function populateDesignDropdown(){
 }
 populateDesignDropdown();
 
+/* Açılış animasiyası seçmə selinqası — dəstəklənən səhnə tipləri */
+var LUNA_CREATE_OPENINGS = [
+    { id: "envelope-seal", label: "Klassik Zərf" },
+    { id: "wax-seal",      label: "Mum Möhürü" },
+    { id: "curtain",       label: "Teatr Pərdəsi" },
+    { id: "floral-paper",  label: "Çiçəkli Kağız" },
+    { id: "luxury-romance",label: "Lüks İpək" },
+    { id: "celebration-pop",label: "Konfeti Partisi" },
+    { id: "starry-night",  label: "Ulduzlu Gecə" },
+    { id: "royal-scroll",  label: "Şahi Dövrə" },
+    { id: "golden-ring",   label: "Qızıl Üzük" },
+    { id: "magic-wand",    label: "Sehirli Çubuq" },
+    { id: "typewriter",    label: "Yazı Makinası" },
+    { id: "candlelight",   label: "Şamdan Işığı" },
+    { id: "winter-drift",  label: "Qış Karlığı" },
+    { id: "old-book",      label: "Köhnə Kitab" },
+    { id: "origami-lotus", label: "Origami Lotos" },
+    { id: "wood-door",     label: "Taxta Qapı" },
+    { id: "glowing-door",  label: "İşıq Qapı" },
+    { id: "stairs",        label: "Pilləkən" },
+    { id: "fullscreen-photo", label: "Tam Ekran Foto" },
+    { id: "editorial-card",   label: "Editorial Kart" },
+    { id: "minimal",       label: "Minimal" }
+];
+var LUNA_CREATE_OPENING_MAP = {
+    "floral-reveal": "floral-paper", "editorial-reveal": "editorial-card",
+    "luxury-reveal": "luxury-romance", "envelope-reveal": "envelope-seal",
+    "stairs-reveal": "stairs", "wax-reveal": "wax-seal", "curtain-reveal": "curtain",
+    "ribbon-reveal": "ribbon", "door-reveal": "door", "wood-door-reveal": "wood-door",
+    "starry-reveal": "starry-night", "celebration-reveal": "celebration-pop",
+    "candlelight-reveal": "candlelight", "winter-reveal": "winter-drift",
+    "royal-reveal": "royal-scroll", "typewriter-reveal": "typewriter",
+    "magic-reveal": "magic-wand", "glow-door": "glowing-door", "forest-walk": "ancient-forest",
+    "book-reveal": "old-book", "golden-ring": "golden-ring", "origami-lotus": "origami-lotus"
+};
+function populateCreateOpeningDropdown(){
+    var sel = document.getElementById('ciOpening');
+    if(!sel) return;
+    sel.innerHTML = '<option value="">Dizayn standartı</option>';
+    LUNA_CREATE_OPENINGS.forEach(function(o){
+        var opt = document.createElement('option');
+        opt.value = o.id;
+        opt.textContent = o.label;
+        sel.appendChild(opt);
+    });
+}
+function defaultOpeningOfDesign(designId){
+    var all = (typeof getAllTemplates === 'function') ? getAllTemplates() : [];
+    if(!all.length && typeof LUNA_TEMPLATES !== 'undefined') all = LUNA_TEMPLATES.slice();
+    var t = all.find(function(x){ return x.id === designId; });
+    if(!t) return "";
+    var raw = t.openingType || t.openingStyle
+        || (t.layoutConfig && t.layoutConfig.openingType)
+        || t.animationType || t.animationStyle || "";
+    return LUNA_CREATE_OPENING_MAP[raw] || (LUNA_CREATE_OPENINGS.some(function(o){ return o.id === raw; }) ? raw : "");
+}
+/* Dizayn dəyişəndə açılış animasiyasını avtomatik standarta qur (əgər əl dəyişdirilməyibsə) */
+document.addEventListener('change', function(e){
+    if(e.target && e.target.id === 'ciDesign'){
+        var sel = document.getElementById('ciOpening');
+        if(sel) sel.value = defaultOpeningOfDesign(e.target.value);
+    }
+});
+populateCreateOpeningDropdown();
+
 function saveCreatedInvitation(){
     var category = document.getElementById('ciCategory').value;
     var pkg = document.getElementById('ciPackage').value;
@@ -5543,6 +5609,7 @@ function saveCreatedInvitation(){
     var imagesRaw = document.getElementById('ciImages').value.trim();
     var countdown = document.getElementById('ciCountdown').value;
     var music = document.getElementById('ciMusic').value.trim();
+    var opening = document.getElementById('ciOpening') ? document.getElementById('ciOpening').value : "";
 
     if(!bride || !dateISO || !time || !venue || !location){
         showToast('Zəhmət olmasa məcburi sahələri doldurun');
@@ -5581,6 +5648,7 @@ function saveCreatedInvitation(){
         venue: venue,
         map: map
     };
+    if(opening) inv.openingType = opening;
 
     if(category === 'business' || category === 'graduation' || category === 'birthday' || category === 'baby-shower'){
         delete inv.groom;
