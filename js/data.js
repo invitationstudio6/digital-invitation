@@ -1055,6 +1055,27 @@ try {
     })();
 } catch(e) {}
 
+/* ----- BUILT-IN GREETING / DƏVƏT CARDS -----
+   Card invitation designs shipped with the site; seeded into
+   luna_greeting_cards only when missing. kind: invitation/thankyou/distribution */
+var LUNA_BUILTIN_CARDS = [
+    { id:"cd_wedding_garden_arch", kind:"invitation", title:"Garden Arch · Toy", description:"Mavi, ağ və yaşıl akvarel bağ tağı toy dəvət kartı.", image:"media/cards/wedding-garden-arch.png", active:true, featured:true, order:1 },
+    { id:"cd_wedding_lace_floral", kind:"invitation", title:"Lace Floral · Nikah", description:"Qəhvəyi və bej krujeva çiçəkli nikah dəvət kartı.", image:"media/cards/wedding-lace-floral.png", active:true, order:2 },
+    { id:"cd_wedding_traditional", kind:"invitation", title:"Ənənəvi Toy", description:"Krem və qırmızı ənənəvi toy dəvət kartı.", image:"media/cards/wedding-traditional-cream.png", active:true, order:3 },
+    { id:"cd_birthday_jungle", kind:"invitation", title:"Jungle Safari · 1 Yaş", description:"Yaşıl və ağ illustrasiyalı cəngəllik safari 1-ci ad günü dəvət kartı.", image:"media/cards/birthday-jungle-wild.png", active:true, featured:true, order:4 },
+    { id:"cd_birthday_safari", kind:"invitation", title:"Akvarel Safari · 1 Yaş", description:"Yaşıl və ağ akvarel cəngəllik safari ilk ad günü dəvət kartı.", image:"media/cards/birthday-safari-watercolor.png", active:true, order:5 },
+    { id:"cd_henna_modern", kind:"invitation", title:"Müasir Xına", description:"Müasir xına gecəsi dəvət kartı.", image:"media/cards/henna-modern.png", active:true, featured:true, order:6 }
+];
+try {
+    (function lunaSeedBuiltinCards(){
+        var now = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
+        var ids = {}; now.forEach(function(c){ if(c && c.id) ids[c.id] = 1; });
+        var added = [];
+        LUNA_BUILTIN_CARDS.forEach(function(bc){ if(!ids[bc.id]){ now.push(bc); ids[bc.id] = 1; added.push(bc); } });
+        if(added.length){ now.sort(function(a,b){ return (a.order||0) - (b.order||0); }); localStorage.setItem("luna_greeting_cards", JSON.stringify(now)); }
+    })();
+} catch(e) {}
+
 /* Media helpers — single shared implementations (mp4/webm file, YouTube, Vimeo) */
 function lunaMediaKind(url) {
     url = (url || "").trim();
