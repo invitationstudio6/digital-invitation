@@ -293,6 +293,54 @@ function lunaSaveRsvp(invitationId, entry) {
 
     /* 3) buluda anon INSERT — qonağın devayıcısında belə saxlanır */
     _lunaPushRsvpToDb(rowKey, entry);
+
+    /* 4) sahibə Gmail bildirişi (Formspree) — bloklamadan */
+    lunaNotifyRsvp(invitationId, entry);
+}
+
+/* =====================================================
+   FORMSPREE — RSVP BILDIRIŞI SAHIBIN GMAIL-INƏ
+   "Luna — Yeni RSVP" mövzusunda qonaq cavabını göndərir.
+   Hansı təbrikdən gəlirsə, eyni endpoint (sahib Gmail) istifadə edilir.
+===================================================== */
+function lunaNotifyRsvp(invitationId, entry) {
+    if (!entry) return;
+    try {
+        var inv = lunaGetInvitation(invitationId) || {};
+
+        var labels = { yes: "Gələcək", maybe: "Bəlkə", no: "Gəlməyəcək" };
+        if (window.LUNA_LANG === "en") labels = { yes: "Yes", maybe: "Maybe", no: "No" };
+        else if (window.LUNA_LANG === "ru") labels = { yes: "Да", maybe: "Возможно", no: "Нет" };
+        else if (window.LUNA_LANG === "tr") labels = { yes: "Gelecek", maybe: "Belki", no: "Gelmiyor" };
+        var statusLabel = labels[entry.status] || entry.status || "—";
+
+        var title = inv.title || invitationId;
+
+        var payload = {
+            _subject: "RSVP — " + title,
+            invitation: title,
+            invitation_id: invitationId,
+            link: "data/invitation.html?id=" + encodeURIComponent(invitationId),
+            guest: entry.name || "—",
+            status: statusLabel,
+            guests: entry.guests || 1,
+            message: entry.message || "—",
+            at: entry.at || new Date().toISOString()
+        };
+
+        var url = (typeof LUNA_FORMSPREE_ENDPOINT !== "undefined" && LUNA_FORMSPREE_ENDPOINT) ||
+            "https://formspree.io/f/mqpzyklb";
+
+        fetch(url, {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).catch(function (err) {
+            console.warn("Luna RSVP email notify failed", err);
+        });
+    } catch (err) {
+        console.warn("Luna RSVP email notify failed", err);
+    }
 }
 
 /* Hər RSVP-ni luna_kv cədvəlinə ayrıca sətir kimi yaz.
