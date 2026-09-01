@@ -1748,10 +1748,11 @@ body.menu-open .languages{display:none}
             product_type: order.productType,
             product_type_name: order.productTypeName,
             lang: order.lang,
-            status: order.status,
+            status: "new",
             contact: order.contact,
             data: order.data,
             invitation_id: order.invitationId || null,
+            grImage: order.logoUrl || null,
             created_at: new Date().toISOString()
         };
         fetch(cfg.url + "/rest/v1/luna_orders", {
@@ -1762,7 +1763,7 @@ body.menu-open .languages{display:none}
                 "Content-Type": "application/json",
                 "Prefer": "return=minimal"
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ payload: payload, status: "new" })
         }).catch(function(){ /* silent fail */ });
     }
 

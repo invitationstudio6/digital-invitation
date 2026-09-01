@@ -4628,33 +4628,72 @@ function saveFormConfig() {
 /* =====================================================
    ORDERS MANAGER (Sifarişlər)
 ===================================================== */
-/* Fetch orders from Supabase (shared) with localStorage fallback */
+/* Fetch orders from Supabase (shared) with localStorage fallback.
+   Haqiqi schema: luna_orders(id uuid, payload jsonb, status text, created_at).
+   Müştəri/Sifariş formaları payload olaraq yazır — admin onları oxuyub göstərir. */
+function orderRowToUi(r) {
+    var p = r.payload || {};
+    if (typeof p === "string") { try { p = JSON.parse(p); } catch (e) { p = {}; } }
+    var cat = p.product_type || p.productType || "invitation";
+    var title = (p.bride && p.groom)
+        ? (p.bride + " & " + p.groom)
+        : p.bride || p.celebrant || p.companyName || p.eventName || p.groom || p.id || cat;
+    return {
+        _remoteId: r.id,
+        id: r.id,
+        ts: r.created_at || p.ts || null,
+        productType: cat,
+        productTypeName: title,
+        lang: p.lang || "",
+        status: r.status || p.status || "new",
+        contact: p.contact || p.email || "",
+        data: p,
+        invitationId: p.id || p.invitation_id || null,
+        grImage: p.grImage || p.gr_image || null,
+        deliveryLink: p.deliveryLink || p.delivery_link || null
+    };
+}
+
+function orderSyncClient() {
+    return (window.LunaSync && typeof LunaSync.client === "function") ? LunaSync.client() : null;
+}
+
+/* Status/grImage/deliveryLink dəyişikliyini buluda yaz (payload+status PATCH) */
+async function syncOrderRow(o) {
+    if (!o || !o._remoteId) return;
+    var client = orderSyncClient();
+    if (!client) return;
+    var payload = o.data || {};
+    if (typeof payload === "string") { try { payload = JSON.parse(payload); } catch (e) { payload = {}; } }
+    if (o.grImage) payload.grImage = o.grImage; else delete payload.grImage;
+    if (o.deliveryLink) payload.deliveryLink = o.deliveryLink; else delete payload.deliveryLink;
+    try {
+        await client.from("luna_orders").update({ payload: payload, status: o.status }).eq("id", o._remoteId);
+    } catch (e) {}
+}
+
 function getOrders() {
     var cfg = window.LUNA_SUPABASE;
     if (cfg && cfg.url && cfg.anonKey) {
-        return fetch(cfg.url + "/rest/v1/luna_orders?select=*&order=ts.desc", {
+        var client = orderSyncClient();
+        if (client) {
+            return client.from("luna_orders")
+                .select("id,payload,status,created_at")
+                .order("created_at", { ascending: false })
+                .limit(200)
+                .then(function (resp) {
+                    if (resp.error) throw resp.error;
+                    return (resp.data || []).map(orderRowToUi);
+                })
+                .catch(function () { return getOrdersLocal(); });
+        }
+        return fetch(cfg.url + "/rest/v1/luna_orders?select=id,payload,status,created_at&order=created_at.desc&limit=200", {
             headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
-        }).then(function(r){ return r.json(); })
-        .then(function(rows){
-            if (rows && rows.length) {
-                return rows.map(function(r){
-                    return {
-                        id: r.id,
-                        ts: r.ts,
-                        productType: r.product_type,
-                        productTypeName: r.product_type_name,
-                        lang: r.lang,
-                        status: r.status,
-                        contact: r.contact,
-                        data: r.data,
-                        invitationId: r.invitation_id,
-                        grImage: r.gr_image,
-                        deliveryLink: r.delivery_link
-                    };
-                });
-            }
+        }).then(function (r) { return r.json(); })
+        .then(function (rows) {
+            if (rows && Array.isArray(rows)) return rows.map(orderRowToUi);
             return [];
-        }).catch(function(){ return getOrdersLocal(); });
+        }).catch(function () { return getOrdersLocal(); });
     }
     return getOrdersLocal();
 }
@@ -4688,7 +4727,12 @@ async function renderOrders() {
     var orders = await getOrders();
     await updateOrdersBadge();
     if (!orders.length) {
-        list.innerHTML = '<div style="padding:40px;text-align:center;color:#ad8c7d;font-size:12px;">Hələ sifariş yoxdur. Müştəri formanı dolduranda burada görünəcək.</div>';
+        var needLogin = (window.LunaSync && LunaSync.enabled() && !LunaSync.currentUser());
+        list.innerHTML = '<div style="padding:40px;text-align:center;color:#ad8c7d;font-size:12px;">' +
+            (needLogin
+                ? 'Sifarişləri görmək üçün buluda giriş lazımdır. Sağ yuxarıdakı <b>Bulud</b> düyməsi ilə daxil olun — sifarişlər burada görünəcək.'
+                : 'Hələ sifariş yoxdur. Müştəri formanı dolduranda burada görünəcək.') +
+            '</div>';
         return;
     }
     list.innerHTML = '';
@@ -4771,8 +4815,12 @@ async function approveOrder(id) {
         if (inp) inp.value = url.href;
     }
     o.status = 'approved';
-    var orders = await getOrders();
-    saveOrders(orders.map(function(x, i) { return i === f.index ? o : x; }));
+    if (o._remoteId) {
+        await syncOrderRow(o);
+    } else {
+        var orders = await getOrders();
+        saveOrders(orders.map(function(x, i) { return i === f.index ? o : x; }));
+    }
     renderOrders();
     showToast('Ödəniş təsdiqləndi ✓ Link aktivdir — WhatsApp mesajı ilə göndərin');
 }
@@ -4785,7 +4833,16 @@ async function findOrder(id) {
 
 async function setOrderStatus(id, status) {
     var f = await findOrder(id);
-    if (f) { f.order.status = status; var orders = await getOrders(); saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; })); renderOrders(); }
+    if (!f) return;
+    f.order.status = status;
+    if (f.order._remoteId) {
+        await syncOrderRow(f.order);
+        renderOrders();
+    } else {
+        var orders = await getOrders();
+        saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
+        renderOrders();
+    }
 }
 
 async function saveOrderMeta(id) {
@@ -4795,8 +4852,12 @@ async function saveOrderMeta(id) {
     var lnk = document.getElementById('lnk_' + id);
     if (gr) f.order.grImage = gr.value.trim();
     if (lnk) f.order.deliveryLink = lnk.value.trim();
-    var orders = await getOrders();
-    saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
+    if (f.order._remoteId) {
+        await syncOrderRow(f.order);
+    } else {
+        var orders = await getOrders();
+        saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
+    }
     showToast('Sifariş məlumatları saxlandı');
 }
 
@@ -4808,8 +4869,12 @@ async function genOrderLink(id) {
     var inp = document.getElementById('lnk_' + id);
     if (inp) inp.value = url.href;
     f.order.deliveryLink = url.href;
-    var orders = await getOrders();
-    saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
+    if (f.order._remoteId) {
+        await syncOrderRow(f.order);
+    } else {
+        var orders = await getOrders();
+        saveOrders(orders.map(function(o, i) { return i === f.index ? f.order : o; }));
+    }
 }
 
 async function copyOrderMessage(id) {
@@ -4829,8 +4894,17 @@ async function copyOrderMessage(id) {
 async function deleteOrder(id) {
     if (!confirm('Bu sifarişi silmək istəyirsiniz?')) return;
     var orders = await getOrders();
-    saveOrders(orders.filter(function(o) { return o.id !== id; }));
-    renderOrders();
+    var target = orders.filter(function(o) { return o.id === id; })[0];
+    if (target && target._remoteId) {
+        var client = orderSyncClient();
+        if (client) {
+            try { await client.from("luna_orders").delete().eq("id", target._remoteId); } catch (e) {}
+        }
+        renderOrders();
+    } else {
+        saveOrders(orders.filter(function(o) { return o.id !== id; }));
+        renderOrders();
+    }
 }
 
 /* =====================================================

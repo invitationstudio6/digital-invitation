@@ -167,8 +167,7 @@
         if (wm) q1 = q1.gt("updated_at", wm);
         var q2 = client.from("luna_invitations").select("*");
         if (m.invWm) q2 = q2.gt("updated_at", m.invWm);
-        var q3 = wm ? Promise.resolve({ data: [], error: null })
-                    : client.from("luna_orders").select("*").eq("status", "new");
+        var q3 = client.from("luna_orders").select("*").eq("status", "new");
 
         Promise.all([q1.then(toData), q2.then(toData), q3.then(toData)])
             .then(function (res) {
@@ -182,13 +181,12 @@
                     try { arr = JSON.parse(rawGet("luna_orders") || "[]"); } catch (e) { arr = []; }
                     var have = {};
                     arr.forEach(function (o) { if (o && o._remoteId) have[o._remoteId] = 1; });
-                    newOrders.forEach(function (ro) {
-                        if (have[ro.id]) return;
-                        var p = ro.payload || {};
-                        p._remoteId = ro.id;
-                        arr.push(p);
-                        client.from("luna_orders").update({ status: "synced" }).eq("id", ro.id).then(function () {});
-                    });
+newOrders.forEach(function (ro) {
+                    if (have[ro.id]) return;
+                    var p = ro.payload || {};
+                    p._remoteId = ro.id;
+                    arr.push(p);
+                });
                     rawSetItem("luna_orders", JSON.stringify(arr));
                 }
 
