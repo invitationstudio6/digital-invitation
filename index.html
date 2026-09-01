@@ -2,14 +2,12 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna — Digital Invitations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap"></noscript>
 <style>
 :root{
     --cream:#FAF6F0;
@@ -2060,8 +2058,24 @@ function openCollection(catId) {
     if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-renderCollections();
-renderTemplates();
+/* Defer heavy initial rendering to let first paint + above-the-fold content
+   appear first — significant on slow mobile connections */
+function lunaIdle(fn) {
+    if (typeof requestIdleCallback === "function") {
+        requestIdleCallback(fn, { timeout: 1500 });
+    } else {
+        setTimeout(fn, 0);
+    }
+}
+lunaIdle(function(){
+    renderCollections();
+    renderTemplates();
+    renderCatCollection("wedding", "colWeddingGrid", 4);
+    renderCatCollection("birthday", "colBirthdayGrid", 4);
+    renderCatCollection("business", "colBusinessGrid", 4);
+    renderSteps();
+    renderPackages();
+});
 
 /* Collection banner close */
 document.getElementById("collBannerClose").addEventListener("click", function() {
@@ -2685,7 +2699,7 @@ document.addEventListener("keydown", function(e) {
     });
 
 /* ===== RENDER HOW IT WORKS STEPS ===== */
-(function renderSteps() {
+function renderSteps() {
     var container = document.getElementById("stepsContainer");
     if (!container) return;
     var stepsData = [
@@ -2707,10 +2721,10 @@ document.addEventListener("keydown", function(e) {
             '<p data-i18n="' + s.textKey + '">' + lunaT(s.textKey) + '</p>';
         container.appendChild(el);
     });
-})();
+}
 
 /* ===== RENDER PACKAGE COMPARISON ===== */
-(function renderPackages() {
+function renderPackages() {
     var grid = document.getElementById("compareGrid");
     if (!grid || typeof LUNA_PACKAGES === "undefined") return;
     grid.innerHTML = "";
@@ -2743,7 +2757,7 @@ document.addEventListener("keydown", function(e) {
             '</div>';
         grid.appendChild(card);
     });
-})();
+}
 
 /* ===== RENDER CATEGORY COLLECTIONS ===== */
 function renderCatCollection(catId, gridId, limit) {
@@ -2783,10 +2797,6 @@ function renderCatCollection(catId, gridId, limit) {
         });
     });
 }
-renderCatCollection("wedding", "colWeddingGrid", 4);
-renderCatCollection("birthday", "colBirthdayGrid", 4);
-renderCatCollection("business", "colBusinessGrid", 4);
-
 /* ===== APPLY HOMEPAGE CONFIG FROM ADMIN PANEL ===== */
 function applyHomepageConfig() {
     var cfg = {};
@@ -3129,18 +3139,42 @@ function getVideoInfo(url) {
                 } else {
                     var posterAttr = v.thumbnail ? ' poster="' + v.thumbnail + '"' : '';
                     card.innerHTML =
-                        '<video autoplay muted loop playsinline preload="metadata"' + posterAttr + ' src="' + videoSrc + '"></video>' +
+                        '<video muted loop playsinline preload="none"' + posterAttr + '></video>' +
                         '<div class="video-play"></div>' +
                         '<span class="video-badge">Video</span>' +
                         '<div class="video-label"><h4>' + (v.title || 'Video Dəvətnamə') + '</h4><p>' + catLabel(v.category) + ' · Animasiyalı</p></div>';
                     var vid = card.querySelector("video");
+                    vid.classList.add("video-lazy");
                     vid.addEventListener("playing", function(){ card.classList.add("is-playing"); });
                     vid.addEventListener("pause", function(){ card.classList.remove("is-playing"); });
-                    card.addEventListener("mouseenter", function() { vid.play().catch(function(){}); });
-                    card.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
                     card.addEventListener("click", function() {
                         openVideoModal({ videoUrl: videoSrc, isYouTube: false, title: v.title || 'Video', poster: v.thumbnail || "" });
                     });
+                    /* Desktop hover play/pause (source stays lazy until viewed) */
+                    card.addEventListener("mouseenter", function() {
+                        if (!vid.getAttribute("src") && typeof videoSrc === "string") vid.setAttribute("src", videoSrc);
+                        vid.play().catch(function(){});
+                    });
+                    card.addEventListener("mouseleave", function() {
+                        if (!vid.paused) { vid.pause(); vid.currentTime = 0; }
+                    });
+                    /* Lazy-load on scroll: only set src + play when the card enters the
+                       viewport. On slow mobile this avoids downloading every video up front. */
+                    if ("IntersectionObserver" in window && typeof videoSrc === "string") {
+                        var io = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(en) {
+                                if (en.isIntersecting) {
+                                    if (!vid.getAttribute("src")) { vid.setAttribute("src", videoSrc); }
+                                    vid.play().catch(function(){});
+                                    io.unobserve(en.target);
+                                }
+                            });
+                        }, { rootMargin: "120px" });
+                        io.observe(card);
+                    } else {
+                        vid.setAttribute("src", videoSrc);
+                        vid.autoplay = true;
+                    }
                 }
                 grid.appendChild(card);
             }

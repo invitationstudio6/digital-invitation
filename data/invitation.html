@@ -7357,71 +7357,94 @@ if (invitation.videoUrl) {
     var _isYT = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)/.test(invitation.videoUrl);
 
     if (_isYT) {
-        /* YouTube — use iframe embed */
+        /* YouTube — use iframe embed, but only boot it when the invitation is
+           revealed so it doesn't compete with the opening scene on slow mobile */
         var _ytMatch = invitation.videoUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
         var _ytId = _ytMatch ? _ytMatch[1] : "";
         if (_ytId) {
-            var iframe = document.createElement("iframe");
-            iframe.src = "https://www.youtube.com/embed/" + _ytId + "?autoplay=1&mute=1&loop=1&playlist=" + _ytId + "&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1";
-            iframe.allow = "autoplay;encrypted-media;fullscreen";
-            iframe.setAttribute("playsinline", "");
-            iframe.className = "hero-video-bg";
-            iframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
-            hero.insertBefore(iframe, hero.firstChild);
+            var _ytInit = function() {
+                if (_ytInit._done) return;
+                _ytInit._done = true;
+                var iframe = document.createElement("iframe");
+                iframe.src = "https://www.youtube.com/embed/" + _ytId + "?autoplay=1&mute=1&loop=1&playlist=" + _ytId + "&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1";
+                iframe.allow = "autoplay;encrypted-media;fullscreen";
+                iframe.setAttribute("playsinline", "");
+                iframe.className = "hero-video-bg";
+                iframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
+                hero.insertBefore(iframe, hero.firstChild);
 
-            /* Play button overlay in case autoplay is blocked */
-            var ytPlay = document.createElement("button");
-            ytPlay.className = "hero-yt-play";
-            ytPlay.setAttribute("aria-label", "Video oynat");
-            ytPlay.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s";
-            ytPlay.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg>';
-            hero.appendChild(ytPlay);
+                /* Play button overlay in case autoplay is blocked */
+                var ytPlay = document.createElement("button");
+                ytPlay.className = "hero-yt-play";
+                ytPlay.setAttribute("aria-label", "Video oynat");
+                ytPlay.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s";
+                ytPlay.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg>';
+                hero.appendChild(ytPlay);
 
-            /* Show play button on hover or if autoplay fails */
-            hero.addEventListener("mouseenter", function(){ ytPlay.style.opacity = "1"; ytPlay.style.pointerEvents = "auto"; });
-            hero.addEventListener("mouseleave", function(){ ytPlay.style.opacity = "0"; ytPlay.style.pointerEvents = "none"; });
+                /* Show play button on hover or if autoplay fails */
+                hero.addEventListener("mouseenter", function(){ ytPlay.style.opacity = "1"; ytPlay.style.pointerEvents = "auto"; });
+                hero.addEventListener("mouseleave", function(){ ytPlay.style.opacity = "0"; ytPlay.style.pointerEvents = "none"; });
 
-            /* Try to play via YouTube API on click */
-            ytPlay.addEventListener("click", function(e){
-                e.stopPropagation();
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":[]}', '*');
-                ytPlay.style.opacity = "0";
-                ytPlay.style.pointerEvents = "none";
-            });
+                /* Try to play via YouTube API on click */
+                ytPlay.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":[]}', '*');
+                    ytPlay.style.opacity = "0";
+                    ytPlay.style.pointerEvents = "none";
+                });
 
-            /* Detect if autoplay was blocked - show play button */
-            var _ytCheck = 0;
-            function checkYTAutoplay(){
-                if (_ytCheck++ > 20) return; // ~2s
-                iframe.contentWindow.postMessage('{"event":"command","func":"getPlayerState","args":[]}', '*');
-            }
-            window.addEventListener("message", function(ev){
-                if (ev.data && ev.data.info && ev.data.info.playerState === 5) { // video cued/unstarted
-                    ytPlay.style.opacity = "1";
-                    ytPlay.style.pointerEvents = "auto";
+                /* Detect if autoplay was blocked - show play button */
+                var _ytCheck = 0;
+                function checkYTAutoplay(){
+                    if (_ytCheck++ > 20) return; // ~2s
+                    iframe.contentWindow.postMessage('{"event":"command","func":"getPlayerState","args":[]}', '*');
                 }
-            });
-            setTimeout(checkYTAutoplay, 1000);
+                window.addEventListener("message", function(ev){
+                    if (ev.data && ev.data.info && ev.data.info.playerState === 5) { // video cued/unstarted
+                        ytPlay.style.opacity = "1";
+                        ytPlay.style.pointerEvents = "auto";
+                    }
+                });
+                setTimeout(checkYTAutoplay, 1000);
+            };
+            (window.__lunaOnReveal = window.__lunaOnReveal || []).push(_ytInit);
+            if (window.__lunaRevealed) _ytInit();
         }
     } else {
         /* Regular video file */
         var video = document.createElement("video");
-        video.autoplay = true;
         video.muted = true;
         video.loop = true;
         video.playsInline = true;
         video.className = "hero-video-bg";
+        /* Auto-play once the opening scene is revealed (matches user flow),
+           so the video doesn't download/compete during the opening */
+        video.autoplay = true;
+        window.__lunaHeroVideo = video;
         var _vu = invitation.videoUrl;
-        if (_vu.indexOf("__idb:") === 0) {
-            lunaIDBLoad(_vu.slice(6), function(blob) {
-                if (blob) video.src = URL.createObjectURL(blob);
-            });
-        } else {
-            /* This page lives in /data/, so repo-relative media paths (media/videos/...) need ../ */
-            if (/^media\//i.test(_vu)) _vu = "../" + _vu;
-            video.src = _vu;
-        }
+        var _vdInit = function() {
+            if (!video.getAttribute("src")) {
+                if (_vu.indexOf("__idb:") === 0) {
+                    lunaIDBLoad(_vu.slice(6), function(blob) {
+                        if (blob) {
+                            video.src = URL.createObjectURL(blob);
+                            video.play().catch(function(){});
+                        }
+                    });
+                } else {
+                    /* This page lives in /data/, so repo-relative media paths (media/videos/...) need ../ */
+                    var _v2 = _vu;
+                    if (/^media\//i.test(_v2)) _v2 = "../" + _v2;
+                    video.src = _v2;
+                    var _tryPlay = function() { video.play().catch(function(){}); };
+                    video.addEventListener("loadeddata", _tryPlay);
+                    _tryPlay();
+                }
+            }
+        };
+        (window.__lunaOnReveal = window.__lunaOnReveal || []).push(_vdInit);
         hero.insertBefore(video, hero.firstChild);
+        if (window.__lunaRevealed) _vdInit();
     }
 
     var overlay = document.createElement("div");
@@ -8287,6 +8310,13 @@ var _openingStyle = (function() {
 
     window.__lunaOpenDelay = sceneCfg.delay;
 
+    /* On mobile / small screens, cap the pre-reveal wait so the invitation
+       opens promptly — long scene journeys (e.g. old-book) feel sluggish
+       on phones. */
+    if (window.matchMedia && window.matchMedia("(max-width: 768px)").matches) {
+        window.__lunaOpenDelay = Math.min(window.__lunaOpenDelay, 1400);
+    }
+
     /* Ambient decorations per scene type */
     function spawn(className, count, styleFn) {
         for (var i = 0; i < count; i++) {
@@ -8446,6 +8476,19 @@ function _openInvitation() {
             invitationPage.classList.add("visible");
             window.scrollTo(0, 0);
             _openInvitation._done = true;
+            window.__lunaRevealed = true;
+
+            /* Run deferred reveal hooks (e.g. hero video init) */
+            try {
+                var _hooks = window.__lunaOnReveal || [];
+                _hooks.forEach(function(fn) { try { fn(); } catch(eH) {} });
+            } catch (eR) {}
+
+            /* Start hero video right on reveal so it doesn't feel "late" */
+            try {
+                var _hv = window.__lunaHeroVideo;
+                if (_hv && _hv.src && _hv.paused) _hv.play().catch(function() {});
+            } catch (eV) {}
 
             /* Auto-play music if available */
             if (pkg === "luxury" && invitation.music) {
