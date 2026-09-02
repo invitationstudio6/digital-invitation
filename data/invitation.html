@@ -7418,6 +7418,90 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     .hero:hover { transition: transform .4s ease; }
 }
 
+/* =============================================================
+   PER-DESIGN HERO SIGNATURE — each template gets an instantly
+   recognisable identity: a giant faded watermark, a bespoke
+   eyebrow flourish and a unique divider glyph (not just colour).
+   The mark is a dedicated `.luna-mark` element (injected by JS)
+   so it never collides with the `.hero::before/::after` overlays.
+   ============================================================= */
+.luna-mark {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%,-50%);
+    font-family: "Italiana", serif;
+    font-size: clamp(240px, 52vw, 620px);
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    opacity: 0;
+    background: linear-gradient(150deg,
+        color-mix(in srgb, var(--white,#fff) 38%, transparent),
+        color-mix(in srgb, var(--accent,#c4a882) 30%, transparent) 55%,
+        color-mix(in srgb, var(--white,#fff) 16%, transparent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: blur(.4px);
+    animation: lunaMarkIn 2.4s ease .4s forwards;
+}
+@keyframes lunaMarkIn { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .luna-mark { animation: none; opacity: 1; } }
+/* glyph shape per family-agnostic mark type set by JS */
+.luna-mark.is-script { font-family: "Great Vibes", "Playfair Display", cursive; font-weight: 400; }
+.luna-mark.is-floral { font-family: serif; font-weight: 400; }
+
+/* --- Bespoke eyebrow flourish (thin rule + motif) --- */
+[data-design] .hero-eyebrow::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 1px;
+    margin: 14px auto 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+}
+[data-design="vintage-romance"] .hero-eyebrow::after,
+[data-design="traditional-henna"] .hero-eyebrow::after,
+[data-design="oriental"] .hero-eyebrow::after,
+[data-design="garden-bloom"] .hero-eyebrow::after,
+[data-design="botanical"] .hero-eyebrow::after { background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+[data-design="noir"] .hero-eyebrow::after,
+[data-design="black-gold"] .hero-eyebrow::after,
+[data-design="luxe-gold"] .hero-eyebrow::after,
+[data-design="royal-gold"] .hero-eyebrow::after { background: linear-gradient(90deg, transparent, var(--gold,#d4b896), transparent); }
+
+/* --- Unique section-divider flanking glyphs per design --- */
+[data-design="amelia"]   .section-divider span::before,
+[data-design="amelia"]   .section-divider span::after  { content: "✿"; font-size: 13px; }
+[data-design="noir"]     .section-divider span::before,
+[data-design="noir"]     .section-divider span::after  { content: "◆"; font-size: 11px; }
+[data-design="royal-gold"] .section-divider span::before,
+[data-design="royal-gold"] .section-divider span::after,
+[data-design="luxe-gold"]  .section-divider span::before,
+[data-design="luxe-gold"]  .section-divider span::after { content: "✦"; font-size: 12px; }
+[data-design="garden"]   .section-divider span::before,
+[data-design="garden"]   .section-divider span::after,
+[data-design="botanical"] .section-divider span::before,
+[data-design="botanical"] .section-divider span::after { content: "❧"; font-size: 14px; }
+[data-design="vintage-romance"] .section-divider span::before,
+[data-design="vintage-romance"] .section-divider span::after { content: "❦"; font-size: 14px; }
+[data-design="black-gold"] .section-divider span::before,
+[data-design="black-gold"] .section-divider span::after { content: "◆"; font-size: 11px; }
+[data-design="blossom"]  .section-divider span::before,
+[data-design="blossom"]  .section-divider span::after  { content: "✿"; font-size: 13px; }
+[data-design="oriental"] .section-divider span::before,
+[data-design="oriental"] .section-divider span::after  { content: "☾"; font-size: 13px; }
+[data-design="kids-party"] .section-divider span::before,
+[data-design="kids-party"] .section-divider span::after { content: "★"; font-size: 12px; }
+[data-design="soft-blush"] .section-divider span::before,
+[data-design="soft-blush"] .section-divider span::after { content: "✿"; font-size: 12px; }
+
 </style>
 
 </head>
@@ -9001,6 +9085,59 @@ document.getElementById("openButton").textContent =
         st.textContent = css;
         document.head.appendChild(st);
     }
+})();
+
+/* Per-design hero watermark — a giant faded monogram/motif behind the
+   names, injected as a dedicated `.luna-mark` element (kept separate from
+   the `.hero::before/::after` overlays so nothing collides). */
+(function injectLunaMark() {
+    var _mk = [];
+    function _m(id, glyph, cls) { _mk[id] = [glyph, cls || ""]; }
+    /* wedding */
+    _m("amelia","A"); _m("amour","A"); _m("noir","N"); _m("serena","S");
+    _m("garden","❧","is-floral"); _m("royal-gold","R"); _m("blossom","✿","is-floral");
+    _m("editorial","&"); _m("luxe-gold","L"); _m("velvet-rose","V","is-floral");
+    _m("minimal-white","M"); _m("vintage-romance","❦","is-floral"); _m("black-gold","B");
+    _m("soft-blush","S"); _m("botanical","❧","is-floral"); _m("modern-classic","&");
+    _m("enchanted","E","is-floral"); _m("royal-seal","M"); _m("velvet-luxe","V","is-floral");
+    _m("typewriter-elegance","&"); _m("candlelight-gold","C"); _m("winter-drift","❄","is-floral");
+    _m("grand-premiere","G"); _m("grand-staircase","G","is-floral"); _m("sealed-with-love","♥","is-floral");
+    _m("starry-vow","✦","is-floral"); _m("grand-door","&"); _m("love-letter","L","is-floral");
+    _m("venue-journey","&"); _m("envelope-reveal","E"); _m("party-journey","★","is-floral");
+    _m("conference-journey","C");
+    /* engagement / henna */
+    _m("classic","C"); _m("romantic-bloom","✿","is-floral"); _m("elegant-pearl","P");
+    _m("modern-chic","&"); _m("soft-rose","R"); _m("grand-curtain","C"); _m("starry-dream","✦","is-floral");
+    _m("royal-scroll","R","is-floral"); _m("spotlight","S"); _m("ascend","A","is-floral");
+    _m("oriental","O","is-floral"); _m("traditional-henna","❦","is-floral"); _m("garden-bloom","❧","is-floral");
+    _m("backstage-henna","✿","is-floral");
+    /* birthday / grad / baby / business */
+    _m("florence","F"); _m("elegant-birthday","E"); _m("luxury-birthday","B","is-floral");
+    _m("kids-party","✿","is-floral"); _m("fiesta-pop","★","is-floral"); _m("showtime","★","is-floral");
+    _m("unwrap-gift","✓","is-floral"); _m("aurora","A"); _m("modern-grad","&");
+    _m("luxury-grad","G"); _m("steps-to-success","G","is-floral"); _m("sweet-arrival","✿","is-floral");
+    _m("little-prince","✦","is-floral"); _m("executive","E"); _m("conference","C");
+    _m("networking","&"); _m("digital-card","D"); _m("qr-contact","❏","is-floral");
+    _m("corporate-profile","C"); _m("launch-stage","L"); _m("anniversary","&");
+    _m("celebration","★","is-floral");
+
+    try {
+        var _did = (typeof finalDesignId !== "undefined" && finalDesignId) ||
+                   (typeof finalDesign !== "undefined" && finalDesign) ||
+                   (document.documentElement.getAttribute("data-design") || "").toLowerCase();
+        var _ent = _mk[_did] || _mk[(document.documentElement.getAttribute("data-design") || "").toLowerCase()];
+        if (!_ent) return;
+        var _hero = document.querySelector(".hero");
+        if (!_hero) return;
+        var _heroContent = _hero.querySelector(".hero-content");
+        var _host = _heroContent || _hero;
+        if (_host.querySelector(".luna-mark")) return;
+        var _i = document.createElement("i");
+        _i.className = "luna-mark" + (_ent[1] ? " " + _ent[1] : "");
+        _i.setAttribute("aria-hidden", "true");
+        _i.textContent = _ent[0];
+        _host.insertBefore(_i, _host.firstChild);
+    } catch (eMark) {}
 })();
 
 document.getElementById("heroEyebrow").textContent =
