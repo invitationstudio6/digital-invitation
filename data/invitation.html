@@ -6365,11 +6365,152 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
         repeating-linear-gradient(90deg, rgba(233,206,126,.05) 0 1px, transparent 1px 4px);
     box-shadow: 0 18px 40px rgba(0,0,0,.4);
 }
-[data-opening="luxury-romance"] .sig-card {
+ [data-opening="luxury-romance"] .sig-card {
     box-shadow:
         inset 0 0 0 1px rgba(217,174,106,.35),
         0 30px 70px -18px rgba(0,0,0,.65);
 }
+
+/* =========================================================
+   PER-MATERIAL ARTISTIC SIGNATURE — data-material
+   Every design family gets an unmistakable layout identity:
+   unique divider glyph, foil corner flourish, eyebrow tone,
+   section spacing, name treatment. Each reads as its own
+   handcrafted art direction, not just a colour recolor.
+   ========================================================= */
+
+/* shared foundation */
+[data-material] .section-divider span {
+    font-family: "Allura", cursive;
+    font-size: 20px;
+    line-height: 1;
+}
+[data-material] .section-divider span::before,
+[data-material] .section-divider span::after {
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    opacity: .7;
+}
+[data-material] .section-divider span::before { margin-right: 8px; content: "·"; }
+[data-material] .section-divider span::after  { margin-left: 8px;  content: "·"; }
+[data-material] .section-divider::before,
+[data-material] .section-divider::after {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--ornament-foil));
+}
+[data-material] .section-divider::after {
+    background: linear-gradient(to left, transparent, var(--ornament-foil));
+}
+
+/* ---- ROYAL / default: gold fleuron with ✦ ---- */
+[data-material="royal"] .section-divider span {
+    -webkit-text-fill-color: var(--gold);
+}
+[data-material="royal"] .section-divider span::before { content: "✦"; font-size: 11px; }
+[data-material="royal"] .section-divider span::after  { content: "✦"; font-size: 11px; }
+[data-material="royal"] .gold-ornament {
+    color: var(--ornament-foil);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ---- DARK: thin architectural gold mono-line ---- */
+[data-material="dark"] .section-divider {
+    gap: 14px;
+}
+[data-material="dark"] .section-divider::before,
+[data-material="dark"] .section-divider::after {
+    width: 70px;
+    height: 1px;
+}
+[data-material="dark"] .section-divider span::before { content: "—"; font-size: 12px; }
+[data-material="dark"] .section-divider span::after  { content: "—"; font-size: 12px; }
+[data-material="dark"] .section-divider span {
+    font-size: 18px;
+    letter-spacing: 2px;
+    -webkit-text-fill-color: var(--gold);
+    color: var(--gold);
+}
+
+/* ---- BOTANICAL: leaf ❧ ---- */
+[data-material="botanical"] .section-divider span::before { content: "❧"; font-size: 14px; }
+[data-material="botanical"] .section-divider span::after  { content: "❧"; font-size: 14px; }
+[data-material="botanical"] .section-divider span {
+    font-size: 22px;
+    -webkit-text-fill-color: #7A9A60;
+    color: #7A9A60;
+}
+[data-material="botanical"] .section-divider::before,
+[data-material="botanical"] .section-divider::after { width: 60px; }
+
+/* ---- ROSE: blossom ✿ ---- */
+[data-material="rose"] .section-divider span::before { content: "✿"; font-size: 13px; }
+[data-material="rose"] .section-divider span::after  { content: "✿"; font-size: 13px; }
+[data-material="rose"] .section-divider span {
+    font-size: 22px;
+    color: #C4879A;
+    -webkit-text-fill-color: #C4879A;
+}
+[data-material="rose"] .section-divider::before,
+[data-material="rose"] .section-divider::after { width: 46px; }
+
+/* ---- MINIMAL: ultra-thin hairline ---- */
+[data-material="minimal"] .section-divider { gap: 10px; }
+[data-material="minimal"] .section-divider span::before,
+[data-material="minimal"] .section-divider span::after { content: "·"; font-size: 8px; }
+[data-material="minimal"] .section-divider span {
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: #8A7E74;
+    -webkit-text-fill-color: #8A7E74;
+}
+
+/* ---- POP: confetti ✦ colour pop ---- */
+[data-material="pop"] .section-divider span::before { content: "✦"; font-size: 12px; }
+[data-material="pop"] .section-divider span::after  { content: "✦"; font-size: 12px; }
+[data-material="pop"] .section-divider span {
+    font-size: 18px;
+    color: #FF6B6B;
+    -webkit-text-fill-color: #FF6B6B;
+    text-shadow: 0 0 18px rgba(255,107,107,.35);
+}
+[data-material="pop"] .section-divider::before,
+[data-material="pop"] .section-divider::after {
+    background: linear-gradient(to right, transparent, #FF9F43);
+}
+
+/* ---- VINTAGE: ornamental serif flourish ‡ ---- */
+[data-material="vintage"] .section-divider span::before { content: "‡"; font-size: 14px; }
+[data-material="vintage"] .section-divider span::after  { content: "‡"; font-size: 14px; }
+[data-material="vintage"] .section-divider span {
+    font-size: 24px;
+    color: #B8956E;
+    -webkit-text-fill-color: #B8956E;
+    font-family: "Italiana", serif;
+}
+[data-material="vintage"] .section-divider::before,
+[data-material="vintage"] .section-divider::after { width: 60px; height: 2px; }
+
+/* ---- AQUA: fresh pastel wave ⁓ ---- */
+[data-material="aqua"] .section-divider span::before { content: "⁓"; font-size: 16px; }
+[data-material="aqua"] .section-divider span::after  { content: "⁓"; font-size: 16px; }
+[data-material="aqua"] .section-divider span {
+    font-size: 22px;
+    color: #7AACB8;
+    -webkit-text-fill-color: #7AACB8;
+}
+[data-material="aqua"] .section-divider::before,
+[data-material="aqua"] .section-divider::after { width: 55px; }
+
+/* Eyebrow tone per material (complements foil) */
+[data-material="botanical"] .section-eyebrow,
+[data-material="aqua"] .section-eyebrow { font-weight: 600; letter-spacing: 6px; }
+
+/* Section breathing-room — each material's editorial rhythm */
+[data-material="royal"] .section { padding-top: 104px; padding-bottom: 104px; }
+[data-material="dark"]  .section { padding-top: 120px; padding-bottom: 120px; }
+[data-material="minimal"] .section { padding-top: 150px; padding-bottom: 150px; }
+[data-material="pop"]   .section { padding-top: 84px;  padding-bottom: 84px; }
 
 </style>
 
@@ -7397,6 +7538,28 @@ if (finalDesign) {
         finalDesign.toLowerCase()
     );
 }
+
+/* Map design -> material family (adds a data-material signature used by
+   the LUNA material + ornament system for a unique artistic identity). */
+(function() {
+    var d = (finalDesign || "").toLowerCase();
+    var dark   = ["noir","black-gold","luxe-gold","luxury-birthday","luxury-grad","oriental","luxury-romance","velvet-luxe","grand-curtain","starry-dream","enchanted"];
+    var bot    = ["botanical","garden-bloom","blossom","henna","traditional-henna","florence"];
+    var rose   = ["velvet-rose","soft-blush","romantic-bloom","soft-rose","sweet-arrival","amour","serena"];
+    var min    = ["minimal-white","modern-chic","modern-classic","elegant-pearl","executive","conference","networking"];
+    var pop    = ["fiesta-pop","kids-party","celebration","celebration-pop"];
+    var vin    = ["vintage-romance","anniversary","royal-seal","classic"];
+    var aqua   = ["aurora","modern-grad","little-prince"];
+    var fam = "royal";
+    if (dark.indexOf(d) !== -1) fam = "dark";
+    else if (bot.indexOf(d) !== -1) fam = "botanical";
+    else if (rose.indexOf(d) !== -1) fam = "rose";
+    else if (min.indexOf(d) !== -1) fam = "minimal";
+    else if (pop.indexOf(d) !== -1) fam = "pop";
+    else if (vin.indexOf(d) !== -1) fam = "vintage";
+    else if (aqua.indexOf(d) !== -1) fam = "aqua";
+    document.documentElement.setAttribute("data-material", fam);
+})();
 
 /* Category-aware typography target */
 (function() {
