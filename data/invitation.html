@@ -7714,10 +7714,84 @@ document.getElementById("openButton").textContent =
     var _theme = {};
     try { _theme = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}"); } catch(e) {}
     var clientOpening = invitation ? (invitation.openingType || invitation.openingStyle || "") : "";
+    var tplOpening = cfg.openingType
+        || (tplData && (tplData.openingType || tplData.openingStyle || tplData.animationStyle || tplData.animationType));
     var openingType = clientOpening
-        || cfg.openingType
-        || (tplData && (tplData.openingType || tplData.openingStyle || tplData.animationStyle || tplData.animationType))
-        || (_theme.openingType || "envelope");
+        || tplOpening
+        || (_theme.openingType)
+        || _designatedOpening(cat, document.documentElement.getAttribute("data-material") || "", finalDesignId, finalTemplateId);
+
+    /* Auto-designated opening — gives every invitation its own fitting,
+       physically-real "wow" scene when nothing was configured manually.
+       Matches the design's material family + occasion so the reveal feels
+       bespoke, not a generic envelope for all. */
+    function _designatedOpening(category, material, design, template) {
+        var c = (category || "").toLowerCase();
+        var d = (design || template || "").toLowerCase();
+        /* Explicit per-design favourites (highest priority) */
+        var fav = {
+            "royal-gold": "royal-scroll",
+            "royal-seal": "wax-seal",
+            "black-gold": "luxury-romance",
+            "luxe-gold": "luxury-romance",
+            "golden-ring": "golden-ring",
+            "oriental": "ornata",
+            "orchid": "origami-lotus",
+            "lotus": "origami-lotus",
+            "henna": "floral-paper",
+            "botanical": "floral-paper",
+            "garden-bloom": "floral-paper",
+            "blossom": "origami-lotus",
+            "soft-rose": "origami-lotus",
+            "velvet-rose": "floral-paper",
+            "luxury-birthday": "stairs",
+            "vintage-romance": "old-book",
+            "anniversary": "old-book",
+            "classic": "wax-seal",
+            "little-prince": "starry-night",
+            "aurora": "starry-night",
+            "starry-dream": "starry-night",
+            "celebration": "celebration-pop",
+            "fiesta-pop": "celebration-pop",
+            "kids-party": "celebration-pop",
+            "executive": "editorial-card",
+            "conference": "editorial-card",
+            "networking": "editorial-card",
+            "minimal-white": "minimal",
+            "modern-chic": "editorial-card",
+            "modern-classic": "minimal",
+            "elegant-pearl": "minimal",
+            "grand-curtain": "curtain",
+            "enchanted": "glowing-door",
+            "winter": "winter-drift",
+            "typewriter": "typewriter",
+            "storybook": "old-book",
+            "flame": "candlelight",
+            "bonfire": "candlelight",
+            "forest": "ancient-forest",
+            "magic": "magic-wand"
+        };
+        if (fav[d]) return fav[d];
+        if (d && d.indexOf("birthday") !== -1) return "celebration-pop";
+        /* Occasion-driven defaults */
+        if (c === "birthday") return "golden-ring";
+        if (c === "graduation") return "candlelight";
+        if (c === "business") return "editorial-card";
+        if (c === "kids") return "celebration-pop";
+        if (c === "engagement" || c === "anniversary") return "golden-ring";
+        if (c === "henna") return "floral-paper";
+        /* Material-family defaults (wedding & everything else) */
+        switch (material) {
+            case "dark":      return "luxury-romance";
+            case "botanical": return "floral-paper";
+            case "rose":      return "origami-lotus";
+            case "minimal":   return "minimal";
+            case "pop":       return "celebration-pop";
+            case "vintage":   return "wax-seal";
+            case "aqua":      return "starry-night";
+            default:          return "royal-scroll";
+        }
+    }
 
     /* Map openingStyle aliases to actual scene types */
     var _openingMap = {
