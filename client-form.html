@@ -1403,6 +1403,7 @@ body.menu-open .languages{display:none}
             if (!t) return;
             var url = new URL(urlBase.href);
             url.searchParams.set("template", t.id);
+            if (selectedOpening) url.searchParams.set("opening", selectedOpening);
             iframe.src = url.href;
             titleEl.textContent = t.name || t.id;
             countEl.textContent = (idx + 1) + " / " + all.length;

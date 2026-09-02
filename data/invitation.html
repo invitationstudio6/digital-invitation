@@ -6833,6 +6833,59 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     .section::after { animation: none; }
 }
 
+/* =============================================================
+   COVER FALLBACK — never an empty cover page
+   Unsplash hotlink URLs can 403/404. A rich branded ACCENT
+   gradient is layered BEHIND every cover background so the
+   cover always looks designed even if the photo cannot load.
+   ============================================================= */
+.hero {
+    background:
+        radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent, #c4a882) 30%, transparent) 0%, transparent 55%),
+        radial-gradient(80% 90% at 50% 110%, color-mix(in srgb, var(--accent, #c4a882) 22%, transparent) 0%, transparent 60%),
+        linear-gradient(160deg, color-mix(in srgb, var(--accent, #c4a882) 26%, var(--bg, #f5f0e8)) 0%, var(--bg, #f5f0e8) 55%, color-mix(in srgb, var(--accent, #c4a882) 20%, var(--bg, #f5f0e8)) 100%),
+        var(--cover) center/cover no-repeat;
+}
+/* fullscreen-photo opening: cover photo over a rich gradient fallback */
+[data-opening="fullscreen-photo"] .opening {
+    background:
+        radial-gradient(90% 70% at 50% 35%, color-mix(in srgb, var(--accent, #c4a882) 38%, transparent) 0%, transparent 60%),
+        linear-gradient(165deg, color-mix(in srgb, var(--accent, #c4a882) 30%, var(--bg, #f5f0e8)), var(--bg, #f5f0e8) 50%, color-mix(in srgb, var(--accent, #c4a882) 24%, var(--bg, #f5f0e8))),
+        var(--cover) center/cover no-repeat;
+}
+
+/* =============================================================
+   OPENING — a couple of the requested scenes made richer.
+   (envelope, üzük, şam) — more depth, light and life.
+   ============================================================= */
+
+/* Envelope: richer paper, deeper pocket, warmer light, soft wax */
+[data-opening="envelope-seal"] .envelope-scene { background: radial-gradient(80% 70% at 50% 30%, color-mix(in srgb, var(--accent,#c4a882) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--bg-alt), var(--bg)); }
+[data-opening="envelope-seal"] .envelope { filter: drop-shadow(0 24px 34px rgba(0,0,0,.38)); }
+[data-opening="envelope-seal"] .envelope-body {
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.35), transparent 40%),
+        linear-gradient(335deg, rgba(0,0,0,.18), transparent 40%),
+        linear-gradient(180deg, color-mix(in srgb, var(--accent,#c4a882) 18%, #fffdf8) 0%, #f4ede2 100%);
+}
+
+/* Ring: richer gold, stronger glow, floating sparkle */
+[data-opening="golden-ring"] .opening-light {
+    background:
+        radial-gradient(50% 45% at 50% 45%, rgba(255,214,120,.45), transparent 62%),
+        radial-gradient(40% 40% at 35% 30%, rgba(255,236,180,.30), transparent 60%),
+        radial-gradient(45% 45% at 68% 70%, rgba(255,200,110,.26), transparent 60%);
+}
+
+/* Candlelight: warmer glow gradient + soft flicker already handled */
+[data-opening="candlelight"] .opening-light {
+    background:
+        radial-gradient(52% 46% at 50% 48%, rgba(255,160,70,.38), transparent 62%),
+        radial-gradient(44% 42% at 30% 26%, rgba(255,120,40,.22), transparent 58%),
+        radial-gradient(46% 48% at 70% 74%, rgba(255,140,55,.26), transparent 60%);
+    mix-blend-mode: screen;
+}
+
 </style>
 
 </head>
@@ -7721,6 +7774,7 @@ var params =
         design: tpl.id,
         templateId: tpl.id,
         style: tpl.style || "",
+        openingType: (params.get("opening") || "").trim() || undefined,
         bride: brideName,
         groom: groomName,
         date: dateISO,
