@@ -171,6 +171,31 @@ body.menu-open .languages{display:none}
 .tpl-swatch i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(92,61,46,.22);box-shadow:0 1px 2px rgba(0,0,0,.12)}
 .tpl-card-info p{font-size:9px;color:var(--dark);opacity:.72;letter-spacing:.6px;margin-top:3px}
 
+/* ===== LIVE FULL PREVIEW (canlı bax) =====
+   Opens the ACTUAL animated invitation (data/invitation.html?template=)
+   in a modal iframe so every design can be seen in full form. */
+.tpl-live{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:5px;padding:6px 12px;border:none;border-radius:20px;background:rgba(196,168,130,.9);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.3);transition:.3s;white-space:nowrap;font-family:inherit;backdrop-filter:blur(2px)}
+.tpl-card:hover .tpl-live{background:var(--gold);transform:translateX(-50%) translateY(-2px);box-shadow:0 10px 24px rgba(196,168,130,.5)}
+.tpl-live:hover{transform:translateX(-50%) translateY(-2px)}
+.luna-prev-overlay{position:fixed;inset:0;z-index:12000;background:rgba(20,12,8,.9);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;animation:prevFade .3s ease}
+@keyframes prevFade{from{opacity:0}to{opacity:1}}
+.luna-prev-frame{position:relative;width:min(96vw,460px);height:min(92vh,820px);background:#000;border-radius:14px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+.luna-prev-frame iframe{width:100%;height:100%;border:none;display:block}
+.luna-prev-header{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;z-index:5;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent)}
+.luna-prev-title{color:#f3ece2;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.luna-prev-x{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;flex:none}
+.luna-prev-x:hover{background:rgba(196,168,130,.6)}
+.luna-prev-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:44px;height:72px;border:none;border-radius:10px;background:rgba(0,0,0,.45);color:#fff;font-size:26px;cursor:pointer;display:grid;place-items:center;transition:.25s}
+.luna-prev-nav:hover{background:var(--gold);color:#fff}
+.luna-prev-nav.prev{left:6px}
+.luna-prev-nav.next{right:6px}
+.luna-prev-foot{display:flex;align-items:center;gap:12px;margin-top:14px}
+.luna-prev-foot .count{color:#d8cdbd;font-size:12px;letter-spacing:.5px}
+.luna-prev-select{padding:11px 26px;border:none;border-radius:30px;background:var(--gold);color:#fff;font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;box-shadow:0 8px 26px rgba(196,168,130,.35);transition:.25s;font-family:inherit}
+.luna-prev-select:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(196,168,130,.5)}
+@media(max-width:560px){.luna-prev-frame{width:94vw;height:86vh;border-radius:10px}}
+
+
 /* ===== OPENING PREVIEW ON DESIGN CARDS ===== */
 .opv{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s}
 .tpl-card:hover .opv,.design-thumb:hover .opv{opacity:1}
@@ -1306,6 +1331,7 @@ body.menu-open .languages{display:none}
                     '<span class="tpl-tint"></span>' +
                     opvHtml +
                     badge +
+                    '<button type="button" class="tpl-live" data-tpl="' + t.id + '">&#128065; Canlı bax</button>' +
                 '</div>' +
                 '<div class="tpl-card-info">' +
                     '<h4>' + t.name + '</h4>' +
@@ -1327,8 +1353,95 @@ body.menu-open .languages{display:none}
                 selectedOpening = _openingAliasMap()[base] || base || "envelope-seal";
                 renderAnimationPicker();
             });
+            /* Live full preview — opens the ACTUAL animated invitation */
+            var liveBtn = card.querySelector(".tpl-live");
+            liveBtn.addEventListener("click", function(ev) {
+                ev.stopPropagation();
+                lunaOpenTemplatePreview(this.getAttribute("data-tpl"), filtered);
+            });
             grid.appendChild(card);
         });
+    }
+
+    /* ===== FULL LIVE PREVIEW — CANLI BAX =====
+       Renders the ACTUAL invitation (data/invitation.html?template=<id>)
+       in a modal iframe, with prev/next to browse every design and a
+       "Birini seç" button to apply the viewed design. */
+    function lunaOpenTemplatePreview(startId, list) {
+        var all = list && list.length ? list : ((typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : (typeof LUNA_TEMPLATES !== "undefined" ? LUNA_TEMPLATES : []));
+        var idx = 0;
+        for (var i = 0; i < all.length; i++) if (all[i].id === startId) { idx = i; break; }
+
+        var overlay = document.createElement("div");
+        overlay.className = "luna-prev-overlay";
+        overlay.innerHTML =
+            '<div class="luna-prev-frame">' +
+                '<div class="luna-prev-header">' +
+                    '<span class="luna-prev-title"></span>' +
+                    '<button type="button" class="luna-prev-x">&times;</button>' +
+                '</div>' +
+                '<button type="button" class="luna-prev-nav prev">&#8249;</button>' +
+                '<button type="button" class="luna-prev-nav next">&#8250;</button>' +
+                '<iframe title="Dizayn önizləmə" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0"></iframe>' +
+            '</div>' +
+            '<div class="luna-prev-foot">' +
+                '<span class="count"></span>' +
+                '<button type="button" class="luna-prev-select">Bu dizaynı seç &#10003;</button>' +
+            '</div>';
+
+        var frame = overlay.querySelector(".luna-prev-frame");
+        var iframe = overlay.querySelector("iframe");
+        var titleEl = overlay.querySelector(".luna-prev-title");
+        var countEl = overlay.querySelector(".count");
+        var urlBase = new URL("data/invitation.html", window.location.href);
+
+        function show(i) {
+            if (i < 0) i = all.length - 1;
+            if (i >= all.length) i = 0;
+            idx = i;
+            var t = all[idx];
+            if (!t) return;
+            var url = new URL(urlBase.href);
+            url.searchParams.set("template", t.id);
+            iframe.src = url.href;
+            titleEl.textContent = t.name || t.id;
+            countEl.textContent = (idx + 1) + " / " + all.length;
+        }
+
+        function applyCurrent() {
+            var t = all[idx];
+            if (!t) return;
+            var grid = document.getElementById("templateGrid");
+            if (grid) grid.querySelectorAll(".tpl-card").forEach(function(c) {
+                var sel = c.getAttribute("data-tpl") === t.id;
+                c.classList.toggle("selected", sel);
+            });
+            var hidden = document.getElementById("selectedTemplate");
+            if (hidden) hidden.value = t.id;
+            design = t.id;
+            designId = t.id;
+            var pillEl = document.getElementById("pillDesign");
+            if (pillEl) pillEl.textContent = t.name;
+            var base = (typeof _resolveOpeningType === "function") ? _resolveOpeningType(t) : "";
+            selectedOpening = (typeof _openingAliasMap === "function" ? (_openingAliasMap()[base] || base) : base) || "envelope-seal";
+            renderAnimationPicker();
+            overlay.remove();
+        }
+
+        overlay.querySelector(".luna-prev-x").addEventListener("click", function() { overlay.remove(); });
+        overlay.querySelector(".prev").addEventListener("click", function() { show(idx - 1); });
+        overlay.querySelector(".next").addEventListener("click", function() { show(idx + 1); });
+        overlay.querySelector(".luna-prev-select").addEventListener("click", applyCurrent);
+        overlay.addEventListener("click", function(ev) { if (ev.target === overlay) overlay.remove(); });
+        document.addEventListener("keydown", function lpk(ev) {
+            if (ev.key === "Escape") overlay.remove();
+            if (ev.key === "ArrowLeft") show(idx - 1);
+            if (ev.key === "ArrowRight") show(idx + 1);
+            if (!overlay.isConnected) document.removeEventListener("keydown", lpk);
+        });
+
+        document.body.appendChild(overlay);
+        show(idx);
     }
 
     /* ===== MULTI-STEP WIZARD ===== */
