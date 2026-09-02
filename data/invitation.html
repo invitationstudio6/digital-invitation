@@ -7374,6 +7374,50 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 }
 .scene-opened[data-opening="light-sweep"] .ls-dust i { animation: none; opacity: 0; }
 
+/* =============================================================
+   INTERACTIVITY — pointer-tilt hero, cursor glow, hover life
+   ============================================================= */
+.hero { perspective: 1000px; }
+.hero-content { transform-style: preserve-3d; will-change: transform; }
+
+/* Gold orb that follows the cursor over the opening & hero */
+.luna-cursor-glow {
+    position: absolute;
+    left: 0; top: 0;
+    width: 340px; height: 340px;
+    transform: translate(calc(var(--gx,50%) - 170px), calc(var(--gy,50%) - 170px));
+    background: radial-gradient(circle, rgba(255,225,160,.16), transparent 62%);
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity .4s ease;
+    will-change: transform;
+}
+.opening .luna-cursor-glow { z-index: 2; }
+
+/* Hover life on interactive art — gentle sheen + lift */
+.lx-hover {
+    position: relative;
+    isolation: isolate;
+    transition: transform .5s cubic-bezier(.22,.9,.32,1), box-shadow .5s ease;
+}
+.lx-hover::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.12), transparent 45%);
+    opacity: 0;
+    transition: opacity .5s ease;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+    .lx-hover:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,.14); }
+    .lx-hover:hover::after { opacity: 1; }
+    .hero:hover { transition: transform .4s ease; }
+}
+
 </style>
 
 </head>
@@ -9757,6 +9801,78 @@ document.getElementById("footerTagline").textContent =
     }, { passive: true });
 })();
 
+/* =====================================================
+   POINTER TILT HERO + AMBIENT CURSOR GLOW + INTERACTIVE
+   A real, luxurious physical depth: the hero gently tilts
+   and a soft light follows the cursor. Sections get a
+   subtle magnetic hover on their art.
+===================================================== */
+(function() {
+    /* ---- Pointer-tilt hero (3D depth on desktop only) ---- */
+    var hero = document.getElementById("hero");
+    var heroContent = document.getElementById("heroContent");
+    if (hero && heroContent && window.matchMedia && window.matchMedia("(pointer:fine)").matches) {
+        var MAX_TILT = 5;
+        var raf = false;
+        function applyTilt() {
+            var sy = window.scrollY;
+            var heroH = hero.offsetHeight;
+            var tr = "translateY(" + (sy * 0.3) + "px)";
+            var r = hero.getBoundingClientRect();
+            var dx = (cursorX - r.left) / r.width - 0.5;
+            var dy = (cursorY - r.top) / r.height - 0.5;
+            tr += " rotateX(" + (dy * MAX_TILT).toFixed(2) + "deg) rotateY(" + (dx * MAX_TILT).toFixed(2) + "deg)";
+            heroContent.style.transform = tr;
+            var names = heroContent.querySelector(".hero-names");
+            var eyebrow = heroContent.querySelector(".hero-eyebrow");
+            var orn = document.querySelector(".hero-ornament");
+            if (names) names.style.transform = "translate(" + (dx * -14) + "px," + (dy * -10) + "px)";
+            if (eyebrow) eyebrow.style.transform = "translate(" + (dx * -22) + "px," + (dy * -16) + "px)";
+            if (orn) orn.style.transform = "translate(" + (dx * 18) + "px," + (dy * 14) + "px)";
+        }
+        var cursorX = 0, cursorY = 0;
+        hero.addEventListener("pointermove", function(e) {
+            cursorX = e.clientX; cursorY = e.clientY;
+            if (!raf) { raf = true; requestAnimationFrame(function(){ applyTilt(); raf = false; }); }
+        });
+        hero.addEventListener("pointerleave", function() {
+            ["hero-names","hero-eyebrow","hero-ornament"].forEach(function(cls){
+                var el = hero.querySelector("." + cls);
+                if (el) el.style.transform = "";
+            });
+            if (window.scrollY < hero.offsetHeight) {
+                heroContent.style.transform = "";
+            }
+        });
+    }
+
+    /* ---- Ambient cursor light (golden orb) on hero & opening ---- */
+    function makeGlow(scope) {
+        var el = document.getElementById(scope);
+        if (!el || !window.matchMedia || !window.matchMedia("(pointer:fine)").matches) return;
+        var orb = document.createElement("i");
+        orb.className = "luna-cursor-glow";
+        el.appendChild(orb);
+        el.addEventListener("pointermove", function(e) {
+            var r = el.getBoundingClientRect();
+            orb.style.setProperty("--gx", (e.clientX - r.left) + "px");
+            orb.style.setProperty("--gy", (e.clientY - r.top) + "px");
+        });
+        el.addEventListener("pointerleave", function() {
+            orb.style.opacity = "0";
+        });
+        el.addEventListener("pointerenter", function() {
+            orb.style.opacity = "1";
+        });
+    }
+    makeGlow("opening");
+    makeGlow("hero");
+
+    /* ---- Magnetic + glow hover on section headings / art ---- */
+    document.querySelectorAll(".section-divider, .story-quote, .hero-ornament, .gallery .photo, .gallery-style-slider .gallery-item, .detail").forEach(function(el) {
+        el.classList.add("lx-hover");
+    });
+})();
 
 /* =====================================================
    SMOOTH SECTION TRANSITIONS
