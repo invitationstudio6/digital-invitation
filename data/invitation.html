@@ -6752,12 +6752,86 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
    tiles; countdown soft; dreamy, airy. */
 [data-material="aqua"] .details-grid { grid-template-columns: repeat(3,1fr); gap: 16px; border: none; max-width: 880px; }
 [data-material="aqua"] .detail { border: none; border-radius: 18px; background: var(--bg-alt); padding: 36px 20px; box-shadow: 0 18px 50px rgba(40,80,90,.1); }
-[data-material="aqua"] .detail:hover { background: var(--accent-light); }
+ [data-material="aqua"] .detail:hover { background: var(--accent-light); }
 [data-material="aqua"] .detail strong { font-size: 26px; }
 [data-material="aqua"] .story-quote { font-size: 22px; }
 
-/* Reduced-motion safety: structural layout is fine, only transforms
-   affected already guarded elsewhere. */
+/* =============================================================
+   PER-MATERIAL ILLUSTRATION / ORNAMENT — data-material
+   Each family decorates its sections with a distinct artistic
+   motif: a large faint watermark behind content, plus refined
+   flanking flourishes on the headings/story. Purely decorative,
+   behind text, reduced-motion safe.
+   ============================================================= */
+
+/* large faint watermark behind each section */
+.section::after {
+    content: "❖";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(200px, 34vw, 460px);
+    line-height: 1;
+    z-index: 0;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    opacity: .05;
+    color: var(--accent);
+}
+[data-material="royal"] .section::after     { content: "❖"; }
+[data-material="dark"] .section::after      { content: "◆"; opacity: .04; }
+[data-material="botanical"] .section::after { content: "❧"; opacity: .06; }
+[data-material="rose"] .section::after      { content: "✿"; opacity: .06; }
+[data-material="minimal"] .section::after   { content: "·"; opacity: .07; font-size: clamp(120px,18vw,280px); }
+[data-material="pop"] .section::after       { content: "✦"; opacity: .07; }
+[data-material="vintage"] .section::after   { content: "❦"; opacity: .06; }
+[data-material="aqua"] .section::after      { content: "~"; opacity: .06; }
+/* keep real content above the watermark */
+.section > * { position: relative; z-index: 1; }
+
+/* heading flanking flourishes — bespoke per material */
+.section h2 { position: relative; }
+.section h2::before,
+.section h2::after {
+    font-family: "Allura", cursive;
+    font-size: 0.5em;
+    color: var(--accent);
+    opacity: .7;
+    line-height: 1;
+    vertical-align: middle;
+}
+.section h2::before { margin-right: 0.35em; }
+.section h2::after  { margin-left: 0.35em; }
+/* hide flanks for minimal (kept ultra clean) */
+[data-material="minimal"] .section h2::before,
+[data-material="minimal"] .section h2::after { content: none; }
+
+[data-material="royal"] .section h2::before,
+[data-material="royal"] .section h2::after { content: "✦"; }
+[data-material="dark"] .section h2::before,
+[data-material="dark"] .section h2::after { content: "—"; font-size: 0.36em; color: var(--gold); opacity: .8; }
+[data-material="botanical"] .section h2::before,
+[data-material="botanical"] .section h2::after { content: "❧"; font-size: 0.52em; color: #7A9A60; }
+[data-material="rose"] .section h2::before,
+[data-material="rose"] .section h2::after { content: "✿"; color: #C4879A; }
+[data-material="pop"] .section h2::before,
+[data-material="pop"] .section h2::after { content: "✦"; color: #FF9F43; }
+[data-material="vintage"] .section h2::before,
+[data-material="vintage"] .section h2::after { content: "❦"; }
+[data-material="aqua"] .section h2::before,
+[data-material="aqua"] .section h2::after { content: "⁓"; }
+
+/* story quote gets a subtle leading mark for warmth */
+[data-material="rose"] .story-quote,
+[data-material="vintage"] .story-quote { font-family: "Cormorant Garamond", serif; }
+[data-material="dark"] .story-quote { border-left: 1px solid var(--border-strong); padding-left: 22px; text-align: left; }
+
+/* reduced-motion safe: watermark is static, no animation introduced */
+@media (prefers-reduced-motion: reduce) {
+    .section::after { animation: none; }
+}
 
 </style>
 
