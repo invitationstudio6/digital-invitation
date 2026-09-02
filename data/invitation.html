@@ -4669,7 +4669,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .rsvp-counts {
-    display: flex;
+    display: none !important; /* RSVP sayı dəvətnamədə görünmür */
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
@@ -8773,10 +8773,27 @@ if (_openingStyle !== "envelope") {
         });
     });
 
-    /* Magic-link ilə qayıdanda session-u yoxla */
-    window.lunaCoupleSession().then(function (session) {
-        onAuthed(session);
-    });
+    /* Magic-link ilə qayıdanda session-u yoxla.
+       Yalnız əsl magic-link qayıdışı (URL-də token var) olduqda siyahını göstər.
+       Adi səhifə açılışında köhnə/aktiv sessiyanı aktivləşdirmə —
+       cütlük özü mail yazıb daxil olmalıdır, avtomatik girili qalmamalıdır. */
+    function isRsvpMagicCallback() {
+        var h = window.location.hash || "";
+        var q = window.location.search || "";
+        return /(access_token|id_token|refresh_token|code)\b/.test(h) ||
+               /([?&](code|token|error_description)=)/.test(q);
+    }
+
+    if (isRsvpMagicCallback()) {
+        window.lunaCoupleSession().then(function (session) {
+            onAuthed(session);
+        });
+    } else {
+        /* Adi açılış — köhnə sessiyanı təmizlə, cütlük özü girsinn */
+        window.lunaCoupleSignOut().then(function () {
+            onAuthed(null);
+        });
+    }
 })();
 </script>
 
