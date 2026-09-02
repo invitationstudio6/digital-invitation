@@ -6507,10 +6507,122 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 [data-material="aqua"] .section-eyebrow { font-weight: 600; letter-spacing: 6px; }
 
 /* Section breathing-room — each material's editorial rhythm */
-[data-material="royal"] .section { padding-top: 104px; padding-bottom: 104px; }
+ [data-material="royal"] .section { padding-top: 104px; padding-bottom: 104px; }
 [data-material="dark"]  .section { padding-top: 120px; padding-bottom: 120px; }
 [data-material="minimal"] .section { padding-top: 150px; padding-bottom: 150px; }
 [data-material="pop"]   .section { padding-top: 84px;  padding-bottom: 84px; }
+
+/* =========================================================
+   HERO — per-material monogram + deep layered parallax
+   ========================================================= */
+
+/* Large soft foil ornament breathing behind the hero names —
+   gives the hero a sculpted, hand-stamped depth. */
+.hero-ornament {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(200px, 34vw, 420px);
+    height: clamp(200px, 34vw, 420px);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: .5;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.hero-ornament::before {
+    content: "❖";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: clamp(120px, 20vw, 240px);
+    background: linear-gradient(135deg,
+        rgba(255,255,255,.55), rgba(255,255,255,.05) 45%,
+        rgba(212,172,120,.5));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(.3px);
+    opacity: .8;
+    animation: heroOrnamentSpin 40s linear infinite;
+}
+.hero-ornament::after {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+}
+@keyframes heroOrnamentSpin {
+    to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-ornament::before { animation: none; }
+}
+
+/* per-material ornament tint */
+[data-material="flower"] .hero-ornament::before { content: "✿"; }
+[data-material="rose"] .hero-ornament::before   { content: "✿"; }
+[data-material="botanical"] .hero-ornament::before { content: "❧"; font-size: clamp(140px, 24vw, 280px); }
+[data-material="pop"] .hero-ornament::before    { content: "✦"; }
+[data-material="aqua"] .hero-ornament::before   { content: "⋆"; }
+[data-material="vintage"] .hero-ornament::before{ content: "❦"; font-size: clamp(150px, 26vw, 300px); }
+[data-material="dark"] .hero-ornament::before   { content: "❖"; }
+
+/* Hero monogram — the "&" becomes a foil medallion, bespoke per material */
+.hero-names .hero-amp {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(48px, 8vw, 88px);
+    height: clamp(48px, 8vw, 88px);
+    margin: clamp(6px, 1.5vw, 18px) auto;
+    border-radius: 50%;
+    font-family: var(--amp-font), "Great Vibes", cursive;
+    font-size: clamp(28px, 4.5vw, 52px);
+    background:
+        radial-gradient(circle at 32% 28%, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(circle at 68% 74%, rgba(0,0,0,.34), transparent 46%),
+        linear-gradient(135deg, var(--gold), #f3e4c8 35%, var(--gold) 65%, #a88350);
+    -webkit-background-clip: padding-box;
+    color: transparent;
+    -webkit-text-fill-color: rgba(255,255,255,0);
+    -webkit-text-stroke: .5px rgba(90,60,20,.5);
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.18) inset,
+        0 0 0 2px rgba(120,80,20,.25),
+        0 12px 34px rgba(0,0,0,.35),
+        0 2px 8px rgba(0,0,0,.25);
+    text-shadow: none;
+}
+/* set the visible glyph as a layered pseudo over the medallion so it stays legible */
+.hero-names .hero-amp::after {
+    content: "&";
+    position: absolute;
+    color: var(--gold);
+    -webkit-text-fill-color: currentColor;
+    -webkit-text-stroke: .5px rgba(120,80,20,.55);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.35));
+}
+
+/* per-material monogram accents */
+[data-material="dark"] .hero-names .hero-amp { background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.2), transparent 40%), radial-gradient(circle at 68% 74%, rgba(0,0,0,.5), transparent 46%), linear-gradient(135deg,#8f7040,#d9be8e 35%,#8f7040 65%,#5c451f); }
+[data-material="botanical"] .hero-names .hero-amp::after { color: #CDE0B8; }
+[data-material="rose"] .hero-names .hero-amp { background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.4), transparent 40%), radial-gradient(circle at 68% 74%, rgba(0,0,0,.3), transparent 46%), linear-gradient(135deg,#d8a5b5,#f3d3df 35%,#d8a5b5 65%,#a87082); }
+[data-material="rose"] .hero-names .hero-amp::after { color: #FBE3EC; }
+[data-material="minimal"] .hero-names .hero-amp { width: clamp(36px, 5vw, 56px); height: clamp(36px, 5vw, 56px); background: transparent; box-shadow: none; }
+[data-material="minimal"] .hero-names .hero-amp::after { color: var(--accent); font-size: clamp(26px,3.5vw,40px); -webkit-text-fill-color: currentColor; }
+[data-material="pop"] .hero-names .hero-amp { background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.5), transparent 40%), linear-gradient(135deg,#FF9F43,#FF6B6B 55%,#FF6B6B); }
+[data-material="pop"] .hero-names .hero-amp::after { color: #FFF3E6; }
+[data-material="aqua"] .hero-names .hero-amp { background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.45), transparent 40%), radial-gradient(circle at 68% 74%, rgba(0,0,0,.25), transparent 46%), linear-gradient(135deg,#7AACB8,#C8E0E6 35%,#7AACB8 65%,#4E7C88); }
+[data-material="aqua"] .hero-names .hero-amp::after { color: #EAF6F8; }
+
+/* hero content needs to stay above the ornament */
+.hero-content { position: relative; z-index: 2; }
 
 </style>
 
@@ -7017,6 +7129,8 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
         <div class="hero-names" id="heroNames"></div>
 
         <p class="hero-date" id="date"></p>
+
+        <div class="hero-ornament" aria-hidden="true"></div>
 
     </div>
 
@@ -8718,6 +8832,15 @@ document.getElementById("footerTagline").textContent =
     var heroContent = document.getElementById("heroContent");
     if (!hero || !heroContent) return;
 
+    /* Layered hero parallax — each stratum drifts at its own speed for real
+       physical depth (eyebrow fast, names slow, date mid, ornament slowest). */
+    var _heroLayers = [
+        { el: heroContent.querySelector(".hero-eyebrow"), spd: 0.42 },
+        { el: heroContent.querySelector(".hero-names"),   spd: 0.26 },
+        { el: heroContent.querySelector(".hero-date"),    spd: 0.34 },
+        { el: document.querySelector(".hero-ornament"),   spd: 0.18 }
+    ];
+
     var ticking = false;
     window.addEventListener("scroll", function() {
         if (!ticking) {
@@ -8728,6 +8851,10 @@ document.getElementById("footerTagline").textContent =
                     var progress = scrollY / heroH;
                     heroContent.style.transform = "translateY(" + (scrollY * 0.3) + "px)";
                     heroContent.style.opacity = 1 - (progress * 1.2);
+                    /* deep-layer drift for physical parallax */
+                    _heroLayers.forEach(function(L) {
+                        if (L.el) L.el.style.transform = "translateY(" + (scrollY * L.spd) + "px)";
+                    });
                 }
                 ticking = false;
             });
