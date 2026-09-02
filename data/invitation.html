@@ -6024,16 +6024,23 @@ html.scene-opened .opening .opening-light { opacity: 0; transition: opacity 1.4s
     50%     { box-shadow: 0 0 0 6px rgba(180,180,180,.14), 0 8px 24px rgba(0,0,0,.25); }
 }
 
-/* 5) sig-card settle — a tiny, lively settle after it springs in */
+/* 5) sig-card settle then a perpetual gentle float (keeps card "alive") */
 [data-opening].scene-opened .sig-scene.active .sig-card {
     animation:
         sigCardIn .9s cubic-bezier(.22,.9,.32,1.1) both,
-        lunaCardSettle 1.1s ease .95s both;
+        lunaCardSettle 1.1s ease .95s both,
+        lunaCardFloat 7s ease-in-out 3s infinite;
 }
 @keyframes lunaCardSettle {
     0%   { transform: perspective(800px) rotateX(0) translateY(-3px); }
     60%  { transform: perspective(800px) rotateX(0) translateY(1px); }
     100% { transform: perspective(800px) rotateX(0) translateY(0); }
+}
+@keyframes lunaCardFloat {
+    0%,100% { transform: perspective(800px) rotateX(0) translateY(0) rotateZ(0); }
+    25%     { transform: perspective(800px) rotateX(.6deg) translateY(-4px) rotateZ(.1deg); }
+    50%     { transform: perspective(800px) rotateX(0) translateY(-6px) rotateZ(0); }
+    75%     { transform: perspective(800px) rotateX(-.6deg) translateY(-4px) rotateZ(-.1deg); }
 }
 
 /* 6) Names & text slide into focus (blur sharpens) */
@@ -6050,11 +6057,318 @@ html.scene-opened .opening .opening-light { opacity: 0; transition: opacity 1.4s
 }
 @keyframes lunaGrainShift {
     0%   { transform: translate(0,0); }
-    20%  { transform: translate(-4px,3px); }
-    40%  { transform: translate(3px,-4px); }
-    60%  { transform: translate(-2px,-2px); }
-    80%  { transform: translate(3px,3px); }
-    100% { transform: translate(0,0); }
+     20%  { transform: translate(-4px,3px); }
+     40%  { transform: translate(3px,-4px); }
+     60%  { transform: translate(-2px,-2px); }
+     80%  { transform: translate(3px,3px); }
+     100% { transform: translate(0,0); }
+}
+
+/* =========================================================
+   LUNA MATERIAL SYSTEM — fiziki, handcraft premium material
+   ---------------------------------------------------------
+   Every design gets an ART-DIRECTED material signature:
+   paper/fabric/foil texture, realistic layered shadow,
+   gold/silver/rose foil accents, wool/grain, edge lighting,
+   and tactile interactions — as if holding a real invitation.
+   Data-driven via CSS custom properties so each [data-design]
+   stays visually its own, not just a flat colour swap.
+   ========================================================= */
+
+/* Default (fine cotton-laid paper) */
+:root {
+    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.5'/%3E%3C/svg%3E");
+    --foil: linear-gradient(135deg,#d8b978 0%,#f5e3b3 25%,#b8893f 50%,#f2dba4 75%,#c9a15a 100%);
+    --foil-soft: linear-gradient(135deg,rgba(212,184,150,.85),rgba(245,227,179,.95));
+    --material: var(--white);
+    --material-deep: var(--bg-alt);
+    --mborder: var(--border-strong);
+    --edge-hi: rgba(255,255,255,.85);
+    --shadow-ao: 0 1px 2px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.06), 0 18px 45px -12px rgba(0,0,0,.22);
+    --ornament-foil: var(--foil);
+}
+
+/* ----- Distinct material families ----- */
+
+[data-design="noir"],
+[data-design="black-gold"],
+[data-design="luxe-gold"],
+[data-design="luxury-birthday"],
+[data-design="luxury-grad"],
+[data-design="oriental"],
+[data-design="luxury-romance"],
+[data-design="velvet-luxe"],
+[data-design="grand-curtain"],
+[data-design="starry-dream"],
+[data-design="velvet-rose"],
+[data-design="enchanted"] {
+    --material: linear-gradient(170deg,#221b14,#16100b 55%,#0d0906);
+    --material-deep: #0d0906;
+    --mborder: rgba(212,184,150,.28);
+    --edge-hi: rgba(245,227,179,.25);
+    --shadow-ao: 0 2px 3px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.42), 0 32px 70px -18px rgba(0,0,0,.7);
+    --ornament-foil: var(--foil);
+}
+
+[data-design="botanical"],
+[data-design="garden-bloom"],
+[data-design="blossom"],
+[data-design="henna"],
+[data-design="traditional-henna"],
+[data-design="florence"] {
+    --material: linear-gradient(175deg,#fffef9,#f7f3ea 55%,#efe9db);
+    --material-deep: #e9e2d2;
+    --mborder: rgba(143,174,126,.5);
+    --edge-hi: rgba(255,255,255,.9);
+    --ornament-foil: linear-gradient(135deg,#c89860,#e8c97a,#a9743c);
+}
+
+[data-design="velvet-rose"],
+[data-design="soft-blush"],
+[data-design="romantic-bloom"],
+[data-design="soft-rose"],
+[data-design="sweet-arrival"],
+[data-design="amour"],
+[data-design="serena"] {
+    --material: linear-gradient(175deg,#fffdfc,#fbf3f5 60%,#f3e6ea);
+    --material-deep: #e9d6dc;
+    --mborder: rgba(196,135,154,.42);
+    --edge-hi: rgba(255,255,255,.95);
+    --ornament-foil: linear-gradient(135deg,#d9a9b8,#f0cfd8,#bf8596);
+}
+
+[data-design="minimal-white"],
+[data-design="modern-chic"],
+[data-design="modern-classic"],
+[data-design="elegant-pearl"],
+[data-design="executive"],
+[data-design="conference"],
+[data-design="networking"] {
+    --material: linear-gradient(175deg,#ffffff,#f8f6f4 60%,#efedea);
+    --material-deep: #e6e4e0;
+    --mborder: rgba(42,37,32,.14);
+    --edge-hi: rgba(255,255,255,1);
+    --ornament-foil: linear-gradient(135deg,#b0a898,#e4ded4,#8a8078);
+}
+
+[data-design="fiesta-pop"],
+[data-design="kids-party"],
+[data-design="celebration"],
+[data-design="celebration-pop"] {
+    --material: linear-gradient(175deg,#fffdf6,#fff8ec 60%,#fff0d6);
+    --material-deep: #ffe7ba;
+    --mborder: rgba(232,160,64,.4);
+    --edge-hi: rgba(255,255,255,.95);
+    --ornament-foil: linear-gradient(135deg,#ffb84a,#ffe29e,#e89a2e);
+}
+
+[data-design="vintage-romance"],
+[data-design="anniversary"],
+[data-design="royal-seal"],
+[data-design="classic"] {
+    --material: linear-gradient(175deg,#fbf6ec,#f0e8da 60%,#e6dcc8);
+    --material-deep: #dccfb6;
+    --mborder: rgba(184,149,110,.5);
+    --edge-hi: rgba(255,252,240,.9);
+    --ornament-foil: linear-gradient(135deg,#b8956e,#e3c69a,#8f6f48);
+}
+
+[data-design="aurora"],
+[data-design="modern-grad"],
+[data-design="little-prince"] {
+    --material: linear-gradient(175deg,#fdfdfd,#f0f5f7 60%,#e6eef2);
+    --material-deep: #d9e6ec;
+    --mborder: rgba(122,172,184,.42);
+    --edge-hi: rgba(255,255,255,1);
+    --ornament-foil: linear-gradient(135deg,#7aacb8,#c6e3e9,#5b8f9c);
+}
+
+/* =====================================================
+   PHYSICAL PAPER — cards, letters, envelopes
+   Realistic grain, layered AO shadow, foil hairline edge
+   ===================================================== */
+
+/* every card that reads as "paper" gets the tactile material */
+.sig-card,
+.letter,
+.envelope-body,
+.floral-paper,
+.stair-card,
+.envelope-card {
+    background-image: var(--paper-grain), var(--material);
+    background-blend-mode: soft-light, normal;
+    border-color: var(--mborder);
+    box-shadow:
+        inset 0 0 0 1px var(--edge-hi),
+        0 2px 6px rgba(0,0,0,.35),
+        0 18px 50px -14px rgba(0,0,0,.45),
+        0 6px 16px rgba(0,0,0,.18);
+}
+
+/* edge glow / rim light — makes material feel dimensional */
+.letter { border-right: 1px solid var(--edge-hi); border-bottom: 2px solid rgba(0,0,0,.14); }
+.sig-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid color-mix(in srgb, var(--ornament-foil) 55%, transparent);
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: .8;
+}
+
+/* =====================================================
+   FOIL / MONOGRAM ORNAMENT — gold, silver, rose
+   A shimmer hairline frame on the sig-card
+   ===================================================== */
+.sig-card::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border: 1px solid transparent;
+    background:
+        linear-gradient(var(--ornament-foil)) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: .5;
+    border-radius: inherit;
+}
+
+/* foil on eyebrow / kicker text */
+.section-eyebrow, .hero-eyebrow, .eyebrow, .kicker {
+    background: var(--ornament-foil);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-weight: 600;
+    letter-spacing: .18em;
+}
+
+/* keep section-eyebrows that rely on solid gold readable */
+[data-design="luxe-gold"] .section-eyebrow,
+[data-design="black-gold"] .section-eyebrow,
+[data-design="luxury-birthday"] .section-eyebrow,
+[data-design="luxury-grad"] .section-eyebrow,
+[data-design="grand-curtain"] .section-eyebrow,
+[data-design="velvet-luxe"] .section-eyebrow,
+[data-design="starry-dream"] .section-eyebrow,
+[data-design="noir"] .section-eyebrow,
+[data-design="oriental"] .section-eyebrow {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: var(--gold);
+}
+
+/* =====================================================
+   HERO — physical depth + soft parallax-ready lighting
+   ===================================================== */
+.hero {
+    box-shadow: inset 0 -70px 120px -40px rgba(0,0,0,.45);
+}
+.hero::after {
+    background:
+        radial-gradient(ellipse at 50% 12%, rgba(255,255,255,.35), transparent 55%) border-box,
+        var(--ornament-foil);
+    mix-blend-mode: screen;
+    opacity: .45;
+    animation: heroFoilBreathe 7s ease-in-out infinite;
+}
+@keyframes heroFoilBreathe {
+    0%,100% { opacity: .3; transform: translate(-50%,-50%) scale(.96); }
+    50%     { opacity: .55; transform: translate(-50%,-50%) scale(1.04); }
+}
+
+/* =====================================================
+   TACTILE INTERACTION — physical touch everywhere
+   ===================================================== */
+.sig-card,
+.envelope,
+.silk-band,
+.scroll-paper,
+.lot-card,
+.open-button:not(:disabled) {
+    transform-style: preserve-3d;
+    transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        box-shadow .5s ease,
+        filter .4s ease;
+}
+body:not(.scene-opened) .open-button:not(:disabled):hover {
+    transform: translateY(-3px) scale(1.03);
+}
+/* subtle living depth — cards breathe like paper held up */
+.sig-card { animation: lunaPaperBreath 8s ease-in-out infinite; }
+@keyframes lunaPaperBreath {
+    0%,100% { transform: perspective(1200px) rotateX(0) translateY(0) rotateZ(0); }
+    25%     { transform: perspective(1200px) rotateX(.6deg) translateY(-3px) rotateZ(.12deg); }
+    50%     { transform: perspective(1200px) rotateX(0) translateY(-5px) rotateZ(0); }
+    75%     { transform: perspective(1200px) rotateX(-.6deg) translateY(-3px) rotateZ(-.12deg); }
+}
+
+/* =====================================================
+   REALISM UPGRADES — weaker scenes brought to physical 3D
+   ===================================================== */
+
+/* envelope: give body + flap real thickness + perspective */
+[data-opening="envelope-seal"] .envelope,
+[data-opening=""] .envelope,
+.opening .envelope {
+    perspective: 1400px;
+}
+.envelope-body {
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.6),
+        inset 0 -14px 34px -22px rgba(0,0,0,.4),
+        0 30px 60px -18px rgba(0,0,0,.45);
+}
+.flap {
+    box-shadow: 0 6px 18px -6px rgba(0,0,0,.4);
+    background-image: var(--paper-grain), var(--material);
+    background-blend-mode: soft-light, normal;
+}
+.seal {
+    box-shadow:
+        inset 0 2px 6px rgba(255,255,255,.35),
+        inset 0 -4px 10px rgba(0,0,0,.35),
+        0 8px 22px rgba(0,0,0,.4);
+}
+
+/* floral-paper: fuller unfold with edge + depth */
+[data-opening="floral-paper"] .sig-card {
+    transform-origin: top center;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.8),
+        0 2px 8px rgba(0,0,0,.3),
+        0 24px 60px -20px rgba(0,0,0,.5);
+}
+@keyframes paperUnfoldUp {
+    0%   { opacity: 0; transform: rotateX(-74deg) scale(.84) translateY(20px); }
+    55%  { opacity: 1; transform: rotateX(12deg) scale(1.04); }
+    75%  { transform: rotateX(-2deg) scale(1); }
+    100% { opacity: 1; transform: rotateX(0) scale(1); }
+}
+.scene-opened[data-opening="floral-paper"] .sig-scene.active .sig-card {
+    animation-name: paperUnfoldUp;
+    animation-duration: 1.1s;
+    animation-timing-function: cubic-bezier(.22,.9,.3,1);
+}
+
+/* luxury-romance: silk band gets fabric-feel + body depth */
+.silk-band {
+    background:
+        linear-gradient(105deg,
+            transparent 0%, rgba(196,106,130,.10) 10%,
+            rgba(217,174,106,.42) 50%, rgba(196,106,130,.10) 90%, transparent 100%),
+        repeating-linear-gradient(90deg, rgba(233,206,126,.05) 0 1px, transparent 1px 4px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.4);
+}
+[data-opening="luxury-romance"] .sig-card {
+    box-shadow:
+        inset 0 0 0 1px rgba(217,174,106,.35),
+        0 30px 70px -18px rgba(0,0,0,.65);
 }
 
 </style>
