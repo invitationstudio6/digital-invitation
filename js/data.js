@@ -1428,11 +1428,94 @@ function lunaHslToHex(h, s, l) {
     function to(v) { v = Math.round((v + m) * 255); var hex = v.toString(16); return hex.length === 1 ? "0" + hex : hex; }
     return "#" + to(r) + to(g) + to(b);
 }
+/* Curated premium palettes per template — deliberate, theme-matched identity. */
+var LUNA_CURATED_PALETTES = {
+    amelia: { c1: "#C4A882", c2: "#D9A0A0" },
+    amour: { c1: "#B08D57", c2: "#D8B98A" },
+    noir: { c1: "#A08A78", c2: "#D4C0AF" },
+    serena: { c1: "#A896BC", c2: "#C6B8D8" },
+    garden: { c1: "#7A9A60", c2: "#B0C89A" },
+    "royal-gold": { c1: "#C8A870", c2: "#E3C787" },
+    editorial: { c1: "#9A8878", c2: "#C2B2A0" },
+    "luxe-gold": { c1: "#D4B896", c2: "#B89A5E" },
+    "velvet-rose": { c1: "#C4879A", c2: "#E0B4C2" },
+    "minimal-white": { c1: "#8A7E74", c2: "#B4AB9F" },
+    "vintage-romance": { c1: "#B8956E", c2: "#D0B491" },
+    "black-gold": { c1: "#C8A870", c2: "#E6CD94" },
+    "soft-blush": { c1: "#D4A0B0", c2: "#EFC8D2" },
+    botanical: { c1: "#7A9A60", c2: "#A6BF8A" },
+    "modern-classic": { c1: "#9A8878", c2: "#C4B29E" },
+    enchanted: { c1: "#A08AD0", c2: "#C8B4E8" },
+    "romantic-bloom": { c1: "#C88A9A", c2: "#E0AEB8" },
+    "elegant-pearl": { c1: "#B0A898", c2: "#CFC8BC" },
+    "modern-chic": { c1: "#8A8078", c2: "#B0A8A0" },
+    "soft-rose": { c1: "#C89AAA", c2: "#E0B8C4" },
+    blossom: { c1: "#E8A870", c2: "#F4C89C" },
+    "elegant-birthday": { c1: "#B89878", c2: "#D0B08E" },
+    "luxury-birthday": { c1: "#C8A0D0", c2: "#E0C0E8" },
+    "kids-party": { c1: "#E8C040", c2: "#F4D87E" },
+    aurora: { c1: "#7AACB8", c2: "#A8D0D8" },
+    "modern-grad": { c1: "#6080A0", c2: "#98B4CC" },
+    "luxury-grad": { c1: "#A088C0", c2: "#C8B0E0" },
+    oriental: { c1: "#D0A860", c2: "#B0442F" },
+    "traditional-henna": { c1: "#C89860", c2: "#8A4B2F" },
+    "sweet-arrival": { c1: "#E8A090", c2: "#F4C0B0" },
+    "little-prince": { c1: "#7090B0", c2: "#9CB8D0" },
+    executive: { c1: "#506070", c2: "#7E8E9C" },
+    conference: { c1: "#706858", c2: "#9A9080" },
+    networking: { c1: "#587088", c2: "#8CA4B8" },
+    anniversary: { c1: "#B8A080", c2: "#D4C0A0" },
+    celebration: { c1: "#E8A040", c2: "#F4C070" },
+    florence: { c1: "#C0A060", c2: "#6A7A40" },
+    "royal-seal": { c1: "#B04A3A", c2: "#C9A96A" },
+    "grand-curtain": { c1: "#A8322E", c2: "#D4AF37" },
+    "garden-bloom": { c1: "#8FAE7E", c2: "#C89860" },
+    "velvet-luxe": { c1: "#C46A82", c2: "#D9AE6A" },
+    "fiesta-pop": { c1: "#FF6B6B", c2: "#FF9F43" },
+    "starry-dream": { c1: "#8EA8E8", c2: "#E8C97A" },
+    "typewriter-elegance": { c1: "#8A6A4A", c2: "#C8B090" },
+    "candlelight-gold": { c1: "#D9A441", c2: "#B04A3A" },
+    "winter-drift": { c1: "#7CA4C8", c2: "#C8DCE8" },
+    "royal-scroll": { c1: "#B8902C", c2: "#7A4A1E" },
+    "velvet-stage": { c1: "#7B2438", c2: "#D9A441" },
+    spotlight: { c1: "#B0423C", c2: "#E8C97A" },
+    showtime: { c1: "#7A2E55", c2: "#E0C040" },
+    "grand-premiere": { c1: "#54328A", c2: "#C8A870" },
+    "backstage-henna": { c1: "#C89860", c2: "#8A4B2F" },
+    "launch-stage": { c1: "#284E8A", c2: "#E0C040" },
+    "grand-staircase": { c1: "#7A4A2C", c2: "#C8A870" },
+    ascend: { c1: "#2C6A8A", c2: "#C8E0F0" },
+    "steps-to-success": { c1: "#567A38", c2: "#C0D8A0" },
+    "sealed-with-love": { c1: "#B04A3A", c2: "#7A5A9A" },
+    "starry-vow": { c1: "#6A7AC8", c2: "#E8C97A" },
+    "grand-door": { c1: "#7A3A2C", c2: "#C8A870" },
+    "love-letter": { c1: "#A86A6A", c2: "#D8B0B0" },
+    "unwrap-gift": { c1: "#C8A040", c2: "#E07A7A" },
+    "manor-door": { c1: "#6A4A2C", c2: "#C8B090" },
+    "magic-reveal": { c1: "#7A54A8", c2: "#E0C040" },
+    "glow-entrance": { c1: "#32A8A8", c2: "#C8E8E8" },
+    "forest-walk": { c1: "#3A6A38", c2: "#A8BC9A" },
+    "story-book": { c1: "#A85A2C", c2: "#D8B090" },
+    "venue-journey": { c1: "#7A9A60", c2: "#C8A870" },
+    "envelope-reveal": { c1: "#B04A3A", c2: "#C8A870" },
+    "party-journey": { c1: "#E8A040", c2: "#E07A9A" },
+    "conference-journey": { c1: "#4A7AB8", c2: "#C8D8E8" },
+    classic: { c1: "#B08D57", c2: "#7A6A50" },
+    henna: { c1: "#C89860", c2: "#8A4B2F" },
+    olivia: { c1: "#B49A8E", c2: "#D8C0B0" },
+    elan: { c1: "#A88A5A", c2: "#C8B090" },
+    romantic: { c1: "#C4879A", c2: "#E0B8C8" },
+    luxury: { c1: "#C8A870", c2: "#8A6A3A" }
+};
+
 /* Returns {c1, c2}: two harmonically-related colours for a template. */
 function lunaTemplatePalette(tpl) {
     var id = (tpl && tpl.id) || "";
     if (tpl && tpl.design && tpl.design.primaryColor) {
         return { c1: tpl.design.primaryColor, c2: tpl.design.secondaryColor || tpl.design.primaryColor };
+    }
+    if (LUNA_CURATED_PALETTES[id]) {
+        return LUNA_CURATED_PALETTES[id];
     }
     /* Deterministic well-spread hue from id (golden angle 137.5°). */
     var seed = (lunaTplHash(id) % 360 + 360) % 360;
