@@ -2825,8 +2825,36 @@ body.menu-open .languages{display:none}
                     } catch (err) {
                         data.images = fromText.length ? fromText : defaultImages;
                         lunaSaveInvitation(data);
-                        alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanild\u0131.");
+                        alert("\u015e\u0259kill\u0259r \u00e7ox b\u00f6y\u00fck oldu\u011fundu s\u00e4nin linkl\u0259r saxlanildi.");
                     }
+
+                    /* Dəvətnaməni Supabase-ə dərc et (public anon read) —
+                       link istənilən cihazda açılsın deyə (yalnız localStorage deyil).
+                       Uğursuz olsa belə lokal saxlama işləyir; bu non-blocking-dir. */
+                    (function persistInvitation(){
+                        var cfg = window.LUNA_SUPABASE;
+                        if (!cfg || !cfg.url || !cfg.anonKey) return;
+                        var heavy = ["images","galleryImages","videoUrl","video","logoUrl","photoInvitation"];
+                        var remote = JSON.parse(JSON.stringify(data));
+                        for (var i = 0; i < heavy.length; i++) {
+                            if (remote[heavy[i]] !== undefined &&
+                                typeof remote[heavy[i]] === "string" &&
+                                remote[heavy[i]].length > 900000) {
+                                delete remote[heavy[i]];
+                            }
+                        }
+                        try {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(remote.id), true);
+                            xhr.setRequestHeader("apikey", cfg.anonKey);
+                            xhr.setRequestHeader("Authorization", "Bearer " + cfg.anonKey);
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                            xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
+                            xhr.onload = function(){ if (xhr.status >= 400) console.warn("Luna remote invite persist failed", xhr.status); };
+                            xhr.onerror = function(){ /* offline — lokal link qalır */ };
+                            xhr.send(JSON.stringify({ id: remote.id, value: remote, updated_at: new Date().toISOString() }));
+                        } catch (e) { console.warn("Luna remote invite persist error", e); }
+                    })();
 
                     /* Register in admin orders list */
                     lunaSaveOrder({

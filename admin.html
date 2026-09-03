@@ -4807,6 +4807,20 @@ async function approveOrder(id) {
             if (inv) {
                 inv.approved = true;
                 localStorage.setItem('luna_' + o.invitationId, JSON.stringify(inv));
+                /* Təsdiqi Supabase-ə də yaz ki, link başqa cihazda da açılsın */
+                var cfg = window.LUNA_SUPABASE;
+                if (cfg && cfg.url && cfg.anonKey) {
+                    try {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(inv.id || o.invitationId), true);
+                        xhr.setRequestHeader("apikey", cfg.anonKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + cfg.anonKey);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                        xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
+                        xhr.onload = function(){ if (xhr.status >= 400) console.warn("Luna approve push failed", xhr.status); };
+                        xhr.send(JSON.stringify({ id: inv.id || o.invitationId, value: inv, updated_at: new Date().toISOString() }));
+                    } catch (e) { console.warn("Luna approve push error", e); }
+                }
             }
         } catch(e) {}
         var url = new URL('data/invitation.html', window.location.href);
