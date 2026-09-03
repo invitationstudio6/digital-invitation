@@ -2429,6 +2429,45 @@ a { text-decoration: none; color: inherit; }
 .scene-opened[data-opening="ribbon"] .rb-half-r { transform: translateX(110%); filter: brightness(.5) blur(2px); }
 
 /* =====================================================
+   3D RIBBON UPGRADE — real depth on bands, bow & panels
+===================================================== */
+[data-opening="ribbon"] .opening { perspective: 1000px; transform-style: preserve-3d; }
+.rb-half-l, .rb-half-r { transform-style: preserve-3d; }
+/* visible ribbon-band thickness while they fly away */
+.rb-band-v::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 48px; width: 14px;
+    background: linear-gradient(90deg, #8A5E22, #CAA04C 50%, #7E541E);
+    transform: rotateY(-70deg); transform-origin: left center;
+}
+.rb-band-h::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 48px; height: 14px;
+    background: linear-gradient(180deg, #8A5E22, #CAA04C 50%, #7E541E);
+    transform: rotateX(70deg); transform-origin: top center;
+}
+/* a single closest-drawn fold on the ribbon face for fabric relief */
+.rb-band-v::after, .rb-band-h::after {
+    background:
+        linear-gradient(115deg, transparent 12%, rgba(255,255,255,.18) 30%, transparent 42%),
+        linear-gradient(180deg, transparent, rgba(255,255,255,.30), transparent);
+}
+/* bow becomes a true 3D object that turns as it unties */
+.rb-bow { transform-style: preserve-3d; }
+.scene-opened[data-opening="ribbon"] .rb-bow { animation: rbUntie3D .8s cubic-bezier(.34,1.56,.64,1) forwards; }
+@keyframes rbUntie3D {
+    0%   { transform: translate(-50%,-50%) rotateX(0) rotateY(0) scale(1); }
+    30%  { transform: translate(-50%,-50%) rotateX(-14deg) rotateY(6deg) scale(1.22); }
+    100% { transform: translate(-50%,-50%) rotateX(24deg) rotateY(40deg) scale(1.5); }
+}
+.scene-opened[data-opening="ribbon"] .rb-bow i.bl { transform: translate(-90px,54px) rotateY(48deg) rotate(-64deg) scaleY(1.15); }
+.scene-opened[data-opening="ribbon"] .rb-bow i.br { transform: translate(90px,54px) rotateY(-48deg) rotate(64deg) scaleY(1.15); }
+/* gold bands leave with a true 3D twist + thickness visible */
+.scene-opened[data-opening="ribbon"] .rb-band-v { transform: translateX(-160%) rotateY(-85deg) rotate(-18deg); }
+.scene-opened[data-opening="ribbon"] .rb-band-h { transform: translateY(-170%) rotateX(80deg) rotate(14deg); }
+/* panels fold slightly outward with perspective as they part */
+.scene-opened[data-opening="ribbon"] .rb-half-l { transform: translateX(-112%) rotateY(8deg); }
+.scene-opened[data-opening="ribbon"] .rb-half-r { transform: translateX(112%) rotateY(-8deg); }
+
+/* =====================================================
    TYPE: WOODEN DOOR (wood-door) — CINEMATIC
 ===================================================== */
 
@@ -3232,6 +3271,62 @@ a { text-decoration: none; color: inherit; }
 }
 [data-opening="luxury-romance"] .sig-card h1 { color: #FBEFF2; }
 [data-opening="luxury-romance"] .open-button { border-color: rgba(233,206,126,.5); color: #E9CE7E; }
+
+/* =====================================================
+   3D SILK DRAPE UPGRADE — layered folds, glint, engraving
+===================================================== */
+[data-opening="luxury-romance"] .opening { perspective: 1100px; transform-style: preserve-3d; }
+/* second translucent silk swag behind the main band for depth */
+.lux-silk-swag {
+    position: absolute; left: -14%; right: -14%; top: 44%;
+    height: 150px; transform: translateY(-50%) rotate(-3deg);
+    background:
+        linear-gradient(180deg, transparent 8%,
+            rgba(217,174,106,.07) 30%, rgba(196,106,130,.10) 50%,
+            rgba(217,174,106,.07) 70%, transparent 92%);
+    filter: blur(2px); z-index: 1; pointer-events: none;
+    transition: transform 1.6s cubic-bezier(.7,0,.3,1), opacity 1.1s ease .6s;
+}
+.scene-opened[data-opening="luxury-romance"] .lux-silk-swag {
+    transform: translateY(-360%) rotate(-6deg) rotateX(18deg);
+    opacity: 0;
+}
+[data-opening="luxury-romance"] .silk-band {
+    height: 150px;
+    background:
+        linear-gradient(115deg,
+            transparent 0%, rgba(196,106,130,.10) 10%,
+            rgba(217,174,106,.42) 42%, rgba(240,214,150,.55) 50%,
+            rgba(217,174,106,.42) 58%, rgba(196,106,130,.10) 90%, transparent 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 26px, transparent 26px 56px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.5), inset 0 0 0 1px rgba(233,206,126,.12);
+}
+/* moving moiré glint sweeping across the silk */
+[data-opening="luxury-romance"] .silk-band::after {
+    left: -18%; right: 78%; width: 40%; top: 0; bottom: 0;
+    background: linear-gradient(105deg, transparent, rgba(255,245,215,.45), transparent);
+    animation: silkGlint 3.6s ease-in-out infinite;
+    mix-blend-mode: screen;
+}
+@keyframes silkGlint { 0% { transform: translateX(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateX(360%); opacity: 0; } }
+.scene-opened[data-opening="luxury-romance"] .silk-band {
+    transform: translateY(-330%) rotate(-10deg) rotateX(20deg);
+    opacity: 0;
+}
+/* monogram gets an engraved gold flourish stroke beneath */
+[data-opening="luxury-romance"] .lux-monogram::after {
+    content: ""; position: absolute; left: 50%; top: calc(100% - 4px);
+    transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #E9CE7E 35%, #C9913A 50%, #E9CE7E 65%, transparent);
+    box-shadow: 0 0 14px rgba(217,174,106,.8);
+    animation: luxFlourish 1.4s cubic-bezier(.6,0,.3,1) 1.1s forwards;
+}
+@keyframes luxFlourish {
+    0%   { width: 0; opacity: 0; }
+    40%  { opacity: 1; }
+    100% { width: 72%; opacity: 1; }
+}
 
 
 /* =====================================================
@@ -7933,6 +8028,7 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene 4 · LUXURY SILK -->
     <div class="sig-scene" id="silkScene" data-scene-for="luxury-romance">
+        <div class="lux-silk-swag"></div>
         <div class="silk-band"></div>
         <div class="lux-monogram" id="luxMonogram">L</div>
         <div class="sig-card">
@@ -8923,13 +9019,19 @@ if (finalDesign) {
     var vin    = ["vintage-romance","anniversary","royal-seal","classic"];
     var aqua   = ["aurora","modern-grad","little-prince"];
     var fam = "royal";
-    if (dark.indexOf(d) !== -1) fam = "dark";
-    else if (bot.indexOf(d) !== -1) fam = "botanical";
-    else if (rose.indexOf(d) !== -1) fam = "rose";
-    else if (min.indexOf(d) !== -1) fam = "minimal";
-    else if (pop.indexOf(d) !== -1) fam = "pop";
-    else if (vin.indexOf(d) !== -1) fam = "vintage";
-    else if (aqua.indexOf(d) !== -1) fam = "aqua";
+    /* LOCK-IN: use the creation-time material family if this invitation has a
+       visualSnapshot, so future material-map edits can't re-tint an existing invite. */
+    if (invitation && invitation.visualSnapshot && invitation.visualSnapshot.material) {
+        fam = invitation.visualSnapshot.material;
+    } else {
+        if (dark.indexOf(d) !== -1) fam = "dark";
+        else if (bot.indexOf(d) !== -1) fam = "botanical";
+        else if (rose.indexOf(d) !== -1) fam = "rose";
+        else if (min.indexOf(d) !== -1) fam = "minimal";
+        else if (pop.indexOf(d) !== -1) fam = "pop";
+        else if (vin.indexOf(d) !== -1) fam = "vintage";
+        else if (aqua.indexOf(d) !== -1) fam = "aqua";
+    }
     document.documentElement.setAttribute("data-material", fam);
 })();
 
@@ -9078,7 +9180,13 @@ document.getElementById("openButton").textContent =
     if (!tplData && finalDesignId && _allTpl.length) {
         tplData = _allTpl.find(function(t) { return t.id === finalDesignId; });
     }
-    var cfg = (tplData && tplData.layoutConfig) || {};
+    /* LOCK-IN: if this invitation was created after the versioning system,
+       its visual layout was frozen into visualSnapshot at creation time.
+       Prefer the snapshot so FUTURE template-library edits can never change
+       an already-created customer's invitation. Pre-snapshot invitations
+       keep the old live-lookup behaviour. */
+    var _snapLc = (invitation && invitation.visualSnapshot && invitation.visualSnapshot.layoutConfig) || null;
+    var cfg = _snapLc || (tplData && tplData.layoutConfig) || {};
     var sectionOrder = cfg.sectionOrder || ["hero","details","gallery","countdown","rsvp","story"];
     var heroType = cfg.heroType || "hero-centered";
     var bgStyle = cfg.backgroundStyle || "default";
@@ -9086,9 +9194,11 @@ document.getElementById("openButton").textContent =
     var _theme = {};
     try { _theme = JSON.parse(localStorage.getItem("luna_invitation_theme") || "{}"); } catch(e) {}
     var clientOpening = invitation ? (invitation.openingType || invitation.openingStyle || "") : "";
+    var snapOpening = (invitation && invitation.visualSnapshot && invitation.visualSnapshot.openingType) || "";
     var tplOpening = cfg.openingType
         || (tplData && (tplData.openingType || tplData.openingStyle || tplData.animationStyle || tplData.animationType));
     var openingType = clientOpening
+        || snapOpening
         || tplOpening
         || (_theme.openingType)
         || _designatedOpening(cat, document.documentElement.getAttribute("data-material") || "", finalDesignId, finalTemplateId);
@@ -9288,6 +9398,15 @@ document.getElementById("openButton").textContent =
         var _tplAll = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : [];
         var _tpl = _tplAll.find(function(t) { return t.id === _tplId; });
         var td = (_tpl && (_tpl.design || null)) || {};
+        /* LOCK-IN: a visualSnapshot freezes the exact template colours/font at
+           creation time, so later edits to a template's design can't recolour an
+           existing customer's invitation. Only untagged (pre-versioning) invites
+           use the live template design. */
+        var _snapD = (invitation && invitation.visualSnapshot && invitation.visualSnapshot.design) || null;
+        if (_snapD) {
+            if (_snapD.primaryColor) td = Object.assign({}, td, { primaryColor: _snapD.primaryColor, secondaryColor: _snapD.secondaryColor || _snapD.primaryColor });
+            if (_snapD.font) td = Object.assign({}, td, { font: _snapD.font });
+        }
         /* Distinct colour identity for EVERY template:
            use design colours when present, otherwise fall back to the same
            deterministic per-template palette used on the homepage cards, so no
@@ -9672,7 +9791,10 @@ if (invitation.templateId && _allTplGallery.length) {
     }) || null;
 }
 
-var galleryStyle = (currentTemplate && currentTemplate.galleryStyle) || "editorial";
+/* LOCK-IN: visualSnapshot freezes the gallery layout at creation time so future
+   template edits can't re-lay-out an existing customer's gallery. */
+var galleryStyle = (invitation.visualSnapshot && invitation.visualSnapshot.galleryStyle) ||
+                   ((currentTemplate && currentTemplate.galleryStyle) || "editorial");
 galleryEl.className = "gallery gallery-style-" + galleryStyle + " reveal-scale";
 
 /* Use customer images ONLY (separated from template demo images) */

@@ -2774,6 +2774,52 @@ body.menu-open .languages{display:none}
                             break;
                     }
 
+                    /* LOCK-IN: snapshot the resolved visual identity of the chosen
+                       template at the moment of creation. From now on the invitation
+                       renders from this snapshot (see invitation.html) so FUTURE edits
+                       to the shared template library can NEVER change an already-created
+                       customer's invitation — it stays exactly as it looked when built. */
+                    try {
+                        var _snapTpl = null;
+                        var _snapAll = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
+                        var _snapId = data.templateId || data.design || "";
+                        if (_snapId && _snapAll.length) {
+                            _snapTpl = _snapAll.find(function(t) { return t && t.id === _snapId; }) || null;
+                        }
+                        var _lc = (_snapTpl && _snapTpl.layoutConfig) || {};
+                        var _dg = (_snapTpl && _snapTpl.design) || {};
+                        var _matD = (data.design || "").toLowerCase();
+                        var _mat = "royal";
+                        if (["noir","black-gold","luxe-gold","luxury-birthday","luxury-grad","oriental","luxury-romance","velvet-luxe","grand-curtain","starry-dream","enchanted"].indexOf(_matD) !== -1) _mat = "dark";
+                        else if (["botanical","garden-bloom","blossom","henna","traditional-henna","florence"].indexOf(_matD) !== -1) _mat = "botanical";
+                        else if (["velvet-rose","soft-blush","romantic-bloom","soft-rose","sweet-arrival","amour","serena"].indexOf(_matD) !== -1) _mat = "rose";
+                        else if (["minimal-white","modern-chic","modern-classic","elegant-pearl","executive","conference","networking"].indexOf(_matD) !== -1) _mat = "minimal";
+                        else if (["fiesta-pop","kids-party","celebration","celebration-pop"].indexOf(_matD) !== -1) _mat = "pop";
+                        else if (["vintage-romance","anniversary","royal-seal","classic"].indexOf(_matD) !== -1) _mat = "vintage";
+                        else if (["aurora","modern-grad","little-prince"].indexOf(_matD) !== -1) _mat = "aqua";
+                        var _pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(_snapTpl || { id: _snapId }) : {};
+                        data.visualSnapshot = {
+                            v: 1,
+                            layoutConfig: {
+                                sectionOrder: Array.isArray(_lc.sectionOrder) ? _lc.sectionOrder.slice() : null,
+                                heroType: _lc.heroType || null,
+                                backgroundStyle: _lc.backgroundStyle || null,
+                                openingType: _lc.openingType || null
+                            },
+                            galleryStyle: (_snapTpl && _snapTpl.galleryStyle) || null,
+                            design: {
+                                primaryColor: _dg.primaryColor || _pal.c1 || null,
+                                secondaryColor: _dg.secondaryColor || _pal.c2 || null,
+                                font: _dg.font || null
+                            },
+                            material: _mat,
+                            openingType: data.openingType || null,
+                            savedAt: new Date().toISOString()
+                        };
+                    } catch (eSnap) {
+                        data.visualSnapshot = { v: 1, savedAt: new Date().toISOString() };
+                    }
+
                     try {
                         lunaSaveInvitation(data);
                     } catch (err) {
