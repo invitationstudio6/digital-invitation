@@ -7728,6 +7728,41 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     100% { opacity:0; transform: translateY(-12vh) translateX(calc(var(--sx,0) * 20vw)) scale(1.6); }
 }
 
+/* ---------- 3D CONFETTI: real tumbling paper in depth ---------- */
+[data-opening="confetti"] .opening { perspective: 1100px; transform-style: preserve-3d; }
+.cf-confetti i {
+    transform-style: preserve-3d;
+    box-shadow: 0 3px 6px rgba(0,0,0,.2);
+}
+/* idle: each piece rotates on all 3 axes while swaying side-to-side = physical tumble */
+@keyframes cfFall {
+    0%   { opacity:0; transform: translateY(-20px) translateX(0) rotate(0) rotateX(0) rotateY(0); }
+    10%  { opacity:1; }
+    50%  { transform: translateY(55vh) translateX(calc(var(--sway, 0) * 1px)) rotate(360deg) rotateX(180deg) rotateY(90deg); }
+    100% { opacity:.15; transform: translateY(120vh) translateX(calc(var(--sway, 0) * -1px)) rotate(720deg) rotateX(360deg) rotateY(180deg); }
+}
+/* open burst: confetti tumbles away in 3D with varying Z-depth */
+@keyframes cfBurst {
+    0%   { opacity:1; transform: translateY(0) translateX(0) rotate(0) scale(1); }
+    100% { opacity:0; transform: translateY(-14vh) translateX(calc(var(--sx,0) * 24vw)) translateZ(calc(var(--sz, 0) * 60px)) rotate(calc(var(--sr, 0) * 1deg)) scale(1.7); }
+}
+.cf-confetti i:nth-child(1) { --sx:1;  --sr:320; --sway:14;  --sz:1; }
+.cf-confetti i:nth-child(2) { --sx:-1; --sr:-280; --sway:-18; --sz:-1; }
+.cf-confetti i:nth-child(3) { --sx:1.4; --sr:400; --sway:10; --sz:1; }
+.cf-confetti i:nth-child(4) { --sx:-1.2; --sr:-360; --sway:-14; --sz:-1; }
+.cf-confetti i:nth-child(5) { --sx:.8; --sr:300; --sway:20; --sz:0; }
+.cf-confetti i:nth-child(6) { --sx:-1.5; --sr:-240; --sway:-22; --sz:1; }
+.cf-confetti i:nth-child(7) { --sx:1.2; --sr:380; --sway:12; --sz:-1; }
+.cf-confetti i:nth-child(8) { --sx:-.9; --sr:-320; --sway:-16; --sz:0; }
+.cf-confetti i:nth-child(9) { --sx:1.1; --sr:340; --sway:16; --sz:1; }
+.cf-confetti i:nth-child(10){ --sx:-1.3; --sr:-300; --sway:-20; --sz:-1; }
+.cf-confetti i:nth-child(11){ --sx:.7;  --sr:360; --sway:24; --sz:0; }
+.cf-confetti i:nth-child(12){ --sx:-1.4; --sr:-400; --sway:-12; --sz:1; }
+.cf-confetti i:nth-child(13){ --sx:1.5; --sr:280; --sway:18; --sz:-1; }
+.cf-confetti i:nth-child(14){ --sx:-.8; --sr:-340; --sway:-24; --sz:0; }
+.cf-confetti i:nth-child(15){ --sx:1.3; --sr:300; --sway:10; --sz:1; }
+.cf-confetti i:nth-child(16){ --sx:-1;  --sr:-260; --sway:-10; --sz:-1; }
+
 /* ---------- 3D ROTATING CARD (card-3d) ---------- */
 [data-opening="card-3d"] .envelope-scene { display: none; }
 [data-opening="card-3d"] .opening {
@@ -7827,6 +7862,37 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     100% { left: 130%; opacity: 0; filter: blur(6px); }
 }
 .scene-opened[data-opening="light-sweep"] .ls-dust i { animation: none; opacity: 0; }
+
+/* ---------- 3D LIGHT SWEEP: volumetric beam + depth-sorted dust ---------- */
+[data-opening="light-sweep"] .opening { perspective: 1200px; transform-style: preserve-3d; }
+.ls-beam {
+    transform-style: preserve-3d;
+    background:
+        linear-gradient(90deg, transparent, rgba(255,244,214,.5), rgba(255,255,255,.3), rgba(255,244,214,.18), transparent),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 10px);
+    box-shadow: 14px 0 60px rgba(255,244,214,.18), -6px 0 30px rgba(255,244,214,.08);
+}
+.ls-dust i { transform-style: preserve-3d; }
+.ls-dust i:nth-child(1){ --dz:1; --ds:1.6; }
+.ls-dust i:nth-child(2){ --dz:0; --ds:1.1; }
+.ls-dust i:nth-child(3){ --dz:1; --ds:1.4; }
+.ls-dust i:nth-child(4){ --dz:-1; --ds:.7; }
+.ls-dust i:nth-child(5){ --dz:1; --ds:1.3; }
+.ls-dust i:nth-child(6){ --dz:-1; --ds:.8; }
+@keyframes lsDust {
+    0%   { opacity:0; transform: translate(0,0) translateZ(calc(var(--dz,0)*30px)) scale(calc(var(--ds,1)*1)); }
+    30%  { opacity:.9; }
+    100% { opacity:0; transform: translate(20px,-30px) translateZ(calc(var(--dz,0)*30px)) scale(calc(var(--ds,1)*1)); }
+}
+.scene-opened[data-opening="light-sweep"] .ls-beam {
+    transform: rotateY(14deg) rotateX(6deg) translateZ(40px);
+    animation: lsReveal 1.8s ease-in-out forwards;
+}
+@keyframes lsReveal {
+    0%   { left: -30%; opacity: 0; filter: blur(2px); }
+    30%  { opacity: 1; }
+    100% { left: 132%; opacity: 0; filter: blur(7px); }
+}
 
 /* =============================================================
    INTERACTIVITY — pointer-tilt hero, cursor glow, hover life
