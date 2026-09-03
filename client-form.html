@@ -1335,6 +1335,8 @@ body.menu-open .languages{display:none}
     }
 
     function _resolveOpeningType(tpl) {
+        var userChoice = (typeof selectedOpening !== "undefined" && selectedOpening) ? selectedOpening : null;
+        if (userChoice) return userChoice;
         if (tpl && tpl.layoutConfig && tpl.layoutConfig.openingType) return tpl.layoutConfig.openingType;
         if (tpl && tpl.openingType) return tpl.openingType;
         try {
