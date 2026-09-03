@@ -194,6 +194,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "sand" },
         preview: { eyebrow: "THE WEDDING OF", names: ["Leyla", "Kamran"], date: "20 · 10 · 2026", message: "Hekayəmiz sadə bir salamla başladı və zaman keçdikcə gözəl bir hekayəyə çevrildi.", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
@@ -211,6 +212,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","story","countdown","rsvp"], heroType: "hero-style-minimal", backgroundStyle: "blush" },
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Aytac", "Rəşad"], date: "05 · 12 · 2026", message: "Həyatımızın ən gözəl anlarını sizinlə paylaşmaq istəyirik.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
@@ -219,6 +221,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","rsvp","countdown"], heroType: "hero-style-botanical", backgroundStyle: "floral" },
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Günel", "Samir"], date: "28 · 06 · 2026", message: "Təbiətin qoynunda, çiçəklərin ətrində birlikdə addımlayacağıq.", venue: "Botanika Bağı", location: "Quba, Azərbaycan", theme: "default" }
     },
     {
@@ -254,6 +257,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-luxury", backgroundStyle: "vintage" },
         preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Nərmin", "Tahir"], date: "18 · 07 · 2026", message: "Qızıl parıltıda başlanan sevgimiz, əbədi olaraq parlayacaq.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -262,6 +266,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "blush" },
         preview: { eyebrow: "SİZİ SEVGİ İLƏ DƏVƏT EDİRİK", names: ["Günay", "Elçin"], date: "25 · 08 · 2026", message: "Məxmər gül kimi zərif, sevgimiz isə əbədi olacaq.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -279,6 +284,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","rsvp","countdown"], heroType: "hero-style-vintage", backgroundStyle: "vintage" },
         preview: { eyebrow: "DƏVƏTNAMƏ", names: ["Lamiyə", "Orxan"], date: "21 · 06 · 2026", message: "Keçmişin gözəlliyini bu günə daşıyırıq, gələcəyə isə birlikdə addım atırıq.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -287,6 +293,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","countdown","story"], heroType: "hero-style-dark", backgroundStyle: "dark" },
         preview: { eyebrow: "WEDDING COLLECTION", names: ["Fidan", "Cavid"], date: "07 · 11 · 2026", message: "Zəriflik və gücü bir arada yaşayacağımız gecəyə dəvət edirik.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
@@ -295,6 +302,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","story","gallery","rsvp","countdown"], heroType: "hero-style-minimal", backgroundStyle: "blush" },
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Aynur", "Kənan"], date: "14 · 09 · 2026", message: "Çəhrayı buludların altında, sevgi ilə dolu bir gecə sizi gözləyir.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
@@ -321,6 +329,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-dark", backgroundStyle: "royal" },
         preview: { eyebrow: "SEHIRLİ DƏVƏT", names: ["Samirə", "Elvin"], date: "23 · 08 · 2026", message: "Sehirli bir gecədə, ulduzların altında əbədi sevgimizi qeyd edəcəyik.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -329,6 +338,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","story","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "sand" },
         preview: { eyebrow: "NİŞAN DƏVƏTNAMƏSİ", names: ["Aygun", "Fərid"], date: "22 · 08 · 2026", message: "Birlikdə addımlayacağımız yeni həyatımızın başlanğıcında sizinlə bölüşmək istəyirik.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -337,6 +347,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","details","gallery","rsvp","countdown"], heroType: "hero-style-botanical", backgroundStyle: "floral" },
         preview: { eyebrow: "NİŞAN DƏVƏTNAMƏSİ", names: ["Nərmin", "Orxan"], date: "15 · 07 · 2026", message: "Çiçəklərin açdığı kimi, sevgimiz də hər gün daha da gözəlləşir.", venue: "Crystal Hall", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -345,6 +356,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","story","rsvp","countdown"], heroType: "hero-style-luxury", backgroundStyle: "frost" },
         preview: { eyebrow: "DƏVƏTNAMƏ", names: ["Gülnar", "Tural"], date: "28 · 09 · 2026", message: "İnci kimi nadir və dəyərli olan sevgimizi sizinlə bölüşmək istəyirik.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -353,6 +365,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "slate" },
         preview: { eyebrow: "NİŞAN MƏCLİSİ", names: ["Aytac", "Ceyhun"], date: "06 · 10 · 2026", message: "Müasir dünyada, klassik sevgi ilə bir yoldaşlıq başladırıq.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -361,6 +374,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","story","gallery","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "blush" },
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Leyla", "Samir"], date: "12 · 11 · 2026", message: "Gül iyində, zəriflik dolu bir nişan mərasimi sizi gözləyir.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
@@ -378,6 +392,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "video", packages: ["video"],
+        layoutConfig: { sectionOrder: ["hero","gallery","countdown","details","rsvp","story"], heroType: "hero-style-editorial", backgroundStyle: "ember" },
         preview: { eyebrow: "AD GÜNÜN MÜBARƏK", names: ["Nigar"], date: "08 · 05 · 2026", message: "Bir yaş daha böyüdük! Gəlin birlikdə qeyd edək.", venue: "Fontanlar Bağı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -386,6 +401,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-luxury", backgroundStyle: "sand" },
         preview: { eyebrow: "AD GÜNÜN MÜBARƏK", names: ["Aysel"], date: "19 · 04 · 2026", message: "Həyatımın ən gözəl gününü sizinlə birlikdə qeyd etmək istəyirəm.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -394,6 +410,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","countdown","story"], heroType: "hero-style-dark", backgroundStyle: "dark" },
         preview: { eyebrow: "BÜTÜN ZİYAFƏTÇİLƏR DƏVƏT OLUNUR", names: ["Kəmalə"], date: "22 · 12 · 2026", message: "İlin ən lüks ad gününə hamınızı dəvət edirəm!", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
@@ -402,6 +419,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","countdown","details","story","rsvp"], heroType: "hero-centered", backgroundStyle: "frost" },
         preview: { eyebrow: "ŞƏN AD GÜNÜ", names: ["Zəhra"], date: "10 · 06 · 2026", message: "Bir il daha böyüdük! Gəlin birlikdə oynayıb əylənək!", venue: "Fun City", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -410,6 +428,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "slate" },
         preview: { eyebrow: "MƏZUNİYYƏT", names: ["Ali"], date: "30 · 06 · 2026", message: "Uzun bir yolculuğun sonuna gəldik. Sizi bu sevincimi bölüşməyə dəvət edirəm.", venue: "ADA Universiteti", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -418,6 +437,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","rsvp","countdown","story"], heroType: "hero-style-minimal", backgroundStyle: "frost" },
         preview: { eyebrow: "MƏZUNİYYƏT MƏRASİMİ", names: ["Nigar"], date: "15 · 07 · 2026", message: "Yeni bir başlanğıcın ardından gələn nailiyyətimi sizinlə bölüşmək istəyirəm.", venue: "Bakı Dövlət Universiteti", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -426,6 +446,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-luxury", backgroundStyle: "dark" },
         preview: { eyebrow: "MƏZUNİYYƏT ZİYAFƏTİ", names: ["Elçin"], date: "20 · 06 · 2026", message: "Uğurlu bir yolculuğun sonunda, ən gözəl nailiyyətimi qeyd edirəm.", venue: "Park Hyatt", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -434,6 +455,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","rsvp","countdown"], heroType: "hero-style-botanical", backgroundStyle: "blush" },
         preview: { eyebrow: "KÖRPƏ MƏCLİSİ", names: ["Leyla"], date: "05 · 08 · 2026", message: "Balaca mələyimizi qarşılamağa hazırlaşırıq. Sizi də dəvət edirik!", venue: "Marriott Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -442,6 +464,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","story","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "frost" },
         preview: { eyebrow: "BALACA ŞAHZADƏ", names: ["Elvin"], date: "18 · 09 · 2026", message: "Balaca şahzadəmizin gəlişini qeyd etməyə hazırlanırıq.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "amour" }
     },
     {
@@ -450,6 +473,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-luxury", backgroundStyle: "slate" },
         preview: { eyebrow: "BİZNES TƏDBİRİ", names: ["Tech Corp"], date: "25 · 09 · 2026", message: "İlin ən böyük biznes tədbirinə dəvət edirik.", venue: "JW Marriott", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -458,6 +482,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "sand" },
         preview: { eyebrow: "İNNOVASİYA KONFRANSI", names: ["AZ Tech Summit"], date: "14 · 11 · 2026", message: "Texnologiya və innovasiya sahəsində ən son yenilikləri müzakirə edəcəyik.", venue: "Bakı Kongres Mərkəzi", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -466,6 +491,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "frost" },
         preview: { eyebrow: "ŞƏBƏKƏ GECƏSİ", names: ["Baku Business Club"], date: "08 · 10 · 2026", message: "Yeni tanışlıqlar və iş imkanları üçün şəbəkə gecəsinə dəvət edirik.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     /* ===== DIGITAL BUSINESS CARDS ===== */
@@ -475,6 +501,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","details","gallery","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "slate" },
         preview: { eyebrow: "DIGITAL VİZİT KART", names: ["Əli Həsənov"], date: "", message: "Mənimlə əlaqə saxlayın. Bütün məlumatlarım bir toxunuşda.", venue: "Tech Corp", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -483,6 +510,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-luxury", backgroundStyle: "dark" },
         preview: { eyebrow: "QR ƏLAQƏ KARTI", names: ["Luna Studio"], date: "", message: "QR kodu skan edin və bütün məlumatlarımı telefonunuza saxlayın.", venue: "Digital", location: "Azərbaycan", theme: "default" }
     },
     {
@@ -491,6 +519,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "slate" },
         preview: { eyebrow: "KORPORATİV PROFİL", names: ["AzTech Holdinqs"], date: "", message: "Şirkətimiz haqqında ətraflı məlumat. Xidmətlərimiz, əlaqə və daha çoxu.", venue: "Bakı, Azərbaycan", location: "Bakı", theme: "default" }
     },
     {
@@ -499,6 +528,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-luxury", backgroundStyle: "royal" },
         preview: { eyebrow: "XINA GECƏSİ", names: ["Aysel"], date: "11 · 09 · 2026", message: "Xınamızda sizinlə birlikdə rəqs etmək istəyirik.", venue: "Şərq Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -507,6 +537,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-vintage", backgroundStyle: "sand" },
         preview: { eyebrow: "ƏNƏNƏVİ XINA GECƏSİ", names: ["Günay"], date: "20 · 08 · 2026", message: "Ənənəvi xına gecəmizdə sizinlə birlikdə rəqs edib, əylənəcəyik.", venue: "İçərişəhər Sarayı", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -515,6 +546,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "royal" },
         preview: { eyebrow: "İLDÖNÜMÜMÜZ MÜBARƏK", names: ["Aysel", "Murad"], date: "12 · 09 · 2026", message: "Birlikdə keçirdiyimiz hər il bizim üçün ən qiymətli hədiyyədir.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -523,6 +555,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
+        layoutConfig: { sectionOrder: ["hero","gallery","countdown","details","rsvp","story"], heroType: "hero-centered", backgroundStyle: "ember" },
         preview: { eyebrow: "XÜSUSİ QİYD EDİRİK", names: ["Ali və Aysəl"], date: "30 · 12 · 2026", message: "İlin sonunda birlikdə qeyd etmək üçün sizləri dəvət edirik!", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     /* ===== INTERACTIVE EXPERIENCES ===== */
