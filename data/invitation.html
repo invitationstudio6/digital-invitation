@@ -3272,6 +3272,66 @@ a { text-decoration: none; color: inherit; }
 
 .scene-opened[data-opening="floral-paper"] .falling-petal { animation-duration: 2.2s !important; opacity: .95; }
 
+/* constructed botanical wreath */
+.flr-wreath { position: relative; z-index: 2; width: 320px; height: 320px; margin: -10px auto -60px; }
+.flr-wreath .flr-branch {
+    position: absolute; left: 50%; top: 50%; margin: -6px;
+}
+.flr-branch:nth-child(1) { transform: rotate(0deg); }
+.flr-branch:nth-child(2) { transform: rotate(22deg); }
+.flr-branch i {
+    position: absolute; width: 128px; height: 26px; left: 0; top: 0; border-radius: 14px 4px 14px 4px; transform-origin: 0 50%;
+    background: linear-gradient(120deg, #7E9A66, #627E50 55%, #4E6A40);
+    box-shadow: inset -8px 0 12px rgba(0,0,0,.25), inset 5px 2px 8px rgba(255,255,255,.18), 0 6px 10px rgba(78,106,64,.35);
+}
+.flr-branch i:nth-child(1){ transform: rotate(0deg) translateX(0); }
+.flr-branch i:nth-child(2){ transform: rotate(45deg); }
+.flr-branch i:nth-child(3){ transform: rotate(90deg); }
+.flr-branch i:nth-child(4){ transform: rotate(135deg); }
+.flr-branch i:nth-child(5){ transform: rotate(180deg); }
+.flr-branch i:nth-child(6){ transform: rotate(225deg); }
+.flr-branch i:nth-child(7){ transform: rotate(270deg); }
+.flr-branch i:nth-child(8){ transform: rotate(315deg); }
+.flr-branch i:nth-child(odd){ height: 30px; }
+.flr-bloom {
+    position: absolute; width: 46px; height: 46px; border-radius: 50%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), transparent 45%),
+        radial-gradient(circle, transparent 42%, rgba(74,50,90,.22) 46%, transparent 48%);
+}
+.flr-bloom::before, .flr-bloom::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.5), transparent 55%);
+}
+.flr-bloom::before { transform: rotate(60deg); }
+.flr-bloom::after  { transform: rotate(-60deg); }
+.flr-bloom .core { position: absolute; inset: 0; margin: auto; width: 15px; height: 15px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #FFDD88, #E9A33C 60%, #C27E1F); box-shadow: 0 2px 6px rgba(0,0,0,.3); z-index: 2; }
+.flr-bloom.b1 { left: 6%;   top: 36%; background: radial-gradient(circle at 28% 28%, #FFD6E3, #EF9DB8 55%, #D47797); box-shadow: 0 12px 22px rgba(212,119,151,.4); transform: rotate(-8deg); }
+.flr-bloom.b2 { right: 4%;  top: 30%; background: radial-gradient(circle at 28% 28%, #FFF0E0, #F4C48F 55%, #DDA05E); box-shadow: 0 12px 22px rgba(221,160,94,.4); transform: rotate(10deg); }
+.flr-bloom.b3 { left: 12%;  bottom: 26%; background: radial-gradient(circle at 28% 28%, #F2E7FF, #C9A6EF 55%, #A77FDA); box-shadow: 0 12px 22px rgba(167,127,218,.4); transform: rotate(6deg); }
+.flr-bloom.b4 { right: 12%; bottom: 22%; background: radial-gradient(circle at 28% 28%, #FFF4F4, #F0B0B0 55%, #DC8C8C); box-shadow: 0 12px 22px rgba(220,140,140,.4); transform: rotate(-5deg); }
+.flr-bloom.b5 { left: 44%;  top: 2%;  background: radial-gradient(circle at 28% 28%, #E8FAF0, #9FDDBB 55%, #6FBE94); box-shadow: 0 12px 22px rgba(111,190,148,.4); transform: rotate(0); }
+.flr-leaf {
+    position: absolute; width: 30px; height: 13px; border-radius: 100% 0 100% 0; background: linear-gradient(120deg, #8FB06E, #597A44); box-shadow: 0 5px 10px rgba(78,106,64,.3);
+}
+.flr-leaf.l1 { left: 26%; top: 20%; transform: rotate(-40deg); }
+.flr-leaf.l2 { right: 28%; top: 24%; transform: rotate(140deg); }
+.flr-leaf.l3 { left: 34%; bottom: 26%; transform: rotate(30deg); }
+.flr-leaf.l4 { right: 32%; bottom: 20%; transform: rotate(150deg); }
+.scene-opened[data-opening="floral-paper"] .flr-wreath { animation: flrBloom 1.6s cubic-bezier(.19,1,.22,1) both; }
+@keyframes flrBloom {
+    0%   { transform: scale(.4) rotate(-16deg); opacity: 0; }
+    55%  { transform: scale(1.1) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.scene-opened[data-opening="floral-paper"] .flr-bloom { animation: flrPetalIn .9s cubic-bezier(.3,1.5,.4,1) both; }
+.scene-opened[data-opening="floral-paper"] .flr-bloom.b1 { animation-delay: .5s; }
+.scene-opened[data-opening="floral-paper"] .flr-bloom.b2 { animation-delay: .62s; }
+.scene-opened[data-opening="floral-paper"] .flr-bloom.b3 { animation-delay: .74s; }
+.scene-opened[data-opening="floral-paper"] .flr-bloom.b4 { animation-delay: .86s; }
+.scene-opened[data-opening="floral-paper"] .flr-bloom.b5 { animation-delay: .98s; }
+@keyframes flrPetalIn { 0% { transform: rotate(0) scale(.2); opacity: 0; } 60% { transform: rotate(0) scale(1.15); opacity: 1; } 100% { transform: rotate(0) scale(1); opacity: 1; } }
+
 
 /* =====================================================
    TYPE: LUXURY ROMANCE / SILK (velvet-luxe)
@@ -3453,13 +3513,62 @@ a { text-decoration: none; color: inherit; }
 }
 [data-opening="celebration-pop"] .sig-card h1 { color: #33253D; }
 
-.scene-opened[data-opening="celebration-pop"] .pop-gift { animation: giftPop .7s cubic-bezier(.3,1.6,.5,1) both; }
-.pop-gift { position: relative; z-index: 2; font-size: 54px; margin-bottom: -30px; filter: drop-shadow(0 12px 24px rgba(255,107,107,.3)); }
+.scene-opened[data-opening="celebration-pop"] .fst-wrap { animation: giftPop .7s cubic-bezier(.3,1.6,.5,1) both; }
 @keyframes giftPop {
     0%   { transform: scale(.4) rotate(-12deg); }
     70%  { transform: scale(1.18) rotate(6deg); }
     100% { transform: scale(1) rotate(0); }
 }
+
+/* constructed 3D gift package */
+.fst-wrap { position: relative; z-index: 2; width: 220px; height: 250px; margin: 0 auto -40px; transform-style: preserve-3d; }
+.fst-shadow { position: absolute; left: 50%; bottom: -8px; width: 190px; height: 26px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(ellipse, rgba(51,37,61,.32), transparent 70%); filter: blur(3px); }
+.fst-box {
+    position: absolute; left: 50%; top: 70px; width: 150px; height: 132px; transform: translateX(-50%);
+    background: linear-gradient(155deg, #FF7A8A, #E8455F 55%, #C62848);
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), inset -14px -18px 30px rgba(120,10,35,.35), inset 10px 10px 24px rgba(255,255,255,.28), 0 26px 44px rgba(200,40,72,.4);
+}
+.fst-box-face {
+    position: absolute; left: 8px; top: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(255,255,255,.22); border-radius: 5px;
+    background: linear-gradient(120deg, rgba(255,255,255,.22), transparent 40%);
+}
+.fst-ribbon { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 34px; height: 100%; background: linear-gradient(180deg, #FFD98A, #F4B840 60%, #D9951E); box-shadow: inset 0 0 0 1px rgba(255,235,180,.4), inset -6px 0 10px rgba(150,90,10,.3); z-index: 2; }
+.fst-ribbon.h { left: 0; top: 50%; width: 100%; height: 34px; transform: translateY(-50%); background: linear-gradient(90deg, #FFD98A, #F4B840 60%, #D9951E); box-shadow: inset 0 0 0 1px rgba(255,235,180,.4), inset 0 -6px 10px rgba(150,90,10,.3); z-index: 2; }
+.fst-lid {
+    position: absolute; left: 50%; top: 52px; width: 172px; height: 36px; transform: translateX(-50%);
+    background: linear-gradient(160deg, #FF8FA0, #E8455F 60%, #C62848);
+    border-radius: 7px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), inset 8px 8px 18px rgba(255,255,255,.25), inset -10px -12px 20px rgba(120,10,35,.3), 0 14px 26px rgba(200,40,72,.35);
+    z-index: 3;
+}
+.fst-lid-face { position: absolute; inset: 5px; border: 1px solid rgba(255,255,255,.25); border-radius: 5px; }
+.fst-bow { position: absolute; left: 50%; top: -20px; transform: translateX(-50%); width: 96px; height: 46px; }
+.fst-bow i { position: absolute; top: 12px; width: 44px; height: 30px; background: radial-gradient(circle at 30% 30%, #FFE7AE, #F4B840 60%, #D9951E); box-shadow: inset 0 -6px 10px rgba(150,90,10,.35), 0 6px 12px rgba(150,90,10,.3); }
+.fst-bow i.b1 { left: 4px;  border-radius: 50% 12% 50% 12%; transform: rotate(22deg) skewX(-8deg); }
+.fst-bow i.b2 { right: 4px; border-radius: 12% 50% 12% 50%; transform: rotate(-22deg) skewX(8deg); }
+.fst-bow i.b3 { left: 14px; top: 4px; border-radius: 50% 12% 50% 12%; transform: rotate(-6deg) scale(.78); }
+.fst-bow i.b4 { right: 14px; top: 4px; border-radius: 12% 50% 12% 50%; transform: rotate(6deg) scale(.78); }
+.fst-bow-knot { position: absolute; left: 50%; top: 12px; width: 20px; height: 20px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE7AE, #E8A620 60%, #C07E10); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 4px 8px rgba(130,80,10,.4); z-index: 2; }
+
+/* popping gift shapes */
+.fst-pop { position: absolute; opacity: 0; pointer-events: none; }
+.fst-pop.t1, .fst-pop.t2 { width: 14px; height: 14px; border-radius: 3px; box-shadow: 0 6px 12px rgba(200,40,72,.3); }
+.fst-pop.t1 { background: radial-gradient(circle at 30% 30%, #FFE7AE, #F4B840 60%, #D9951E); }
+.fst-pop.t2 { background: radial-gradient(circle at 30% 30%, #8FF5E0, #22C6AE 60%, #0E8F7B); }
+.fst-pop.c1, .fst-pop.c2 { width: 12px; height: 12px; border-radius: 50%; }
+.fst-pop.c1 { background: radial-gradient(circle at 30% 30%, #FFD0E0, #FF5E8A 60%, #D12C5E); }
+.fst-pop.c2 { background: radial-gradient(circle at 30% 30%, #C8A0FF, #8A5CF5 60%, #5B2FD0); }
+
+.fst-pop.t1 { left: 12%; top: 40%; animation: fstFly1 1.3s cubic-bezier(.2,.7,.3,1) .35s forwards; }
+.fst-pop.t2 { right: 12%; top: 36%; animation: fstFly2 1.3s cubic-bezier(.2,.7,.3,1) .45s forwards; }
+.fst-pop.c1 { left: 22%; top: 28%; animation: fstFly3 1.2s cubic-bezier(.2,.7,.3,1) .55s forwards; }
+.fst-pop.c2 { right: 22%; top: 24%; animation: fstFly4 1.2s cubic-bezier(.2,.7,.3,1) .65s forwards; }
+@keyframes fstFly1 { 0% { opacity: 0; transform: translate(0,0) rotate(0) scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(-46vw, -260px) rotate(520deg) scale(1.6); } }
+@keyframes fstFly2 { 0% { opacity: 0; transform: translate(0,0) rotate(0) scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(46vw, -240px) rotate(-520deg) scale(1.6); } }
+@keyframes fstFly3 { 0% { opacity: 0; transform: translate(0,0) scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(-38vw, 120px) scale(1.5); } }
+@keyframes fstFly4 { 0% { opacity: 0; transform: translate(0,0) scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(38vw, 100px) scale(1.5); } }
 
 
 /* =====================================================
@@ -3522,13 +3631,52 @@ a { text-decoration: none; color: inherit; }
     position: fixed;
     top: 12%;
     right: 14%;
-    width: 74px;
-    height: 74px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
-    background: radial-gradient(circle at 36% 34%, #FBF6E4, #E8C97A 68%);
-    box-shadow: 0 0 60px rgba(232,201,122,.4);
+    background:
+        radial-gradient(circle at 36% 34%, #FFF9E8, #F2D98C 55%, #D9B25E 75%, #C29A48 100%);
+    box-shadow:
+        inset -6px -8px 18px rgba(150,105,40,.4),
+        inset 4px 5px 12px rgba(255,255,255,.5),
+        0 0 70px rgba(232,201,122,.55),
+        0 0 140px rgba(232,201,122,.22);
     z-index: 1;
 }
+.starry-moon .m-crater {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle at 40% 38%, rgba(150,105,40,.38), transparent 70%);
+    box-shadow: inset -2px -2px 4px rgba(255,255,255,.35), inset 2px 2px 4px rgba(120,85,30,.5);
+}
+.starry-moon .c1 { width: 22px; height: 22px; left: 18px; top: 22px; }
+.starry-moon .c2 { width: 14px; height: 14px; right: 18px; top: 30px; }
+.starry-moon .c3 { width: 17px; height: 17px; left: 30px; bottom: 18px; }
+.starry-moon .c4 { width: 10px; height: 10px; right: 30px; bottom: 26px; }
+.starry-moon .c5 { width: 8px;  height: 8px;  left: 14px; bottom: 34px; }
+.starry-ring {
+    position: fixed; right: 8%; top: 6%; width: 150px; height: 150px; border-radius: 50%;
+    border: 1px solid rgba(232,201,122,.28); box-shadow: 0 0 24px rgba(232,201,122,.12), inset 0 0 24px rgba(232,201,122,.08);
+    z-index: 0; pointer-events: none;
+}
+.starry-hill {
+    position: fixed; left: -10%; right: -10%; bottom: -6vh; height: 34vh; pointer-events: none; z-index: 1;
+}
+.starry-hill.h1 { background: #0B0E20; border-radius: 50% 50% 0 0 / 28% 28% 0 0; }
+.starry-hill.h2 { bottom: -12vh; height: 30vh; background: #131735; border-radius: 50% 50% 0 0 / 40% 40% 0 0; }
+.starry-trees { position: fixed; left: 0; right: 0; bottom: 2vh; height: 26vh; z-index: 2; pointer-events: none; }
+.starry-trees i {
+    position: absolute; bottom: 0; width: 28px; height: 60px;
+    background: linear-gradient(180deg, #0E142E 26%, #0A0D22 26%, #0A0D22 60%, #070A18);
+    clip-path: polygon(50% 0, 62% 26%, 82% 22%, 60% 44%, 100% 44%, 55% 100%, 0 100%);
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,.6));
+}
+.starry-trees i:nth-child(1){ left: 4%;  height: 54px; transform: scale(.8); }
+.starry-trees i:nth-child(2){ left: 11%; height: 70px; }
+.starry-trees i:nth-child(3){ left: 46%; height: 64px; transform: scale(.9); }
+.starry-trees i:nth-child(4){ left: 55%; height: 82px; }
+.starry-trees i:nth-child(5){ left: 86%; height: 74px; }
+.starry-trees i:nth-child(6){ left: 92%; height: 52px; transform: scale(.8); }
+.starry-trees i:nth-child(7){ left: 66%; height: 56px; transform: scale(.75); }
 
 [data-opening="starry-night"] .sig-scene { z-index: 3; }
 [data-opening="starry-night"] .sig-card {
@@ -5657,9 +5805,13 @@ footer p {
     55%  { transform: perspective(800px) rotateX(4deg) translateY(-6px) scale(1.04); opacity: 1; }
     100% { transform: perspective(800px) rotateX(0) translateY(0) scale(1); opacity: 1; }
 }
-.scene-opened[data-opening="celebration-pop"] .pop-gift {
+.scene-opened[data-opening="celebration-pop"] .fst-wrap {
     animation: giftPop3D .7s cubic-bezier(.3,1.6,.5,1) both;
 }
+[data-opening="celebration-pop"] .fst-lid { transform-origin: center bottom; transition: transform .5s cubic-bezier(.3,1.6,.5,1); }
+.scene-opened[data-opening="celebration-pop"] .fst-lid { transform: translateX(-50%) translateY(-12px) rotateX(16deg) scale(1.06); }
+.scene-opened[data-opening="celebration-pop"] .fst-lid .fst-bow { animation: fstBowBounce 1.1s cubic-bezier(.3,1.6,.5,1) .3s both; }
+@keyframes fstBowBounce { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.3) rotate(6deg); } 100% { transform: translateX(-50%) scale(1) rotate(0); } }
 @keyframes giftPop3D {
     0%   { transform: perspective(600px) rotateX(-20deg) rotate(-12deg) scale(.3); }
     60%  { transform: perspective(600px) rotateX(8deg) rotate(5deg) scale(1.2); }
@@ -5685,6 +5837,17 @@ footer p {
     55%  { transform: translateY(-4px) rotateX(1.5deg) scale(1.01); opacity: 1; }
     100% { transform: translateY(0) rotateX(0) scale(1); opacity: 1; }
 }
+.scene-opened[data-opening="starry-night"] .starry-ring { animation: stRingPulse 3s ease infinite; }
+@keyframes stRingPulse { 0%,100% { transform: scale(1); opacity: .7; } 50% { transform: scale(1.08); opacity: 1; } }
+.scene-opened[data-opening="starry-night"] .starry-hill { animation: stHillUp 2s cubic-bezier(.19,1,.22,1) both; }
+.scene-opened[data-opening="starry-night"] .starry-hill.h2 { animation-delay: .08s; }
+@keyframes stHillUp { 0% { transform: translateY(70px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+.scene-opened[data-opening="starry-night"] .starry-trees { animation: stHillUp 2.2s cubic-bezier(.19,1,.22,1) .15s both; }
+.scene-opened[data-opening="starry-night"] .starry-trees i { animation: stTreeSway 5s ease-in-out infinite alternate; transform-origin: bottom center; }
+.scene-opened[data-opening="starry-night"] .starry-trees i:nth-child(2){ animation-delay: .3s; }
+.scene-opened[data-opening="starry-night"] .starry-trees i:nth-child(4){ animation-delay: .6s; }
+.scene-opened[data-opening="starry-night"] .starry-trees i:nth-child(5){ animation-delay: .9s; }
+@keyframes stTreeSway { from { transform: rotate(-1.2deg); } to { transform: rotate(1.2deg); } }
 
 /* ── TYPEWRITER: paper rise with 3D tilt + shadow depth ── */
 [data-opening="typewriter"] .opening { perspective: 1000px; }
@@ -7556,19 +7719,56 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     opacity: 0;
 }
 .pl-photo {
-    width: 100%; height: 100%;
+    width: 100%; height: 100%; position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #F6EFE2, #E3D5BF);
+}
+/* photographic content inside each polaroid */
+.pl-p1 .pl-photo, .pl-p2 .pl-photo, .pl-p3 .pl-photo { background: #7FA6C9; }
+.pl-p1 .pl-photo {
     background:
-        radial-gradient(80% 70% at 50% 40%, color-mix(in srgb, var(--accent,#c4a882) 40%, transparent), transparent 65%),
-        linear-gradient(160deg, #F6EFE2, #E3D5BF);
+        radial-gradient(120% 60% at 50% 8%, rgba(255,244,214,.9), rgba(255,220,140,.4) 30%, transparent 55%),
+        radial-gradient(60% 42% at 28% 62%, rgba(48,110,96,.85), transparent 70%),
+        linear-gradient(180deg, #3D6B96 0%, #5E93B8 55%, #9E7B5A 62%, #6F5238 100%);
+}
+.pl-p2 .pl-photo {
+    background:
+        radial-gradient(90% 70% at 50% 100%, rgba(255,170,140,.85), transparent 70%),
+        radial-gradient(80% 50% at 50% 8%, #F4E9C8, transparent 60%),
+        linear-gradient(180deg, #E8C9A0 0%, #B98C6A 60%, #6E4B33 100%);
+}
+.pl-p3 .pl-photo {
+    background:
+        radial-gradient(50% 30% at 50% 78%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%),
+        radial-gradient(120% 80% at 50% 0%, #19233F, transparent 60%),
+        radial-gradient(130% 90% at 50% 120%, #4C2E48, #241829 70%);
+}
+.pl-photo::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(115deg, rgba(255,255,255,.55), rgba(255,255,255,0) 32%, rgba(255,255,255,0) 68%, rgba(0,0,0,.12) 100%);
+    mix-blend-mode: overlay; pointer-events: none;
+}
+.pl-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.22'/></svg>");
+    opacity: .5; pointer-events: none; mix-blend-mode: overlay;
+}
+.pl-polaroid { box-shadow: 0 1px 2px rgba(90,70,40,.4), 0 22px 44px rgba(90,70,40,.32), inset 0 0 0 1px rgba(255,255,255,.4); }
+.pl-p1 .pl-photo::after, .pl-p2 .pl-photo::after { opacity: .4; }
+.pl-tape {
+    position: absolute; left: 50%; top: -10px; width: 56px; height: 22px;
+    transform: translateX(-50%) rotate(-4deg);
+    background: linear-gradient(180deg, rgba(244,236,200,.85), rgba(224,212,172,.7));
+    box-shadow: 0 2px 5px rgba(0,0,0,.14), inset 0 0 0 1px rgba(255,255,255,.35);
+    backdrop-filter: blur(1px);
+}
+.pl-tape::before {
+    content: ""; position: absolute; inset: 1px;
+    background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(255,255,255,.25) 6px 8px);
+    opacity: .5;
 }
 .pl-p1 { left: 12%; top: 26%; transform: rotate(-12deg); }
 .pl-p2 { right: 12%; top: 30%; transform: rotate(9deg); z-index: 3; }
 .pl-p3 { left: 50%; top: 44%; transform: translateX(-50%) rotate(3deg); z-index: 4; width: 160px; height: 196px; }
-.pl-tape {
-    position: absolute; left: 50%; top: -10px; width: 52px; height: 22px;
-    transform: translateX(-50%) rotate(-4deg);
-    background: rgba(240,230,190,.9); box-shadow: 0 2px 5px rgba(0,0,0,.1);
-}
 .pl-flash {
     position: fixed; left: 50%; top: 50%; width: 0; height: 0; border-radius: 50%;
     transform: translate(-50%,-50%); z-index: 6; pointer-events: none;
@@ -7618,13 +7818,63 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 .ch-flute {
     position: relative; width: 96px; height: 230px;
     background: linear-gradient(90deg,
-        rgba(220,200,150,.25) 0%, rgba(255,250,230,.55) 22%, rgba(246,232,190,.15) 50%,
-        rgba(255,252,235,.5) 78%, rgba(220,200,150,.28) 100%);
+        rgba(220,200,150,.25) 0%, rgba(255,255,255,.5) 18%, rgba(246,232,190,.12) 45%,
+        rgba(255,255,255,.45) 78%, rgba(220,200,150,.26) 100%);
     border-radius: 8px 8px 0 0;
-    border: 2px solid rgba(210,180,120,.5);
+    border: 2px solid rgba(210,180,120,.55);
     clip-path: polygon(16% 0, 84% 0, 68% 100%, 32% 100%);
     box-shadow: 0 24px 44px rgba(180,150,90,.3);
+    overflow: hidden;
 }
+.ch-liquid {
+    position: absolute; left: 50%; bottom: 6%; width: 96%; height: 56%;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(255,224,150,.95), rgba(240,190,90,.88) 60%, rgba(226,166,66,.95));
+    clip-path: polygon(14% 0, 86% 0, 70% 100%, 30% 100%);
+    box-shadow: inset 0 -12px 24px rgba(170,120,30,.35), inset 0 10px 18px rgba(255,242,200,.5);
+    border-radius: 90% 90% 0 0 / 22% 22% 0 0;
+}
+.ch-liquid::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 14px;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(255,252,225,.9), transparent 70%);
+    border-radius: 90% 90% 0 0 / 60% 60% 0 0;
+}
+.ch-stream { position: absolute; left: 50%; bottom: 8%; width: 6px; height: 120px; transform: translateX(-50%); opacity: 0; pointer-events: none; }
+.ch-stream i {
+    position: absolute; bottom: 0; left: 50%; width: 4px; height: 4px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #FFF7DA, #F5C660); box-shadow: 0 0 6px rgba(255,214,120,.9);
+    opacity: 0; animation: chStream 1.6s linear infinite;
+}
+.ch-stream i:nth-child(1){ animation-delay:0s; } .ch-stream i:nth-child(2){ animation-delay:.14s; width:3px;height:3px; }
+.ch-stream i:nth-child(3){ animation-delay:.28s; } .ch-stream i:nth-child(4){ animation-delay:.42s; width:3px;height:3px; }
+.ch-stream i:nth-child(5){ animation-delay:.56s; } .ch-stream i:nth-child(6){ animation-delay:.7s; width:3px;height:3px; }
+.ch-stream i:nth-child(7){ animation-delay:.84s; } .ch-stream i:nth-child(8){ animation-delay:.98s; width:3px;height:3px; }
+.ch-stream i:nth-child(9){ animation-delay:1.12s; } .ch-stream i:nth-child(10){ animation-delay:1.26s; width:3px;height:3px; }
+@keyframes chStream {
+    0%   { opacity: 0; transform: translate(-50%,0) scale(.6); }
+    25%  { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%,-120px) scale(1.4); }
+}
+.ch-gloss { position: absolute; background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent); pointer-events: none; }
+.ch-gloss.gl1 { left: 30%; top: 0; width: 8px; height: 88%; border-radius: 6px; opacity: .5; transform: rotate(2deg); }
+.ch-gloss.gl2 { left: 64%; top: 0; width: 5px; height: 70%; border-radius: 5px; opacity: .35; }
+.ch-stem {
+    position: absolute; left: 50%; top: 100%; width: 12px; height: 58px; transform: translateX(-50%);
+    background: linear-gradient(90deg, rgba(210,180,120,.9), rgba(255,250,230,.95) 45%, rgba(210,180,120,.9));
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 12px 20px rgba(180,150,90,.25);
+}
+.ch-foot {
+    position: absolute; left: 50%; top: calc(100% + 52px); width: 78px; height: 12px; transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(255,250,235,.95), rgba(214,184,124,.85));
+    border-radius: 50%;
+    box-shadow: 0 14px 22px rgba(180,150,90,.3);
+}
+.ch-foot::after {
+    content: ""; position: absolute; left: 50%; top: 100%; width: 92%; height: 12px; transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(180,150,90,.3), transparent 70%); filter: blur(3px);
+}
+.scene-opened[data-opening="champagne"] .ch-stream { animation: chBurst .8s ease-out .2s forwards; }
 .ch-bubbles i {
     position: absolute; left: 50%; bottom: 10%; width: 5px; height: 5px;
     border-radius: 50%; background: rgba(255,240,200,.9); opacity: 0;
@@ -8298,7 +8548,19 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene 3 · FLORAL PAPER -->
     <div class="sig-scene" id="floralScene" data-scene-for="floral-paper">
-        <div class="pop-gift">&#10047;</div>
+        <div class="flr-wreath">
+            <div class="flr-branch"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="flr-branch"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="flr-bloom b1"><span class="core"></span></div>
+            <div class="flr-bloom b2"><span class="core"></span></div>
+            <div class="flr-bloom b3"><span class="core"></span></div>
+            <div class="flr-bloom b4"><span class="core"></span></div>
+            <div class="flr-bloom b5"><span class="core"></span></div>
+            <div class="flr-leaf l1"></div>
+            <div class="flr-leaf l2"></div>
+            <div class="flr-leaf l3"></div>
+            <div class="flr-leaf l4"></div>
+        </div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
@@ -8322,7 +8584,25 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene 5 · CELEBRATION POP -->
     <div class="sig-scene" id="fiestaScene" data-scene-for="celebration-pop">
-        <div class="pop-gift">&#127873;</div>
+        <div class="fst-wrap">
+            <div class="fst-shadow"></div>
+            <div class="fst-box">
+                <div class="fst-box-face"></div>
+            </div>
+            <div class="fst-ribbon v"></div>
+            <div class="fst-ribbon h"></div>
+            <div class="fst-lid">
+                <div class="fst-lid-face"></div>
+                <div class="fst-bow">
+                    <i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i>
+                    <span class="fst-bow-knot"></span>
+                </div>
+            </div>
+        </div>
+        <div class="fst-pop t1"></div>
+        <div class="fst-pop t2"></div>
+        <div class="fst-pop c1"></div>
+        <div class="fst-pop c2"></div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
@@ -8333,8 +8613,17 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene 6 · STARRY NIGHT -->
     <div class="sig-scene" id="starryScene" data-scene-for="starry-night">
-        <div class="starry-moon"></div>
+        <div class="starry-moon">
+            <i class="m-crater c1"></i><i class="m-crater c2"></i><i class="m-crater c3"></i>
+            <i class="m-crater c4"></i><i class="m-crater c5"></i>
+        </div>
+        <div class="starry-ring"></div>
         <div class="shooting-star" id="shootingStar"></div>
+        <div class="starry-hill h1"></div>
+        <div class="starry-hill h2"></div>
+        <div class="starry-trees">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
         <div class="sig-card">
             <div class="scene-fill">
                 <small></small><h1></h1><p></p>
@@ -8662,7 +8951,14 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     <!-- Signature Scene · CHAMPAGNE SPARKLE -->
     <div class="sig-scene" id="champagneScene" data-scene-for="champagne">
         <div class="ch-glass">
-            <div class="ch-flute"></div>
+            <div class="ch-flute">
+                <div class="ch-liquid"></div>
+                <div class="ch-stream"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <i class="ch-gloss gl1"></i>
+                <i class="ch-gloss gl2"></i>
+            </div>
+            <div class="ch-stem"></div>
+            <div class="ch-foot"></div>
             <div class="ch-bubbles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="ch-sparkle s1"></div><div class="ch-sparkle s2"></div><div class="ch-sparkle s3"></div>
         </div>
