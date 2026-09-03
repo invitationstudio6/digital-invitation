@@ -926,8 +926,8 @@ const LUNA_TEMPLATES = [
     {
         id: "love-letter", name: "Love Letter", category: "wedding", style: "Klassik · Möhürlü Məktub", galleryStyle: "slider", openingStyle: "envelope-seal",
         animationStyle: "envelope-seal",
-        thumbnail: "https://images.unsplash.com/photo-1522673607200-8d1d38c61bbe?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1522673607200-8d1d38c61bbe?auto=format&fit=crop&w=1800&q=90",
+        thumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         design: { primaryColor: "#7a4a2b", secondaryColor: "#b03a3a", font: "Cormorant Garamond" },
         layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-center", backgroundStyle: "floral", openingType: "envelope-seal" },

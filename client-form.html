@@ -1355,7 +1355,11 @@ body.menu-open .languages{display:none}
             "forest-walk":"ancient-forest", "book-reveal":"old-book", "fullscreen-photo":"curtain", "editorial-card":"envelope-seal",
             "golden-ring":"golden-ring", "origami-lotus":"origami-lotus",
             "card-unfolds":"card-unfolds", "flowers-bloom":"flowers-bloom", "butterfly":"butterfly", "gold-sparkles":"gold-sparkles",
-            "polaroid":"polaroid", "champagne":"champagne", "confetti":"confetti", "card-3d":"card-3d", "light-sweep":"light-sweep"
+            "polaroid":"polaroid", "champagne":"champagne", "confetti":"confetti", "card-3d":"card-3d", "light-sweep":"light-sweep",
+            "envelope":"envelope-seal", "shooting-star":"starry-night", "luxury-silk":"luxury-romance",
+            "elegant":"luxury-romance", "confetti-burst":"confetti", "minimal-reveal":"envelope-seal",
+            "minimal":"envelope-seal", "fullscreen":"envelope-seal", "blossom-dust":"flowers-bloom",
+            "ornata":"luxury-romance", "portal":"glowing-door", "scene":"envelope-seal"
         };
         return m;
     }
@@ -1429,7 +1433,8 @@ body.menu-open .languages{display:none}
             card.setAttribute("data-tpl", t.id);
             var minPkg = t.minPackage ? t.minPackage.charAt(0).toUpperCase() + t.minPackage.slice(1) : "";
             var opvType = _resolveOpeningType(t);
-            var opvHtml = _opvHTML(opvType);
+            if (typeof _openingAliasMap === "function") opvType = _openingAliasMap()[opvType] || opvType;
+            var opvHtml = _opvHTML(opvType) || _opvHTML("envelope-seal");
             /* Distinct colour identity per template (unique swatch + tint). */
             var pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(t) : { c1: "#c4a882", c2: "#d9bf9e" };
             var openInfo = (typeof lunaOpeningInfo === "function") ? lunaOpeningInfo(t) : null;
@@ -1513,6 +1518,9 @@ body.menu-open .languages{display:none}
             var url = new URL(urlBase.href);
             url.searchParams.set("template", t.id);
             if (selectedOpening) url.searchParams.set("opening", selectedOpening);
+            if (typeof photoInvitationImgs !== "undefined" && photoInvitationImgs && photoInvitationImgs[0]) {
+                url.searchParams.set("cover", photoInvitationImgs[0]);
+            }
             iframe.src = url.href;
             titleEl.textContent = t.name || t.id;
             countEl.textContent = (idx + 1) + " / " + all.length;
@@ -2714,7 +2722,8 @@ body.menu-open .languages{display:none}
                         images: images.length ? images : defaultImages,
                         invitationLanguage: (localStorage.getItem("lunaLanguage") || v.invitationLanguage || "az"),
                         template: v.template || "",
-                        openingType: selectedOpening
+                        openingType: selectedOpening,
+                        cover: (photoInvitationImgs && photoInvitationImgs[0]) ? photoInvitationImgs[0] : ""
                     };
 
                     if (videoRef) data.videoUrl = videoRef;

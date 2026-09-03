@@ -8675,6 +8675,27 @@ if (finalDesign) {
     );
 }
 
+/* =====================================================
+   CLIENT-CHANGEABLE HERO COVER
+   The hero cover image (behind the names) is normally the
+   design's default --cover. A client can override it:
+     priority 1: ?cover=<url>  (used by the client-form live preview)
+     priority 2: invitation.cover
+     priority 3: invitation.photoInvitation (client-uploaded poster)
+   Applied as an inline --cover so it wins over the design rule.
+===================================================== */
+(function() {
+    try {
+        var urlCover = (params.get("cover") || "").trim();
+        var invData = (typeof invitation === "object" && invitation) ? invitation : {};
+        var invCover = (invData.cover || invData.photoInvitation || "").trim();
+        var chosen = urlCover || invCover || "";
+        if (chosen) {
+            document.documentElement.style.setProperty("--cover", "url('" + chosen + "')");
+        }
+    } catch (e) {}
+})();
+
 /* Map design -> material family (adds a data-material signature used by
    the LUNA material + ornament system for a unique artistic identity). */
 (function() {
