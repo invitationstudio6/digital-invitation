@@ -2055,9 +2055,17 @@ a { text-decoration: none; color: inherit; }
 .scene-opened[data-opening="old-book"] .ob-pl2 { opacity: 1; animation: obTurn .95s cubic-bezier(.3,.9,.3,1) 2.7s both; }
 .scene-opened[data-opening="old-book"] .ob-pl3 { opacity: 1; animation: obTurn .9s cubic-bezier(.3,.9,.3,1) 3.8s both; }
 @keyframes obTurn {
-    0% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
-    40% { transform: perspective(1200px) rotateY(-60deg) translateX(-6px); opacity: 1; }
-    100% { transform: perspective(1200px) rotateY(-176deg) translateX(-10px); opacity: 0; }
+    0%   { transform: perspective(1200px) translateY(8px) rotateY(0deg) skewY(0deg); opacity: 0; }
+    8%   { opacity: 1; }
+    30%  { transform: perspective(1200px) translateY(-16px) rotateY(-40deg) skewY(-8deg); opacity: 1; }
+    58%  { transform: perspective(1200px) translateY(-38px) rotateY(-96deg) skewY(10deg); opacity: 1; }
+    100% { transform: perspective(1200px) translateY(-26px) rotateY(-176deg) translateX(-10px) skewY(0deg); opacity: 0; }
+}
+@keyframes obGust {
+    0%   { transform: translateX(-40vw) rotate(8deg); opacity: 0; }
+    15%  { opacity: .55; }
+    55%  { opacity: .35; }
+    100% { transform: translateX(46vw) rotate(-6deg); opacity: 0; }
 }
 
 /* Stage 4 — invitation rises from the opened book */
@@ -2090,6 +2098,30 @@ a { text-decoration: none; color: inherit; }
     pointer-events: none;
     z-index: 1;
 }
+
+/* ---- wind gusts that "blow" the pages open ---- */
+.ob-gust {
+    position: fixed;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: 6;
+    pointer-events: none;
+    opacity: 0;
+    transform-style: preserve-3d;
+}
+.ob-gust i {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 46px;
+    background: linear-gradient(180deg, transparent, rgba(235,210,150,.28) 40%, rgba(255,245,220,.4) 50%, rgba(235,210,150,.22) 60%, transparent);
+    filter: blur(3px);
+    transform: skewX(-18deg);
+    animation: obGust 3.4s cubic-bezier(.4,.1,.5,1) infinite;
+    opacity: 0;
+}
+.ob-gust i:nth-child(1) { left: -60px; animation-delay: .2s; }
+.ob-gust i:nth-child(2) { left: 12vw; animation-delay: 1.3s; }
+.ob-gust i:nth-child(3) { left: 30vw; animation-delay: 2.4s; height: 70%; top: 15%; }
+.scene-opened[data-opening="old-book"] .ob-gust { opacity: 1; }
 
 /* =====================================================
    OPENING SCENE SHARED LAYOUT
@@ -8392,6 +8424,7 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     <div class="sig-scene" id="oldBookScene" data-scene-for="old-book">
         <div class="ob-desk"></div>
         <div class="ob-ember"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="ob-gust"><i></i><i></i><i></i></div>
         <div class="ob-book">
             <div class="ob-page ob-page-0"></div>
             <div class="ob-pl"><span class="ob-pl-line l1"></span><span class="ob-pl-line l2"></span><span class="ob-pl-line l3"></span><span class="ob-pl-line l4"></span></div>
