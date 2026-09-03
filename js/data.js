@@ -374,7 +374,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
-        layoutConfig: { sectionOrder: ["hero","details","story","gallery","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "blush" },
+        layoutConfig: { sectionOrder: ["hero","details","story","gallery","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "minimal" },
         preview: { eyebrow: "SİZİ DƏVƏT EDİRİK", names: ["Leyla", "Samir"], date: "12 · 11 · 2026", message: "Gül iyində, zəriflik dolu bir nişan mərasimi sizi gözləyir.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "serena" }
     },
     {
@@ -410,7 +410,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
-        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","countdown","story"], heroType: "hero-style-dark", backgroundStyle: "dark" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","countdown","story"], heroType: "hero-style-dark", backgroundStyle: "royal" },
         preview: { eyebrow: "BÜTÜN ZİYAFƏTÇİLƏR DƏVƏT OLUNUR", names: ["Kəmalə"], date: "22 · 12 · 2026", message: "İlin ən lüks ad gününə hamınızı dəvət edirəm!", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "noir" }
     },
     {
@@ -482,7 +482,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
-        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "sand" },
+        layoutConfig: { sectionOrder: ["hero","gallery","story","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "ember" },
         preview: { eyebrow: "İNNOVASİYA KONFRANSI", names: ["AZ Tech Summit"], date: "14 · 11 · 2026", message: "Texnologiya və innovasiya sahəsində ən son yenilikləri müzakirə edəcəyik.", venue: "Bakı Kongres Mərkəzi", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
@@ -491,7 +491,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1800&q=90",
         minPackage: "basic", packages: ["basic", "premium", "luxury"],
-        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "frost" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-minimal", backgroundStyle: "blush" },
         preview: { eyebrow: "ŞƏBƏKƏ GECƏSİ", names: ["Baku Business Club"], date: "08 · 10 · 2026", message: "Yeni tanışlıqlar və iş imkanları üçün şəbəkə gecəsinə dəvət edirik.", venue: "Pullman Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     /* ===== DIGITAL BUSINESS CARDS ===== */
@@ -510,7 +510,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
-        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-luxury", backgroundStyle: "dark" },
+        layoutConfig: { sectionOrder: ["hero","gallery","details","rsvp","story","countdown"], heroType: "hero-style-luxury", backgroundStyle: "royal" },
         preview: { eyebrow: "QR ƏLAQƏ KARTI", names: ["Luna Studio"], date: "", message: "QR kodu skan edin və bütün məlumatlarımı telefonunuza saxlayın.", venue: "Digital", location: "Azərbaycan", theme: "default" }
     },
     {
@@ -519,7 +519,7 @@ const LUNA_TEMPLATES = [
         thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
-        layoutConfig: { sectionOrder: ["hero","story","gallery","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "slate" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","rsvp","countdown"], heroType: "hero-style-editorial", backgroundStyle: "dark" },
         preview: { eyebrow: "KORPORATİV PROFİL", names: ["AzTech Holdinqs"], date: "", message: "Şirkətimiz haqqında ətraflı məlumat. Xidmətlərimiz, əlaqə və daha çoxu.", venue: "Bakı, Azərbaycan", location: "Bakı", theme: "default" }
     },
     {
