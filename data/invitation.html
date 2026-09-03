@@ -2840,6 +2840,43 @@ a { text-decoration: none; color: inherit; }
 }
 [data-opening="wax-seal"] .sig-card h1 { color: #40291A; }
 
+/* ---- PREMIUM SVG WAX SEAL ---- */
+[data-opening="wax-seal"] .wax-premium {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 2px;
+    transform-style: preserve-3d;
+}
+[data-opening="wax-seal"] .ws-seal {
+    display: block;
+    width: min(300px, 58vw);
+    height: auto;
+    margin: 0 auto;
+    cursor: pointer;
+    filter: drop-shadow(0 18px 26px rgba(60,25,6,.4));
+    animation: wsBreath 5s ease-in-out infinite;
+}
+@keyframes wsBreath {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.02); }
+}
+[data-opening="wax-seal"] .ws-seal:hover { transform: scale(1.04); }
+/* crack on open */
+.scene-opened[data-opening="wax-seal"] .ws-seal {
+    animation: waxCrack .8s cubic-bezier(.5,0,.75,.4) forwards;
+    pointer-events: none;
+}
+/* a soft paper-reveal shadow that fades away as the seal cracks */
+[data-opening="wax-seal"] .sig-card {
+    transition: transform .6s cubic-bezier(.22,.9,.36,1) .4s;
+}
+.scene-opened[data-opening="wax-seal"] .sig-card {
+    transform: translateY(0);
+}
+@media (max-width: 520px) {
+    [data-opening="wax-seal"] .ws-seal { width: min(240px, 70vw); }
+}
+
 
 /* =====================================================
    TYPE: GRAND CURTAIN — Premium Theater
@@ -8072,11 +8109,62 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene 1 · WAX SEAL -->
     <div class="sig-scene" id="waxSealScene" data-scene-for="wax-seal">
-        <div class="wax-wrap">
-            <div class="wax-half-l"></div>
-            <div class="wax-half-r"></div>
-                <div class="wax-sparkles"><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span><span class="wax-sparkle"></span></div>
-            <div class="wax-seal-big" id="waxSealBig">L</div>
+        <div class="wax-premium">
+            <svg class="ws-seal" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <radialGradient id="wsDome" cx="38%" cy="30%" r="75%">
+                        <stop offset="0%" stop-color="#e86a52"/><stop offset="38%" stop-color="#c73e2c"/>
+                        <stop offset="72%" stop-color="#9c2418"/><stop offset="100%" stop-color="#6f120c"/>
+                    </radialGradient>
+                    <radialGradient id="wsEdge" cx="50%" cy="38%" r="85%">
+                        <stop offset="0%" stop-color="#e88a72" stop-opacity="0"/>
+                        <stop offset="62%" stop-color="#7d1a10"/><stop offset="100%" stop-color="#4d0a05"/>
+                    </radialGradient>
+                    <radialGradient id="wsFoil" cx="42%" cy="32%" r="70%">
+                        <stop offset="0%" stop-color="#fdf3cf"/><stop offset="45%" stop-color="#e3bf74"/>
+                        <stop offset="75%" stop-color="#b5873c"/><stop offset="100%" stop-color="#7d5b22"/>
+                    </radialGradient>
+                    <radialGradient id="wsSpec" cx="36%" cy="28%" r="60%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity=".85"/>
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                    </radialGradient>
+                    <filter id="wsShadow" x="-40%" y="-40%" width="180%" height="180%">
+                        <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#4d0a05" flood-opacity=".5"/>
+                    </filter>
+                    <filter id="wsEmboss" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="1.6" result="blur"/>
+                        <feSpecularLighting in="blur" surfaceScale="3.2" specularConstant=".9" specularExponent="22" lighting-color="#fff" result="spec">
+                            <fePointLight x="110" y="70" z="220"/>
+                        </feSpecularLighting>
+                        <feComposite in="spec" in2="SourceAlpha" operator="in" result="baseHi"/>
+                        <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="baseHi"/></feMerge>
+                    </filter>
+                </defs>
+                <g filter="url(#wsShadow)">
+                    <path d="M150,44 C78,44 40,96 40,150 C40,206 86,256 150,256 C214,256 260,206 260,150 C260,96 222,44 150,44 Z" fill="url(#wsEdge)"/>
+                    <ellipse cx="150" cy="150" rx="98" ry="98" fill="url(#wsDome)"/>
+                    <g fill="#8e1c10">
+                        <path d="M58,150 c-4,10 -2,20 3,28 c3,4 7,6 9,4 c3,-4 1,-14 -2,-24 c-2,-5 -7,-8 -10,-8 Z"/>
+                        <path d="M236,162 c5,8 4,18 0,26 c-3,5 -8,7 -10,4 c-2,-4 1,-13 5,-22 c2,-5 3,-8 5,-8 Z"/>
+                        <path d="M118,246 c-3,9 -12,13 -19,11 c-5,-2 -7,-6 -5,-10 c3,-3 10,-4 16,-6 c4,-1 7,1 8,5 Z"/>
+                        <path d="M196,244 c3,10 12,13 19,10 c5,-2 6,-6 4,-10 c-3,-2 -9,-4 -15,-5 c-4,-1 -8,1 -8,5 Z"/>
+                    </g>
+                    <circle cx="150" cy="150" r="97" fill="none" stroke="#ffd9c4" stroke-opacity=".28" stroke-width="1.4"/>
+                </g>
+                <g filter="url(#wsEmboss)">
+                    <circle cx="150" cy="150" r="76" fill="none" stroke="url(#wsFoil)" stroke-width="2.6"/>
+                    <circle cx="150" cy="150" r="84" fill="none" stroke="url(#wsFoil)" stroke-opacity=".55" stroke-width="1"/>
+                    <circle cx="150" cy="150" r="68" fill="none" stroke="url(#wsFoil)" stroke-opacity=".5" stroke-width="1"/>
+                </g>
+                <g transform="rotate(-16 150 150)" fill="url(#wsFoil)" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3.4" font-weight="600">
+                    <defs><path id="wsRingPath" d="M150,150 m-56,0 a56,56 0 1,1 112,0 a56,56 0 1,1 -112,0"/></defs>
+                    <textPath href="#wsRingPath">EST · 2026 · L O V E   &amp;   T E N D E R N E S S ·</textPath>
+                </g>
+                <g filter="url(#wsEmboss)" text-anchor="middle">
+                    <text id="waxSealBig" x="150" y="172" font-family="Great Vibes, cursive" font-size="92" fill="url(#wsFoil)">L</text>
+                </g>
+                <ellipse cx="150" cy="150" rx="97" ry="97" fill="url(#wsSpec)" opacity=".5"/>
+            </svg>
         </div>
         <div class="sig-card">
             <div class="scene-fill">
