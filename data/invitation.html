@@ -7305,6 +7305,29 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 .scene-opened[data-opening="flowers-bloom"] .bl-flowers { opacity: .35; filter: blur(2px); transition: all 1s ease; }
 .scene-opened[data-opening="flowers-bloom"] .bl-pollen { opacity: 0; transition: opacity .5s; }
 
+/* ---- 3D FLOWER BLOOM: petals unfold with real depth ---- */
+[data-opening="flowers-bloom"] .opening { perspective: 1100px; transform-style: preserve-3d; }
+.bl-fl { transform-style: preserve-3d; }
+.bl-pet { transform-origin: 100% 100% 0; }
+.bl-pet:nth-child(1){ transform: rotate(0deg) translate(-22px,-22px) rotateX(40deg); }
+.bl-pet:nth-child(2){ transform: rotate(72deg) translate(-22px,-22px) rotateX(40deg); }
+.bl-pet:nth-child(3){ transform: rotate(144deg) translate(-22px,-22px) rotateX(40deg); }
+.bl-pet:nth-child(4){ transform: rotate(216deg) translate(-22px,-22px) rotateX(40deg); }
+.bl-pet:nth-child(5){ transform: rotate(288deg) translate(-22px,-22px) rotateX(40deg); }
+@keyframes blBloom3D {
+    0%   { opacity: 0; transform: scale(0) rotate(-30deg) translateZ(-30px); }
+    60%  { opacity: 1; }
+    100% { opacity: 1; transform: scale(1) rotate(0) translateZ(0); }
+}
+.bl-fl { animation: blBloom3D 1.7s cubic-bezier(.22,.9,.32,1.3) both; }
+/* a soft ground shadow so the stems stand with depth */
+.bl-flowers::after {
+    content: ""; position: fixed; left: 50%; bottom: 2vh; width: 60vw; height: 30px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(90,70,40,.25), transparent 70%);
+    filter: blur(3px); pointer-events: none;
+}
+
 /* ---------- BUTTERFLY FLIES ACROSS (butterfly) ---------- */
 [data-opening="butterfly"] .envelope-scene { display: none; }
 [data-opening="butterfly"] .opening {
@@ -7365,6 +7388,23 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 .scene-opened[data-opening="butterfly"] .bt-trail { opacity: 1; animation: btTrail 2.2s ease-out forwards; }
 @keyframes btTrail { 0%{opacity:0;} 40%{opacity:1;} 100%{opacity:0; right:20vw;} }
 
+/* ---- 3D BUTTERFLY: wings beat with perspective, not flat 2D ---- */
+[data-opening="butterfly"] .opening { perspective: 1000px; transform-style: preserve-3d; }
+.bt-butterfly { transform-style: preserve-3d; }
+.bt-wing {
+    border-radius: 62% 62% 32% 62% / 74% 74% 44% 58%;
+    background:
+        radial-gradient(circle at 40% 30%, #f4c8ee, #d99ae0 55%, #a96ac0),
+        radial-gradient(circle at 70% 60%, rgba(255,210,240,.5), transparent 45%);
+}
+.bt-wing-l, .bt-wing-r { animation: btFlap3D .22s ease-in-out infinite alternate; }
+@keyframes btFlap3D {
+    0%   { transform: rotateY(-34deg) scaleY(1); }
+    100% { transform: rotateY(34deg) scaleY(.72); }
+}
+/* the fixed-position butterfly needs its own perspective context for 3D children */
+.bt-butterfly { perspective: 600px; }
+
 /* ---------- GOLD SPARKLES (gold-sparkles) ---------- */
 [data-opening="gold-sparkles"] .envelope-scene { display: none; }
 [data-opening="gold-sparkles"] .opening {
@@ -7418,6 +7458,19 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     100% { opacity: 0; transform: translate(calc((40vw - var(--x, 50vw)) * -1), calc((30vh - var(--y,50vh)) * -1)) scale(2.4); }
 }
 
+/* ---- 3D GOLD SPARKLES: particles swirl in with depth ---- */
+[data-opening="gold-sparkles"] .opening { perspective: 1000px; transform-style: preserve-3d; }
+.gs-particles i { transform-style: preserve-3d; }
+@keyframes gsFloat {
+    0%   { opacity: 0; transform: translateY(20px) scale(.4) rotateY(0); }
+    30%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-60px) scale(1.3) rotateY(220deg); }
+}
+.scene-opened[data-opening="gold-sparkles"] .gs-beam {
+    transform: translateX(-50%) rotateX(60deg) scaleY(1.6);
+    opacity: 0; transition: transform 1s ease, opacity .4s;
+}
+
 /* ---------- POLAROID PHOTOS DEVELOP (polaroid) ---------- */
 [data-opening="polaroid"] .envelope-scene { display: none; }
 [data-opening="polaroid"] .opening {
@@ -7463,6 +7516,25 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     55%  { opacity: 1; }
     100% { opacity: 1; transform: translateY(0) rotate(var(--rot,4deg)) scale(1); filter: none; }
 }
+
+/* ---- 3D POLAROIDS: photos tumble onto the table with depth ---- */
+[data-opening="polaroid"] .opening { perspective: 1200px; transform-style: preserve-3d; }
+.pl-polaroid { transform-style: preserve-3d; }
+@keyframes plDrop3D {
+    0%   { opacity: 0; transform: translateY(-46vh) rotateX(-28deg) rotate(var(--rot,4deg)) scale(.8); filter: brightness(2) saturate(.2); }
+    45%  { opacity: 1; transform: translateY(4vh)  rotateX(10deg)  rotate(var(--rot,4deg)) scale(1.05); }
+    70%  { transform: translateY(-1vh) rotateX(-4deg) rotate(var(--rot,4deg)) scale(1); }
+    100% { opacity: 1; transform: translateY(0)    rotateX(0)     rotate(var(--rot,4deg)) scale(1); filter: none; }
+}
+.scene-opened[data-opening="polaroid"] .pl-polaroid { animation: plDrop3D .95s cubic-bezier(.3,1.3,.4,1) forwards; }
+/* laid-flat shadow under the front photo for grounded realism */
+.pl-polaroid::after {
+    content: ""; position: absolute; left: 50%; top: 100%; width: 88%; height: 26px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(90,70,40,.32), transparent 70%);
+    filter: blur(4px); pointer-events: none; opacity: 0; z-index: -1;
+}
+.scene-opened[data-opening="polaroid"] .pl-polaroid::after { opacity: 1; transition: opacity .6s ease .5s; }
 
 /* ---------- CHAMPAGNE SPARKLE (champagne) ---------- */
 [data-opening="champagne"] .envelope-scene { display: none; }
@@ -7517,6 +7589,29 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 .scene-opened[data-opening="champagne"] .ch-bubbles i:nth-child(3){ animation-delay:.2s; } .scene-opened[data-opening="champagne"] .ch-bubbles i:nth-child(4){ animation-delay:.3s; }
 .scene-opened[data-opening="champagne"] .ch-bubbles i:nth-child(5){ animation-delay:.4s; } .scene-opened[data-opening="champagne"] .ch-bubbles i:nth-child(6){ animation-delay:.5s; }
 .scene-opened[data-opening="champagne"] .ch-bubbles i:nth-child(7){ animation-delay:.6s; }
+
+/* ---- 3D CHAMPAGNE: flute turns on a slow axis, bubbles layered in depth ---- */
+[data-opening="champagne"] .opening { perspective: 1100px; transform-style: preserve-3d; }
+.ch-flute { transform-style: preserve-3d; animation: chTilt 6s ease-in-out infinite; }
+@keyframes chTilt {
+    0%,100% { transform: rotateY(0deg) rotateX(0deg); }
+    50%     { transform: rotateY(10deg) rotateX(2deg); }
+}
+.ch-bubbles { transform-style: preserve-3d; }
+.ch-bubbles i:nth-child(odd){ transform: translateZ(8px); }
+.ch-bubbles i:nth-child(even){ transform: translateZ(-8px); }
+@keyframes chBubble {
+    0%   { opacity: 0; transform: translateY(0)   scale(.5)  translateZ(0); }
+    20%  { opacity: .9; }
+    100% { opacity: 0; transform: translateY(-150px) scale(1.4) translateZ(6px); }
+}
+/* a soft golden halo behind the glass so it reads as a celebratory toast */
+.ch-glass::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 260px; height: 260px;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(circle, rgba(240,205,120,.35), transparent 62%);
+    z-index: -1; filter: blur(3px);
+}
 
 /* ---------- CONFETTI REVEAL (confetti) ---------- */
 [data-opening="confetti"] .envelope-scene { display: none; }
