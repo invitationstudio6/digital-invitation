@@ -11809,41 +11809,8 @@ document.getElementById("footerTagline").textContent =
    PARALLAX HERO EFFECT
 ===================================================== */
 
-(function() {
-    var hero = document.getElementById("hero");
-    var heroContent = document.getElementById("heroContent");
-    if (!hero || !heroContent) return;
-
-    /* Layered hero parallax — each stratum drifts at its own speed for real
-       physical depth (eyebrow fast, names slow, date mid, ornament slowest). */
-    var _heroLayers = [
-        { el: heroContent.querySelector(".hero-eyebrow"), spd: 0.42 },
-        { el: heroContent.querySelector(".hero-names"),   spd: 0.26 },
-        { el: heroContent.querySelector(".hero-date"),    spd: 0.34 },
-        { el: document.querySelector(".hero-ornament"),   spd: 0.18 }
-    ];
-
-    var ticking = false;
-    window.addEventListener("scroll", function() {
-        if (!ticking) {
-            requestAnimationFrame(function() {
-                var scrollY = window.scrollY;
-                var heroH = hero.offsetHeight;
-                if (scrollY < heroH) {
-                    var progress = scrollY / heroH;
-                    heroContent.style.transform = "translateY(" + (scrollY * 0.3) + "px)";
-                    heroContent.style.opacity = 1 - (progress * 1.2);
-                    /* deep-layer drift for physical parallax */
-                    _heroLayers.forEach(function(L) {
-                        if (L.el) L.el.style.transform = "translateY(" + (scrollY * L.spd) + "px)";
-                    });
-                }
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
-})();
+/* Hero scroll-parallax removed: couple names stay rock-still while the
+   invitation scrolls (no drifting names, no fading hero content). */
 
 /* =====================================================
    POINTER TILT HERO + AMBIENT CURSOR GLOW + INTERACTIVE
@@ -11852,43 +11819,7 @@ document.getElementById("footerTagline").textContent =
    subtle magnetic hover on their art.
 ===================================================== */
 (function() {
-    /* ---- Pointer-tilt hero (3D depth on desktop only) ---- */
-    var hero = document.getElementById("hero");
-    var heroContent = document.getElementById("heroContent");
-    if (hero && heroContent && window.matchMedia && window.matchMedia("(pointer:fine)").matches) {
-        var MAX_TILT = 5;
-        var raf = false;
-        function applyTilt() {
-            var sy = window.scrollY;
-            var heroH = hero.offsetHeight;
-            var tr = "translateY(" + (sy * 0.3) + "px)";
-            var r = hero.getBoundingClientRect();
-            var dx = (cursorX - r.left) / r.width - 0.5;
-            var dy = (cursorY - r.top) / r.height - 0.5;
-            tr += " rotateX(" + (dy * MAX_TILT).toFixed(2) + "deg) rotateY(" + (dx * MAX_TILT).toFixed(2) + "deg)";
-            heroContent.style.transform = tr;
-            var names = heroContent.querySelector(".hero-names");
-            var eyebrow = heroContent.querySelector(".hero-eyebrow");
-            var orn = document.querySelector(".hero-ornament");
-            if (names) names.style.transform = "translate(" + (dx * -14) + "px," + (dy * -10) + "px)";
-            if (eyebrow) eyebrow.style.transform = "translate(" + (dx * -22) + "px," + (dy * -16) + "px)";
-            if (orn) orn.style.transform = "translate(" + (dx * 18) + "px," + (dy * 14) + "px)";
-        }
-        var cursorX = 0, cursorY = 0;
-        hero.addEventListener("pointermove", function(e) {
-            cursorX = e.clientX; cursorY = e.clientY;
-            if (!raf) { raf = true; requestAnimationFrame(function(){ applyTilt(); raf = false; }); }
-        });
-        hero.addEventListener("pointerleave", function() {
-            ["hero-names","hero-eyebrow","hero-ornament"].forEach(function(cls){
-                var el = hero.querySelector("." + cls);
-                if (el) el.style.transform = "";
-            });
-            if (window.scrollY < hero.offsetHeight) {
-                heroContent.style.transform = "";
-            }
-        });
-    }
+    /* Pointer-tilt removed: names no longer follow the cursor. */
 
     /* ---- Ambient cursor light (golden orb) on hero & opening ---- */
     function makeGlow(scope) {
