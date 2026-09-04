@@ -591,3 +591,298 @@ html.lx-physical .invitation.visible .hero::before {
     animation: none !important;
   }
 }
+
+/* =========================================================
+   LUNA PREMIUM INVITATION OBJECT — POST-OPENING EXPERIENCE
+   The opening is only the prologue. These styles make the
+   invitation that follows feel like a designed object:
+   cover, paper, chapter breaks, and tactile details.
+========================================================= */
+
+html.lx-physical .invitation {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(80% 28% at 50% 0%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 72%),
+    var(--bg);
+}
+
+/* Continuous paper grain below the hero, like a luxury stock sheet */
+html.lx-physical .invitation::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--lx-fiber), var(--lx-grain);
+  background-size: auto, 180px 180px;
+  opacity: .055;
+  mix-blend-mode: multiply;
+}
+
+/* The hero becomes a printed cover rather than a plain full-screen block */
+html.lx-physical .invitation .hero {
+  min-height: 100svh;
+  perspective: 1400px;
+  background-position: center;
+  box-shadow: inset 0 -80px 120px rgba(20,12,8,.24);
+}
+
+html.lx-physical .invitation .hero::after {
+  width: min(720px, 88vw);
+  height: min(720px, 88vw);
+  border-color: color-mix(in srgb, var(--gold) 42%, transparent);
+  box-shadow:
+    0 0 0 18px rgba(255,255,255,.035),
+    0 0 90px color-mix(in srgb, var(--gold) 20%, transparent);
+}
+
+html.lx-physical .invitation.hero-revealed .hero-content {
+  position: relative;
+  padding: clamp(46px, 7vw, 86px) clamp(34px, 7vw, 90px);
+  min-width: min(720px, 92vw);
+  z-index: 3;
+  transform-style: preserve-3d;
+  animation: lxCoverDrop 1.45s cubic-bezier(.19,1,.22,1) both;
+}
+
+html.lx-physical .invitation.hero-revealed .hero-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 1px solid rgba(255,255,255,.38);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.16), transparent 38%),
+    linear-gradient(180deg, rgba(18,10,6,.32), rgba(18,10,6,.52));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.55) inset,
+    0 22px 70px rgba(18,10,6,.24),
+    0 46px 110px rgba(18,10,6,.18);
+  transform: translateZ(-12px);
+  backdrop-filter: blur(3px);
+}
+
+html.lx-physical .invitation.hero-revealed .hero-content::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  z-index: 0;
+  border: 1px solid color-mix(in srgb, var(--gold) 48%, transparent);
+  pointer-events: none;
+}
+
+html.lx-physical .invitation.hero-revealed .hero-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+html.lx-physical .invitation.hero-revealed .hero-eyebrow,
+html.lx-physical .invitation.hero-revealed .hero-date {
+  text-shadow: 0 1px 12px rgba(0,0,0,.26);
+}
+
+html.lx-physical .invitation.hero-revealed .hero-names .name {
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.40),
+    0 3px 20px rgba(0,0,0,.26);
+  letter-spacing: clamp(-2px, -.12vw, -1px);
+}
+
+@keyframes lxCoverDrop {
+  0% { opacity: 0; transform: translateY(24px) rotateX(8deg) scale(.96); filter: blur(8px); }
+  62% { opacity: 1; transform: translateY(-4px) rotateX(-1deg) scale(1.01); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); filter: none; }
+}
+
+/* Chapter-like transitions as the visitor scrolls */
+html.lx-physical .invitation .section {
+  overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+html.lx-physical .invitation .section::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  width: 1px;
+  height: 32px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--gold) 48%, transparent), transparent);
+  opacity: .55;
+}
+
+html.lx-physical .invitation .section.reveal-up,
+html.lx-physical .invitation .section .reveal-up,
+html.lx-physical .invitation .section .reveal-scale {
+  will-change: transform, opacity, filter;
+}
+
+html.lx-physical .invitation .section-divider {
+  position: relative;
+}
+
+html.lx-physical .invitation .section-divider span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 3px 12px rgba(30,18,10,.12);
+}
+
+/* Story and details read like mounted cards on cotton paper */
+html.lx-physical .invitation #storySection .reveal-up,
+html.lx-physical .invitation #detailsSection .reveal-up,
+html.lx-physical .invitation #countdownSection .reveal-up,
+html.lx-physical .invitation #rsvpSection .reveal-up {
+  max-width: 980px;
+  margin-inline: auto;
+  padding: clamp(32px, 5vw, 68px);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.30), transparent 45%),
+    color-mix(in srgb, var(--bg) 82%, white);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.7) inset,
+    0 18px 55px rgba(40,24,12,.09);
+}
+
+html.lx-physical .invitation .details-grid {
+  border-color: color-mix(in srgb, var(--gold) 42%, transparent);
+  box-shadow: 0 8px 24px rgba(40,24,12,.07);
+}
+
+html.lx-physical .invitation .detail {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255,255,255,.18), transparent);
+}
+
+html.lx-physical .invitation .detail::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--gold);
+  transform: rotate(45deg);
+  opacity: .6;
+}
+
+/* Photos become mounted prints, not raw image tiles */
+html.lx-physical .invitation .gallery {
+  padding: 0 clamp(14px, 5vw, 70px);
+}
+
+html.lx-physical .invitation .gallery img {
+  border: 7px solid color-mix(in srgb, var(--bg) 80%, white);
+  outline: 1px solid color-mix(in srgb, var(--gold) 40%, transparent);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.65) inset,
+    0 16px 34px rgba(24,14,8,.18);
+}
+
+html.lx-physical .invitation .gallery-style-polaroid img {
+  border: 0;
+}
+
+html.lx-physical .invitation .gallery-style-collage img:nth-child(2),
+html.lx-physical .invitation .gallery-style-collage img:nth-child(4) {
+  transform: rotate(1.2deg);
+}
+
+html.lx-physical .invitation .rsvp-button,
+html.lx-physical .invitation .map-button {
+  box-shadow: 0 5px 14px rgba(40,24,12,.14), inset 0 1px 0 rgba(255,255,255,.4);
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+html.lx-physical .invitation .rsvp-button:hover,
+html.lx-physical .invitation .map-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(40,24,12,.20);
+}
+
+/* Distinct luxury art-direction after the same opening */
+html.lx-physical[data-design="grand-curtain"] .invitation .hero-content,
+html.lx-physical[data-design="velvet-luxe"] .invitation .hero-content,
+html.lx-physical[data-design="luxe-gold"] .invitation .hero-content,
+html.lx-physical[data-design="black-gold"] .invitation .hero-content {
+  background: linear-gradient(145deg, rgba(20,7,8,.48), rgba(20,7,8,.16));
+  border-color: rgba(219,177,103,.48);
+}
+
+html.lx-physical[data-design="grand-curtain"] .invitation .section,
+html.lx-physical[data-design="velvet-luxe"] .invitation .section,
+html.lx-physical[data-design="luxe-gold"] .invitation .section,
+html.lx-physical[data-design="black-gold"] .invitation .section {
+  background:
+    radial-gradient(60% 35% at 50% 0%, rgba(212,168,94,.10), transparent 72%),
+    var(--bg);
+}
+
+html.lx-physical[data-design="garden-bloom"] .invitation .section,
+html.lx-physical[data-design="botanical"] .invitation .section {
+  background:
+    radial-gradient(36% 24% at 8% 20%, rgba(122,154,96,.13), transparent 70%),
+    radial-gradient(34% 22% at 94% 78%, rgba(200,152,96,.11), transparent 70%),
+    var(--bg);
+}
+
+html.lx-physical[data-design="starry-dream"] .invitation .hero::after,
+html.lx-physical[data-design="enchanted"] .invitation .hero::after {
+  border-style: dotted;
+  box-shadow: 0 0 100px rgba(142,168,232,.25), 0 0 0 22px rgba(142,168,232,.035);
+}
+
+/* Ring: make the handoff feel like the ring gives way to a real card */
+html.lx-physical[data-opening="golden-ring"] .sig-card {
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.75) inset,
+    0 18px 34px rgba(70,45,12,.25),
+    0 46px 90px rgba(42,25,8,.24);
+}
+
+/* Castle door: depth, stone light and a camera-like reveal */
+html.lx-physical[data-opening="wood-door"] .wd-arch,
+html.lx-physical[data-opening="door"] .door-scene {
+  filter: drop-shadow(0 30px 55px rgba(0,0,0,.42));
+}
+
+html.lx-physical[data-opening="wood-door"] .wd-wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 55%, rgba(255,215,145,.13), transparent 34%);
+  animation: lxCastleBreath 5s ease-in-out infinite;
+}
+
+@keyframes lxCastleBreath {
+  0%, 100% { opacity: .45; transform: scale(.98); }
+  50% { opacity: .9; transform: scale(1.04); }
+}
+
+/* Ribbon: satin depth and an intentional pause before the untie */
+html.lx-physical[data-opening="ribbon"] .rb-band-v,
+html.lx-physical[data-opening="ribbon"] .rb-band-h,
+html.lx-physical[data-opening="ribbon"] .rb-bow {
+  filter: drop-shadow(0 12px 18px rgba(50,10,18,.30));
+}
+
+@media (max-width: 640px) {
+  html.lx-physical .invitation.hero-revealed .hero-content {
+    min-width: 0;
+    width: calc(100vw - 32px);
+    padding: 42px 24px;
+  }
+  html.lx-physical .invitation #storySection .reveal-up,
+  html.lx-physical .invitation #detailsSection .reveal-up,
+  html.lx-physical .invitation #countdownSection .reveal-up,
+  html.lx-physical .invitation #rsvpSection .reveal-up {
+    padding: 30px 18px;
+  }
+}
