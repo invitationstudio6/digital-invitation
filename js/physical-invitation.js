@@ -19,53 +19,6 @@
         return n;
     }
 
-    function svgWrap(viewBox, cls) {
-        var s = document.createElementNS(SVGNS, "svg");
-        s.setAttribute("viewBox", viewBox);
-        s.setAttribute("class", cls);
-        s.setAttribute("aria-hidden", "true");
-        return s;
-    }
-
-    function svgEl(tag, attrs) {
-        var n = document.createElementNS(SVGNS, tag);
-        for (var k in attrs) n.setAttribute(k, attrs[k]);
-        return n;
-    }
-
-    /* ---- Elegant couple silhouette (bride & groom) ---- */
-    function buildCoupleSVG() {
-        var s = svgWrap("0 0 260 300", "lx-couple-svg");
-        var defs = svgEl("defs", {});
-        var lg = svgEl("linearGradient", { id: "lxFigG", x1: "0", y1: "0", x2: "0", y2: "1" });
-        lg.appendChild(svgEl("stop", { offset: "0", "stop-color": "#2b1a12" }));
-        lg.appendChild(svgEl("stop", { offset: "1", "stop-color": "#0f0805" }));
-        defs.appendChild(lg);
-        s.appendChild(defs);
-
-        /* rim light — soft warm edge behind the pair */
-        var rim = svgEl("ellipse", { cx: "130", cy: "200", rx: "104", ry: "118", fill: "none", stroke: "rgba(220,178,120,.28)", "stroke-width": "1.4", opacity: ".5" });
-        s.appendChild(rim);
-
-        /* Groom (left) */
-        var groom = svgEl("g", { "class": "lx-groom", fill: "url(#lxFigG)" });
-        groom.appendChild(svgEl("circle", { cx: "84", cy: "34", r: "14" }));
-        groom.appendChild(svgEl("path", { d: "M84 52c-10 0-15 7-15 17v7c0 3 3 6 6 6h6v96h18v-96h6c3 0 6-3 6-6v-7c0-10-5-17-15-17z" }));
-        groom.appendChild(svgEl("path", { d: "M71 178v82h13v-82z" }));
-        groom.appendChild(svgEl("path", { d: "M84 178v82h13v-82z" }));
-        s.appendChild(groom);
-
-        /* Bride (right) */
-        var bride = svgEl("g", { "class": "lx-bride", fill: "url(#lxFigG)" });
-        bride.appendChild(svgEl("path", { d: "M176 14c-12-9-27-8-35 3-4 7-4 22-6 28-1 4 1 8 4 10 4-2 8-4 13-6 7-2 15-3 25-1z", opacity: ".9" }));
-        bride.appendChild(svgEl("circle", { cx: "176", cy: "30", r: "13" }));
-        bride.appendChild(svgEl("path", { d: "M176 44c-8 0-13 6-13 15v10c0 4 3 7 7 7h5v74c0 6 2 10 6 10h8 8c4 0 6-4 6-10v-54c8 0 14-6 14-16v-9c0-4-3-7-7-7h-6c0-4-3-9-7-12-5-3-11-3-14 0-2 1-2 4-2 7z" }));
-        bride.appendChild(svgEl("circle", { cx: "154", cy: "74", r: "7" }));
-        s.appendChild(bride);
-
-        return s;
-    }
-
     function inject(id, html) {
         var host = document.getElementById(id);
         if (!host) return;
@@ -73,13 +26,14 @@
     }
 
     function initScenes() {
-        /* Stairs — bride & groom climbing */
+        /* Stairs — restrained editorial couple, scaled like a real photograph */
         inject("stairsScene",
             '<div class="lx-couple" aria-hidden="true">' +
             '<span class="lx-couple-halo"></span>' +
+            '<span class="lx-person lx-person-groom"><i class="lx-head"></i><i class="lx-body"></i><i class="lx-leg lx-leg-a"></i><i class="lx-leg lx-leg-b"></i></span>' +
+            '<span class="lx-person lx-person-bride"><i class="lx-head"></i><i class="lx-body"></i><i class="lx-leg lx-leg-a"></i><i class="lx-leg lx-leg-b"></i><i class="lx-veil"></i></span>' +
+            '<span class="lx-hand"></span>' +
             '</div>');
-        var couple = document.querySelector("#stairsScene .lx-couple");
-        if (couple) couple.appendChild(buildCoupleSVG());
 
         /* Wood door + door — castle torchlight & drifting fog */
         ["woodDoorScene", "doorScene"].forEach(function (id) {
