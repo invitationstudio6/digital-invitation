@@ -4726,6 +4726,7 @@ async function renderOrders() {
     var list = document.getElementById('ordersList');
     if (!list) return;
     var orders = await getOrders();
+    await preloadInvitationApprovals(orders);
     await updateOrdersBadge();
     if (!orders.length) {
         var needLogin = (window.LunaSync && LunaSync.enabled() && !LunaSync.currentUser());
@@ -4793,8 +4794,50 @@ async function renderOrders() {
 function isInvitationApproved(invitationId) {
     try {
         var inv = JSON.parse(localStorage.getItem('luna_' + invitationId) || 'null');
-        return inv ? inv.approved !== false : true;
-    } catch(e) { return true; }
+        if (inv) return inv.approved !== false;
+    } catch(e) {}
+    var cached = window.__lunaInvApprovalCache && window.__lunaInvApprovalCache[invitationId];
+    return cached !== undefined ? cached : true;
+}
+
+async function fetchInvitationApprovedFromCloud(invitationId) {
+    var cfg = window.LUNA_SUPABASE;
+    if (!cfg || !cfg.url || !cfg.anonKey) return undefined;
+    try {
+        var res = await fetch(cfg.url + "/rest/v1/luna_invitations?select=id,value&id=eq." + encodeURIComponent(invitationId), {
+            headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey }
+        });
+        if (!res.ok) return undefined;
+        var rows = await res.json();
+        if (rows && rows[0] && rows[0].value) {
+            return rows[0].value.approved !== false;
+        }
+    } catch(e) {}
+    return undefined;
+}
+
+async function preloadInvitationApprovals(orders) {
+    var ids = [];
+    orders.forEach(function(o) {
+        if (o.productType === 'invitation' && o.invitationId && !window.__lunaInvApprovalCache) {
+            var cached = window.__lunaInvApprovalCache && window.__lunaInvApprovalCache[o.invitationId];
+            if (cached === undefined) ids.push(o.invitationId);
+        }
+    });
+    if (!ids.length) return;
+    var uniqueIds = [...new Set(ids)];
+    var cfg = window.LUNA_SUPABASE;
+    if (!cfg || !cfg.url || !cfg.anonKey) return;
+    try {
+        var url = cfg.url + "/rest/v1/luna_invitations?select=id,value&id=in.(" + uniqueIds.map(encodeURIComponent).join(",") + ")";
+        var res = await fetch(url, { headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey } });
+        if (!res.ok) return;
+        var rows = await res.json();
+        window.__lunaInvApprovalCache = window.__lunaInvApprovalCache || {};
+        rows.forEach(function(r) {
+            if (r && r.value) window.__lunaInvApprovalCache[r.id] = r.value.approved !== false;
+        });
+    } catch(e) {}
 }
 
 async function approveOrder(id) {
@@ -4807,21 +4850,32 @@ async function approveOrder(id) {
             if (inv) {
                 inv.approved = true;
                 localStorage.setItem('luna_' + o.invitationId, JSON.stringify(inv));
-                /* Təsdiqi Supabase-ə də yaz ki, link başqa cihazda da açılsın */
-                var cfg = window.LUNA_SUPABASE;
-                if (cfg && cfg.url && cfg.anonKey) {
-                    try {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(inv.id || o.invitationId), true);
-                        xhr.setRequestHeader("apikey", cfg.anonKey);
-                        xhr.setRequestHeader("Authorization", "Bearer " + cfg.anonKey);
-                        xhr.setRequestHeader("Content-Type", "application/json");
-                        xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
-                        xhr.onload = function(){ if (xhr.status >= 400) console.warn("Luna approve push failed", xhr.status); };
-                        xhr.send(JSON.stringify({ id: inv.id || o.invitationId, value: inv, updated_at: new Date().toISOString() }));
-                    } catch (e) { console.warn("Luna approve push error", e); }
-                }
             }
+            /* Always push approval to Supabase so link works on any device */
+            var cfg = window.LUNA_SUPABASE;
+            if (cfg && cfg.url && cfg.anonKey) {
+                try {
+                    var rows = await fetch(cfg.url + "/rest/v1/luna_invitations?select=id,value&id=eq." + encodeURIComponent(inv && inv.id || o.invitationId), {
+                        headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey }
+                    }).then(function(r) { return r.json(); });
+                    var val = (rows && rows[0]) ? rows[0].value : null;
+                    if (val) {
+                        val.approved = true;
+                        await fetch(cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(val.id || o.invitationId), {
+                            method: "PATCH",
+                            headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey, "Content-Type": "application/json", Prefer: "return=minimal" },
+                            body: JSON.stringify({ value: val, updated_at: new Date().toISOString() })
+                        });
+                    } else if (inv) {
+                        await fetch(cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(inv.id || o.invitationId), {
+                            method: "POST",
+                            headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+                            body: JSON.stringify({ id: inv.id || o.invitationId, value: inv, updated_at: new Date().toISOString() })
+                        });
+                    }
+                } catch (e) { console.warn("Luna approve push error", e); }
+            }
+            if (window.__lunaInvApprovalCache) window.__lunaInvApprovalCache[o.invitationId] = true;
         } catch(e) {}
         var url = new URL('data/invitation.html', window.location.href);
         url.searchParams.set('id', o.invitationId);

@@ -10387,8 +10387,33 @@ var params =
     };
 })();
 
+/* =====================================================
+   CLOUD INVITATION PRELOAD — fetch from Supabase if
+   not in localStorage, so link works on any device
+===================================================== */
+window.__lunaCloudPreload = (function() {
+    var cfg = window.LUNA_SUPABASE;
+    var qid = (params.get("id") || "").toLowerCase().trim();
+    if (!qid || !cfg || !cfg.url || !cfg.anonKey) return Promise.resolve();
+    var localKey = "luna_" + qid;
+    if (localStorage.getItem(localKey)) return Promise.resolve();
+    var url = cfg.url + "/rest/v1/luna_invitations?select=id,value&id=eq." + encodeURIComponent(qid);
+    return fetch(url, { headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey } })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(rows) {
+            if (rows && rows[0] && rows[0].value) {
+                try { localStorage.setItem(localKey, JSON.stringify(rows[0].value)); } catch(e) {}
+            }
+        })
+        .catch(function(){});
+})();
+
 var invitationId = "";
 var invitation = null;
+
+/* Wrap main logic in async IIFE to await cloud preload */
+(async function() {
+    await window.__lunaCloudPreload;
 
 /* Template demo mode takes priority — a stale luna_last_invitation
    saved from an earlier order must never shadow the ?template= preview */
@@ -12336,6 +12361,7 @@ if (_openingStyle !== "envelope") {
     });
 }
 
+})();
 
 </script>
 
