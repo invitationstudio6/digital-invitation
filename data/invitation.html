@@ -11,6 +11,9 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
+<link rel="stylesheet"
+      href="../css/physical-invitation.css">
+
 <title>Luna | Digital Invitation</title>
 
 <link rel="preconnect"
@@ -12305,6 +12308,7 @@ function _openInvitation() {
         function() {
             opening.classList.add("hidden");
             invitationPage.classList.add("visible");
+            invitationPage.classList.add("hero-revealed");
             window.scrollTo(0, 0);
             _openInvitation._done = true;
             window.__lunaRevealed = true;
@@ -12576,6 +12580,7 @@ html.lx-fx #musicButton{animation:lxBtnGlow 5s ease-in-out infinite;}
   try{
     var docEl=document.documentElement;
     docEl.classList.add("lx-fx");
+    docEl.classList.add("lx-physical");
     var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var fine=window.matchMedia&&window.matchMedia("(pointer: fine)").matches;
 
@@ -12605,20 +12610,41 @@ html.lx-fx #musicButton{animation:lxBtnGlow 5s ease-in-out infinite;}
 
     /* 2) Section + gallery reveal (adds .lx-seen) */
     function markVisible(el){if(el)el.classList.add("lx-seen");}
+    function idx(){var gal=document.getElementById("gallery");if(!gal)return;var imgs=gal.querySelectorAll("img");[].forEach.call(imgs,function(img,i){img.style.setProperty("--lx-i",i);});}
+    function checkVisible(){
+      var vh=window.innerHeight||document.documentElement.clientHeight;
+      [].forEach.call(document.querySelectorAll(".section:not(.lx-seen)"),function(s){
+        var r=s.getBoundingClientRect();
+        if(r.top<vh*.92&&r.bottom>0)markVisible(s);
+      });
+      var gal=document.getElementById("gallery");
+      if(gal&&!gal.classList.contains("lx-seen")){
+        var gr=gal.getBoundingClientRect();
+        if(gr.top<vh*.92&&gr.bottom>0){markVisible(gal);idx();}
+      }
+    }
+    idx();setTimeout(idx,400);setTimeout(idx,1600);
     if("IntersectionObserver" in window){
       var io=new IntersectionObserver(function(entries){
         entries.forEach(function(en){
-          if(en.isIntersecting){markVisible(en.target);io.unobserve(en.target);}
+          if(en.isIntersecting){markVisible(en.target);if(en.target.id==="gallery")idx();}
         });
       },{threshold:.1,rootMargin:"0px 0px -8% 0px"});
       [].forEach.call(document.querySelectorAll(".section"),function(s){io.observe(s);});
-      var gal=document.getElementById("gallery");
-      if(gal){io.observe(gal);function idx(){var imgs=gal.querySelectorAll("img");[].forEach.call(imgs,function(img,i){img.style.setProperty("--lx-i",i);});}
-        idx();setTimeout(idx,400);}
-    }else{
-      [].forEach.call(document.querySelectorAll(".section"),markVisible);
-      var g2=document.getElementById("gallery");if(g2)markVisible(g2);
+      var gal0=document.getElementById("gallery");
+      if(gal0)io.observe(gal0);
     }
+    checkVisible();
+    window.addEventListener("scroll",checkVisible,{passive:true});
+    window.addEventListener("resize",checkVisible);
+    var lxTimer=setInterval(function(){
+      checkVisible();
+      var done=true;
+      [].forEach.call(document.querySelectorAll(".section"),function(s){if(!s.classList.contains("lx-seen"))done=false;});
+      var gal2=document.getElementById("gallery");
+      if(gal2&&!gal2.classList.contains("lx-seen"))done=false;
+      if(done)clearInterval(lxTimer);
+    },700);
 
     /* 3) Ambient themed particles (petals / gold dust / stars / confetti) */
     function ambient(){
