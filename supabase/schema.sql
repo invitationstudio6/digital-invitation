@@ -49,15 +49,23 @@ drop policy if exists "inv public read" on luna_invitations;
 drop policy if exists "inv admin insert" on luna_invitations;
 drop policy if exists "inv admin update" on luna_invitations;
 drop policy if exists "inv admin delete" on luna_invitations;
+drop policy if exists "inv anon insert" on luna_invitations;
+drop policy if exists "inv anon update" on luna_invitations;
 create policy "inv public read"   on luna_invitations for select to anon, authenticated using (true);
 create policy "inv admin insert"  on luna_invitations for insert to authenticated with check (true);
 create policy "inv admin update"  on luna_invitations for update to authenticated using (true) with check (true);
 create policy "inv admin delete"  on luna_invitations for delete to authenticated using (true);
+-- Dəvətnamə linki istənilən cihazda açılsın deyə müştəri öz dəvətnaməsini
+-- yaza bilsin (localStorage-dan əlavə). Oxuma artıq hamıya açıqdır.
+create policy "inv anon insert"  on luna_invitations for insert to anon with check (true);
+create policy "inv anon update"  on luna_invitations for update to anon using (true) with check (true);
 
 -- ---- luna_orders: hərkəs göndərir, yalnız admin oxuyur/dəyişir ----
 drop policy if exists "orders anon insert" on luna_orders;
 drop policy if exists "orders admin read"   on luna_orders;
 drop policy if exists "orders admin update" on luna_orders;
+drop policy if exists "orders admin delete" on luna_orders;
 create policy "orders anon insert"  on luna_orders for insert to anon with check (true);
 create policy "orders admin read"   on luna_orders for select to authenticated using (true);
 create policy "orders admin update" on luna_orders for update to authenticated using (true) with check (true);
+create policy "orders admin delete" on luna_orders for delete to authenticated using (true);

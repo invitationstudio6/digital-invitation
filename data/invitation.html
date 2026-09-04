@@ -2969,30 +2969,29 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     inset: -5%;
     background:
-        linear-gradient(90deg, transparent 0%, rgba(255,236,190,.55) 46%, rgba(255,220,150,.3) 55%, transparent 100%),
-        radial-gradient(ellipse 55% 45% at 50% 45%, rgba(255,240,210,.5), transparent 70%);
+        radial-gradient(ellipse 60% 50% at 50% 42%, rgba(255,242,205,.5), rgba(255,230,180,.16) 45%, transparent 72%);
     mix-blend-mode: screen;
     opacity: 0;
     pointer-events: none;
     z-index: 12;
 }
 .scene-opened[data-opening="curtain"] .ct-stage::after {
-    animation: ctLightSurge 3.4s cubic-bezier(.3,.1,.2,1) 1.2s both;
+    animation: ctLightSurge 3.6s cubic-bezier(.3,.1,.2,1) 1.2s both;
 }
 @keyframes ctLightSurge {
-    0% { opacity: 0; transform: scale(.86) translateX(-6%); }
-    35% { opacity: 1; transform: scale(1.04) translateX(0); }
-    70% { opacity: .55; transform: scale(1) translateX(0); }
-    100% { opacity: .25; transform: scale(1); }
+    0% { opacity: 0; transform: scale(.82); }
+    32% { opacity: 1; transform: scale(1.06); }
+    68% { opacity: .5; transform: scale(1); }
+    100% { opacity: .16; transform: scale(1); }
 }
 
-/* Back wall / cyclorama — grand red velvet drape backdrop (opera house) */
+/* Back wall / cyclorama — grand crimson velvet drape backdrop (opera house) */
 .ct-backwall {
     position: absolute;
     left: -6%; right: -6%; top: -4%; bottom: -12%;
     transform: rotateX(4deg) translateZ(-160px);
     background:
-        radial-gradient(ellipse at 50% 18%, #3A1612 0%, #240C09 48%, #100503 100%);
+        radial-gradient(ellipse at 50% 22%, #7A2A1E 0%, #4E1A12 42%, #2A0D08 78%, #150503 100%);
     overflow: hidden;
 }
 /* Warm stage light washing the velvet */
@@ -3000,21 +2999,23 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 46% 30% at 50% 30%, rgba(255,215,150,.2), transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 110%, rgba(212,80,50,.18), transparent 60%),
-        linear-gradient(180deg, rgba(255,220,160,.05), transparent 55%);
+        radial-gradient(ellipse 52% 36% at 50% 32%, rgba(255,225,160,.42), transparent 68%),
+        radial-gradient(ellipse 100% 62% at 50% 115%, rgba(255,150,90,.34), transparent 62%),
+        radial-gradient(ellipse 32% 40% at 9% 30%, rgba(255,190,125,.3), transparent 75%),
+        radial-gradient(ellipse 32% 40% at 91% 30%, rgba(255,190,125,.3), transparent 75%),
+        linear-gradient(180deg, rgba(255,225,170,.15), transparent 50%);
     mix-blend-mode: screen;
 }
 .ct-backwall-texture {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle 1px at 25% 35%, rgba(255,255,255,.05), transparent),
-        radial-gradient(circle 1px at 65% 60%, rgba(255,255,255,.04), transparent),
-        radial-gradient(circle 1px at 80% 25%, rgba(255,255,255,.05), transparent);
+        radial-gradient(circle 1px at 25% 35%, rgba(255,220,180,.08), transparent),
+        radial-gradient(circle 1px at 65% 60%, rgba(255,220,180,.06), transparent),
+        radial-gradient(circle 1px at 80% 25%, rgba(255,220,180,.07), transparent);
 }
 
-/* Deep red velvet drape with vertical folds receding in perspective */
+/* Deep crimson velvet drape with vertical folds receding in perspective */
 .ct-drape {
     position: absolute;
     inset: 0;
@@ -3028,14 +3029,18 @@ a { text-decoration: none; color: inherit; }
     border-radius: 0 0 18% 0 / 0 0 30% 0;
     background:
         linear-gradient(90deg,
-            rgba(0,0,0,.5) 0%, transparent 18%,
-            rgba(0,0,0,0) 55%,
-            rgba(255,255,255,.08) 78%, rgba(255,255,255,.04) 100%),
-        linear-gradient(180deg, #5A1410, #7E1F18 55%, #4A0F0C);
-    box-shadow: inset -14px 0 34px rgba(0,0,0,.5), inset 6px 0 20px rgba(0,0,0,.3);
+            rgba(30,4,2,.55) 0%, transparent 22%,
+            rgba(255,180,130,.16) 42%,
+            rgba(255,240,210,.3) 70%, rgba(255,220,170,.14) 82%, transparent 100%),
+        linear-gradient(180deg,
+            #C24A3A 0%, #A83226 42%, #8E2418 72%, #6B1A15 100%);
+    box-shadow:
+        inset -16px 0 40px rgba(80,6,2,.55),
+        inset 10px 0 26px rgba(0,0,0,.3),
+        0 8px 22px rgba(0,0,0,.35);
 }
-.ct-drape i:nth-child(odd) { filter: brightness(.92); }
-.ct-drape i:nth-child(3n)  { filter: brightness(1.08); }
+.ct-drape i:nth-child(odd) { filter: brightness(.9); }
+.ct-drape i:nth-child(3n)  { filter: brightness(1.12); }
 .ct-drape i:nth-child(1){ left:0; }
 .ct-drape i:nth-child(2){ left:8.3333%; }
 .ct-drape i:nth-child(3){ left:16.6666%; }
@@ -3048,21 +3053,23 @@ a { text-decoration: none; color: inherit; }
 .ct-drape i:nth-child(10){ left:75%; }
 .ct-drape i:nth-child(11){ left:83.3333%; }
 .ct-drape i:nth-child(12){ left:91.6666%; }
-/* Drape center is pushed back so the names sit in the reveal; sides steepen */
-.ct-drape i:nth-child(n+4):nth-child(-n+9) { transform: translateZ(-40px); filter: brightness(.82); }
+/* Drape center sits in the stage-light pool; outer folds brighten for balance */
+.ct-drape i:nth-child(n+4):nth-child(-n+9) { transform: translateZ(-40px); filter: brightness(.9); }
 .ct-drape i:nth-child(n+2):nth-child(-n+3),
-.ct-drape i:nth-child(n+10):nth-child(-n+11) { transform: translateZ(-20px); filter: brightness(.9); }
+.ct-drape i:nth-child(n+10):nth-child(-n+11) { transform: translateZ(-20px); filter: brightness(.95); }
+.ct-drape i:first-child,
+.ct-drape i:last-child { filter: brightness(1.06); }
 /* A deeper inner drape layer for real operatic depth */
 .ct-drape-reveal {
     position: absolute;
     left: 22%; right: 22%; top: 0; bottom: 0;
     background:
         repeating-linear-gradient(90deg,
-            rgba(0,0,0,.28) 0 3px, transparent 3px 22px,
-            rgba(255,200,150,.06) 22px 25px, transparent 25px 44px),
-        linear-gradient(180deg, #2A0E0B, #160705 65%, #0B0302);
+            rgba(60,6,2,.4) 0 3px, transparent 3px 22px,
+            rgba(255,205,150,.1) 22px 25px, transparent 25px 44px),
+        linear-gradient(180deg, #4A1410, #2A0A07 65%, #160503);
     transform: translateZ(-70px);
-    box-shadow: 0 0 90px rgba(0,0,0,.7);
+    box-shadow: 0 0 90px rgba(0,0,0,.6);
 }
 /* Side drape curtains (operatic legs) framing the stage */
 .ct-drape-side {
@@ -3072,13 +3079,24 @@ a { text-decoration: none; color: inherit; }
     z-index: 3;
     background:
         repeating-linear-gradient(90deg,
-            rgba(0,0,0,.45) 0 4px, transparent 4px 18px,
-            rgba(255,255,255,.06) 18px 21px, transparent 21px 36px),
-        linear-gradient(90deg, #3A0E0B, #6B1A15 55%, #4A100D);
-    box-shadow: 0 0 40px rgba(0,0,0,.7), inset 0 0 30px rgba(0,0,0,.5);
+            rgba(50,4,2,.5) 0 4px, transparent 4px 18px,
+            rgba(255,220,170,.16) 18px 21px, transparent 21px 36px),
+        linear-gradient(90deg, #7E241C, #A83226 55%, #8E281C);
+    box-shadow: 0 0 40px rgba(0,0,0,.55), inset 0 0 30px rgba(0,0,0,.4);
 }
 .ct-drape-side-l { left: -4%; transform: rotateY(18deg) translateZ(-60px); }
 .ct-drape-side-r { right: -4%; transform: rotateY(-18deg) translateZ(-60px); }
+
+/* Warm footlight glow rising from the stage floor onto the velvet */
+.ct-backwall::before {
+    content: "";
+    position: absolute;
+    left: -10%; right: -10%; bottom: 0; height: 55%;
+    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255,160,100,.4), rgba(255,180,120,.14) 45%, transparent 75%);
+    mix-blend-mode: screen;
+    filter: blur(4px);
+}
+
 
 
 /* Stage floor with perspective + reflection strip */
@@ -3831,8 +3849,8 @@ a { text-decoration: none; color: inherit; }
 .ct-spot-l {
     left: 10%;
     background:
-        linear-gradient(180deg, rgba(255,238,190,.55), rgba(255,225,150,.18) 55%, transparent 85%),
-        linear-gradient(90deg, transparent 0%, rgba(255,240,200,.22) 12%, transparent 34%);
+        linear-gradient(180deg, rgba(255,238,190,.62), rgba(255,220,150,.26) 55%, transparent 88%),
+        linear-gradient(90deg, transparent 0%, rgba(255,238,200,.26) 12%, transparent 34%);
     transform: rotate(18deg);
     transform-origin: 15% 0;
     clip-path: polygon(30% 0, 70% 0, 100% 100%, 45% 100%);
@@ -3840,8 +3858,8 @@ a { text-decoration: none; color: inherit; }
 .ct-spot-r {
     right: 10%;
     background:
-        linear-gradient(180deg, rgba(255,238,190,.55), rgba(255,225,150,.18) 55%, transparent 85%),
-        linear-gradient(90deg, transparent 66%, rgba(255,240,200,.22) 88%, transparent 100%);
+        linear-gradient(180deg, rgba(255,238,190,.62), rgba(255,220,150,.26) 55%, transparent 88%),
+        linear-gradient(90deg, transparent 66%, rgba(255,238,200,.26) 88%, transparent 100%);
     transform: rotate(-18deg);
     transform-origin: 85% 0;
     clip-path: polygon(30% 0, 70% 0, 55% 100%, 0 100%);
@@ -3859,7 +3877,7 @@ a { text-decoration: none; color: inherit; }
     left: 50%; top: 42%;
     width: 46vw; height: 34vh;
     transform: translate(-50%,-50%);
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,240,200,.4), rgba(255,220,150,.16) 45%, transparent 72%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,238,195,.45), rgba(255,220,155,.18) 45%, transparent 72%);
     filter: blur(16px);
     mix-blend-mode: screen;
     opacity: 0;

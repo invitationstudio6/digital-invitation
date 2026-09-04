@@ -1332,6 +1332,73 @@ img{background:linear-gradient(135deg,#f5ede3,#ebe3d5)}
 #video-section .section::before{display:none}
 #cta-final .section::before{display:none}
 </style>
+<style id="professional-polish">
+/* Luna editorial polish: calmer hierarchy, tactile invitation-studio feel */
+:root{
+  --cream:#F8F4ED;
+  --cream-dark:#EEE7DB;
+  --dark:#1E2028;
+  --dark-soft:#30333D;
+  --gold:#B98B52;
+  --gold-light:#D8BC91;
+  --gold-dark:#8E673B;
+  --rose:#A96973;
+  --text:#27231F;
+  --text-soft:#685D52;
+  --muted:#8D8175;
+}
+body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.2)),radial-gradient(ellipse at 50% -10%,rgba(185,139,82,.08),transparent 58%)}
+.navbar{width:min(1240px,calc(100% - 48px));height:72px;top:18px;padding:0 30px;border-radius:18px;background:rgba(250,247,241,.84);border-color:rgba(142,103,59,.16);box-shadow:0 12px 36px rgba(51,39,27,.08),0 0 0 1px rgba(255,255,255,.65) inset}
+.navbar.scrolled{top:10px;background:rgba(250,247,241,.96);border-color:rgba(142,103,59,.22)}
+.hero{padding-top:136px;background:radial-gradient(ellipse at 50% 24%,rgba(255,255,255,.85),transparent 46%),linear-gradient(180deg,#FBF8F2 0%,#F3EDE3 68%,#EDE4D7 100%)}
+.hero::before{opacity:.22}
+.hero-label{border-radius:4px;padding:11px 18px;background:rgba(255,253,249,.58);letter-spacing:3px;color:var(--gold-dark)}
+.hero h1{font-size:clamp(56px,10vw,128px);line-height:.86;letter-spacing:-3.5px}
+.hero h1 .hero-gradient{display:inline-block;background:linear-gradient(100deg,#24252d 15%,#24252d 42%,#B98B52 61%,#A96973 82%,#24252d);background-size:220% 100%;background:none!important;color:#24252d!important;-webkit-text-fill-color:#24252d!important}
+.hero h1 span{margin-top:28px;font-size:clamp(12px,1.7vw,20px);letter-spacing:6px;color:#B98B52;-webkit-text-fill-color:#B98B52}
+.hero-text{max-width:580px;font-size:13px;line-height:1.9;color:#6C6054}
+.hero-buttons{gap:12px;margin-top:34px}
+.btn{min-height:52px;padding:0 28px;border-radius:6px;letter-spacing:2px}
+.btn-dark{background:#20212B;box-shadow:0 12px 26px rgba(32,33,43,.2)}
+.btn-light{background:rgba(255,253,249,.72);border-color:rgba(142,103,59,.2)}
+.section-heading h2{font-style:normal;letter-spacing:-1.2px;color:#24252D;background:none;-webkit-text-fill-color:initial}
+.section-heading p{color:#75685C}
+.hero-inv-card{border-radius:12px;box-shadow:0 24px 64px -18px rgba(45,35,24,.3),0 0 0 3px rgba(255,252,247,.74),0 0 0 4px rgba(185,139,82,.22)}
+.hero-deco-ring{border-color:rgba(185,139,82,.18)}
+@media(max-width:700px){
+  .navbar{width:calc(100% - 28px);top:10px;height:64px;padding:0 18px;border-radius:14px}
+  .hero{padding-top:112px}
+  .hero h1{font-size:clamp(54px,16vw,82px);letter-spacing:-2px}
+  .hero h1 span{letter-spacing:3px;font-size:12px}
+  .hero-text{padding:0 12px}
+  .hero-buttons{flex-direction:column;align-items:stretch;padding:0 18px}
+  .hero-buttons .btn{width:100%}
+}
+</style>
+<style id="invitation-materials-polish">
+/* Invitation gallery: paper, ink, foil and depth */
+.design-thumb{position:relative;overflow:hidden;background:#f8f3eb;border:1px solid rgba(109,78,48,.14);box-shadow:0 16px 34px rgba(57,38,23,.08),0 2px 0 rgba(255,255,255,.8) inset;transform:translateZ(0);transition:transform .55s cubic-bezier(.19,1,.22,1),box-shadow .55s cubic-bezier(.19,1,.22,1)}
+.design-thumb::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.2;background:repeating-linear-gradient(105deg,rgba(75,48,25,.035) 0,rgba(75,48,25,.035) 1px,transparent 1px,transparent 5px);mix-blend-mode:multiply}
+.design-thumb:hover,.design-thumb:focus-within{transform:translateY(-8px) rotateX(1deg);box-shadow:0 28px 52px rgba(57,38,23,.18),0 2px 0 rgba(255,255,255,.9) inset}
+.dt-imgwrap{isolation:isolate;background:#e9dfd1;perspective:1100px}
+.design-thumb-img{transition:transform 1.2s cubic-bezier(.19,1,.22,1),filter 1.2s ease!important;filter:saturate(.82) contrast(1.02)}
+.design-thumb:hover .design-thumb-img,.design-thumb:focus-within .design-thumb-img{transform:scale(1.055);filter:saturate(1.08) contrast(1.04)}
+.dt-tint{opacity:.08!important;background:linear-gradient(135deg,var(--tpl-c1),transparent 45%,var(--tpl-c2))!important;mix-blend-mode:color}
+.anim-badge{background:rgba(25,25,31,.88);border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 18px rgba(25,20,14,.2);letter-spacing:1.8px}
+.opv{perspective:1200px;transform-style:preserve-3d;filter:drop-shadow(0 14px 22px rgba(0,0,0,.18));transition:opacity .28s ease}
+.design-thumb:hover .opv,.design-thumb:focus-within .opv{opacity:1}
+.opv-curtain i,.opv-door i,.opv-wdoor .w-door,.opv-gdoor .gd-l,.opv-gdoor .gd-r{backface-visibility:hidden;transform-style:preserve-3d;box-shadow:inset 0 0 24px rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.08)}
+.opv-curtain .c-l,.opv-curtain .c-r{transition:transform 1.35s cubic-bezier(.16,1,.3,1),filter 1.35s ease!important}
+.design-thumb:hover .opv-curtain .c-l,.design-thumb:focus-within .opv-curtain .c-l{transform:perspective(850px) translateX(-38%) rotateY(78deg)!important;filter:brightness(.72)}
+.design-thumb:hover .opv-curtain .c-r,.design-thumb:focus-within .opv-curtain .c-r{transform:perspective(850px) translateX(38%) rotateY(-78deg)!important;filter:brightness(.72)}
+.opv-env{transform-style:preserve-3d}
+.opv-env .e-flp,.opv-env .e-ltr{backface-visibility:hidden;transform-origin:center top!important;transition:transform 1.05s cubic-bezier(.16,1,.3,1),box-shadow 1.05s ease!important}
+.design-thumb:hover .opv-env .e-flp,.design-thumb:focus-within .opv-env .e-flp{transform:perspective(700px) rotateX(178deg)!important}
+.design-thumb:hover .opv-env .e-ltr,.design-thumb:focus-within .opv-env .e-ltr{transform:perspective(700px) translateY(-118%) rotateX(4deg)!important}
+.opv-wax i{box-shadow:0 10px 20px rgba(74,20,20,.34),inset 0 1px 2px rgba(255,255,255,.25)!important;transition:transform .7s cubic-bezier(.16,1,.3,1),box-shadow .7s ease!important}
+.design-thumb:hover .opv-wax i,.design-thumb:focus-within .opv-wax i{transform:scale(1.28) rotate(14deg)!important}
+@media (prefers-reduced-motion:reduce){.design-thumb,.design-thumb-img,.opv,.opv-curtain i,.opv-env .e-flp,.opv-env .e-ltr{transition:none!important;animation:none!important}.design-thumb:hover,.design-thumb:focus-within{transform:none}}
+</style>
 </head>
 <body>
 

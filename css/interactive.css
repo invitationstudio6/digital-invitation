@@ -1004,3 +1004,17 @@
     }
   }
 }
+
+
+/* Material depth pass for live invitation scenes */
+.scene-engine{perspective:1400px;isolation:isolate}
+.scene{transform-style:preserve-3d;backface-visibility:hidden}
+.scene.active{animation-duration:1.15s}
+.scene-content{transform:translateZ(24px);text-rendering:optimizeLegibility}
+.scene-bg{will-change:transform,filter;filter:saturate(.94) contrast(1.03)}
+.scene-overlay{background:linear-gradient(180deg,rgba(12,9,7,.06),transparent 42%,rgba(12,9,7,.18));mix-blend-mode:multiply}
+.opv{transform-style:preserve-3d;perspective:1200px}
+.opv-curtain,.opv-door,.opv-env,.opv-wdoor,.opv-gdoor{transform-style:preserve-3d;filter:drop-shadow(0 18px 26px rgba(0,0,0,.24))}
+.opv-curtain .c-l,.opv-curtain .c-r,.opv-door .d-l,.opv-door .d-r,.opv-env .e-flp,.opv-env .e-ltr,.opv-wdoor .w-door,.opv-gdoor .gd-l,.opv-gdoor .gd-r{backface-visibility:hidden;transform-style:preserve-3d}
+.scene-hint{letter-spacing:3px;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.scene,.scene-bg,.scene-enter-fade,.scene-enter-slide-up,.scene-enter-zoom,.scene-enter-slide-left,.scene-enter-reveal{animation:none!important;transition:none!important}.scene.active .scene-bg{transform:none}}
