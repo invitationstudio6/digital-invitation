@@ -322,15 +322,9 @@ html.lx-physical .sig-card::after {
   border: 1px solid rgba(196,168,130,.34);
   box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset;
 }
-/* Gentle floating is subtly more organic */
+/* Names on the invitation card stay rock-still — no floating wobble */
 html.lx-physical .sig-scene.active .sig-card {
-  animation:
-    sigCardFloat 7s ease-in-out infinite,
-    lxCardDrift 9s ease-in-out infinite;
-}
-@keyframes lxCardDrift {
-  0%, 100% { transform: perspective(900px) rotateX(0) rotateY(0); }
-  50% { transform: perspective(900px) rotateX(.7deg) rotateY(-.6deg) translateY(-5px); }
+  animation: none;
 }
 
 /* ---------------------------------------------------------
