@@ -3480,19 +3480,14 @@ a { text-decoration: none; color: inherit; }
     opacity: 0;
     filter: blur(8px) brightness(1.4);
 }
-/* Lights up as the stage is revealed (after curtains part) */
+/* Lights up as the stage is revealed (after curtains part) —
+   steady light-up, names stay perfectly still (no transform/scale wobble) */
 .scene-opened[data-opening="curtain"] .ct-stage-title {
     opacity: 1;
     filter: blur(0) brightness(1);
     transition: opacity 1.6s ease 1.4s, filter 2s ease 1.2s;
-    animation: ctTitleLight 3.2s cubic-bezier(.2,.9,.3,1) 1.4s both;
 }
-@keyframes ctTitleLight {
-    0% { opacity: 0; transform: translateZ(30px) scale(.92); filter: blur(8px) brightness(1.6); }
-    45% { opacity: 1; transform: translateZ(60px) scale(1.03); filter: blur(0) brightness(1.15); }
-    100% { opacity: 1; transform: translateZ(50px) scale(1); filter: blur(0) brightness(1); }
-}
-/* Divine warm light pool behind the names */
+/* Steady warm light pool behind the names — static, no pulsing */
 .ct-tt-glow {
     position: absolute;
     left: 50%; top: 55%;
@@ -3502,10 +3497,8 @@ a { text-decoration: none; color: inherit; }
     filter: blur(22px);
     mix-blend-mode: screen;
     z-index: -1;
-    animation: ctTitleGlow 5s ease-in-out infinite;
+    opacity: .9;
 }
-@keyframes ctTitleGlow { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
-/* Eyebrow line */
 .ct-tt-eyebrow {
     font-family: "DM Sans", sans-serif;
     font-size: 11px;
