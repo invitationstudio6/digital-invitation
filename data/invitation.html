@@ -2333,6 +2333,30 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="ribbon"] .envelope-scene { display: none; }
 
+/* Realistic 3D ribbon — full-bleed WebGL canvas layered where the CSS box
+   sat; the old CSS box remains as a no-WebGL fallback and is hidden once
+   the 3D scene initialises. */
+[data-opening="ribbon"] .ribbon-3d {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+[data-opening="ribbon"] .ribbon-3d canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+[data-opening="ribbon"] .ribbon-3d-active .rb-half-l,
+[data-opening="ribbon"] .ribbon-3d-active .rb-half-r,
+[data-opening="ribbon"] .ribbon-3d-active .rb-band-v,
+[data-opening="ribbon"] .ribbon-3d-active .rb-band-h,
+[data-opening="ribbon"] .ribbon-3d-active .rb-glow,
+[data-opening="ribbon"] .ribbon-3d-active .rb-bow,
+[data-opening="ribbon"] .ribbon-3d-active .rb-spark {
+    display: none !important;
+}
+
 /* Full-bleed ribbon stage: strip every ancestor property that could turn
    the fixed panels' containing block into the (small) scene box. */
 [data-opening="ribbon"] .opening,
@@ -4764,6 +4788,7 @@ html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 
 
 .hero-names {
     margin-top: 24px;
+    max-width: 100%;
 }
 
 .hero-names .name {
@@ -4772,9 +4797,13 @@ html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 
     font-size: clamp(64px,12vw,140px);
     font-weight: 300;
     font-style: italic;
-    line-height: .85;
+    line-height: 1;
     color: var(--white);
     text-shadow: 0 2px 40px rgba(0,0,0,.15);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    padding: 0 .12em;
     animation: nameReveal 1.2s .3s cubic-bezier(.19,1,.22,1) both;
 }
 
@@ -4793,6 +4822,8 @@ html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 
     font-size: clamp(28px,4vw,44px);
     color: rgba(255,252,247,.40);
     margin: 8px 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     animation: nameReveal 1s .4s cubic-bezier(.19,1,.22,1) both;
 }
 
@@ -9169,6 +9200,7 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
     <!-- Signature Scene · RIBBON UNWRAP -->
     <div class="sig-scene" id="ribbonScene" data-scene-for="ribbon">
+        <div class="ribbon-3d" id="ribbon3d"></div>
         <div class="rb-half-l"></div>
         <div class="rb-half-r"></div>
         <div class="rb-band-v"></div>
@@ -10996,6 +11028,26 @@ document.getElementById("heroEyebrow").textContent =
 document.getElementById("date").textContent =
     displayDate;
 
+function lunaFitHeroNames(container) {
+    if (!container) return;
+    var names = container.querySelectorAll(".name");
+    if (!names.length) return;
+    var longest = "";
+    for (var i = 0; i < names.length; i++) {
+        var t = (names[i].textContent || "").replace(/\s+/g, " ").trim();
+        if (t.length > longest.length) longest = t;
+    }
+    var len = longest.length;
+    if (len <= 9) return;
+    var cap;
+    if (len <= 13)      cap = "clamp(52px,9vw,104px)";
+    else if (len <= 18) cap = "clamp(42px,7vw,80px)";
+    else                cap = "clamp(34px,5.5vw,64px)";
+    for (var j = 0; j < names.length; j++) {
+        names[j].style.fontSize = cap;
+    }
+}
+
 (function buildHeroNames() {
 
     var container = document.getElementById("heroNames");
@@ -11046,6 +11098,8 @@ document.getElementById("date").textContent =
             '</span>';
 
     }
+
+    lunaFitHeroNames(container);
 
 })();
 
@@ -11988,7 +12042,7 @@ var _openingStyle = (function() {
         "door":           { id: "doorScene",    delay: 2600 },
         "stairs":         { id: "stairsScene",  delay: 1400 },
         "envelope-seal":  { id: "envSealScene", delay: 1500 },
-        "ribbon":         { id: "ribbonScene",  delay: 3000 },
+        "ribbon":         { id: "ribbonScene",  delay: 3400 },
         "wood-door":      { id: "woodDoorScene", delay: 1500 },
         "magic-wand":     { id: "magicWandScene", delay: 1900 },
         "glowing-door":   { id: "glowingDoorScene", delay: 1800 },
@@ -12335,6 +12389,9 @@ function _openInvitation() {
 function _openTriggers() {
     document.documentElement.classList.add("scene-opened");
     try { envelope.classList.add("open"); } catch(e) {}
+    if (window.__lunaRibbon3D && typeof window.__lunaRibbon3D.play === "function") {
+        window.__lunaRibbon3D.play();
+    }
 }
 
 openButton.addEventListener("click", _openInvitation);
@@ -12724,6 +12781,17 @@ html.lx-fx #musicButton{animation:lxBtnGlow 5s ease-in-out infinite;}
 </script>
 
 <script src="../js/physical-invitation.js"></script>
+
+<!-- Realistic 3D ribbon opening (gift box that unties) -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../js/ribbon-3d.js"></script>
 
 </body>
 
