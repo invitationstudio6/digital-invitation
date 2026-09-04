@@ -886,3 +886,290 @@ html.lx-physical[data-opening="ribbon"] .rb-bow {
     padding: 30px 18px;
   }
 }
+
+/* =========================================================
+   LUNA PREMIUM — ALIVE OPENING SCENES (illustrated figures,
+   atmosphere, hero scene backdrops, parallax)
+========================================================= */
+
+/* ---- Hero parallax backdrop layer (injected by JS) ---- */
+html.lx-physical .lx-hero-bg {
+  position: absolute;
+  inset: -7%;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  transform: translate3d(0, calc(var(--lx-sy, 0) * -0.13px), 0);
+}
+
+/* ---- Stairs: bride & groom climbing ---- */
+html.lx-physical .lx-couple {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  width: 132px;
+  height: 158px;
+  transform: translateX(-50%);
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+}
+html.lx-physical .lx-couple-halo {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 170px;
+  height: 96px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(255,205,110,.34), transparent 66%);
+  filter: blur(7px);
+}
+html.lx-physical .lx-couple-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: lxBob 1.7s ease-in-out infinite;
+}
+html.lx-physical[data-opening="stairs"].scene-opened .lx-couple {
+  animation: lxClimb 2.2s cubic-bezier(.45,.05,.3,1) .15s both;
+}
+@keyframes lxClimb {
+  0% { opacity: 0; transform: translateX(-50%) translateY(6px) scale(1); }
+  12% { opacity: 1; }
+  100% { opacity: 1; transform: translateX(-50%) translateY(-298px) scale(.78); }
+}
+@keyframes lxBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ---- Door / wood-door: castle torchlight + drifting fog ---- */
+html.lx-physical .lx-torch {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+html.lx-physical .lx-torch i {
+  position: absolute;
+  top: 33%;
+  width: 18px;
+  height: 54px;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 50% 34%, #fff6dd, #ffcf7d 45%, #ff9a3c 70%, rgba(255,122,40,0) 80%);
+  box-shadow: 0 0 26px rgba(255,160,60,.75), 0 0 84px rgba(255,140,50,.42);
+  animation: lxTorch 2.1s ease-in-out infinite;
+}
+html.lx-physical .lx-torch .lx-torch-l { left: 7%; }
+html.lx-physical .lx-torch .lx-torch-r { right: 7%; animation-delay: .55s; }
+@keyframes lxTorch {
+  0%, 100% { transform: scaleY(1) rotate(-2deg); opacity: .9; }
+  50% { transform: scaleY(1.2) rotate(3deg) translateY(-3px); opacity: 1; }
+}
+html.lx-physical .lx-fog {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+html.lx-physical .lx-fog i {
+  position: absolute;
+  bottom: -24%;
+  left: -10%;
+  width: 120%;
+  height: 62%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(205,210,220,.13), transparent 70%);
+  filter: blur(12px);
+  animation: lxFog 18s linear infinite;
+}
+html.lx-physical .lx-fog i:nth-child(2) { animation-delay: -6s; opacity: .7; }
+html.lx-physical .lx-fog i:nth-child(3) { animation-delay: -12s; opacity: .5; height: 46%; }
+html.lx-physical .lx-fog i:nth-child(4) { animation-delay: -15s; opacity: .4; }
+html.lx-physical .lx-fog i:nth-child(5) { animation-delay: -3s; opacity: .55; height: 54%; }
+html.lx-physical .lx-fog i:nth-child(6) { animation-delay: -9s; opacity: .35; }
+@keyframes lxFog {
+  from { transform: translateX(-7%); }
+  to { transform: translateX(7%); }
+}
+
+/* ---- Curtain: theatre spotlight + audience glow ---- */
+html.lx-physical .lx-spot {
+  position: absolute;
+  top: -12%;
+  left: 50%;
+  width: 48%;
+  height: 120%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(255,236,190,.30), rgba(255,236,190,.06) 66%, transparent);
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: lxSpot 6.5s ease-in-out infinite;
+}
+@keyframes lxSpot { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+html.lx-physical .lx-audience {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32%;
+  background: radial-gradient(ellipse at 50% 140%, rgba(0,0,0,.6), transparent 72%);
+  pointer-events: none;
+}
+
+/* =========================================================
+   HERO SCENE BACKDROPS — after the opening, each theme's
+   hero becomes its own stage instead of a plain gradient.
+========================================================= */
+
+/* Theatre — grand curtain: velvet wings + dark stage + spotlight */
+html.lx-physical[data-opening="curtain"] .lx-hero-bg {
+  background:
+    linear-gradient(90deg, #400d09 0%, #551410 9%, #370a06 17%, transparent 18%),
+    linear-gradient(270deg, #400d09 0%, #551410 9%, #370a06 17%, transparent 18%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 22px, transparent 22px 34px),
+    linear-gradient(90deg, #2a0705 0%, transparent 20%, transparent 80%, #2a0705 100%),
+    radial-gradient(110% 80% at 50% 4%, rgba(255,236,190,.32), transparent 50%),
+    linear-gradient(180deg, #150a08 0%, #241009 52%, #36150c 100%);
+}
+html.lx-physical[data-opening="curtain"] .lx-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,236,190,.08) 0%, transparent 40%), radial-gradient(ellipse at 50% 118%, rgba(0,0,0,.55), transparent 60%);
+}
+
+/* Grand staircase — warm light at the top, the couple below */
+html.lx-physical[data-opening="stairs"] .lx-hero-bg {
+  background:
+    linear-gradient(180deg, rgba(30,18,12,.55) 0%, transparent 34%),
+    radial-gradient(80% 46% at 50% 0%, rgba(255,205,120,.32), transparent 62%),
+    repeating-linear-gradient(180deg, rgba(0,0,0,.18) 0 3px, transparent 3px 54px),
+    linear-gradient(180deg, #2a1a12 0%, #4a2f1c 60%, #63401f 100%);
+}
+
+/* Old book — candlelit library / desk */
+html.lx-physical[data-opening="old-book"] .lx-hero-bg {
+  background:
+    radial-gradient(70% 46% at 50% 16%, rgba(255,190,90,.30), transparent 58%),
+    radial-gradient(50% 40% at 80% 70%, rgba(255,150,60,.16), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(60,38,20,.35) 0 4px, transparent 4px 70px),
+    linear-gradient(180deg, #1d1209 0%, #3a2510 60%, #4a2e14 100%);
+}
+
+/* Ribbon — silk blush with satin sheen */
+html.lx-physical[data-opening="ribbon"] .lx-hero-bg {
+  background:
+    linear-gradient(118deg, transparent 34%, rgba(255,255,255,.30) 44%, transparent 54%),
+    radial-gradient(80% 50% at 50% 30%, rgba(255,214,214,.30), transparent 60%),
+    linear-gradient(160deg, #fbe8ec 0%, #f3d3dc 55%, #e9b8c6 100%);
+}
+
+/* Golden ring — jeweller's velvet under a spot */
+html.lx-physical[data-opening="golden-ring"] .lx-hero-bg {
+  background:
+    radial-gradient(70% 50% at 50% 22%, rgba(255,214,120,.32), transparent 55%),
+    radial-gradient(40% 34% at 50% 22%, rgba(255,255,255,.16), transparent 70%),
+    linear-gradient(180deg, #0e1412 0%, #14241d 55%, #1b2e24 100%);
+}
+
+/* Castle door — stone hall with warm torch glow */
+html.lx-physical[data-opening="wood-door"] .lx-hero-bg,
+html.lx-physical[data-opening="door"] .lx-hero-bg {
+  background:
+    radial-gradient(46% 40% at 18% 42%, rgba(255,150,55,.22), transparent 60%),
+    radial-gradient(46% 40% at 82% 42%, rgba(255,150,55,.22), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 2px, transparent 2px 54px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 2px, transparent 2px 92px),
+    linear-gradient(180deg, #160f0a 0%, #241712 55%, #2c1a12 100%);
+}
+
+/* Wax seal — aged parchment letter */
+html.lx-physical[data-opening="wax-seal"] .lx-hero-bg,
+html.lx-physical[data-opening="envelope-seal"] .lx-hero-bg {
+  background:
+    radial-gradient(70% 50% at 50% 30%, rgba(120,84,44,.16), transparent 62%),
+    linear-gradient(160deg, #f2e5c9 0%, #e7d3ae 55%, #dcc294 100%);
+}
+
+/* Starry night — constellations + bokeh */
+html.lx-physical[data-opening="starry-night"] .lx-hero-bg {
+  background:
+    radial-gradient(2px 2px at 18% 24%, rgba(255,255,255,.8), transparent 70%),
+    radial-gradient(2px 2px at 72% 30%, rgba(255,255,255,.6), transparent 70%),
+    radial-gradient(3px 3px at 46% 16%, rgba(200,215,255,.7), transparent 70%),
+    radial-gradient(2px 2px at 86% 52%, rgba(255,255,255,.55), transparent 70%),
+    radial-gradient(60% 40% at 50% 0%, rgba(120,150,230,.20), transparent 60%),
+    linear-gradient(180deg, #0a0f24 0%, #131a38 60%, #1a2346 100%);
+}
+
+/* Candlelight — warm intimate dark */
+html.lx-physical[data-opening="candlelight"] .lx-hero-bg {
+  background:
+    radial-gradient(54% 42% at 50% 58%, rgba(255,160,60,.28), transparent 62%),
+    radial-gradient(30% 26% at 50% 58%, rgba(255,200,120,.20), transparent 70%),
+    linear-gradient(180deg, #0d0806 0%, #1a1008 55%, #201309 100%);
+}
+
+/* Winter drift — frost + ice light */
+html.lx-physical[data-opening="winter-drift"] .lx-hero-bg {
+  background:
+    radial-gradient(70% 50% at 50% 24%, rgba(200,225,250,.26), transparent 60%),
+    radial-gradient(3px 3px at 30% 30%, rgba(255,255,255,.7), transparent 70%),
+    radial-gradient(3px 3px at 64% 20%, rgba(255,255,255,.6), transparent 70%),
+    linear-gradient(180deg, #dfe9f3 0%, #eef3f8 60%, #f6f9fc 100%);
+}
+
+/* Golden sparkles / champagne — celebratory gold */
+html.lx-physical[data-opening="gold-sparkles"] .lx-hero-bg,
+html.lx-physical[data-opening="champagne"] .lx-hero-bg,
+html.lx-physical[data-opening="celebration-pop"] .lx-hero-bg,
+html.lx-physical[data-opening="confetti"] .lx-hero-bg {
+  background:
+    radial-gradient(60% 44% at 50% 20%, rgba(255,208,90,.28), transparent 58%),
+    radial-gradient(34% 30% at 50% 20%, rgba(255,244,200,.24), transparent 70%),
+    linear-gradient(180deg, #1a140c 0%, #2b2012 60%, #3a2a16 100%);
+}
+
+/* Botanical / floral — garden air */
+html.lx-physical[data-opening="floral-paper"] .lx-hero-bg,
+html.lx-physical[data-opening="flowers-bloom"] .lx-hero-bg,
+html.lx-physical[data-opening="butterfly"] .lx-hero-bg,
+html.lx-physical[data-opening="ancient-forest"] .lx-hero-bg {
+  background:
+    radial-gradient(40% 34% at 12% 20%, rgba(122,154,96,.22), transparent 60%),
+    radial-gradient(40% 34% at 88% 74%, rgba(200,152,96,.18), transparent 60%),
+    linear-gradient(160deg, #eef2e7 0%, #e2ead6 55%, #d4e0c4 100%);
+}
+
+/* Gentle ambient drift so each scene feels alive */
+html.lx-physical[data-opening] .lx-hero-bg {
+  animation: lxHeroDrift 16s ease-in-out infinite alternate;
+}
+@keyframes lxHeroDrift {
+  from { background-position: 50% 46%; }
+  to { background-position: 50% 58%; }
+}
+
+/* Keep the names readable over scene backdrops */
+html.lx-physical[data-opening] .hero::before {
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(0,0,0,.10), transparent 58%),
+    linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,.34));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.lx-physical .lx-couple,
+  html.lx-physical .lx-couple-svg,
+  html.lx-physical .lx-torch i,
+  html.lx-physical .lx-fog i,
+  html.lx-physical .lx-spot,
+  html.lx-physical[data-opening] .lx-hero-bg {
+    animation: none !important;
+  }
+}
