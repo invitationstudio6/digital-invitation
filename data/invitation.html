@@ -4766,6 +4766,23 @@ html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 
     margin-top: 24px;
 }
 
+/* Couple names are a fixed cover monogram: pinned to the viewport while the
+   invitation scrolls beneath, so they never scroll away. */
+.invitation:not(.hero-revealed) .hero-names { visibility: hidden; }
+
+.invitation.hero-revealed .hero-names {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 60 !important;
+    width: max-content !important;
+    max-width: 94vw !important;
+    margin: 0 !important;
+    text-align: center !important;
+    pointer-events: none !important;
+}
+
 .hero-names .name {
     display: block;
     font-family: "Cormorant Garamond", serif;
@@ -9953,8 +9970,6 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
         <p class="hero-eyebrow" id="heroEyebrow"></p>
 
-        <div class="hero-names" id="heroNames"></div>
-
         <p class="hero-date" id="date"></p>
 
         <div class="hero-ornament" aria-hidden="true"></div>
@@ -9964,6 +9979,8 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     <div class="hero-scroll" id="heroScroll"></div>
 
 </section>
+
+<div class="hero-names" id="heroNames" aria-hidden="false"></div>
 
 
 <!-- =====================================================
