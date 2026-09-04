@@ -180,14 +180,11 @@ html.lx-physical .scene-bg { transform-origin: center; filter: saturate(.86) con
 html.lx-physical .scene.active .scene-bg { animation: lxSceneKenBurns 12s ease-in-out both alternate; }
 html.lx-physical .scene-content { transform: translateZ(30px); text-shadow: 0 4px 24px rgba(0,0,0,.2); }
 @keyframes lxSceneKenBurns { from { transform: scale(1.01); } to { transform: scale(1.09) translate3d(-1%, -1%, 0); } }
+/* Velvet look and timing for the reveal curtains live in the
+   FINAL MATERIAL PASS section at the end of this file. */
 html.lx-physical .reveal-curtain-left,
 html.lx-physical .reveal-curtain-right {
-  background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
-    linear-gradient(135deg, #38251a, #1a100b 70%);
-  box-shadow: inset 0 0 90px rgba(0,0,0,.38), 0 0 34px rgba(0,0,0,.25);
   transform-style: preserve-3d;
-  transition-duration: 1.45s;
 }
 html.lx-physical .reveal-card {
   background:
@@ -904,78 +901,93 @@ html.lx-physical .lx-hero-bg {
   transform: translate3d(0, calc(var(--lx-sy, 0) * -0.13px), 0);
 }
 
-/* ---- Stairs: restrained editorial couple, not oversized cartoon figures ---- */
-html.lx-physical .lx-couple {
+/* Media-first hero: the client's own photograph rides the parallax
+   layer; the bokeh/vignette overlays continue to grade it. */
+html.lx-physical .lx-hero-bg.lx-hero-photo {
+  background-size: cover;
+  background-position: center 30%;
+}
+html.lx-physical .lx-hero-bg.lx-hero-stairs-fallback {
+  filter: saturate(.94) contrast(1.04) brightness(.86);
+  background-position: center 28%;
+}
+
+/* ---- Stairs: the client's real photograph as a cinematic stage ----
+   The couple is the photograph itself — no illustrated figures. We grade
+   it like a film frame: focus pull, slow camera push-in, warm step
+   lights and grain. */
+html.lx-physical .lx-stairs-photo {
   position: absolute;
-  left: 50%;
-  bottom: 23%;
-  width: 92px;
-  height: 132px;
-  transform: translateX(-50%) scale(.72);
-  transform-origin: 50% 100%;
-  z-index: 6;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
   pointer-events: none;
+}
+html.lx-physical .lx-sp-img {
+  position: absolute;
+  inset: -6%;
+  background-image: url("../media/stairs-couple.jpg");
+  background-size: cover;
+  background-position: center 28%;
+  filter: blur(12px) saturate(.9) brightness(.78);
+  transform: scale(1.14);
+  transition:
+    filter 2.8s ease .25s,
+    transform 7.5s cubic-bezier(.21,.6,.2,1) .25s;
+}
+html.lx-physical .lx-sp-grade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(58% 44% at 50% 30%, rgba(255,214,150,.16), transparent 70%),
+    linear-gradient(180deg, rgba(28,14,8,.30), rgba(20,10,6,.06) 34%, rgba(16,8,4,.46) 100%);
+  mix-blend-mode: normal;
+}
+html.lx-physical .lx-sp-grain {
+  position: absolute;
+  inset: -30px;
+  background-image: var(--lx-grain);
+  background-size: 150px 150px;
+  opacity: .07;
+  mix-blend-mode: overlay;
+  animation: lxGrainShift 1.4s steps(3) infinite;
+}
+@keyframes lxGrainShift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-14px, 8px); }
+  66% { transform: translate(10px, -12px); }
+  100% { transform: translate(0, 0); }
+}
+/* The opening moment: focus pull onto the couple + gentle camera push-in */
+html.lx-physical[data-opening="stairs"].scene-opened .lx-sp-img {
+  filter: blur(0) saturate(1.06) brightness(1.02);
+  transform: scale(1.05) translateY(-1.2%);
+  transition:
+    filter 2.2s ease .35s,
+    transform 8.5s cubic-bezier(.21,.6,.2,1) .35s;
+}
+/* The CSS steps become warm light pools receding up the staircase */
+html.lx-physical[data-opening="stairs"] .stairs-step {
+  background: linear-gradient(180deg, rgba(255,216,156,.20), rgba(255,206,140,.05) 62%, transparent);
+  box-shadow: none;
+  filter: blur(1px);
+}
+html.lx-physical[data-opening="stairs"] .stairs-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255,226,168,.22), transparent 80%);
   opacity: 0;
-  filter: drop-shadow(0 10px 7px rgba(30,18,10,.34));
 }
-html.lx-physical .lx-couple-halo {
-  position: absolute;
-  left: 50%;
-  bottom: -7px;
-  width: 116px;
-  height: 34px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(255,208,132,.26), transparent 70%);
-  filter: blur(7px);
+html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(1)::after { animation: lxStepLight 1.6s ease .5s forwards; }
+html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(2)::after { animation: lxStepLight 1.6s ease .85s forwards; }
+html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(3)::after { animation: lxStepLight 1.6s ease 1.2s forwards; }
+html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(4)::after { animation: lxStepLight 1.6s ease 1.55s forwards; }
+html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(5)::after { animation: lxStepLight 1.6s ease 1.9s forwards; }
+@keyframes lxStepLight {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-html.lx-physical .lx-person {
-  position: absolute;
-  bottom: 7px;
-  display: block;
-  width: 24px;
-  height: 84px;
-  transform-origin: 50% 100%;
-}
-html.lx-physical .lx-person-groom { left: 50px; z-index: 2; }
-html.lx-physical .lx-person-bride { left: 19px; bottom: 3px; z-index: 3; width: 30px; height: 91px; }
-html.lx-physical .lx-person i { position: absolute; display: block; }
-html.lx-physical .lx-person .lx-head {
-  top: 0; left: 6px; width: 13px; height: 15px; border-radius: 50%;
-  background: linear-gradient(135deg, #d8b69a, #8d5d48);
-  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset;
-}
-html.lx-physical .lx-person-groom .lx-head::after {
-  content: ""; position: absolute; left: -1px; top: -1px; width: 15px; height: 6px; border-radius: 50% 50% 30% 30%; background: #2a211d;
-}
-html.lx-physical .lx-person-bride .lx-head::after {
-  content: ""; position: absolute; left: -3px; top: -2px; width: 19px; height: 24px; border-radius: 50% 50% 44% 44%; border: 2px solid #ede3d5; border-top-color: #c9b49e;
-}
-html.lx-physical .lx-person .lx-body {
-  top: 14px; left: 5px; width: 15px; height: 39px; border-radius: 6px 6px 3px 3px;
-  background: linear-gradient(90deg, rgba(255,255,255,.2), #211b19 48%, #090807);
-}
-html.lx-physical .lx-person-bride .lx-body {
-  top: 14px; left: 4px; width: 21px; height: 56px; border-radius: 8px 8px 50% 50%;
-  background: linear-gradient(90deg, #fffdf8 0%, #e8ded3 48%, #a89588 100%);
-}
-html.lx-physical .lx-person .lx-leg { top: 49px; width: 6px; height: 35px; border-radius: 4px; background: #171311; }
-html.lx-physical .lx-person .lx-leg-a { left: 6px; transform: rotate(5deg); }
-html.lx-physical .lx-person .lx-leg-b { left: 13px; transform: rotate(-8deg); }
-html.lx-physical .lx-person-bride .lx-leg { top: 65px; background: #ded3c7; height: 23px; }
-html.lx-physical .lx-person .lx-veil { left: -2px; top: 16px; width: 29px; height: 45px; border-left: 1px solid rgba(255,255,255,.65); border-radius: 50%; transform: rotate(9deg); opacity: .7; }
-html.lx-physical .lx-hand { position: absolute; left: 43px; top: 38px; width: 18px; height: 2px; background: #caa98b; transform: rotate(18deg); z-index: 5; opacity: .9; }
-html.lx-physical[data-opening="stairs"].scene-opened .lx-couple {
-  animation: lxClimbEditorial 2.4s cubic-bezier(.35,.08,.26,1) .15s both;
-}
-html.lx-physical[data-opening="stairs"].scene-opened .lx-person { animation: lxStepBody .55s ease-in-out .45s 3 alternate; }
-@keyframes lxClimbEditorial {
-  0% { opacity: 0; transform: translateX(-50%) translateY(12px) scale(.72); }
-  16% { opacity: 1; }
-  42% { transform: translateX(-50%) translateY(-52px) scale(.72); }
-  70% { transform: translateX(-50%) translateY(-108px) scale(.69); }
-  100% { opacity: 1; transform: translateX(-50%) translateY(-154px) scale(.66); }
-}
-@keyframes lxStepBody { from { transform: translateY(0); } to { transform: translateY(-3px); } }
 @keyframes lxBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
 /* ---- Door / wood-door: castle torchlight + drifting fog ---- */
@@ -1197,13 +1209,18 @@ html.lx-physical.scene-opened[data-opening="ribbon"] .rb-band-h::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.lx-physical .lx-couple,
   html.lx-physical .lx-torch i,
   html.lx-physical .lx-fog i,
   html.lx-physical .lx-spot,
+  html.lx-physical .lx-sp-grain,
   html.lx-physical .lx-hero-bg::before,
   html.lx-physical .invitation .hero-names .name {
     animation: none !important;
+  }
+  html.lx-physical .lx-sp-img {
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
 
@@ -1211,49 +1228,85 @@ html.lx-physical.scene-opened[data-opening="ribbon"] .rb-band-h::after {
    FINAL MATERIAL PASS — physical object corrections
 ========================================================= */
 
-/* A real ring is an open metal band, not a filled gold disk. */
+/* A real ring is a thin open metal band with a seated stone —
+   circular base geometry + perspective gives the torus profile. */
 html.lx-physical[data-opening="golden-ring"] .gr-ring {
-  width: 190px;
-  height: 142px;
-  margin: -71px 0 0 -95px;
-  transform: perspective(1000px) rotateX(58deg) rotateY(-12deg) rotateZ(-4deg);
+  width: 216px;
+  height: 216px;
+  margin: -108px 0 0 -108px;
+  transform: perspective(1100px) rotateX(62deg) rotateY(-14deg) rotateZ(-8deg);
   animation: lxRingRock 7s ease-in-out infinite;
 }
-html.lx-physical[data-opening="golden-ring"] .gr-band-rim {
-  inset: 3px;
-  background:
-    radial-gradient(ellipse at 34% 20%, #fff8dd 0%, #e9c56c 24%, #bd8730 55%, #6d4615 83%, #3b2308 100%);
-  -webkit-mask: radial-gradient(ellipse at center, transparent 0 37%, #000 38% 100%);
-  mask: radial-gradient(ellipse at center, transparent 0 37%, #000 38% 100%);
-  box-shadow: 0 24px 38px rgba(0,0,0,.55), inset 0 6px 15px rgba(255,255,255,.58), inset 0 -10px 20px rgba(35,20,2,.58);
-}
-html.lx-physical[data-opening="golden-ring"] .gr-band-hole {
-  left: 36%; right: 36%; top: 28%; bottom: 28%;
-  background: transparent;
-  border: 1px solid rgba(255,238,180,.24);
-  box-shadow: inset 0 0 12px rgba(0,0,0,.55);
-}
-html.lx-physical[data-opening="golden-ring"] .gr-band-sheen {
-  left: 8%; right: 8%; top: 3%; height: 42%;
-  border-radius: 50%;
-  background: linear-gradient(105deg, transparent 22%, rgba(255,255,255,.92) 38%, transparent 52%);
-  -webkit-mask: radial-gradient(ellipse at center, transparent 0 39%, #000 40% 100%);
-  mask: radial-gradient(ellipse at center, transparent 0 39%, #000 40% 100%);
-}
 @keyframes lxRingRock {
-  0%, 100% { transform: perspective(1000px) rotateX(58deg) rotateY(-12deg) rotateZ(-4deg) translateY(0); }
-  50% { transform: perspective(1000px) rotateX(54deg) rotateY(12deg) rotateZ(-1deg) translateY(-5px); }
+  0%, 100% { transform: perspective(1100px) rotateX(62deg) rotateY(-14deg) rotateZ(-8deg) translateY(0); }
+  50% { transform: perspective(1100px) rotateX(57deg) rotateY(14deg) rotateZ(-2deg) translateY(-6px); }
+}
+/* The band: a thin open torus. The mask cuts the finger hole; the
+   conic gradient reads as polished gold turning around the hoop. */
+html.lx-physical[data-opening="golden-ring"] .gr-band {
+  filter:
+    drop-shadow(0 18px 26px rgba(20,10,2,.55))
+    drop-shadow(0 0 18px rgba(255,205,110,.28));
+}
+html.lx-physical[data-opening="golden-ring"] .gr-band-rim {
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 16%, rgba(255,255,255,.9), transparent 22%),
+    conic-gradient(from 215deg,
+      #f8ecc0, #d3a850 14%, #94681f 30%, #6d4512 46%,
+      #8a5f1c 58%, #c99b3c 72%, #f3dd96 86%, #f8ecc0);
+  -webkit-mask: radial-gradient(closest-side circle at center, transparent 0 74%, #000 75% 100%);
+  mask: radial-gradient(closest-side circle at center, transparent 0 74%, #000 75% 100%);
+}
+/* Inner wall of the tube: dark rim light just inside the hole */
+html.lx-physical[data-opening="golden-ring"] .gr-band-hole {
+  inset: 13%;
+  background: transparent;
+  border: none;
+  box-shadow: inset 0 0 0 3px rgba(64,40,8,.5), inset 0 5px 12px rgba(0,0,0,.35);
+}
+/* Specular sweep travelling around the polish */
+html.lx-physical[data-opening="golden-ring"] .gr-band-sheen {
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,.92) 36%, rgba(255,244,200,.4) 44%, transparent 58%);
+  -webkit-mask: radial-gradient(closest-side circle at center, transparent 0 74%, #000 75% 100%);
+  mask: radial-gradient(closest-side circle at center, transparent 0 74%, #000 75% 100%);
+  mix-blend-mode: screen;
+  filter: blur(1px);
+  animation: lxRingSheen 5s ease-in-out infinite;
+}
+@keyframes lxRingSheen {
+  0%, 100% { opacity: .3; transform: rotate(0); }
+  50% { opacity: .85; transform: rotate(14deg); }
+}
+/* Remove the leftover disk shading and floating shanks */
+html.lx-physical[data-opening="golden-ring"] .gr-inner-shade,
+html.lx-physical[data-opening="golden-ring"] .gr-shank { display: none; }
+/* The stone sits ON the band at the top of the hoop, in a small basket */
+html.lx-physical[data-opening="golden-ring"] .gr-gem {
+  top: 7%;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  filter: drop-shadow(0 6px 10px rgba(255,240,200,.4)) brightness(1.1) saturate(1.08);
+}
+html.lx-physical[data-opening="golden-ring"] .gr-glint {
+  box-shadow: 0 0 12px 4px rgba(255,255,255,.95), 0 0 30px 8px rgba(255,240,200,.6);
 }
 html.lx-physical[data-opening="golden-ring"].scene-opened .gr-ring {
-  animation: lxRingRevealBurst .9s cubic-bezier(.3,.1,.3,1) forwards;
+  animation: lxRingRevealBurst .95s cubic-bezier(.3,.1,.3,1) forwards;
 }
 @keyframes lxRingRevealBurst {
-  0% { transform: perspective(1000px) rotateX(58deg) rotateY(-12deg) rotateZ(-4deg) scale(1); opacity: 1; }
-  32% { transform: perspective(1000px) rotateX(34deg) rotateY(-5deg) rotateZ(0) scale(1.08); filter: brightness(1.55); }
-  100% { transform: perspective(1000px) rotateX(4deg) rotateY(0) scale(1.8) translateY(-28px); opacity: 0; filter: blur(4px); }
+  0% { transform: perspective(1100px) rotateX(62deg) rotateY(-14deg) rotateZ(-8deg) scale(1); opacity: 1; }
+  30% { transform: perspective(1100px) rotateX(36deg) rotateY(-4deg) rotateZ(-2deg) scale(1.1); filter: brightness(1.6); }
+  100% { transform: perspective(1100px) rotateX(8deg) rotateY(0) rotateZ(0) scale(1.9) translateY(-26px); opacity: 0; filter: blur(5px); }
 }
 
-/* Book pages hinge at the spine: short lift, curl, then settle together. */
+/* Pages behave like paper in a draft: the free edge lifts first,
+   the sheet curls (skew + depth), drifts with the wind, then
+   settles softly on the far side — one page at a time. */
 html.lx-physical[data-opening="old-book"] .ob-cover {
   box-shadow: 12px 18px 42px rgba(0,0,0,.68), inset 0 0 28px rgba(0,0,0,.28), inset 2px 0 0 rgba(255,220,170,.2);
 }
@@ -1265,24 +1318,26 @@ html.lx-physical[data-opening="old-book"] .ob-pl3 {
   border-radius: 3px 0 0 3px;
   box-shadow: 7px 2px 14px rgba(42,22,8,.18), inset -7px 0 9px rgba(126,83,38,.16);
 }
-html.lx-physical[data-opening="old-book"].scene-opened .ob-pl { animation: lxPageTurn .95s cubic-bezier(.32,.72,.22,1) 1.45s both; }
-html.lx-physical[data-opening="old-book"].scene-opened .ob-pl2 { animation: lxPageTurn .95s cubic-bezier(.32,.72,.22,1) 2.45s both; }
-html.lx-physical[data-opening="old-book"].scene-opened .ob-pl3 { animation: lxPageTurn .95s cubic-bezier(.32,.72,.22,1) 3.42s both; }
+html.lx-physical[data-opening="old-book"].scene-opened .ob-pl { animation: lxPageTurn 1.35s cubic-bezier(.34,.1,.24,1) 1.45s both; }
+html.lx-physical[data-opening="old-book"].scene-opened .ob-pl2 { animation: lxPageTurn 1.3s cubic-bezier(.34,.1,.24,1) 2.6s both; }
+html.lx-physical[data-opening="old-book"].scene-opened .ob-pl3 { animation: lxPageTurn 1.25s cubic-bezier(.34,.1,.24,1) 3.7s both; }
 @keyframes lxPageTurn {
-  0% { opacity: 0; transform: perspective(1200px) rotateY(0) translateY(3px) skewY(0); }
-  10% { opacity: 1; }
-  35% { transform: perspective(1200px) rotateY(-42deg) translateY(-7px) skewY(-2deg); }
-  62% { transform: perspective(1200px) rotateY(-86deg) translateY(-10px) skewY(2deg); }
-  100% { opacity: .92; transform: perspective(1200px) rotateY(-132deg) translateY(-3px) skewY(0); }
+  0%  { opacity: 0; transform: perspective(1200px) rotateY(0deg) translateZ(0) skewX(0deg); }
+  9%  { opacity: 1; transform: perspective(1200px) rotateY(-7deg) translateZ(8px) skewX(4deg); }
+  28% { transform: perspective(1200px) rotateY(-34deg) translateZ(26px) skewX(9deg); }
+  52% { transform: perspective(1200px) rotateY(-68deg) translateZ(34px) skewX(5deg); }
+  74% { transform: perspective(1200px) rotateY(-102deg) translateZ(20px) skewX(-5deg); }
+  90% { transform: perspective(1200px) rotateY(-126deg) translateZ(7px) skewX(-2deg); }
+  100% { opacity: .94; transform: perspective(1200px) rotateY(-132deg) translateZ(0) skewX(0deg); }
 }
 html.lx-physical[data-opening="old-book"] .ob-gust i {
-  width: 22px;
-  height: 42%;
-  top: 29%;
+  width: 15px;
+  height: 44%;
+  top: 28%;
   bottom: auto;
-  background: linear-gradient(90deg, transparent, rgba(255,244,214,.24), transparent);
-  filter: blur(5px);
-  transform: rotate(-8deg) skewX(-8deg);
+  background: linear-gradient(90deg, transparent, rgba(255,244,214,.17), transparent);
+  filter: blur(6px);
+  transform: rotate(-14deg) skewX(-12deg);
 }
 
 /* Default envelope: paper bends, seal catches light, letter rises from the pocket. */
@@ -1327,14 +1382,58 @@ html.lx-physical[data-opening="curtain"] .ct-curtain-right::after { left: 7%; }
 html.lx-physical[data-opening="curtain"].scene-opened .ct-stage-title { transition-delay: 2.2s; }
 html.lx-physical[data-opening="curtain"].scene-opened .ct-spotlight { transition-delay: 1.8s; }
 
-/* The two curtain presentations share the same tactile velvet language. */
+/* The second curtain presentation is a different staging: heavy side
+   panels that gather and fold outward (not a flat slide), with a warm
+   footlight edge and true velvet depth. */
 html.lx-physical .reveal-curtain-left,
 html.lx-physical .reveal-curtain-right {
+  position: relative;
   background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 3px, transparent 3px 15px),
-    linear-gradient(135deg, #58120f, #260605 72%);
-  box-shadow: inset 0 0 55px rgba(0,0,0,.48), 0 18px 35px rgba(15,3,2,.35);
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 3px, transparent 3px 14px),
+    radial-gradient(130% 90% at 30% 0%, rgba(255,186,142,.12), transparent 44%),
+    linear-gradient(135deg, #55110e, #2a0706 62%, #1c0403);
+  box-shadow:
+    inset 0 0 55px rgba(0,0,0,.5),
+    inset 0 -40px 70px rgba(0,0,0,.42),
+    0 18px 35px rgba(15,3,2,.35);
+  transition-duration: 2.6s;
+  transition-timing-function: cubic-bezier(.62,.02,.22,1);
+  will-change: transform;
 }
+/* Warm footlight kiss on the leading (inner) edge */
+html.lx-physical .reveal-curtain-left::after,
+html.lx-physical .reveal-curtain-right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(90deg, rgba(255,214,166,.22), rgba(255,214,166,.05) 55%, transparent);
+  filter: blur(2px);
+  pointer-events: none;
+}
+html.lx-physical .reveal-curtain-left::after { right: 0; }
+html.lx-physical .reveal-curtain-right::after { left: 0; transform: scaleX(-1); }
+/* Opened: the fabric is pulled aside while gathering into folds */
+html.lx-physical .reveal-curtain.opened .reveal-curtain-left {
+  transform: translateX(-97%) scaleX(.58) rotateY(15deg);
+}
+html.lx-physical .reveal-curtain.opened .reveal-curtain-right {
+  transform: translateX(97%) scaleX(.58) rotateY(-15deg);
+}
+/* The panels ripple as they gather: two soft interior fold waves */
+html.lx-physical .reveal-curtain.opened .reveal-curtain-left::before,
+html.lx-physical .reveal-curtain.opened .reveal-curtain-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 12px, transparent 12px 34px);
+  opacity: 0;
+  transition: opacity 1.8s ease .5s;
+  pointer-events: none;
+}
+html.lx-physical .reveal-curtain.opened .reveal-curtain-left::before,
+html.lx-physical .reveal-curtain.opened .reveal-curtain-right::before { opacity: .8; }
 
 @media (prefers-reduced-motion: reduce) {
   html.lx-physical[data-opening="golden-ring"] .gr-ring,

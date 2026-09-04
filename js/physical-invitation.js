@@ -26,14 +26,18 @@
     }
 
     function initScenes() {
-        /* Stairs — restrained editorial couple, scaled like a real photograph */
-        inject("stairsScene",
-            '<div class="lx-couple" aria-hidden="true">' +
-            '<span class="lx-couple-halo"></span>' +
-            '<span class="lx-person lx-person-groom"><i class="lx-head"></i><i class="lx-body"></i><i class="lx-leg lx-leg-a"></i><i class="lx-leg lx-leg-b"></i></span>' +
-            '<span class="lx-person lx-person-bride"><i class="lx-head"></i><i class="lx-body"></i><i class="lx-leg lx-leg-a"></i><i class="lx-leg lx-leg-b"></i><i class="lx-veil"></i></span>' +
-            '<span class="lx-hand"></span>' +
-            '</div>');
+        /* Stairs — the client's real staircase photograph as the stage:
+           blurred-to-focused push-in, warm grade and film grain. */
+        var stairs = document.getElementById("stairsScene");
+        if (stairs && !stairs.querySelector(".lx-stairs-photo")) {
+            /* Prepend so the photo stays behind the steps and the card. */
+            stairs.insertAdjacentHTML("afterbegin",
+                '<div class="lx-stairs-photo" aria-hidden="true">' +
+                '<span class="lx-sp-img"></span>' +
+                '<span class="lx-sp-grade"></span>' +
+                '<span class="lx-sp-grain"></span>' +
+                '</div>');
+        }
 
         /* Wood door + door — castle torchlight & drifting fog */
         ["woodDoorScene", "doorScene"].forEach(function (id) {
@@ -68,6 +72,26 @@
         if (!hero) return;
         var bg = el("div", "lx-hero-bg", hero);
         hero.insertBefore(bg, hero.firstChild);
+
+        /* Media-first hero: when the client supplied a photo cover and there
+           is no hero video, the parallax layer carries the real photograph
+           with cinematic grading instead of a flat gradient. */
+        if (!hero.querySelector(".hero-video-bg")) {
+            var cover = "";
+            try {
+                cover = (getComputedStyle(document.documentElement)
+                    .getPropertyValue("--cover") || "").trim();
+            } catch (e) {}
+            if (cover && cover.indexOf("url(") === 0) {
+                bg.classList.add("lx-hero-photo");
+                bg.style.backgroundImage = cover;
+            } else if (document.documentElement.getAttribute("data-opening") === "stairs") {
+                /* The supplied staircase photograph is the safe visual
+                   fallback for this opening when a client has no cover. */
+                bg.classList.add("lx-hero-photo", "lx-hero-stairs-fallback");
+                bg.style.backgroundImage = 'url("../media/stairs-couple.jpg")';
+            }
+        }
 
         var ticking = false;
         function frame() {
