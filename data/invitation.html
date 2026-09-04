@@ -2918,7 +2918,20 @@ a { text-decoration: none; color: inherit; }
    Scene 3: camera dolly forward · Scene 4: invitation centerpiece
    ══════════════════════════════════════════════════════════════ */
 [data-opening="curtain"] .envelope-scene { display: none; }
-[data-opening="curtain"] #curtainScene { perspective: 1100px; perspective-origin: 50% 40%; }
+/* Full-viewport theater stage (scene must not be card-sized) */
+[data-opening="curtain"] #curtainScene {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    perspective: 1100px;
+    perspective-origin: 50% 40%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 [data-opening="curtain"] .ct-scene {
     position: fixed;
     inset: 0;
@@ -3337,6 +3350,98 @@ a { text-decoration: none; color: inherit; }
     filter: blur(5px);
 }
 
+/* ── Stage title: couple names lit like a real theatre marquee ── */
+.ct-stage-title {
+    position: absolute;
+    left: 0; right: 0;
+    top: 30%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: translateZ(30px);
+    transform-style: preserve-3d;
+    opacity: 0;
+    filter: blur(8px) brightness(1.4);
+}
+/* Lights up as the stage is revealed (after curtains part) */
+.scene-opened[data-opening="curtain"] .ct-stage-title {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transition: opacity 1.6s ease 1.4s, filter 2s ease 1.2s;
+    animation: ctTitleLight 3.2s cubic-bezier(.2,.9,.3,1) 1.4s both;
+}
+@keyframes ctTitleLight {
+    0% { opacity: 0; transform: translateZ(30px) scale(.92); filter: blur(8px) brightness(1.6); }
+    45% { opacity: 1; transform: translateZ(60px) scale(1.03); filter: blur(0) brightness(1.15); }
+    100% { opacity: 1; transform: translateZ(50px) scale(1); filter: blur(0) brightness(1); }
+}
+/* Divine warm light pool behind the names */
+.ct-tt-glow {
+    position: absolute;
+    left: 50%; top: 55%;
+    width: 60vw; height: 55vh;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,225,160,.5), rgba(255,205,120,.22) 45%, transparent 72%);
+    filter: blur(22px);
+    mix-blend-mode: screen;
+    z-index: -1;
+    animation: ctTitleGlow 5s ease-in-out infinite;
+}
+@keyframes ctTitleGlow { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
+/* Eyebrow line */
+.ct-tt-eyebrow {
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    color: rgba(240,220,180,.85);
+    text-shadow: 0 0 18px rgba(255,210,130,.5);
+    margin-bottom: 18px;
+}
+/* Gold rule with center flourish */
+.ct-tt-rule {
+    width: clamp(120px, 26vw, 220px);
+    height: 1px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, transparent, #D4AF37 30%, #F5E3A8 50%, #D4AF37 70%, transparent);
+    filter: drop-shadow(0 0 6px rgba(212,175,55,.8));
+}
+/* Names */
+.ct-tt-names {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-size: clamp(34px, 7.5vw, 66px);
+    line-height: 1.12;
+    color: #FFF4E0;
+    text-shadow:
+        0 0 30px rgba(255,220,150,.7),
+        0 0 80px rgba(255,190,110,.35),
+        0 3px 6px rgba(0,0,0,.4);
+    letter-spacing: .5px;
+}
+/* Date beneath */
+.ct-tt-date {
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(244,228,200,.7);
+    text-shadow: 0 0 14px rgba(255,210,130,.4);
+    margin-top: 18px;
+}
+/* Soft cast shadow under the text for depth */
+.ct-tt-shadow {
+    position: absolute;
+    left: 50%; top: 108%;
+    width: 80%; height: 26px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,.55), transparent 70%);
+    filter: blur(7px);
+}
+
 /* Ambient rising particles near invitation */
 .ct-ambient-particles {
     position: absolute;
@@ -3359,33 +3464,62 @@ a { text-decoration: none; color: inherit; }
 
 /* ────────────────────────────────────────────────────────────
    THEATER CURTAINS (foreground) — velvet with folds & physics
+   Fully cover the screen; open in slow, weighty, gathered stacks
    ──────────────────────────────────────────────────────────── */
-.ct-curtains { position: absolute; inset: 0; z-index: 10; transform-style: preserve-3d; }
+.ct-curtains { position: absolute; inset: 0; z-index: 10; transform-style: preserve-3d; perspective: 1200px; }
 .ct-curtain {
     position: absolute;
-    top: -4px; bottom: -10px;
-    width: 58%;
+    top: -2px; bottom: -2px;
+    width: 56%;
     z-index: 2;
-    overflow: hidden;
-    transition:
-        transform 2.4s cubic-bezier(.22,.9,.36,1) .15s,
-        filter 1.2s ease .8s;
+    transform-style: preserve-3d;
     will-change: transform, filter;
 }
-.ct-curtain-left { left: 0; transform-origin: left center; }
-.ct-curtain-right { right: 0; transform-origin: right center; }
+/* Closed: curtains fully overlap and cover every pixel (112% total) */
+.ct-curtain-left  { left: 0;  transform-origin: left center;  transform: translateX(0); transition: transform 3.8s cubic-bezier(.65,0,.2,1) .25s, filter 1.4s ease .9s; }
+.ct-curtain-right { right: 0; transform-origin: right center; transform: translateX(0); transition: transform 3.8s cubic-bezier(.65,0,.2,1) .25s, filter 1.4s ease .9s; }
+
+/* OPEN: curtains draw toward the sides and BUNCH into gathered
+   stacks that remain visible on screen (never retract off-view).
+   Slow, weighty draw with a long ease for premium realism. */
+.scene-opened[data-opening="curtain"] .ct-curtain-left  { transform: translateX(-10%) scaleX(.155) rotateY(16deg); filter: brightness(.66) sepia(.28) contrast(1.06); }
+.scene-opened[data-opening="curtain"] .ct-curtain-right { transform: translateX(10%)  scaleX(.155) rotateY(-16deg); filter: brightness(.66) sepia(.28) contrast(1.06); }
+
+/* Gathered stack: concentric pleat layers pile up at the sides */
+.ct-curtain::before {
+    content: "";
+    position: absolute;
+    top: -3px; bottom: -3px;
+    width: 26%;
+    z-index: 0;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(255,255,255,.06) 0 3px, transparent 3px 7px,
+            rgba(0,0,0,.34) 7px 11px),
+        linear-gradient(90deg, #5A1410, #8E2A1F 55%, #7E2119);
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(0,0,0,.75), inset 0 0 26px rgba(0,0,0,.55);
+    opacity: 0;
+    transition: opacity 1.1s ease .8s, transform 3.6s cubic-bezier(.65,0,.2,1) .25s;
+}
+.ct-curtain-left::before  { right: -6%;  transform-origin: right center; transform: scaleX(.6); }
+.ct-curtain-right::before { left: -6%;   transform-origin: left center;  transform: scaleX(.6); }
+/* The stack blooms outward to read as piled, folded velvet */
+.scene-opened[data-opening="curtain"] .ct-curtain-left::before  { transform: scaleX(7) translateX(3%);  opacity: 1; }
+.scene-opened[data-opening="curtain"] .ct-curtain-right::before { transform: scaleX(7) translateX(-3%); opacity: 1; }
 
 /* Rich velvet fabric with vertical folds */
 .ct-curtain-fabric {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(0,0,0,.55) 0%, transparent 12%, transparent 88%, rgba(0,0,0,.5) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.6) 0%, transparent 12%, transparent 88%, rgba(0,0,0,.55) 100%),
         linear-gradient(90deg,
             #1F0705 0%, #3E0E0B 8%, #5A1410 16%, #3A0C09 28%, #6B1A15 38%,
             #43100C 50%, #7E2119 62%, #4B120E 72%, #6B1A15 82%, #351009 92%, #3A0C09 100%);
     background-size: 100% 100%, 12.5% 100%;
-    box-shadow: inset -14px 0 40px rgba(0,0,0,.6), inset 14px 0 40px rgba(0,0,0,.4);
+    box-shadow: inset -16px 0 46px rgba(0,0,0,.65), inset 16px 0 46px rgba(0,0,0,.45),
+        0 20px 60px rgba(0,0,0,.5);
 }
 /* Fabric fold ridges with highlight/sheen */
 .ct-fold {
@@ -3415,49 +3549,49 @@ a { text-decoration: none; color: inherit; }
     100% { filter: brightness(.95) contrast(1.08); }
 }
 
-/* Curtain edge (leading split edge) with rolled hem */
+/* Curtain edge (leading split edge) with rolled hem + gold trim */
 .ct-curtain-edge {
     position: absolute;
     top: 0; bottom: 0;
     width: 2.2%;
-    min-width: 24px;
+    min-width: 30px;
     background: linear-gradient(90deg, #2A0A06, #4B120E 60%, #6B1A15);
     box-shadow: 0 0 24px rgba(0,0,0,.6), inset 0 0 14px rgba(0,0,0,.5);
     z-index: 3;
 }
-.ct-curtain-left .ct-curtain-edge { right: -4px; border-radius: 0 60% 60% 0 / 0 20% 20% 0; }
-.ct-curtain-right .ct-curtain-edge { left: -4px; border-radius: 60% 0 0 60% / 20% 0 0 20%; }
+.ct-curtain-left .ct-curtain-edge {
+    right: -4px; border-radius: 0 60% 60% 0 / 0 20% 20% 0;
+    border-right: 2px solid rgba(212,175,55,.6);
+}
+.ct-curtain-right .ct-curtain-edge {
+    left: -4px; border-radius: 60% 0 0 60% / 20% 0 0 20%;
+    border-left: 2px solid rgba(212,175,55,.6);
+}
 
 /* Inner lining visible after opening (fabric thickness) */
 .ct-curtain-lining {
     position: absolute;
     top: 0; bottom: 0;
-    width: 34px;
+    width: 46px;
     opacity: 0;
-    transition: opacity 1.4s ease .3s;
-    background: linear-gradient(90deg, #8E2A1F, #5A1410 60%, #3A0C09);
+    transition: opacity 1.6s ease .2s;
+    background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 6px, transparent 6px 14px),
+        linear-gradient(90deg, #8E2A1F, #5A1410 60%, #3A0C09);
     z-index: 1;
+    box-shadow: -6px 0 18px rgba(0,0,0,.6);
 }
-.ct-curtain-left .ct-curtain-lining { right: -18px; transform: rotateY(-70deg); transform-origin: right; }
-.ct-curtain-right .ct-curtain-lining { left: -18px; transform: rotateY(70deg); transform-origin: left; }
+.ct-curtain-left .ct-curtain-lining { right: -24px; transform: rotateY(-72deg); transform-origin: right; }
+.ct-curtain-right .ct-curtain-lining { left: -24px; transform: rotateY(72deg); transform-origin: left; }
 .scene-opened[data-opening="curtain"] .ct-curtain-lining { opacity: 1; }
 
-/* — OPEN STATE: curtains draw apart with weight & secondary settle —
-   Folding into a bunched stack with a slight settle bounce */
-.scene-opened[data-opening="curtain"] .ct-curtain-left {
-    transform: translateX(-50%) rotateY(22deg) scaleX(.9);
-    filter: brightness(.55);
-}
-.scene-opened[data-opening="curtain"] .ct-curtain-right {
-    transform: translateX(50%) rotateY(-22deg) scaleX(.9);
-    filter: brightness(.55);
-}
-/* Secondary motion: already-open curtains settle/twitch slightly */
-@keyframes ctCurtainSettle {
-    0% { }
-    20% { filter: brightness(.5); }
-    60% { transform: translateX(-50%) rotateY(25deg) scaleX(.9); }
-    100% { transform: translateX(-50%) rotateY(22deg) scaleX(.9); }
+/* Lining deepens as curtain bunches (thick stacked fabric edge) */
+.ct-curtain-lining::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 100%;
+    background: repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 4px, transparent 4px 10px);
 }
 
 /* ── Curtain track: gold rail with brackets & finials ── */
@@ -9045,6 +9179,16 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
 
                     <!-- Ambient particles -->
                     <div class="ct-ambient-particles" id="ctAmbientParticles"></div>
+
+                    <!-- Stage title: couple names presented under theatre light -->
+                    <div class="ct-stage-title">
+                        <div class="ct-tt-glow"></div>
+                        <div class="ct-tt-eyebrow"></div>
+                        <div class="ct-tt-rule"></div>
+                        <div class="ct-tt-names"></div>
+                        <div class="ct-tt-date"></div>
+                        <div class="ct-tt-shadow"></div>
+                    </div>
                 </div>
 
                 <!-- Theater curtains (foreground) -->
@@ -11712,6 +11856,14 @@ var _openingStyle = (function() {
         /* Curtain monogram (closed-state tap hint) */
         var thMonoTap = document.querySelector("#curtainScene .ct-mono-tap");
         if (thMonoTap) thMonoTap.title = lunaT("invOpen");
+
+        /* Curtain stage title — names presented under theatre light */
+        var ttNames = document.querySelector("#curtainScene .ct-tt-names");
+        if (ttNames) ttNames.textContent = lunaDisplayNames(invitation);
+        var ttEyebrow = document.querySelector("#curtainScene .ct-tt-eyebrow");
+        if (ttEyebrow) ttEyebrow.textContent = lunaT("invitation");
+        var ttDate = document.querySelector("#curtainScene .ct-tt-date");
+        if (ttDate) ttDate.textContent = displayDate;
         
         ["doorEyebrow","stairsEyebrow"].forEach(function(id) {
             var el = document.getElementById(id);
