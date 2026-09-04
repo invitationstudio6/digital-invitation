@@ -4007,6 +4007,20 @@ a { text-decoration: none; color: inherit; }
     transition: opacity 1.6s ease .7s, visibility 1.6s ease .7s;
 }
 
+/* Curtain opening owns the reveal — strip the default hero wash + pulse overlay
+   so the red-velvet stage shows through cleanly. Hide the hero page while the
+   curtain is live (the stage title holds the names), then reveal it only after
+   the opening collapses into the invitation page. */
+html[data-opening="curtain"] .hero::before,
+html[data-opening="curtain"] .hero::after { display: none !important; }
+html[data-opening="curtain"] .hero { background: #140B08; }
+html[data-opening="curtain"] .hero .hero-content,
+html[data-opening="curtain"] .hero .hero-scroll { opacity: 0; transition: opacity 1s ease; }
+html[data-opening="curtain"] #opening.hidden ~ #invitation .hero .hero-content,
+html[data-opening="curtain"] #opening.hidden ~ #invitation .hero .hero-scroll { opacity: 1; }
+/* Gentle fade of the velvet stage out (instead of a hard snap) when it hands off */
+html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 1s ease; }
+
 
 /* =====================================================
    TYPE: FLORAL PAPER (garden-bloom)
@@ -11963,7 +11977,7 @@ var _openingStyle = (function() {
 
     var SCENES = {
         "wax-seal":       { id: "waxSealScene", delay: 1300 },
-        "curtain":        { id: "curtainScene", delay: 1800 },
+        "curtain":        { id: "curtainScene", delay: 6200 },
         "floral-paper":   { id: "floralScene",  delay: 1400 },
         "luxury-romance": { id: "silkScene",    delay: 1500 },
         "celebration-pop":{ id: "fiestaScene",  delay: 1400 },
@@ -12501,6 +12515,191 @@ if (_openingStyle !== "envelope") {
 })();
 </script>
 
+
+
+<!-- =====================================================
+     LUNA PREMIUM LAYER (additive visual polish only)
+     Gated on html.lx-fx — safe kill-switch, respects
+     prefers-reduced-motion. Does not touch existing logic.
+===================================================== -->
+<style id="lx-premium-css">
+html.lx-fx .section{transition:opacity 1s ease,transform 1.1s cubic-bezier(.19,1,.22,1),filter 1.1s ease;filter:blur(8px);transform:translateY(14px);}
+html.lx-fx .section.lx-seen{filter:blur(0);transform:translateY(0);}
+html.lx-fx .section-divider span{animation:lxDivPulse 4s ease-in-out infinite;}
+@keyframes lxDivPulse{0%,100%{opacity:.55;}50%{opacity:1;text-shadow:0 0 14px var(--accent);}}
+html.lx-fx .lx-seen .section-eyebrow{animation:lxTrack .9s ease both;}
+@keyframes lxTrack{from{opacity:0;letter-spacing:8px;}to{opacity:1;letter-spacing:5px;}}
+html.lx-fx .section h2 .lx-w{display:inline-block;opacity:0;transform:translateY(.6em) rotate(1.5deg);filter:blur(4px);}
+html.lx-fx .section.lx-seen h2 .lx-w{animation:lxWordIn .8s cubic-bezier(.19,1,.22,1) both;animation-delay:calc(var(--lx-i,0)*45ms);}
+@keyframes lxWordIn{to{opacity:1;transform:translateY(0) rotate(0);filter:blur(0);}}
+html.lx-fx .section.lx-seen .details-grid .detail{animation:lxWordIn .8s cubic-bezier(.19,1,.22,1) both;}
+html.lx-fx .section.lx-seen .details-grid .detail:nth-child(1){animation-delay:.05s;}
+html.lx-fx .section.lx-seen .details-grid .detail:nth-child(2){animation-delay:.13s;}
+html.lx-fx .section.lx-seen .details-grid .detail:nth-child(3){animation-delay:.21s;}
+html.lx-fx .section.lx-seen .timer > div{animation:lxWordIn .8s cubic-bezier(.19,1,.22,1) both;}
+html.lx-fx .section.lx-seen .timer > div:nth-child(1){animation-delay:.05s;}
+html.lx-fx .section.lx-seen .timer > div:nth-child(2){animation-delay:.12s;}
+html.lx-fx .section.lx-seen .timer > div:nth-child(3){animation-delay:.19s;}
+html.lx-fx .section.lx-seen .timer > div:nth-child(4){animation-delay:.26s;}
+html.lx-fx .timer strong{animation:lxGlow 3.6s ease-in-out infinite;}
+@keyframes lxGlow{0%,100%{text-shadow:0 0 0 rgba(0,0,0,0);}50%{text-shadow:0 0 22px var(--accent);}}
+html.lx-fx .gallery.lx-seen img{animation:lxImgIn .9s cubic-bezier(.19,1,.22,1) both,lxKB 26s ease-in-out infinite alternate;animation-delay:calc(var(--lx-i,0)*70ms),0s;}
+html.lx-fx .gallery.lx-seen img:hover{animation-play-state:paused;}
+@keyframes lxImgIn{from{opacity:0;filter:blur(6px) saturate(.6);}to{opacity:1;filter:blur(0) saturate(.9);}}
+@keyframes lxKB{from{scale:1;}to{scale:1.07;}}
+html.lx-fx.scene-opened #hero .hero-content{animation:lxHeroIn 1.7s cubic-bezier(.19,1,.22,1);}
+@keyframes lxHeroIn{from{opacity:.4;transform:translateY(16px) scale(.985);filter:blur(7px);}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}}
+html.lx-fx.scene-opened .hero-ornament{animation:lxOrnPulse 6s ease-in-out infinite;}
+@keyframes lxOrnPulse{0%,100%{opacity:.85;}50%{opacity:1;}}
+html.lx-fx #musicButton{animation:lxBtnGlow 5s ease-in-out infinite;}
+@keyframes lxBtnGlow{0%,100%{box-shadow:0 0 0 rgba(0,0,0,0);}50%{box-shadow:0 0 18px var(--accent);}}
+#lx-ambient{position:fixed;inset:0;z-index:-4;pointer-events:none;overflow:hidden;}
+#lx-ambient i{position:absolute;display:block;will-change:transform,opacity;}
+.lx-petal{border-radius:60% 10% 60% 10%;opacity:.55;animation-name:lxFall;animation-timing-function:linear;animation-iteration-count:infinite;}
+.lx-dot{border-radius:50%;opacity:.5;animation-name:lxFall;animation-timing-function:linear;animation-iteration-count:infinite;}
+.lx-twinkle{border-radius:50%;opacity:0;animation-name:lxTwinkle;animation-iteration-count:infinite;}
+@keyframes lxFall{from{transform:translateY(-8vh) translateX(0) rotate(0deg);opacity:0;}8%{opacity:var(--lx-o,.5);}92%{opacity:var(--lx-o,.5);}to{transform:translateY(108vh) translateX(var(--lx-drift,40px)) rotate(var(--lx-rot,420deg));opacity:0;}}
+@keyframes lxTwinkle{0%,100%{opacity:0;transform:scale(.6);}50%{opacity:var(--lx-o,.7);transform:scale(1);}}
+#lx-trail{position:fixed;inset:0;z-index:1500;pointer-events:none;}
+#lx-trail i{position:absolute;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,#fff,var(--gold,#d4af37));animation:lxSpark .7s ease-out forwards;}
+@keyframes lxSpark{to{transform:translateY(-14px) scale(.2);opacity:0;}}
+@media (prefers-reduced-motion:reduce){
+  html.lx-fx .section,html.lx-fx .section-divider span,html.lx-fx .section h2 .lx-w,
+  html.lx-fx .details-grid .detail,html.lx-fx .timer > div,html.lx-fx .timer strong,
+  html.lx-fx .gallery img,html.lx-fx #hero .hero-content,html.lx-fx .hero-ornament,
+  html.lx-fx #musicButton{animation:none !important;transition:none !important;filter:none !important;transform:none !important;opacity:1 !important;}
+  html.lx-fx #lx-ambient,html.lx-fx #lx-trail{display:none !important;}
+}
+</style>
+<script>
+(function(){
+  try{
+    var docEl=document.documentElement;
+    docEl.classList.add("lx-fx");
+    var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var fine=window.matchMedia&&window.matchMedia("(pointer: fine)").matches;
+
+    /* 1) Word-by-word heading reveal (re-wraps after i18n refills) */
+    function wrapWords(el){
+      if(!el||el.querySelector(".lx-w")||!el.textContent||!el.textContent.trim())return;
+      var words=el.textContent.trim().split(/\s+/);
+      if(words.length<2)return;
+      el.textContent="";
+      words.forEach(function(w,i){
+        var sp=document.createElement("span");
+        sp.className="lx-w";
+        sp.textContent=w;
+        sp.style.setProperty("--lx-i",i);
+        el.appendChild(sp);
+      });
+    }
+    function rewrap(){[].slice.call(document.querySelectorAll(".section h2")).forEach(wrapWords);}
+    rewrap();
+    if(window.MutationObserver){
+      var scheduled=null;
+      new MutationObserver(function(){
+        if(scheduled)return;
+        scheduled=requestAnimationFrame(function(){scheduled=null;rewrap();});
+      }).observe(document.body,{childList:true,subtree:true,characterData:true});
+    }
+
+    /* 2) Section + gallery reveal (adds .lx-seen) */
+    function markVisible(el){if(el)el.classList.add("lx-seen");}
+    if("IntersectionObserver" in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){markVisible(en.target);io.unobserve(en.target);}
+        });
+      },{threshold:.1,rootMargin:"0px 0px -8% 0px"});
+      [].forEach.call(document.querySelectorAll(".section"),function(s){io.observe(s);});
+      var gal=document.getElementById("gallery");
+      if(gal){io.observe(gal);function idx(){var imgs=gal.querySelectorAll("img");[].forEach.call(imgs,function(img,i){img.style.setProperty("--lx-i",i);});}
+        idx();setTimeout(idx,400);}
+    }else{
+      [].forEach.call(document.querySelectorAll(".section"),markVisible);
+      var g2=document.getElementById("gallery");if(g2)markVisible(g2);
+    }
+
+    /* 3) Ambient themed particles (petals / gold dust / stars / confetti) */
+    function ambient(){
+      if(reduce)return;
+      var mat=(docEl.getAttribute("data-material")||"").toLowerCase();
+      var des=(docEl.getAttribute("data-design")||"").toLowerCase();
+      var kind="dot",colors=["rgba(196,168,130,.55)"];
+      var count=window.innerWidth<768?8:12;
+      if(/botanical|flower|garden/.test(mat)){kind="petal";colors=["#8fb4a0","#b8c9a5","#d8c9b0","#e3b7a0"];}
+      else if(/rose|blush|velvet|bloom|romantic/.test(mat)||/rose|blush|velvet|romantic/.test(des)){kind="petal";colors=["#d9a7b5","#e8c2cd","#f0d3da","#c88a9a"];}
+      else if(/vintage/.test(mat)){kind="petal";colors=["#c9a877","#b8956e","#d8c9b0"];}
+      else if(/royal|dark|noir|gold|luxe|black|oriental/.test(mat)||/royal|dark|noir|gold|luxe|black|oriental/.test(des)){kind="dot";colors=["#d4af37","#c8a870","#f0e0b8","#b8860b"];}
+      else if(/aqua|starry|aurora|night/.test(mat)||/starry|aurora/.test(des)){kind="twinkle";colors=["#e8ecff","#cfe0ff","#ffd98a","#ffffff"];}
+      else if(/pop|kids|fiesta|celebration/.test(mat)||/pop|kids|fiesta/.test(des)){kind="dot";colors=["#ff6b6b","#ff9f43","#4ecdc4","#f7d774"];}
+      else if(/minimal|pearl|executive|conference|networking/.test(mat)){colors=["rgba(138,126,116,.35)"];}
+      var layer=document.createElement("div");
+      layer.id="lx-ambient";layer.setAttribute("aria-hidden","true");
+      for(var i=0;i<count;i++){
+        var pt=document.createElement("i");
+        var c=colors[i%colors.length];
+        var size=kind==="petal"?7+Math.random()*9:2+Math.random()*4;
+        pt.style.left=(Math.random()*100).toFixed(1)+"%";
+        pt.style.top=(Math.random()*100).toFixed(1)+"%";
+        pt.style.width=size.toFixed(1)+"px";
+        pt.style.height=(kind==="petal"?size*1.15:size).toFixed(1)+"px";
+        pt.style.background=c;
+        if(kind==="dot")pt.style.boxShadow="0 0 8px 1px "+c;
+        pt.className=kind==="petal"?"lx-petal":(kind==="twinkle"?"lx-twinkle":"lx-dot");
+        pt.style.setProperty("--lx-drift",((Math.random()*160)-80).toFixed(0)+"px");
+        pt.style.setProperty("--lx-rot",(360+Math.random()*360).toFixed(0)+"deg");
+        pt.style.setProperty("--lx-o",(.25+Math.random()*.4).toFixed(2));
+        pt.style.animationDuration=(9+Math.random()*10).toFixed(1)+"s";
+        pt.style.animationDelay=(-Math.random()*12).toFixed(1)+"s";
+        layer.appendChild(pt);
+      }
+      document.body.appendChild(layer);
+    }
+    ambient();
+
+    /* 4) Golden cursor sparkle trail (desktop only) */
+    function trail(){
+      if(reduce||!fine)return;
+      var layer=document.createElement("div");
+      layer.id="lx-trail";layer.setAttribute("aria-hidden","true");
+      document.body.appendChild(layer);
+      var last=0,count=0;
+      document.addEventListener("pointermove",function(e){
+        var now=Date.now();
+        if(now-last<40)return;last=now;
+        var sp=document.createElement("i");
+        sp.style.left=(e.clientX-3)+"px";sp.style.top=(e.clientY-3)+"px";
+        layer.appendChild(sp);count++;
+        if(count>60){var f=layer.firstChild;if(f)layer.removeChild(f);}
+        setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp);},750);
+      },{passive:true});
+    }
+    trail();
+
+    /* 5) Magnetic lift on cards & map button */
+    function magnet(){
+      if(reduce||!fine)return;
+      [].forEach.call(document.querySelectorAll(".detail, .map-button, .story-quote"),function(el){
+        var raf=false;
+        el.addEventListener("pointermove",function(e){
+          if(raf)return;
+          raf=true;
+          requestAnimationFrame(function(){
+            raf=false;
+            var r=el.getBoundingClientRect();
+            var dx=(e.clientX-(r.left+r.width/2))/r.width;
+            var dy=(e.clientY-(r.top+r.height/2))/r.height;
+            el.style.transform="translate("+(dx*8).toFixed(2)+"px,"+(dy*6).toFixed(2)+"px)";
+          });
+        });
+        el.addEventListener("pointerleave",function(){el.style.transform="";});
+      });
+    }
+    magnet();
+  }catch(err){/* premium layer must never break the invitation */}
+})();
+</script>
 
 </body>
 
