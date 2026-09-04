@@ -680,27 +680,6 @@ html.lx-physical .invitation.hero-revealed .hero-names .name {
   letter-spacing: clamp(-2px, -.12vw, -1px);
 }
 
-/* The pinned names get a soft scrim so they stay legible over any section */
-html.lx-physical .invitation.hero-revealed .hero-names {
-  animation: lxNamesIn .7s .1s ease both;
-}
-html.lx-physical .invitation.hero-revealed .hero-names::after {
-  content: "";
-  position: absolute;
-  inset: -46% -34%;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse 82% 72% at 50% 50%,
-      color-mix(in srgb, var(--bg) 58%, transparent), transparent 74%);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
-  border-radius: 28px;
-}
-@keyframes lxNamesIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 @keyframes lxCoverDrop {
   0% { opacity: 0; transform: translateY(24px) rotateX(8deg) scale(.96); filter: blur(8px); }
   62% { opacity: 1; transform: translateY(-4px) rotateX(-1deg) scale(1.01); filter: blur(0); }
