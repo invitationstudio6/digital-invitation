@@ -2962,6 +2962,30 @@ a { text-decoration: none; color: inherit; }
 }
 .scene-opened[data-opening="curtain"] .ct-stage { opacity: 1; }
 
+/* Grand light surge that sweeps the whole backdrop the moment the
+   names light up — the background visibly transforms behind them */
+.ct-stage::after {
+    content: "";
+    position: absolute;
+    inset: -5%;
+    background:
+        linear-gradient(90deg, transparent 0%, rgba(255,236,190,.55) 46%, rgba(255,220,150,.3) 55%, transparent 100%),
+        radial-gradient(ellipse 55% 45% at 50% 45%, rgba(255,240,210,.5), transparent 70%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 12;
+}
+.scene-opened[data-opening="curtain"] .ct-stage::after {
+    animation: ctLightSurge 3.4s cubic-bezier(.3,.1,.2,1) 1.2s both;
+}
+@keyframes ctLightSurge {
+    0% { opacity: 0; transform: scale(.86) translateX(-6%); }
+    35% { opacity: 1; transform: scale(1.04) translateX(0); }
+    70% { opacity: .55; transform: scale(1) translateX(0); }
+    100% { opacity: .25; transform: scale(1); }
+}
+
 /* Back wall / cyclorama — grand red velvet drape backdrop (opera house) */
 .ct-backwall {
     position: absolute;
@@ -3546,8 +3570,8 @@ a { text-decoration: none; color: inherit; }
     will-change: transform, filter;
 }
 /* Closed: curtains fully overlap and cover every pixel (112% total) */
-.ct-curtain-left  { left: 0;  transform-origin: left center;  transform: translateX(0); transition: transform 3.8s cubic-bezier(.65,0,.2,1) .25s, filter 1.4s ease .9s; }
-.ct-curtain-right { right: 0; transform-origin: right center; transform: translateX(0); transition: transform 3.8s cubic-bezier(.65,0,.2,1) .25s, filter 1.4s ease .9s; }
+.ct-curtain-left  { left: 0;  transform-origin: left center;  transform: translateX(0); transition: transform 4.6s cubic-bezier(.7,.03,.2,1) .35s, filter 1.4s ease 1.1s; }
+.ct-curtain-right { right: 0; transform-origin: right center; transform: translateX(0); transition: transform 4.6s cubic-bezier(.7,.03,.2,1) .35s, filter 1.4s ease 1.1s; }
 
 /* OPEN: curtains draw toward the sides and BUNCH into gathered
    stacks that remain visible on screen (never retract off-view).
@@ -3570,7 +3594,7 @@ a { text-decoration: none; color: inherit; }
     border-radius: 8px;
     box-shadow: 0 0 40px rgba(0,0,0,.75), inset 0 0 26px rgba(0,0,0,.55);
     opacity: 0;
-    transition: opacity 1.1s ease .8s, transform 3.6s cubic-bezier(.65,0,.2,1) .25s;
+    transition: opacity 1.1s ease .8s, transform 4.4s cubic-bezier(.7,.03,.2,1) .35s;
 }
 .ct-curtain-left::before  { right: -6%;  transform-origin: right center; transform: scaleX(.6); }
 .ct-curtain-right::before { left: -6%;   transform-origin: left center;  transform: scaleX(.6); }
@@ -3911,12 +3935,30 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Scene card: the invitation text sheet rising after dolly ── */
 [data-opening="curtain"] .sig-scene { z-index: 3; }
+/* Flat detail card sits LOWER on the stage so the red-velvet backdrop
+   and the stage title names stay the hero behind it. Translucent glass. */
 [data-opening="curtain"] #curtainScene .sig-card {
-    background: linear-gradient(165deg, #241510, #160C08);
-    border-color: rgba(212,175,55,.45);
-    box-shadow: 0 0 100px rgba(212,175,55,.15), 0 30px 80px rgba(0,0,0,.65);
+    position: absolute;
+    left: 50%;
+    top: 66%;
+    width: min(460px, 90vw);
+    background: linear-gradient(165deg, rgba(34,18,13,.92), rgba(20,10,7,.94));
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border-color: rgba(212,175,55,.42);
+    box-shadow: 0 0 90px rgba(212,175,55,.12), 0 30px 80px rgba(0,0,0,.6);
+    border-radius: 14px;
 }
 [data-opening="curtain"] #curtainScene .sig-card h1 { color: #F7EDDF; }
+/* Override the generic reveal so horizontal centering is preserved */
+[data-opening="curtain"] .scene-opened[data-opening="curtain"] #curtainScene .sig-card {
+    animation: ctSigCardIn 1.3s cubic-bezier(.2,.9,.3,1) 1.6s both;
+}
+@keyframes ctSigCardIn {
+    0% { opacity: 0; transform: translate(-50%,40px) rotateX(10deg) scale(.94); filter: blur(5px); }
+    60% { opacity: 1; transform: translate(-50%,-4px) rotateX(-2deg) scale(1.01); filter: blur(0); }
+    100% { opacity: 1; transform: translate(-50%,0) rotateX(0) scale(1); filter: blur(0); }
+}
 
 /* Ambient glow behind everything */
 [data-opening="curtain"] .opening::after {
