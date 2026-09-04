@@ -1,0 +1,220 @@
+/* Luna physical stationery layer — additive visual treatment only. */
+:root {
+  --lx-paper: #f7f1e8;
+  --lx-ink: #2a2420;
+  --lx-gold: #c5a46a;
+  --lx-shadow: rgba(43, 28, 18, .22);
+}
+
+/* Material response shared by the catalogue, order form, and invitation surfaces. */
+.tpl-card,
+.anim-card,
+.design-thumb,
+.card-item,
+.video-card,
+.hero-inv-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  isolation: isolate;
+  will-change: transform, box-shadow;
+}
+
+.tpl-card::before,
+.anim-card::before,
+.design-thumb::after,
+.card-item::before,
+.video-card::before,
+.hero-inv-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  opacity: .24;
+  mix-blend-mode: multiply;
+  background:
+    repeating-linear-gradient(103deg, rgba(76, 51, 30, .045) 0 1px, transparent 1px 5px),
+    radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.55), transparent 48%);
+}
+
+.tpl-card:hover,
+.tpl-card:focus-within,
+.anim-card:hover,
+.anim-card:focus-within,
+.design-thumb:hover,
+.design-thumb:focus-within,
+.card-item:hover,
+.video-card:hover,
+.hero-inv-card:hover {
+  transform: translateY(-7px) rotateX(1deg) rotateY(-1deg);
+  box-shadow: 0 24px 52px var(--lx-shadow), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+
+.tpl-card-img,
+.anim-card img,
+.design-thumb-img,
+.card-item img,
+.video-card img,
+.video-card video,
+.hero-inv-card .hi-img {
+  transform: translateZ(8px);
+  transform-origin: center;
+  transition: transform 1.1s cubic-bezier(.19,1,.22,1), filter 1.1s ease;
+  filter: saturate(.88) contrast(1.03);
+}
+
+.tpl-card:hover .tpl-card-img,
+.anim-card:hover img,
+.design-thumb:hover .design-thumb-img,
+.card-item:hover img,
+.video-card:hover img,
+.video-card:hover video,
+.hero-inv-card:hover .hi-img {
+  transform: translateZ(18px) scale(1.055);
+  filter: saturate(1.05) contrast(1.06);
+}
+
+/* Order-form template selection: tactile paper edge and opening cue. */
+.template-grid .tpl-card,
+.anim-grid .anim-card {
+  box-shadow: 0 8px 18px rgba(62,37,24,.08), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+.template-grid .tpl-card::after,
+.anim-grid .anim-card::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 5;
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.28);
+  opacity: .75;
+}
+
+/* Delivered invitation: one physical handoff after the existing opening scene. */
+html.lx-physical .opening {
+  isolation: isolate;
+  perspective: 1600px;
+  background-image: radial-gradient(ellipse at 50% 34%, rgba(255,250,232,.12), transparent 42%);
+}
+html.lx-physical .opening::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .17;
+  background: repeating-linear-gradient(112deg, rgba(255,255,255,.08) 0 1px, transparent 1px 7px);
+  mix-blend-mode: screen;
+}
+html.lx-physical .envelope-scene,
+html.lx-physical .door-scene,
+html.lx-physical .sig-scene {
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 24px 42px rgba(20,12,8,.24));
+}
+html.lx-physical .envelope {
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(.19,1,.22,1), filter 1.2s ease;
+}
+html.lx-physical .envelope.open {
+  transform: translateY(-4px) rotateX(2deg) rotateY(-1deg);
+  filter: drop-shadow(0 28px 42px rgba(20,12,8,.3));
+}
+html.lx-physical .envelope .flap,
+html.lx-physical .envelope .letter,
+html.lx-physical .envelope .seal {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+html.lx-physical .envelope .flap {
+  filter: drop-shadow(0 8px 9px rgba(30,16,8,.22));
+}
+html.lx-physical .envelope .letter {
+  box-shadow: 0 16px 28px rgba(39,25,15,.2), inset 0 0 0 1px rgba(255,255,255,.7);
+  background-image: linear-gradient(105deg, rgba(255,255,255,.32), transparent 30%), repeating-linear-gradient(95deg, rgba(86,57,31,.025) 0 1px, transparent 1px 4px);
+}
+html.lx-physical .envelope .seal {
+  box-shadow: 0 8px 20px rgba(52,18,15,.3), inset 0 1px 2px rgba(255,255,255,.3);
+}
+html.lx-physical .opening.hidden {
+  transform: scale(1.07) translateY(-1.5vh);
+  filter: blur(7px) brightness(1.22) saturate(1.08);
+  transition: transform 1.35s cubic-bezier(.19,1,.22,1), filter 1.35s ease, opacity 1.35s ease;
+}
+
+/* Hero appears as a card settling onto the paper, immediately after opening. */
+html.lx-physical .invitation.hero-revealed .hero::before {
+  animation: lxHeroLightSweep 2.1s cubic-bezier(.19,1,.22,1) both;
+}
+html.lx-physical .invitation.hero-revealed .hero::after {
+  animation: lxHeroRing 2.2s cubic-bezier(.19,1,.22,1) both;
+}
+html.lx-physical .invitation.hero-revealed .hero-content {
+  animation: lxHeroPaperSettle 1.45s cubic-bezier(.19,1,.22,1) both;
+}
+html.lx-physical .invitation.hero-revealed .hero-names .name {
+  animation: lxNameInk 1.1s cubic-bezier(.19,1,.22,1) both;
+}
+html.lx-physical .invitation.hero-revealed .hero-names .name:nth-child(3) { animation-delay: .12s; }
+html.lx-physical .invitation.hero-revealed .hero-amp { animation: lxInkFade .8s .2s ease both; }
+@keyframes lxHeroPaperSettle {
+  0% { opacity: 0; transform: translateY(30px) scale(.965) rotateX(7deg); filter: blur(13px); }
+  65% { opacity: 1; transform: translateY(-3px) scale(1.008) rotateX(-1deg); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0); filter: blur(0); }
+}
+@keyframes lxNameInk {
+  0% { opacity: 0; transform: translateY(20px); filter: blur(9px); letter-spacing: .08em; }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); letter-spacing: normal; }
+}
+@keyframes lxInkFade { from { opacity: 0; transform: scale(.7) rotate(-12deg); } to { opacity: .75; transform: scale(1) rotate(0); } }
+@keyframes lxHeroLightSweep {
+  0% { opacity: .15; transform: scale(.82); }
+  55% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: .72; transform: scale(1); }
+}
+@keyframes lxHeroRing { from { opacity: 0; transform: scale(.72); } to { opacity: .8; transform: scale(1); } }
+
+/* Interactive journey scenes and the intermediate curtain card. */
+html.lx-physical .scene-engine { perspective: 1600px; }
+html.lx-physical .scene-bg { transform-origin: center; filter: saturate(.86) contrast(1.07); }
+html.lx-physical .scene.active .scene-bg { animation: lxSceneKenBurns 12s ease-in-out both alternate; }
+html.lx-physical .scene-content { transform: translateZ(30px); text-shadow: 0 4px 24px rgba(0,0,0,.2); }
+@keyframes lxSceneKenBurns { from { transform: scale(1.01); } to { transform: scale(1.09) translate3d(-1%, -1%, 0); } }
+html.lx-physical .reveal-curtain-left,
+html.lx-physical .reveal-curtain-right {
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
+    linear-gradient(135deg, #38251a, #1a100b 70%);
+  box-shadow: inset 0 0 90px rgba(0,0,0,.38), 0 0 34px rgba(0,0,0,.25);
+  transform-style: preserve-3d;
+  transition-duration: 1.45s;
+}
+html.lx-physical .reveal-card {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255,255,255,.92), transparent 45%),
+    repeating-linear-gradient(105deg, rgba(95,64,35,.035) 0 1px, transparent 1px 6px),
+    var(--bg, #f5ede3);
+}
+html.lx-physical .reveal-card-inner {
+  padding: clamp(32px, 7vw, 80px);
+  border: 1px solid rgba(196,168,130,.28);
+  box-shadow: 0 30px 90px rgba(62,37,24,.16), inset 0 0 0 10px rgba(255,255,255,.18);
+  transform: rotateX(8deg) scale(.94);
+  transition: transform 1.2s cubic-bezier(.19,1,.22,1) .15s;
+}
+html.lx-physical .reveal-card.visible .reveal-card-inner { transform: rotateX(0) scale(1); }
+html.lx-physical .reveal-card-inner h2 { text-shadow: 0 8px 22px rgba(62,37,24,.12); }
+
+@media (hover: none) {
+  .tpl-card:active,
+  .anim-card:active,
+  .design-thumb:active,
+  .hero-inv-card:active { transform: translateY(-3px) scale(.99); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tpl-card, .anim-card, .design-thumb, .card-item, .video-card, .hero-inv-card,
+  html.lx-physical .invitation.hero-revealed .hero-content,
+  html.lx-physical .invitation.hero-revealed .hero-names .name,
+  html.lx-physical .scene.active .scene-bg { animation: none !important; transition: none !important; }
+  html.lx-physical .invitation.hero-revealed .hero-content { opacity: 1; transform: none; filter: none; }
+}
