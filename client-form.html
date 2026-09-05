@@ -804,12 +804,13 @@ body.menu-open .languages{display:none}
     </section>
 </main>
 
-<script src="data/luna.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/data.js?v=20260824b"></script>
-<script src="js/config.js?v=1"></script>
-<script src="js/sync.js?v=3"></script>
+<script src="data/luna.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/data.js?v=20260824b" defer></script>
+<script src="js/config.js?v=1" defer></script>
+<script src="js/sync.js?v=3" defer></script>
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 (function() {
     var params = new URLSearchParams(window.location.search);
     var design = (params.get("design") || "amelia").toLowerCase();
@@ -833,7 +834,7 @@ body.menu-open .languages{display:none}
         };
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    (function() {
         var lang = (localStorage.getItem("lunaLanguage") || "az");
 
         /* Titles / descriptions */
@@ -895,7 +896,7 @@ body.menu-open .languages{display:none}
             });
             piPreview.style.display = "block";
         }
-    });
+    })();
 
     function renderAdminCustomFields() {
         var wrap = document.getElementById("customFieldsWrap");
@@ -2973,6 +2974,7 @@ body.menu-open .languages{display:none}
     });
 
 })();
+});
 </script>
 
 <!-- ===== ADMIN INLINE FORM EDITOR (sidebar drawer) ===== -->
@@ -3023,6 +3025,7 @@ body.menu-open .languages{display:none}
     <a class="cf-admin-link" href="admin.html">Tam admin panelini aç →</a>
 </aside>
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 (function() {
     var isOwner = false;
     try { isOwner = !!localStorage.getItem("luna_form_config"); } catch(e) {}
@@ -3133,6 +3136,7 @@ body.menu-open .languages{display:none}
 
 /* Bulud sinxronizasiya — admin paneldəki sessiyadan avtomatik istifadə */
 if (window.LunaSync) LunaSync.init(function(){});
+});
 </script>
 </body>
 </html>

@@ -522,9 +522,10 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
     </div>
 </footer>
 
-<script src="js/data.js?v=20260824b"></script>
-<script src="js/i18n.js"></script>
+<script src="js/data.js?v=20260824b" defer></script>
+<script src="js/i18n.js" defer></script>
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 /* ===== INIT LANGUAGE ===== */
 lunaInitLanguage();
 
@@ -617,6 +618,7 @@ window.addEventListener("load", function() {
     setTimeout(function() {
         document.getElementById("loader").classList.add("hide");
     }, 600);
+});
 });
 </script>
 </body>
