@@ -1357,11 +1357,10 @@ html.lx-physical[data-opening="curtain"] .ct-curtain-fabric {
     linear-gradient(90deg, #4e0c0a, #8e211a 35%, #5b0f0c 72%, #2b0504);
   box-shadow: inset 0 0 42px rgba(0,0,0,.48), inset 0 0 12px rgba(255,193,148,.12);
 }
-html.lx-physical[data-opening="curtain"] .ct-curtain-left,
-html.lx-physical[data-opening="curtain"] .ct-curtain-right {
-  transition-duration: 5.2s;
-  transition-timing-function: cubic-bezier(.72,.02,.18,1);
-}
+/* The curtain timing is owned by the inline .ct-curtain-left/right transition
+   in data/invitation.html. Do NOT re-declare a separate duration here: a second
+   transition-duration made the panels animate at 5.2s while their gathered
+   folds (::before) still ran at 4.4s, so the curtain visibly opened twice. */
 html.lx-physical[data-opening="curtain"] .ct-curtain-left::after,
 html.lx-physical[data-opening="curtain"] .ct-curtain-right::after {
   content: "";
