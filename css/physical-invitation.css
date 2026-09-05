@@ -984,6 +984,90 @@ html.lx-physical[data-opening="stairs"].scene-opened .stairs-step:nth-child(5)::
 }
 @keyframes lxBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
+/* =========================================================
+   STAIRS UPGRADE — realistic marble staircase + climbing couple
+   (additive layer that replaces the old flat step strips)
+   ========================================================= */
+html.lx-physical[data-opening="stairs"] .stairs-steps {
+  display: none;
+}
+/* Give the stairs more room: compact invitation card at the top. */
+html.lx-physical[data-opening="stairs"] .stairs-card {
+  top: 1.5%;
+  width: 46%;
+  aspect-ratio: auto;
+  height: 30%;
+}
+html.lx-physical[data-opening="stairs"] .stairs-card-content {
+  padding: 18px;
+}
+html.lx-physical[data-opening="stairs"] .stairs-card-content h1 {
+  font-size: clamp(26px, 4.5vw, 42px);
+  margin: 8px 0 6px;
+}
+html.lx-physical[data-opening="stairs"] .lx-stairs-3d {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 94%;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 22px 30px rgba(42,26,14,.30));
+  animation: lxStairsIn 1.2s cubic-bezier(.22,.9,.36,1) both;
+}
+html.lx-physical[data-opening="stairs"] .lx-couple-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5%;
+  width: 24%;
+  max-width: 135px;
+  z-index: 2;
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: lxClimb 7.5s cubic-bezier(.5,.06,.24,1) .9s forwards;
+}
+html.lx-physical[data-opening="stairs"] .lx-couple {
+  transform-origin: 50% 100%;
+  animation: lxStep .62s ease-in-out infinite;
+}
+html.lx-physical[data-opening="stairs"] .lx-couple-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+html.lx-physical[data-opening="stairs"] .lx-couple .lx-veil {
+  transform-origin: 50% 0%;
+  animation: lxVeil 3.6s ease-in-out infinite;
+}
+@keyframes lxStairsIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(26px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes lxClimb {
+  0%   { bottom: 1.5%; }
+  100% { bottom: 38%; }
+}
+@keyframes lxStep {
+  0%, 100% { transform: translateY(0) rotate(-1.4deg); }
+  50%      { transform: translateY(-9px) rotate(1.4deg); }
+}
+@keyframes lxVeil {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.lx-physical[data-opening="stairs"] .lx-stairs-3d,
+  html.lx-physical[data-opening="stairs"] .lx-couple-wrap,
+  html.lx-physical[data-opening="stairs"] .lx-couple,
+  html.lx-physical[data-opening="stairs"] .lx-couple .lx-veil {
+    animation: none !important;
+  }
+  html.lx-physical[data-opening="stairs"] .lx-couple-wrap {
+    bottom: 38%;
+  }
+}
+
 /* ---- Door / wood-door: castle torchlight + drifting fog ---- */
 html.lx-physical .lx-torch {
   position: fixed;
