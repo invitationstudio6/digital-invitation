@@ -2252,6 +2252,7 @@ document.addEventListener("DOMContentLoaded", function(){
             '<p style="margin:8px 0 0;font-size:11px;color:var(--muted)">JPG, PNG, WebP — ölçüsünün üstü yoxdur (avtomatik sıkışdırılır)</p>' +
             '</div>' +
             '<div class="luna-thumbs" id="lunaGalleryThumbs" style="display:none"></div>' +
+            '<button type="button" class="luna-browse-btn" id="lunaGalleryAddMore" style="display:none;margin-top:12px">+ Daha çox şəkil əlavə et</button>' +
             '<div class="luna-upload-progress" id="lunaGalleryProgress" style="display:none;margin-top:12px">' +
             '<div class="luna-progress-bar"><div class="luna-progress-fill" id="lunaProgressFill"></div></div>' +
             '<p class="luna-progress-text" id="lunaProgressText" style="margin:8px 0 0;font-size:12px;color:var(--muted)"></p>' +
@@ -2286,6 +2287,7 @@ document.addEventListener("DOMContentLoaded", function(){
         var dropzone = document.getElementById("lunaGalleryDropzone");
         var input = document.getElementById("lunaGalleryInput");
         var browseBtn = document.getElementById("lunaGalleryBrowse");
+        var addMore = document.getElementById("lunaGalleryAddMore");
         var thumbs = document.getElementById("lunaGalleryThumbs");
         var progressWrap = document.getElementById("lunaGalleryProgress");
         var progressFill = document.getElementById("lunaProgressFill");
@@ -2298,10 +2300,12 @@ document.addEventListener("DOMContentLoaded", function(){
             if (!galleryCompressed.length) {
                 thumbs.style.display = "none";
                 dropzone.style.display = "flex";
+                if (addMore) addMore.style.display = "none";
                 return;
             }
             thumbs.style.display = "grid";
             dropzone.style.display = "none";
+            if (addMore) addMore.style.display = "inline-block";
             thumbs.innerHTML = "";
             galleryCompressed.forEach(function(item, idx) {
                 var wrapper = document.createElement("div");
@@ -2410,6 +2414,12 @@ document.addEventListener("DOMContentLoaded", function(){
             e.stopPropagation();
             input.click();
         });
+        if (addMore) {
+            addMore.addEventListener("click", function(e) {
+                e.stopPropagation();
+                input.click();
+            });
+        }
         input.addEventListener("change", function() {
             processFiles(this.files);
             this.value = "";
