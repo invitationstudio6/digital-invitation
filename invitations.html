@@ -368,6 +368,22 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <div class="loader-line"></div>
     </div>
 </div>
+<script>
+/* Hide the loader on first paint — never wait for window.load (which
+   blocks on all images/fonts and keeps the page "closed" on slow phones). */
+(function () {
+    function hide() {
+        var l = document.getElementById("loader");
+        if (l) l.classList.add("hide");
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hide, { once: true });
+    } else {
+        hide();
+    }
+    setTimeout(hide, 500);
+})();
+</script>
 
 <!-- BACKGROUND -->
 <div class="site-bg"></div>

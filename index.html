@@ -1696,6 +1696,24 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         <div class="loader-tagline">Digital Invitations</div>
     </div>
 </div>
+<script>
+/* Hide the loader on first paint — never wait for the heavy deferred
+   scripts (data.js ~126KB, i18n.js ~47KB) to download & execute.
+   This runs immediately after the loader markup is parsed. */
+(function () {
+    function hide() {
+        var l = document.getElementById("loader");
+        if (l) l.classList.add("hide");
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hide, { once: true });
+    } else {
+        hide();
+    }
+    /* Hard safety net: never let the loader linger past 600ms */
+    setTimeout(hide, 600);
+})();
+</script>
 
 <!-- BACKGROUND -->
 <div class="site-bg"></div>
