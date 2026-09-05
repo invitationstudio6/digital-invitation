@@ -4797,29 +4797,13 @@ function isInvitationApproved(invitationId) {
         if (inv) return inv.approved !== false;
     } catch(e) {}
     var cached = window.__lunaInvApprovalCache && window.__lunaInvApprovalCache[invitationId];
-    return cached !== undefined ? cached : true;
-}
-
-async function fetchInvitationApprovedFromCloud(invitationId) {
-    var cfg = window.LUNA_SUPABASE;
-    if (!cfg || !cfg.url || !cfg.anonKey) return undefined;
-    try {
-        var res = await fetch(cfg.url + "/rest/v1/luna_invitations?select=id,value&id=eq." + encodeURIComponent(invitationId), {
-            headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey }
-        });
-        if (!res.ok) return undefined;
-        var rows = await res.json();
-        if (rows && rows[0] && rows[0].value) {
-            return rows[0].value.approved !== false;
-        }
-    } catch(e) {}
-    return undefined;
+    return cached !== undefined ? cached : false;
 }
 
 async function preloadInvitationApprovals(orders) {
     var ids = [];
     orders.forEach(function(o) {
-        if (o.productType === 'invitation' && o.invitationId && !window.__lunaInvApprovalCache) {
+        if (o.productType === 'invitation' && o.invitationId) {
             var cached = window.__lunaInvApprovalCache && window.__lunaInvApprovalCache[o.invitationId];
             if (cached === undefined) ids.push(o.invitationId);
         }
