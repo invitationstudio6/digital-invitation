@@ -11996,7 +11996,7 @@ var _openingStyle = (function() {
         "winter-drift":   { id: "winterScene",  delay: 1400 },
         "royal-scroll":   { id: "royalScrollScene", delay: 1500 },
         "door":           { id: "doorScene",    delay: 2600 },
-        "stairs":         { id: "stairsScene",  delay: 1400 },
+        "stairs":         { id: "stairsScene",  delay: 4600 },
         "envelope-seal":  { id: "envSealScene", delay: 1500 },
         "ribbon":         { id: "ribbonScene",  delay: 3400 },
         "wood-door":      { id: "woodDoorScene", delay: 1500 },
@@ -12125,10 +12125,9 @@ var _openingStyle = (function() {
     window.__lunaOpenDelay = sceneCfg.delay;
 
     /* On mobile / small screens, cap the pre-reveal wait so the invitation
-       opens promptly — long scene journeys (e.g. old-book) feel sluggish
-       on phones. */
+       opens promptly — but keep enough time for the stairs scene to breathe. */
     if (window.matchMedia && window.matchMedia("(max-width: 768px)").matches) {
-        window.__lunaOpenDelay = Math.min(window.__lunaOpenDelay, 1400);
+        window.__lunaOpenDelay = Math.min(window.__lunaOpenDelay, 2600);
     }
 
     /* Ambient decorations per scene type */

@@ -27,82 +27,102 @@
 
     /* ---- Stairs upgrade: a realistic marble staircase plus a bride & groom
            who climb it together (illustrated SVG, additive only). ---- */
-    function stairsStaircaseSVG() {
-        var W = 420, H = 320, steps = 7, rise = 30, bottom = 304;
-        var lx0 = (W - 356) / 2;   /* bottom-left x of the lowest step */
-        var lx1 = (W - 212) / 2;   /* top-left x of the highest step */
-        var railTopY = bottom - steps * rise + 10;
-        var s = '<svg class="lx-stairs-3d" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">';
-        s += '<defs>' +
-            '<linearGradient id="lxStairWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4ecdd"/><stop offset="1" stop-color="#d3c4a7"/></linearGradient>' +
-            '<linearGradient id="lxStairTread" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f1e3"/><stop offset="1" stop-color="#dccfb6"/></linearGradient>' +
-            '<linearGradient id="lxStairRiser" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7b79d"/><stop offset="1" stop-color="#9f8a6e"/></linearGradient>' +
-            '</defs>';
-
-        /* Grand-foyer back wall behind the staircase */
-        s += '<rect x="26" y="14" width="368" height="290" rx="120" fill="url(#lxStairWall)"/>';
-        s += '<rect x="26" y="14" width="368" height="290" rx="120" fill="none" stroke="#c5a46a" stroke-opacity=".35" stroke-width="2"/>';
-
-        /* Steps — draw the top-most first so each lower step sits in front. */
-        for (var i = steps - 1; i >= 0; i--) {
-            var w = 356 - i * 24;
-            var x = (W - w) / 2;
-            var riserTop = bottom - (i + 1) * rise;
-            var riserBot = bottom - i * rise;
-            var depth = 12, inset = 7;
-            s += '<path d="M' + x.toFixed(1) + ' ' + riserTop.toFixed(1) +
-                 ' L' + (x + w).toFixed(1) + ' ' + riserTop.toFixed(1) +
-                 ' L' + (x + w).toFixed(1) + ' ' + riserBot.toFixed(1) +
-                 ' L' + x.toFixed(1) + ' ' + riserBot.toFixed(1) + ' Z" fill="url(#lxStairRiser)"/>';
-            s += '<path d="M' + x.toFixed(1) + ' ' + riserTop.toFixed(1) +
-                 ' L' + (x + w).toFixed(1) + ' ' + riserTop.toFixed(1) +
-                 ' L' + (x + w - inset).toFixed(1) + ' ' + (riserTop - depth).toFixed(1) +
-                 ' L' + (x + inset).toFixed(1) + ' ' + (riserTop - depth).toFixed(1) + ' Z" fill="url(#lxStairTread)"/>';
-        }
-
-        /* Gold handrails + newel caps */
-        s += '<path d="M' + (lx0 - 8).toFixed(1) + ' ' + bottom + ' L' + (lx1 - 8).toFixed(1) + ' ' + railTopY + '" fill="none" stroke="#c5a46a" stroke-width="8" stroke-linecap="round"/>';
-        s += '<path d="M' + (W - lx0 + 8).toFixed(1) + ' ' + bottom + ' L' + (W - lx1 + 8).toFixed(1) + ' ' + railTopY + '" fill="none" stroke="#c5a46a" stroke-width="8" stroke-linecap="round"/>';
-        s += '<circle cx="' + (lx1 - 8).toFixed(1) + '" cy="' + railTopY + '" r="10" fill="#c5a46a"/>';
-        s += '<circle cx="' + (W - lx1 + 8).toFixed(1) + '" cy="' + railTopY + '" r="10" fill="#c5a46a"/>';
-        s += '</svg>';
-        return s;
-    }
+    /* (The flat SVG staircase is removed — the client's real staircase
+       photograph now provides the stairs, kept clearly visible.) */
 
     function stairsCoupleSVG() {
-        return '<svg class="lx-couple-svg" viewBox="0 0 220 300" aria-hidden="true" focusable="false">' +
-            '<defs><linearGradient id="lxDress" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf8"/><stop offset=".62" stop-color="#f4ebdd"/><stop offset="1" stop-color="#e1d4bf"/></linearGradient></defs>' +
-            '<ellipse cx="120" cy="272" rx="66" ry="9" fill="rgba(44,26,14,.20)"/>' +
-            '<g class="lx-groom">' +
-            '<rect x="68" y="136" width="12" height="98" rx="6" fill="#15151b"/>' +
-            '<rect x="86" y="136" width="12" height="98" rx="6" fill="#101017"/>' +
-            '<ellipse cx="74" cy="236" rx="11" ry="5" fill="#0d0d12"/>' +
-            '<ellipse cx="92" cy="236" rx="11" ry="5" fill="#0d0d12"/>' +
-            '<path d="M60 138 L102 138 L109 76 L54 76 Z" fill="#1d1d24"/>' +
-            '<path d="M66 76 L96 76 L81 104 Z" fill="#f6f2ea"/>' +
-            '<path d="M74 82 L88 82 L81 90 Z" fill="#7a2230"/>' +
-            '<path d="M100 84 Q122 86 130 104" fill="none" stroke="#1d1d24" stroke-width="13" stroke-linecap="round"/>' +
-            '<circle cx="81" cy="44" r="15" fill="#e7bd92"/>' +
-            '<path d="M66 41 Q81 18 96 41 Q90 32 81 31 Q71 32 66 41 Z" fill="#261c16"/>' +
-            '</g>' +
-            '<g class="lx-bride">' +
-            '<path class="lx-veil" d="M143 20 Q118 8 150 6 Q168 10 154 30 Q147 18 143 20 Z" fill="rgba(255,255,255,.72)"/>' +
-            '<path d="M126 62 L160 62 L192 266 L72 266 Z" fill="url(#lxDress)"/>' +
-            '<path d="M126 62 L160 62 L155 100 L131 100 Z" fill="#fbf7f0"/>' +
-            '<path d="M143 106 L140 258 M143 106 L150 258 M143 106 L160 248" stroke="#e2d4bf" stroke-width="2.5" fill="none" opacity=".75"/>' +
-            '<path d="M130 96 Q112 102 112 124" fill="none" stroke="#e7bd92" stroke-width="9" stroke-linecap="round"/>' +
-            '<g class="lx-bouquet">' +
-            '<circle cx="110" cy="132" r="7" fill="#e79cb0"/>' +
-            '<circle cx="119" cy="128" r="6" fill="#e26885"/>' +
-            '<circle cx="125" cy="134" r="7" fill="#f4b7c7"/>' +
-            '<circle cx="112" cy="125" r="6" fill="#f7dbe4"/>' +
-            '<path d="M112 134 Q114 144 119 150" stroke="#5f7d4a" stroke-width="3.5" fill="none"/>' +
-            '</g>' +
-            '<circle cx="143" cy="38" r="14" fill="#e7bd92"/>' +
-            '<path d="M129 38 Q143 16 157 38 Q152 30 143 29 Q134 30 129 38 Z" fill="#241a16"/>' +
-            '<circle cx="143" cy="24" r="6.5" fill="#241a16"/>' +
-            '</g>' +
+        return '<svg class="lx-couple-svg" viewBox="0 0 240 320" aria-hidden="true" focusable="false">' +
+            '<defs>' +
+            '<radialGradient id="lxSkin" cx="42%" cy="34%" r="65%"><stop offset="0" stop-color="#f7d5b4"/><stop offset=".7" stop-color="#e9be95"/><stop offset="1" stop-color="#d2a074"/></radialGradient>' +
+            '<linearGradient id="lxHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3426"/><stop offset="1" stop-color="#1c130d"/></linearGradient>' +
+            '<linearGradient id="lxSuit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33333c"/><stop offset="1" stop-color="#15151b"/></linearGradient>' +
+            '<linearGradient id="lxDress" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f7efe4"/><stop offset="1" stop-color="#e2d4bd"/></linearGradient>' +
+            '<linearGradient id="lxVeilG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(255,255,255,.9)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></linearGradient>' +
+            '</defs>' +
+            '<ellipse cx="120" cy="306" rx="80" ry="12" fill="rgba(30,18,10,.30)"/>' +
+            stairsGroomSVG() +
+            stairsBrideSVG() +
             '</svg>';
+    }
+
+    function stairsGroomSVG() {
+        return '<g class="lx-groom">' +
+            '<path d="M62 176 L62 288 L75 288 L75 176 Z" fill="#14141a"/>' +
+            '<path d="M84 176 L84 288 L97 288 L97 176 Z" fill="#0f0f15"/>' +
+            '<path d="M58 288 L80 288 L82 298 L56 298 Z" fill="#0b0b0f"/>' +
+            '<path d="M82 288 L102 288 L104 298 L80 298 Z" fill="#0b0b0f"/>' +
+            '<path d="M56 120 L106 120 L112 178 L50 178 Z" fill="url(#lxSuit)"/>' +
+            '<path d="M69 120 L95 120 L82 150 Z" fill="#f6f2ea"/>' +
+            '<path d="M79 120 L85 120 L82 152 Z" fill="#6d1f2e"/>' +
+            '<path d="M69 120 L57 152 L69 152 Z" fill="#23232b"/>' +
+            '<path d="M95 120 L107 152 L95 152 Z" fill="#23232b"/>' +
+            '<path d="M103 130 Q126 132 140 156" fill="none" stroke="#33333c" stroke-width="16" stroke-linecap="round"/>' +
+            '<path d="M103 130 Q126 132 140 156" fill="none" stroke="#4a4a55" stroke-width="5" stroke-linecap="round" opacity=".5"/>' +
+            '<path d="M74 114 L88 114 L86 122 L76 122 Z" fill="#e0b488"/>' +
+            '<ellipse cx="81" cy="82" rx="15.5" ry="18.5" fill="url(#lxSkin)"/>' +
+            '<ellipse cx="65.5" cy="84" rx="3.4" ry="6" fill="url(#lxSkin)"/>' +
+            '<ellipse cx="96.5" cy="84" rx="3.4" ry="6" fill="url(#lxSkin)"/>' +
+            '<path d="M65 74 Q81 48 97 74 Q94 63 81 62 Q68 63 65 74 Z" fill="url(#lxHair)"/>' +
+            '<path d="M64 80 Q63 92 66 96 L64 94 Q62 86 63 78 Z" fill="#2a1d15"/>' +
+            '<path d="M72 79 Q75 76 79 78" stroke="#33261c" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+            '<path d="M83 78 Q87 76 90 79" stroke="#33261c" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+            '<ellipse cx="75.5" cy="85" rx="2.6" ry="1.7" fill="#fff"/>' +
+            '<circle cx="75.5" cy="85" r="1.1" fill="#241710"/>' +
+            '<ellipse cx="86.5" cy="85" rx="2.6" ry="1.7" fill="#fff"/>' +
+            '<circle cx="86.5" cy="85" r="1.1" fill="#241710"/>' +
+            '<path d="M81 86 Q79.5 92 82 93" stroke="#c89970" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
+            '<path d="M77 98 Q81 101 85 98" stroke="#b76e5c" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+            '</g>';
+    }
+
+    function stairsBrideSVG() {
+        return '<g class="lx-bride">' +
+            '<path d="M146 94 L186 94 L220 296 L114 296 Z" fill="url(#lxDress)"/>' +
+            '<path d="M166 108 L157 292 M166 108 L170 292 M166 108 L185 288 M166 108 L199 284" stroke="#dccbb2" stroke-width="3" fill="none" opacity=".6"/>' +
+            '<path d="M146 94 L186 94 L186 118 L146 118 Z" fill="#ffffff" opacity=".65"/>' +
+            '<path d="M146 94 L186 94 L180 130 L152 130 Z" fill="#fcf7ef"/>' +
+            '<path d="M152 130 L180 130 L176 148 L156 148 Z" fill="#eee1cc"/>' +
+            '<path d="M158 118 Q166 126 174 118" stroke="#d8b46a" stroke-width="1.6" fill="none"/>' +
+            '<path d="M158 82 L172 82 L170 94 L160 94 Z" fill="#e6bc92"/>' +
+            '<ellipse cx="165" cy="58" rx="14.5" ry="17.5" fill="url(#lxSkin)"/>' +
+            '<ellipse cx="150.5" cy="60" rx="3.2" ry="5.6" fill="url(#lxSkin)"/>' +
+            '<ellipse cx="179.5" cy="60" rx="3.2" ry="5.6" fill="url(#lxSkin)"/>' +
+            '<path d="M150 52 Q165 26 180 52 Q176 44 165 43 Q154 44 150 52 Z" fill="url(#lxHair)"/>' +
+            '<circle cx="165" cy="40" r="8" fill="url(#lxHair)"/>' +
+            '<path d="M157 55 Q160 52 163 54" stroke="#33261c" stroke-width="1.7" fill="none" stroke-linecap="round"/>' +
+            '<path d="M167 54 Q170 52 173 55" stroke="#33261c" stroke-width="1.7" fill="none" stroke-linecap="round"/>' +
+            '<ellipse cx="159.5" cy="61" rx="2.5" ry="1.6" fill="#fff"/>' +
+            '<circle cx="159.5" cy="61" r="1" fill="#241710"/>' +
+            '<ellipse cx="170.5" cy="61" rx="2.5" ry="1.6" fill="#fff"/>' +
+            '<circle cx="170.5" cy="61" r="1" fill="#241710"/>' +
+            '<path d="M165 63 Q163.5 68 166 69" stroke="#c89970" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
+            '<path d="M160.5 74 Q165 78 169.5 74" fill="#c9767a"/>' +
+            '<path class="lx-veil" d="M165 42 Q150 14 167 8 Q184 12 177 42 Q171 28 165 42 Z" fill="url(#lxVeilG)"/>' +
+            '<path class="lx-veil" d="M151 38 Q130 56 137 86 Q145 70 151 38 Z" fill="rgba(255,255,255,.5)"/>' +
+            '<path d="M150 102 Q128 108 126 130" fill="none" stroke="#e9be95" stroke-width="9" stroke-linecap="round"/>' +
+            '<g class="lx-bouquet">' +
+            '<circle cx="122" cy="140" r="8" fill="#e89cb2"/>' +
+            '<circle cx="132" cy="136" r="7" fill="#e26885"/>' +
+            '<circle cx="138" cy="144" r="8" fill="#f4b7c7"/>' +
+            '<circle cx="124" cy="132" r="6" fill="#f7dbe4"/>' +
+            '<circle cx="132" cy="146" r="6" fill="#c94f6c"/>' +
+            '<path d="M122 148 Q124 156 130 162" stroke="#5f7d4a" stroke-width="4" fill="none"/>' +
+            '<path d="M134 150 Q132 158 128 164" stroke="#4f6b3c" stroke-width="3" fill="none"/>' +
+            '</g>' +
+            '</g>';
+    }
+
+    function stairsDustHTML() {
+        var h = '<div class="lx-stairs-dust" aria-hidden="true">';
+        for (var i = 0; i < 14; i++) {
+            var left = (10 + Math.random() * 80).toFixed(1);
+            var top = (15 + Math.random() * 70).toFixed(1);
+            var size = (2 + Math.random() * 3).toFixed(1);
+            var dur = (6 + Math.random() * 8).toFixed(1);
+            var delay = (Math.random() * 6).toFixed(1);
+            h += '<i style="left:' + left + '%;top:' + top + '%;width:' + size + 'px;height:' + size + 'px;animation-duration:' + dur + 's;animation-delay:-' + delay + 's"></i>';
+        }
+        return h + '</div>';
     }
 
     function stairsCoupleWrap() {
@@ -114,14 +134,16 @@
            blurred-to-focused push-in, warm grade and film grain. */
         var stairs = document.getElementById("stairsScene");
         if (stairs && !stairs.querySelector(".lx-stairs-photo")) {
-            /* Prepend so the photo stays behind the steps, the couple and the card. */
+            /* Prepend so the photo stays behind the light, the dust, the couple
+               and the card. The client's real staircase photo is the stairs. */
             stairs.insertAdjacentHTML("afterbegin",
                 '<div class="lx-stairs-photo" aria-hidden="true">' +
                 '<span class="lx-sp-img"></span>' +
                 '<span class="lx-sp-grade"></span>' +
                 '<span class="lx-sp-grain"></span>' +
                 '</div>' +
-                stairsStaircaseSVG() +
+                '<div class="lx-stairs-light" aria-hidden="true"></div>' +
+                stairsDustHTML() +
                 stairsCoupleWrap());
         }
 
