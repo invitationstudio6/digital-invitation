@@ -373,6 +373,13 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
         items.forEach(function(el) { observer.observe(el); });
+
+        /* SAFETY NET: never let content stay invisible. If the observer
+           hasn't revealed everything shortly after load (slow phones,
+           background tabs, flaky IntersectionObserver), force it visible. */
+        setTimeout(function() {
+            items.forEach(function(el) { el.classList.add('reveal-3d-visible'); });
+        }, 1200);
     }
 
     /* ---------- 7. Text reveal animation (staggered chars/words) ---------- */
