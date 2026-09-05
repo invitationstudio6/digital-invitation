@@ -304,10 +304,10 @@ transition:transform .7s cubic-bezier(.19,1,.22,1),box-shadow .7s;transform-styl
     0 0 16px rgba(232,197,109,.3),
     0 12px 40px rgba(62,37,24,.1),
     0 0 0 1px rgba(255,255,255,.14) inset}
-.card-item::before{content:"";position:absolute;inset:-3px;border-radius:inherit;background:linear-gradient(135deg,rgba(255,215,120,.65),rgba(255,255,255,.85),rgba(232,197,109,.65),rgba(201,138,144,.45),rgba(255,215,120,.65));background-size:300% 300%;z-index:1;opacity:.5;animation:borderFlow 5s ease infinite;mix-blend-mode:overlay;pointer-events:none}
-.card-item::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.35) 45%,rgba(255,255,255,.85) 50%,rgba(255,255,255,.35) 55%,transparent 68%);background-size:220% 100%;background-position:220% 0;z-index:2;mix-blend-mode:screen;opacity:.55;pointer-events:none;animation:shineSweep 4s ease-in-out infinite}
-.card-item:hover::before{opacity:.8}
-.card-item:hover::after{opacity:.85}
+.card-item::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,215,120,.55),rgba(255,255,255,.7),rgba(232,197,109,.55),rgba(201,138,144,.4),rgba(255,215,120,.55));background-size:300% 300%;z-index:1;opacity:.2;animation:borderFlow 5s ease infinite;pointer-events:none}
+.card-item::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.5) 45%,rgba(255,255,255,.9) 50%,rgba(255,255,255,.5) 55%,transparent 68%);background-size:220% 100%;background-position:220% 0;z-index:2;opacity:.3;pointer-events:none;animation:shineSweep 4s ease-in-out infinite}
+.card-item:hover::before{opacity:.4}
+.card-item:hover::after{opacity:.5}
 .card-item:hover{transform:translateY(-10px) scale(1.03) rotateX(5deg);box-shadow:
     0 0 0 3px rgba(232,197,109,.65),
     0 24px 60px rgba(62,37,24,.22),
@@ -904,12 +904,12 @@ transition:transform .7s cubic-bezier(.19,1,.22,1),box-shadow .7s;transform-styl
     0 12px 40px rgba(28,26,24,.1),
     0 0 0 1px rgba(255,255,255,.12) inset;
 transform-style:preserve-3d;perspective:800px}
-.coll-card::before{content:"";position:absolute;inset:-3px;border-radius:inherit;background:linear-gradient(135deg,rgba(255,215,120,.6),rgba(255,255,255,.8),rgba(232,197,109,.6),rgba(201,138,144,.4),rgba(255,215,120,.6));background-size:300% 300%;z-index:1;opacity:.45;transition:opacity .6s;animation:borderFlow 5s ease infinite;mix-blend-mode:overlay;pointer-events:none}
-.coll-card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.35) 45%,rgba(255,255,255,.8) 50%,rgba(255,255,255,.35) 55%,transparent 68%);background-size:220% 100%;background-position:220% 0;z-index:2;mix-blend-mode:screen;opacity:.5;pointer-events:none;animation:shineSweep 4s ease-in-out infinite}
+.coll-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,215,120,.55),rgba(255,255,255,.7),rgba(232,197,109,.55),rgba(201,138,144,.4),rgba(255,215,120,.55));background-size:300% 300%;z-index:1;opacity:.2;transition:opacity .6s;animation:borderFlow 5s ease infinite;pointer-events:none}
+.coll-card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.5) 45%,rgba(255,255,255,.85) 50%,rgba(255,255,255,.5) 55%,transparent 68%);background-size:220% 100%;background-position:220% 0;z-index:2;opacity:.3;pointer-events:none;animation:shineSweep 4s ease-in-out infinite}
 @keyframes borderFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 @keyframes shineSweep{0%{background-position:220% 0}100%{background-position:-80% 0}}
-.coll-card:hover::before{opacity:.8}
-.coll-card:hover::after{opacity:.85}
+.coll-card:hover::before{opacity:.4}
+.coll-card:hover::after{opacity:.5}
 .coll-card:hover{transform:translateY(-14px) scale(1.03) rotateX(5deg);box-shadow:
     0 0 0 3px rgba(232,197,109,.6),
     0 28px 80px rgba(28,26,24,.18),
