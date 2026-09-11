@@ -11504,7 +11504,7 @@ if (childCategory && invitation.scrollHeroImage) {
 /* The selected post-opening image is the invitation's actual hero image.
    It must be applied after all data and design CSS have loaded, otherwise
    the template's default cover can win over the client selection. */
-var postOpeningHeroImage = invitation.scrollHeroImage || invitation.cover || invitation.photoInvitation || "";
+var postOpeningHeroImage = invitation.cover || invitation.photoInvitation || "";
 if (postOpeningHeroImage) {
     document.documentElement.style.setProperty("--cover", "url('" + postOpeningHeroImage + "')");
     var postOpeningHero = document.getElementById("hero");
@@ -12246,6 +12246,17 @@ var _openingStyle = (function() {
     if (!sceneEl) return;
     sceneEl.style.display = "";
     sceneEl.classList.add("active");
+
+    /* Re-apply the client's selected post-opening cover after the opening
+       scene is activated, so template scene styles cannot replace it. */
+    if (postOpeningHeroImage) {
+        var finalHero = document.getElementById("hero");
+        if (finalHero) {
+            finalHero.style.setProperty("background-image", "url('" + postOpeningHeroImage + "')", "important");
+            finalHero.style.setProperty("background-size", "cover", "important");
+            finalHero.style.setProperty("background-position", "center", "important");
+        }
+    }
 
     /* Apply the client's chosen image as the opening/animation background.
        Priority: scrollHeroImage (client "after opening" image) → cover/photoInvitation
