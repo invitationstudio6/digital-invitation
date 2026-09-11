@@ -65,6 +65,35 @@
   document.head.appendChild(link);
 })();
 </script>
+<script>
+/* Early opening-type pre-set. The chosen opening animation is applied here,
+   FROM THE CACHED COPY, before the body (and the default envelope) has a
+   chance to render. This stops the "wrong animation first, then the selected
+   one" flash — previously data-opening was only set after the cloud fetch
+   resolved. The full scene engine re-applies it with authoritative data. */
+(function() {
+    try {
+        var _q = new URLSearchParams(window.location.search).get("id");
+        if (!_q) return;
+        _q = String(_q).toLowerCase().trim();
+        var _c = localStorage.getItem("luna_" + _q);
+        if (!_c) return;
+        var _inv = JSON.parse(_c);
+        var _raw = _inv.openingType || _inv.openingStyle || _inv.animationType || _inv.animationStyle
+            || (_inv.visualSnapshot && _inv.visualSnapshot.openingType) || "";
+        if (!_raw) return;
+        var _alias = {
+            "floral-reveal":"floral-paper","editorial-reveal":"editorial-card","luxury-reveal":"luxury-romance",
+            "envelope-reveal":"envelope-seal","stairs-reveal":"stairs","wax-reveal":"wax-seal",
+            "curtain-reveal":"curtain","ribbon-reveal":"ribbon","door-reveal":"door","wood-door-reveal":"wood-door",
+            "starry-reveal":"starry-night","celebration-reveal":"celebration-pop","candlelight-reveal":"candlelight",
+            "winter-reveal":"winter-drift","royal-reveal":"royal-scroll","typewriter-reveal":"typewriter",
+            "magic-reveal":"magic-wand","glow-door":"glowing-door","forest-walk":"ancient-forest","book-reveal":"old-book"
+        };
+        document.documentElement.setAttribute("data-opening", _alias[_raw] || _raw);
+    } catch (e) {}
+})();
+</script>
 <style>
 
 /* =====================================================
@@ -10333,6 +10362,35 @@ var params =
     new URLSearchParams(
         window.location.search
     );
+
+/* Activate the selected opening scene IMMEDIATELY (from the cached copy) so
+   the chosen animation is on screen right away instead of only after the cloud
+   fetch. Mirrors the scene engine below; that engine re-runs later with the
+   authoritative data and any changes win. */
+(function lunaEarlySceneActivate() {
+    try {
+        var _type = document.documentElement.getAttribute("data-opening");
+        if (!_type) return;
+        var _sceneIds = {
+            "wax-seal":"waxSealScene","curtain":"curtainScene","floral-paper":"floralScene",
+            "luxury-romance":"silkScene","celebration-pop":"fiestaScene","starry-night":"starryScene",
+            "typewriter":"typewriterScene","candlelight":"candlelightScene","winter-drift":"winterScene",
+            "royal-scroll":"royalScrollScene","door":"doorScene","stairs":"stairsScene",
+            "envelope-seal":"envSealScene","ribbon":"ribbonScene","wood-door":"woodDoorScene",
+            "magic-wand":"magicWandScene","glowing-door":"glowingDoorScene","ancient-forest":"ancientForestScene",
+            "old-book":"oldBookScene","golden-ring":"goldRingScene","origami-lotus":"lotusScene",
+            "card-unfolds":"cardUnfoldScene","flowers-bloom":"bloomScene","butterfly":"butterflyScene",
+            "gold-sparkles":"goldSparkleScene","polaroid":"polaroidScene","champagne":"champagneScene",
+            "confetti":"confettiScene","card-3d":"rotateScene","light-sweep":"lightSweepScene"
+        };
+        var _sid = _sceneIds[_type];
+        if (!_sid) return;
+        var _env = document.querySelector(".envelope-scene");
+        if (_env) _env.style.display = "none";
+        var _sc = document.getElementById(_sid);
+        if (_sc) { _sc.style.display = ""; _sc.classList.add("active"); }
+    } catch (e) {}
+})();
 
 /* =====================================================
    TEMPLATE DEMO PREVIEW — ?template=<id>
