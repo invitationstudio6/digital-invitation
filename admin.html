@@ -1722,8 +1722,12 @@ input,select,textarea{max-width:100%;}
         <form id="editInvitationForm">
             <input type="hidden" id="editInvId">
             <div class="form-grid">
-                <div class="field"><label>Gelin / Ad</label><input id="efBride" type="text"></div>
-                <div class="field"><label>Bəy / Soyad</label><input id="efGroom" type="text"></div>
+                <div class="field"><label id="efBrideLabel">Gəlin / Ad</label><input id="efBride" type="text"></div>
+                <div class="field"><label id="efGroomLabel">Bəy / Soyad</label><input id="efGroom" type="text"></div>
+                <div class="field"><label>Kateqoriya</label><select id="efCategory"></select></div>
+                <div class="field"><label>Dizayn / Template</label><select id="efDesign"></select></div>
+                <div class="field"><label>Paket</label><select id="efPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option><option value="video">Video</option></select></div>
+                <div class="field"><label>Açılış animasiyası</label><input id="efOpeningType" type="text" placeholder="curtain-reveal"></div>
                 <div class="field"><label>Tarix</label><input id="efDate" type="date"></div>
                 <div class="field"><label>Saat</label><input id="efTime" type="time"></div>
                 <div class="field"><label>Məkan (Venue)</label><input id="efVenue" type="text"></div>
@@ -1732,6 +1736,8 @@ input,select,textarea{max-width:100%;}
                 <div class="field full"><label>Mesaj</label><textarea id="efMessage" rows="2"></textarea></div>
                 <div class="field full"><label>Hekayə (Story)</label><textarea id="efStory" rows="3"></textarea></div>
                 <div class="field full"><label>Qalereya şəkilləri (hər sətirdə bir URL)</label><textarea id="efImages" rows="3" placeholder="https://..."></textarea></div>
+                <div class="field full"><label>Hero / qapaq şəkli URL</label><input id="efCover" type="url" placeholder="https://..."></div>
+                <div class="field full"><label>Scroll hero şəkli URL</label><input id="efScrollHero" type="url" placeholder="https://..."></div>
                 <div class="field full"><label>Musiqi (URL)</label><input id="efMusic" type="url" placeholder="https://... mp3"></div>
                 <div class="field full"><label>Video URL (YouTube / MP4 / TikTok)</label><input id="efVideoUrl" type="url" placeholder="https://youtube.com/watch?v=... və ya .mp4 linki"></div>
             </div>
@@ -5837,6 +5843,21 @@ function openEditInvitation(id){
     if(!inv){ showToast('Dəvətnamə tapılmadı'); return; }
     editingInvitationId = id;
     document.getElementById('editInvId').value = id;
+    var categorySelect = document.getElementById('efCategory');
+    var designSelect = document.getElementById('efDesign');
+    categorySelect.innerHTML = (typeof LUNA_CATEGORIES !== 'undefined' ? LUNA_CATEGORIES : []).map(function(c){
+        return '<option value="' + lunaEscapeHtml(c.id) + '">' + lunaEscapeHtml(c.name || c.id) + '</option>';
+    }).join('');
+    designSelect.innerHTML = getDesigns().map(function(d){
+        return '<option value="' + lunaEscapeHtml(d.id) + '">' + lunaEscapeHtml(d.name || d.id) + '</option>';
+    }).join('');
+    categorySelect.value = inv.category || 'wedding';
+    designSelect.value = inv.design || inv.templateId || '';
+    document.getElementById('efPackage').value = inv.package || 'basic';
+    document.getElementById('efOpeningType').value = inv.openingType || inv.openingStyle || '';
+    var isChild = inv.category === 'birthday' || inv.category === 'baby-shower';
+    document.getElementById('efBrideLabel').textContent = isChild ? 'Uşağın adı' : 'Gəlin / Ad';
+    document.getElementById('efGroomLabel').textContent = isChild ? 'Yaş / əlavə ad (istəyə görə)' : 'Bəy / Soyad';
     document.getElementById('efBride').value = inv.bride || '';
     document.getElementById('efGroom').value = inv.groom || '';
     document.getElementById('efDate').value = lunaParseFormattedDate(inv.date) || lunaParseFormattedDate((inv.countdown || '').split('T')[0]);
@@ -5847,6 +5868,8 @@ function openEditInvitation(id){
     document.getElementById('efMessage').value = inv.message || '';
     document.getElementById('efStory').value = inv.story ? inv.story.replace(/<[^>]*>/g, '') : '';
     document.getElementById('efImages').value = Array.isArray(inv.images) ? inv.images.join('\n') : '';
+    document.getElementById('efCover').value = inv.cover || inv.photoInvitation || '';
+    document.getElementById('efScrollHero').value = inv.scrollHeroImage || '';
     document.getElementById('efMusic').value = inv.music || '';
     document.getElementById('efVideoUrl').value = inv.videoUrl || '';
     document.getElementById('editInvitationModal').classList.add('open');
@@ -5865,7 +5888,7 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
     var location = document.getElementById('efLocation').value.trim();
 
     if(!bride || !dateISO || !time || !venue || !location){
-        showToast('Zəhmət olmasa məcburi sahələri doldurun');
+        showToast('Ad, tarix, saat, məkan və ünvan doldurulmalıdır');
         return;
     }
 
@@ -5873,6 +5896,11 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
        approval state, addons and every other stored field intact */
     inv.bride = bride;
     if(document.getElementById('efGroom').value.trim()) inv.groom = document.getElementById('efGroom').value.trim(); else delete inv.groom;
+    inv.category = document.getElementById('efCategory').value || inv.category;
+    inv.design = document.getElementById('efDesign').value || inv.design;
+    inv.templateId = inv.design;
+    inv.package = document.getElementById('efPackage').value || inv.package;
+    inv.openingType = document.getElementById('efOpeningType').value.trim() || inv.openingType;
     inv.date = lunaFormatDate(dateISO);
     inv.dateShort = lunaDateShort(dateISO);
     inv.time = time;
@@ -5886,7 +5914,18 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
     if(story) inv.story = '<p>' + story + '</p>'; else delete inv.story;
 
     var images = document.getElementById('efImages').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
-    if(images.length) inv.images = images;
+    if(images.length) inv.images = images; else delete inv.images;
+
+    var cover = document.getElementById('efCover').value.trim();
+    if(cover) {
+        inv.cover = cover;
+        inv.photoInvitation = cover;
+    } else {
+        delete inv.cover;
+        delete inv.photoInvitation;
+    }
+    var scrollHero = document.getElementById('efScrollHero').value.trim();
+    if(scrollHero) inv.scrollHeroImage = scrollHero; else delete inv.scrollHeroImage;
 
     var music = document.getElementById('efMusic').value.trim();
     if(music) inv.music = music; else delete inv.music;

@@ -10623,6 +10623,9 @@ if (finalDesign) {
             return invCover.indexOf(u) === 0;
         });
         var chosen = urlCover || "";
+        if (!chosen && childCategory) {
+            chosen = "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90";
+        }
         if (!chosen && childCategory && !isLegacyChildCover) {
             chosen = invCover;
         } else if (!chosen && !childCategory) {

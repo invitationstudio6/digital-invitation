@@ -128,6 +128,7 @@ function lunaSaveInvitation(invitation) {
     }
     if (trySave(invitation)) {
         try { localStorage.setItem("luna_last_invitation", invitation.id); } catch (e) {}
+        lunaPushInvitationToDb(invitation);
         return true;
     }
     /* Quota exceeded — strip heavy media progressively and retry */
@@ -136,10 +137,51 @@ function lunaSaveInvitation(invitation) {
         if (copy[heavy[i]] !== undefined) delete copy[heavy[i]];
         if (trySave(copy)) {
             try { localStorage.setItem("luna_last_invitation", invitation.id); } catch (e) {}
+            lunaPushInvitationToDb(copy);
             return true;
         }
     }
     return false;
+}
+
+function lunaPushInvitationToDb(invitation) {
+    var cfg = window.LUNA_SUPABASE || {};
+    if (!cfg.url || !cfg.anonKey || !invitation || !invitation.id) return;
+    try {
+        fetch(cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(invitation.id), {
+            method: "PATCH",
+            headers: {
+                "apikey": cfg.anonKey,
+                "Authorization": "Bearer " + cfg.anonKey,
+                "Content-Type": "application/json",
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({
+                value: invitation,
+                updated_at: new Date().toISOString()
+            })
+        }).then(function(response) {
+            if (response.ok) return;
+            return fetch(cfg.url + "/rest/v1/luna_invitations", {
+                method: "POST",
+                headers: {
+                    "apikey": cfg.anonKey,
+                    "Authorization": "Bearer " + cfg.anonKey,
+                    "Content-Type": "application/json",
+                    "Prefer": "resolution=merge-duplicates,return=minimal"
+                },
+                body: JSON.stringify({
+                    id: invitation.id,
+                    value: invitation,
+                    updated_at: new Date().toISOString()
+                })
+            });
+        }).catch(function(error) {
+            console.warn("Luna invitation cloud sync failed", error);
+        });
+    } catch (error) {
+        console.warn("Luna invitation cloud sync failed", error);
+    }
 }
 
 /* ===== IndexedDB media store (shared with admin / home / viewer) ===== */
