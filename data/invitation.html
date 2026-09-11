@@ -1400,7 +1400,9 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="magic-wand"] .envelope-scene { display: none; }
 [data-opening="magic-wand"] .opening {
-    background: radial-gradient(ellipse at 50% 55%, #16102E, #0A0614);
+    background:
+        linear-gradient(rgba(255,248,241,.12), rgba(255,248,241,.12)),
+        url('https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90') center / cover no-repeat;
     overflow: hidden;
     perspective: 1000px;
 }
@@ -1477,12 +1479,12 @@ a { text-decoration: none; color: inherit; }
 
 [data-opening="magic-wand"] .sig-scene { z-index: 2; }
 [data-opening="magic-wand"] .sig-card {
-    background: linear-gradient(165deg, #1E1535, #120E22);
-    border-color: rgba(180,140,255,.3);
-    box-shadow: 0 0 100px rgba(120,80,220,.15), 0 30px 80px rgba(0,0,0,.6);
+    background: rgba(255,249,241,.92);
+    border-color: rgba(232,168,112,.65);
+    box-shadow: 0 0 100px rgba(255,210,150,.3), 0 30px 80px rgba(92,52,30,.35);
 }
-[data-opening="magic-wand"] .sig-card h1 { color: #E8E0FF; }
-[data-opening="magic-wand"] .open-button { border-color: rgba(180,140,255,.5); color: #C8A8FF; }
+[data-opening="magic-wand"] .sig-card h1 { color: #80502f; }
+[data-opening="magic-wand"] .open-button { border-color: rgba(180,108,64,.7); color: #80502f; }
 
 [data-opening="magic-wand"] .opening::after {
     content: "";
