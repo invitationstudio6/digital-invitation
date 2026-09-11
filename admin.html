@@ -2215,7 +2215,37 @@ function getCustomers(){
             if(data && data.id) customers.push(data);
         } catch(e){}
     }
+    /* Merge invitations created via the client form that were persisted to
+       Supabase (so the link works on any device) but are not yet in this
+       admin's localStorage. Remote data is cached by lunaFetchRemoteCustomers. */
+    var remote = window.__lunaRemoteCustomers || [];
+    var localIds = {};
+    customers.forEach(function(c){ localIds[c.id] = true; });
+    remote.forEach(function(c){
+        if(c && c.id && !localIds[c.id]) customers.push(c);
+    });
     return customers;
+}
+
+/* Fetch all customer invitations from Supabase (public anon read) and cache
+   them so the admin's Müştərilər list shows client-form orders too. */
+function lunaFetchRemoteCustomers(){
+    var cfg = window.LUNA_SUPABASE;
+    if(!cfg || !cfg.url || !cfg.anonKey) return;
+    fetch(cfg.url + "/rest/v1/luna_invitations?select=id,value", {
+        headers: { "apikey": cfg.anonKey, "Authorization": "Bearer " + cfg.anonKey }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+        var list = [];
+        (rows || []).forEach(function(row){
+            var v = row && row.value;
+            if(v && v.id) list.push(v);
+        });
+        window.__lunaRemoteCustomers = list;
+        /* Refresh any open customer views */
+        try { if(window.renderCustomers) renderCustomers(); } catch(e){}
+        try { if(window.renderDashboard) renderDashboard(); } catch(e){}
+        try { if(window.renderClientInvitations) renderClientInvitations(); } catch(e){}
+    }).catch(function(){});
 }
 
 /* createdAt can be a Date.now() number (admin-created) or an ISO string
@@ -6417,6 +6447,7 @@ function importLunaBackup(input){
     var steps = [
         lunaInitLanguage,
         seedSampleData,
+        lunaFetchRemoteCustomers,
         renderDashboard,
         renderCustomers,
         renderRsvps,
