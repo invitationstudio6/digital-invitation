@@ -365,6 +365,9 @@ var invitations = {
 
         category: "baby-shower",
 
+        design: "sweet-arrival",
+        templateId: "sweet-arrival",
+
         bride: "Ayşən",
         parentName: "Ayşən & Kamal",
         babyName: "Kübra",
