@@ -11328,7 +11328,16 @@ if (invitation.videoUrl) {
     overlay.className = "hero-video-overlay";
     hero.insertBefore(overlay, document.getElementById("heroContent"));
 
-    hero.style.background = "var(--cover)";
+    /* Keep the client-selected cover authoritative after the video setup.
+       This block runs after the initial hero assignment and otherwise would
+       replace the chosen image with the template CSS variable. */
+    if (postOpeningHeroImage) {
+        hero.style.setProperty("background-image", "url('" + postOpeningHeroImage + "')", "important");
+        hero.style.setProperty("background-size", "cover", "important");
+        hero.style.setProperty("background-position", "center", "important");
+    } else {
+        hero.style.background = "var(--cover)";
+    }
 
 }
 
