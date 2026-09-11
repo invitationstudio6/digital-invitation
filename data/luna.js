@@ -148,34 +148,27 @@ function lunaPushInvitationToDb(invitation) {
     var cfg = window.LUNA_SUPABASE || {};
     if (!cfg.url || !cfg.anonKey || !invitation || !invitation.id) return;
     try {
-        fetch(cfg.url + "/rest/v1/luna_invitations?id=eq." + encodeURIComponent(invitation.id), {
-            method: "PATCH",
+        /* Single UPSERT. PostgREST "resolution=merge-duplicates" INSERTs the
+           row when the id doesn't exist yet and merges/UPDATEs it when it does.
+           (Same approach the client form already uses — the only one that
+           reliably publishes.) The previous PATCH-then-POST logic was broken:
+           PostgREST returns 204 for a PATCH that matched 0 rows (a brand-new
+           invitation), so the POST fallback never ran and admin-created
+           invitations were never written to Supabase — they only lived in the
+           admin's own browser, so the link could never open on other phones. */
+        fetch(cfg.url + "/rest/v1/luna_invitations", {
+            method: "POST",
             headers: {
                 "apikey": cfg.anonKey,
                 "Authorization": "Bearer " + cfg.anonKey,
                 "Content-Type": "application/json",
-                "Prefer": "return=minimal"
+                "Prefer": "resolution=merge-duplicates,return=minimal"
             },
             body: JSON.stringify({
+                id: invitation.id,
                 value: invitation,
                 updated_at: new Date().toISOString()
             })
-        }).then(function(response) {
-            if (response.ok) return;
-            return fetch(cfg.url + "/rest/v1/luna_invitations", {
-                method: "POST",
-                headers: {
-                    "apikey": cfg.anonKey,
-                    "Authorization": "Bearer " + cfg.anonKey,
-                    "Content-Type": "application/json",
-                    "Prefer": "resolution=merge-duplicates,return=minimal"
-                },
-                body: JSON.stringify({
-                    id: invitation.id,
-                    value: invitation,
-                    updated_at: new Date().toISOString()
-                })
-            });
         }).catch(function(error) {
             console.warn("Luna invitation cloud sync failed", error);
         });
