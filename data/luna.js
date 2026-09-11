@@ -369,7 +369,12 @@ function lunaNotifyRsvp(invitationId, entry) {
             at: entry.at || new Date().toISOString()
         };
 
-        var url = (typeof LUNA_FORMSPREE_ENDPOINT !== "undefined" && LUNA_FORMSPREE_ENDPOINT) ||
+        /* Route the RSVP notification to THIS invitation's own endpoint when the
+           admin has set one on the record; only then fall back to the single
+           global endpoint. Previously every invitation's RSVP was emailed to the
+           same hardcoded form (the demo "Aysel & Murad" one). */
+        var url = (inv.formspreeEndpoint) ||
+            (typeof LUNA_FORMSPREE_ENDPOINT !== "undefined" && LUNA_FORMSPREE_ENDPOINT) ||
             "https://formspree.io/f/mqpzyklb";
 
         fetch(url, {
