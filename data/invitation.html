@@ -11501,6 +11501,14 @@ if (childCategory && invitation.scrollHeroImage) {
     customerImages.unshift(invitation.scrollHeroImage);
 }
 
+/* The selected post-opening image is the invitation's actual hero image.
+   It must be applied after all data and design CSS have loaded, otherwise
+   the template's default cover can win over the client selection. */
+var postOpeningHeroImage = invitation.scrollHeroImage || invitation.cover || invitation.photoInvitation || "";
+if (postOpeningHeroImage) {
+    document.documentElement.style.setProperty("--cover", "url('" + postOpeningHeroImage + "')");
+}
+
 /* Hide gallery entirely if no valid customer images */
 if (customerImages.length === 0) {
     document.getElementById("gallerySection").hidden = true;
