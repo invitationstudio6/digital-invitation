@@ -369,13 +369,16 @@ function lunaNotifyRsvp(invitationId, entry) {
             at: entry.at || new Date().toISOString()
         };
 
-        /* Route the RSVP notification to THIS invitation's own endpoint when the
-           admin has set one on the record; only then fall back to the single
-           global endpoint. Previously every invitation's RSVP was emailed to the
-           same hardcoded form (the demo "Aysel & Murad" one). */
-        var url = (inv.formspreeEndpoint) ||
-            (typeof LUNA_FORMSPREE_ENDPOINT !== "undefined" && LUNA_FORMSPREE_ENDPOINT) ||
-            "https://formspree.io/f/mqpzyklb";
+        /* Route ONLY to this invitation's own endpoint. Do NOT fall back to the
+           global order-form endpoint (https://formspree.io/f/mqpzyklb) — that
+           made every invitation's RSVP land in the same demo "Aysel & Murad"
+           inbox. The RSVP itself is always saved (Supabase + localStorage), so
+           skipping the email when no endpoint is set costs nothing. */
+        var url = inv.formspreeEndpoint || "";
+        if (!url) {
+            console.warn("Luna RSVP: dəvətnamə üçün Formspree endpoint təyin olunmayıb — e-mail bildirişi atlanır: " + invitationId);
+            return;
+        }
 
         fetch(url, {
             method: "POST",
