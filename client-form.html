@@ -582,6 +582,16 @@ body.menu-open .languages{display:none}
 .photo-invite-preview:not(:empty){display:flex}
 .photo-invite-preview img{width:min(180px,45%);border-radius:10px;cursor:zoom-in;box-shadow:0 12px 30px rgba(62,37,24,.18);transition:transform .35s cubic-bezier(.19,1,.22,1)}
 .photo-invite-preview img:hover{transform:scale(1.03)}
+.hero-cover-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
+.hero-cover-card{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;cursor:pointer;border:2px solid transparent;background:rgba(196,168,130,.12);transition:border-color .25s,transform .25s,box-shadow .25s}
+.hero-cover-card img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-cover-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.hero-cover-card.active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,168,130,.35)}
+.hero-cover-card.active::after{content:"✓";position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;box-shadow:0 4px 12px rgba(62,37,24,.3)}
+.hero-cover-hint{margin-top:10px;font-size:11px;line-height:1.9;color:#b88c76}
+.hero-cover-hint a{text-decoration:underline;cursor:pointer}
+@media(max-width:900px){.hero-cover-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.hero-cover-grid{grid-template-columns:repeat(3,1fr)}}
 
     /* Gallery uploader styles */
     .luna-gallery-uploader{position:relative}
@@ -765,6 +775,12 @@ body.menu-open .languages{display:none}
                         <input type="file" id="photoInviteInput" accept="image/*" multiple>
                         <div class="photo-invite-preview" id="photoInvitePreview"></div>
                     </div>
+                    <div class="photo-invite-block hero-cover-block">
+                        <h4 class="sub-title">Nümunə hero qapaqları</h4>
+                        <p class="step-desc">Bu kateqoriyaya uyğun hazır qapaq nümunələrindən birini seçin. Seçdiyiniz şəkil həm açılış animasiyasının arxa fonu, həm də animasiyadan sonra dəvətnamənin əsas hero şəkli kimi istifadə olunacaq. Öz şəklinizi yükləsəniz, o nümunəyə üstünlük təşkil edir.</p>
+                        <div class="hero-cover-grid" id="heroCoverGrid"></div>
+                        <p class="hero-cover-hint" id="heroCoverHint"></p>
+                    </div>
                     <div class="photo-invite-block">
                         <h4 class="sub-title">Scroll hero şəkli</h4>
                         <p class="step-desc">Açılışdan sonra səhifəni aşağı sürüşdürərkən görünən xüsusi şəkli seçin. Bu şəkil ayrıca seçilməzsə, yuxarıdakı əsas hero şəkli istifadə olunacaq.</p>
@@ -825,6 +841,7 @@ document.addEventListener("DOMContentLoaded", function(){
     var designId = design;
     var selectedOpening = "";
     var photoInvitationImgs = [];
+    var selectedHeroCover = "";
 
     /* ===== APPLY ADMIN FORM CONFIG ===== */
     var _formCfg = {};
@@ -870,6 +887,8 @@ document.addEventListener("DOMContentLoaded", function(){
         var piPreview = document.getElementById("photoInvitePreview");
         if (piInput && piPreview) {
             piInput.addEventListener("change", function() {
+                selectedHeroCover = "";
+                renderHeroCovers();
                 var files = piInput.files || [];
                 var list = Array.prototype.slice.call(files);
                 photoInvitationImgs = photoInvitationImgs.concat(new Array(list.length));
@@ -916,6 +935,73 @@ document.addEventListener("DOMContentLoaded", function(){
             piPreview.style.display = "block";
         }
     })();
+
+    function renderHeroCovers() {
+        var grid = document.getElementById("heroCoverGrid");
+        if (!grid) return;
+        var list = (typeof LUNA_HERO_COVERS !== "undefined" && LUNA_HERO_COVERS[category]) ? LUNA_HERO_COVERS[category] : [];
+        grid.innerHTML = "";
+        var hint = document.getElementById("heroCoverHint");
+        if (!list.length) {
+            if (hint) hint.innerHTML = "";
+            return;
+        }
+        list.forEach(function(url) {
+            var card = document.createElement("div");
+            card.className = "hero-cover-card" + (selectedHeroCover === url ? " active" : "");
+            card.setAttribute("data-cover", url);
+            card.setAttribute("role", "button");
+            card.setAttribute("tabindex", "0");
+            card.setAttribute("aria-pressed", selectedHeroCover === url ? "true" : "false");
+            var img = document.createElement("img");
+            img.src = url;
+            img.alt = "Nümunə qapaq";
+            img.loading = "lazy";
+            card.appendChild(img);
+            grid.appendChild(card);
+        });
+        /* Reflect the chosen sample in the "Əsas şəkil" preview area too */
+        var piPrv = document.getElementById("photoInvitePreview");
+        if (selectedHeroCover) {
+            if (piPrv) { piPrv.style.display = "block"; piPrv.innerHTML = '<img src="' + selectedHeroCover + '" alt="Seçilmiş nümunə qapaq" style="cursor:default">'; }
+        } else if (piPrv && !(photoInvitationImgs || []).filter(function(s){ return !!s; }).length) {
+            piPrv.style.display = "none";
+            piPrv.innerHTML = "";
+        }
+        if (hint) {
+            if (selectedHeroCover) {
+                hint.innerHTML = '✓ Nümunə qapaq seçildi · <a href="#" id="heroCoverClear">Seçimi sil</a>';
+                var clr = document.getElementById("heroCoverClear");
+                if (clr) clr.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    selectedHeroCover = "";
+                    renderHeroCovers();
+                    if (typeof renderPhotoPreviews === "function") renderPhotoPreviews();
+                });
+            } else {
+                hint.innerHTML = "";
+            }
+        }
+    }
+
+    var _hGrid = document.getElementById("heroCoverGrid");
+    if (_hGrid && !_hGrid._lunaBound) {
+        _hGrid._lunaBound = true;
+        _hGrid.addEventListener("click", function(e) {
+            var card = e.target.closest ? e.target.closest(".hero-cover-card") : null;
+            if (!card) return;
+            selectedHeroCover = card.getAttribute("data-cover");
+            renderHeroCovers();
+        });
+        _hGrid.addEventListener("keydown", function(e) {
+            if (e.key !== "Enter" && e.key !== " ") return;
+            var card = e.target.closest ? e.target.closest(".hero-cover-card") : null;
+            if (!card) return;
+            e.preventDefault();
+            selectedHeroCover = card.getAttribute("data-cover");
+            renderHeroCovers();
+        });
+    }
 
     function renderAdminCustomFields() {
         var wrap = document.getElementById("customFieldsWrap");
@@ -1541,8 +1627,9 @@ document.addEventListener("DOMContentLoaded", function(){
             var url = new URL(urlBase.href);
             url.searchParams.set("template", t.id);
             if (selectedOpening) url.searchParams.set("opening", selectedOpening);
-            if (typeof photoInvitationImgs !== "undefined" && photoInvitationImgs && photoInvitationImgs[0]) {
-                url.searchParams.set("cover", photoInvitationImgs[0]);
+            var _effCover = selectedHeroCover || (typeof photoInvitationImgs !== "undefined" && photoInvitationImgs && photoInvitationImgs[0]) || "";
+            if (_effCover) {
+                url.searchParams.set("cover", _effCover);
             }
             iframe.src = url.href;
             titleEl.textContent = t.name || t.id;
@@ -1657,6 +1744,10 @@ document.addEventListener("DOMContentLoaded", function(){
             var catName = lunaCategoryName(category);
             document.getElementById("pillCategory").textContent = catName;
         }
+
+        // The selected sample belongs to the old category — clear it and re-render the picker
+        selectedHeroCover = "";
+        renderHeroCovers();
 
         // Reset design to first matching template for the newly selected category
         var tpls = ((typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : LUNA_TEMPLATES).filter(function(t) { return t.category === category; });
@@ -2529,8 +2620,9 @@ document.addEventListener("DOMContentLoaded", function(){
         rows += '<div class="preview-row"><span class="preview-row-label">Dizayn</span><span class="preview-row-value">' + (tplObj ? tplObj.name + ' (' + tplObj.style + ')' : tplId || '—') + '</span></div>';
 
         var posterImgs = (photoInvitationImgs || []).filter(function(s){ return !!s; });
-        if (posterImgs.length) {
-            rows += '<div class="preview-row"><span class="preview-row-label">Şəkil dəvətnamə (' + posterImgs.length + ')</span><span class="preview-row-value"><img id="previewPhotoInvite" src="' + posterImgs[0] + '" alt="Şəkil dəvətnamə" style="max-width:130px;border-radius:8px;display:block;cursor:zoom-in"></span></div>';
+        var effCoverImg = selectedHeroCover || posterImgs[0] || "";
+        if (posterImgs.length || effCoverImg) {
+            rows += '<div class="preview-row"><span class="preview-row-label">Şəkil dəvətnamə' + (selectedHeroCover ? ' (nümunə)' : '') + '</span><span class="preview-row-value"><img id="previewPhotoInvite" src="' + effCoverImg + '" alt="Şəkil dəvətnamə" style="max-width:130px;border-radius:8px;display:block;cursor:zoom-in"></span></div>';
         }
 
         if (fields) {
@@ -2552,7 +2644,7 @@ document.addEventListener("DOMContentLoaded", function(){
         var ppImg = document.getElementById("previewPhotoInvite");
         if (ppImg) ppImg.addEventListener("click", function() {
             var _p = (photoInvitationImgs || []).filter(function(s){ return !!s; });
-            if (_p[0]) lunaOpenImageLightbox(_p[0], "Şəkil dəvətnamə");
+            lunaOpenImageLightbox(_p[0] || selectedHeroCover || "", "Şəkil dəvətnamə");
         });
     }
 
@@ -2566,6 +2658,7 @@ document.addEventListener("DOMContentLoaded", function(){
         if (pick) pick.classList.add("selected");
     })();
 
+    renderHeroCovers();
     goToStep(1);
 
     // Override lunaSetLanguage to also re-apply extra labels
@@ -2732,8 +2825,9 @@ document.addEventListener("DOMContentLoaded", function(){
             storeSingleToIdb(logoFile, function(logoRef) {
             function proceedWithVideo() {
                 var posterImgs = (photoInvitationImgs || []).filter(function(s){ return !!s; });
+                var selectedCoverUsed = (!posterImgs.length && selectedHeroCover) ? [selectedHeroCover] : [];
                 var galleryImgs = (galleryCompressed || []).map(function(item){ return item.dataUrl; });
-                var images = posterImgs.concat(galleryImgs).concat(fromText);
+                var images = selectedCoverUsed.concat(posterImgs).concat(galleryImgs).concat(fromText);
 
                     var data = {
                         id: invitationId,
@@ -2741,7 +2835,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         category: category,
                         design: design,
                         templateId: design,
-                        photoInvitation: (photoInvitationImgs && photoInvitationImgs[0]) ? photoInvitationImgs[0] : "",
+                        photoInvitation: selectedHeroCover || (photoInvitationImgs && photoInvitationImgs[0]) || "",
                         scrollHeroImage: window.scrollHeroImage || "",
                         approved: false,
                         bride: primaryName,
@@ -2757,7 +2851,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         invitationLanguage: (localStorage.getItem("lunaLanguage") || v.invitationLanguage || "az"),
                         template: v.template || "",
                         openingType: selectedOpening,
-                        cover: (photoInvitationImgs && photoInvitationImgs[0]) ? photoInvitationImgs[0] : ""
+                        cover: selectedHeroCover || (photoInvitationImgs && photoInvitationImgs[0]) || ""
                     };
 
                     if (videoRef) data.videoUrl = videoRef;
@@ -3165,6 +3259,9 @@ document.addEventListener("DOMContentLoaded", function(){
 })();
 
 /* Bulud sinxronizasiya — admin paneldəki sessiyadan avtomatik istifadə */
+/* Safety: re-render the hero-cover picker once deferred data.js has finished parsing */
+window.addEventListener("load", function() { renderHeroCovers(); });
+
 if (window.LunaSync) LunaSync.init(function(){});
 });
 </script>
