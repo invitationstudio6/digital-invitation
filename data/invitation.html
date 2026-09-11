@@ -11328,7 +11328,7 @@ if (invitation.videoUrl) {
     overlay.className = "hero-video-overlay";
     hero.insertBefore(overlay, document.getElementById("heroContent"));
 
-    hero.style.background = "#1a1410";
+    hero.style.background = "var(--cover)";
 
 }
 
@@ -11507,6 +11507,12 @@ if (childCategory && invitation.scrollHeroImage) {
 var postOpeningHeroImage = invitation.scrollHeroImage || invitation.cover || invitation.photoInvitation || "";
 if (postOpeningHeroImage) {
     document.documentElement.style.setProperty("--cover", "url('" + postOpeningHeroImage + "')");
+    var postOpeningHero = document.getElementById("hero");
+    if (postOpeningHero) {
+        postOpeningHero.style.backgroundImage = "url('" + postOpeningHeroImage + "')";
+        postOpeningHero.style.backgroundSize = "cover";
+        postOpeningHero.style.backgroundPosition = "center";
+    }
 }
 
 /* Hide gallery entirely if no valid customer images */
