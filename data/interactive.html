@@ -1959,7 +1959,11 @@ function startInteractiveExperience(config) {
 
 function buildCustomerData() {
     var d = invitation;
-    var displayDate = d.dateShort || lunaDateShort(d.date) || d.date || "";
+    var displayDate = d.dateShort || lunaDateShort(d.date) || (function() {
+        var cd = (typeof d.countdown === "string") ? d.countdown : "";
+        var m = cd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        return m ? lunaDateShort(m[1] + "-" + m[2] + "-" + m[3]) : "";
+    })() || d.date || "";
     var lang = LUNA_LANG || "az";
 
     /* Build long date */
@@ -2054,7 +2058,11 @@ function populateInvitation() {
     var pkg = (invitation.package || "basic").toLowerCase();
     var cat = (invitation.category || "wedding").toLowerCase();
     var isCouple = (cat === "wedding" || cat === "engagement" || cat === "anniversary" || cat === "henna");
-    var displayDate = invitation.dateShort || lunaDateShort(invitation.date) || invitation.date || "";
+    var displayDate = invitation.dateShort || lunaDateShort(invitation.date) || (function() {
+        var cd = (typeof invitation.countdown === "string") ? invitation.countdown : "";
+        var m = cd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        return m ? lunaDateShort(m[1] + "-" + m[2] + "-" + m[3]) : "";
+    })() || invitation.date || "";
 
     /* Hero */
     document.getElementById("heroEyebrow").textContent = lunaInvitationHeading(invitation);
@@ -2099,7 +2107,8 @@ function populateInvitation() {
     if (pkg !== "luxury") document.getElementById("storySection").hidden = true;
     document.getElementById("storyEyebrow").textContent = lunaT("invStoryTitle");
     document.getElementById("storyHeading").innerHTML = lunaT("invStoryHeading");
-    if (invitation.story) document.getElementById("story").innerHTML = lunaFormatStory(invitation.story);
+    var storySource = invitation.story || invitation.message || "";
+    if (storySource) document.getElementById("story").innerHTML = lunaFormatStory(storySource);
 
     /* Details */
     document.getElementById("detailsEyebrow").textContent = lunaT("invDetailsTitle");
@@ -2247,7 +2256,10 @@ function startCountdown() {
         );
     }
 
-    if (!target || isNaN(target.getTime())) return;
+    if (!target || isNaN(target.getTime())) {
+        document.getElementById("countdownSection").hidden = true;
+        return;
+    }
 
     function update() {
         var now = new Date();

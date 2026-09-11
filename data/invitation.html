@@ -117,7 +117,7 @@
 [data-design="oriental"] { --bg: #1A1008; --bg-alt: #241810; --fg: #E8D8C0; --fg-heading: #F0E0C8; --accent: #D0A860; --accent-light: rgba(208,168,96,.10); --gold: #D0A860; --cover: url('https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="traditional-henna"] { --bg: #F5EDE0; --bg-alt: #EDE4D5; --accent: #C89860; --accent-light: rgba(200,152,96,.10); --gold: #C89860; --cover: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="sweet-arrival"] { --bg: #FFF8F5; --bg-alt: #FFF0EA; --accent: #E8A090; --accent-light: rgba(232,160,144,.10); --gold: #E8A090; --cover: url('https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=90'); }
-[data-design="little-prince"] { --bg: #F0F4F8; --bg-alt: #E4EAF0; --accent: #7090B0; --accent-light: rgba(112,144,176,.10); --gold: #7090B0; --cover: url('https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=1800&q=90'); }
+[data-design="little-prince"] { --bg: #FDF9F3; --bg-alt: #F6EEE4; --accent: #8BA3BE; --accent-light: rgba(139,163,190,.13); --gold: #C9A96A; --cover: url('https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="executive"] { --bg: #F0F2F4; --bg-alt: #E4E8EC; --accent: #506070; --accent-light: rgba(80,96,112,.08); --gold: #506070; --cover: url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="conference"] { --bg: #F4F2F0; --bg-alt: #ECEAE6; --accent: #706858; --accent-light: rgba(112,104,88,.08); --gold: #706858; --cover: url('https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1800&q=90'); }
 [data-design="networking"] { --bg: #F2F4F6; --bg-alt: #E8ECF0; --accent: #587088; --accent-light: rgba(88,112,136,.08); --gold: #587088; --cover: url('https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1800&q=90'); }
@@ -7529,13 +7529,21 @@ html.scene-opened .opening .opening-light { opacity: 0; transition: opacity 1.4s
 }
 
 [data-design="aurora"],
-[data-design="modern-grad"],
-[data-design="little-prince"] {
+[data-design="modern-grad"] {
     --material: linear-gradient(175deg,#fdfdfd,#f0f5f7 60%,#e6eef2);
     --material-deep: #d9e6ec;
     --mborder: rgba(122,172,184,.42);
     --edge-hi: rgba(255,255,255,1);
     --ornament-foil: linear-gradient(135deg,#7aacb8,#c6e3e9,#5b8f9c);
+}
+
+/* Little Prince — warm, gentle baby-boy paper (soft cream + gold) */
+[data-design="little-prince"] {
+    --material: linear-gradient(175deg,#fffdfa,#f7f1e8 60%,#efe3d2);
+    --material-deep: #e8dcc8;
+    --mborder: rgba(201,169,106,.5);
+    --edge-hi: rgba(255,255,255,1);
+    --ornament-foil: linear-gradient(135deg,#c9a96a,#f0d9a8,#a8844e);
 }
 
 /* =====================================================
@@ -10732,7 +10740,18 @@ var isCouple = (
     cat === "anniversary" ||
     cat === "henna"
 );
-var displayDate = invitation.dateShort || lunaDateShort(invitation.date) || invitation.date || "";
+var displayDate = invitation.dateShort
+    || lunaDateShort(invitation.date)
+    || (function() {
+        /* If the plain date fields were never saved, recover the date from the
+           date part of a countdown value (e.g. "2026-09-12T14:00:00"). */
+        var cd = (typeof invitation.countdown === "string") ? invitation.countdown : "";
+        var m = cd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        if (m) return lunaDateShort(m[1] + "-" + m[2] + "-" + m[3]);
+        return "";
+    })()
+    || invitation.date
+    || "";
 
 
 /* =====================================================
@@ -11290,9 +11309,12 @@ document.getElementById("storyEyebrow").textContent =
 document.getElementById("storyHeading").innerHTML =
     lunaT("invStoryHeading");
 
-if (invitation.story) {
+/* The client's written text may be stored in `message` (single-message form)
+   rather than `story`. Fall back so the guest's personal words always show. */
+var storySource = invitation.story || invitation.message || "";
+if (storySource) {
     document.getElementById("story").innerHTML =
-        lunaFormatStory(invitation.story);
+        lunaFormatStory(storySource);
 }
 
 
@@ -11415,6 +11437,14 @@ var customerImages = [];
 if (invitation.images && invitation.images.length) {
     customerImages = invitation.images.filter(function(src) {
         return src && typeof src === "string" && src.trim() !== "";
+    });
+    /* Drop exact duplicate photos (e.g. the same poster re-uploaded in the
+       gallery) so guests never see the same picture twice in a row. */
+    var _seenImg = {};
+    customerImages = customerImages.filter(function(src) {
+        if (_seenImg[src]) return false;
+        _seenImg[src] = true;
+        return true;
     });
 }
 
@@ -11569,10 +11599,9 @@ function updateCountdown() {
     }
 
     if (!target || isNaN(target.getTime())) {
-        daysEl.textContent = "00";
-        hoursEl.textContent = "00";
-        minutesEl.textContent = "00";
-        secondsEl.textContent = "00";
+        /* No usable event date — hide the countdown instead of showing a
+           frozen "00:00:00:00" that looks broken to guests. */
+        document.getElementById("countdownSection").hidden = true;
         return;
     }
 

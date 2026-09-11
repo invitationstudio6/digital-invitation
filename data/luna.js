@@ -186,8 +186,14 @@ function lunaCountdownTarget(invitation) {
     var countdown = invitation.countdown;
 
     if (typeof countdown === "string" && countdown.trim()) {
-        if (countdown.indexOf("+") !== -1 || /z$/i.test(countdown)) return countdown;
-        return countdown + "+04:00";
+        var c = countdown.trim();
+        /* A usable countdown must carry a date part (YYYY-MM-DD…). Time-only
+           values like "T14:00:00" (saved when a form captured no date) are not
+           valid targets — skip them so callers can fall back or hide gracefully. */
+        if (/^\d{4}-\d{2}-\d{2}/.test(c)) {
+            if (c.indexOf("+") !== -1 || /z$/i.test(c)) return c;
+            return c + "+04:00";
+        }
     }
 
     if (countdown && countdown.date && countdown.time) {
