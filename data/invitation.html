@@ -12866,6 +12866,10 @@ html.lx-fx #musicButton{animation:lxBtnGlow 5s ease-in-out infinite;}
       if(words.length<2)return;
       el.textContent="";
       words.forEach(function(w,i){
+        /* Keep the original spaces between words — the reveal spans are
+           inline-block, so without an explicit space the words ran together
+           (e.g. "Birlikdə sayağ." became "Birlikdəsayağ."). */
+        if(i > 0) el.appendChild(document.createTextNode(" "));
         var sp=document.createElement("span");
         sp.className="lx-w";
         sp.textContent=w;
