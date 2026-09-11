@@ -10626,10 +10626,14 @@ if (finalDesign) {
         });
         var chosen = urlCover || "";
         if (!chosen && childCategory) {
-            chosen = "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90";
-        }
-        if (!chosen && childCategory && !isLegacyChildCover) {
-            chosen = invCover;
+            /* Child invitations: prefer the client's own uploaded image, but
+               never a known legacy non-child cover. Fall back to the design's
+               child-friendly birthday cover only when no client image exists. */
+            if (invCover && !isLegacyChildCover) {
+                chosen = invCover;
+            } else {
+                chosen = "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90";
+            }
         } else if (!chosen && !childCategory) {
             chosen = invCover;
         }
@@ -12228,6 +12232,24 @@ var _openingStyle = (function() {
     if (!sceneEl) return;
     sceneEl.style.display = "";
     sceneEl.classList.add("active");
+
+    /* Apply the client's chosen image as the opening/animation background.
+       Priority: scrollHeroImage (client "after opening" image) → cover/photoInvitation
+       (client hero image) → design default. Only for child invitations the
+       legacy non-child cover is skipped. */
+    var _openingImg = (invitation && (invitation.scrollHeroImage || invitation.cover || invitation.photoInvitation)) || "";
+    if (_openingImg) {
+        var _legacy = ["https://images.unsplash.com/photo-1555252333-9f8e92e65df9"];
+        var _isLegacy = _legacy.some(function(u){ return _openingImg.indexOf(u) === 0; });
+        if (!_isLegacy) {
+            var _openingEl = document.getElementById("opening");
+            if (_openingEl) {
+                _openingEl.style.backgroundImage = "linear-gradient(rgba(255,248,241,.10), rgba(255,248,241,.10)), url('" + _openingImg + "')";
+                _openingEl.style.backgroundSize = "cover";
+                _openingEl.style.backgroundPosition = "center";
+            }
+        }
+    }
 
     /* Hide the default envelope + all unused scenes */
     var envScene = document.querySelector(".envelope-scene");
