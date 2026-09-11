@@ -4806,6 +4806,18 @@ html[data-opening="curtain"] #opening { transition: opacity 1s ease, visibility 
         linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.50));
 }
 
+/* When the client has uploaded a real hero photo, the decorative gradient
+   and foil overlays would sit on top of it and hide it. Fade them out so
+   the client's selected image is clearly visible as the hero backdrop. */
+.hero.has-client-cover::before,
+.hero.has-client-cover::after {
+    opacity: 0 !important;
+    background: none !important;
+    animation: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
 @keyframes heroPulse {
     0%,100% { transform: scale(.96); opacity: .4; }
     50% { transform: scale(1.02); opacity: .8; }
@@ -11521,6 +11533,10 @@ if (postOpeningHeroImage) {
         postOpeningHero.style.backgroundImage = "url('" + postOpeningHeroImage + "')";
         postOpeningHero.style.backgroundSize = "cover";
         postOpeningHero.style.backgroundPosition = "center";
+        /* Mark the hero as carrying a real client photo so the CSS can
+           suppress the decorative gradient/foil overlays that would
+           otherwise sit on top of the client's image and hide it. */
+        postOpeningHero.classList.add("has-client-cover");
     }
 }
 
