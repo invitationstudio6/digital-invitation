@@ -761,9 +761,15 @@ body.menu-open .languages{display:none}
                     <p class="step-desc">Qalereya şəkilləri və fon musiqisi əlavə edin</p>
                     <div class="photo-invite-block">
                         <h4 class="sub-title">Əsas şəkil (Hero / Qapaq)</h4>
-                        <p class="step-desc">Dəvətnamənin yuxarısında, adların arxa fonunda görünən əsas şəkli (məsələn, gəlin-bəy şəkli) dəyişmək üçün öz şəklinizi yükləyin. Yükləməsəniz, seçdiyiniz dizaynın standart şəkli görünəcək. Birdən artıq şəkil seçə bilərsiniz — birincisi əsas olacaq.</p>
+                        <p class="step-desc">Dəvətnamənin yuxarısında, adların arxa fonunda görünən əsas şəkli dəyişmək üçün öz şəklinizi yükləyin. Uşaq və körpə dəvətnamələrində bu şəkil uşağa uyğun hero görünüşü kimi istifadə olunur. Birdən artıq şəkil seçə bilərsiniz — birincisi əsas olacaq.</p>
                         <input type="file" id="photoInviteInput" accept="image/*" multiple>
                         <div class="photo-invite-preview" id="photoInvitePreview"></div>
+                    </div>
+                    <div class="photo-invite-block">
+                        <h4 class="sub-title">Scroll hero şəkli</h4>
+                        <p class="step-desc">Açılışdan sonra səhifəni aşağı sürüşdürərkən görünən xüsusi şəkli seçin. Bu şəkil ayrıca seçilməzsə, yuxarıdakı əsas hero şəkli istifadə olunacaq.</p>
+                        <input type="file" id="scrollHeroInput" accept="image/*">
+                        <div class="photo-invite-preview" id="scrollHeroPreview"></div>
                     </div>
                     <div class="form-grid" id="mediaGrid"></div>
                 </div>
@@ -877,6 +883,19 @@ document.addEventListener("DOMContentLoaded", function(){
                         photoInvitationImgs[photoInvitationImgs.length - list.length + idx] = dataUrl;
                         if (++done === list.length) renderPhotoPreviews();
                     });
+                });
+            });
+        }
+        var scrollInput = document.getElementById("scrollHeroInput");
+        var scrollPreview = document.getElementById("scrollHeroPreview");
+        if (scrollInput && scrollPreview) {
+            scrollInput.addEventListener("change", function() {
+                var file = scrollInput.files && scrollInput.files[0];
+                if (!file) return;
+                lunaCompressImage(file, function(dataUrl) {
+                    window.scrollHeroImage = dataUrl || "";
+                    scrollPreview.innerHTML = dataUrl ? '<img src="' + dataUrl + '" alt="Scroll hero şəkli">' : "";
+                    scrollPreview.style.display = dataUrl ? "block" : "none";
                 });
             });
         }
@@ -2723,6 +2742,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         design: design,
                         templateId: design,
                         photoInvitation: (photoInvitationImgs && photoInvitationImgs[0]) ? photoInvitationImgs[0] : "",
+                        scrollHeroImage: window.scrollHeroImage || "",
                         approved: false,
                         bride: primaryName,
                         date: v.date,
