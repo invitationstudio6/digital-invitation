@@ -10613,7 +10613,21 @@ if (finalDesign) {
         var urlCover = (params.get("cover") || "").trim();
         var invData = (typeof invitation === "object" && invitation) ? invitation : {};
         var invCover = (invData.cover || invData.photoInvitation || "").trim();
-        var chosen = urlCover || invCover || "";
+        var childCategory = invData.category === "birthday" || invData.category === "baby-shower";
+        /* Known non-child legacy covers that must never override a child
+           invitation's hero (e.g. the old baby-feet poster). */
+        var legacyChildCovers = [
+            "https://images.unsplash.com/photo-1555252333-9f8e92e65df9"
+        ];
+        var isLegacyChildCover = legacyChildCovers.some(function(u){
+            return invCover.indexOf(u) === 0;
+        });
+        var chosen = urlCover || "";
+        if (!chosen && childCategory && !isLegacyChildCover) {
+            chosen = invCover;
+        } else if (!chosen && !childCategory) {
+            chosen = invCover;
+        }
         if (chosen) {
             document.documentElement.style.setProperty("--cover", "url('" + chosen + "')");
         }
