@@ -291,6 +291,9 @@ var invitations = {
 
         category: "birthday",
 
+        design: "kids-party",
+        templateId: "kids-party",
+
         bride: "Nicat",
         celebrant: "Nicat",
 
