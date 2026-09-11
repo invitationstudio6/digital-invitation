@@ -462,7 +462,7 @@ const LUNA_TEMPLATES = [
         id: "little-prince", name: "Little Prince", category: "baby-shower", style: "Şahzadə · Zərif", galleryStyle: "editorial", openingStyle: "floral-reveal",
         animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=1800&q=90",
+        cover: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1800&q=90",
         minPackage: "premium", packages: ["premium", "luxury"],
         layoutConfig: { sectionOrder: ["hero","details","gallery","story","countdown","rsvp"], heroType: "hero-style-editorial", backgroundStyle: "frost" },
         preview: { eyebrow: "BALACA ŞAHZADƏ", names: ["Elvin"], date: "18 · 09 · 2026", message: "Balaca şahzadəmizin gəlişini qeyd etməyə hazırlanırıq.", venue: "Azure Hall", location: "Bakı, Azərbaycan", theme: "amour" }
