@@ -11526,18 +11526,37 @@ if (childCategory && invitation.scrollHeroImage) {
    It must be applied after all data and design CSS have loaded, otherwise
    the template's default cover can win over the client selection. */
 var postOpeningHeroImage = invitation.cover || invitation.photoInvitation || "";
+
+/* Apply the client photo to BOTH the hero and the parallax backdrop layer.
+   The backdrop (`.lx-hero-bg`) is injected by js/physical-invitation.js at
+   DOMContentLoaded — i.e. BEFORE this async init resolves the invitation
+   from the cloud — so it starts out painted with the design's DEFAULT cover.
+   If left alone it sits on top of the hero and hides the client's photo, so
+   we re-point it at the real image the moment the cover is known. */
+function lunaApplyClientHeroCover(img) {
+    if (!img) return;
+    var _hero = document.getElementById("hero");
+    if (!_hero) return;
+
+    _hero.style.setProperty("background-image", "url('" + img + "')", "important");
+    _hero.style.setProperty("background-size", "cover", "important");
+    _hero.style.setProperty("background-position", "center", "important");
+
+    /* Suppress the decorative gradient/foil overlays that would otherwise
+       sit on top of the client's image and hide it. */
+    _hero.classList.add("has-client-cover");
+
+    /* Keep the parallax backdrop in sync — it paints above the hero. */
+    var _lx = _hero.querySelector(".lx-hero-bg");
+    if (_lx) {
+        _lx.classList.add("lx-hero-photo");
+        _lx.style.backgroundImage = "url('" + img + "')";
+    }
+}
+
 if (postOpeningHeroImage) {
     document.documentElement.style.setProperty("--cover", "url('" + postOpeningHeroImage + "')");
-    var postOpeningHero = document.getElementById("hero");
-    if (postOpeningHero) {
-        postOpeningHero.style.backgroundImage = "url('" + postOpeningHeroImage + "')";
-        postOpeningHero.style.backgroundSize = "cover";
-        postOpeningHero.style.backgroundPosition = "center";
-        /* Mark the hero as carrying a real client photo so the CSS can
-           suppress the decorative gradient/foil overlays that would
-           otherwise sit on top of the client's image and hide it. */
-        postOpeningHero.classList.add("has-client-cover");
-    }
+    lunaApplyClientHeroCover(postOpeningHeroImage);
 }
 
 /* Hide gallery entirely if no valid customer images */
@@ -12275,12 +12294,7 @@ var _openingStyle = (function() {
     /* Re-apply the client's selected post-opening cover after the opening
        scene is activated, so template scene styles cannot replace it. */
     if (postOpeningHeroImage) {
-        var finalHero = document.getElementById("hero");
-        if (finalHero) {
-            finalHero.style.setProperty("background-image", "url('" + postOpeningHeroImage + "')", "important");
-            finalHero.style.setProperty("background-size", "cover", "important");
-            finalHero.style.setProperty("background-position", "center", "important");
-        }
+        lunaApplyClientHeroCover(postOpeningHeroImage);
     }
 
     /* Apply the client's chosen image as the opening/animation background.
