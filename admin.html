@@ -2686,6 +2686,22 @@ document.getElementById('assignDesignForm').addEventListener('submit', function(
 
     function assignExistingDesign(){
         setClientInvitation(clientId, finalDesignId);
+        /* The mapping above only lives in this browser's localStorage, so it
+           would NOT change what visitors see on the live link. Also update the
+           invitation record itself (design + opening) and push it to Supabase
+           so the assigned design actually appears for every guest. */
+        try {
+            var _inv = lunaGetInvitation(clientId);
+            if(_inv){
+                if(!_inv.id) _inv.id = clientId;
+                _inv.design = finalDesignId;
+                _inv.templateId = finalDesignId;
+                var _op = (typeof defaultOpeningOfDesign === 'function') ? defaultOpeningOfDesign(finalDesignId) : "";
+                if(_op) _inv.openingType = _op;
+                lunaRebuildVisualSnapshot(_inv);
+                lunaSaveInvitation(_inv);
+            }
+        } catch(e){}
         showToast('Dizayn müştəriye təyin edildi');
         closeModal('assignDesignModal');
         document.getElementById('assignDesignForm').reset();
@@ -5841,6 +5857,10 @@ function lunaParseFormattedDate(str){
 function openEditInvitation(id){
     var inv = lunaGetInvitation(id);
     if(!inv){ showToast('Dəvətnamə tapılmadı'); return; }
+    /* Some stored invitations (seed data, older records) lack an `id` field;
+       lunaSaveInvitation refuses to save without it, which made admin edits
+       silently "do nothing". Always stamp the id before editing. */
+    if(!inv.id) inv.id = id;
     editingInvitationId = id;
     document.getElementById('editInvId').value = id;
     var categorySelect = document.getElementById('efCategory');
@@ -5873,6 +5893,53 @@ function openEditInvitation(id){
     document.getElementById('efMusic').value = inv.music || '';
     document.getElementById('efVideoUrl').value = inv.videoUrl || '';
     document.getElementById('editInvitationModal').classList.add('open');
+}
+
+/* Rebuild the invitation's frozen visual identity (visualSnapshot) after an
+   admin edit. Without this, changing the design / opening animation in admin
+   has no visible effect — the invitation viewer keeps reading the OLD
+   snapshot and ignores the newly-selected template's colours/layout. */
+function lunaRebuildVisualSnapshot(inv){
+    try {
+        var _snapAll = (typeof lunaGetAllTemplates === "function") ? lunaGetAllTemplates() : ((typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES : []);
+        var _snapId = inv.templateId || inv.design || "";
+        var _snapTpl = null;
+        if (_snapId && _snapAll.length) {
+            _snapTpl = _snapAll.find(function(t) { return t && t.id === _snapId; }) || null;
+        }
+        var _lc = (_snapTpl && _snapTpl.layoutConfig) || {};
+        var _dg = (_snapTpl && _snapTpl.design) || {};
+        var _matD = (inv.design || "").toLowerCase();
+        var _mat = "royal";
+        if (["noir","black-gold","luxe-gold","luxury-birthday","luxury-grad","oriental","luxury-romance","velvet-luxe","grand-curtain","starry-dream","enchanted"].indexOf(_matD) !== -1) _mat = "dark";
+        else if (["botanical","garden-bloom","blossom","henna","traditional-henna","florence"].indexOf(_matD) !== -1) _mat = "botanical";
+        else if (["velvet-rose","soft-blush","romantic-bloom","soft-rose","sweet-arrival","amour","serena"].indexOf(_matD) !== -1) _mat = "rose";
+        else if (["minimal-white","modern-chic","modern-classic","elegant-pearl","executive","conference","networking"].indexOf(_matD) !== -1) _mat = "minimal";
+        else if (["fiesta-pop","kids-party","celebration","celebration-pop"].indexOf(_matD) !== -1) _mat = "pop";
+        else if (["vintage-romance","anniversary","royal-seal","classic"].indexOf(_matD) !== -1) _mat = "vintage";
+        else if (["aurora","modern-grad","little-prince"].indexOf(_matD) !== -1) _mat = "aqua";
+        var _pal = (typeof lunaTemplatePalette === "function") ? lunaTemplatePalette(_snapTpl || { id: _snapId }) : {};
+        inv.visualSnapshot = {
+            v: 1,
+            layoutConfig: {
+                sectionOrder: Array.isArray(_lc.sectionOrder) ? _lc.sectionOrder.slice() : null,
+                heroType: _lc.heroType || null,
+                backgroundStyle: _lc.backgroundStyle || null,
+                openingType: _lc.openingType || null
+            },
+            galleryStyle: (_snapTpl && _snapTpl.galleryStyle) || null,
+            design: {
+                primaryColor: _dg.primaryColor || _pal.c1 || null,
+                secondaryColor: _dg.secondaryColor || _pal.c2 || null,
+                font: _dg.font || null
+            },
+            material: _mat,
+            openingType: inv.openingType || null,
+            savedAt: new Date().toISOString()
+        };
+    } catch (e) {
+        inv.visualSnapshot = { v: 1, savedAt: new Date().toISOString() };
+    }
 }
 
 document.getElementById('editInvitationForm').addEventListener('submit', function(e){
@@ -5932,6 +5999,11 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
 
     var videoUrl = document.getElementById('efVideoUrl').value.trim();
     if(videoUrl) inv.videoUrl = videoUrl; else delete inv.videoUrl;
+
+    /* Refresh the frozen visual snapshot so design/opening changes actually
+       take effect on the invitation (instead of being overridden by the old
+       snapshot's locked-in colours and layout). */
+    lunaRebuildVisualSnapshot(inv);
 
     lunaSaveInvitation(inv);
 

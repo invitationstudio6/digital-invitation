@@ -10470,8 +10470,14 @@ window.__lunaCloudPreload = (function() {
     var cfg = window.LUNA_SUPABASE;
     var qid = (params.get("id") || "").toLowerCase().trim();
     if (!qid || !cfg || !cfg.url || !cfg.anonKey) return Promise.resolve();
+    if (navigator.onLine === false) return Promise.resolve();
     var localKey = "luna_" + qid;
-    if (localStorage.getItem(localKey)) return Promise.resolve();
+    /* Always refresh from Supabase while online so edits made in the admin
+       (on any device / browser) are reflected immediately. The local cache
+       is a fallback only — if we skipped the fetch whenever a cached copy
+       existed, a previously-cached invitation would keep showing stale data
+       forever and admin edits would "never appear" on the live link. When
+       offline (or fetch fails) the cached copy is kept. */
     var url = cfg.url + "/rest/v1/luna_invitations?select=id,value&id=eq." + encodeURIComponent(qid);
     return fetch(url, { headers: { apikey: cfg.anonKey, Authorization: "Bearer " + cfg.anonKey } })
         .then(function(r) { return r.ok ? r.json() : null; })
