@@ -6,7 +6,8 @@
 <title>Luna — The Luna Edit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Allura&display=swap"></noscript>
 <style>
 :root{
     --cream:#F5EDE3;
@@ -401,12 +402,12 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <a href="index.html#how" data-i18n="navHowItWorks">Necə işləyir</a>
     </div>
     <div class="languages">
-        <button class="active" data-lang="az">AZ</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="ru">RU</button>
-        <button data-lang="tr">TR</button>
+        <button type="button" class="active" data-lang="az">AZ</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="tr">TR</button>
     </div>
-    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Menyu"><span></span><span></span><span></span><span style="display:none">Menyu</span></button>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -417,10 +418,10 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
     <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
     <a href="index.html#how" data-i18n="navHowItWorks">Necə işləyir</a>
     <div class="mobile-languages">
-        <button data-lang="az">AZ</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="ru">RU</button>
-        <button data-lang="tr">TR</button>
+        <button type="button" data-lang="az">AZ</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="tr">TR</button>
     </div>
 </div>
 
@@ -436,8 +437,8 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
     <div class="showcase-wrap">
         <div class="showcase" id="showcase">
             <div class="showcase-stage" id="showcaseStage"></div>
-            <button class="showcase-nav prev" id="showcasePrev" aria-label="Previous">←</button>
-            <button class="showcase-nav next" id="showcaseNext" aria-label="Next">→</button>
+            <button type="button" class="showcase-nav prev" id="showcasePrev" aria-label="Previous">←</button>
+            <button type="button" class="showcase-nav next" id="showcaseNext" aria-label="Next">→</button>
             <div class="showcase-dots" id="showcaseDots"></div>
             <div class="showcase-progress"><div class="showcase-progress-bar" id="showcaseProgress"></div></div>
         </div>
@@ -504,7 +505,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
 
 <!-- FULL PREVIEW MODAL -->
 <div class="modal-overlay" id="previewModal">
-    <button class="modal-close" id="modalClose">✕</button>
+    <button type="button" class="modal-close" id="modalClose">✕</button>
     <div class="modal-content">
         <!-- Header -->
         <div class="modal-header">
@@ -521,7 +522,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <div class="modal-body">
             <div class="modal-invite-preview">
                 <div class="modal-invite-hero">
-                    <img id="mHeroImg" src="" alt="">
+                    <img id="mHeroImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
                     <div class="modal-invite-hero-overlay">
                         <div class="modal-invite-eyebrow" id="mEyebrow"></div>
                         <div class="modal-invite-names" id="mNames"></div>
@@ -597,7 +598,7 @@ footer{padding:60px 5% 35px;border-top:1px solid var(--border);display:flex;alig
         <!-- CTA -->
         <div class="modal-cta">
             <a id="modalFormLink" href="#" class="btn btn-dark">Bu dizaynı seç</a>
-            <button class="btn btn-light" id="modalCloseBtn">Geri</button>
+            <button type="button" class="btn btn-light" id="modalCloseBtn">Geri</button>
         </div>
     </div>
 </div>
@@ -941,7 +942,7 @@ function renderTemplates(catFilter, styleFilter) {
                 '<span class="pkg-badge">' + minPkg + ' · ' + (tpl.packages ? tpl.packages.join(" · ") : "") + '</span>' +
             '</div>' +
             '<div class="design-thumb-actions">' +
-                '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
+                '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
                 '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
             '</div>';
 

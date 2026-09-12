@@ -1748,13 +1748,13 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         <a href="#how">Nə daxildir</a>
     </div>
     <div class="languages">
-        <button class="active" data-lang="az">AZ</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="ru">RU</button>
-        <button data-lang="tr">TR</button>
+        <button type="button" class="active" data-lang="az">AZ</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="tr">TR</button>
     </div>
     <a href="client-form.html" class="nav-cta">Sifariş et</a>
-    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Menyu"><span></span><span></span><span></span><span style="display:none">Menyu</span></button>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -1768,10 +1768,10 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         <a href="#how">Nə daxildir</a>
         <a href="client-form.html">Dəvətnamə yarat</a>
     <div class="mobile-languages">
-        <button data-lang="az">AZ</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="ru">RU</button>
-        <button data-lang="tr">TR</button>
+        <button type="button" data-lang="az">AZ</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="tr">TR</button>
     </div>
 </div>
 
@@ -1785,15 +1785,15 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
     <div class="hero-3d-stage" aria-hidden="true">
         <div class="hero-inv-card-3d hi-1">
             <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80')"></div>
-            <div class="hi-overlay"><div class="hi-tag">Toy</div><div class="hi-names">Aysel & Murad</div></div>
+            <div class="hi-overlay"><div class="hi-tag">Toy</div><div class="hi-names">Aysel &amp; Murad</div></div>
         </div>
         <div class="hero-inv-card-3d hi-2">
             <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80')"></div>
-            <div class="hi-overlay"><div class="hi-tag">Nişan</div><div class="hi-names">Leyla & Tural</div></div>
+            <div class="hi-overlay"><div class="hi-tag">Nişan</div><div class="hi-names">Leyla &amp; Tural</div></div>
         </div>
         <div class="hero-inv-card-3d hi-3">
             <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80')"></div>
-            <div class="hi-overlay"><div class="hi-tag">Xına</div><div class="hi-names">Nigar & Elvin</div></div>
+            <div class="hi-overlay"><div class="hi-tag">Xına</div><div class="hi-names">Nigar &amp; Elvin</div></div>
         </div>
         <div class="hero-inv-card-3d hi-4">
             <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80')"></div>
@@ -1805,7 +1805,7 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         </div>
         <div class="hero-inv-card-3d hi-6">
             <div class="hi-img" style="background-image:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80')"></div>
-            <div class="hi-overlay"><div class="hi-tag">Şadlıq</div><div class="hi-names">Günel & Kamran</div></div>
+            <div class="hi-overlay"><div class="hi-tag">Şadlıq</div><div class="hi-names">Günel &amp; Kamran</div></div>
         </div>
     </div>
     <!-- Decorative elements -->
@@ -1887,18 +1887,18 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
             <div id="collBannerIcon" style="font-size:22px;margin-bottom:4px"></div>
             <div id="collBannerName" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--dark)"></div>
             <div id="collBannerCount" style="font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-top:4px"></div>
-            <button id="collBannerClose" style="margin-top:10px;background:none;border:1px solid rgba(212,165,116,.25);border-radius:20px;padding:6px 16px;font-size:9px;letter-spacing:1px;color:var(--gold-dark);cursor:pointer;transition:.25s">Hamısına qayıt</button>
+            <button type="button" id="collBannerClose" style="margin-top:10px;background:none;border:1px solid rgba(212,165,116,.25);border-radius:20px;padding:6px 16px;font-size:9px;letter-spacing:1px;color:var(--gold-dark);cursor:pointer;transition:.25s">Hamısına qayıt</button>
         </div>
         <div class="tpl-tools" style="justify-content:center">
             <div class="tpl-search" id="tplSearchWrap" style="max-width:380px">
                 <span class="s-ico" style="font-size:12px;opacity:.5">🔍</span>
                 <input type="text" id="tplSearch" placeholder="Dizayn axtar…" autocomplete="off" style="font-size:12px;padding:12px 16px">
-                <button class="s-clear" id="tplSearchClear" aria-label="Təmizlə">✕</button>
+                <button type="button" class="s-clear" id="tplSearchClear" aria-label="Təmizlə">✕</button>
             </div>
         </div>
         <div class="results-line" id="resultsLine"></div>
         <div class="designs-grid" id="designsGrid"></div>
-        <div class="show-more-wrap"><button class="show-more-btn" id="showMoreBtn" style="display:none"></button></div>
+        <div class="show-more-wrap"><button type="button" class="show-more-btn" id="showMoreBtn" style="display:none"></button></div>
     </div>
 </section>
 
@@ -1992,7 +1992,7 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
 
 <!-- PREVIEW MODAL — Full Invitation Experience -->
 <div class="modal-overlay" id="previewModal">
-    <button class="modal-close" id="modalClose">✕</button>
+    <button type="button" class="modal-close" id="modalClose">✕</button>
     <div class="modal-content" id="modalContent">
         <!-- Header -->
         <div class="modal-header">
@@ -2009,7 +2009,7 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         <div class="modal-invite" id="mInvite">
             <!-- Hero -->
             <div class="modal-invite-hero">
-                <img id="mHeroImg" src="" alt="">
+                <img id="mHeroImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
                 <div class="modal-invite-hero-overlay">
                     <div class="modal-invite-eyebrow" id="mEyebrow"></div>
                     <div class="modal-invite-names" id="mNames"></div>
@@ -2088,8 +2088,8 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
         <!-- Modal CTA -->
         <div class="modal-cta">
             <a id="modalFormLink" href="#" class="btn btn-dark">Bu dizaynı seç</a>
-            <button class="btn btn-live" id="modalLiveBtn">Canlı açılışı izlə</button>
-            <button class="btn btn-light" id="modalCloseBtn">Geri</button>
+            <button type="button" class="btn btn-live" id="modalLiveBtn">Canlı açılışı izlə</button>
+            <button type="button" class="btn btn-light" id="modalCloseBtn">Geri</button>
         </div>
     </div>
 </div>
@@ -2099,18 +2099,18 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
 <div class="section-inner">
     <div class="section-heading" style="text-align:center">
         <div class="kicker">Luna</div>
-        <h2 id="testiTitle"></h2>
+        <h2 id="testiTitle">Rəylər</h2>
     </div>
     <div class="testi-grid" id="testiGrid"></div>
 </div>
 </section>
 
 <!-- FAVORITES FAB + DRAWER -->
-<button class="to-top" id="toTop" aria-label="Yuxarı qalx">↑</button>
-<button class="fav-fab" id="favFab">♥ Seçilmişlər <b id="favCount">0</b></button>
+<button type="button" class="to-top" id="toTop" aria-label="Yuxarı qalx">↑</button>
+<button type="button" class="fav-fab" id="favFab">♥ Seçilmişlər <b id="favCount">0</b></button>
 <div class="fav-backdrop" id="favBackdrop"></div>
 <aside class="fav-drawer" id="favDrawer" aria-label="Seçilmiş dizaynlar">
-    <div class="fd-head"><h3>♥ Seçilmişlər</h3><button class="fd-close" id="favClose" aria-label="Bağla">✕</button></div>
+    <div class="fd-head"><h3>♥ Seçilmişlər</h3><button type="button" class="fd-close" id="favClose" aria-label="Bağla">✕</button></div>
     <div class="fd-list" id="favList"></div>
 </aside>
 
@@ -2602,7 +2602,7 @@ function renderTemplates(filter) {
                 '<span class="dt-tint"></span>' +
                 (opening ? _opvHTML(opening.type) : "") +
                 animBadge +
-                '<button class="fav-btn' + (isFav ? ' active' : '') + '" data-fav="' + tpl.id + '" aria-label="Seçilmişlərə əlavə et">♥</button>' +
+                '<button type="button" class="fav-btn' + (isFav ? ' active' : '') + '" data-fav="' + tpl.id + '" aria-label="Seçilmişlərə əlavə et">♥</button>' +
             '</div>' +
             '<div class="dt-meta">' +
                 '<span class="dt-cat">' + catName + (tpl.featured ? ' · ★ Seçilmiş' : '') + '</span>' +
@@ -2612,8 +2612,8 @@ function renderTemplates(filter) {
             '</div>' +
             featHtml +
             '<div class="dt-actions">' +
-                '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + (opening ? '▶ Açılışa bax' : 'Böyüd') + '</button>' +
-                '<button class="btn btn-choose" data-design="' + tpl.id + '">Paket seç →</button>' +
+                '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + (opening ? '▶ Açılışa bax' : 'Böyüd') + '</button>' +
+                '<button type="button" class="btn btn-choose" data-design="' + tpl.id + '">Paket seç →</button>' +
             '</div>';
 
         grid.appendChild(card);
@@ -2733,7 +2733,7 @@ renderTemplates("all");
                 '<img src="' + tpl.thumbnail + '" alt="" onerror="this.src=\'' + tpl.cover + '\'">' +
                 '<div class="fd-info"><h4>' + tpl.name + '</h4><p>' + lunaCategoryName(tpl.category) + (priceVal ? ' · ' + priceVal + ' AZN' : '') + '</p></div>' +
                 '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '">Seç</a>' +
-                '<button class="fd-x" data-fav="' + tpl.id + '" aria-label="Sil">✕</button>';
+                '<button type="button" class="fd-x" data-fav="' + tpl.id + '" aria-label="Sil">✕</button>';
             box.appendChild(row);
         });
     }
@@ -3168,7 +3168,7 @@ function renderCatCollection(catId, gridId, limit) {
                 '<span class="tpl-swatch" style="margin-top:5px"><i style="background:' + pal.c1 + '"></i><i style="background:' + pal.c2 + '"></i></span>' +
             '</div>' +
             '<div class="cat-col-card-actions">' +
-                '<button class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
+                '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
                 '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
             '</div>';
         grid.appendChild(card);
@@ -3681,7 +3681,7 @@ function openImageModal(src, title) {
     m.className = "modal-overlay";
     m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
     m.innerHTML =
-        '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
+        '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
         '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:imgZoom .35s ease" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
     m.addEventListener("click", function(ev) {
         if (ev.target === m) m.remove();
@@ -3731,7 +3731,7 @@ function openVideoModal(video) {
         }
 
         modal.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
             '<div class="platform-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
                 '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
                 '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="' + platformLabel + '-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">' + platformLabel + '</span></a>' +
@@ -3773,7 +3773,7 @@ function openVideoModal(video) {
         var wrap = document.createElement("div");
         wrap.style.cssText = "position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px";
         wrap.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
             '<video src="' + video.videoUrl + '" controls playsinline preload="metadata" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
             '<a href="' + video.videoUrl + '" download target="_blank" rel="noopener" style="color:#d8b98f;font-size:12px;text-decoration:underline">Videonu yüklə</a>';
         modal.appendChild(wrap);

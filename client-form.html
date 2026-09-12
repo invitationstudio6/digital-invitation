@@ -9,7 +9,8 @@
 <title>Luna — Dəvətnaməni yarat</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Italiana&display=swap"></noscript>
 <link rel="stylesheet" href="css/physical-invitation.css">
 <style>
 :root{
@@ -638,6 +639,26 @@ body.menu-open .languages{display:none}
     .step-dot label{display:none}
 }
 </style>
+<style>
+#cfEditFab{position:fixed;right:18px;bottom:18px;z-index:2600;width:48px;height:48px;border-radius:50%;border:none;background:#5C3D2E;color:#F5EDE3;font-size:19px;cursor:pointer;box-shadow:0 8px 26px rgba(62,37,24,.4);display:none;place-items:center;transition:.25s}
+#cfEditFab:hover{transform:scale(1.08)}
+#cfBackdrop{position:fixed;inset:0;background:rgba(43,26,16,.35);z-index:2650;display:none}
+#cfBackdrop.open{display:block}
+#cfDrawer{position:fixed;top:0;right:-390px;width:min(370px,94vw);height:100vh;background:#FBF6EF;z-index:2700;transition:right .35s ease;box-shadow:-14px 0 44px rgba(62,37,24,.2);overflow-y:auto;padding:22px 20px 90px}
+#cfDrawer.open{right:0}
+#cfDrawer h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#3E2518;margin:0 0 4px}
+#cfDrawer .cf-sub{font-size:11px;color:#8A6E5E;margin-bottom:16px}
+#cfDrawer h4{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#B88C76;margin:18px 0 8px;border-top:1px solid rgba(92,61,46,.12);padding-top:14px}
+#cfDrawer label.cf-lbl{display:block;font-size:10px;color:#8A6E5E;margin:8px 0 3px}
+#cfDrawer input[type=text],#cfDrawer textarea{width:100%;padding:9px 11px;background:#fff;border:1px solid rgba(92,61,46,.2);color:#3E2518;font-family:inherit;font-size:12.5px;border-radius:6px}
+#cfDrawer textarea{resize:vertical;min-height:56px}
+#cfDrawer .cf-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#cfDrawer .cf-fields label{display:flex;align-items:center;gap:6px;font-size:11px;color:#3E2518;background:#fff;border:1px solid rgba(92,61,46,.14);padding:7px 9px;border-radius:6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cfDrawer .cf-save{margin-top:18px;width:100%;padding:13px;background:#5C3D2E;color:#F5EDE3;border:none;font-family:inherit;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:6px}
+#cfDrawer .cf-save:hover{background:#3E2518}
+#cfDrawer .cf-admin-link{display:block;text-align:center;margin-top:10px;font-size:11px;color:#B88C76;text-decoration:none}
+#cfClose{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(92,61,46,.25);background:none;color:#5C3D2E;cursor:pointer;font-size:14px}
+</style>
 </head>
 <body>
 
@@ -658,13 +679,13 @@ body.menu-open .languages{display:none}
         <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
         <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
         <div class="languages">
-            <button data-lang="az" class="active">AZ</button>
-            <button data-lang="en">EN</button>
-            <button data-lang="ru">RU</button>
-            <button data-lang="tr">TR</button>
+            <button type="button" data-lang="az" class="active">AZ</button>
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="ru">RU</button>
+            <button type="button" data-lang="tr">TR</button>
         </div>
     </div>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Menu">
         <span></span><span></span><span></span>
     </button>
 </nav>
@@ -674,10 +695,10 @@ body.menu-open .languages{display:none}
     <a href="invitations.html" data-i18n="navInvitations">Dəvətnamələr</a>
     <a href="pricing.html" data-i18n="navPricing">Qiymətlər</a>
     <div class="mobile-languages">
-        <button data-lang="az" class="active">AZ</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="ru">RU</button>
-        <button data-lang="tr">TR</button>
+        <button type="button" data-lang="az" class="active">AZ</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="tr">TR</button>
     </div>
 </div>
 
@@ -2337,7 +2358,7 @@ document.addEventListener("DOMContentLoaded", function(){
         m.className = "modal-overlay";
         m.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
         m.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
+            '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2">&times;</button>' +
             '<img src="' + src + '" alt="' + (title || "").replace(/"/g, "") + '" style="max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:imgZoom .35s ease" onerror="this.alt=\'Şəkil yüklənmədi\';this.style.padding=\'24px\';this.style.color=\'#fff\'">';
         m.addEventListener("click", function(ev) { if (ev.target === m) m.remove(); });
         document.body.appendChild(m);
@@ -3102,34 +3123,14 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 <!-- ===== ADMIN INLINE FORM EDITOR (sidebar drawer) ===== -->
-<style>
-#cfEditFab{position:fixed;right:18px;bottom:18px;z-index:2600;width:48px;height:48px;border-radius:50%;border:none;background:#5C3D2E;color:#F5EDE3;font-size:19px;cursor:pointer;box-shadow:0 8px 26px rgba(62,37,24,.4);display:none;place-items:center;transition:.25s}
-#cfEditFab:hover{transform:scale(1.08)}
-#cfBackdrop{position:fixed;inset:0;background:rgba(43,26,16,.35);z-index:2650;display:none}
-#cfBackdrop.open{display:block}
-#cfDrawer{position:fixed;top:0;right:-390px;width:min(370px,94vw);height:100vh;background:#FBF6EF;z-index:2700;transition:right .35s ease;box-shadow:-14px 0 44px rgba(62,37,24,.2);overflow-y:auto;padding:22px 20px 90px}
-#cfDrawer.open{right:0}
-#cfDrawer h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#3E2518;margin:0 0 4px}
-#cfDrawer .cf-sub{font-size:11px;color:#8A6E5E;margin-bottom:16px}
-#cfDrawer h4{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#B88C76;margin:18px 0 8px;border-top:1px solid rgba(92,61,46,.12);padding-top:14px}
-#cfDrawer label.cf-lbl{display:block;font-size:10px;color:#8A6E5E;margin:8px 0 3px}
-#cfDrawer input[type=text],#cfDrawer textarea{width:100%;padding:9px 11px;background:#fff;border:1px solid rgba(92,61,46,.2);color:#3E2518;font-family:inherit;font-size:12.5px;border-radius:6px}
-#cfDrawer textarea{resize:vertical;min-height:56px}
-#cfDrawer .cf-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-#cfDrawer .cf-fields label{display:flex;align-items:center;gap:6px;font-size:11px;color:#3E2518;background:#fff;border:1px solid rgba(92,61,46,.14);padding:7px 9px;border-radius:6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#cfDrawer .cf-save{margin-top:18px;width:100%;padding:13px;background:#5C3D2E;color:#F5EDE3;border:none;font-family:inherit;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:6px}
-#cfDrawer .cf-save:hover{background:#3E2518}
-#cfDrawer .cf-admin-link{display:block;text-align:center;margin-top:10px;font-size:11px;color:#B88C76;text-decoration:none}
-#cfClose{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(92,61,46,.25);background:none;color:#5C3D2E;cursor:pointer;font-size:14px}
-</style>
-<button id="cfEditFab" title="Form redaktəsi">⚙</button>
+<button type="button" id="cfEditFab" title="Form redaktəsi">⚙</button>
 <div id="cfBackdrop"></div>
 <aside id="cfDrawer">
-    <button id="cfClose">✕</button>
+    <button type="button" id="cfClose">✕</button>
     <h3>Form Redaktəsi</h3>
     <div class="cf-sub">Dəyişikliklər dərhal bütün formaya tətbiq olunur.</div>
 
-    <h4>Başlıq & Təsvir</h4>
+    <h4>Başlıq &amp; Təsvir</h4>
     <label class="cf-lbl">Başlıq (AZ)</label><input type="text" id="cfTitleAz">
     <label class="cf-lbl">Başlıq (EN)</label><input type="text" id="cfTitleEn">
     <label class="cf-lbl">Təsvir (AZ)</label><textarea id="cfDescAz"></textarea>
@@ -3137,7 +3138,7 @@ document.addEventListener("DOMContentLoaded", function(){
     <h4>Addım başlıqları (AZ)</h4>
     <div id="cfSteps"></div>
 
-    <h4>Düymə & Mesajlar</h4>
+    <h4>Düymə &amp; Mesajlar</h4>
     <label class="cf-lbl">Göndər düyməsi (AZ)</label><input type="text" id="cfSubmitAz">
     <label class="cf-lbl">Uğur mesajı (AZ)</label><textarea id="cfSuccessAz"></textarea>
 
@@ -3145,7 +3146,7 @@ document.addEventListener("DOMContentLoaded", function(){
     <div class="cf-sub">İşarələnmiş sahələr formada göstərilməyəcək.</div>
     <div class="cf-fields" id="cfFields"></div>
 
-    <button class="cf-save" id="cfSaveBtn">Yadda saxla</button>
+    <button type="button" class="cf-save" id="cfSaveBtn">Yadda saxla</button>
     <a class="cf-admin-link" href="admin.html">Tam admin panelini aç →</a>
 </aside>
 <script>
