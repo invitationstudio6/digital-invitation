@@ -10552,7 +10552,14 @@ var invitation = null;
 
 /* Wrap main logic in async IIFE to await cloud preload */
 (async function() {
-    await window.__lunaCloudPreload;
+    /* Never block first paint on the network. Render from the local cache
+       within a short budget, then let the cloud preload refresh the cache
+       in the background for the next visit. On a slow mobile connection the
+       page opens instantly instead of sitting blank while Supabase responds. */
+    await Promise.race([
+        window.__lunaCloudPreload,
+        new Promise(function(res) { setTimeout(res, 600); })
+    ]);
 
 /* Template demo mode takes priority — a stale luna_last_invitation
    saved from an earlier order must never shadow the ?template= preview */
