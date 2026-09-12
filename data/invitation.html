@@ -10590,6 +10590,18 @@ window.__lunaCloudPreload = (function() {
 var invitationId = "";
 var invitation = null;
 
+/* Placeholder used to render the opening scene instantly on a first visit
+   (no cached copy yet) so the invitation is interactive immediately while the
+   cloud fetch populates the real content in the background. */
+var _placeholderInvitation = {
+    id: "",
+    bride: "", groom: "", celebrant: "", graduate: "",
+    companyName: "", hostName: "", eventName: "",
+    dateShort: "", date: "", time: "", venue: "", location: "",
+    message: "", story: "", package: "basic", category: "wedding",
+    approved: true
+};
+
 /* Wrap main logic in async IIFE to await cloud preload */
 (async function() {
     /* Fast, non-blocking startup. Render from the local cache immediately so
@@ -10623,14 +10635,23 @@ if (window.lunaGetInvitationOverride) {
             if (_cached) invitation = JSON.parse(_cached);
         } catch (e) {}
 
-        /* First visit on this device — wait for the async cloud preload to
-           populate the cache, then read it again. Non-blocking. */
+        /* First visit on this device — render the opening scene immediately
+           with a placeholder so the invitation is interactive right away, and
+           let the cloud preload populate the real content in the background.
+           The fetch never blocks the main thread. */
         if (!invitation) {
+            invitation = _placeholderInvitation;
+            invitation.id = invitationId;
             await window.__lunaCloudPreload;
             try {
                 var _cached2 = localStorage.getItem("luna_" + invitationId);
                 if (_cached2) invitation = JSON.parse(_cached2);
             } catch (e) {}
+            /* The real invitation arrived from the cloud — re-render the
+               content in place so the names/hero/date appear without a reload. */
+            if (invitation && invitation !== _placeholderInvitation) {
+                window.__lunaReRenderContent = true;
+            }
         }
 
         /* Last resort — template invitations live in the static registry and
@@ -12195,6 +12216,133 @@ document.getElementById("footerTagline").textContent =
 
     sections.forEach(function(s) { sectionObserver.observe(s); });
 })();
+
+
+/* =====================================================
+   RE-RENDER CONTENT AFTER CLOUD FETCH
+   On a first visit the opening scene renders immediately with a
+   placeholder; when the real invitation arrives from the cloud we
+   re-populate the visible content in place (no reload, no flash).
+===================================================== */
+if (window.__lunaReRenderContent) {
+    try {
+        /* Letter + open button */
+        var _le = document.getElementById("letterEyebrow");
+        if (_le) _le.textContent = lunaT("invOpen");
+        var _ln = document.getElementById("letterNames");
+        if (_ln) _ln.textContent = lunaDisplayNames(invitation);
+        var _ld = document.getElementById("letterDate");
+        if (_ld) _ld.textContent = displayDate;
+        var _ob = document.getElementById("openButton");
+        if (_ob) _ob.textContent = lunaT("invOpen");
+
+        /* Hero eyebrow + date */
+        var _he = document.getElementById("heroEyebrow");
+        if (_he) _he.textContent = lunaInvitationHeading(invitation);
+        var _dt = document.getElementById("date");
+        if (_dt) _dt.textContent = displayDate;
+
+        /* Hero names (category-aware) */
+        var _hn = document.getElementById("heroNames");
+        if (_hn) {
+            var _hc = (invitation.category || "wedding").toLowerCase();
+            var _couple = (_hc === "wedding" || _hc === "engagement" || _hc === "anniversary" || _hc === "henna");
+            var _html = "";
+            if (_couple) {
+                var _b = invitation.bride || "";
+                var _g = invitation.groom || "";
+                _html = '<span class="name">' + lunaEscapeHtml(_b) + '</span>';
+                if (_g) { _html += '<span class="hero-amp">&amp;</span><span class="name">' + lunaEscapeHtml(_g) + '</span>'; }
+            } else if (_hc === "birthday") {
+                _html = '<span class="name" style="font-size:clamp(48px,10vw,110px)">' + lunaEscapeHtml(invitation.bride || invitation.celebrant || "") + '</span>';
+            } else if (_hc === "graduation") {
+                _html = '<span class="name" style="font-size:clamp(48px,10vw,110px)">' + lunaEscapeHtml(invitation.bride || invitation.graduate || "") + '</span>';
+            } else if (_hc === "business") {
+                _html = '<span class="name" style="font-size:clamp(36px,7vw,80px)">' + lunaEscapeHtml(invitation.eventName || invitation.companyName || invitation.bride || "") + '</span>';
+            } else {
+                _html = '<span class="name" style="font-size:clamp(48px,10vw,110px)">' + lunaT("invRsvpHeading") + '</span>';
+            }
+            _hn.innerHTML = _html;
+            if (typeof lunaFitHeroNames === "function") { try { lunaFitHeroNames(_hn); } catch (eFH) {} }
+        }
+
+        /* Story + details */
+        var _story = document.getElementById("story");
+        if (_story) {
+            var _ss = invitation.story || invitation.message || "";
+            if (_ss) _story.innerHTML = lunaFormatStory(_ss);
+        }
+        var _dd = document.getElementById("detailDate");
+        if (_dd) _dd.textContent = displayDate;
+        var _tm = document.getElementById("time");
+        if (_tm) _tm.textContent = invitation.time || "";
+        var _vn = document.getElementById("venue");
+        if (_vn) _vn.textContent = invitation.venue || "";
+        var _lc = document.getElementById("location");
+        if (_lc) _lc.textContent = invitation.location || "";
+
+        /* Countdown */
+        if (typeof updateCountdown === "function") {
+            try { updateCountdown(); } catch (eCD) {}
+        }
+
+        /* Client hero cover + opening background */
+        var _postHero = invitation.cover || invitation.photoInvitation || "";
+        if (_postHero && typeof lunaApplyClientHeroCover === "function") {
+            try { lunaApplyClientHeroCover(_postHero); } catch (eHC) {}
+        }
+
+        /* Resolve the client's selected opening animation and apply it so the
+           correct scene shows on a first visit (the early data-opening set ran
+           before the fetch, so it was empty). Mirrors _openingStyle below. */
+        var _curOpen = document.documentElement.getAttribute("data-opening") || "";
+        if (!_curOpen || _curOpen === "envelope") {
+            var _rawOpen = invitation.openingType || invitation.openingStyle || invitation.animationType || invitation.animationStyle
+                || (invitation.visualSnapshot && invitation.visualSnapshot.openingType) || "";
+            var _aliasOpen = {
+                "floral-reveal":"floral-paper","editorial-reveal":"editorial-card","luxury-reveal":"luxury-romance",
+                "envelope-reveal":"envelope-seal","stairs-reveal":"stairs","wax-reveal":"wax-seal",
+                "curtain-reveal":"curtain","ribbon-reveal":"ribbon","door-reveal":"door","wood-door-reveal":"wood-door",
+                "starry-reveal":"starry-night","celebration-reveal":"celebration-pop","candlelight-reveal":"candlelight",
+                "winter-reveal":"winter-drift","royal-reveal":"royal-scroll","typewriter-reveal":"typewriter",
+                "magic-reveal":"magic-wand","glow-door":"glowing-door","forest-walk":"ancient-forest","book-reveal":"old-book"
+            };
+            var _resolvedOpen = _aliasOpen[_rawOpen] || _rawOpen || "";
+            if (_resolvedOpen) {
+                document.documentElement.setAttribute("data-opening", _resolvedOpen);
+                /* Activate the scene immediately (mirrors lunaEarlySceneActivate) */
+                var _sceneIds = {
+                    "wax-seal":"waxSealScene","curtain":"curtainScene","floral-paper":"floralScene",
+                    "luxury-romance":"silkScene","celebration-pop":"fiestaScene","starry-night":"starryScene",
+                    "typewriter":"typewriterScene","candlelight":"candlelightScene","winter-drift":"winterScene",
+                    "royal-scroll":"royalScrollScene","door":"doorScene","stairs":"stairsScene",
+                    "envelope-seal":"envSealScene","ribbon":"ribbonScene","wood-door":"woodDoorScene",
+                    "magic-wand":"magicWandScene","glowing-door":"glowingDoorScene","ancient-forest":"ancientForestScene",
+                    "old-book":"oldBookScene","golden-ring":"goldRingScene","origami-lotus":"lotusScene",
+                    "card-unfolds":"cardUnfoldScene","flowers-bloom":"bloomScene","butterfly":"butterflyScene",
+                    "gold-sparkles":"goldSparkleScene","polaroid":"polaroidScene","champagne":"champagneScene",
+                    "confetti":"confettiScene","card-3d":"rotateScene","light-sweep":"lightSweepScene"
+                };
+                var _sid = _sceneIds[_resolvedOpen];
+                if (_sid) {
+                    var _envS = document.querySelector(".envelope-scene");
+                    if (_envS) _envS.style.display = "none";
+                    var _sc = document.getElementById(_sid);
+                    if (_sc) { _sc.style.display = ""; _sc.classList.add("active"); }
+                }
+            }
+        }
+        var _opImg = (invitation.scrollHeroImage || invitation.cover || invitation.photoInvitation) || "";
+        if (_opImg) {
+            var _opEl = document.getElementById("opening");
+            if (_opEl) {
+                _opEl.style.backgroundImage = "linear-gradient(rgba(255,248,241,.10), rgba(255,248,241,.10)), url('" + _opImg + "')";
+                _opEl.style.backgroundSize = "cover";
+                _opEl.style.backgroundPosition = "center";
+            }
+        }
+    } catch (eRe) {}
+}
 
 
 /* =====================================================
