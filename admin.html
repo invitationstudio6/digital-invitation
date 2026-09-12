@@ -98,6 +98,13 @@ body{
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
 .field{display:flex;flex-direction:column;gap:6px;}
 .field.full{grid-column:1/-1;}
+.gallery-toggle{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.4px;text-transform:none;color:#cbb7a6;cursor:pointer;margin-top:4px;}
+.gallery-toggle input{width:auto;accent-color:#d4af37;}
+.gallery-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.gallery-preview .gp-item{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);}
+.gallery-preview .gp-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.gallery-preview .gp-item .gp-rm{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:11px;line-height:1;cursor:pointer;display:grid;place-items:center;}
+.gallery-preview .gp-item .gp-rm:hover{background:#c0392b;}
 label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#b99583;}
 input,select,textarea{
     width:100%;
@@ -541,6 +548,17 @@ input,select,textarea{max-width:100%;}
     .modal-box{max-width:100%;margin:0;border-radius:12px;}
 }
 </style>
+<style>
+    .rsvp-list-body{max-height:60vh;overflow:auto;display:flex;flex-direction:column;gap:10px;}
+    .rsvp-row{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;}
+    .rsvp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+    .rsvp-head strong{font-size:13px;}
+    .rsvp-status{font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(184,140,118,.15);color:#e4c3a8;}
+    .rsvp-msg{margin-top:8px;font-size:11px;color:#b8a493;font-style:italic;border-left:2px solid rgba(184,140,118,.4);padding-left:10px;}
+    .rsvp-time{margin-top:8px;font-size:9px;color:#6f5f55;text-transform:uppercase;letter-spacing:.5px;}
+    .rsvp-list-body .empty{text-align:center;padding:40px;color:#8a7a70;font-size:12px;}
+    .couple-access-msg{min-height:18px;font-size:12px;color:#b88c76;margin-top:12px;}
+</style>
 </head>
 
 <body>
@@ -605,7 +623,7 @@ input,select,textarea{max-width:100%;}
         </a>
     </nav>
     <div class="sidebar-bottom">
-        <button id="syncChip" class="sync-chip" onclick="onSyncChipClick()" title="Bulud sinxronizasiya">
+        <button type="button" id="syncChip" class="sync-chip" onclick="onSyncChipClick()" title="Bulud sinxronizasiya">
             <span id="syncDot"></span><span id="syncLabel">Lokal rejim</span>
         </button>
         <a href="client-form.html" target="_blank" class="sidebar-link">
@@ -624,7 +642,7 @@ input,select,textarea{max-width:100%;}
     <div class="modal-box sync-login-box">
         <div class="modal-header">
             <h3>Bulud Girişi</h3>
-            <button class="modal-close" onclick="closeSyncLogin()">×</button>
+            <button type="button" class="modal-close" onclick="closeSyncLogin()">×</button>
         </div>
         <p style="font-size:11px;color:#ad8c7d;margin-bottom:16px;">
             Sinxronizasiya üçün Supabase hesabına daxil ol.
@@ -643,11 +661,11 @@ input,select,textarea{max-width:100%;}
 <!-- Əməliyyat Jurnalı (Audit Log) modalı -->
 <div id="auditLogModal" class="modal-overlay">
     <div class="modal" style="max-width:min(760px,100vw - 32px);">
-        <button class="modal-close" onclick="closeModal('auditLogModal')">×</button>
+        <button type="button" class="modal-close" onclick="closeModal('auditLogModal')">×</button>
         <h2>📋 Əməliyyat Jurnalı</h2>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
             <span id="auditCount" style="font-size:11px;color:rgba(255,255,255,.45);"></span>
-            <button class="tb-btn danger" onclick="clearAuditLog()">📌 Jurnalı təmizlə</button>
+            <button type="button" class="tb-btn danger" onclick="clearAuditLog()">📌 Jurnalı təmizlə</button>
         </div>
         <div id="auditList" style="max-height:60vh;overflow-y:auto;"></div>
     </div>
@@ -656,7 +674,7 @@ input,select,textarea{max-width:100%;}
 <!-- Hesabat modalı (təhlil) -->
 <div id="reportModal" class="modal-overlay">
     <div class="modal" style="max-width:min(820px,100vw - 32px);">
-        <button class="modal-close" onclick="closeModal('reportModal')">×</button>
+        <button type="button" class="modal-close" onclick="closeModal('reportModal')">×</button>
         <h2 id="reportTitle">Hesabat</h2>
         <div id="reportBody"></div>
     </div>
@@ -672,7 +690,7 @@ input,select,textarea{max-width:100%;}
 
 <!-- Əmr palitrası sürətli düyməsi -->
 <div style="position:fixed;bottom:24px;right:24px;z-index:150;">
-    <button onclick="openCmdPalette()" title="Əmr palitrası (⌘K)" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#b88c76,#d4af37);border:none;color:#17120f;font-size:22px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);display:grid;place-items:center;">⌘</button>
+    <button type="button" onclick="openCmdPalette()" title="Əmr palitrası (⌘K)" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#b88c76,#d4af37);border:none;color:#17120f;font-size:22px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);display:grid;place-items:center;">⌘</button>
 </div>
 <div class="kbd-hint" id="kbdHint"><kbd>⌘</kbd> <kbd>K</kbd> Əmr palitrası aç</div>
 
@@ -688,9 +706,9 @@ input,select,textarea{max-width:100%;}
     </div>
 
     <div class="quickstart">
-        <button onclick="switchSection('templates');openAddTemplate();">➕ Yeni Dizayn<small>Şablon yarat, ana səhifəyə yayımla</small></button>
-        <button onclick="switchSection('orders')">📥 Gələn Sifarişlər<small>Müştəri formalarından yeni sifarişlər</small></button>
-        <button onclick="switchSection('createinv')">✉️ Müştəriyə Dəvət Yarat<small>Dizayn seç, məlumatları daxil et, linki paylaş</small></button>
+        <button type="button" onclick="switchSection('templates');openAddTemplate();">➕ Yeni Dizayn<small>Şablon yarat, ana səhifəyə yayımla</small></button>
+        <button type="button" onclick="switchSection('orders')">📥 Gələn Sifarişlər<small>Müştəri formalarından yeni sifarişlər</small></button>
+        <button type="button" onclick="switchSection('createinv')">✉️ Müştəriyə Dəvət Yarat<small>Dizayn seç, məlumatları daxil et, linki paylaş</small></button>
     </div>
 
     <div class="stats-grid" id="statsGrid">
@@ -709,9 +727,9 @@ input,select,textarea{max-width:100%;}
             <h2>Tez Əməliyyatlar</h2>
             <div class="quick-actions">
                 <a href="client-form.html">+ Müştəri</a>
-                <button onclick="switchSection('designs')">+ Dizayn</button>
-                <button onclick="switchSection('videos')">+ Video</button>
-                <button onclick="switchSection('client-invitations')">+ Müştəri Dizaynı</button>
+                <button type="button" onclick="switchSection('designs')">+ Dizayn</button>
+                <button type="button" onclick="switchSection('videos')">+ Video</button>
+                <button type="button" onclick="switchSection('client-invitations')">+ Müştəri Dizaynı</button>
             </div>
             <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">
                 <div style="font-size:11px;margin-bottom:10px;color:#b88c76;">Sifariş Formunu Doldurulmuş Aç</div>
@@ -720,7 +738,7 @@ input,select,textarea{max-width:100%;}
                     <select id="qfPackage" style="padding:8px;font-size:11px;"><option value="video">Video</option><option value="basic">Basic</option><option value="premium" selected>Premium</option><option value="luxury">Luxury</option></select>
                 </div>
                 <select id="qfDesign" style="width:100%;padding:8px;font-size:11px;margin-bottom:10px;"></select>
-                <button class="save" style="width:100%;" onclick="openPrefilledForm()">Formu Aç →</button>
+                <button type="button" class="save" style="width:100%;" onclick="openPrefilledForm()">Formu Aç →</button>
             </div>
             <div style="margin-top:25px;">
                 <h2 style="margin-bottom:15px;">Kateqoriyalar</h2>
@@ -736,50 +754,50 @@ input,select,textarea{max-width:100%;}
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📦 Toplu Əməliyyatlar</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="bulkAssignDesigns()" style="padding:12px;font-size:11px;">Bütün müştərilərə eyni dizayn təyin et</button>
-                    <button class="save" onclick="bulkUpdatePackage()" style="padding:12px;font-size:11px;background:#6a9c89;">Paketləri toplu yenilə</button>
-                    <button class="clear" onclick="exportAllClientsCSV()" style="padding:12px;font-size:11px;">Müştəri siyahısını CSV endir</button>
-                    <button class="clear" onclick="exportAllDesignsCSV()" style="padding:12px;font-size:11px;">Dizayn siyahısını CSV endir</button>
+                    <button type="button" class="save" onclick="bulkAssignDesigns()" style="padding:12px;font-size:11px;">Bütün müştərilərə eyni dizayn təyin et</button>
+                    <button type="button" class="save" onclick="bulkUpdatePackage()" style="padding:12px;font-size:11px;background:#6a9c89;">Paketləri toplu yenilə</button>
+                    <button type="button" class="clear" onclick="exportAllClientsCSV()" style="padding:12px;font-size:11px;">Müştəri siyahısını CSV endir</button>
+                    <button type="button" class="clear" onclick="exportAllDesignsCSV()" style="padding:12px;font-size:11px;">Dizayn siyahısını CSV endir</button>
                 </div>
             </div>
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">🔗 Link Alətləri</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="generateAllLinks()" style="padding:12px;font-size:11px;">Bütün müştərilər üçün link yarad</button>
-                    <button class="save" onclick="openWhatsAppBulk()" style="padding:12px;font-size:11px;background:#25D366;">WhatsApp-da toplu paylaş</button>
-                    <button class="clear" onclick="copyAllLinks()" style="padding:12px;font-size:11px;">Bütün linkləri kopyala</button>
+                    <button type="button" class="save" onclick="generateAllLinks()" style="padding:12px;font-size:11px;">Bütün müştərilər üçün link yarad</button>
+                    <button type="button" class="save" onclick="openWhatsAppBulk()" style="padding:12px;font-size:11px;background:#25D366;">WhatsApp-da toplu paylaş</button>
+                    <button type="button" class="clear" onclick="copyAllLinks()" style="padding:12px;font-size:11px;">Bütün linkləri kopyala</button>
                 </div>
             </div>
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">🎨 Dizayn Yönetimi</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="duplicateDesign()" style="padding:12px;font-size:11px;">Seçili dizaynı kopyala</button>
-                    <button class="save" onclick="createDesignFromTemplate()" style="padding:12px;font-size:11px;background:#8a6ec9;">Şablondan yeni dizayn yarat</button>
-                    <button class="clear" onclick="bulkDeleteUnusedDesigns()" style="padding:12px;font-size:11px;">İstifadə olunmayan dizaynları sil</button>
+                    <button type="button" class="save" onclick="duplicateDesign()" style="padding:12px;font-size:11px;">Seçili dizaynı kopyala</button>
+                    <button type="button" class="save" onclick="createDesignFromTemplate()" style="padding:12px;font-size:11px;background:#8a6ec9;">Şablondan yeni dizayn yarat</button>
+                    <button type="button" class="clear" onclick="bulkDeleteUnusedDesigns()" style="padding:12px;font-size:11px;">İstifadə olunmayan dizaynları sil</button>
                 </div>
             </div>
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📊 Təhlil & Hesabatlar</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="showRevenueReport()" style="padding:12px;font-size:11px;">Gəlir hesabatı</button>
-                    <button class="save" onclick="showConversionReport()" style="padding:12px;font-size:11px;background:#c97d6a;">Konversiya analizi</button>
-                    <button class="clear" onclick="showPopularDesigns()" style="padding:12px;font-size:11px;">Ən populyar dizaynlar</button>
+                    <button type="button" class="save" onclick="showRevenueReport()" style="padding:12px;font-size:11px;">Gəlir hesabatı</button>
+                    <button type="button" class="save" onclick="showConversionReport()" style="padding:12px;font-size:11px;background:#c97d6a;">Konversiya analizi</button>
+                    <button type="button" class="clear" onclick="showPopularDesigns()" style="padding:12px;font-size:11px;">Ən populyar dizaynlar</button>
                 </div>
             </div>
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">💾 Ehtiyat Nüsxə & Audit</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="lunaExportAll()" style="padding:12px;font-size:11px;background:#6a9c89;">📤 Bütün məlumatları ehtiyat nüsxə (JSON)</button>
-                    <button class="save" onclick="lunaImportAllTrigger()" style="padding:12px;font-size:11px;background:#8a6ec9;">📥 Ehtiyat nüsxəni bərpa et (import)</button>
-                    <button class="save" onclick="openAuditLog()" style="padding:12px;font-size:11px;background:#5a7ba8;">📋 Əməliyyat jurnalı (audit log)</button>
-                    <button class="clear" onclick="lunaDeleteAllCustomers()" style="padding:12px;font-size:11px;">🗑 Bütün müştəriləri sil</button>
+                    <button type="button" class="save" onclick="lunaExportAll()" style="padding:12px;font-size:11px;background:#6a9c89;">📤 Bütün məlumatları ehtiyat nüsxə (JSON)</button>
+                    <button type="button" class="save" onclick="lunaImportAllTrigger()" style="padding:12px;font-size:11px;background:#8a6ec9;">📥 Ehtiyat nüsxəni bərpa et (import)</button>
+                    <button type="button" class="save" onclick="openAuditLog()" style="padding:12px;font-size:11px;background:#5a7ba8;">📋 Əməliyyat jurnalı (audit log)</button>
+                    <button type="button" class="clear" onclick="lunaDeleteAllCustomers()" style="padding:12px;font-size:11px;">🗑 Bütün müştəriləri sil</button>
                 </div>
             </div>
             <div style="padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;">
                 <h4 style="color:#b88c76;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:18px;">📤 İxrac Alətləri</h4>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <button class="save" onclick="lunaExportCustomersCsv()" style="padding:12px;font-size:11px;">Müştəriləri CSV endir (genişləndirilmiş)</button>
-                    <button class="clear" onclick="openLinkedinShare()" style="padding:12px;font-size:11px;">Açıq linkləri gör</button>
+                    <button type="button" class="save" onclick="lunaExportCustomersCsv()" style="padding:12px;font-size:11px;">Müştəriləri CSV endir (genişləndirilmiş)</button>
+                    <button type="button" class="clear" onclick="openLinkedinShare()" style="padding:12px;font-size:11px;">Açıq linkləri gör</button>
                 </div>
             </div>
         </div>
@@ -795,7 +813,7 @@ input,select,textarea{max-width:100%;}
         </div>
         <div class="header-actions">
             <input type="text" class="search-bar" id="customerSearch" placeholder="Axtarış..." oninput="renderCustomers()">
-            <button class="tb-btn" onclick="openCmdPalette()" title="Əmr palitrası">⌘ Əmrlər</button>
+            <button type="button" class="tb-btn" onclick="openCmdPalette()" title="Əmr palitrası">⌘ Əmrlər</button>
             <a href="client-form.html" class="save" style="padding:12px 22px;font-size:8px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;">+ Yeni Müştəri</a>
         </div>
     </div>
@@ -803,10 +821,10 @@ input,select,textarea{max-width:100%;}
         <label style="display:inline-flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;">
             <input type="checkbox" id="customerSelectAll" onchange="toggleSelectAllCustomers(this.checked)"> Hamısını seç
         </label>
-        <button class="tb-btn success" onclick="bulkSendLink()">📤 Link göndər</button>
-        <button class="tb-btn" onclick="bulkAssignDesign2()">🎨 Dizayn təyin et</button>
-        <button class="tb-btn" onclick="bulkExportSelected()">📄 CSV endir</button>
-        <button class="tb-btn danger" onclick="bulkDeleteSelected()">🗑 Sil</button>
+        <button type="button" class="tb-btn success" onclick="bulkSendLink()">📤 Link göndər</button>
+        <button type="button" class="tb-btn" onclick="bulkAssignDesign2()">🎨 Dizayn təyin et</button>
+        <button type="button" class="tb-btn" onclick="bulkExportSelected()">📄 CSV endir</button>
+        <button type="button" class="tb-btn danger" onclick="bulkDeleteSelected()">🗑 Sil</button>
         <span id="customerSelCount" style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.5);"></span>
     </div>
     <div class="panel">
@@ -905,7 +923,7 @@ input,select,textarea{max-width:100%;}
             <h1>Kateqoriya Örtükləri</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="saveCatPreviews()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="saveCatPreviews()">Yadda Saxla</button>
         </div>
     </div>
 
@@ -1054,7 +1072,7 @@ input,select,textarea{max-width:100%;}
             <h1>Dəvətnamə Dekoru</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="saveInvitationTheme()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="saveInvitationTheme()">Yadda Saxla</button>
         </div>
     </div>
     <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştərilərin alaçağı dəvətnamə səhifəsini dekorlaşdırın: rənglər, şrift, künclər və atmosfer animasiyaları. Bütün dəvətnamələrə avtomatik tətbiq olunur.</p>
@@ -1103,7 +1121,7 @@ input,select,textarea{max-width:100%;}
                         <button type="button" onclick="setInvWax('#2C4A6E')" title="Lacivərd" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:#2C4A6E;cursor:pointer;"></button>
                         <button type="button" onclick="setInvWax('#26211E')" title="Qara" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:#26211E;cursor:pointer;"></button>
                         <button type="button" onclick="setInvWax('#D98BA3')" title="Çəhrayı" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:#D98BA3;cursor:pointer;"></button>
-                        <button type="button" onclick="setInvWax('#7C5CA8')" title="Bənövşəyi" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:#7C5CA8;cursor:pointer;"></button>
+                        <button type="button" onclick="setInvWax('#7C5CA8')" title="Bənövşəyi" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:#7C5CA8;cursor:pointer;"><span style="display:none">Bənövşəyi</span></button>
                     </div>
                     <input id="invWaxColor" type="color" value="#B04A3A" onchange="setInvWax(this.value)" style="width:44px;height:34px;padding:2px;border:1px solid rgba(255,255,255,.15);background:none;cursor:pointer;">
                 </div>
@@ -1139,7 +1157,7 @@ input,select,textarea{max-width:100%;}
             <h1>Şablonlar</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="openAddTemplate()">+ Yeni Şablon</button>
+            <button type="button" class="save" onclick="openAddTemplate()">+ Yeni Şablon</button>
         </div>
     </div>
 
@@ -1170,7 +1188,7 @@ input,select,textarea{max-width:100%;}
             <h1>Dəvətnamə Yarat</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="saveCreatedInvitation()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="saveCreatedInvitation()">Yadda Saxla</button>
         </div>
     </div>
 
@@ -1246,7 +1264,7 @@ input,select,textarea{max-width:100%;}
             <h1>Müştəri Dəvətnamələri</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="openAssignDesignModal()">+ Dizayn Təyin Et</button>
+            <button type="button" class="save" onclick="openAssignDesignModal()">+ Dizayn Təyin Et</button>
         </div>
     </div>
 
@@ -1263,7 +1281,7 @@ input,select,textarea{max-width:100%;}
     </div>
 
     <div class="panel">
-        <h2>Dizayn Hazırla & Təyin Et (Sürətli)</h2>
+        <h2>Dizayn Hazırla &amp; Təyin Et (Sürətli)</h2>
         <p style="color:#ad8c7d;font-size:10px;margin-bottom:20px;">Yeni bir dizayn yaradın və eyni anda müştəriye təyin edin.</p>
         <form id="quickDesignAssignForm">
             <div class="form-grid">
@@ -1271,7 +1289,7 @@ input,select,textarea{max-width:100%;}
                 <div class="field"><label>Kateqoriya</label><select id="qdCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Paket</label><select id="qdPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
                 <div class="field"><label>Animasiya Növü</label><select id="qdAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
-                <div class="field"><label>Örtük Şəkli</label><div class="file-box"><input id="qdCover" type="file" accept="image/*" required><img id="qdCoverPreview" class="preview-image"></div></div>
+                <div class="field"><label>Örtük Şəkli</label><div class="file-box"><input id="qdCover" type="file" accept="image/*" required><img id="qdCoverPreview" class="preview-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""></div></div>
                 <div class="field full"><label>Müştəri Seç</label><select id="qdClientSelect" required><option value="">— Müştəri seçin —</option></select></div>
             </div>
             <div class="button-row">
@@ -1287,10 +1305,10 @@ input,select,textarea{max-width:100%;}
     <div class="header">
         <div class="page-title">
             <small>Luna Studio</small>
-            <h1>Paketlər & Qiymətlər</h1>
+            <h1>Paketlər &amp; Qiymətlər</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="savePackagesConfig()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="savePackagesConfig()">Yadda Saxla</button>
         </div>
     </div>
 
@@ -1340,7 +1358,7 @@ input,select,textarea{max-width:100%;}
             <h1>Form Redaktə</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="saveFormConfig()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="saveFormConfig()">Yadda Saxla</button>
         </div>
     </div>
 
@@ -1368,7 +1386,7 @@ input,select,textarea{max-width:100%;}
     </div>
 
     <div class="panel">
-        <h2>Göndər Düyməsi & Uğur Mesajı</h2>
+        <h2>Göndər Düyməsi &amp; Uğur Mesajı</h2>
         <div class="form-grid">
             <div class="field"><label>Göndər düyməsi (AZ)</label><input id="submitBtnAz" type="text" placeholder="Göndər"></div>
             <div class="field"><label>Göndər düyməsi (EN)</label><input id="submitBtnEn" type="text" placeholder="Send"></div>
@@ -1430,7 +1448,7 @@ input,select,textarea{max-width:100%;}
             <h1>Sifarişlər</h1>
         </div>
         <div class="header-actions">
-            <button onclick="refreshOrders()">↻ Yenilə</button>
+            <button type="button" onclick="refreshOrders()">↻ Yenilə</button>
         </div>
     </div>
     <p style="color:#ad8c7d;font-size:11px;margin-bottom:18px;">Müştəri formadan gələn bütün sifarişlər. Hazırladıqdan sonra görüntü (GR) əlavə edin, link yaradın və WhatsApp mesajı ilə göndərin.</p>
@@ -1445,7 +1463,7 @@ input,select,textarea{max-width:100%;}
             <h1>Ana Səhifə Redaktə</h1>
         </div>
         <div class="header-actions">
-            <button class="save" onclick="saveHomepageConfig()">Yadda Saxla</button>
+            <button type="button" class="save" onclick="saveHomepageConfig()">Yadda Saxla</button>
         </div>
     </div>
 
@@ -1511,7 +1529,7 @@ input,select,textarea{max-width:100%;}
             <button type="button" onclick="applyPalette('#B76E79','#F9EFED',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#B76E79;display:inline-block;"></span>Rose Gold</button>
             <button type="button" onclick="applyPalette('#3F7A5D','#EEF4F0',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#3F7A5D;display:inline-block;"></span>Emerald</button>
             <button type="button" onclick="applyPalette('#2C4A6E','#EDF1F6',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#2C4A6E;display:inline-block;"></span>Sapphire</button>
-            <button type="button" onclick="applyPalette('#D4AF37','#161311',true)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#D4AF37,#161311);display:inline-block;"></span>Noir & Gold</button>
+            <button type="button" onclick="applyPalette('#D4AF37','#161311',true)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#D4AF37,#161311);display:inline-block;"></span>Noir &amp; Gold</button>
             <button type="button" onclick="applyPalette('#9C6B9E','#F6EFF7',false)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:10px;cursor:pointer;"><span style="width:14px;height:14px;border-radius:50%;background:#9C6B9E;display:inline-block;"></span>Lavender Luxe</button>
         </div>
         <p style="color:rgba(255,255,255,.35);font-size:9px;">Palitra seçimi rəng sahələrini avtomatik doldurur — sonra "Yadda Saxla" basın.</p>
@@ -1566,7 +1584,7 @@ input,select,textarea{max-width:100%;}
             </div>
         </div>
 
-        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Effektlər & Toxunuşlar</h3>
+        <h3 style="font-family:Cormorant Garamond,serif;font-size:15px;font-style:italic;margin:22px 0 10px;">Effektlər &amp; Toxunuşlar</h3>
         <div class="form-grid">
             <div class="field"><label>Fon naxışı</label><select id="homePattern">
                 <option value="">Yoxdur</option>
@@ -1613,17 +1631,17 @@ input,select,textarea{max-width:100%;}
     <div class="panel">
         <h2>Dil Seçimi</h2>
         <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-            <button data-lang="az" class="save" onclick="lunaSetLanguage('az');location.reload();">Azərbaycanca</button>
-            <button data-lang="en" class="clear" onclick="lunaSetLanguage('en');location.reload();">English</button>
-            <button data-lang="ru" class="clear" onclick="lunaSetLanguage('ru');location.reload();">Русский</button>
-            <button data-lang="tr" class="clear" onclick="lunaSetLanguage('tr');location.reload();">Türkçe</button>
+            <button type="button" data-lang="az" class="save" onclick="lunaSetLanguage('az');location.reload();">Azərbaycanca</button>
+            <button type="button" data-lang="en" class="clear" onclick="lunaSetLanguage('en');location.reload();">English</button>
+            <button type="button" data-lang="ru" class="clear" onclick="lunaSetLanguage('ru');location.reload();">Русский</button>
+            <button type="button" data-lang="tr" class="clear" onclick="lunaSetLanguage('tr');location.reload();">Türkçe</button>
         </div>
     </div>
     <div class="panel">
-        <h2>Yedekləmə & Bərpa</h2>
+        <h2>Yedekləmə &amp; Bərpa</h2>
         <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:20px;">Bütün məlumatları (dizaynlar, şablonlar, müştərilər, qiymətlər, konfiqurasiyalar) JSON faylı kimi endirin və ya əvvəlki yedekdən bərpa edin.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="save" onclick="exportLunaBackup()">Yedek Endir</button>
+            <button type="button" class="save" onclick="exportLunaBackup()">Yedek Endir</button>
             <label class="clear" style="padding:10px 20px;border:1px solid rgba(255,255,255,.15);cursor:pointer;">Bərpa Et<input type="file" accept=".json" onchange="importLunaBackup(this)" style="display:none;"></label>
         </div>
     </div>
@@ -1644,7 +1662,7 @@ input,select,textarea{max-width:100%;}
     <div class="panel">
         <h2>Bütün Məlumatları Sil</h2>
         <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:20px;">Bu əməliyyat bütün localStorage məlumatlarını siləcək. Bu geri alınamaz.</p>
-        <button class="delete" onclick="clearAllData()" style="padding:12px 22px;">Bütün Məlumatları Sil</button>
+        <button type="button" class="delete" onclick="clearAllData()" style="padding:12px 22px;">Bütün Məlumatları Sil</button>
     </div>
 </div>
 
@@ -1652,7 +1670,7 @@ input,select,textarea{max-width:100%;}
 
 <div class="modal-overlay" id="editDesignModal">
     <div class="modal">
-        <button class="modal-close" onclick="closeModal('editDesignModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('editDesignModal')">&times;</button>
         <h2>Dizaynı Redaktə Et</h2>
         <form id="editDesignForm">
             <input type="hidden" id="editDesignId">
@@ -1677,7 +1695,7 @@ input,select,textarea{max-width:100%;}
 
 <div class="modal-overlay" id="editVideoModal">
     <div class="modal">
-        <button class="modal-close" onclick="closeModal('editVideoModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('editVideoModal')">&times;</button>
         <h2>Video Redaktə Et</h2>
         <form id="editVideoForm">
             <input type="hidden" id="editVideoId">
@@ -1687,7 +1705,7 @@ input,select,textarea{max-width:100%;}
                 <div class="field"><label>Təsvir</label><input id="editVideoDescription" type="text"></div>
                 <div class="field"><label>Qiymət</label><input id="editVideoPrice" type="number"></div>
                 <div class="field full"><label>Video yüklə və ya link ver</label>
-                    <label class="vid-drop" for="editVideoFileInput" style="min-height:80px">
+                    <label class="vid-drop" style="min-height:80px">
                         <input id="editVideoFileInput" type="file" accept="video/*" style="display:none" onchange="readUploadTo(this,'editVideoUrl','editVideoFilePreview','video')">
                         <span class="vid-drop-ico">🎬</span><span>Yeni video faylı seç</span>
                     </label>
@@ -1695,11 +1713,11 @@ input,select,textarea{max-width:100%;}
                     <input id="editVideoUrl" type="text" style="margin-top:8px">
                 </div>
                 <div class="field full"><label>Örtük şəkli</label>
-                    <label class="vid-drop" for="editVideoCoverInput" style="min-height:70px">
+                    <label class="vid-drop" style="min-height:70px">
                         <input id="editVideoCoverInput" type="file" accept="image/*" style="display:none" onchange="readUploadTo(this,'editVideoThumb','editVideoCoverPreview','image')">
                         <span class="vid-drop-ico">🖼</span><span>Yeni örtük şəkli seç</span>
                     </label>
-                    <img id="editVideoCoverPreview" alt="" style="display:none;width:100%;border-radius:8px;margin-top:8px;max-height:140px;object-fit:cover">
+                    <img id="editVideoCoverPreview" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" style="display:none;width:100%;border-radius:8px;margin-top:8px;max-height:140px;object-fit:cover">
                     <input id="editVideoThumb" type="text" style="margin-top:8px">
                 </div>
                 <div class="field"><label>Dil</label><select id="editVideoLang"><option value="az">Azərbaycanca</option><option value="en">English</option><option value="ru">Русский</option><option value="tr">Türkçe</option></select></div>
@@ -1717,7 +1735,7 @@ input,select,textarea{max-width:100%;}
 
 <div class="modal-overlay" id="editInvitationModal">
     <div class="modal" style="max-width:750px;">
-        <button class="modal-close" onclick="closeModal('editInvitationModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('editInvitationModal')">&times;</button>
         <h2>Dəvətnaməni Redaktə Et</h2>
         <form id="editInvitationForm">
             <input type="hidden" id="editInvId">
@@ -1735,7 +1753,12 @@ input,select,textarea{max-width:100%;}
                 <div class="field full"><label>Google Maps linki</label><input id="efMap" type="url" placeholder="https://maps.google.com/?q=..."></div>
                 <div class="field full"><label>Mesaj</label><textarea id="efMessage" rows="2"></textarea></div>
                 <div class="field full"><label>Hekayə (Story)</label><textarea id="efStory" rows="3"></textarea></div>
-                <div class="field full"><label>Qalereya şəkilləri (hər sətirdə bir URL)</label><textarea id="efImages" rows="3" placeholder="https://..."></textarea></div>
+                <div class="field full">
+                    <label>Qalereya şəkilləri (hər sətirdə bir URL)</label>
+                    <textarea id="efImages" rows="3" placeholder="https://..."></textarea>
+                    <label class="gallery-toggle"><input type="checkbox" id="efGalleryEnabled" checked> Qalereyanı dəvətnamədə göstər</label>
+                    <div class="gallery-preview" id="efGalleryPreview"></div>
+                </div>
                 <div class="field full"><label>Hero / qapaq şəkli URL</label><input id="efCover" type="url" placeholder="https://..."></div>
                 <div class="field full"><label>Scroll hero şəkli URL</label><input id="efScrollHero" type="url" placeholder="https://..."></div>
                 <div class="field full"><label>Musiqi (URL)</label><input id="efMusic" type="url" placeholder="https://... mp3"></div>
@@ -1755,7 +1778,7 @@ input,select,textarea{max-width:100%;}
 <!-- Template Modal (Add/Edit) -->
 <div class="modal-overlay" id="templateModal">
     <div class="modal" style="max-width:750px;">
-        <button class="modal-close" onclick="closeModal('templateModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('templateModal')">&times;</button>
         <h2 id="templateModalTitle">Yeni Şablon Əlavə Et</h2>
         <form id="templateForm">
             <input type="hidden" id="templateEditId">
@@ -1824,7 +1847,7 @@ input,select,textarea{max-width:100%;}
 <!-- Assign Design Modal -->
 <div class="modal-overlay" id="assignDesignModal">
     <div class="modal">
-        <button class="modal-close" onclick="closeModal('assignDesignModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('assignDesignModal')">&times;</button>
         <h2>Müştəriyə Dizayn Təyin Et</h2>
         <form id="assignDesignForm">
             <div class="form-grid">
@@ -1834,7 +1857,7 @@ input,select,textarea{max-width:100%;}
                 <div class="field"><label>Kateqoriya (yeni üçün)</label><select id="adNewCategory"><option value="wedding">Toy</option><option value="engagement">Nişan</option><option value="henna">Xına</option><option value="birthday">Ad Günü</option><option value="graduation">Məzuniyyət</option><option value="baby-shower">Körpə Partisi</option><option value="business">Biznes</option><option value="other">Digər</option></select></div>
                 <div class="field"><label>Paket (yeni üçün)</label><select id="adNewPackage"><option value="basic">Basic</option><option value="premium">Premium</option><option value="luxury">Luxury</option></select></div>
                 <div class="field"><label>Animasiya (yeni üçün)</label><select id="adNewAnimation"><option value="">— Standart —</option><option value="envelope">Zərf Açılışı</option><option value="wax-seal">Mum Möhürü 🔴</option><option value="curtain">Teatr Pərdəsi 🎭</option><option value="floral-paper">Çiçəkli Kağız 🌸</option><option value="luxury-romance">Lüks İpək 💎</option><option value="celebration-pop">Konfeti Partisi 🎉</option><option value="starry-night">Ulduzlu Gecə ✨</option><option value="typewriter">Daxilçeci Mashini 📝</option><option value="candlelight">Şamdan Işığı 🕯</option><option value="winter-drift">Qış Karlığı ❄</option><option value="royal-scroll">Şahi Dövrə 📜</option><option value="door">Qapı Açılışı</option><option value="stairs">Pilləkən</option><option value="fullscreen-photo">Tam Ekran Foto</option><option value="editorial-card">Editorial Kart</option><option value="minimal">Minimal</option></select></div>
-                <div class="field full"><label>Örtük Şəkli (yeni üçün)</label><div class="file-box"><input id="adNewCover" type="file" accept="image/*"><img id="adNewCoverPreview" class="preview-image"></div></div>
+                <div class="field full"><label>Örtük Şəkli (yeni üçün)</label><div class="file-box"><input id="adNewCover" type="file" accept="image/*"><img id="adNewCoverPreview" class="preview-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""></div></div>
             </div>
             <div class="button-row">
                 <button type="submit" class="save">Təyin Et</button>
@@ -1846,7 +1869,7 @@ input,select,textarea{max-width:100%;}
 
 <div class="modal-overlay" id="rsvpListModal">
     <div class="modal" style="max-width:760px;">
-        <button class="modal-close" onclick="closeModal('rsvpListModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('rsvpListModal')">&times;</button>
         <h2 id="rsvpListTitle">RSVP-lər</h2>
         <div id="rsvpListBody" class="rsvp-list-body"></div>
     </div>
@@ -1854,7 +1877,7 @@ input,select,textarea{max-width:100%;}
 
 <div class="modal-overlay" id="coupleAccessModal">
     <div class="modal" style="max-width:520px;">
-        <button class="modal-close" onclick="closeModal('coupleAccessModal')">&times;</button>
+        <button type="button" class="modal-close" onclick="closeModal('coupleAccessModal')">&times;</button>
         <h2 id="coupleAccessTitle">Cütlük Girişi</h2>
         <p style="font-size:12px;color:#b8a493;margin-bottom:16px;">
             Klientin e-mailini təyin et — o, yalnız öz dəvətnaməsinin RSVP siyahısını görə biləcək (qonaqlar heç nə görmür).
@@ -1868,23 +1891,11 @@ input,select,textarea{max-width:100%;}
             <div style="display:flex;gap:10px;margin-top:16px;align-items:center;">
                 <button class="save" id="coupleAccessSaveBtn" type="button">Saxla</button>
                 <button class="delete" id="coupleAccessClearBtn" type="button" style="display:none;">Sil</button>
-                <button class="copy-btn" onclick="closeModal('coupleAccessModal')" style="margin-left:auto;">Bağla</button>
+                <button type="button" class="copy-btn" onclick="closeModal('coupleAccessModal')" style="margin-left:auto;">Bağla</button>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .rsvp-list-body{max-height:60vh;overflow:auto;display:flex;flex-direction:column;gap:10px;}
-    .rsvp-row{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;}
-    .rsvp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-    .rsvp-head strong{font-size:13px;}
-    .rsvp-status{font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(184,140,118,.15);color:#e4c3a8;}
-    .rsvp-msg{margin-top:8px;font-size:11px;color:#b8a493;font-style:italic;border-left:2px solid rgba(184,140,118,.4);padding-left:10px;}
-    .rsvp-time{margin-top:8px;font-size:9px;color:#6f5f55;text-transform:uppercase;letter-spacing:.5px;}
-    .rsvp-list-body .empty{text-align:center;padding:40px;color:#8a7a70;font-size:12px;}
-    .couple-access-msg{min-height:18px;font-size:12px;color:#b88c76;margin-top:12px;}
-</style>
 
 <script src="data/luna.js?v=20260824"></script>
 <script src="js/data.js?v=20260824b"></script>
@@ -2551,13 +2562,13 @@ function renderClientInvitations(){
             '</div>' +
             '<div class="customer-actions">' +
                 (inv
-                    ? '<button class="edit-btn" onclick="openChangeDesignModal(\'' + c.id + '\')">Dəyiş</button>'
-                    : '<button class="save" onclick="openAssignDesignModalFor(\'' + c.id + '\')">Təyin Et</button>'
+                    ? '<button type="button" class="edit-btn" onclick="openChangeDesignModal(\'' + c.id + '\')">Dəyiş</button>'
+                    : '<button type="button" class="save" onclick="openAssignDesignModalFor(\'' + c.id + '\')">Təyin Et</button>'
                 ) +
-                '<button class="copy-btn" onclick="copyClientInvitationLink(\'' + c.id + '\')">Link</button>' +
-                '<button class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
-                '<button class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
-                (inv ? '<button class="delete" onclick="removeClientInvitationConfirm(\'' + c.id + '\')">Sil</button>' : '') +
+                '<button type="button" class="copy-btn" onclick="copyClientInvitationLink(\'' + c.id + '\')">Link</button>' +
+                '<button type="button" class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
+                '<button type="button" class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
+                (inv ? '<button type="button" class="delete" onclick="removeClientInvitationConfirm(\'' + c.id + '\')">Sil</button>' : '') +
             '</div>';
         listEl.appendChild(div);
     });
@@ -2942,11 +2953,11 @@ function renderCustomers(){
             '</div>' +
             '<div class="customer-actions">' +
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
-                '<button class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
-                '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
-                '<button class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
-                '<button class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
-                '<button class="delete" onclick="deleteCustomer(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+                '<button type="button" class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
+                '<button type="button" class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button type="button" class="edit-btn" onclick="openRsvpList(\'' + lunaEscapeHtml(c.id) + '\')">RSVP-lər</button>' +
+                '<button type="button" class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
+                '<button type="button" class="delete" onclick="deleteCustomer(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
         list.appendChild(row);
     });
@@ -3056,8 +3067,8 @@ function renderDesigns(){
             (d.description ? '<p>' + lunaEscapeHtml(d.description) + '</p>' : '') +
             '<div class="card-actions">' +
                 (d.url ? '<a href="' + lunaEscapeHtml(d.url) + '" target="_blank" class="preview-btn">Aç</a>' : '') +
-                '<button class="edit-btn" onclick="openEditDesign(' + d.id + ')">Redaktə Et</button>' +
-                '<button class="delete" onclick="deleteDesign(' + d.id + ')">Sil</button>' +
+                '<button type="button" class="edit-btn" onclick="openEditDesign(' + d.id + ')">Redaktə Et</button>' +
+                '<button type="button" class="delete" onclick="deleteDesign(' + d.id + ')">Sil</button>' +
             '</div>';
         list.appendChild(card);
     });
@@ -3325,7 +3336,7 @@ function renderVideos(){
         var featuredBadge = v.featured ? '<span class="badge featured">Featured</span>' : '';
         var isYT = v.url && /(?:youtube\.com|youtu\.be)/i.test(v.url);
         var isPlayable = isYT || ['file','mp4','local','url'].indexOf(videoKindInfo(v.url).kind) !== -1 || /^media\//i.test((v.url||'').trim());
-        var playBtn = isPlayable ? '<button class="play-btn" onclick="openVideoModal({videoUrl:\'' + lunaEscapeHtml(v.url) + '\',isYouTube:' + isYT + ',title:\'' + lunaEscapeHtml(v.title || 'Video') + '\'})" aria-label="Oynat" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;opacity:0;transition:opacity .3s"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg></button>' : '';
+        var playBtn = isPlayable ? '<button type="button" class="play-btn" onclick="openVideoModal({videoUrl:\'' + lunaEscapeHtml(v.url) + '\',isYouTube:' + isYT + ',title:\'' + lunaEscapeHtml(v.title || 'Video') + '\'})" aria-label="Oynat" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;opacity:0;transition:opacity .3s"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg></button>' : '';
         card.innerHTML =
             '<div class="card-thumb" style="position:relative;overflow:hidden;">' +
                 thumb +
@@ -3339,12 +3350,12 @@ function renderVideos(){
             '</div>' +
             (v.description ? '<p>' + lunaEscapeHtml(v.description) + '</p>' : '') +
             '<div class="card-actions">' +
-                '<button class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',-1)">▲</button>' +
-                '<button class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',1)">▼</button>' +
-                '<button class="edit-btn" onclick="openEditVideo(\'' + lunaEscapeHtml(v.id) + '\')">Redaktə</button>' +
-                '<button class="toggle-btn" onclick="toggleVideoActive(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
-                '<button class="toggle-btn" onclick="toggleVideoFeatured(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.featured ? 'Featured Sil' : 'Featured Et') + '</button>' +
-                '<button class="delete" onclick="deleteVideo(\'' + lunaEscapeHtml(v.id) + '\')">Sil</button>' +
+                '<button type="button" class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',-1)">▲</button>' +
+                '<button type="button" class="edit-btn" onclick="moveVideo(\'' + lunaEscapeHtml(v.id) + '\',1)">▼</button>' +
+                '<button type="button" class="edit-btn" onclick="openEditVideo(\'' + lunaEscapeHtml(v.id) + '\')">Redaktə</button>' +
+                '<button type="button" class="toggle-btn" onclick="toggleVideoActive(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                '<button type="button" class="toggle-btn" onclick="toggleVideoFeatured(\'' + lunaEscapeHtml(v.id) + '\')">' + (v.featured ? 'Featured Sil' : 'Featured Et') + '</button>' +
+                '<button type="button" class="delete" onclick="deleteVideo(\'' + lunaEscapeHtml(v.id) + '\')">Sil</button>' +
             '</div>';
         card.querySelector('.card-thumb').addEventListener('mouseenter', function(){ var pb=this.querySelector('.play-btn'); if(pb){pb.style.opacity='1';} });
         card.querySelector('.card-thumb').addEventListener('mouseleave', function(){ var pb=this.querySelector('.play-btn'); if(pb){pb.style.opacity='0';} });
@@ -3566,11 +3577,11 @@ function renderGreetingCards(){
             '<div class="card-meta"><span class="badge">' + kindLabel + '</span>' + statusBadge + '</div>' +
             (c.description ? '<p>' + lunaEscapeHtml(c.description) + '</p>' : '') +
             '<div class="card-actions">' +
-                '<button class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',-1)">▲</button>' +
-                '<button class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',1)">▼</button>' +
-                '<button class="edit-btn" onclick="openEditGCard(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə</button>' +
-                '<button class="toggle-btn" onclick="toggleGCardActive(\'' + lunaEscapeHtml(c.id) + '\')">' + (c.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
-                '<button class="delete" onclick="deleteGCard(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+                '<button type="button" class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',-1)">▲</button>' +
+                '<button type="button" class="edit-btn" onclick="moveGCard(\'' + lunaEscapeHtml(c.id) + '\',1)">▼</button>' +
+                '<button type="button" class="edit-btn" onclick="openEditGCard(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə</button>' +
+                '<button type="button" class="toggle-btn" onclick="toggleGCardActive(\'' + lunaEscapeHtml(c.id) + '\')">' + (c.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                '<button type="button" class="delete" onclick="deleteGCard(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
         list.appendChild(card);
     });
@@ -3722,8 +3733,8 @@ function renderMsgTemplates(){
                     '<div style="font-size:11px;color:rgba(255,255,255,.6);white-space:pre-wrap;line-height:1.6;">' + lunaEscapeHtml(t.body) + '</div>' +
                 '</div>' +
                 '<div style="display:flex;gap:6px;flex-shrink:0;">' +
-                    '<button class="edit-btn" onclick="useMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">İstifadə Et</button>' +
-                    '<button class="delete" onclick="deleteMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>' +
+                    '<button type="button" class="edit-btn" onclick="useMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">İstifadə Et</button>' +
+                    '<button type="button" class="delete" onclick="deleteMsgTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>' +
                 '</div>' +
             '</div>';
         el.appendChild(div);
@@ -3890,13 +3901,13 @@ function renderTemplates(){
             (langTags ? '<div class="lang-tags">' + langTags + '</div>' : '') +
             '<div class="template-card card-footer">' +
                 '<div class="card-actions" style="width:100%;">' +
-                    '<button class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' +
-                    '<button class="preview-btn" onclick="previewTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Preview</button>' +
-                    '<button class="toggle-btn" onclick="duplicateTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Dublikat</button>' +
-                    '<button class="toggle-btn" onclick="toggleTemplateActive(\'' + lunaEscapeHtml(t.id) + '\')">' + (t.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
+                    '<button type="button" class="edit-btn" onclick="openEditTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Redaktə Et</button>' +
+                    '<button type="button" class="preview-btn" onclick="previewTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Preview</button>' +
+                    '<button type="button" class="toggle-btn" onclick="duplicateTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Dublikat</button>' +
+                    '<button type="button" class="toggle-btn" onclick="toggleTemplateActive(\'' + lunaEscapeHtml(t.id) + '\')">' + (t.active ? 'Deaktiv Et' : 'Aktiv Et') + '</button>' +
                     (t.isCustom
-                        ? '<button class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>'
-                        : (getTemplateOverrides()[t.id] ? '<button class="delete" onclick="resetTemplateOverride(\'' + lunaEscapeHtml(t.id) + '\')">Sıfırla</button>' : '')) +
+                        ? '<button type="button" class="delete" onclick="deleteTemplate(\'' + lunaEscapeHtml(t.id) + '\')">Sil</button>'
+                        : (getTemplateOverrides()[t.id] ? '<button type="button" class="delete" onclick="resetTemplateOverride(\'' + lunaEscapeHtml(t.id) + '\')">Sıfırla</button>' : '')) +
                 '</div>' +
             '</div>';
         list.appendChild(card);
@@ -4422,7 +4433,7 @@ function openVideoModal(video) {
         }
 
         modal.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
             '<div class="youtube-holder" style="position:relative;width:min(90vw,960px);aspect-ratio:16/9;z-index:1">' +
                 '<iframe src="' + embedSrc + '" allow="autoplay;encrypted-media;fullscreen" allowfullscreen="true" frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></iframe>' +
                 '<a href="' + watchUrl + '" target="_blank" rel="noopener" title="YouTube-da aç" style="position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;text-decoration:none;font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px">&#9654; <span style="opacity:.85">YouTube</span></a>' +
@@ -4461,7 +4472,7 @@ function openVideoModal(video) {
         var wrap = document.createElement("div");
         wrap.style.cssText = "position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px";
         wrap.innerHTML =
-            '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
+            '<button type="button" class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3">&times;</button>' +
             '<video src="' + video.videoUrl + '" controls playsinline preload="metadata" poster="' + (video.poster || "") + '" style="max-width:90vw;max-height:78vh;object-fit:contain;background:#000;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.5)"></video>' +
             '<a href="' + video.videoUrl + '" download target="_blank" rel="noopener" style="color:#d8b98f;font-size:12px;text-decoration:underline">Videonu yüklə</a>';
         modal.appendChild(wrap);
@@ -4815,7 +4826,7 @@ async function renderOrders() {
                 '<b style="font-size:13px;color:#fff;">' + esc(o.productTypeName || o.productType) + '</b>' +
                 '<span style="color:#ad8c7d;font-size:10px;">' + dateStr + '</span>' +
                 (o.contact ? '<span style="color:#b88c76;font-size:11px;">📞 ' + esc(o.contact) + '</span>' : '') +
-                '<button onclick="deleteOrder(\'' + o.id + '\')" style="margin-left:auto;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:16px;" title="Sil">🗑</button>' +
+                '<button type="button" onclick="deleteOrder(\'' + o.id + '\')" style="margin-left:auto;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:16px;" title="Sil">🗑</button>' +
             '</div>' +
             approveHint +
             '<div style="margin-top:12px;">' + dataRows + '</div>' +
@@ -5816,11 +5827,11 @@ function renderCreatedInvitations(){
             '</div>' +
             '<div class="customer-actions">' +
                 '<a href="' + link + '" target="_blank" class="preview-btn">Önizləmə</a>' +
-                '<button class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
-                '<button class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
-                '<button class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
-                '<button class="copy-btn" onclick="duplicateCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Kopyala</button>' +
-                '<button class="delete" onclick="deleteCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
+                '<button type="button" class="edit-btn" onclick="openEditInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Redaktə Et</button>' +
+                '<button type="button" class="copy-btn" onclick="copyToClipboard(\'' + link + '\');showToast(\'Link kopyalandı!\')">Link Kopyala</button>' +
+                '<button type="button" class="edit-btn" onclick="openCoupleAccess(\'' + lunaEscapeHtml(c.id) + '\')">Cütlük Girişi</button>' +
+                '<button type="button" class="copy-btn" onclick="duplicateCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Kopyala</button>' +
+                '<button type="button" class="delete" onclick="deleteCreatedInvitation(\'' + lunaEscapeHtml(c.id) + '\')">Sil</button>' +
             '</div>';
         list.appendChild(row);
     });
@@ -5889,6 +5900,8 @@ function openEditInvitation(id){
     document.getElementById('efMessage').value = inv.message || '';
     document.getElementById('efStory').value = inv.story ? inv.story.replace(/<[^>]*>/g, '') : '';
     document.getElementById('efImages').value = Array.isArray(inv.images) ? inv.images.join('\n') : '';
+    document.getElementById('efGalleryEnabled').checked = inv.galleryEnabled !== false;
+    lunaRenderGalleryPreview();
     document.getElementById('efCover').value = inv.cover || inv.photoInvitation || '';
     document.getElementById('efScrollHero').value = inv.scrollHeroImage || '';
     document.getElementById('efMusic').value = inv.music || '';
@@ -5896,6 +5909,39 @@ function openEditInvitation(id){
     document.getElementById('efFormspree').value = inv.formspreeEndpoint || '';
     document.getElementById('editInvitationModal').classList.add('open');
 }
+
+/* Render live thumbnails of the gallery image URLs in the edit form so the
+   admin can actually see the pictures, not just the raw links. */
+function lunaRenderGalleryPreview(){
+    var box = document.getElementById('efGalleryPreview');
+    if(!box) return;
+    var urls = document.getElementById('efImages').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    box.innerHTML = '';
+    urls.forEach(function(u, i){
+        var item = document.createElement('div');
+        item.className = 'gp-item';
+        var img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = 'Qalereya ' + (i + 1);
+        img.onerror = function(){ this.style.display = 'none'; };
+        img.src = u;
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'gp-rm';
+        rm.textContent = '×';
+        rm.title = 'Sil';
+        rm.onclick = function(){
+            var lines = document.getElementById('efImages').value.split('\n');
+            lines.splice(i, 1);
+            document.getElementById('efImages').value = lines.join('\n');
+            lunaRenderGalleryPreview();
+        };
+        item.appendChild(img);
+        item.appendChild(rm);
+        box.appendChild(item);
+    });
+}
+document.getElementById('efImages').addEventListener('input', lunaRenderGalleryPreview);
 
 /* Rebuild the invitation's frozen visual identity (visualSnapshot) after an
    admin edit. Without this, changing the design / opening animation in admin
@@ -5984,6 +6030,7 @@ document.getElementById('editInvitationForm').addEventListener('submit', functio
 
     var images = document.getElementById('efImages').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
     if(images.length) inv.images = images; else delete inv.images;
+    inv.galleryEnabled = document.getElementById('efGalleryEnabled').checked;
 
     var cover = document.getElementById('efCover').value.trim();
     if(cover) {
@@ -6166,8 +6213,8 @@ function renderCardsList(){
                 '<p>' + info + '</p>' +
             '</div>' +
             '<div class="customer-actions">' +
-                '<button class="copy-btn" onclick="copyCardText(\'' + c.id + '\')">Məlumatı Kopyala</button>' +
-                '<button class="delete" onclick="deleteCard(\'' + c.id + '\')">Sil</button>' +
+                '<button type="button" class="copy-btn" onclick="copyCardText(\'' + c.id + '\')">Məlumatı Kopyala</button>' +
+                '<button type="button" class="delete" onclick="deleteCard(\'' + c.id + '\')">Sil</button>' +
             '</div>';
         list.appendChild(row);
     });
@@ -6272,11 +6319,11 @@ function buildPkgFeaturesEditor(){
         feats.forEach(function(f, idx){
             html += '<div style="display:flex;gap:6px;align-items:center;">' +
                 '<input type="text" data-pkgfeat="' + p.id + '" value="' + lunaEscapeHtml(f) + '" style="flex:1;padding:6px 8px;font-size:11px;background:#111;border:1px solid rgba(255,255,255,.1);color:#fff;">' +
-                '<button onclick="removePkgFeature(\'' + p.id + '\',' + idx + ')" style="padding:4px 10px;font-size:10px;background:rgba(220,80,80,.15);border:1px solid rgba(220,80,80,.3);color:#e87070;cursor:pointer;border-radius:4px;">×</button>' +
+                '<button type="button" onclick="removePkgFeature(\'' + p.id + '\',' + idx + ')" style="padding:4px 10px;font-size:10px;background:rgba(220,80,80,.15);border:1px solid rgba(220,80,80,.3);color:#e87070;cursor:pointer;border-radius:4px;">×</button>' +
                 '</div>';
         });
         html += '</div>';
-        html += '<button onclick="addPkgFeature(\'' + p.id + '\')" style="padding:5px 12px;font-size:9px;background:rgba(184,140,118,.15);border:1px solid rgba(184,140,118,.3);color:#b88c76;cursor:pointer;border-radius:4px;letter-spacing:1px;text-transform:uppercase;">+ Əlavə Et</button>';
+        html += '<button type="button" onclick="addPkgFeature(\'' + p.id + '\')" style="padding:5px 12px;font-size:9px;background:rgba(184,140,118,.15);border:1px solid rgba(184,140,118,.3);color:#b88c76;cursor:pointer;border-radius:4px;letter-spacing:1px;text-transform:uppercase;">+ Əlavə Et</button>';
         box.innerHTML = html;
         wrap.appendChild(box);
     });
@@ -6406,7 +6453,7 @@ function renderCustomCategoriesList(){
     cats.forEach(function(c){
         var chip = document.createElement('span');
         chip.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);font-size:11px;';
-        chip.innerHTML = '<span>' + lunaEscapeHtml(c.icon || '✦') + ' ' + lunaEscapeHtml(c.nameAz) + '</span><button class="delete" style="padding:2px 8px;font-size:9px;" onclick="deleteCustomCategory(\'' + c.id + '\')">×</button>';
+        chip.innerHTML = '<span>' + lunaEscapeHtml(c.icon || '✦') + ' ' + lunaEscapeHtml(c.nameAz) + '</span><button type="button" class="delete" style="padding:2px 8px;font-size:9px;" onclick="deleteCustomCategory(\'' + c.id + '\')">×</button>';
         wrap.appendChild(chip);
     });
 }
