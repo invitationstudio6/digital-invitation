@@ -321,6 +321,39 @@ a { text-decoration: none; color: inherit; }
 .opening.scene-opened .opening-petals,
 .opening.scene-opened .opening-light { opacity: 0; transition: opacity 1.2s ease; }
 
+/* Loading state — shown only while the invitation data is being fetched on a
+   first visit. Centered, subtle, and hidden as soon as rendering starts. */
+.opening-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    pointer-events: none;
+    transition: opacity .5s ease;
+}
+.opening-loading.is-hidden { opacity: 0; }
+.opening-loading-ring {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.18);
+    border-top-color: rgba(255,255,255,.85);
+    animation: openingSpin 1s linear infinite;
+}
+.opening-loading-text {
+    font-size: 12px;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+    text-indent: .42em;
+}
+@keyframes openingSpin { to { transform: rotate(360deg); } }
+.opening.scene-opened .opening-loading { opacity: 0; }
+
 /* Type: Fullscreen Photo opening */
 [data-opening="fullscreen-photo"] .opening {
     background: var(--cover) center/cover no-repeat;
@@ -9203,6 +9236,13 @@ body:not(.scene-opened) .open-button:not(:disabled):hover {
     <div class="opening-light"></div>
     <div class="opening-petals"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
+    <!-- Loading state shown only while the invitation data is being fetched
+         on a first visit (no cached copy yet). Hidden once rendering starts. -->
+    <div class="opening-loading" id="openingLoading" aria-hidden="true">
+        <span class="opening-loading-ring"></span>
+        <span class="opening-loading-text">LUNA</span>
+    </div>
+
     <!-- Envelope Scene (default) -->
     <div class="envelope-scene" id="envelopeScene">
 
@@ -10552,14 +10592,12 @@ var invitation = null;
 
 /* Wrap main logic in async IIFE to await cloud preload */
 (async function() {
-    /* Never block first paint on the network. Render from the local cache
-       within a short budget, then let the cloud preload refresh the cache
-       in the background for the next visit. On a slow mobile connection the
-       page opens instantly instead of sitting blank while Supabase responds. */
-    await Promise.race([
-        window.__lunaCloudPreload,
-        new Promise(function(res) { setTimeout(res, 600); })
-    ]);
+    /* Fast, non-blocking startup. Render from the local cache immediately so
+       the page opens instantly on phones. The cloud preload refreshes the
+       cache in the background; only when there is no cached copy yet (first
+       visit on a device) do we wait for that async fetch — which never blocks
+       the main thread — before rendering. This removes the synchronous XHR
+       freeze that made client invitation links open late on slow networks. */
 
 /* Template demo mode takes priority — a stale luna_last_invitation
    saved from an earlier order must never shadow the ?template= preview */
@@ -10577,11 +10615,35 @@ if (window.lunaGetInvitationOverride) {
             ""
         ).toLowerCase().trim();
 
-    invitation = invitationId
-        ? lunaGetInvitation(invitationId)
-        : null;
+    invitation = null;
+    if (invitationId) {
+        /* Fast path — read the local cache directly (no network, no freeze). */
+        try {
+            var _cached = localStorage.getItem("luna_" + invitationId);
+            if (_cached) invitation = JSON.parse(_cached);
+        } catch (e) {}
+
+        /* First visit on this device — wait for the async cloud preload to
+           populate the cache, then read it again. Non-blocking. */
+        if (!invitation) {
+            await window.__lunaCloudPreload;
+            try {
+                var _cached2 = localStorage.getItem("luna_" + invitationId);
+                if (_cached2) invitation = JSON.parse(_cached2);
+            } catch (e) {}
+        }
+
+        /* Last resort — template invitations live in the static registry and
+           are not cached; lunaGetInvitation also covers a failed preload. */
+        if (!invitation) invitation = lunaGetInvitation(invitationId);
+    }
 
 }
+
+/* Hide the first-visit loading indicator now that the invitation is resolved
+   (or the not-found screen is about to replace the body). */
+var _openingLoading = document.getElementById("openingLoading");
+if (_openingLoading) _openingLoading.classList.add("is-hidden");
 
 
 if (!invitation) {
