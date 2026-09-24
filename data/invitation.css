@@ -2141,9 +2141,26 @@ a { text-decoration: none; color: inherit; }
     display: none;
     flex-direction: column;
     align-items: center;
+    /* Reserve room for the open button so it never overflows the scene box
+       and never overlaps the card / illustration on short viewports. */
+    padding-bottom: 96px;
+    box-sizing: border-box;
 }
 
 [data-opening] .sig-scene.active { display: flex; }
+
+/* Only the active scene's button is ever laid out. Inactive scenes are
+   display:none, but their buttons must never leak into the opening screen. */
+.sig-scene:not(.active) .open-button { display: none; }
+
+/* The scene button sits in normal flow, centred under the card. */
+.sig-scene > .open-button {
+    position: relative;
+    flex: 0 0 auto;
+    align-self: center;
+    margin-top: 28px;
+    z-index: 6;
+}
 
 .sig-card {
     position: relative;
@@ -3993,6 +4010,22 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
 
 /* ── Scene card: the invitation text sheet rising after dolly ── */
 [data-opening="curtain"] .sig-scene { z-index: 3; }
+/* Curtain scene pins its card absolutely, so the open button is pinned too —
+   otherwise it would sit at the top of the scene and cover the stage. */
+[data-opening="curtain"] #curtainScene > .open-button {
+    position: absolute;
+    left: 50%;
+    bottom: 6%;
+    transform: translateX(-50%);
+    margin-top: 0;
+    z-index: 32;
+    border-color: rgba(212,175,55,.55);
+    color: #F0DCA8;
+    background: rgba(20,10,7,.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+[data-opening="curtain"] #curtainScene > .open-button:hover { color: #1a0d08; }
 /* Flat detail card sits LOWER on the stage so the red-velvet backdrop
    and the stage title names stay the hero behind it. Translucent glass. */
 [data-opening="curtain"] #curtainScene .sig-card {
@@ -6517,6 +6550,8 @@ footer p {
 }
 [data-opening="stairs"] .stairs-card { width: 86%; top: 6%; }
     .sig-scene .sig-card { width: 90vw; min-height: auto; padding: 36px 22px; }
+    .sig-scene { padding-bottom: 84px; }
+    .sig-scene > .open-button { margin-top: 22px; }
     .wax-seal-big { width: 92px; height: 92px; font-size: 34px; }
     .open-button { margin-top: 30px; padding: 15px 32px; letter-spacing: 3px; min-height: 48px; }
     
@@ -6568,6 +6603,7 @@ footer p {
     .timer div:nth-child(2)::after { display: none; }
     .timer strong { font-size: 30px; }
     .sig-scene .sig-card { padding: 30px 16px; }
+    .sig-scene { padding-bottom: 78px; }
     .gallery-style-editorial img:first-child { height: 180px; }
     .gallery-style-editorial img { height: 130px; }
     .gallery-style-collage { grid-template-rows: repeat(3, 110px); }
