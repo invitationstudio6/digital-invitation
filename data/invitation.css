@@ -3636,25 +3636,42 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
    Fully cover the screen; open in slow, weighty, gathered stacks
    ──────────────────────────────────────────────────────────── */
 .ct-curtains { position: absolute; inset: 0; z-index: 10; transform-style: preserve-3d; perspective: 1200px; }
+/* ── Curtain geometry ────────────────────────────────────────────────
+   The panels are laid out with `left`/`right` and opened by animating
+   `left`/`right` themselves — NOT `scaleX`.
+
+   Why: `scaleX` squeezes the whole panel, so the eight fold ridges
+   (each 12.5% of the panel) were compressed 6.45x into ~2% slivers and
+   the gold hem, lining and edge all collapsed with them. The result
+   read as a flat red rectangle sliding sideways instead of velvet
+   gathering into a stack.
+
+   Animating `left`/`right` keeps every fold, hem and highlight at its
+   true size while the panel genuinely narrows, which is what a real
+   draw-curtain does. `left`/`right` are layout properties, so the
+   transition is driven on the compositor by `will-change` and the
+   panels are promoted to their own layer. */
 .ct-curtain {
     position: absolute;
     top: -2px; bottom: -2px;
     width: 56%;
     z-index: 2;
     transform-style: preserve-3d;
-    will-change: transform, filter;
+    will-change: left, right, filter;
 }
-/* Closed: curtains fully overlap and cover every pixel (112% total) */
-.ct-curtain-left  { left: 0;  transform-origin: left center;  transform: translateX(0); transition: transform 4.6s cubic-bezier(.7,.03,.2,1) .35s, filter 1.4s ease 1.1s; }
-.ct-curtain-right { right: 0; transform-origin: right center; transform: translateX(0); transition: transform 4.6s cubic-bezier(.7,.03,.2,1) .35s, filter 1.4s ease 1.1s; }
+/* Closed: the two 56% panels overlap by 12% and cover every pixel. */
+.ct-curtain-left  { left: 0;   right: auto; transition: left 4.2s cubic-bezier(.62,.02,.18,1) .3s, filter 1.4s ease 1.1s; }
+.ct-curtain-right { right: 0;  left: auto;  transition: right 4.2s cubic-bezier(.62,.02,.18,1) .3s, filter 1.4s ease 1.1s; }
 
-/* OPEN: curtains draw toward the sides and BUNCH into gathered
-   stacks that remain visible on screen (never retract off-view).
-   Slow, weighty draw with a long ease for premium realism. */
-.scene-opened[data-opening="curtain"] .ct-curtain-left  { transform: translateX(-10%) scaleX(.155) rotateY(16deg); filter: brightness(.66) sepia(.28) contrast(1.06); }
-.scene-opened[data-opening="curtain"] .ct-curtain-right { transform: translateX(10%)  scaleX(.155) rotateY(-16deg); filter: brightness(.66) sepia(.28) contrast(1.06); }
+/* OPEN: each panel draws back to a 15% gathered stack that stays on
+   screen at the side, exactly like a theatre curtain that has been
+   pulled and tied off. The stage is revealed between them. */
+.scene-opened[data-opening="curtain"] .ct-curtain-left  { left: -41%;  filter: brightness(.72) sepia(.22) contrast(1.05); }
+.scene-opened[data-opening="curtain"] .ct-curtain-right { right: -41%; filter: brightness(.72) sepia(.22) contrast(1.05); }
 
-/* Gathered stack: concentric pleat layers pile up at the sides */
+/* Gathered stack: the pleats pile up where the curtain is tied off.
+   This sits at the leading edge and grows as the panel draws back, so
+   the fabric reads as bunched rather than cut off. */
 .ct-curtain::before {
     content: "";
     position: absolute;
@@ -3669,13 +3686,13 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
     border-radius: 8px;
     box-shadow: 0 0 40px rgba(0,0,0,.75), inset 0 0 26px rgba(0,0,0,.55);
     opacity: 0;
-    transition: opacity 1.1s ease .8s, transform 4.4s cubic-bezier(.7,.03,.2,1) .35s;
+    transition: opacity 1.1s ease .8s, transform 4.2s cubic-bezier(.62,.02,.18,1) .3s;
 }
 .ct-curtain-left::before  { right: -6%;  transform-origin: right center; transform: scaleX(.6); }
 .ct-curtain-right::before { left: -6%;   transform-origin: left center;  transform: scaleX(.6); }
 /* The stack blooms outward to read as piled, folded velvet */
-.scene-opened[data-opening="curtain"] .ct-curtain-left::before  { transform: scaleX(7) translateX(3%);  opacity: 1; }
-.scene-opened[data-opening="curtain"] .ct-curtain-right::before { transform: scaleX(7) translateX(-3%); opacity: 1; }
+.scene-opened[data-opening="curtain"] .ct-curtain-left::before  { transform: scaleX(2.6) translateX(3%);  opacity: 1; }
+.scene-opened[data-opening="curtain"] .ct-curtain-right::before { transform: scaleX(2.6) translateX(-3%); opacity: 1; }
 
 /* Rich velvet fabric with vertical folds */
 .ct-curtain-fabric {
@@ -3690,21 +3707,24 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
     box-shadow: inset -16px 0 46px rgba(0,0,0,.65), inset 16px 0 46px rgba(0,0,0,.45),
         0 20px 60px rgba(0,0,0,.5);
 }
-/* Fabric fold ridges with highlight/sheen */
+/* Fabric fold ridges with highlight/sheen.
+   The ridges are full-height and full-width so they keep their shape
+   while the panel narrows; the sway is a transform-only animation so
+   it never repaints the fabric. */
 .ct-fold {
     position: absolute;
     top: 0; bottom: 0;
     width: 12.5%;
-    transform: scaleX(.6);
     background: repeating-linear-gradient(90deg,
         rgba(255,255,255,.05) 0 6px, transparent 6px 12px,
         rgba(0,0,0,.25) 12px 16px);
     background-size: 100% 100%;
+    transform-origin: center;
     animation: ctFoldSway 5s ease-in-out infinite alternate;
 }
 .ct-curtain-left .ct-fold { animation-delay: calc(var(--i,0)*-1.2s); }
 .ct-curtain-right .ct-fold { animation-delay: calc(var(--i,0)*.8s); }
-.ct-fold-1 { left: 0; --i: 1; transform: scaleX(.9) translateX(2px); }
+.ct-fold-1 { left: 0; --i: 1; }
 .ct-fold-2 { left: 12.5%; --i: 2; }
 .ct-fold-3 { left: 25%; --i: 3; filter: brightness(1.12); }
 .ct-fold-4 { left: 37.5%; --i: 4; }
@@ -3712,18 +3732,22 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
 .ct-fold-6 { left: 62.5%; --i: 6; }
 .ct-fold-7 { left: 75%; --i: 7; filter: brightness(1.1); }
 .ct-fold-8 { left: 87.5%; --i: 8; }
+/* Sway is a subtle horizontal breathing of the ridge, not a brightness
+   flicker — velvet folds catch light by moving, not by pulsing. */
 @keyframes ctFoldSway {
-    0% { filter: brightness(.92) contrast(1.04); }
-    50% { filter: brightness(1.08); }
-    100% { filter: brightness(.95) contrast(1.08); }
+    0%   { transform: translateX(-1.5%) scaleX(.94); }
+    50%  { transform: translateX(0)    scaleX(1); }
+    100% { transform: translateX(1.5%) scaleX(.96); }
 }
 
-/* Curtain edge (leading split edge) with rolled hem + gold trim */
+/* Curtain edge (leading split edge) with rolled hem + gold trim.
+   This is the leading edge of the panel, so it must stay a readable
+   width once the panel has drawn back — hence the larger min-width. */
 .ct-curtain-edge {
     position: absolute;
     top: 0; bottom: 0;
-    width: 2.2%;
-    min-width: 30px;
+    width: 3.4%;
+    min-width: 34px;
     background: linear-gradient(90deg, #2A0A06, #4B120E 60%, #6B1A15);
     box-shadow: 0 0 24px rgba(0,0,0,.6), inset 0 0 14px rgba(0,0,0,.5);
     z-index: 3;
@@ -3737,7 +3761,9 @@ html[data-opening="ribbon"].scene-opened .sig-scene.active .sig-card {
     border-left: 2px solid rgba(212,175,55,.6);
 }
 
-/* Inner lining visible after opening (fabric thickness) */
+/* Inner lining visible after opening (fabric thickness).
+   It hangs off the leading edge and is revealed as the panel draws
+   back, giving the stack a visible depth of fabric. */
 .ct-curtain-lining {
     position: absolute;
     top: 0; bottom: 0;
