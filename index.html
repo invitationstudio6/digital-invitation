@@ -1894,6 +1894,62 @@ body{background-color:var(--cream);background-image:linear-gradient(rgba(255,255
    their overlay without interaction. */
 .anim-card:not(.live) .opv { animation-play-state: paused !important; }
 </style>
+<script>
+/* ==================================================================
+   ON-DEVICE CRASH REPORTER
+   ------------------------------------------------------------------
+   The mobile failure ("A problem repeatedly occurred on index.html")
+   does not reproduce in a desktop/headless browser, so the only way to
+   learn the real cause is to capture it on the phone itself.
+
+   This block is intentionally tiny, dependency-free and runs before
+   anything else. It records the first uncaught error / rejection and
+   paints it on screen. It is inert when nothing goes wrong, and it can
+   be disabled with ?nodiag=1.
+   ================================================================== */
+(function () {
+  try {
+    if (/[?&]nodiag=1/.test(location.search)) return;
+    var shown = false;
+    function paint(title, detail) {
+      if (shown) return;
+      shown = true;
+      try {
+        var d = document.createElement('div');
+        d.setAttribute('id', 'luna-diag');
+        d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483647;' +
+          'background:#1a0d0d;color:#ffd9d9;font:12px/1.45 -apple-system,Menlo,monospace;' +
+          'padding:10px 12px;max-height:46vh;overflow:auto;white-space:pre-wrap;' +
+          'border-top:2px solid #ff5a5a;-webkit-user-select:text;user-select:text';
+        d.textContent = 'LUNA DIAG\n' + title + '\n' + detail +
+          '\n\nUA: ' + navigator.userAgent +
+          '\nURL: ' + location.href;
+        (document.body || document.documentElement).appendChild(d);
+      } catch (e) {}
+    }
+    window.addEventListener('error', function (e) {
+      var t = e && e.target;
+      if (t && t !== window && (t.tagName === 'IMG' || t.tagName === 'VIDEO' || t.tagName === 'SOURCE')) {
+        return; /* asset 404s are not crashes */
+      }
+      paint('ERROR: ' + ((e && e.message) || 'unknown'),
+        ((e && e.filename) || '') + ':' + ((e && e.lineno) || '') + ':' + ((e && e.colno) || '') +
+        '\n' + ((e && e.error && e.error.stack) || ''));
+    }, true);
+    window.addEventListener('unhandledrejection', function (e) {
+      var r = e && e.reason;
+      paint('PROMISE: ' + ((r && r.message) || String(r)),
+        (r && r.stack) || '');
+    });
+    /* A WebContent process kill leaves no JS error behind, so also flag
+       the case where the page was restored from the back/forward cache
+       after being terminated — that is the signature of a memory kill. */
+    window.addEventListener('pageshow', function (e) {
+      if (e && e.persisted) paint('PAGE RESTORED FROM BFCACHE', 'likely process termination');
+    });
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 
