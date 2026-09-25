@@ -236,6 +236,8 @@
         if (reduced) return;
         var hero = document.getElementById('home');
         if (!hero) return;
+        /* The canvas is hidden on small phones by CSS; don't create it at all. */
+        if (window.innerWidth <= 480) return;
 
         var canvas = document.createElement('canvas');
         canvas.className = 'hero-particles-canvas';
@@ -246,14 +248,33 @@
         var particles = [];
         var mouse = { x: 0, y: 0, active: false };
         var raf = null;
+        /*
+         * This loop used to run forever: 60 full-canvas clear+redraws per
+         * second plus an O(n²) connection pass, even while the hero was
+         * scrolled far off screen or the tab was in the background. On a phone
+         * that is continuous GPU work with no idle frame, and it is one of the
+         * reasons Safari eventually killed the page. Now it only runs while
+         * the hero is visible AND the tab is in the foreground, and phones get
+         * fewer particles with the expensive connection pass skipped.
+         */
+        var visible = !('IntersectionObserver' in window);
+        var running = false;
+        var linkCount = 100;
 
         function resize() {
-            canvas.width = hero.clientWidth;
-            canvas.height = hero.clientHeight;
+            var w = hero.clientWidth, h = hero.clientHeight;
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+            }
         }
 
         function createParticles() {
-            var count = window.innerWidth < 600 ? 25 : window.innerWidth < 900 ? 40 : 55;
+            var count = window.innerWidth < 600 ? 14 : window.innerWidth < 900 ? 24 : 55;
+            if (isTouch) {
+                count = Math.round(count * 0.6);
+                linkCount = 0; /* no connection lines on touch devices */
+            }
             particles = [];
             for (var i = 0; i < count; i++) {
                 particles.push({
@@ -269,7 +290,12 @@
             }
         }
 
+        function shouldRun() {
+            return visible && !document.hidden;
+        }
+
         function animate() {
+            if (!shouldRun()) { raf = null; running = false; return; }
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             particles.forEach(function(p) {
@@ -308,24 +334,33 @@
                 ctx.fill();
             });
 
-            // Connections
-            for (var i = 0; i < particles.length; i++) {
-                for (var j = i + 1; j < particles.length; j++) {
-                    var dx = particles[i].x - particles[j].x;
-                    var dy = particles[i].y - particles[j].y;
-                    var dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = 'rgba(212,165,116,' + (0.03 * (1 - dist / 100)).toFixed(4) + ')';
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
+            // Connections (skipped on touch devices — see linkCount above)
+            if (linkCount > 0) {
+                for (var i = 0; i < particles.length; i++) {
+                    for (var j = i + 1; j < particles.length; j++) {
+                        var dx = particles[i].x - particles[j].x;
+                        var dy = particles[i].y - particles[j].y;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < linkCount) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = 'rgba(212,165,116,' + (0.03 * (1 - dist / linkCount)).toFixed(4) + ')';
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
                     }
                 }
             }
 
-            raf = requestAnimationFrame(animate);
+            if (shouldRun()) raf = requestAnimationFrame(animate);
+            else { raf = null; running = false; }
+        }
+
+        function start() {
+            if (running || !shouldRun()) return;
+            running = true;
+            if (!raf) raf = requestAnimationFrame(animate);
         }
 
         hero.addEventListener('mousemove', function(e) {
@@ -339,14 +374,30 @@
             mouse.active = false;
         }, { passive: true });
 
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function(entries) {
+                entries.forEach(function(en) {
+                    visible = en.isIntersecting;
+                    if (visible) start();
+                });
+            }, { threshold: 0 }).observe(hero);
+        }
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) start();
+        });
+
+        var resizeTimer = null;
         window.addEventListener('resize', function() {
-            resize();
-            createParticles();
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                resize();
+                createParticles();
+            }, 200);
         }, { passive: true });
 
         resize();
         createParticles();
-        animate();
+        start();
     }
 
     /* ---------- 6. Scroll reveal with stagger ---------- */
