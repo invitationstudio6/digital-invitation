@@ -417,7 +417,7 @@ if (finalDesign) {
    the LUNA material + ornament system for a unique artistic identity). */
 (function() {
     var d = (finalDesign || "").toLowerCase();
-    var dark   = ["noir","black-gold","luxe-gold","luxury-birthday","luxury-grad","oriental","luxury-romance","velvet-luxe","grand-curtain","starry-dream","enchanted"];
+    var dark   = ["noir","black-gold","luxe-gold","luxury-birthday","luxury-grad","oriental","luxury-romance","velvet-luxe","grand-curtain","starry-dream","enchanted","emerald-royal"];
     var bot    = ["botanical","garden-bloom","blossom","henna","traditional-henna","florence"];
     var rose   = ["velvet-rose","soft-blush","romantic-bloom","soft-rose","sweet-arrival","amour","serena"];
     var min    = ["minimal-white","modern-chic","modern-classic","elegant-pearl","executive","conference","networking"];
@@ -467,7 +467,7 @@ if (finalDesign) {
         footerClass = "footer-style-editorial";
         storyClass = "story-style-editorial";
         rsvpClass = "rsvp-style-editorial";
-    } else if (style.indexOf("luxe") !== -1 || style.indexOf("luxury") !== -1 || style.indexOf("dark") !== -1 || design === "noir" || design === "black-gold" || design === "luxe-gold") {
+    } else if (style.indexOf("luxe") !== -1 || style.indexOf("luxury") !== -1 || style.indexOf("dark") !== -1 || style.indexOf("zümrüd") !== -1 || design === "noir" || design === "black-gold" || design === "luxe-gold" || design === "emerald-royal") {
         heroClass = "hero-style-luxury";
         sectionClass = "section-style-luxury";
         detailsClass = "details-style-luxury";
@@ -493,7 +493,7 @@ if (finalDesign) {
     }
 
     /* Dark themes always get dark hero */
-    if (heroClass === "" && (design === "noir" || design === "black-gold" || design === "luxe-gold" || design === "enchanted" || design === "luxury-birthday" || design === "oriental" || design === "luxury-grad")) {
+    if (heroClass === "" && (design === "noir" || design === "black-gold" || design === "luxe-gold" || design === "enchanted" || design === "luxury-birthday" || design === "oriental" || design === "luxury-grad" || design === "emerald-royal")) {
         heroClass = "hero-style-dark";
         footerClass = "footer-style-dark";
     }
@@ -871,7 +871,7 @@ document.getElementById("openButton").textContent =
     _m("editorial","&"); _m("luxe-gold","L"); _m("velvet-rose","V","is-floral");
     _m("minimal-white","M"); _m("vintage-romance","❦","is-floral"); _m("black-gold","B");
     _m("soft-blush","S"); _m("botanical","❧","is-floral"); _m("modern-classic","&");
-    _m("enchanted","E","is-floral"); _m("royal-seal","M"); _m("velvet-luxe","V","is-floral");
+    _m("enchanted","E","is-floral"); _m("royal-seal","M"); _m("velvet-luxe","V","is-floral"); _m("emerald-royal","E");
     _m("typewriter-elegance","&"); _m("candlelight-gold","C"); _m("winter-drift","❄","is-floral");
     _m("grand-premiere","G"); _m("grand-staircase","G","is-floral"); _m("sealed-with-love","♥","is-floral");
     _m("starry-vow","✦","is-floral"); _m("grand-door","&"); _m("love-letter","L","is-floral");

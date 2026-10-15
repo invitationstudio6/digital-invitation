@@ -306,6 +306,17 @@ const LUNA_TEMPLATES = [
         preview: { eyebrow: "QIZIL SARAY DƏVƏTNAMƏSİ", names: ["Nərmin", "Tahir"], date: "18 · 07 · 2026", message: "Qızıl üzükdə parıldayan sevgimiz, ürəyimizin ən dərin yerində əbədi qalacaq.", venue: "Four Seasons", location: "Bakı, Azərbaycan", theme: "royal-gold" }
     },
     {
+        id: "emerald-royal", name: "Emerald Royal", category: "wedding", style: "Lüks · Zümrüd", galleryStyle: "fullscreen", openingStyle: "luxury-reveal",
+        animationStyle: "luxury",
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        featured: true,
+        design: { primaryColor: "#0e3b2e", secondaryColor: "#c9a86a", font: "Cormorant Garamond" },
+        layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-luxury", backgroundStyle: "dark" },
+        preview: { eyebrow: "TOY DƏVƏTNAMƏSİ", names: ["Tural", "Aysel"], date: "20 · 12 · 2026", message: "Sevgi hekayəmizin ən möhtəşəm səhifəsini sizinlə birlikdə yazmaq istəyirik.", venue: "Four Seasons Baku", location: "Bakı, Azərbaycan", theme: "dark" }
+    },
+    {
         id: "blossom", name: "Blossom", category: "wedding", style: "Origami · Zərif", galleryStyle: "masonry", openingStyle: "origami-lotus",
         animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85",
@@ -1523,6 +1534,7 @@ var LUNA_CURATED_PALETTES = {
     "modern-chic": { c1: "#8A8078", c2: "#B0A8A0" },
     "soft-rose": { c1: "#C89AAA", c2: "#E0B8C4" },
     blossom: { c1: "#E8A870", c2: "#F4C89C" },
+    "emerald-royal": { c1: "#0E3B2E", c2: "#C9A86A" },
     "elegant-birthday": { c1: "#B89878", c2: "#D0B08E" },
     "luxury-birthday": { c1: "#C8A0D0", c2: "#E0C0E8" },
     "kids-party": { c1: "#E8C040", c2: "#F4D87E" },
