@@ -252,6 +252,19 @@ const LUNA_PACKAGES = [
 /* ----- TEMPLATES ----- */
 const LUNA_TEMPLATES = [
     {
+        id: "french-blue", name: "French Blue", category: "wedding", style: "Fransız Mavi · Floral", galleryStyle: "editorial", openingStyle: "envelope",
+        animationStyle: "envelope",
+        featured: true,
+        order: -100,
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        experienceType: "standalone",
+        standaloneUrl: "invitation-french-blue.html",
+        layoutConfig: { sectionOrder: ["hero","countdown","location","timeline","dress","gift","rsvp","faq"], heroType: "hero-style-editorial", backgroundStyle: "ivory", openingType: "envelope" },
+        preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "french-blue" }
+    },
+    {
         id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik", galleryStyle: "masonry", openingStyle: "floral-reveal",
         animationStyle: "floral",
         thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
@@ -414,17 +427,6 @@ const LUNA_TEMPLATES = [
         minPackage: "luxury", packages: ["luxury"],
         layoutConfig: { sectionOrder: ["hero","story","gallery","details","countdown","rsvp"], heroType: "hero-style-dark", backgroundStyle: "royal" },
         preview: { eyebrow: "SEHIRLİ DƏVƏT", names: ["Samirə", "Elvin"], date: "23 · 08 · 2026", message: "Sehirli bir gecədə, ulduzların altında əbədi sevgimizi qeyd edəcəyik.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
-    },
-    {
-        id: "french-blue", name: "French Blue", category: "wedding", style: "Fransız Mavi · Floral", galleryStyle: "editorial", openingStyle: "envelope",
-        animationStyle: "envelope",
-        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
-        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
-        minPackage: "luxury", packages: ["luxury"],
-        experienceType: "standalone",
-        standaloneUrl: "invitation-french-blue.html",
-        layoutConfig: { sectionOrder: ["hero","countdown","location","timeline","dress","gift","rsvp","faq"], heroType: "hero-style-editorial", backgroundStyle: "ivory", openingType: "envelope" },
-        preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "french-blue" }
     },
     {
         id: "classic", name: "Classic", category: "engagement", style: "Klassik · Sadə", galleryStyle: "editorial", openingStyle: "envelope",
