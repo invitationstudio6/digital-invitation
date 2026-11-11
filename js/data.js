@@ -416,6 +416,17 @@ const LUNA_TEMPLATES = [
         preview: { eyebrow: "SEHIRLİ DƏVƏT", names: ["Samirə", "Elvin"], date: "23 · 08 · 2026", message: "Sehirli bir gecədə, ulduzların altında əbədi sevgimizi qeyd edəcəyik.", venue: "Boulevard Hotel", location: "Bakı, Azərbaycan", theme: "default" }
     },
     {
+        id: "french-blue", name: "French Blue", category: "wedding", style: "Fransız Mavi · Floral", galleryStyle: "editorial", openingStyle: "envelope",
+        animationStyle: "envelope",
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        experienceType: "standalone",
+        standaloneUrl: "invitation-french-blue.html",
+        layoutConfig: { sectionOrder: ["hero","countdown","location","timeline","dress","gift","rsvp","faq"], heroType: "hero-style-editorial", backgroundStyle: "ivory", openingType: "envelope" },
+        preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "french-blue" }
+    },
+    {
         id: "classic", name: "Classic", category: "engagement", style: "Klassik · Sadə", galleryStyle: "editorial", openingStyle: "envelope",
         animationStyle: "minimal",
         thumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=85",
@@ -1535,6 +1546,7 @@ var LUNA_CURATED_PALETTES = {
     "soft-rose": { c1: "#C89AAA", c2: "#E0B8C4" },
     blossom: { c1: "#E8A870", c2: "#F4C89C" },
     "emerald-royal": { c1: "#0E3B2E", c2: "#C9A86A" },
+    "french-blue": { c1: "#1B2A4A", c2: "#B9C4D6" },
     "elegant-birthday": { c1: "#B89878", c2: "#D0B08E" },
     "luxury-birthday": { c1: "#C8A0D0", c2: "#E0C0E8" },
     "kids-party": { c1: "#E8C040", c2: "#F4D87E" },

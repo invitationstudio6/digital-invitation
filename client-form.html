@@ -1642,6 +1642,13 @@ document.addEventListener("DOMContentLoaded", function(){
             idx = i;
             var t = all[idx];
             if (!t) return;
+            /* Standalone designs (e.g. French Blue) are complete HTML pages,
+               not rendered by data/invitation.html. Open them directly. */
+            if (t.experienceType === "standalone" && t.standaloneUrl) {
+                var absUrl = new URL(t.standaloneUrl, window.location.href).href;
+                window.open(absUrl, "_blank");
+                return;
+            }
             var url = new URL(urlBase.href);
             url.searchParams.set("template", t.id);
             if (selectedOpening) url.searchParams.set("opening", selectedOpening);
@@ -3050,18 +3057,24 @@ document.addEventListener("DOMContentLoaded", function(){
                         });
                     }
 
-                    /* Route to interactive or static viewer */
+                    /* Route to interactive, standalone, or static viewer */
                     var tplData = (typeof LUNA_TEMPLATES !== "undefined") ? LUNA_TEMPLATES.find(function(t) { return t.id === designId; }) : null;
-                    var viewerFile = (tplData && tplData.experienceType === "interactive") ? "data/interactive.html" : "data/invitation.html";
-                    var url = new URL(viewerFile, window.location.href);
-                    url.searchParams.set("id", invitationId);
+                    var viewerUrl;
+                    if (tplData && tplData.experienceType === "standalone" && tplData.standaloneUrl) {
+                        viewerUrl = new URL(tplData.standaloneUrl, window.location.href).href;
+                    } else {
+                        var viewerFile = (tplData && tplData.experienceType === "interactive") ? "data/interactive.html" : "data/invitation.html";
+                        var url = new URL(viewerFile, window.location.href);
+                        url.searchParams.set("id", invitationId);
+                        viewerUrl = url.href;
+                    }
 
                     /* APPROVAL FLOW: link is prepared but NOT revealed.
                        Admin activates it after payment confirmation. */
                     var link = document.getElementById("generatedLink");
-                    link.href = url.href;
-                    link.textContent = url.href;
-                    document.getElementById("openLink").href = url.href;
+                    link.href = viewerUrl;
+                    link.textContent = viewerUrl;
+                    document.getElementById("openLink").href = viewerUrl;
                     link.style.display = "none";
                     var actionsEl = document.querySelector("#resultCard .result-actions");
                     if (actionsEl) actionsEl.style.display = "none";
