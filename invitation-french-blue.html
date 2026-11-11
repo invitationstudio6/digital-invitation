@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laura &amp; Marco — Wedding Invitation</title>
+<meta name="description" content="Laura &amp; Marco invite you to celebrate their wedding on 19 June 2027 at Lake Como, Italy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+/* ========================================================================
+   French Blue Wedding Invitation — Laura & Marco
+   All styles scoped under .invite-wrapper for safe embedding.
+   Palette: cream #FDFBF7 · French navy #1B2A4A · silver #B9C4D6
+   Fonts: Playfair Display (headings) · Montserrat (body)
+   ======================================================================== */
+
+/* 1. Design tokens & base */
+.invite-wrapper {
+  --iv-cream: #FDFBF7;
+  --iv-navy: #1B2A4A;
+  --iv-navy-soft: rgba(27, 42, 74, 0.10);
+  --iv-silver: #B9C4D6;
+  --iv-silver-light: #E8ECF2;
+  --iv-ink: #212A3C;
+  --iv-muted: #5C6B84;
+  --iv-line: rgba(27, 42, 74, 0.14);
+  --iv-radius: 12px;
+  --iv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  min-height: 100dvh;
+  background: var(--iv-cream);
+  color: var(--iv-ink);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.invite-wrapper.iv-no-js .iv-env-overlay { display: none; }
+.invite-wrapper.iv-no-js .iv-invitation { opacity: 1; pointer-events: auto; transform: none; }
+.invite-wrapper a { color: var(--iv-navy); }
+.invite-wrapper button { font-family: inherit; border: none; background: transparent; cursor: pointer; }
+.invite-wrapper .iv-section { padding: 26px 16px; }
+
+/* 3. Section 1 — Envelope opening overlay */
+.invite-wrapper .iv-env-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--iv-cream);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.invite-wrapper .iv-env-stage {
+  position: relative;
+  width: min(88vw, 330px);
+  aspect-ratio: 13 / 9;
+}
+.invite-wrapper .iv-envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: iv-float 5s ease-in-out infinite;
+}
+.invite-wrapper .iv-env-back {
+  position: absolute;
+  inset: 0;
+  background: var(--iv-cream);
+  border: 2.5px solid var(--iv-navy);
+  border-radius: 2px;
+  box-shadow: 0 22px 60px rgba(27, 42, 74, 0.14);
+}
+.invite-wrapper .iv-env-flap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 64%;
+  max-width: 200px;
+  height: 48%;
+  transform: translateX(-50%);
+  background: var(--iv-cream);
+  border: 2.5px solid var(--iv-navy);
+  border-bottom: none;
+  clip-path: polygon(0 0, 100% 0, 50% 80%, 0 0);
+  transform-origin: 50% 0;
+  transform: rotateX(0);
+  transition: transform 0.95s var(--iv-ease);
+  box-shadow: 0 14px 30px rgba(27, 42, 74, 0.12);
+}
+.invite-wrapper .iv-env-overlay.iv-env--open .iv-env-flap {
+  transform: rotateX(-115deg);
+}
+.invite-wrapper .iv-env-overlay.iv-env--open .iv-envelope {
+  transform: scale(0.7);
+  opacity: 0;
+  transition: transform 1s var(--iv-ease), opacity 1s ease;
+}
+.invite-wrapper .iv-env-overlay.iv-env--open .iv-tap-hint { opacity: 0; transition: opacity 0.4s ease; }
+
+/* Ribbon & bow */
+.invite-wrapper .iv-ribbon {
+  position: absolute;
+  background: linear-gradient(180deg, #eef2f7, var(--iv-silver), #eef2f7);
+  border: 1px solid rgba(27, 42, 74, 0.35);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(27, 42, 74, 0.14);
+}
+.invite-wrapper .iv-ribbon-v { top: 12%; left: 50%; width: 11px; height: 76%; transform: translateX(-50%); }
+.invite-wrapper .iv-ribbon-h { left: 12%; top: 50%; width: 76%; height: 11px; transform: translateY(-50%); }
+.invite-wrapper .iv-bow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  width: 1px;
+  height: 1px;
+}
+.invite-wrapper .iv-bow-loop {
+  position: absolute;
+  background: linear-gradient(180deg, #f4f7fb, var(--iv-silver));
+  border: 1px solid rgba(27, 42, 74, 0.35);
+  border-radius: 60% 22% 0 42% / 52% 38% 52% 48%;
+  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.7), 0 2px 5px rgba(27, 42, 74, 0.12);
+}
+.invite-wrapper .iv-loop-lt { top: -13px; left: -22px; width: 26px; height: 34px; transform: rotate(-24deg); transform-origin: right bottom; }
+.invite-wrapper .iv-loop-rt { top: -13px; right: -22px; width: 26px; height: 34px; transform: rotate(24deg); transform-origin: left bottom; }
+.invite-wrapper .iv-bow-center {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 14px;
+  height: 14px;
+  background: var(--iv-navy);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.invite-wrapper .iv-bow-tail {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  width: 10px;
+  height: 28px;
+  background: linear-gradient(180deg, #eef2f7, var(--iv-silver));
+  border: 1px solid rgba(27, 42, 74, 0.35);
+  border-radius: 2px;
+  transform-origin: top center;
+}
+.invite-wrapper .iv-tail-l { transform: translate(-50%, 0) rotate(-9deg); }
+.invite-wrapper .iv-tail-r { transform: translate(-50%, 0) rotate(9deg); }
+
+/* Tap hint */
+.invite-wrapper .iv-tap-hint {
+  position: absolute;
+  bottom: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--iv-navy);
+  animation: iv-pulse 2.2s ease-in-out infinite;
+  z-index: 5;
+}
+
+/* 2. Keyframes */
+/* 4. Section 2 — Hero cover card */
+.invite-wrapper .iv-hero { text-align: center; }
+.invite-wrapper .iv-frame {
+  position: relative;
+  border: 2.5px solid var(--iv-navy);
+  background: var(--iv-cream);
+  padding: 30px 18px 36px;
+}
+.invite-wrapper .iv-corner {
+  position: absolute;
+  z-index: 4;
+  width: 48px;
+  height: 48px;
+}
+.invite-wrapper .iv-corner.tl { top: -14px; left: -14px; }
+.invite-wrapper .iv-corner.tr { top: -14px; right: -14px; transform: rotate(180deg); }
+.invite-wrapper .iv-corner.bl { bottom: -14px; left: -14px; transform: rotate(270deg); }
+.invite-wrapper .iv-corner.br { bottom: -14px; right: -14px; transform: rotate(90deg); }
+.invite-wrapper .iv-vine {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 20px;
+  opacity: 0.75;
+}
+.invite-wrapper .iv-vine-l { left: 4px; transform: translateY(-50%) rotate(120deg); }
+.invite-wrapper .iv-vine-r { right: 4px; transform: translateY(-50%) rotate(-60deg); }
+.invite-wrapper .iv-vine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.1px solid var(--iv-navy);
+  border-radius: 55% 25% 40% 60% / 50% 35% 55% 45%;
+  background: transparent;
+}
+.invite-wrapper .iv-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--iv-navy);
+  margin: 0 0 6px;
+  text-align: center;
+  line-height: 1.4;
+}
+.invite-wrapper .iv-names {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 11vw, 66px);
+  font-weight: 500;
+  line-height: 1.02;
+  color: var(--iv-navy);
+  margin: 0 0 4px;
+  text-align: center;
+  letter-spacing: -1px;
+}
+.invite-wrapper .iv-amp { font-weight: 700; color: rgba(27, 42, 74, 0.6); }
+.invite-wrapper .iv-wedding-date,
+.invite-wrapper .iv-wedding-place {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  text-align: center;
+  margin: 2px 0;
+}
+
+/* 5. Section 3 — Countdown */
+.invite-wrapper .iv-countdown { text-align: center; }
+.invite-wrapper .iv-sec-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 5.5vw, 26px);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: var(--iv-navy);
+  margin: 0 0 6px;
+}
+.invite-wrapper .iv-sec-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  border: 1px solid var(--iv-navy);
+  padding: 1px 8px;
+  border-radius: 5px;
+}
+.invite-wrapper .iv-sec-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  margin: 0 0 26px;
+  text-align: center;
+}
+.invite-wrapper .iv-champagne {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 22px;
+}
+.invite-wrapper .iv-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: -16px;
+  position: relative;
+  z-index: 2;
+}
+.invite-wrapper .iv-glass {
+  width: 24px;
+  height: 28px;
+  border: 1.4px solid var(--iv-navy);
+  border-bottom: none;
+  background: #fff;
+  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0% 100%);
+  position: relative;
+}
+.invite-wrapper .iv-liquid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 11px;
+  background: #E3DCC8;
+  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0% 100%);
+}
+.invite-wrapper .iv-bubble {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.invite-wrapper .iv-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.invite-wrapper .iv-block {
+  border: 1px solid var(--iv-line);
+  background: #fff;
+  padding: 12px 8px;
+  border-radius: 10px;
+  min-width: 56px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(27, 42, 74, 0.06);
+}
+.invite-wrapper .iv-value {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 7vw, 40px);
+  font-weight: 600;
+  color: var(--iv-navy);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.invite-wrapper .iv-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  margin-top: 5px;
+  display: block;
+}
+
+@keyframes iv-float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-7px) } }
+/* 6. Section 4 — Date, time & location (maps) */
+.invite-wrapper .iv-location { text-align: center; }
+.invite-wrapper .iv-venue-grid { display: grid; gap: 18px; margin-top: 6px; }
+.invite-wrapper .iv-venue-card {
+  border: 1.5px solid var(--iv-navy);
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 16px 22px;
+  text-align: left;
+}
+.invite-wrapper .iv-kind {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  display: block;
+  margin-bottom: 10px;
+}
+.invite-wrapper .iv-venue-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--iv-navy);
+  margin: 0 0 4px;
+  letter-spacing: -0.4px;
+}
+.invite-wrapper .iv-when {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--iv-navy);
+  margin: 0 0 5px;
+  display: block;
+}
+.invite-wrapper .iv-addr {
+  font-size: 12px;
+  color: var(--iv-muted);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.invite-wrapper .iv-map-wrap {
+  height: 160px;
+  border: 1px solid var(--iv-line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #F3EFE6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--iv-muted);
+  margin-bottom: 14px;
+  position: relative;
+}
+.invite-wrapper .iv-map { width: 100%; height: 100%; display: block; }
+.invite-wrapper .iv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--iv-navy);
+  color: var(--iv-navy);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: 10px;
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+}
+.invite-wrapper .iv-btn:hover { background: var(--iv-navy); color: #fff; }
+.invite-wrapper .iv-btn-dark { background: var(--iv-navy); color: #fff; }
+.invite-wrapper .iv-btn-dark:hover { opacity: 0.9; }
+
+.invite-wrapper .iv-travel { margin-top: 30px; text-align: left; }
+.invite-wrapper .iv-travel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  margin: 0 0 12px;
+  color: var(--iv-navy);
+}
+.invite-wrapper .iv-travel-grid { display: grid; gap: 10px; }
+.invite-wrapper .iv-travel-item {
+  border: 1px solid var(--iv-line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.invite-wrapper .iv-travel-item strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--iv-navy);
+  margin-bottom: 4px;
+}
+.invite-wrapper .iv-travel-item p { font-size: 12.5px; color: var(--iv-muted); margin: 0; }
+
+/* 7. Section 5 — Timeline / schedule */
+.invite-wrapper .iv-timeline { position: relative; padding-left: 14px; }
+.invite-wrapper .iv-timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: var(--iv-navy);
+}
+.invite-wrapper .iv-timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+  padding-left: 26px;
+}
+.invite-wrapper .iv-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  border: 1.6px solid var(--iv-navy);
+  background: #fff;
+  border-radius: 50%;
+  z-index: 2;
+}
+.invite-wrapper .iv-timeline-item time {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--iv-navy);
+  margin-bottom: 2px;
+}
+.invite-wrapper .iv-timeline-item h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 3px;
+  color: var(--iv-navy);
+}
+.invite-wrapper .iv-timeline-item p { margin: 0; font-size: 12.5px; color: var(--iv-muted); }
+
+/* 8. Section 6 — Dress code */
+.invite-wrapper .iv-dress-card {
+  border: 1.5px solid var(--iv-navy);
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px 20px;
+  text-align: center;
+}
+.invite-wrapper .iv-note {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--iv-navy);
+  margin: 12px 0 4px;
+  text-transform: uppercase;
+}
+.invite-wrapper .iv-note span { font-weight: 400; }
+.invite-wrapper .iv-couple { width: 86px; height: 86px; margin: 22px auto 0; opacity: 0.85; }
+
+@keyframes iv-pulse { 0%, 100% { opacity: 0.55; transform: translateY(0) scale(1) } 50% { opacity: 0.9; transform: translateY(-4px) scale(1.04) } }
+/* 9. Section 7 — Gift list / registry */
+.invite-wrapper .iv-gift { text-align: center; }
+.invite-wrapper .iv-gift-note {
+  font-size: 12.5px;
+  color: var(--iv-muted);
+  margin: 0 0 22px;
+}
+.invite-wrapper .iv-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--iv-navy);
+  color: var(--iv-navy);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 11px 26px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.invite-wrapper .iv-toggle:hover { background: var(--iv-navy); color: #fff; }
+.invite-wrapper .iv-iban-panel {
+  border: 1.5px solid var(--iv-navy);
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: left;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s var(--iv-ease), opacity 0.4s ease;
+  opacity: 0;
+}
+.invite-wrapper .iv-iban-panel.open { max-height: 420px; opacity: 1; }
+.invite-wrapper .iv-iban-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--iv-line);
+  padding: 10px 4px;
+  align-items: center;
+}
+.invite-wrapper .iv-iban-row:last-child { border-bottom: none; }
+.invite-wrapper .iv-iban-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+}
+.invite-wrapper .iv-iban-val {
+  font-size: 12.5px;
+  color: var(--iv-ink);
+  font-variant-numeric: tabular-nums;
+}
+.invite-wrapper .iv-iban-main .iv-iban-val {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--iv-navy);
+}
+.invite-wrapper .iv-copy {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--iv-navy);
+  color: var(--iv-navy);
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+.invite-wrapper .iv-copy:hover { background: var(--iv-navy); color: #fff; }
+.invite-wrapper .iv-copy.copied { background: rgba(27, 42, 74, 0.1); }
+.invite-wrapper .iv-copy-msg {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--iv-navy);
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.invite-wrapper .iv-copy-msg.show { opacity: 1; }
+
+/* 10. Section 8 — RSVP form */
+.invite-wrapper .iv-rsvp { text-align: center; }
+.invite-wrapper .iv-rsvp-form {
+  border: 1.5px solid var(--iv-navy);
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 18px;
+  margin: 0 auto;
+  max-width: 420px;
+}
+.invite-wrapper .iv-field { margin-bottom: 16px; text-align: left; }
+.invite-wrapper .iv-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  margin-bottom: 7px;
+}
+.invite-wrapper .iv-field input,
+.invite-wrapper .iv-field textarea {
+  width: 100%;
+  border: 1px solid var(--iv-line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--iv-cream);
+  color: var(--iv-ink);
+}
+.invite-wrapper .iv-field input:focus,
+.invite-wrapper .iv-field textarea:focus { outline: 2px solid var(--iv-navy); }
+.invite-wrapper .iv-radios {
+  display: flex;
+  gap: 10px;
+  border: 1px solid var(--iv-line);
+  border-radius: 8px;
+  padding: 6px;
+  background: var(--iv-cream);
+}
+.invite-wrapper .iv-radios label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--iv-ink);
+  cursor: pointer;
+  flex: 1;
+}
+.invite-wrapper .iv-radios input { margin: 0; width: 16px; height: 16px; accent-color: var(--iv-navy); }
+.invite-wrapper .iv-rsvp-msg {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--iv-navy);
+  min-height: 20px;
+}
+
+/* 11. Section 9 — FAQ accordion */
+.invite-wrapper .iv-faq { text-align: center; }
+.invite-wrapper .iv-accordion { max-width: 420px; margin: 0 auto; }
+.invite-wrapper .iv-accordion-item {
+  border: 1px solid var(--iv-line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.invite-wrapper .iv-accordion-head {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--iv-navy);
+  letter-spacing: 0.2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.invite-wrapper .iv-accordion-head::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--iv-navy);
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+  transition: transform 0.3s ease;
+}
+.invite-wrapper .iv-accordion-head[aria-expanded='true']::after { transform: rotate(135deg); }
+.invite-wrapper .iv-accordion-panel {
+  padding: 0 16px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--iv-ease), padding 0.3s ease;
+  font-size: 12.5px;
+  color: var(--iv-muted);
+  line-height: 1.55;
+}
+.invite-wrapper .iv-accordion-panel.open { padding: 10px 16px 16px; max-height: 400px; }
+
+/* 12. Footer & sticky bottom nav */
+.invite-wrapper .iv-footer {
+  border-top: 1px solid var(--iv-line);
+  padding: 30px 16px 40px;
+  text-align: center;
+}
+.invite-wrapper .iv-monogram {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 14vw, 72px);
+  font-weight: 700;
+  letter-spacing: -3px;
+  color: var(--iv-navy);
+  margin-bottom: 10px;
+  line-height: 1;
+}
+.invite-wrapper .iv-monogram span {
+  font-size: 0.55em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(27, 42, 74, 0.55);
+}
+.invite-wrapper .iv-closing {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--iv-muted);
+  margin: 0 0 6px;
+  line-height: 1.7;
+}
+.invite-wrapper .iv-closing-date {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+}
+.invite-wrapper .iv-bottombar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(253, 251, 247, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--iv-line);
+  padding: 8px 4px;
+  z-index: 40;
+}
+.invite-wrapper .iv-navlink {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  padding: 10px 6px;
+  border-radius: 10px;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+.invite-wrapper .iv-navlink:hover { color: var(--iv-navy); }
+.invite-wrapper .iv-navlink.iv-active { color: var(--iv-navy); background: rgba(27, 42, 74, 0.07); }
+
+/* 13. Desktop refinements */
+@media (min-width: 640px) {
+  .invite-wrapper .iv-section { padding: 40px 24px; }
+  .invite-wrapper .iv-venue-grid { grid-template-columns: 1fr 1fr; }
+  .invite-wrapper .iv-travel-grid { grid-template-columns: repeat(3, 1fr); }
+  .invite-wrapper .iv-map-wrap { height: 210px; }
+  .invite-wrapper .iv-timeline { padding-left: 18px; }
+  .invite-wrapper .iv-timeline::before { left: 9px; }
+  .invite-wrapper .iv-timeline-item { padding-left: 32px; }
+  .invite-wrapper .iv-timeline-item::before { left: 4px; top: 3px; width: 14px; height: 14px; }
+}
+@media (min-width: 900px) {
+  .invite-wrapper .iv-hero .iv-frame { max-width: 680px; margin-left: auto; margin-right: auto; padding: 44px 30px 56px; }
+  .invite-wrapper .iv-countdown { max-width: 680px; margin-left: auto; margin-right: auto; }
+  .invite-wrapper .iv-location { max-width: 920px; margin-left: auto; margin-right: auto; text-align: left; }
+  .invite-wrapper .iv-location .iv-sec-title { justify-content: flex-start; }
+  .invite-wrapper .iv-location .iv-sec-sub { text-align: left; }
+}
+
+/* 14. Reveal-on-scroll + reduced motion */
+.invite-wrapper .iv-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--iv-ease), transform 0.7s var(--iv-ease);
+}
+.invite-wrapper .iv-reveal.iv-revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .invite-wrapper .iv-env-flap,
+  .invite-wrapper .iv-envelope,
+  .invite-wrapper .iv-tap-hint,
+  .invite-wrapper .iv-iban-panel,
+  .invite-wrapper .iv-accordion-panel,
+  .invite-wrapper .iv-reveal { transition: none !important; animation: none !important; }
+  .invite-wrapper .iv-reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="invite-wrapper iv-no-js" id="ivApp">
+
+  <!-- ===== SECTION 1 — ENVELOPE OPENING OVERLAY ===== -->
+  <div class="iv-env-overlay" id="ivEnvOverlay" role="button" tabindex="0" aria-label="Open the invitation">
+    <div class="iv-env-stage">
+      <div class="iv-envelope" id="ivEnvelope">
+        <div class="iv-env-back"></div>
+        <div class="iv-env-flap" id="ivEnvFlap"></div>
+        <div class="iv-ribbon iv-ribbon-v"></div>
+        <div class="iv-ribbon iv-ribbon-h"></div>
+        <div class="iv-bow">
+          <div class="iv-bow-loop iv-loop-lt"></div>
+          <div class="iv-bow-loop iv-loop-rt"></div>
+          <div class="iv-bow-center"></div>
+          <div class="iv-bow-tail iv-tail-l"></div>
+          <div class="iv-bow-tail iv-tail-r"></div>
+        </div>
+      </div>
+      <p class="iv-tap-hint" id="ivTapHint">TAP TO OPEN</p>
+    </div>
+  </div>
+
+  <div class="iv-invitation" id="ivInvitation" aria-hidden="true">
+    <!-- ===== SECTION 2 — HERO COVER CARD ===== -->
+    <section class="iv-section iv-reveal iv-hero" id="ivHero">
+      <div class="iv-frame">
+        <svg class="iv-floral-svg iv-corner tl" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(0 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(60 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(120 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(180 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(240 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(300 24 24)" />
+          <circle class="iv-center" cx="24" cy="24" r="2" />
+          <ellipse class="iv-leaf" cx="14" cy="34" rx="3.2" ry="7.4" transform="rotate(-26 14 34)" />
+          <ellipse class="iv-leaf" cx="34" cy="34" rx="3.2" ry="7.4" transform="rotate(26 34 34)" />
+        </svg>
+        <svg class="iv-floral-svg iv-corner tr" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(0 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(60 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(120 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(180 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(240 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(300 24 24)" />
+          <circle class="iv-center" cx="24" cy="24" r="2" />
+          <ellipse class="iv-leaf" cx="14" cy="34" rx="3.2" ry="7.4" transform="rotate(-26 14 34)" />
+          <ellipse class="iv-leaf" cx="34" cy="34" rx="3.2" ry="7.4" transform="rotate(26 34 34)" />
+        </svg>
+        <svg class="iv-floral-svg iv-corner bl" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(0 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(60 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(120 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(180 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(240 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(300 24 24)" />
+          <circle class="iv-center" cx="24" cy="24" r="2" />
+          <ellipse class="iv-leaf" cx="14" cy="34" rx="3.2" ry="7.4" transform="rotate(-26 14 34)" />
+          <ellipse class="iv-leaf" cx="34" cy="34" rx="3.2" ry="7.4" transform="rotate(26 34 34)" />
+        </svg>
+        <svg class="iv-floral-svg iv-corner br" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(0 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(60 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(120 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(180 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(240 24 24)" />
+          <ellipse class="iv-petal" cx="24" cy="12" rx="2.8" ry="6.6" transform="rotate(300 24 24)" />
+          <circle class="iv-center" cx="24" cy="24" r="2" />
+          <ellipse class="iv-leaf" cx="14" cy="34" rx="3.2" ry="7.4" transform="rotate(-26 14 34)" />
+          <ellipse class="iv-leaf" cx="34" cy="34" rx="3.2" ry="7.4" transform="rotate(26 34 34)" />
+        </svg>
+        <div class="iv-vine iv-vine-l"></div>
+        <div class="iv-vine iv-vine-r"></div>
+        <p class="iv-eyebrow">WITH ALL OUR LOVE<br>WE INVITE YOU</p>
+        <h1 class="iv-names">Laura <span class="iv-amp">&amp;</span> Marco</h1>
+        <p class="iv-wedding-date">19 · 06 · 2027</p>
+        <p class="iv-wedding-place">Lake Como · Italy</p>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3 — COUNTDOWN ===== -->
+    <section class="iv-section iv-reveal iv-countdown" id="ivCountdown">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">02</span>THE COUNTDOWN</h2>
+      <p class="iv-sec-sub">Forever begins in</p>
+      <div class="iv-champagne" aria-label="Champagne tower illustration">
+        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div><div class="iv-bubble" style="left:6px;top:6px;width:3px;height:3px"></div><div class="iv-bubble" style="left:16px;top:14px;width:2px;height:2px"></div></div></div>
+        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
+        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
+        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
+      </div>
+      <div class="iv-blocks">
+        <div class="iv-block"><span class="iv-value" data-unit="d">00</span><span class="iv-label">DAYS</span></div>
+        <div class="iv-block"><span class="iv-value" data-unit="h">00</span><span class="iv-label">HOURS</span></div>
+        <div class="iv-block"><span class="iv-value" data-unit="m">00</span><span class="iv-label">MINUTES</span></div>
+        <div class="iv-block"><span class="iv-value" data-unit="s">00</span><span class="iv-label">SECONDS</span></div>
+      </div>
+    </section>
+    <!-- ===== SECTION 4 — DATE, TIME & LOCATION ===== -->
+    <section class="iv-section iv-reveal iv-location" id="ivLocation">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">04</span>THE VENUE</h2>
+      <div class="iv-venue-grid">
+        <article class="iv-venue-card">
+          <span class="iv-kind">Ceremony</span>
+          <h3>Villa Carlotta</h3>
+          <span class="iv-when">19 · 06 · 2027 · 15:30</span>
+          <p class="iv-addr">Via Garibaldi, 2 · Tremezzo · Lake Como · Italy</p>
+          <div class="iv-map-wrap">
+            <div class="iv-map" id="ivMapCeremony">Loading map…</div>
+          </div>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Villa+Carlotta,+Tremezzo,+Italy" class="iv-btn iv-btn-dark" target="_blank" rel="noopener">Get directions</a>
+        </article>
+        <article class="iv-venue-card">
+          <span class="iv-kind">Reception</span>
+          <h3>Grand Hotel Tremezzo</h3>
+          <span class="iv-when">19 · 06 · 2027 · 20:00</span>
+          <p class="iv-addr">Via Regina, 52 · Tremezzo · Lake Como · Italy</p>
+          <div class="iv-map-wrap">
+            <div class="iv-map" id="ivMapReception">Loading map…</div>
+          </div>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Grand+Hotel+Tremezzo,+Tremezzo,+Italy" class="iv-btn iv-btn-dark" target="_blank" rel="noopener">Get directions</a>
+        </article>
+      </div>
+      <div class="iv-travel">
+        <h3>Travel tips</h3>
+        <div class="iv-travel-grid">
+          <div class="iv-travel-item">
+            <strong>By car</strong>
+            <p>A9 motorway, Como Nord exit; follow signs to Tremezzo. Limited venue parking — valet available.</p>
+          </div>
+          <div class="iv-travel-item">
+            <strong>By train</strong>
+            <p>Como San Giovanni station, then taxi or bus C10 to Tremezzo (about 10 minutes).</p>
+          </div>
+          <div class="iv-travel-item">
+            <strong>Parking</strong>
+            <p>Public parking at Piazza Tremezzo; hotel valet for reception guests.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ===== SECTION 5 — TIMELINE / SCHEDULE ===== -->
+    <section class="iv-section iv-reveal iv-timeline" id="ivTimeline">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">05</span>SCHEDULE OF THE DAY</h2>
+      <ul class="iv-timeline-list">
+        <li class="iv-timeline-item">
+          <time>14:30</time>
+          <div class="iv-timeline-content">
+            <h3>Guest arrival</h3>
+            <p>Aperitivo and welcome drinks on the Villa Carlotta terrace.</p>
+          </div>
+        </li>
+        <li class="iv-timeline-item">
+          <time>15:30</time>
+          <div class="iv-timeline-content">
+            <h3>Civil ceremony</h3>
+            <p>Vows in the garden overlooking Lake Como, followed by the first toast.</p>
+          </div>
+        </li>
+        <li class="iv-timeline-item">
+          <time>17:00</time>
+          <div class="iv-timeline-content">
+            <h3>Cocktails &amp; photos</h3>
+            <p>Champagne tower and garden portraits with the wedding party.</p>
+          </div>
+        </li>
+        <li class="iv-timeline-item">
+          <time>20:00</time>
+          <div class="iv-timeline-content">
+            <h3>Dinner &amp; celebrations</h3>
+            <p>Reception dinner at Grand Hotel Tremezzo, wedding cake and dancing.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== SECTION 6 — DRESS CODE ===== -->
+    <section class="iv-section iv-reveal iv-dress" id="ivDress">
+      <div class="iv-dress-card">
+        <h2 class="iv-sec-title"><span class="iv-sec-num">03</span>Dress code</h2>
+        <h3>Formal elegance</h3>
+        <p class="iv-note">Please avoid white <span>— it is reserved for the bride</span></p>
+        <svg class="iv-couple" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <circle cx="34" cy="30" r="11" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M34 41 L26 62 L34 78" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M26 55 L42 59" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" />
+          <circle cx="66" cy="30" r="11" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M66 41 L74 62 L66 78" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M74 55 L58 59" fill="none" stroke="#1B2A4A" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M48 52 Q50 46 52 52" fill="none" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+    </section>
+    <!-- ===== SECTION 7 — GIFT LIST / REGISTRY ===== -->
+    <section class="iv-section iv-reveal iv-gift" id="ivGift">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">06</span>Gift list</h2>
+      <p class="iv-gift-note">Your presence is the only gift we wish for. If you would like to contribute to our honeymoon fund, bank details are below.</p>
+      <button class="iv-toggle" id="ivToggleIban" aria-expanded="false" aria-controls="ivIbanPanel">SHOW IBAN</button>
+      <div class="iv-iban-panel" id="ivIbanPanel" aria-hidden="true">
+        <div class="iv-iban-row">
+          <span class="iv-iban-label">Account holder</span>
+          <span class="iv-iban-val">Laura &amp; Marco</span>
+        </div>
+        <div class="iv-iban-row iv-iban-main">
+          <span class="iv-iban-label">IBAN</span>
+          <span class="iv-iban-val" id="ivIbanValue">IT60&nbsp;X054&nbsp;2811&nbsp;1010&nbsp;0000&nbsp;0012&nbsp;345</span>
+          <button class="iv-copy" id="ivCopyBtn">COPY</button>
+        </div>
+        <div class="iv-iban-row">
+          <span class="iv-iban-label">Bank</span>
+          <span class="iv-iban-val">Banca Popolare di Sondrio · Tremezzo branch</span>
+        </div>
+        <div class="iv-iban-row">
+          <span class="iv-iban-label">SWIFT</span>
+          <span class="iv-iban-val">POSOIT22</span>
+        </div>
+        <p class="iv-copy-msg" id="ivCopyMsg">Copied!</p>
+      </div>
+    </section>
+    <!-- ===== SECTION 8 — RSVP ===== -->
+    <section class="iv-section iv-reveal iv-rsvp" id="ivRsvp">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">07</span>RSVP</h2>
+      <form id="ivRsvpForm" class="iv-rsvp-form">
+        <div class="iv-field">
+          <label for="ivNames">Guest names</label>
+          <input id="ivNames" type="text" name="names" placeholder="e.g. Laura Rossi &amp; guest" required />
+        </div>
+        <div class="iv-field">
+          <label>Attendance</label>
+          <div class="iv-radios">
+            <label><input type="radio" name="attendance" value="yes" checked required /> We’ll be there</label>
+            <label><input type="radio" name="attendance" value="no" required /> Can’t make it</label>
+          </div>
+        </div>
+        <div class="iv-field">
+          <label for="ivDietary">Dietary requirements</label>
+          <textarea id="ivDietary" name="dietary" rows="3" placeholder="Allergies or preferences…"></textarea>
+        </div>
+        <button type="submit" class="iv-btn iv-btn-dark" id="ivRsvpBtn">SEND RSVP</button>
+      </form>
+      <p class="iv-rsvp-msg" id="ivRsvpMsg"></p>
+    </section>
+
+    <!-- ===== SECTION 9 — FAQ ===== -->
+    <section class="iv-section iv-reveal iv-faq" id="ivFaq">
+      <h2 class="iv-sec-title">Guest FAQ</h2>
+      <div class="iv-accordion">
+        <div class="iv-accordion-item">
+          <button class="iv-accordion-head" aria-expanded="false" aria-controls="ivFaq1" id="ivQ1">Can I bring a plus one?</button>
+          <div class="iv-accordion-panel" id="ivFaq1">Yes — please include their name when you RSVP so we can prepare a place at the table.</div>
+        </div>
+        <div class="iv-accordion-item">
+          <button class="iv-accordion-head" aria-expanded="false" aria-controls="ivFaq2" id="ivQ2">Where can we stay nearby?</button>
+          <div class="iv-accordion-panel" id="ivFaq2">Grand Hotel Tremezzo (our reception venue) holds a room block for guests. Other lovely options nearby: Hotel Bellevue &amp; Suite and Villa Sosta. We are happy to help with bookings.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="iv-footer iv-reveal">
+      <div class="iv-monogram">L<span>&amp;</span>M</div>
+      <p class="iv-closing">With all our love,<br>Laura &amp; Marco</p>
+      <p class="iv-closing-date">19 · 06 · 2027 · Lake Como · Italy</p>
+    </footer>
+
+    <nav class="iv-bottombar" aria-label="Quick links">
+      <a href="#ivHero" class="iv-navlink iv-active">HOME</a>
+      <a href="#ivLocation" class="iv-navlink">LOCATION</a>
+      <a href="#ivGift" class="iv-navlink">GIFT LIST</a>
+      <a href="#ivRsvp" class="iv-navlink">RSVP</a>
+    </nav>
+  </div>
+<script>
+/* ========================================================================
+   French Blue Wedding Invitation — vanilla JS
+   ======================================================================== */
+(function () {
+  'use strict';
+
+  var wrapper = document.getElementById('ivApp');
+  if (wrapper) {
+    wrapper.classList.remove('iv-no-js');
+    wrapper.classList.add('iv-js');
+  }
+
+  /* ---------- Section 1 — Envelope opening ---------- */
+  var overlay = document.getElementById('ivEnvOverlay');
+  var invitation = document.getElementById('ivInvitation');
+  var flap = document.getElementById('ivEnvFlap');
+  var hint = document.getElementById('ivTapHint');
+  var opened = false;
+
+  function openInvitation() {
+    if (opened) return;
+    opened = true;
+    overlay.classList.add('iv-env--open');
+    if (hint) hint.style.opacity = '0';
+
+    flap.addEventListener('transitionend', function onFlapEnd() {
+      flap.removeEventListener('transitionend', onFlapEnd);
+      setTimeout(function () {
+        overlay.style.display = 'none';
+        invitation.removeAttribute('aria-hidden');
+        invitation.classList.add('iv-active');
+        startCountdown();
+        initMaps();
+        observeReveals();
+        observeNav();
+      }, 120);
+    }, { once: true });
+  }
+
+  if (overlay) {
+    overlay.addEventListener('pointerup', openInvitation);
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openInvitation();
+      }
+    });
+  }
+
+  /* ---------- Section 3 — Live countdown ---------- */
+  function startCountdown() {
+    var target = new Date('2027-06-19T15:00:00').getTime();
+    var els = {
+      d: document.querySelector('#ivCountdown [data-unit="d"]'),
+      h: document.querySelector('#ivCountdown [data-unit="h"]'),
+      m: document.querySelector('#ivCountdown [data-unit="m"]'),
+      s: document.querySelector('#ivCountdown [data-unit="s"]')
+    };
+    var sub = document.querySelector('#ivCountdown .iv-sec-sub');
+    var timer;
+
+    function tick() {
+      var diff = Math.max(0, target - Date.now());
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+
+      if (els.d) els.d.textContent = d;
+      if (els.h) els.h.textContent = String(h).padStart(2, '0');
+      if (els.m) els.m.textContent = String(m).padStart(2, '0');
+      if (els.s) els.s.textContent = String(s).padStart(2, '0');
+
+      if (diff <= 0) {
+        clearInterval(timer);
+        if (sub) sub.textContent = 'The day has arrived';
+      }
+    }
+    tick();
+    timer = setInterval(tick, 1000);
+  }
+  /* ---------- Section 4 — Interactive maps (Leaflet) ---------- */
+  function initMaps() {
+    if (typeof L === 'undefined') return;
+    try {
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
+      });
+      var venues = [
+        { id: 'ivMapCeremony', lat: [45.9957, 9.2138], name: 'Villa Carlotta' },
+        { id: 'ivMapReception', lat: [45.9972, 9.2156], name: 'Grand Hotel Tremezzo' }
+      ];
+      venues.forEach(function (v) {
+        var map = L.map(v.id, {
+          scrollWheelZoom: false,
+          zoomControl: false,
+          attributionControl: false
+        }).setView(v.lat, 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.marker(v.lat).addTo(map).bindPopup(v.name).openPopup();
+        setTimeout(function () { map.invalidateSize(); }, 50);
+      });
+    } catch (e) {
+      console.warn('Map init failed:', e);
+    }
+  }
+
+  /* ---------- Reveal sections on scroll ---------- */
+  function observeReveals() {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('iv-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('#ivApp .iv-reveal').forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
+  /* ---------- Sticky bottom nav: scroll spy + smooth scroll ---------- */
+  function observeNav() {
+    var links = Array.from(document.querySelectorAll('#ivApp .iv-navlink'));
+    var ids = links.map(function (a) { return a.getAttribute('href').slice(1); }).filter(Boolean);
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = document.querySelector('#ivApp .iv-navlink[href="#' + entry.target.id + '"]');
+        if (link) {
+          entry.isIntersecting ? link.classList.add('iv-active') : link.classList.remove('iv-active');
+        }
+      });
+    }, { threshold: 0.28, rootMargin: '-12% 0% -66% 0%' });
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var el = document.getElementById(a.getAttribute('href').slice(1));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('#ivApp .iv-accordion-head').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', !expanded);
+      panel.classList.toggle('open', !expanded);
+    });
+  });
+
+  /* ---------- Section 7 — IBAN toggle + copy ---------- */
+  var toggle = document.getElementById('ivToggleIban');
+  var panel = document.getElementById('ivIbanPanel');
+  if (toggle && panel) {
+    toggle.addEventListener('click', function () {
+      var showing = panel.classList.toggle('open');
+      toggle.textContent = showing ? 'HIDE IBAN' : 'SHOW IBAN';
+      toggle.setAttribute('aria-expanded', showing);
+      panel.setAttribute('aria-hidden', !showing);
+    });
+  }
+
+  var copyBtn = document.getElementById('ivCopyBtn');
+  var copyMsg = document.getElementById('ivCopyMsg');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var value = document.getElementById('ivIbanValue').textContent.replace(/\u00a0/g, ' ').trim();
+      navigator.clipboard.writeText(value).then(function () {
+        copyBtn.classList.add('copied');
+        copyBtn.textContent = 'COPIED!';
+        if (copyMsg) copyMsg.classList.add('show');
+        setTimeout(function () {
+          copyBtn.classList.remove('copied');
+          copyBtn.textContent = 'COPY';
+          if (copyMsg) copyMsg.classList.remove('show');
+        }, 1800);
+      }, function () {
+        copyBtn.textContent = 'Copy failed';
+        setTimeout(function () { copyBtn.textContent = 'COPY'; }, 1500);
+      });
+    });
+  }
+
+  /* ---------- Section 8 — RSVP form ---------- */
+  var form = document.getElementById('ivRsvpForm');
+  var msg = document.getElementById('ivRsvpMsg');
+  var rsvpBtn = document.getElementById('ivRsvpBtn');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var yes = data.get('attendance') === 'yes';
+      rsvpBtn.textContent = 'SENDING…';
+      rsvpBtn.disabled = true;
+      setTimeout(function () {
+        rsvpBtn.textContent = 'SEND RSVP';
+        rsvpBtn.disabled = false;
+        if (msg) {
+          msg.textContent = yes
+            ? 'Thank you — we can’t wait to celebrate with you!'
+            : 'We’ll miss you — thank you for letting us know.';
+        }
+        setTimeout(function () {
+          if (msg) msg.textContent = '';
+          form.reset();
+        }, 3500);
+      }, 900);
+    });
+  }
+})();
+</script>
+</div>
+</body>
+</html>
