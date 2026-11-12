@@ -4116,11 +4116,11 @@ function getVideoInfo(url) {
         allCards = JSON.parse(localStorage.getItem("luna_greeting_cards") || "[]");
     } catch (e) {}
 
-    // Təşəkkür kartları — masaüstündeki "luna invitations" folderundan
+    // Təşəkkür kartları — repo-daki img/thank-you-cards folderundan
     allCards.push(
-        { kind: "thankyou", title: "Brown Elegant Dinner Party", image: "../luna invitations/dəvətnamə kartları, paylama kartları/2.png", description: "Təşəkkür kartı", order: 1 },
-        { kind: "thankyou", title: "Nuray 45 Yaş", image: "../luna invitations/dəvətnamə kartları, paylama kartları/3.png", description: "Təşəkkür kartı", order: 2 },
-        { kind: "thankyou", title: "Nərmin's Birthday Party", image: "../luna invitations/dəvətnamə kartları, paylama kartları/4.png", description: "Təşəkkür kartı", order: 3 }
+        { kind: "thankyou", title: "Brown Elegant Dinner Party", image: "img/thank-you-cards/2.png", description: "Təşəkkür kartı", order: 1 },
+        { kind: "thankyou", title: "Nuray 45 Yaş", image: "img/thank-you-cards/3.png", description: "Təşəkkür kartı", order: 2 },
+        { kind: "thankyou", title: "Nərmin's Birthday Party", image: "img/thank-you-cards/4.png", description: "Təşəkkür kartı", order: 3 }
     );
 
     renderCards();
