@@ -169,10 +169,10 @@
   display: grid;
   place-items: start center;
   transform: translateY(3%) scale(0.985);
-  transition: transform 1s cubic-bezier(0.2, 0.85, 0.25, 1) 0.9s, box-shadow 1s ease 0.9s;
+  transition: transform 1.1s cubic-bezier(0.2, 0.85, 0.25, 1) 0.65s, box-shadow 1.1s ease 0.65s;
 }
 .invite-wrapper .iv-env--open .iv-env-card {
-  transform: translateY(-70%) scale(1.02) rotate(-1.1deg);
+  transform: translateY(-76%) scale(1.02) rotate(-1.1deg);
   box-shadow: 0 18px 30px rgba(27, 42, 74, 0.2);
 }
 .invite-wrapper .iv-ec-inner {
@@ -262,40 +262,57 @@
   position: absolute;
   display: block;
   border-radius: 1px;
+  /* a soft satin sheen — one gentle ridge, not a hard specular pipe */
   background-image: linear-gradient(90deg,
-    #93a1b7 0%, #b6c2d4 6%, #e4ebf5 16%, #ffffff 26%, #dee6f1 34%,
-    #c1ccdc 44%, #eef3fa 54%, #ffffff 62%, #d2dbe8 72%, #a8b5c8 86%, #94a2b8 100%);
+    #b6c3d6 0%, #c8d4e4 5%, #dde7f3 13%, #eff5fb 24%, #fbfdff 33%,
+    #f6fafd 43%, #e6eef7 55%, #d6e1ee 68%, #c9d5e4 82%, #c0cddd 93%, #bcc9da 100%);
   box-shadow:
-    0 2px 3px rgba(27, 42, 74, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+    0 1px 2px rgba(27, 42, 74, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.26);
+}
+/* the ribbon turning around the envelope edge */
+.invite-wrapper .iv-ribbon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(27, 42, 74, 0.26) 0%, rgba(27, 42, 74, 0) 6%,
+    rgba(27, 42, 74, 0) 94%, rgba(27, 42, 74, 0.26) 100%);
 }
 /* fine satin ribbing */
 .invite-wrapper .iv-ribbon::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0 1px, rgba(27, 42, 74, 0.07) 1px 3px);
-  opacity: 0.22;
+  background-image: repeating-linear-gradient(90deg,
+    rgba(255, 255, 255, 0.42) 0 1px, rgba(27, 42, 74, 0.06) 1px 2.5px);
+  opacity: 0.15;
 }
 .invite-wrapper .iv-ribbon-v {
-  top: -3%;
-  left: 50%;
-  width: 25px;
-  height: 106%;
-  transform: translateX(-50%);
+  top: -1%;
+  left: calc(50% - 10.5px);
+  width: 21px;
+  height: 102%;
+  transform-origin: 50% 0;
 }
 .invite-wrapper .iv-ribbon-h {
-  left: -3%;
-  top: 50%;
-  width: 106%;
-  height: 25px;
-  transform: translateY(-50%);
+  left: -1%;
+  top: calc(50% - 10.5px);
+  width: 102%;
+  height: 21px;
+  transform-origin: 0 50%;
   background-image: linear-gradient(180deg,
-    #93a1b7 0%, #b6c2d4 6%, #e4ebf5 16%, #ffffff 26%, #dee6f1 34%,
-    #c1ccdc 44%, #eef3fa 54%, #ffffff 62%, #d2dbe8 72%, #a8b5c8 86%, #94a2b8 100%);
+    #b6c3d6 0%, #c8d4e4 5%, #dde7f3 13%, #eff5fb 24%, #fbfdff 33%,
+    #f6fafd 43%, #e6eef7 55%, #d6e1ee 68%, #c9d5e4 82%, #c0cddd 93%, #bcc9da 100%);
+}
+.invite-wrapper .iv-ribbon-h::before {
+  background: linear-gradient(90deg,
+    rgba(27, 42, 74, 0.26) 0%, rgba(27, 42, 74, 0) 6%,
+    rgba(27, 42, 74, 0) 94%, rgba(27, 42, 74, 0.26) 100%);
 }
 .invite-wrapper .iv-ribbon-h::after {
-  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0 1px, rgba(27, 42, 74, 0.07) 1px 3px);
+  background-image: repeating-linear-gradient(0deg,
+    rgba(255, 255, 255, 0.42) 0 1px, rgba(27, 42, 74, 0.06) 1px 2.5px);
 }
 
 /* --- the satin bow (inline SVG so the loops can fold) --- */
@@ -309,67 +326,75 @@
   z-index: 6;
   overflow: visible;
   pointer-events: none;
-  filter: drop-shadow(0 3px 3px rgba(27, 42, 74, 0.22));
+  filter: drop-shadow(0 2px 2px rgba(27, 42, 74, 0.16));
 }
-.invite-wrapper .iv-bow g { transform-box: fill-box; }
-.invite-wrapper .iv-bow path,
-.invite-wrapper .iv-bow ellipse {
-  stroke: rgba(120, 136, 160, 0.3);
-  stroke-width: 0.7;
-}
-.invite-wrapper .iv-loop-lt { transform-origin: 100% 50%; }
-.invite-wrapper .iv-loop-rt { transform-origin: 0% 50%; }
-.invite-wrapper .iv-bow-tail { transform-origin: 50% 3%; }
-.invite-wrapper .iv-bow-knot { transform-origin: 50% 50%; }
+/* everything pivots on the knot, in viewBox coordinates */
+.invite-wrapper .iv-bow g { transform-box: view-box; }
+.invite-wrapper .iv-loop-lt,
+.invite-wrapper .iv-loop-rt { transform-origin: 120px 78px; }
+.invite-wrapper .iv-bow-tail { transform-origin: 120px 82px; }
+.invite-wrapper .iv-bow-knot { transform-origin: 120px 78px; }
 
 /* ===== phase 1 — the satin bow comes undone ===== */
-.invite-wrapper .iv-env--untie .iv-bow-knot { animation: iv-knot-out 0.55s 0.78s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-loop-lt { animation: iv-loop-out-l 0.95s 0.04s cubic-bezier(0.4, 0, 0.35, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-loop-rt { animation: iv-loop-out-r 0.95s 0.2s cubic-bezier(0.4, 0, 0.35, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-tail-l { animation: iv-tail-out-l 0.95s 0.26s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-tail-r { animation: iv-tail-out-r 0.95s 0.42s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-ribbon-v { animation: iv-band-off-v 0.95s 0.5s cubic-bezier(0.55, 0.06, 0.35, 1) forwards; }
-.invite-wrapper .iv-env--untie .iv-ribbon-h { animation: iv-band-off-h 0.95s 0.62s cubic-bezier(0.55, 0.06, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-bow-knot { animation: iv-knot-out 0.5s 0.58s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-loop-lt { animation: iv-loop-out-l 0.9s 0.02s cubic-bezier(0.45, 0, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-loop-rt { animation: iv-loop-out-r 0.9s 0.16s cubic-bezier(0.45, 0, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-tail-l { animation: iv-tail-out-l 0.9s 0.22s cubic-bezier(0.4, 0, 0.32, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-tail-r { animation: iv-tail-out-r 0.9s 0.34s cubic-bezier(0.4, 0, 0.32, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-ribbon-v { animation: iv-band-off-v 0.55s 0.56s cubic-bezier(0.45, 0, 0.85, 0.55) forwards; }
+.invite-wrapper .iv-env--untie .iv-ribbon-h { animation: iv-band-off-h 0.55s 0.66s cubic-bezier(0.45, 0, 0.85, 0.55) forwards; }
+/* the paper gives a little under the pull */
+.invite-wrapper .iv-env--untie .iv-env-body { animation: iv-env-press 0.6s ease-out; }
+/* the shadows baked into the bow SVG must leave with it */
+.invite-wrapper .iv-env--untie .iv-bow { animation: iv-bow-gone 0.4s 0.8s ease-out forwards; }
 
+@keyframes iv-env-press {
+  0%   { transform: scale(1); }
+  38%  { transform: scale(0.993, 0.99); }
+  100% { transform: scale(1); }
+}
+@keyframes iv-bow-gone {
+  to { opacity: 0; }
+}
 @keyframes iv-knot-out {
-  0%   { transform: scale(1); opacity: 1; }
-  35%  { transform: scale(1.16, 0.84); opacity: 1; }
-  70%  { transform: scale(0.92, 0.92); opacity: 1; }
-  100% { transform: scale(0.42) translateY(16px); opacity: 0; }
+  0%   { transform: scale(1) translateY(0); opacity: 1; }
+  38%  { transform: scale(1.1, 0.84) translateY(1px); opacity: 1; }
+  72%  { transform: scale(0.9) translateY(4px); opacity: 1; }
+  100% { transform: scale(0.5) translateY(15px); opacity: 0; }
 }
 @keyframes iv-loop-out-l {
-  0%   { transform: rotate(0deg) translate(0, 0) scale(1); opacity: 1; }
-  22%  { transform: rotate(-6deg) translate(-4px, 1px) scale(1.03, 0.95); opacity: 1; }
-  62%  { transform: rotate(-30deg) translate(-20px, 11px) scale(0.9, 0.72); opacity: 1; }
-  100% { transform: rotate(-56deg) translate(-38px, 30px) scale(0.62, 0.34); opacity: 0; }
+  0%   { transform: rotate(0deg) translate(0, 0) scale(1, 1); opacity: 1; }
+  16%  { transform: rotate(-2deg) translate(3px, 1px) scale(0.97, 1.02); opacity: 1; }
+  48%  { transform: rotate(-14deg) translate(-8px, 5px) scale(0.92, 0.86); opacity: 1; }
+  100% { transform: rotate(-46deg) translate(-30px, 33px) scale(0.5, 0.22); opacity: 0; }
 }
 @keyframes iv-loop-out-r {
-  0%   { transform: rotate(0deg) translate(0, 0) scale(1); opacity: 1; }
-  22%  { transform: rotate(6deg) translate(4px, 1px) scale(1.03, 0.95); opacity: 1; }
-  62%  { transform: rotate(30deg) translate(20px, 11px) scale(0.9, 0.72); opacity: 1; }
-  100% { transform: rotate(56deg) translate(38px, 30px) scale(0.62, 0.34); opacity: 0; }
+  0%   { transform: rotate(0deg) translate(0, 0) scale(1, 1); opacity: 1; }
+  16%  { transform: rotate(2deg) translate(-3px, 1px) scale(0.97, 1.02); opacity: 1; }
+  48%  { transform: rotate(14deg) translate(8px, 5px) scale(0.92, 0.86); opacity: 1; }
+  100% { transform: rotate(46deg) translate(30px, 33px) scale(0.5, 0.22); opacity: 0; }
 }
 @keyframes iv-tail-out-l {
-  0%   { transform: rotate(0deg) translateY(0); opacity: 1; }
-  30%  { transform: rotate(-5deg) translateY(4px); opacity: 1; }
-  100% { transform: rotate(-24deg) translate(-12px, 46px); opacity: 0; }
+  0%   { transform: rotate(0deg) translate(0, 0) scaleY(1); opacity: 1; }
+  20%  { transform: rotate(-2deg) translate(0, 3px) scaleY(0.98); opacity: 1; }
+  100% { transform: rotate(-13deg) translate(-9px, 38px) scaleY(0.9); opacity: 0; }
 }
 @keyframes iv-tail-out-r {
-  0%   { transform: rotate(0deg) translateY(0); opacity: 1; }
-  30%  { transform: rotate(5deg) translateY(4px); opacity: 1; }
-  100% { transform: rotate(24deg) translate(12px, 46px); opacity: 0; }
+  0%   { transform: rotate(0deg) translate(0, 0) scaleY(1); opacity: 1; }
+  20%  { transform: rotate(2deg) translate(0, 3px) scaleY(0.98); opacity: 1; }
+  100% { transform: rotate(13deg) translate(9px, 38px) scaleY(0.9); opacity: 0; }
 }
 @keyframes iv-band-off-v {
-  0%   { transform: translateX(-50%) translateY(0); opacity: 1; }
-  12%  { transform: translateX(-50%) translateY(-1.5%) scaleY(1.015); opacity: 1; }
-  72%  { transform: translateX(-50%) translateY(74%) rotate(1.2deg); opacity: 1; }
-  100% { transform: translateX(-50%) translateY(108%) rotate(2deg); opacity: 0; }
+  0%   { transform: translateY(0) scaleX(1); opacity: 1; }
+  12%  { transform: translateY(-1.2%) scaleX(1); opacity: 1; }
+  34%  { transform: translateY(26%) scaleX(0.82); opacity: 1; }
+  100% { transform: translateY(76%) scaleX(0.3); opacity: 0; }
 }
 @keyframes iv-band-off-h {
-  0%   { transform: translateY(-50%) translateX(0); opacity: 1; }
-  12%  { transform: translateY(-50%) translateX(-1.5%) scaleX(1.015); opacity: 1; }
-  72%  { transform: translateY(-50%) translateX(74%) rotate(-1.2deg); opacity: 1; }
-  100% { transform: translateY(-50%) translateX(108%) rotate(-2deg); opacity: 0; }
+  0%   { transform: translateX(0) scaleY(1); opacity: 1; }
+  12%  { transform: translateX(-1.2%) scaleY(1); opacity: 1; }
+  34%  { transform: translateX(26%) scaleY(0.82); opacity: 1; }
+  100% { transform: translateX(76%) scaleY(0.3); opacity: 0; }
 }
 @keyframes iv-aura {
   0%, 100% { transform: translate(-50%, -62%) scale(1); opacity: 0.75; }
@@ -1044,6 +1069,8 @@
   .invite-wrapper .iv-bow-loop,
   .invite-wrapper .iv-bow-knot,
   .invite-wrapper .iv-bow-tail,
+  .invite-wrapper .iv-bow,
+  .invite-wrapper .iv-env-body,
   .invite-wrapper .iv-ribbon,
   .invite-wrapper .iv-iban-panel,
   .invite-wrapper .iv-accordion-panel,
@@ -1080,54 +1107,93 @@
             <span class="iv-ribbon iv-ribbon-h"></span>
             <svg class="iv-bow" id="ivBow" viewBox="0 0 240 160" aria-hidden="true" focusable="false">
               <defs>
-                <linearGradient id="ivFbLoopL" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="16%" stop-color="#f4f8fd"/>
-                  <stop offset="42%" stop-color="#dde6f1"/>
-                  <stop offset="70%" stop-color="#bcc9da"/>
-                  <stop offset="100%" stop-color="#93a2b8"/>
-                </linearGradient>
-                <linearGradient id="ivFbLoopR" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#93a2b8"/>
-                  <stop offset="30%" stop-color="#bcc9da"/>
-                  <stop offset="58%" stop-color="#dde6f1"/>
-                  <stop offset="84%" stop-color="#f4f8fd"/>
-                  <stop offset="100%" stop-color="#ffffff"/>
+                <linearGradient id="ivFbLoopG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f4f9ff"/>
+                  <stop offset="30%" stop-color="#e3ecf7"/>
+                  <stop offset="62%" stop-color="#cfdcec"/>
+                  <stop offset="88%" stop-color="#bccce1"/>
+                  <stop offset="100%" stop-color="#b3c4da"/>
                 </linearGradient>
                 <linearGradient id="ivFbTailG" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#a3b0c4"/>
-                  <stop offset="22%" stop-color="#d7e1ee"/>
-                  <stop offset="46%" stop-color="#ffffff"/>
-                  <stop offset="60%" stop-color="#dde6f1"/>
-                  <stop offset="100%" stop-color="#9aa8bd"/>
+                  <stop offset="0%" stop-color="#b3c2d7"/>
+                  <stop offset="22%" stop-color="#dbe6f2"/>
+                  <stop offset="46%" stop-color="#f6fafd"/>
+                  <stop offset="66%" stop-color="#dde7f3"/>
+                  <stop offset="100%" stop-color="#b6c5d9"/>
                 </linearGradient>
-                <radialGradient id="ivFbKnotG" cx="30%" cy="22%" r="88%">
+                <linearGradient id="ivFbKnotG" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="52%" stop-color="#dde6f2"/>
-                  <stop offset="100%" stop-color="#a6b4c9"/>
-                </radialGradient>
-                <radialGradient id="ivFbShine" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
-                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-                </radialGradient>
+                  <stop offset="34%" stop-color="#eaf2fb"/>
+                  <stop offset="72%" stop-color="#cfdcec"/>
+                  <stop offset="100%" stop-color="#b7c7db"/>
+                </linearGradient>
+                <filter id="ivFbSoft" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3.5"/>
+                </filter>
               </defs>
+
+              <!-- the bow's shadow on the paper -->
+              <ellipse cx="120" cy="95" rx="48" ry="9" fill="#1b2a4a" opacity="0.11" filter="url(#ivFbSoft)"/>
+
+              <!-- tails -->
               <g class="iv-bow-tail iv-tail-l">
-                <path d="M113 86 C105 112 95 136 84 152 L102 146 L108 158 C112 130 117 104 122 88 Z" fill="url(#ivFbTailG)"/>
+                <g transform="translate(120 80) rotate(6)">
+                  <path d="M-22 2 C-26 26 -30 48 -36 68 L-22 63 L-18 74 C-12 50 -6 26 -2 4 Z"
+                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.14)" stroke-width="0.8"/>
+                  <path d="M-4 4 C-10 26 -16 50 -22 63" fill="none"
+                        stroke="rgba(27,42,74,0.16)" stroke-width="1"/>
+                </g>
               </g>
               <g class="iv-bow-tail iv-tail-r">
-                <path d="M127 86 C135 112 145 136 156 152 L138 146 L132 158 C128 130 123 104 118 88 Z" fill="url(#ivFbTailG)"/>
+                <g transform="translate(120 80) scale(-1 1) rotate(6)">
+                  <path d="M-22 2 C-26 26 -30 48 -36 68 L-22 63 L-18 74 C-12 50 -6 26 -2 4 Z"
+                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.14)" stroke-width="0.8"/>
+                  <path d="M-4 4 C-10 26 -16 50 -22 63" fill="none"
+                        stroke="rgba(27,42,74,0.16)" stroke-width="1"/>
+                </g>
               </g>
+
+              <!-- left loop -->
               <g class="iv-bow-loop iv-loop-lt">
-                <path d="M118 70 C108 44 82 26 56 28 C31 30 19 49 26 68 C33 89 61 97 85 91 C101 87 112 78 119 74 Z" fill="url(#ivFbLoopL)"/>
-                <ellipse cx="54" cy="46" rx="19" ry="8" fill="url(#ivFbShine)" stroke="none" transform="rotate(-14 54 46)"/>
+                <g transform="translate(120 80) rotate(14)">
+                  <ellipse cx="-4" cy="-2" rx="15" ry="11" fill="#1b2a4a" opacity="0.16" filter="url(#ivFbSoft)"/>
+                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
+                        transform="translate(0 3.5)" fill="#a4b5ca" opacity="0.5"/>
+                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
+                        fill="url(#ivFbLoopG)" stroke="rgba(27,42,74,0.16)" stroke-width="0.9"/>
+                  <path d="M-4 -2 C-30 -14 -60 -24 -80 -21" fill="none"
+                        stroke="rgba(27,42,74,0.13)" stroke-width="2.4" stroke-linecap="round"/>
+                  <path d="M-6 -8 C-32 -20 -60 -29 -79 -26" fill="none"
+                        stroke="rgba(255,255,255,0.55)" stroke-width="1.6" stroke-linecap="round"/>
+                </g>
               </g>
+
+              <!-- right loop -->
               <g class="iv-bow-loop iv-loop-rt">
-                <path d="M122 70 C132 44 158 26 184 28 C209 30 221 49 214 68 C207 89 179 97 155 91 C139 87 128 78 121 74 Z" fill="url(#ivFbLoopR)"/>
-                <ellipse cx="186" cy="46" rx="19" ry="8" fill="url(#ivFbShine)" stroke="none" transform="rotate(14 186 46)"/>
+                <g transform="translate(120 80) scale(-1 1) rotate(14)">
+                  <ellipse cx="-4" cy="-2" rx="15" ry="11" fill="#1b2a4a" opacity="0.16" filter="url(#ivFbSoft)"/>
+                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
+                        transform="translate(0 3.5)" fill="#a4b5ca" opacity="0.5"/>
+                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
+                        fill="url(#ivFbLoopG)" stroke="rgba(27,42,74,0.16)" stroke-width="0.9"/>
+                  <path d="M-4 -2 C-30 -14 -60 -24 -80 -21" fill="none"
+                        stroke="rgba(27,42,74,0.13)" stroke-width="2.4" stroke-linecap="round"/>
+                  <path d="M-6 -8 C-32 -20 -60 -29 -79 -26" fill="none"
+                        stroke="rgba(255,255,255,0.55)" stroke-width="1.6" stroke-linecap="round"/>
+                </g>
               </g>
+
+              <!-- knot -->
               <g class="iv-bow-knot">
-                <rect x="106" y="65" width="28" height="26" rx="9" fill="url(#ivFbKnotG)" stroke="rgba(120,136,160,0.4)" stroke-width="0.9"/>
-                <ellipse cx="114" cy="73" rx="7" ry="4.5" fill="url(#ivFbShine)" stroke="none"/>
+                <ellipse cx="120" cy="88" rx="14" ry="4" fill="#1b2a4a" opacity="0.2" filter="url(#ivFbSoft)"/>
+                <rect x="108" y="68" width="24" height="22" rx="6" fill="url(#ivFbKnotG)"/>
+                <path d="M108.5 78.4 C113.5 80.6 126.5 80.6 131.5 78.4" fill="none"
+                      stroke="rgba(27,42,74,0.3)" stroke-width="1.1"/>
+                <path d="M108.5 77.2 C113.5 79.4 126.5 79.4 131.5 77.2" fill="none"
+                      stroke="rgba(255,255,255,0.9)" stroke-width="0.9"/>
+                <rect x="108" y="68" width="24" height="22" rx="6" fill="none"
+                      stroke="rgba(27,42,74,0.2)" stroke-width="0.9"/>
+                <ellipse cx="114" cy="73" rx="4.6" ry="2.4" fill="#ffffff" opacity="0.75"/>
               </g>
             </svg>
           </div>
@@ -1429,12 +1495,12 @@
     overlay.classList.add('iv-env--untie');
 
     /* 2 — the flap folds back and the card rises out */
-    setTimeout(function () { overlay.classList.add('iv-env--open'); }, 1300);
-    setTimeout(function () { overlay.classList.add('iv-env--flap-behind'); }, 1800);
+    setTimeout(function () { overlay.classList.add('iv-env--open'); }, 1550);
+    setTimeout(function () { overlay.classList.add('iv-env--flap-behind'); }, 2000);
 
     /* 3 — fade the envelope away and reveal the invitation */
-    setTimeout(function () { overlay.classList.add('iv-env--reveal'); }, 3250);
-    setTimeout(finishReveal, 3950);
+    setTimeout(function () { overlay.classList.add('iv-env--reveal'); }, 3600);
+    setTimeout(finishReveal, 4350);
   }
 
   if (overlay) {
