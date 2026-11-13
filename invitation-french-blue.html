@@ -48,130 +48,356 @@
 .invite-wrapper button { font-family: inherit; border: none; background: transparent; cursor: pointer; }
 .invite-wrapper .iv-section { padding: 26px 16px; }
 
-/* 3. Section 1 — Envelope opening overlay */
+/* 3. Section 1 — satin ribbon unties, then a real envelope opens */
 .invite-wrapper .iv-env-overlay {
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: var(--iv-cream);
   display: grid;
   place-items: center;
   overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  background:
+    radial-gradient(120% 85% at 50% 8%, #fffefb 0%, #f8f5ef 42%, #e8ecf3 100%);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
+.invite-wrapper .iv-env-overlay.iv-env--reveal { opacity: 0; visibility: hidden; }
+
+.invite-wrapper .iv-env-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  padding: 16px 0;
+}
+.invite-wrapper .iv-env-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 430px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -62%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 46%, rgba(185, 196, 214, 0.5), rgba(185, 196, 214, 0) 64%);
+  pointer-events: none;
+  animation: iv-aura 7s ease-in-out infinite;
+}
+
+/* --- the envelope --- */
 .invite-wrapper .iv-env-stage {
   position: relative;
-  width: min(88vw, 330px);
-  aspect-ratio: 13 / 9;
-}
-.invite-wrapper .iv-envelope {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  width: min(86vw, 372px);
+  aspect-ratio: 1.44 / 1;
+  perspective: 1100px;
+  perspective-origin: 50% 22%;
   transform-style: preserve-3d;
-  animation: iv-float 5s ease-in-out infinite;
+  animation: iv-float 7s ease-in-out infinite;
+  transition: transform 0.9s var(--iv-ease), opacity 0.65s ease;
 }
-.invite-wrapper .iv-env-back {
+.invite-wrapper .iv-env {
   position: absolute;
   inset: 0;
-  background: var(--iv-cream);
-  border: 2.5px solid var(--iv-navy);
-  border-radius: 2px;
-  box-shadow: 0 22px 60px rgba(27, 42, 74, 0.14);
+  transform-style: preserve-3d;
+  transform: rotateX(6deg);
+  transition: transform 1.2s var(--iv-ease);
 }
+.invite-wrapper .iv-env-body {
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    0 30px 55px -26px rgba(27, 42, 74, 0.45),
+    0 10px 22px -14px rgba(27, 42, 74, 0.3);
+  transition: box-shadow 1.2s ease;
+}
+.invite-wrapper .iv-env-back,
+.invite-wrapper .iv-env-front {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  border: 1px solid rgba(27, 42, 74, 0.15);
+}
+.invite-wrapper .iv-env-back {
+  z-index: 0;
+  background: linear-gradient(160deg, #fffdf8 0%, #f7f2e8 100%);
+  box-shadow: inset 0 0 38px rgba(27, 42, 74, 0.09);
+}
+.invite-wrapper .iv-env-front {
+  z-index: 2;
+  background: linear-gradient(158deg, #fffdf9 0%, #f8f4ec 56%, #efe9dd 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -18px 30px rgba(27, 42, 74, 0.05);
+}
+/* soft shadow the flap casts onto the front */
+.invite-wrapper .iv-env-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(27, 42, 74, 0.11) 0%, rgba(27, 42, 74, 0.03) 7%, rgba(27, 42, 74, 0) 15%);
+  transition: opacity 0.9s ease;
+}
+.invite-wrapper .iv-env--open .iv-env-front::before { opacity: 0.55; }
+/* paper grain */
+.invite-wrapper .iv-env-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23g)' opacity='0.055'/></svg>");
+}
+
+/* --- the invitation card that rises out --- */
+.invite-wrapper .iv-env-card {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 6%;
+  height: 88%;
+  z-index: 1;
+  border-radius: 2px;
+  border: 1px solid rgba(27, 42, 74, 0.13);
+  background: linear-gradient(180deg, #fffefb 0%, #fbf7ef 100%);
+  box-shadow: 0 10px 22px rgba(27, 42, 74, 0.15);
+  display: grid;
+  place-items: start center;
+  transform: translateY(3%) scale(0.985);
+  transition: transform 1s cubic-bezier(0.2, 0.85, 0.25, 1) 0.9s, box-shadow 1s ease 0.9s;
+}
+.invite-wrapper .iv-env--open .iv-env-card {
+  transform: translateY(-70%) scale(1.02) rotate(-1.1deg);
+  box-shadow: 0 18px 30px rgba(27, 42, 74, 0.2);
+}
+.invite-wrapper .iv-ec-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 24px 10px 10px;
+  text-align: center;
+}
+.invite-wrapper .iv-ec-kicker {
+  font: 500 6.5px/1.4 'Montserrat', sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+}
+.invite-wrapper .iv-ec-mono {
+  font: 500 48px/1 'Playfair Display', serif;
+  letter-spacing: 0.03em;
+  color: var(--iv-navy);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+}
+.invite-wrapper .iv-ec-amp { font-size: 27px; font-style: italic; color: var(--iv-muted); }
+.invite-wrapper .iv-ec-rule {
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--iv-silver), transparent);
+}
+.invite-wrapper .iv-ec-date {
+  font: 600 11px/1 'Montserrat', sans-serif;
+  letter-spacing: 0.2em;
+  color: var(--iv-navy);
+}
+.invite-wrapper .iv-ec-place {
+  font: 500 6.5px/1.4 'Montserrat', sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+}
+
+/* --- the flap --- */
 .invite-wrapper .iv-env-flap {
   position: absolute;
   top: 0;
-  left: 50%;
-  width: 64%;
-  max-width: 200px;
-  height: 48%;
-  transform: translateX(-50%);
-  background: var(--iv-cream);
-  border: 2.5px solid var(--iv-navy);
-  border-bottom: none;
-  clip-path: polygon(0 0, 100% 0, 50% 80%, 0 0);
+  left: 0;
+  width: 100%;
+  height: 52%;
+  z-index: 3;
   transform-origin: 50% 0;
-  transform: rotateX(0);
-  transition: transform 0.95s var(--iv-ease);
-  box-shadow: 0 14px 30px rgba(27, 42, 74, 0.12);
+  transform: perspective(900px) rotateX(0deg);
+  transition: transform 0.95s cubic-bezier(0.42, 0.03, 0.26, 1);
 }
-.invite-wrapper .iv-env-overlay.iv-env--open .iv-env-flap {
-  transform: rotateX(-115deg);
+.invite-wrapper .iv-env-flap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #fffdf9 0%, #f7f2e8 58%, #eae2d3 100%);
+  border: 1px solid rgba(27, 42, 74, 0.15);
+  border-bottom: none;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
-.invite-wrapper .iv-env-overlay.iv-env--open .iv-envelope {
-  transform: scale(0.7);
+/* the inside of the flap, seen once it is folded back */
+.invite-wrapper .iv-env-flap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, #f5efe3 0%, #eae1cf 52%, #dcd2bd 100%);
+  box-shadow: inset 0 14px 22px rgba(27, 42, 74, 0.14), inset 0 -18px 26px rgba(27, 42, 74, 0.16);
   opacity: 0;
-  transition: transform 1s var(--iv-ease), opacity 1s ease;
+  transition: opacity 0.6s ease 0.25s;
 }
-.invite-wrapper .iv-env-overlay.iv-env--open .iv-tap-hint { opacity: 0; transition: opacity 0.4s ease; }
+.invite-wrapper .iv-env--open .iv-env-flap { transform: perspective(900px) rotateX(-122deg); }
+.invite-wrapper .iv-env--open .iv-env-flap::after { opacity: 1; }
+.invite-wrapper .iv-env--flap-behind .iv-env-flap { z-index: 0; }
 
-/* Ribbon & bow */
+/* --- satin ribbon --- */
+.invite-wrapper .iv-ribbon-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
 .invite-wrapper .iv-ribbon {
   position: absolute;
-  background: linear-gradient(180deg, #eef2f7, var(--iv-silver), #eef2f7);
-  border: 1px solid rgba(27, 42, 74, 0.35);
-  border-radius: 2px;
-  box-shadow: 0 2px 6px rgba(27, 42, 74, 0.14);
+  display: block;
+  border-radius: 1px;
+  background-image: linear-gradient(90deg,
+    #93a1b7 0%, #b6c2d4 6%, #e4ebf5 16%, #ffffff 26%, #dee6f1 34%,
+    #c1ccdc 44%, #eef3fa 54%, #ffffff 62%, #d2dbe8 72%, #a8b5c8 86%, #94a2b8 100%);
+  box-shadow:
+    0 2px 3px rgba(27, 42, 74, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
 }
-.invite-wrapper .iv-ribbon-v { top: 12%; left: 50%; width: 11px; height: 76%; transform: translateX(-50%); }
-.invite-wrapper .iv-ribbon-h { left: 12%; top: 50%; width: 76%; height: 11px; transform: translateY(-50%); }
+/* fine satin ribbing */
+.invite-wrapper .iv-ribbon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0 1px, rgba(27, 42, 74, 0.07) 1px 3px);
+  opacity: 0.22;
+}
+.invite-wrapper .iv-ribbon-v {
+  top: -3%;
+  left: 50%;
+  width: 25px;
+  height: 106%;
+  transform: translateX(-50%);
+}
+.invite-wrapper .iv-ribbon-h {
+  left: -3%;
+  top: 50%;
+  width: 106%;
+  height: 25px;
+  transform: translateY(-50%);
+  background-image: linear-gradient(180deg,
+    #93a1b7 0%, #b6c2d4 6%, #e4ebf5 16%, #ffffff 26%, #dee6f1 34%,
+    #c1ccdc 44%, #eef3fa 54%, #ffffff 62%, #d2dbe8 72%, #a8b5c8 86%, #94a2b8 100%);
+}
+.invite-wrapper .iv-ribbon-h::after {
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0 1px, rgba(27, 42, 74, 0.07) 1px 3px);
+}
+
+/* --- the satin bow (inline SVG so the loops can fold) --- */
 .invite-wrapper .iv-bow {
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 214px;
+  height: 143px;
   transform: translate(-50%, -50%);
-  z-index: 4;
-  width: 1px;
-  height: 1px;
+  z-index: 6;
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 3px rgba(27, 42, 74, 0.22));
 }
-.invite-wrapper .iv-bow-loop {
-  position: absolute;
-  background: linear-gradient(180deg, #f4f7fb, var(--iv-silver));
-  border: 1px solid rgba(27, 42, 74, 0.35);
-  border-radius: 60% 22% 0 42% / 52% 38% 52% 48%;
-  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.7), 0 2px 5px rgba(27, 42, 74, 0.12);
+.invite-wrapper .iv-bow g { transform-box: fill-box; }
+.invite-wrapper .iv-bow path,
+.invite-wrapper .iv-bow ellipse {
+  stroke: rgba(120, 136, 160, 0.3);
+  stroke-width: 0.7;
 }
-.invite-wrapper .iv-loop-lt { top: -13px; left: -22px; width: 26px; height: 34px; transform: rotate(-24deg); transform-origin: right bottom; }
-.invite-wrapper .iv-loop-rt { top: -13px; right: -22px; width: 26px; height: 34px; transform: rotate(24deg); transform-origin: left bottom; }
-.invite-wrapper .iv-bow-center {
-  position: absolute;
-  left: 50%;
-  top: -3px;
-  width: 14px;
-  height: 14px;
-  background: var(--iv-navy);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-.invite-wrapper .iv-bow-tail {
-  position: absolute;
-  left: 50%;
-  top: 11px;
-  width: 10px;
-  height: 28px;
-  background: linear-gradient(180deg, #eef2f7, var(--iv-silver));
-  border: 1px solid rgba(27, 42, 74, 0.35);
-  border-radius: 2px;
-  transform-origin: top center;
-}
-.invite-wrapper .iv-tail-l { transform: translate(-50%, 0) rotate(-9deg); }
-.invite-wrapper .iv-tail-r { transform: translate(-50%, 0) rotate(9deg); }
+.invite-wrapper .iv-loop-lt { transform-origin: 100% 50%; }
+.invite-wrapper .iv-loop-rt { transform-origin: 0% 50%; }
+.invite-wrapper .iv-bow-tail { transform-origin: 50% 3%; }
+.invite-wrapper .iv-bow-knot { transform-origin: 50% 50%; }
 
-/* Tap hint */
+/* ===== phase 1 — the satin bow comes undone ===== */
+.invite-wrapper .iv-env--untie .iv-bow-knot { animation: iv-knot-out 0.55s 0.78s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-loop-lt { animation: iv-loop-out-l 0.95s 0.04s cubic-bezier(0.4, 0, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-loop-rt { animation: iv-loop-out-r 0.95s 0.2s cubic-bezier(0.4, 0, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-tail-l { animation: iv-tail-out-l 0.95s 0.26s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-tail-r { animation: iv-tail-out-r 0.95s 0.42s cubic-bezier(0.4, 0, 0.3, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-ribbon-v { animation: iv-band-off-v 0.95s 0.5s cubic-bezier(0.55, 0.06, 0.35, 1) forwards; }
+.invite-wrapper .iv-env--untie .iv-ribbon-h { animation: iv-band-off-h 0.95s 0.62s cubic-bezier(0.55, 0.06, 0.35, 1) forwards; }
+
+@keyframes iv-knot-out {
+  0%   { transform: scale(1); opacity: 1; }
+  35%  { transform: scale(1.16, 0.84); opacity: 1; }
+  70%  { transform: scale(0.92, 0.92); opacity: 1; }
+  100% { transform: scale(0.42) translateY(16px); opacity: 0; }
+}
+@keyframes iv-loop-out-l {
+  0%   { transform: rotate(0deg) translate(0, 0) scale(1); opacity: 1; }
+  22%  { transform: rotate(-6deg) translate(-4px, 1px) scale(1.03, 0.95); opacity: 1; }
+  62%  { transform: rotate(-30deg) translate(-20px, 11px) scale(0.9, 0.72); opacity: 1; }
+  100% { transform: rotate(-56deg) translate(-38px, 30px) scale(0.62, 0.34); opacity: 0; }
+}
+@keyframes iv-loop-out-r {
+  0%   { transform: rotate(0deg) translate(0, 0) scale(1); opacity: 1; }
+  22%  { transform: rotate(6deg) translate(4px, 1px) scale(1.03, 0.95); opacity: 1; }
+  62%  { transform: rotate(30deg) translate(20px, 11px) scale(0.9, 0.72); opacity: 1; }
+  100% { transform: rotate(56deg) translate(38px, 30px) scale(0.62, 0.34); opacity: 0; }
+}
+@keyframes iv-tail-out-l {
+  0%   { transform: rotate(0deg) translateY(0); opacity: 1; }
+  30%  { transform: rotate(-5deg) translateY(4px); opacity: 1; }
+  100% { transform: rotate(-24deg) translate(-12px, 46px); opacity: 0; }
+}
+@keyframes iv-tail-out-r {
+  0%   { transform: rotate(0deg) translateY(0); opacity: 1; }
+  30%  { transform: rotate(5deg) translateY(4px); opacity: 1; }
+  100% { transform: rotate(24deg) translate(12px, 46px); opacity: 0; }
+}
+@keyframes iv-band-off-v {
+  0%   { transform: translateX(-50%) translateY(0); opacity: 1; }
+  12%  { transform: translateX(-50%) translateY(-1.5%) scaleY(1.015); opacity: 1; }
+  72%  { transform: translateX(-50%) translateY(74%) rotate(1.2deg); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(108%) rotate(2deg); opacity: 0; }
+}
+@keyframes iv-band-off-h {
+  0%   { transform: translateY(-50%) translateX(0); opacity: 1; }
+  12%  { transform: translateY(-50%) translateX(-1.5%) scaleX(1.015); opacity: 1; }
+  72%  { transform: translateY(-50%) translateX(74%) rotate(-1.2deg); opacity: 1; }
+  100% { transform: translateY(-50%) translateX(108%) rotate(-2deg); opacity: 0; }
+}
+@keyframes iv-aura {
+  0%, 100% { transform: translate(-50%, -62%) scale(1); opacity: 0.75; }
+  50%      { transform: translate(-50%, -62%) scale(1.06); opacity: 1; }
+}
+
+/* ===== phase 2 — the flap folds back, the card rises ===== */
+.invite-wrapper .iv-env--open .iv-env { transform: rotateX(3deg) scale(1.012); }
+.invite-wrapper .iv-env--open .iv-env-body {
+  box-shadow:
+    0 38px 66px -28px rgba(27, 42, 74, 0.52),
+    0 12px 26px -14px rgba(27, 42, 74, 0.32);
+}
+
+/* ===== phase 3 — fade away and reveal the invitation ===== */
+.invite-wrapper .iv-env--reveal .iv-env-stage { opacity: 0; }
+.invite-wrapper .iv-env--reveal .iv-env { transform: rotateX(3deg) scale(1.09); }
+.invite-wrapper .iv-env--reveal .iv-env-aura { opacity: 0; transition: opacity 0.55s ease; }
+.invite-wrapper .iv-env--reveal .iv-tap-hint { opacity: 0; }
+
 .invite-wrapper .iv-tap-hint {
-  position: absolute;
-  bottom: 16%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 5px;
+  margin: 0;
+  font: 600 10.5px/1 'Montserrat', sans-serif;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--iv-navy);
   animation: iv-pulse 2.2s ease-in-out infinite;
-  z-index: 5;
+  transition: opacity 0.4s ease;
 }
 
 /* 2. Keyframes */
@@ -810,8 +1036,15 @@
 .invite-wrapper .iv-reveal.iv-revealed { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .invite-wrapper .iv-env-flap,
-  .invite-wrapper .iv-envelope,
+  .invite-wrapper .iv-env,
+  .invite-wrapper .iv-env-stage,
+  .invite-wrapper .iv-env-aura,
+  .invite-wrapper .iv-env-card,
   .invite-wrapper .iv-tap-hint,
+  .invite-wrapper .iv-bow-loop,
+  .invite-wrapper .iv-bow-knot,
+  .invite-wrapper .iv-bow-tail,
+  .invite-wrapper .iv-ribbon,
   .invite-wrapper .iv-iban-panel,
   .invite-wrapper .iv-accordion-panel,
   .invite-wrapper .iv-reveal { transition: none !important; animation: none !important; }
@@ -822,23 +1055,85 @@
 <body>
 <div class="invite-wrapper iv-no-js" id="ivApp">
 
-  <!-- ===== SECTION 1 — ENVELOPE OPENING OVERLAY ===== -->
+  <!-- ===== SECTION 1 — SATIN RIBBON + ENVELOPE OPENING ===== -->
   <div class="iv-env-overlay" id="ivEnvOverlay" role="button" tabindex="0" aria-label="Open the invitation">
-    <div class="iv-env-stage">
-      <div class="iv-envelope" id="ivEnvelope">
-        <div class="iv-env-back"></div>
-        <div class="iv-env-flap" id="ivEnvFlap"></div>
-        <div class="iv-ribbon iv-ribbon-v"></div>
-        <div class="iv-ribbon iv-ribbon-h"></div>
-        <div class="iv-bow">
-          <div class="iv-bow-loop iv-loop-lt"></div>
-          <div class="iv-bow-loop iv-loop-rt"></div>
-          <div class="iv-bow-center"></div>
-          <div class="iv-bow-tail iv-tail-l"></div>
-          <div class="iv-bow-tail iv-tail-r"></div>
+    <div class="iv-env-scene">
+      <div class="iv-env-aura" aria-hidden="true"></div>
+      <div class="iv-env-stage">
+        <div class="iv-env" id="ivEnvelope">
+          <div class="iv-env-body">
+            <div class="iv-env-back"></div>
+            <div class="iv-env-card" id="ivEnvCard">
+              <div class="iv-ec-inner">
+                <span class="iv-ec-kicker">Together with their families</span>
+                <span class="iv-ec-mono">L<span class="iv-ec-amp">&amp;</span>M</span>
+                <span class="iv-ec-rule"></span>
+                <span class="iv-ec-date">19 · 06 · 2027</span>
+                <span class="iv-ec-place">Lake Como · Italy</span>
+              </div>
+            </div>
+            <div class="iv-env-front"></div>
+            <div class="iv-env-flap" id="ivEnvFlap"></div>
+          </div>
+          <div class="iv-ribbon-layer" aria-hidden="true">
+            <span class="iv-ribbon iv-ribbon-v"></span>
+            <span class="iv-ribbon iv-ribbon-h"></span>
+            <svg class="iv-bow" id="ivBow" viewBox="0 0 240 160" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="ivFbLoopL" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="16%" stop-color="#f4f8fd"/>
+                  <stop offset="42%" stop-color="#dde6f1"/>
+                  <stop offset="70%" stop-color="#bcc9da"/>
+                  <stop offset="100%" stop-color="#93a2b8"/>
+                </linearGradient>
+                <linearGradient id="ivFbLoopR" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#93a2b8"/>
+                  <stop offset="30%" stop-color="#bcc9da"/>
+                  <stop offset="58%" stop-color="#dde6f1"/>
+                  <stop offset="84%" stop-color="#f4f8fd"/>
+                  <stop offset="100%" stop-color="#ffffff"/>
+                </linearGradient>
+                <linearGradient id="ivFbTailG" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#a3b0c4"/>
+                  <stop offset="22%" stop-color="#d7e1ee"/>
+                  <stop offset="46%" stop-color="#ffffff"/>
+                  <stop offset="60%" stop-color="#dde6f1"/>
+                  <stop offset="100%" stop-color="#9aa8bd"/>
+                </linearGradient>
+                <radialGradient id="ivFbKnotG" cx="30%" cy="22%" r="88%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="52%" stop-color="#dde6f2"/>
+                  <stop offset="100%" stop-color="#a6b4c9"/>
+                </radialGradient>
+                <radialGradient id="ivFbShine" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <g class="iv-bow-tail iv-tail-l">
+                <path d="M113 86 C105 112 95 136 84 152 L102 146 L108 158 C112 130 117 104 122 88 Z" fill="url(#ivFbTailG)"/>
+              </g>
+              <g class="iv-bow-tail iv-tail-r">
+                <path d="M127 86 C135 112 145 136 156 152 L138 146 L132 158 C128 130 123 104 118 88 Z" fill="url(#ivFbTailG)"/>
+              </g>
+              <g class="iv-bow-loop iv-loop-lt">
+                <path d="M118 70 C108 44 82 26 56 28 C31 30 19 49 26 68 C33 89 61 97 85 91 C101 87 112 78 119 74 Z" fill="url(#ivFbLoopL)"/>
+                <ellipse cx="54" cy="46" rx="19" ry="8" fill="url(#ivFbShine)" stroke="none" transform="rotate(-14 54 46)"/>
+              </g>
+              <g class="iv-bow-loop iv-loop-rt">
+                <path d="M122 70 C132 44 158 26 184 28 C209 30 221 49 214 68 C207 89 179 97 155 91 C139 87 128 78 121 74 Z" fill="url(#ivFbLoopR)"/>
+                <ellipse cx="186" cy="46" rx="19" ry="8" fill="url(#ivFbShine)" stroke="none" transform="rotate(14 186 46)"/>
+              </g>
+              <g class="iv-bow-knot">
+                <rect x="106" y="65" width="28" height="26" rx="9" fill="url(#ivFbKnotG)" stroke="rgba(120,136,160,0.4)" stroke-width="0.9"/>
+                <ellipse cx="114" cy="73" rx="7" ry="4.5" fill="url(#ivFbShine)" stroke="none"/>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
-      <p class="iv-tap-hint" id="ivTapHint">TAP TO OPEN</p>
+      <p class="iv-tap-hint" id="ivTapHint">Tap to open</p>
     </div>
   </div>
 
@@ -1102,39 +1397,52 @@
     wrapper.classList.add('iv-js');
   }
 
-  /* ---------- Section 1 — Envelope opening ---------- */
+  /* ---------- Section 1 — satin ribbon unties, then the envelope opens ---------- */
   var overlay = document.getElementById('ivEnvOverlay');
   var invitation = document.getElementById('ivInvitation');
-  var flap = document.getElementById('ivEnvFlap');
   var hint = document.getElementById('ivTapHint');
-  var opened = false;
+  var busy = false;
 
-  function openInvitation() {
-    if (opened) return;
-    opened = true;
-    overlay.classList.add('iv-env--open');
-    if (hint) hint.style.opacity = '0';
+  function finishReveal() {
+    overlay.style.display = 'none';
+    invitation.removeAttribute('aria-hidden');
+    invitation.classList.add('iv-active');
+    startCountdown();
+    initMaps();
+    observeReveals();
+    observeNav();
+  }
 
-    flap.addEventListener('transitionend', function onFlapEnd() {
-      flap.removeEventListener('transitionend', onFlapEnd);
-      setTimeout(function () {
-        overlay.style.display = 'none';
-        invitation.removeAttribute('aria-hidden');
-        invitation.classList.add('iv-active');
-        startCountdown();
-        initMaps();
-        observeReveals();
-        observeNav();
-      }, 120);
-    }, { once: true });
+  function playOpenSequence() {
+    if (busy) return;
+    busy = true;
+    if (hint) { hint.style.animation = 'none'; hint.style.opacity = '0'; }
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      overlay.classList.add('iv-env--reveal');
+      setTimeout(finishReveal, 400);
+      return;
+    }
+
+    /* 1 — the satin bow comes undone and the ribbon slips off the envelope */
+    overlay.classList.add('iv-env--untie');
+
+    /* 2 — the flap folds back and the card rises out */
+    setTimeout(function () { overlay.classList.add('iv-env--open'); }, 1300);
+    setTimeout(function () { overlay.classList.add('iv-env--flap-behind'); }, 1800);
+
+    /* 3 — fade the envelope away and reveal the invitation */
+    setTimeout(function () { overlay.classList.add('iv-env--reveal'); }, 3250);
+    setTimeout(finishReveal, 3950);
   }
 
   if (overlay) {
-    overlay.addEventListener('pointerup', openInvitation);
+    overlay.addEventListener('pointerup', playOpenSequence);
     overlay.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openInvitation();
+        playOpenSequence();
       }
     });
   }
@@ -1210,7 +1518,12 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('#ivApp .iv-reveal').forEach(function (el) {
-      io.observe(el);
+      var box = el.getBoundingClientRect();
+      if (box.top < window.innerHeight * 0.92 && box.bottom > 0) {
+        el.classList.add('iv-revealed');
+      } else {
+        io.observe(el);
+      }
     });
   }
 
