@@ -265,8 +265,30 @@ const LUNA_TEMPLATES = [
         preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "french-blue" }
     },
     {
+        id: "gallery", name: "Gallery", category: "wedding", style: "Editorial", galleryStyle: "editorial", openingStyle: "envelope",
+        animationStyle: "envelope",
+        featured: true,
+        order: -200,
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        experienceType: "standalone",
+        standaloneUrl: "invitation-french-blue.html",
+        layoutConfig: { sectionOrder: ["hero","countdown","location","timeline","dress","gallery","rsvp","faq"], heroType: "hero-style-editorial", backgroundStyle: "ivory", openingType: "envelope" },
+        preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "gallery" }
+    },
+    {
         id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik", galleryStyle: "masonry", openingStyle: "floral-reveal",
-        animationStyle: "floral",
+        thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+        minPackage: "luxury", packages: ["luxury"],
+        experienceType: "standalone",
+        standaloneUrl: "invitation-french-blue.html",
+        layoutConfig: { sectionOrder: ["hero","countdown","location","timeline","dress","gallery","rsvp","faq"], heroType: "hero-style-editorial", backgroundStyle: "ivory", openingType: "envelope" },
+        preview: { eyebrow: "WITH ALL OUR LOVE WE INVITE YOU", names: ["Laura", "Marco"], date: "19 · 06 · 2027", message: "Join us for an intimate celebration at Lake Como, Italy.", venue: "Villa Carlotta · Grand Hotel Tremezzo", location: "Lake Como, Italy", theme: "gallery" }
+    },
+    {
+        id: "amelia", name: "Amelia", category: "wedding", style: "Floral · Romantik", galleryStyle: "masonry", openingStyle: "floral-reveal",
         thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
         cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
         minPackage: "luxury", packages: ["luxury"],
