@@ -1390,67 +1390,7 @@
       <a href="#ivRsvp" class="iv-navlink">RSVP</a>
     </nav>
   </div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">  /* ---------- Section 5 — album flipper ---------- */
-  var album = document.querySelector('.iv-album');
-  var pages = document.querySelectorAll('.iv-album-page');
-  var navs = document.querySelectorAll('.iv-album-nav');
-  var indicators = document.querySelectorAll('.iv-album-indicator');
-  var current = 0;
-  var numPages = pages.length;
-
-  function showPage(i) {
-    current = (i + numPages) % numPages;
-    pages.forEach(function (p, idx) {
-      p.classList.toggle('active', idx === current);
-    });
-    indicators.forEach(function (ind, idx) {
-      ind.classList.toggle('active', idx === current);
-    });
-  }
-
-  function nextPage() { showPage(current + 1); }
-  function prevPage() { showPage(current - 1); }
-
-  navs.forEach(function (n) {
-    n.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (n.classList.contains('next')) nextPage();
-      else prevPage();
-    });
-  });
-
-  indicators.forEach(function (ind) {
-    ind.addEventListener('click', function () {
-      var idx = Array.from(indicators).indexOf(ind);
-      showPage(idx);
-    });
-  });
-
-  // Swipe support for touch devices
-  var startX = 0;
-  album.addEventListener('touchstart', function (e) {
-    startX = e.touchStartX || e.originalEvent.touches[0].clientX;
-  });
-  album.addEventListener('touchend', function (e) {
-    var endX = e.touchEndX || e.originalEvent.changedTouches[0].clientX;
-    var diff = startX - endX;
-    if (Math.abs(diff) > 30) {
-      if (diff > 0) nextPage();
-      else prevPage();
-    }
-  });
-
-  // Click anywhere on active page to go forward
-  pages.forEach(function (page) {
-    page.addEventListener('click', function () {
-      if (!page.classList.contains('active')) return;
-      nextPage();
-    });
-  });
-
-  // Init: show first page
-  showPage(0);
-</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* ========================================================================
    French Blue Wedding Invitation — vanilla JS
@@ -1763,65 +1703,6 @@
 
   // Init: show first page
   showPage(0);
-  /* ---------- Section 5 — album flipper ---------- */
-  var album = document.querySelector('.iv-album');
-  var pages = document.querySelectorAll('.iv-album-page');
-  var navs = document.querySelectorAll('.iv-album-nav');
-  var indicators = document.querySelectorAll('.iv-album-indicator');
-  var current = 0;
-  var numPages = pages.length;
-
-  function showPage(i) {
-    current = (i + numPages) % numPages;
-    pages.forEach(function (p, idx) {
-      p.classList.toggle('active', idx === current);
-    });
-    indicators.forEach(function (ind, idx) {
-      ind.classList.toggle('active', idx === current);
-    });
-  }
-
-  function nextPage() { showPage(current + 1); }
-  function prevPage() { showPage(current - 1); }
-
-  navs.forEach(function (n) {
-    n.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (n.classList.contains('next')) nextPage();
-      else prevPage();
-    });
-  });
-
-  indicators.forEach(function (ind) {
-    ind.addEventListener('click', function () {
-      var idx = Array.from(indicators).indexOf(ind);
-      showPage(idx);
-    });
-  });
-
-  // Swipe support for touch devices
-  var startX = 0;
-  album.addEventListener('touchstart', function (e) {
-    startX = e.touchStartX || e.originalEvent.touches[0].clientX;
-  });
-  album.addEventListener('touchend', function (e) {
-    var endX = e.touchEndX || e.originalEvent.changedTouches[0].clientX;
-    var diff = startX - endX;
-    if (Math.abs(diff) > 30) {
-      if (diff > 0) nextPage();
-      else prevPage();
-    }
-  });
-
-  // Click anywhere on active page to go forward
-  pages.forEach(function (page) {
-    page.addEventListener('click', function () {
-      if (!page.classList.contains('active')) return;
-      nextPage();
-    });
-  });
-
-  // Init: show first page
   showPage(0);
 </script>
 </div>
