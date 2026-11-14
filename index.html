@@ -965,7 +965,9 @@ transform-style:preserve-3d;perspective:800px}
 .dt-actions .btn{flex:1;text-align:center;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 6px;border-radius:6px;transition:.25s;}
 .dt-actions .btn-preview{background:transparent;border:1px solid rgba(62,37,24,.35);color:#4a2e1c;}
 .dt-actions .btn-preview:hover{background:#3e2518;color:#fff;border-color:#3e2518;}
-.dt-actions .btn-choose{background:#3e2518;color:#f7efe4;border:1px solid #3e2518;}
+.dt-actions .btn-live{background:#f6f1e9;border:1px solid rgba(62,37,24,.55);color:#3e2518;font-weight:700;}
+.dt-actions .btn-live:hover{background:#3e2518;color:#f7efe4;}
+.anim-badge-live{background:rgba(37,84,63,.92);color:#eaf6ee;letter-spacing:1.4px;}
 .dt-actions .btn-choose:hover{background:#5a3a26;}
 
 /* ===== ANIMATED SHOWCASE STRIP — 3D Glowing ===== */
@@ -2827,6 +2829,21 @@ function _getHomepageTemplates() {
     return _getAllTemplates();
 }
 
+/* Standalone designs (a hand-built page like French Blue) have their own
+   full experience. The modal preview can only approximate them, so send the
+   visitor to the real page instead. */
+function lunaIsStandalone(tpl) {
+    return !!(tpl && tpl.experienceType === "standalone" && tpl.standaloneUrl);
+}
+function openTplPreview(tplId) {
+    var tpl = _getAllTemplates().find(function(t) { return t.id === tplId; });
+    if (lunaIsStandalone(tpl)) {
+        window.open(tpl.standaloneUrl, "_blank", "noopener");
+        return;
+    }
+    openPreviewModal(tplId);
+}
+
 /* ===== RENDER TEMPLATES ===== */
 var _gridFilter = "all", _gridQuery = "", _gridLimit = 24;
 
@@ -2890,6 +2907,7 @@ function renderTemplates(filter) {
         var opening = _openingOf(tpl);
         var animBadge = opening ? '<span class="anim-badge">' + opening.emoji + ' ' + opening.label + '</span>' : "";
         var isFav = lunaFavList().indexOf(tpl.id) !== -1;
+        var isLive = lunaIsStandalone(tpl);
 
         /* Features — hər paket üçün features */
         var pkgObj = null;
@@ -2930,7 +2948,9 @@ function renderTemplates(filter) {
             '</div>' +
             featHtml +
             '<div class="dt-actions">' +
-                '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + (opening ? '▶ Açılışa bax' : 'Böyüd') + '</button>' +
+                (isLive
+                    ? '<a class="btn btn-preview btn-live" href="' + tpl.standaloneUrl + '" target="_blank" rel="noopener">Canlı bax ↗</a>'
+                    : '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + (opening ? '▶ Açılışa bax' : 'Böyüd') + '</button>') +
                 '<button type="button" class="btn btn-choose" data-design="' + tpl.id + '">Paket seç →</button>' +
             '</div>';
 
@@ -2950,10 +2970,11 @@ function renderTemplates(filter) {
     }
 
     grid.querySelectorAll(".btn-preview").forEach(function(btn) {
+        if (btn.tagName === "A") return; /* standalone designs are real links */
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             e.stopPropagation();
-            openPreviewModal(this.getAttribute("data-tpl"));
+            openTplPreview(this.getAttribute("data-tpl"));
         });
     });
 }
@@ -3612,16 +3633,19 @@ function renderCatCollection(catId, gridId, limit) {
                 '<span class="tpl-swatch" style="margin-top:5px"><i style="background:' + pal.c1 + '"></i><i style="background:' + pal.c2 + '"></i></span>' +
             '</div>' +
             '<div class="cat-col-card-actions">' +
-                '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>' +
+                (lunaIsStandalone(tpl)
+                    ? '<a class="btn btn-preview btn-live" href="' + tpl.standaloneUrl + '" target="_blank" rel="noopener">Canlı bax ↗</a>'
+                    : '<button type="button" class="btn btn-preview" data-tpl="' + tpl.id + '">' + lunaT("tplView") + '</button>') +
                 '<a href="form/' + tpl.category + '.html?design=' + tpl.id + '&package=' + tpl.minPackage + '" class="btn btn-choose">' + lunaT("tplChoose") + '</a>' +
             '</div>';
         grid.appendChild(card);
     });
     grid.querySelectorAll(".btn-preview").forEach(function(btn) {
+        if (btn.tagName === "A") return; /* standalone designs are real links */
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             e.stopPropagation();
-            openPreviewModal(this.getAttribute("data-tpl"));
+            openTplPreview(this.getAttribute("data-tpl"));
         });
     });
 }

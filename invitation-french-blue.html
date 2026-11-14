@@ -257,18 +257,22 @@
   inset: 0;
   z-index: 5;
   pointer-events: none;
+  /* the ribbon leaves over the envelope edge instead of floating in mid-air */
+  overflow: hidden;
 }
 .invite-wrapper .iv-ribbon {
   position: absolute;
   display: block;
   border-radius: 1px;
-  /* a soft satin sheen — one gentle ridge, not a hard specular pipe */
+  /* satin: the ridge sits off-centre and falls away to a darker selvedge */
   background-image: linear-gradient(90deg,
-    #b6c3d6 0%, #c8d4e4 5%, #dde7f3 13%, #eff5fb 24%, #fbfdff 33%,
-    #f6fafd 43%, #e6eef7 55%, #d6e1ee 68%, #c9d5e4 82%, #c0cddd 93%, #bcc9da 100%);
+    #a9b8cc 0%, #b6c4d6 4%, #c8d5e5 11%, #dde8f4 21%, #eef5fb 30%,
+    #f7fbff 36%, #f1f6fc 44%, #e4edf7 54%, #d4dfee 66%, #c6d2e2 78%,
+    #b9c7da 89%, #b0bfd3 100%);
   box-shadow:
-    0 1px 2px rgba(27, 42, 74, 0.14),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.26);
+    0 1px 2px rgba(27, 42, 74, 0.16),
+    inset 1px 0 0 rgba(255, 255, 255, 0.35),
+    inset -1px 0 0 rgba(27, 42, 74, 0.10);
 }
 /* the ribbon turning around the envelope edge */
 .invite-wrapper .iv-ribbon::before {
@@ -285,8 +289,8 @@
   position: absolute;
   inset: 0;
   background-image: repeating-linear-gradient(90deg,
-    rgba(255, 255, 255, 0.42) 0 1px, rgba(27, 42, 74, 0.06) 1px 2.5px);
-  opacity: 0.15;
+    rgba(255, 255, 255, 0.5) 0 1px, rgba(27, 42, 74, 0.07) 1px 2px);
+  opacity: 0.18;
 }
 .invite-wrapper .iv-ribbon-v {
   top: -1%;
@@ -302,8 +306,9 @@
   height: 21px;
   transform-origin: 0 50%;
   background-image: linear-gradient(180deg,
-    #b6c3d6 0%, #c8d4e4 5%, #dde7f3 13%, #eff5fb 24%, #fbfdff 33%,
-    #f6fafd 43%, #e6eef7 55%, #d6e1ee 68%, #c9d5e4 82%, #c0cddd 93%, #bcc9da 100%);
+    #a9b8cc 0%, #b6c4d6 4%, #c8d5e5 11%, #dde8f4 21%, #eef5fb 30%,
+    #f7fbff 36%, #f1f6fc 44%, #e4edf7 54%, #d4dfee 66%, #c6d2e2 78%,
+    #b9c7da 89%, #b0bfd3 100%);
 }
 .invite-wrapper .iv-ribbon-h::before {
   background: linear-gradient(90deg,
@@ -326,7 +331,7 @@
   z-index: 6;
   overflow: visible;
   pointer-events: none;
-  filter: drop-shadow(0 2px 2px rgba(27, 42, 74, 0.16));
+  filter: drop-shadow(0 3px 4px rgba(27, 42, 74, 0.15));
 }
 /* everything pivots on the knot, in viewBox coordinates */
 .invite-wrapper .iv-bow g { transform-box: view-box; }
@@ -533,43 +538,12 @@
   text-align: center;
 }
 .invite-wrapper .iv-champagne {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 0 22px;
+  display: block;
+  width: min(190px, 58%);
+  margin: 4px auto 22px;
+  color: var(--iv-navy);
 }
-.invite-wrapper .iv-row {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  margin-top: -16px;
-  position: relative;
-  z-index: 2;
-}
-.invite-wrapper .iv-glass {
-  width: 24px;
-  height: 28px;
-  border: 1.4px solid var(--iv-navy);
-  border-bottom: none;
-  background: #fff;
-  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0% 100%);
-  position: relative;
-}
-.invite-wrapper .iv-liquid {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 11px;
-  background: #E3DCC8;
-  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0% 100%);
-}
-.invite-wrapper .iv-bubble {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  opacity: 0.8;
-}
+.invite-wrapper .iv-champagne svg { display: block; width: 100%; height: auto; }
 .invite-wrapper .iv-blocks {
   display: flex;
   flex-wrap: wrap;
@@ -662,6 +636,20 @@
   position: relative;
 }
 .invite-wrapper .iv-map { width: 100%; height: 100%; display: block; }
+.invite-wrapper .iv-map-fallback {
+  display: grid;
+  place-items: center;
+  padding: 0 22px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: var(--iv-muted);
+  background: repeating-linear-gradient(45deg,
+    rgba(27, 42, 74, 0.03) 0 8px, rgba(27, 42, 74, 0.06) 8px 16px);
+}
 .invite-wrapper .iv-btn {
   display: inline-flex;
   align-items: center;
@@ -674,6 +662,7 @@
   text-transform: uppercase;
   padding: 10px 18px;
   border-radius: 10px;
+  box-sizing: border-box;
   transition: background 0.3s ease, color 0.3s ease;
   width: 100%;
 }
@@ -681,77 +670,95 @@
 .invite-wrapper .iv-btn-dark { background: var(--iv-navy); color: #fff; }
 .invite-wrapper .iv-btn-dark:hover { opacity: 0.9; }
 
-.invite-wrapper .iv-travel { margin-top: 30px; text-align: left; }
-.invite-wrapper .iv-travel h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  margin: 0 0 12px;
-  color: var(--iv-navy);
+/* 7. Section 5 — Gallery */
+.invite-wrapper .iv-gallery { text-align: center; }
+.invite-wrapper .iv-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 24px;
 }
-.invite-wrapper .iv-travel-grid { display: grid; gap: 10px; }
-.invite-wrapper .iv-travel-item {
-  border: 1px solid var(--iv-line);
-  background: #fff;
-  border-radius: 10px;
-  padding: 12px 14px;
-}
-.invite-wrapper .iv-travel-item strong {
-  display: block;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--iv-navy);
-  margin-bottom: 4px;
-}
-.invite-wrapper .iv-travel-item p { font-size: 12.5px; color: var(--iv-muted); margin: 0; }
-
-/* 7. Section 5 — Timeline / schedule */
-.invite-wrapper .iv-timeline { position: relative; padding-left: 14px; }
-.invite-wrapper .iv-timeline::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 0;
-  bottom: 0;
-  width: 1.5px;
-  background: var(--iv-navy);
-}
-.invite-wrapper .iv-timeline-item {
+.invite-wrapper .iv-gallery-item {
   position: relative;
-  margin-bottom: 24px;
-  padding-left: 26px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--iv-line);
+  box-shadow: 0 10px 22px -18px rgba(27, 42, 74, 0.55);
 }
-.invite-wrapper .iv-timeline-item::before {
-  content: '';
+.invite-wrapper .iv-gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  cursor: zoom-in;
+  filter: saturate(0.9) contrast(1.02);
+  transition: transform 0.9s var(--iv-ease), filter 0.6s ease;
+}
+.invite-wrapper .iv-gallery-item:hover img {
+  transform: scale(1.05);
+  filter: saturate(1.02) contrast(1.03);
+}
+.invite-wrapper .iv-gallery-item img:focus-visible { outline: 2px solid var(--iv-navy); outline-offset: -3px; }
+.invite-wrapper .iv-gallery-wide { grid-column: span 2; }
+.invite-wrapper .iv-gallery-wide img { aspect-ratio: 16 / 10; }
+.invite-wrapper .iv-gallery-item figcaption {
   position: absolute;
   left: 0;
-  top: 2px;
-  width: 12px;
-  height: 12px;
-  border: 1.6px solid var(--iv-navy);
-  background: #fff;
-  border-radius: 50%;
-  z-index: 2;
-}
-.invite-wrapper .iv-timeline-item time {
-  display: block;
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
+  right: 0;
+  bottom: 0;
+  padding: 26px 12px 10px;
+  text-align: left;
+  font-size: 9px;
   font-weight: 600;
-  color: var(--iv-navy);
-  margin-bottom: 2px;
-}
-.invite-wrapper .iv-timeline-item h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 2.4px;
   text-transform: uppercase;
-  margin: 0 0 3px;
-  color: var(--iv-navy);
+  color: #fff;
+  background: linear-gradient(180deg, rgba(27, 42, 74, 0) 0%, rgba(27, 42, 74, 0.55) 100%);
+  pointer-events: none;
 }
-.invite-wrapper .iv-timeline-item p { margin: 0; font-size: 12.5px; color: var(--iv-muted); }
+/* full-size photo viewer */
+.invite-wrapper .iv-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(13, 19, 31, 0.96);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.invite-wrapper .iv-lightbox.open { opacity: 1; visibility: visible; }
+.invite-wrapper .iv-lightbox img {
+  max-width: 100%;
+  max-height: 84vh;
+  border-radius: 4px;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.9);
+  transform: scale(0.98);
+  transition: transform 0.3s var(--iv-ease);
+}
+.invite-wrapper .iv-lightbox.open img { transform: scale(1); }
+.invite-wrapper .iv-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.25s ease;
+}
+.invite-wrapper .iv-lightbox-close:hover { background: rgba(255, 255, 255, 0.24); }
 
 /* 8. Section 6 — Dress code */
 .invite-wrapper .iv-dress-card {
@@ -760,6 +767,8 @@
   border-radius: 16px;
   padding: 26px 20px;
   text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
 }
 .invite-wrapper .iv-note {
   font-size: 12.5px;
@@ -773,95 +782,7 @@
 .invite-wrapper .iv-couple { width: 86px; height: 86px; margin: 22px auto 0; opacity: 0.85; }
 
 @keyframes iv-pulse { 0%, 100% { opacity: 0.55; transform: translateY(0) scale(1) } 50% { opacity: 0.9; transform: translateY(-4px) scale(1.04) } }
-/* 9. Section 7 — Gift list / registry */
-.invite-wrapper .iv-gift { text-align: center; }
-.invite-wrapper .iv-gift-note {
-  font-size: 12.5px;
-  color: var(--iv-muted);
-  margin: 0 0 22px;
-}
-.invite-wrapper .iv-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--iv-navy);
-  color: var(--iv-navy);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  padding: 11px 26px;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-.invite-wrapper .iv-toggle:hover { background: var(--iv-navy); color: #fff; }
-.invite-wrapper .iv-iban-panel {
-  border: 1.5px solid var(--iv-navy);
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px 16px;
-  text-align: left;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s var(--iv-ease), opacity 0.4s ease;
-  opacity: 0;
-}
-.invite-wrapper .iv-iban-panel.open { max-height: 420px; opacity: 1; }
-.invite-wrapper .iv-iban-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  border-bottom: 1px solid var(--iv-line);
-  padding: 10px 4px;
-  align-items: center;
-}
-.invite-wrapper .iv-iban-row:last-child { border-bottom: none; }
-.invite-wrapper .iv-iban-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--iv-muted);
-}
-.invite-wrapper .iv-iban-val {
-  font-size: 12.5px;
-  color: var(--iv-ink);
-  font-variant-numeric: tabular-nums;
-}
-.invite-wrapper .iv-iban-main .iv-iban-val {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--iv-navy);
-}
-.invite-wrapper .iv-copy {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: 1px solid var(--iv-navy);
-  color: var(--iv-navy);
-  padding: 5px 12px;
-  border-radius: 6px;
-  transition: 0.3s;
-}
-.invite-wrapper .iv-copy:hover { background: var(--iv-navy); color: #fff; }
-.invite-wrapper .iv-copy.copied { background: rgba(27, 42, 74, 0.1); }
-.invite-wrapper .iv-copy-msg {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--iv-navy);
-  text-align: center;
-  margin-top: 10px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.invite-wrapper .iv-copy-msg.show { opacity: 1; }
-
-/* 10. Section 8 — RSVP form */
+/* 9. Section 6 — RSVP form */
 .invite-wrapper .iv-rsvp { text-align: center; }
 .invite-wrapper .iv-rsvp-form {
   border: 1.5px solid var(--iv-navy);
@@ -884,6 +805,7 @@
 .invite-wrapper .iv-field input,
 .invite-wrapper .iv-field textarea {
   width: 100%;
+  box-sizing: border-box;
   border: 1px solid var(--iv-line);
   border-radius: 8px;
   padding: 11px 12px;
@@ -1037,12 +959,8 @@
 @media (min-width: 640px) {
   .invite-wrapper .iv-section { padding: 40px 24px; }
   .invite-wrapper .iv-venue-grid { grid-template-columns: 1fr 1fr; }
-  .invite-wrapper .iv-travel-grid { grid-template-columns: repeat(3, 1fr); }
   .invite-wrapper .iv-map-wrap { height: 210px; }
-  .invite-wrapper .iv-timeline { padding-left: 18px; }
-  .invite-wrapper .iv-timeline::before { left: 9px; }
-  .invite-wrapper .iv-timeline-item { padding-left: 32px; }
-  .invite-wrapper .iv-timeline-item::before { left: 4px; top: 3px; width: 14px; height: 14px; }
+  .invite-wrapper .iv-gallery-grid { gap: 12px; }
 }
 @media (min-width: 900px) {
   .invite-wrapper .iv-hero .iv-frame { max-width: 680px; margin-left: auto; margin-right: auto; padding: 44px 30px 56px; }
@@ -1050,6 +968,7 @@
   .invite-wrapper .iv-location { max-width: 920px; margin-left: auto; margin-right: auto; text-align: left; }
   .invite-wrapper .iv-location .iv-sec-title { justify-content: flex-start; }
   .invite-wrapper .iv-location .iv-sec-sub { text-align: left; }
+  .invite-wrapper .iv-gallery { max-width: 780px; margin-left: auto; margin-right: auto; }
 }
 
 /* 14. Reveal-on-scroll + reduced motion */
@@ -1072,8 +991,9 @@
   .invite-wrapper .iv-bow,
   .invite-wrapper .iv-env-body,
   .invite-wrapper .iv-ribbon,
-  .invite-wrapper .iv-iban-panel,
   .invite-wrapper .iv-accordion-panel,
+  .invite-wrapper .iv-lightbox,
+  .invite-wrapper .iv-gallery-item img,
   .invite-wrapper .iv-reveal { transition: none !important; animation: none !important; }
   .invite-wrapper .iv-reveal { opacity: 1; transform: none; }
 }
@@ -1107,93 +1027,139 @@
             <span class="iv-ribbon iv-ribbon-h"></span>
             <svg class="iv-bow" id="ivBow" viewBox="0 0 240 160" aria-hidden="true" focusable="false">
               <defs>
-                <linearGradient id="ivFbLoopG" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#f4f9ff"/>
-                  <stop offset="30%" stop-color="#e3ecf7"/>
-                  <stop offset="62%" stop-color="#cfdcec"/>
-                  <stop offset="88%" stop-color="#bccce1"/>
-                  <stop offset="100%" stop-color="#b3c4da"/>
+                <linearGradient id="ivFbLoopG" x1="0" y1="0" x2="0.28" y2="1">
+                  <stop offset="0%" stop-color="#f2f7fd"/>
+                  <stop offset="20%" stop-color="#e2ebf7"/>
+                  <stop offset="52%" stop-color="#cfdcec"/>
+                  <stop offset="82%" stop-color="#b9c9dd"/>
+                  <stop offset="100%" stop-color="#adbfd4"/>
                 </linearGradient>
-                <linearGradient id="ivFbTailG" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#b3c2d7"/>
-                  <stop offset="22%" stop-color="#dbe6f2"/>
-                  <stop offset="46%" stop-color="#f6fafd"/>
-                  <stop offset="66%" stop-color="#dde7f3"/>
-                  <stop offset="100%" stop-color="#b6c5d9"/>
+                <linearGradient id="ivFbTailG" x1="0" y1="0" x2="1" y2="0.15">
+                  <stop offset="0%" stop-color="#9dafc5"/>
+                  <stop offset="12%" stop-color="#aec0d5"/>
+                  <stop offset="26%" stop-color="#c6d5e6"/>
+                  <stop offset="40%" stop-color="#d9e5f3"/>
+                  <stop offset="54%" stop-color="#cddbec"/>
+                  <stop offset="70%" stop-color="#bccbe0"/>
+                  <stop offset="86%" stop-color="#adbed4"/>
+                  <stop offset="100%" stop-color="#9fb1c7"/>
                 </linearGradient>
-                <linearGradient id="ivFbKnotG" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="34%" stop-color="#eaf2fb"/>
-                  <stop offset="72%" stop-color="#cfdcec"/>
-                  <stop offset="100%" stop-color="#b7c7db"/>
+                <linearGradient id="ivFbKnotG" x1="0.15" y1="0" x2="0.85" y2="1">
+                  <stop offset="0%" stop-color="#f7fbff"/>
+                  <stop offset="34%" stop-color="#e2ebf6"/>
+                  <stop offset="70%" stop-color="#c6d4e5"/>
+                  <stop offset="100%" stop-color="#adbdd2"/>
                 </linearGradient>
                 <filter id="ivFbSoft" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="3.5"/>
                 </filter>
+                <filter id="ivFbBlur" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2.6"/>
+                </filter>
+                <clipPath id="ivFbClip" clipPathUnits="userSpaceOnUse">
+                  <path clip-rule="evenodd"
+                        d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"/>
+                </clipPath>
               </defs>
 
               <!-- the bow's shadow on the paper -->
-              <ellipse cx="120" cy="95" rx="48" ry="9" fill="#1b2a4a" opacity="0.11" filter="url(#ivFbSoft)"/>
+              <ellipse cx="120" cy="95" rx="46" ry="9" fill="#1b2a4a" opacity="0.12" filter="url(#ivFbSoft)"/>
 
               <!-- tails -->
               <g class="iv-bow-tail iv-tail-l">
-                <g transform="translate(120 80) rotate(6)">
-                  <path d="M-22 2 C-26 26 -30 48 -36 68 L-22 63 L-18 74 C-12 50 -6 26 -2 4 Z"
-                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.14)" stroke-width="0.8"/>
-                  <path d="M-4 4 C-10 26 -16 50 -22 63" fill="none"
-                        stroke="rgba(27,42,74,0.16)" stroke-width="1"/>
+                <g transform="translate(120 80) rotate(7)">
+                  <path d="M-13 1 C-17 26 -22 50 -31 71 L-14 66 L-9 78 C-4 51 4 25 14 3 Z"
+                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.12)" stroke-width="0.7"/>
+                  <path d="M-2 3 C-8 26 -15 50 -22 68" fill="none"
+                        stroke="rgba(27,42,74,0.14)" stroke-width="1.4" filter="url(#ivFbBlur)"/>
+                  <path d="M-11 2 C-15 26 -20 49 -27 68" fill="none"
+                        stroke="rgba(255,255,255,0.32)" stroke-width="2" filter="url(#ivFbBlur)"/>
                 </g>
               </g>
               <g class="iv-bow-tail iv-tail-r">
-                <g transform="translate(120 80) scale(-1 1) rotate(6)">
-                  <path d="M-22 2 C-26 26 -30 48 -36 68 L-22 63 L-18 74 C-12 50 -6 26 -2 4 Z"
-                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.14)" stroke-width="0.8"/>
-                  <path d="M-4 4 C-10 26 -16 50 -22 63" fill="none"
-                        stroke="rgba(27,42,74,0.16)" stroke-width="1"/>
+                <g transform="translate(120 80) scale(-1 1) rotate(7)">
+                  <path d="M-13 1 C-17 26 -22 50 -31 71 L-14 66 L-9 78 C-4 51 4 25 14 3 Z"
+                        fill="url(#ivFbTailG)" stroke="rgba(27,42,74,0.12)" stroke-width="0.7"/>
+                  <path d="M-2 3 C-8 26 -15 50 -22 68" fill="none"
+                        stroke="rgba(27,42,74,0.14)" stroke-width="1.4" filter="url(#ivFbBlur)"/>
+                  <path d="M-11 2 C-15 26 -20 49 -27 68" fill="none"
+                        stroke="rgba(255,255,255,0.32)" stroke-width="2" filter="url(#ivFbBlur)"/>
                 </g>
               </g>
 
-              <!-- left loop -->
+              <!-- left loop: soft contact shadow, ribbon body, satin sheen, faint edge -->
               <g class="iv-bow-loop iv-loop-lt">
                 <g transform="translate(120 80) rotate(14)">
-                  <ellipse cx="-4" cy="-2" rx="15" ry="11" fill="#1b2a4a" opacity="0.16" filter="url(#ivFbSoft)"/>
-                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
-                        transform="translate(0 3.5)" fill="#a4b5ca" opacity="0.5"/>
-                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
-                        fill="url(#ivFbLoopG)" stroke="rgba(27,42,74,0.16)" stroke-width="0.9"/>
-                  <path d="M-4 -2 C-30 -14 -60 -24 -80 -21" fill="none"
-                        stroke="rgba(27,42,74,0.13)" stroke-width="2.4" stroke-linecap="round"/>
-                  <path d="M-6 -8 C-32 -20 -60 -29 -79 -26" fill="none"
-                        stroke="rgba(255,255,255,0.55)" stroke-width="1.6" stroke-linecap="round"/>
+                  <ellipse cx="-4" cy="0" rx="15" ry="11" fill="#1b2a4a" opacity="0.13" filter="url(#ivFbSoft)"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        transform="translate(0 3.4)" fill="#9fb2c8" opacity="0.42" fill-rule="evenodd"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="url(#ivFbLoopG)" fill-rule="evenodd"/>
+                  <g clip-path="url(#ivFbClip)">
+                    <path d="M-8 -15 C-26 -40 -52 -52 -74 -38" fill="none"
+                          stroke="#ffffff" stroke-width="8" stroke-linecap="round"
+                          opacity="0.55" filter="url(#ivFbBlur)"/>
+                    <path d="M-10 -9 C-34 -28 -56 -36 -70 -28" fill="none"
+                          stroke="#1b2a4a" stroke-width="6" stroke-linecap="round"
+                          opacity="0.14" filter="url(#ivFbBlur)"/>
+                    <path d="M-76 -41 C-82 -36 -84 -26 -79 -17" fill="none"
+                          stroke="#ffffff" stroke-width="5" stroke-linecap="round"
+                          opacity="0.6" filter="url(#ivFbBlur)"/>
+                  </g>
+                  <path d="M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="none" stroke="rgba(27,42,74,0.14)" stroke-width="1.3" filter="url(#ivFbBlur)"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="none" stroke="rgba(27,42,74,0.10)" stroke-width="0.7" fill-rule="evenodd"/>
                 </g>
               </g>
 
               <!-- right loop -->
               <g class="iv-bow-loop iv-loop-rt">
                 <g transform="translate(120 80) scale(-1 1) rotate(14)">
-                  <ellipse cx="-4" cy="-2" rx="15" ry="11" fill="#1b2a4a" opacity="0.16" filter="url(#ivFbSoft)"/>
-                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
-                        transform="translate(0 3.5)" fill="#a4b5ca" opacity="0.5"/>
-                  <path d="M0 -5 C-18 -42 -56 -56 -78 -36 C-86 -28 -86 -14 -76 -8 C-54 2 -26 8 0 6 Z"
-                        fill="url(#ivFbLoopG)" stroke="rgba(27,42,74,0.16)" stroke-width="0.9"/>
-                  <path d="M-4 -2 C-30 -14 -60 -24 -80 -21" fill="none"
-                        stroke="rgba(27,42,74,0.13)" stroke-width="2.4" stroke-linecap="round"/>
-                  <path d="M-6 -8 C-32 -20 -60 -29 -79 -26" fill="none"
-                        stroke="rgba(255,255,255,0.55)" stroke-width="1.6" stroke-linecap="round"/>
+                  <ellipse cx="-4" cy="0" rx="15" ry="11" fill="#1b2a4a" opacity="0.13" filter="url(#ivFbSoft)"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        transform="translate(0 3.4)" fill="#9fb2c8" opacity="0.42" fill-rule="evenodd"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="url(#ivFbLoopG)" fill-rule="evenodd"/>
+                  <g clip-path="url(#ivFbClip)">
+                    <path d="M-8 -15 C-26 -40 -52 -52 -74 -38" fill="none"
+                          stroke="#ffffff" stroke-width="8" stroke-linecap="round"
+                          opacity="0.55" filter="url(#ivFbBlur)"/>
+                    <path d="M-10 -9 C-34 -28 -56 -36 -70 -28" fill="none"
+                          stroke="#1b2a4a" stroke-width="6" stroke-linecap="round"
+                          opacity="0.14" filter="url(#ivFbBlur)"/>
+                    <path d="M-76 -41 C-82 -36 -84 -26 -79 -17" fill="none"
+                          stroke="#ffffff" stroke-width="5" stroke-linecap="round"
+                          opacity="0.6" filter="url(#ivFbBlur)"/>
+                  </g>
+                  <path d="M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="none" stroke="rgba(27,42,74,0.14)" stroke-width="1.3" filter="url(#ivFbBlur)"/>
+                  <path d="M-2 -12 C-24 -42 -54 -56 -76 -40 C-86 -32 -86 -14 -74 -6 C-50 4 -24 8 -2 6 Z
+                           M-8 -11 C-30 -34 -56 -44 -70 -32 C-76 -27 -76 -18 -68 -13 C-50 -5 -30 0 -8 2 Z"
+                        fill="none" stroke="rgba(27,42,74,0.10)" stroke-width="0.7" fill-rule="evenodd"/>
                 </g>
               </g>
 
-              <!-- knot -->
+              <!-- knot: a soft fabric bundle, not a buckle -->
               <g class="iv-bow-knot">
-                <ellipse cx="120" cy="88" rx="14" ry="4" fill="#1b2a4a" opacity="0.2" filter="url(#ivFbSoft)"/>
-                <rect x="108" y="68" width="24" height="22" rx="6" fill="url(#ivFbKnotG)"/>
-                <path d="M108.5 78.4 C113.5 80.6 126.5 80.6 131.5 78.4" fill="none"
-                      stroke="rgba(27,42,74,0.3)" stroke-width="1.1"/>
-                <path d="M108.5 77.2 C113.5 79.4 126.5 79.4 131.5 77.2" fill="none"
-                      stroke="rgba(255,255,255,0.9)" stroke-width="0.9"/>
-                <rect x="108" y="68" width="24" height="22" rx="6" fill="none"
-                      stroke="rgba(27,42,74,0.2)" stroke-width="0.9"/>
-                <ellipse cx="114" cy="73" rx="4.6" ry="2.4" fill="#ffffff" opacity="0.75"/>
+                <ellipse cx="120" cy="89" rx="16" ry="5" fill="#1b2a4a" opacity="0.22" filter="url(#ivFbSoft)"/>
+                <path d="M107 72 C107 67.5 112 65.5 120 65.5 C128 65.5 133 67.5 133 72 C133 74 131.4 75 130.4 76.4 C131.4 77.8 133 79 133 82 C133 86.5 128 88.5 120 88.5 C112 88.5 107 86.5 107 82 C107 79 108.6 77.8 109.6 76.4 C108.6 75 107 74 107 72 Z"
+                      fill="url(#ivFbKnotG)"/>
+                <path d="M108.4 78.4 C113.6 80.9 126.4 80.9 131.6 78.4" fill="none"
+                      stroke="rgba(27,42,74,0.26)" stroke-width="1.1"/>
+                <path d="M108.4 77.1 C113.6 79.6 126.4 79.6 131.6 77.1" fill="none"
+                      stroke="rgba(255,255,255,0.8)" stroke-width="0.8"/>
+                <path d="M111 68 C114 66 118 65.4 121 65.6" fill="none"
+                      stroke="rgba(255,255,255,0.7)" stroke-width="1.6"
+                      stroke-linecap="round" filter="url(#ivFbBlur)"/>
+                <path d="M107 72 C107 67.5 112 65.5 120 65.5 C128 65.5 133 67.5 133 72 C133 74 131.4 75 130.4 76.4 C131.4 77.8 133 79 133 82 C133 86.5 128 88.5 120 88.5 C112 88.5 107 86.5 107 82 C107 79 108.6 77.8 109.6 76.4 C108.6 75 107 74 107 72 Z"
+                      fill="none" stroke="rgba(27,42,74,0.10)" stroke-width="0.7"/>
               </g>
             </svg>
           </div>
@@ -1264,11 +1230,30 @@
     <section class="iv-section iv-reveal iv-countdown" id="ivCountdown">
       <h2 class="iv-sec-title"><span class="iv-sec-num">02</span>THE COUNTDOWN</h2>
       <p class="iv-sec-sub">Forever begins in</p>
-      <div class="iv-champagne" aria-label="Champagne tower illustration">
-        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div><div class="iv-bubble" style="left:6px;top:6px;width:3px;height:3px"></div><div class="iv-bubble" style="left:16px;top:14px;width:2px;height:2px"></div></div></div>
-        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
-        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
-        <div class="iv-row"><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div><div class="iv-glass"><div class="iv-liquid"></div></div></div>
+      <div class="iv-champagne" aria-label="Champagne coupe tower">
+        <svg viewBox="0 0 200 112" role="img" aria-hidden="true" focusable="false">
+          <defs>
+            <g id="ivCoupe">
+              <path d="M-13 0 C-13 7.6 -6.4 12.6 0 12.6 C6.4 12.6 13 7.6 13 0 Z"
+                    fill="#E7DFCA" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M-9.4 1.4 C-9.2 6.4 -4.6 10 0 10.2" fill="none"
+                    stroke="rgba(255,255,255,0.75)" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="0" y1="12.6" x2="0" y2="19.4" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M-6.2 20.2 C-3.2 21.4 3.2 21.4 6.2 20.2" fill="none"
+                    stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </g>
+          </defs>
+        <use href="#ivCoupe" transform="translate(100 21)"/>
+        <use href="#ivCoupe" transform="translate(85 42)"/>
+        <use href="#ivCoupe" transform="translate(115 42)"/>
+        <use href="#ivCoupe" transform="translate(70 63)"/>
+        <use href="#ivCoupe" transform="translate(100 63)"/>
+        <use href="#ivCoupe" transform="translate(130 63)"/>
+        <use href="#ivCoupe" transform="translate(55 84)"/>
+        <use href="#ivCoupe" transform="translate(85 84)"/>
+        <use href="#ivCoupe" transform="translate(115 84)"/>
+        <use href="#ivCoupe" transform="translate(145 84)"/>
+        </svg>
       </div>
       <div class="iv-blocks">
         <div class="iv-block"><span class="iv-value" data-unit="d">00</span><span class="iv-label">DAYS</span></div>
@@ -1277,9 +1262,9 @@
         <div class="iv-block"><span class="iv-value" data-unit="s">00</span><span class="iv-label">SECONDS</span></div>
       </div>
     </section>
-    <!-- ===== SECTION 4 — DATE, TIME & LOCATION ===== -->
+    <!-- ===== SECTION 3 — DATE, TIME & LOCATION ===== -->
     <section class="iv-section iv-reveal iv-location" id="ivLocation">
-      <h2 class="iv-sec-title"><span class="iv-sec-num">04</span>THE VENUE</h2>
+      <h2 class="iv-sec-title"><span class="iv-sec-num">03</span>THE VENUE</h2>
       <div class="iv-venue-grid">
         <article class="iv-venue-card">
           <span class="iv-kind">Ceremony</span>
@@ -1302,63 +1287,11 @@
           <a href="https://www.google.com/maps/dir/?api=1&destination=Grand+Hotel+Tremezzo,+Tremezzo,+Italy" class="iv-btn iv-btn-dark" target="_blank" rel="noopener">Get directions</a>
         </article>
       </div>
-      <div class="iv-travel">
-        <h3>Travel tips</h3>
-        <div class="iv-travel-grid">
-          <div class="iv-travel-item">
-            <strong>By car</strong>
-            <p>A9 motorway, Como Nord exit; follow signs to Tremezzo. Limited venue parking — valet available.</p>
-          </div>
-          <div class="iv-travel-item">
-            <strong>By train</strong>
-            <p>Como San Giovanni station, then taxi or bus C10 to Tremezzo (about 10 minutes).</p>
-          </div>
-          <div class="iv-travel-item">
-            <strong>Parking</strong>
-            <p>Public parking at Piazza Tremezzo; hotel valet for reception guests.</p>
-          </div>
-        </div>
-      </div>
     </section>
-    <!-- ===== SECTION 5 — TIMELINE / SCHEDULE ===== -->
-    <section class="iv-section iv-reveal iv-timeline" id="ivTimeline">
-      <h2 class="iv-sec-title"><span class="iv-sec-num">05</span>SCHEDULE OF THE DAY</h2>
-      <ul class="iv-timeline-list">
-        <li class="iv-timeline-item">
-          <time>14:30</time>
-          <div class="iv-timeline-content">
-            <h3>Guest arrival</h3>
-            <p>Aperitivo and welcome drinks on the Villa Carlotta terrace.</p>
-          </div>
-        </li>
-        <li class="iv-timeline-item">
-          <time>15:30</time>
-          <div class="iv-timeline-content">
-            <h3>Civil ceremony</h3>
-            <p>Vows in the garden overlooking Lake Como, followed by the first toast.</p>
-          </div>
-        </li>
-        <li class="iv-timeline-item">
-          <time>17:00</time>
-          <div class="iv-timeline-content">
-            <h3>Cocktails &amp; photos</h3>
-            <p>Champagne tower and garden portraits with the wedding party.</p>
-          </div>
-        </li>
-        <li class="iv-timeline-item">
-          <time>20:00</time>
-          <div class="iv-timeline-content">
-            <h3>Dinner &amp; celebrations</h3>
-            <p>Reception dinner at Grand Hotel Tremezzo, wedding cake and dancing.</p>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ===== SECTION 6 — DRESS CODE ===== -->
+    <!-- ===== SECTION 4 — DRESS CODE ===== -->
     <section class="iv-section iv-reveal iv-dress" id="ivDress">
       <div class="iv-dress-card">
-        <h2 class="iv-sec-title"><span class="iv-sec-num">03</span>Dress code</h2>
+        <h2 class="iv-sec-title"><span class="iv-sec-num">04</span>Dress code</h2>
         <h3>Formal elegance</h3>
         <p class="iv-note">Please avoid white <span>— it is reserved for the bride</span></p>
         <svg class="iv-couple" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
@@ -1372,35 +1305,64 @@
         </svg>
       </div>
     </section>
-    <!-- ===== SECTION 7 — GIFT LIST / REGISTRY ===== -->
-    <section class="iv-section iv-reveal iv-gift" id="ivGift">
-      <h2 class="iv-sec-title"><span class="iv-sec-num">06</span>Gift list</h2>
-      <p class="iv-gift-note">Your presence is the only gift we wish for. If you would like to contribute to our honeymoon fund, bank details are below.</p>
-      <button class="iv-toggle" id="ivToggleIban" aria-expanded="false" aria-controls="ivIbanPanel">SHOW IBAN</button>
-      <div class="iv-iban-panel" id="ivIbanPanel" aria-hidden="true">
-        <div class="iv-iban-row">
-          <span class="iv-iban-label">Account holder</span>
-          <span class="iv-iban-val">Laura &amp; Marco</span>
-        </div>
-        <div class="iv-iban-row iv-iban-main">
-          <span class="iv-iban-label">IBAN</span>
-          <span class="iv-iban-val" id="ivIbanValue">IT60&nbsp;X054&nbsp;2811&nbsp;1010&nbsp;0000&nbsp;0012&nbsp;345</span>
-          <button class="iv-copy" id="ivCopyBtn">COPY</button>
-        </div>
-        <div class="iv-iban-row">
-          <span class="iv-iban-label">Bank</span>
-          <span class="iv-iban-val">Banca Popolare di Sondrio · Tremezzo branch</span>
-        </div>
-        <div class="iv-iban-row">
-          <span class="iv-iban-label">SWIFT</span>
-          <span class="iv-iban-val">POSOIT22</span>
-        </div>
-        <p class="iv-copy-msg" id="ivCopyMsg">Copied!</p>
+    <!-- ===== SECTION 5 — GALLERY ===== -->
+    <section class="iv-section iv-reveal iv-gallery" id="ivGallery">
+      <h2 class="iv-sec-title"><span class="iv-sec-num">05</span>THE GALLERY</h2>
+      <p class="iv-sec-sub">Moments we keep</p>
+      <div class="iv-gallery-grid">
+        <figure class="iv-gallery-item iv-gallery-wide">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+               alt="Bridal bouquet held in warm afternoon light"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85"
+               aria-label="Open photo: the bouquet" />
+          <figcaption>The bouquet</figcaption>
+        </figure>
+        <figure class="iv-gallery-item">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=80"
+               alt="Couple releasing white balloons as guests watch"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=85"
+               aria-label="Open photo: the celebration" />
+          <figcaption>The celebration</figcaption>
+        </figure>
+        <figure class="iv-gallery-item">
+          <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=700&q=80"
+               alt="Wedding cake and flowers against a brick wall"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1400&q=85"
+               aria-label="Open photo: the cake" />
+          <figcaption>The cake</figcaption>
+        </figure>
+        <figure class="iv-gallery-item">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80"
+               alt="Table setting with candles and glassware"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1400&q=85"
+               aria-label="Open photo: the table" />
+          <figcaption>The table</figcaption>
+        </figure>
+        <figure class="iv-gallery-item">
+          <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80"
+               alt="Two gold wedding bands resting on linen"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1400&q=85"
+               aria-label="Open photo: the rings" />
+          <figcaption>The rings</figcaption>
+        </figure>
+        <figure class="iv-gallery-item iv-gallery-wide">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80"
+               alt="Guests gathered around the couple during the celebration"
+               loading="lazy" decoding="async" tabindex="0" role="button"
+               data-full="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85"
+               aria-label="Open photo: our people" />
+          <figcaption>Our people</figcaption>
+        </figure>
       </div>
     </section>
-    <!-- ===== SECTION 8 — RSVP ===== -->
+    <!-- ===== SECTION 6 — RSVP ===== -->
     <section class="iv-section iv-reveal iv-rsvp" id="ivRsvp">
-      <h2 class="iv-sec-title"><span class="iv-sec-num">07</span>RSVP</h2>
+      <h2 class="iv-sec-title"><span class="iv-sec-num">06</span>RSVP</h2>
       <form id="ivRsvpForm" class="iv-rsvp-form">
         <div class="iv-field">
           <label for="ivNames">Guest names</label>
@@ -1422,7 +1384,7 @@
       <p class="iv-rsvp-msg" id="ivRsvpMsg"></p>
     </section>
 
-    <!-- ===== SECTION 9 — FAQ ===== -->
+    <!-- ===== SECTION 7 — FAQ ===== -->
     <section class="iv-section iv-reveal iv-faq" id="ivFaq">
       <h2 class="iv-sec-title">Guest FAQ</h2>
       <div class="iv-accordion">
@@ -1431,8 +1393,8 @@
           <div class="iv-accordion-panel" id="ivFaq1">Yes — please include their name when you RSVP so we can prepare a place at the table.</div>
         </div>
         <div class="iv-accordion-item">
-          <button class="iv-accordion-head" aria-expanded="false" aria-controls="ivFaq2" id="ivQ2">Where can we stay nearby?</button>
-          <div class="iv-accordion-panel" id="ivFaq2">Grand Hotel Tremezzo (our reception venue) holds a room block for guests. Other lovely options nearby: Hotel Bellevue &amp; Suite and Villa Sosta. We are happy to help with bookings.</div>
+          <button class="iv-accordion-head" aria-expanded="false" aria-controls="ivFaq2" id="ivQ2">Can we take photos?</button>
+          <div class="iv-accordion-panel" id="ivFaq2">We would love you to be fully present — please keep phones away during the ceremony. Our photographer will share the full gallery with everyone afterwards.</div>
         </div>
       </div>
     </section>
@@ -1443,13 +1405,19 @@
       <p class="iv-closing-date">19 · 06 · 2027 · Lake Como · Italy</p>
     </footer>
 
+    <div class="iv-lightbox" id="ivLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+      <button type="button" class="iv-lightbox-close" id="ivLightboxClose" aria-label="Close photo">✕</button>
+      <img id="ivLightboxImg" src="" alt="" />
+    </div>
+
     <nav class="iv-bottombar" aria-label="Quick links">
       <a href="#ivHero" class="iv-navlink iv-active">HOME</a>
       <a href="#ivLocation" class="iv-navlink">LOCATION</a>
-      <a href="#ivGift" class="iv-navlink">GIFT LIST</a>
+      <a href="#ivGallery" class="iv-navlink">GALLERY</a>
       <a href="#ivRsvp" class="iv-navlink">RSVP</a>
     </nav>
   </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* ========================================================================
    French Blue Wedding Invitation — vanilla JS
@@ -1547,7 +1515,14 @@
   }
   /* ---------- Section 4 — Interactive maps (Leaflet) ---------- */
   function initMaps() {
-    if (typeof L === 'undefined') return;
+    if (typeof L === 'undefined') {
+      /* Leaflet could not load (offline or blocked) — don't leave a dead box */
+      Array.prototype.forEach.call(document.querySelectorAll('#ivApp .iv-map'), function (el) {
+        el.classList.add('iv-map-fallback');
+        el.textContent = 'Map preview unavailable — use “Get directions”';
+      });
+      return;
+    }
     try {
       L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -1629,38 +1604,45 @@
     });
   });
 
-  /* ---------- Section 7 — IBAN toggle + copy ---------- */
-  var toggle = document.getElementById('ivToggleIban');
-  var panel = document.getElementById('ivIbanPanel');
-  if (toggle && panel) {
-    toggle.addEventListener('click', function () {
-      var showing = panel.classList.toggle('open');
-      toggle.textContent = showing ? 'HIDE IBAN' : 'SHOW IBAN';
-      toggle.setAttribute('aria-expanded', showing);
-      panel.setAttribute('aria-hidden', !showing);
-    });
+  /* ---------- Section 5 — gallery lightbox ---------- */
+  var lb = document.getElementById('ivLightbox');
+  var lbImg = document.getElementById('ivLightboxImg');
+  var lbClose = document.getElementById('ivLightboxClose');
+
+  function closeLightbox() {
+    if (!lb) return;
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function openLightbox(src, alt) {
+    if (!lb || !lbImg || !src) return;
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (lbClose) lbClose.focus();
   }
 
-  var copyBtn = document.getElementById('ivCopyBtn');
-  var copyMsg = document.getElementById('ivCopyMsg');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      var value = document.getElementById('ivIbanValue').textContent.replace(/\u00a0/g, ' ').trim();
-      navigator.clipboard.writeText(value).then(function () {
-        copyBtn.classList.add('copied');
-        copyBtn.textContent = 'COPIED!';
-        if (copyMsg) copyMsg.classList.add('show');
-        setTimeout(function () {
-          copyBtn.classList.remove('copied');
-          copyBtn.textContent = 'COPY';
-          if (copyMsg) copyMsg.classList.remove('show');
-        }, 1800);
-      }, function () {
-        copyBtn.textContent = 'Copy failed';
-        setTimeout(function () { copyBtn.textContent = 'COPY'; }, 1500);
-      });
+  document.querySelectorAll('#ivApp .iv-gallery-item img[data-full]').forEach(function (img) {
+    img.addEventListener('click', function () {
+      openLightbox(this.getAttribute('data-full'), this.alt);
     });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(this.getAttribute('data-full'), this.alt);
+      }
+    });
+  });
+  if (lb) {
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
   }
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 
   /* ---------- Section 8 — RSVP form ---------- */
   var form = document.getElementById('ivRsvpForm');
