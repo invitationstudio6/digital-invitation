@@ -719,46 +719,7 @@
   pointer-events: none;
 }
 /* full-size photo viewer */
-.invite-wrapper .iv-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-  background: rgba(13, 19, 31, 0.96);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-.invite-wrapper .iv-lightbox.open { opacity: 1; visibility: visible; }
-.invite-wrapper .iv-lightbox img {
-  max-width: 100%;
-  max-height: 84vh;
-  border-radius: 4px;
-  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.9);
-  transform: scale(0.98);
-  transition: transform 0.3s var(--iv-ease);
-}
-.invite-wrapper .iv-lightbox.open img { transform: scale(1); }
-.invite-wrapper .iv-lightbox-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-size: 15px;
-  line-height: 1;
-  transition: background 0.25s ease;
-}
-.invite-wrapper .iv-lightbox-close:hover { background: rgba(255, 255, 255, 0.24); }
+
 
 /* 8. Section 6 — Dress code */
 .invite-wrapper .iv-dress-card {
@@ -992,7 +953,6 @@
   .invite-wrapper .iv-env-body,
   .invite-wrapper .iv-ribbon,
   .invite-wrapper .iv-accordion-panel,
-  .invite-wrapper .iv-lightbox,
   .invite-wrapper .iv-gallery-item img,
   .invite-wrapper .iv-reveal { transition: none !important; animation: none !important; }
   .invite-wrapper .iv-reveal { opacity: 1; transform: none; }
@@ -1276,16 +1236,6 @@
           </div>
           <a href="https://www.google.com/maps/dir/?api=1&destination=Villa+Carlotta,+Tremezzo,+Italy" class="iv-btn iv-btn-dark" target="_blank" rel="noopener">Get directions</a>
         </article>
-        <article class="iv-venue-card">
-          <span class="iv-kind">Reception</span>
-          <h3>Grand Hotel Tremezzo</h3>
-          <span class="iv-when">19 · 06 · 2027 · 20:00</span>
-          <p class="iv-addr">Via Regina, 52 · Tremezzo · Lake Como · Italy</p>
-          <div class="iv-map-wrap">
-            <div class="iv-map" id="ivMapReception">Loading map…</div>
-          </div>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=Grand+Hotel+Tremezzo,+Tremezzo,+Italy" class="iv-btn iv-btn-dark" target="_blank" rel="noopener">Get directions</a>
-        </article>
       </div>
     </section>
     <!-- ===== SECTION 4 — DRESS CODE ===== -->
@@ -1309,60 +1259,114 @@
     <section class="iv-section iv-reveal iv-gallery" id="ivGallery">
       <h2 class="iv-sec-title"><span class="iv-sec-num">05</span>THE GALLERY</h2>
       <p class="iv-sec-sub">Moments we keep</p>
-      <div class="iv-gallery-grid">
-        <figure class="iv-gallery-item iv-gallery-wide">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
-               alt="Bridal bouquet held in warm afternoon light"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85"
-               aria-label="Open photo: the bouquet" />
+      <div class="iv-album">
+        <a href="#" class="iv-album-nav prev" aria-label="Previous page">&#9668;</a>
+        <a href="#" class="iv-album-nav next" aria-label="Next page">&#9658;</a>
+        <div class="iv-album-indicators">
+          <div class="iv-album-indicator active"></div>
+          <div class="iv-album-indicator"></div>
+          <div class="iv-album-indicator"></div>
+          <div class="iv-album-indicator"></div>
+          <div class="iv-album-indicator"></div>
+          <div class="iv-album-indicator"></div>
+        </div>
+        <div class="iv-album-page iv-album-wide" aria-label="Page 1">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552" loading="lazy" decoding="async"
+               alt="The bouquet"
+               aria-label="Gallery page 1"/>
           <figcaption>The bouquet</figcaption>
-        </figure>
-        <figure class="iv-gallery-item">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=80"
-               alt="Couple releasing white balloons as guests watch"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=85"
-               aria-label="Open photo: the celebration" />
+        </div>\n        <div class="iv-album-page" aria-label="Page 2">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc" loading="lazy" decoding="async"
+               alt="The celebration"
+               aria-label="Gallery page 2"/>
           <figcaption>The celebration</figcaption>
-        </figure>
-        <figure class="iv-gallery-item">
-          <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=700&q=80"
-               alt="Wedding cake and flowers against a brick wall"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1400&q=85"
-               aria-label="Open photo: the cake" />
+        </div>\n        <div class="iv-album-page" aria-label="Page 3">
+          <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a" loading="lazy" decoding="async"
+               alt="The cake"
+               aria-label="Gallery page 3"/>
           <figcaption>The cake</figcaption>
-        </figure>
-        <figure class="iv-gallery-item">
-          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80"
-               alt="Table setting with candles and glassware"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1400&q=85"
-               aria-label="Open photo: the table" />
+        </div>\n        <div class="iv-album-page" aria-label="Page 4">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed" loading="lazy" decoding="async"
+               alt="The table"
+               aria-label="Gallery page 4"/>
           <figcaption>The table</figcaption>
-        </figure>
-        <figure class="iv-gallery-item">
-          <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80"
-               alt="Two gold wedding bands resting on linen"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1400&q=85"
-               aria-label="Open photo: the rings" />
+        </div>\n        <div class="iv-album-page" aria-label="Page 5">
+          <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866" loading="lazy" decoding="async"
+               alt="The rings"
+               aria-label="Gallery page 5"/>
           <figcaption>The rings</figcaption>
-        </figure>
-        <figure class="iv-gallery-item iv-gallery-wide">
-          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80"
-               alt="Guests gathered around the couple during the celebration"
-               loading="lazy" decoding="async" tabindex="0" role="button"
-               data-full="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85"
-               aria-label="Open photo: our people" />
+        </div>\n        <div class="iv-album-page iv-album-wide" aria-label="Page 6">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a" loading="lazy" decoding="async"
+               alt="Our people"
+               aria-label="Gallery page 6"/>
           <figcaption>Our people</figcaption>
-        </figure>
+        </div>
       </div>
     </section>
     <!-- ===== SECTION 6 — RSVP ===== -->
     <section class="iv-section iv-reveal iv-rsvp" id="ivRsvp">
-      <h2 class="iv-sec-title"><span class="iv-sec-num">06</span>RSVP</h2>
+      \n>>  /* ---------- Section 5 — album flipper ---------- */
+  var album = document.querySelector('.iv-album');
+  var pages = document.querySelectorAll('.iv-album-page');
+  var navs = document.querySelectorAll('.iv-album-nav');
+  var indicators = document.querySelectorAll('.iv-album-indicator');
+  var current = 0;
+  var numPages = pages.length;
+
+  function showPage(i) {
+    current = (i + numPages) % numPages;
+    pages.forEach(function (p, idx) {
+      p.classList.toggle('active', idx === current);
+    });
+    indicators.forEach(function (ind, idx) {
+      ind.classList.toggle('active', idx === current);
+    });
+  }
+
+  function nextPage() { showPage(current + 1); }
+  function prevPage() { showPage(current - 1); }
+
+  navs.forEach(function (n) {
+    n.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (n.classList.contains('next')) nextPage();
+      else prevPage();
+    });
+  });
+
+  indicators.forEach(function (ind) {
+    ind.addEventListener('click', function () {
+      var idx = Array.from(indicators).indexOf(ind);
+      showPage(idx);
+    });
+  });
+
+  // Swipe support for touch devices
+  var startX = 0;
+  album.addEventListener('touchstart', function (e) {
+    startX = e.touchStartX || e.originalEvent.touches[0].clientX;
+  });
+  album.addEventListener('touchend', function (e) {
+    var endX = e.touchEndX || e.originalEvent.changedTouches[0].clientX;
+    var diff = startX - endX;
+    if (Math.abs(diff) > 30) {
+      if (diff > 0) nextPage();
+      else prevPage();
+    }
+  });
+
+  // Click anywhere on active page to go forward
+  pages.forEach(function (page) {
+    page.addEventListener('click', function () {
+      if (!page.classList.contains('active')) return;
+      nextPage();
+    });
+  });
+
+  // Init: show first page
+  showPage(0);
+
+  /* ---------- Section 6 — RSVP form ---------- */\n<h2 class="iv-sec-title"><span class="iv-sec-num">06</span>RSVP</h2>
       <form id="ivRsvpForm" class="iv-rsvp-form">
         <div class="iv-field">
           <label for="ivNames">Guest names</label>
@@ -1405,10 +1409,7 @@
       <p class="iv-closing-date">19 · 06 · 2027 · Lake Como · Italy</p>
     </footer>
 
-    <div class="iv-lightbox" id="ivLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
-      <button type="button" class="iv-lightbox-close" id="ivLightboxClose" aria-label="Close photo">✕</button>
-      <img id="ivLightboxImg" src="" alt="" />
-    </div>
+
 
     <nav class="iv-bottombar" aria-label="Quick links">
       <a href="#ivHero" class="iv-navlink iv-active">HOME</a>
