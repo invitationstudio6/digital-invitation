@@ -670,14 +670,45 @@
 .invite-wrapper .iv-btn-dark { background: var(--iv-navy); color: #fff; }
 .invite-wrapper .iv-btn-dark:hover { opacity: 0.9; }
 
-/* 7. Section 5 — Gallery */
-.invite-wrapper .iv-gallery { text-align: center; }
-.invite-wrapper .iv-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 24px;
+.invite-wrapper .iv-album { 
+  position: relative; 
+  max-width: 780px; 
+  margin: 4px auto 22px; 
+  overflow: hidden; 
 }
+.invite-wrapper .iv-album-nav { 
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%; 
+  background: rgba(27,42,74,0.6); 
+  color: #fff; 
+  font-size: 20px; 
+  display: grid; 
+  place-items: center; 
+  z-index: 5; 
+  transition: background 0.2s; 
+}
+.invite-wrapper .iv-album-nav:hover { background: rgba(27,42,74,0.8); }
+.invite-wrapper .iv-album-nav.prev { left: 18px; }
+.invite-wrapper .iv-album-nav.next { right: 18px; }
+.invite-wrapper .iv-album-page { 
+  position: absolute; 
+  inset: 0; 
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease, visibility 0.3s ease; 
+}
+.invite-wrapper .iv-album-page.active { opacity: 1; visibility: visible; }
+.invite-wrapper .iv-album-page img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.invite-wrapper .iv-album-caption { 
+  position: absolute; 
+  left: 0; right: 0; bottom: 0; padding: 26px 20px 10px; text-align: left; font-size: 9px; font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: #fff; background: linear-gradient(180deg, rgba(27,42,74,0) 0%, rgba(27,42,74,0.55) 100%); pointer-events: none; } 
+.invite-wrapper .iv-album-indicators { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.invite-wrapper .iv-album-indicator { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); border: 2px solid rgba(255,255,255,0.6); cursor: pointer; transition: background 0.2s; }
+.invite-wrapper .iv-album-indicator.active { background: #fff; }
 .invite-wrapper .iv-gallery-item {
   position: relative;
   margin: 0;
@@ -921,7 +952,7 @@
   .invite-wrapper .iv-section { padding: 40px 24px; }
   .invite-wrapper .iv-venue-grid { grid-template-columns: 1fr 1fr; }
   .invite-wrapper .iv-map-wrap { height: 210px; }
-  .invite-wrapper .iv-gallery-grid { gap: 12px; }
+
 }
 @media (min-width: 900px) {
   .invite-wrapper .iv-hero .iv-frame { max-width: 680px; margin-left: auto; margin-right: auto; padding: 44px 30px 56px; }
@@ -1305,66 +1336,7 @@
     </section>
     <!-- ===== SECTION 6 — RSVP ===== -->
     <section class="iv-section iv-reveal iv-rsvp" id="ivRsvp">
-      \n>>  /* ---------- Section 5 — album flipper ---------- */
-  var album = document.querySelector('.iv-album');
-  var pages = document.querySelectorAll('.iv-album-page');
-  var navs = document.querySelectorAll('.iv-album-nav');
-  var indicators = document.querySelectorAll('.iv-album-indicator');
-  var current = 0;
-  var numPages = pages.length;
-
-  function showPage(i) {
-    current = (i + numPages) % numPages;
-    pages.forEach(function (p, idx) {
-      p.classList.toggle('active', idx === current);
-    });
-    indicators.forEach(function (ind, idx) {
-      ind.classList.toggle('active', idx === current);
-    });
-  }
-
-  function nextPage() { showPage(current + 1); }
-  function prevPage() { showPage(current - 1); }
-
-  navs.forEach(function (n) {
-    n.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (n.classList.contains('next')) nextPage();
-      else prevPage();
-    });
-  });
-
-  indicators.forEach(function (ind) {
-    ind.addEventListener('click', function () {
-      var idx = Array.from(indicators).indexOf(ind);
-      showPage(idx);
-    });
-  });
-
-  // Swipe support for touch devices
-  var startX = 0;
-  album.addEventListener('touchstart', function (e) {
-    startX = e.touchStartX || e.originalEvent.touches[0].clientX;
-  });
-  album.addEventListener('touchend', function (e) {
-    var endX = e.touchEndX || e.originalEvent.changedTouches[0].clientX;
-    var diff = startX - endX;
-    if (Math.abs(diff) > 30) {
-      if (diff > 0) nextPage();
-      else prevPage();
-    }
-  });
-
-  // Click anywhere on active page to go forward
-  pages.forEach(function (page) {
-    page.addEventListener('click', function () {
-      if (!page.classList.contains('active')) return;
-      nextPage();
-    });
-  });
-
-  // Init: show first page
-  showPage(0);
+      \n>>
 
   /* ---------- Section 6 — RSVP form ---------- */\n<h2 class="iv-sec-title"><span class="iv-sec-num">06</span>RSVP</h2>
       <form id="ivRsvpForm" class="iv-rsvp-form">
@@ -1671,6 +1643,66 @@
     });
   }
 })();
+  /* ---------- Section 5 — album flipper ---------- */
+  var album = document.querySelector('.iv-album');
+  var pages = document.querySelectorAll('.iv-album-page');
+  var navs = document.querySelectorAll('.iv-album-nav');
+  var indicators = document.querySelectorAll('.iv-album-indicator');
+  var current = 0;
+  var numPages = pages.length;
+
+  function showPage(i) {
+    current = (i + numPages) % numPages;
+    pages.forEach(function (p, idx) {
+      p.classList.toggle('active', idx === current);
+    });
+    indicators.forEach(function (ind, idx) {
+      ind.classList.toggle('active', idx === current);
+    });
+  }
+
+  function nextPage() { showPage(current + 1); }
+  function prevPage() { showPage(current - 1); }
+
+  navs.forEach(function (n) {
+    n.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (n.classList.contains('next')) nextPage();
+      else prevPage();
+    });
+  });
+
+  indicators.forEach(function (ind) {
+    ind.addEventListener('click', function () {
+      var idx = Array.from(indicators).indexOf(ind);
+      showPage(idx);
+    });
+  });
+
+  // Swipe support for touch devices
+  var startX = 0;
+  album.addEventListener('touchstart', function (e) {
+    startX = e.touchStartX || e.originalEvent.touches[0].clientX;
+  });
+  album.addEventListener('touchend', function (e) {
+    var endX = e.touchEndX || e.originalEvent.changedTouches[0].clientX;
+    var diff = startX - endX;
+    if (Math.abs(diff) > 30) {
+      if (diff > 0) nextPage();
+      else prevPage();
+    }
+  });
+
+  // Click anywhere on active page to go forward
+  pages.forEach(function (page) {
+    page.addEventListener('click', function () {
+      if (!page.classList.contains('active')) return;
+      nextPage();
+    });
+  });
+
+  // Init: show first page
+  showPage(0);
 </script>
 </div>
 </body>
